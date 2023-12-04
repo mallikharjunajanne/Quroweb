@@ -1,0 +1,550 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.AutomaticChallanGeneration
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<html>
+<head>
+
+    <style>
+        .View_Edit_btn {
+            text-decoration: none;
+            padding: 2px 10px;
+            margin-right: 2px;
+            border: 1px solid #C1C267;
+            border-bottom: none;
+            background-color: #F6F6EF;
+            color: #686AA3;
+            font-size: 13px;
+        }
+
+        .Generate_Challana_btn {
+            text-decoration: none;
+            padding: 2px 10px;
+            margin-right: 2px;
+            border: 1px solid #C1C267;
+            border-bottom: none;
+            background-color: #F6F6EF;
+            color: #686AA3;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .Header_Btn {
+            background-color: black;
+            color: white;
+            border-radius: 6px;
+            margin-left: 3px;
+            font-family: emoji;
+            border: 2px solid black;
+            height: 29px;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .Clear_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .Serch_Btn {
+            width: 15%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .lbl {
+            font-weight: 600;
+            font-family: none;
+        }
+
+        .dropdown-style {
+            margin-left: -24px;
+            width: 72%;
+            height: 24px;
+            border: 1px solid;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .Classdropdown {
+            margin-left: -24px;
+            width: 72%;
+            height: 75px;
+            border: 1px solid;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-1 {
+            flex-basis: 8%;
+        }
+
+        .col-5 {
+            flex-basis: 40%;
+        }
+
+        .col-form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" style="margin-left:1%">
+        <div class="card-header pb-0">
+            <div style=" font-size: 50px; text-align: center;">
+                <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: -13px; ">AUTOMATIC CHALLAN GENERATION</h1>
+            </div>
+        </div>
+        <div id="ErrorMessage" style=" color: red; margin-left: 4px; font-family: none;"></div>
+        <div id="validation2" style=" color: red; margin-left: 4px; font-family: none;"></div>
+        <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <div>
+            <button class="Generate_Challana_btn">Generate Challan</button>
+            <button class="View_Edit_btn">View / Edit Challan</button>
+            <hr style="margin-top: 1px; border-bottom: 4px solid #4f94d7;" />
+        </div>
+
+
+
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">SEARCH USERS</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form id="searchForm">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl" style=" margin-left: 22%;"> Academic Year : </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" id="Instance_TxtId" value="@ViewBag.Instanceid">
+                                                <input type="hidden" id="CreatedBy_TxtId" value="@ViewBag.CreatedBy">
+
+                                                <select id="AcademicYear_DDid" class="dropdown-style">
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl"> <font style="color: red; font-size: 13px;">*</font>Previous Fee Term: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="Previous_FeeTerm_DDid" class="dropdown-style" onchange="handleDropdownChange(this)">
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label" style=" margin-top: 20%; font-weight: 600; font-family: none; margin-left: 4%;"> Previous Fee Types: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="Previous_Fee_Types_DDid" class="Classdropdown" multiple>
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl" style=" margin-left: 22%;"> <font style="color: red; font-size: 13px;">*</font>Need to be set: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="Need_to_be_set_DDid" class="dropdown-style">
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label" style=" margin-left: -35%; font-weight: 600; font-family: none; text-align: right;"><font style="color: red; font-size: 13px;">*</font> Challan Generation Date: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="date" id="ChallanGenerationDate" style="height: 23px; width: 73%; margin-left: -24px; border-radius: 3px; border: 1px solid; outline: none; font-size: 13px; font-family: none;" name="LastName" value="">
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl" style="margin-left:39%"><font style="color: red; font-size: 13px;">*</font> Due Date: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="date" id="DueDate" style="height: 23px; width: 73%; margin-left: -24px; border-radius: 3px; border: 1px solid; outline: none; font-size: 13px; font-family: none;" name="LastName" value="">
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl" style=" margin-top: 20%; font-weight: 600; font-family: none; margin-left: 65%;"> Class: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="InstanceSubclassification_DDid" class="Classdropdown" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div style=" text-align: center; margin: 13px 0px 0px 0px;">
+                                            <input type="button" value="Clear" class="btn btn-pill btn-outline-danger-2x" onclick="clearForm()">
+                                            <input type="button" value="Generate Challans" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn" id="generateChallansBtn">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="ViewECId_partialContainer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        GetAcademicYears();
+        Previous_FeeTerm();
+        Needtobeset_GETTerms();
+        InstanceSubclassification_DD();
+
+        
+
+        $('.View_Edit_btn').on('click', function () {
+
+            debugger;
+            $('#searchFormContainer').hide();
+
+            loadPartialView();
+
+        });
+
+        function loadPartialView() {
+            debugger;
+
+            $.ajax({
+                url: '@Url.Action("View_Edit_Challan_ViewId", "FeeSection")', // Replace with your actual controller and action names
+                type: 'GET',
+                success: function (result) {
+                    $('#ViewECId_partialContainer').html(result);
+                },
+                error: function () {
+                    console.log('An error occurred while loading the partial view.');
+                }
+            });
+        }
+
+        $('.Generate_Challana_btn').on('click', function () {
+            debugger;
+            $('#searchFormContainer').show();
+         
+            $('#ViewECId_partialContainer').html('');
+        });
+
+
+
+    });
+
+    document.getElementById('generateChallansBtn').addEventListener('click', generateChallans);
+
+    function generateChallans() {
+        debugger;
+        var PreviousFeeTerm = $('#Previous_FeeTerm_DDid').val();
+        var Needtobeset = $('#Need_to_be_set_DDid').val();
+
+        if (!validateInputs()) {
+            return; // Don't proceed if validation fails
+        }
+        if (PreviousFeeTerm === Needtobeset) {
+            $('#ErrorMessage').html("Please select a different term for Need to be set. <br>");
+            $('#validation2').html('');
+            return;
+        }
+        $('#ErrorMessage').html('');
+
+            var feeTypes = Array.from(document.querySelectorAll('#Previous_Fee_Types_DDid option:checked')).map(option => option.value);
+
+            var classes = Array.from(document.querySelectorAll('#InstanceSubclassification_DDid option:checked')).map(option => option.value);
+
+            var formData = new FormData();
+            formData.append('InstanceId', $('#Instance_TxtId').val());
+            formData.append('CreatedBy', $('#CreatedBy_TxtId').val());
+            formData.append('AcademicYearId', $('#AcademicYear_DDid').val());
+            formData.append('FeeTermId', $('#Previous_FeeTerm_DDid').val());
+            formData.append('FeeTypeIds', feeTypes); // Assuming feeTypes is an array
+            formData.append('PrevFeeTermId', $('#Need_to_be_set_DDid').val());
+            formData.append('ChallanDate', $('#ChallanGenerationDate').val());
+            formData.append('Duedate', $('#DueDate').val());
+            formData.append('ClassIds', classes); // Assuming classes is an array
+
+            $.ajax({
+                url: '/FeeSection/A_ChallanGeneration',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response == "2") {
+                        $('#ErrorMessage').html("No new users found for Generate Challans");
+                    } else if (response =="1") {
+
+                    }
+                    console.log(response);
+                }
+            });
+      
+    }
+
+    function validateInputs() {
+
+        debugger;
+        var PreviousFeeTerm = $('#Previous_FeeTerm_DDid').val();        
+        var Needtobeset = $('#Need_to_be_set_DDid').val();
+        var challanGenerationDate = $('#ChallanGenerationDate').val();
+        var dueDate = $('#DueDate').val();
+       
+
+        var validationMessage = "";
+        var hasError = false;
+
+        if (PreviousFeeTerm === "") {
+            validationMessage += "Previous Fee Term <br>";
+            hasError = true;
+        }
+        if (Needtobeset === "") {
+            validationMessage += "Need to be set <br>";
+            hasError = true;
+        }
+        //}else if (PreviousFeeTerm === Needtobeset) {
+        //    validationMessage += "Please select a different term for Need to be set. <br>";
+        //    hasError = true;
+        //}
+
+        
+        if (challanGenerationDate === "") {
+            validationMessage += "Challan Generation Date <br>";
+            hasError = true;
+        } else {
+            var today = new Date();
+            var selectedDate = new Date(challanGenerationDate);
+            if (selectedDate > today) {
+                validationMessage += "Challan Generation Date cannot be greater than today's date. <br>";
+                hasError = true;
+            }
+        }
+       
+        if (dueDate === "") {
+            validationMessage += "Due Date <br>";
+            hasError = true;
+        } else {
+            var today = new Date();
+            var selectedDueDate = new Date(dueDate);
+
+            if (selectedDueDate < today.getDate()) {
+                validationMessage += "Due Date cannot be less than or equal to today's date. <br>";
+                hasError = true;
+            }
+        }
+       
+
+        if (hasError) {
+            $('#validation2').html("Following fields have invalid data :");
+            $("#validationMessage").html(validationMessage);
+            return false;
+        } else {
+            $("#validationMessage").html("");
+            return true;
+        }
+    }
+
+    function clearForm() {
+        location.reload();
+    }
+    /*<--------------------- DROPDOWNS DATA BINDING  FUNCTION CODE START ------------------>*/
+
+    function GetAcademicYears() {
+        debugger;
+
+        var Instanceid = $('#Instance_TxtId').val();
+
+        $.ajax({
+            url: '/FeeSection/GetAcademicYears?InstanceId=' + Instanceid, // Replace with your controller's route
+            type: 'GET',
+            success: function (data) {
+                debugger;
+
+                var dropdown = $('#AcademicYear_DDid');
+                dropdown.empty();
+
+                // Add a default option
+                dropdown.append($('<option>').val('').text('------Select------'));
+
+                // Populate options from data
+                data.forEach(function (item) {
+                    dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+    }
+
+    function Previous_FeeTerm() {
+        debugger;
+
+        var Instanceid = $('#Instance_TxtId').val();
+        var AcademicYearId = $('#AcademicYear_DDid').val();
+
+        $.ajax({
+            url: '/FeeSection/GetPrevious_FeeTerm?InstanceId=' + Instanceid + "&AcademicYearId=" + AcademicYearId, // Replace with your controller's route
+            type: 'GET',
+            success: function (data) {
+                debugger;
+
+                var Previous_FeeTermdropdown = $('#Previous_FeeTerm_DDid');
+                Previous_FeeTermdropdown.empty();
+
+                // Add a default option
+                Previous_FeeTermdropdown.append($('<option>').val('').text('------Select------'));
+
+                // Populate options from data
+                data.forEach(function (item) {
+                    Previous_FeeTermdropdown.append($('<option>').val(item.value).text(item.text));
+                });
+
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+    }
+
+
+    function Needtobeset_GETTerms() {
+        debugger;
+
+        var Instanceid = $('#Instance_TxtId').val();
+
+
+        $.ajax({
+            url: '/FeeSection/Need_to_be_set_GETTerms?InstanceId=' + Instanceid , // Replace with your controller's route
+            type: 'GET',
+            success: function (data) {
+                debugger;
+
+
+                var NTBS_dropdown = $('#Need_to_be_set_DDid');
+                NTBS_dropdown.empty();
+
+                // Add a default option
+                NTBS_dropdown.append($('<option>').val('').text('------Select------'));
+
+                // Populate options from data
+                data.forEach(function (item) {
+                    NTBS_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+    }
+
+    function InstanceSubclassification_DD() {
+        debugger;
+
+        var Instanceid = $('#Instance_TxtId').val();
+
+
+        $.ajax({
+            url: '/FeeSection/InstanceSubclassification?InstanceId=' + Instanceid, // Replace with your controller's route
+            type: 'GET',
+            success: function (data) {
+                debugger;
+
+
+                var Class_dropdown = $('#InstanceSubclassification_DDid');
+                Class_dropdown.empty();
+
+                // Add a default option
+                Class_dropdown.append($('<option>').val('').text('------Select------'));
+
+                // Populate options from data
+                data.forEach(function (item) {
+                    Class_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+    }
+
+
+    function handleDropdownChange(dropdown) {
+        debugger;
+       /* alert("Its Working ....!");*/
+        var selectedOptionValue = dropdown.value;
+        var Instanceid = $('#Instance_TxtId').val();
+
+        $.ajax({
+            url: '/FeeSection/PreviousFeeTypes', // Replace with your controller's route
+            type: 'GET',
+            data: {
+                FeeTermId: selectedOptionValue,
+                instanceId: Instanceid },
+            success: function (data) {
+                //console.log('Data from server:', result);
+                debugger;
+                var PreviousFeeTypes_dropdown = $('#Previous_Fee_Types_DDid');
+                PreviousFeeTypes_dropdown.empty();
+
+                // Add a default option
+                PreviousFeeTypes_dropdown.append($('<option>').val('').text('------Select------'));
+
+                // Populate options from data
+                data.forEach(function (item) {
+                    PreviousFeeTypes_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+
+        //fetchDataFromServer(selectedOptionValue);
+    }
+
+
+    /*<--------------------- DROPDOWNS DATA BINDING  FUNCTION CODE END ------------------>*/
+</script>

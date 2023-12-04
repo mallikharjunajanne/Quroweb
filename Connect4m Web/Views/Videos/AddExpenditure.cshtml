@@ -1,0 +1,410 @@
+﻿@model Connect4m_Web.Models.LMSproperties.SEMtblGovFundRecieved
+
+@{
+    ViewData["Title"] = "AddExpenditure";
+    Layout = null;
+}
+
+<!--<link href="~/css/Managesubjecttools.css" rel="stylesheet" />-->
+@*<link href="~/css/pagination.css" rel="stylesheet" />*@
+<!--<link href="~/css/texts.css" rel="stylesheet" />-->
+
+<style>
+    #bankDetails, #ChequeDetails {
+        display: none;
+    }
+/*
+    #InsertSEM .col-2 label::after {
+        content: " : ";
+        display: inline-block;
+        font-weight:900;
+    }*/
+
+    #InsertSEM .col-2 {
+        text-align: end;
+    }
+    #radioaddexpenditure input[type="radio"]:checked {
+        background-color: #fd2d63;
+    }
+
+    /*#InsertSEM .col-4 {
+        left: 8px !important;
+    }*/
+</style>
+<div style="display:flex" id="radioaddexpenditure">
+    @{ if (ViewBag?.radiobutton == "0")
+        {
+            <input type="radio" name="ExpenditureType" class="btn btn-radio" value="0" style=" flex: 0.05;" checked /><span>Credits (Income)</span>
+            <input type="radio" name="ExpenditureType" class="btn btn-radio" value="1" style=" flex: 0.05;" /><span>Debits (Expenditure)</span>
+
+        }
+        else
+        {
+            <input type="radio" name="ExpenditureType" class="btn btn-radio" value="0" style=" flex: 0.05;" /><span>Credits (Income)</span>
+            <input type="radio" name="ExpenditureType" class="btn btn-radio" checked value="1" style=" flex: 0.05;" /><span>Debits (Expenditure)</span>
+        }
+    }
+</div>
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card">
+
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" @*data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"*@>
+                                    ADD TYPE OF EXPENDITURE DETAILS   <span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span>
+
+                                </button>
+                            </h5>
+                        </div>
+                        @*<div class="alert alert-success">
+                           
+                        </div>
+                        <div class="alert alert-danger">
+                          
+                        </div>*@
+                        <div @*class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc"*@>
+
+                            <div class="row padding-search">
+                                <div class="row">
+
+                                    <form id="InsertSEM" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                        <div class="row">
+                                            <input asp-for="GovFundId" class="form-control" type="number" id="GovFundId_Sem" hidden />
+
+                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="TypeofExpenditure" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_1">
+                                                    @Html.DropDownListFor(
+x => x.TypeofExpenditure,
+ new SelectList(ViewBag.FoundSource, "Value", "Text"),
+ "-------select-------", new { @class = "form-select readonly", @id = "dropdown_FoundSource_SEM", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="TypeofExpenditure" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="form-group col-2">
+                                                <label asp-for="VendorName" class="control-label space"></label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="VendorName" class="form-control" id="VendorName_SEM" />
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="YearId" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_1">
+                                                    @Html.DropDownListFor(
+x => x.YearId,
+ new SelectList(ViewBag.Years, "Value", "Text"),
+ "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Year_SEM", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="YearId" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="MonthId" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_1">
+                                                    @Html.DropDownListFor(
+x => x.MonthId,
+ new SelectList(ViewBag.Months, "Value", "Text"),
+ "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Month_SEM", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="MonthId" class="text-danger"></span>
+
+                                            </div>
+
+
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="Amount" class="control-label required space"></label>
+
+                                            </div>
+
+
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="Amount" class="form-control" type="number" id="Amount_SEM"  />
+                                                <span asp-validation-for="Amount" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="PaymentMode" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_2">
+                                                    @Html.DropDownListFor(
+x => x.PaymentMode,
+ new SelectList(ViewBag.PaymentMode, "Value", "Text"),
+ "-------select-------", new { @class = "form-select readonly", @id = "dropdown_PaymentMode_SEM", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="PaymentMode" class="text-danger"></span>
+
+                                            </div>
+
+
+                                            <div id="bankDetails">
+
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="BankName" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="BankName" class="form-control" />
+                                                    <span asp-validation-for="BankName" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="BankAddress" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="BankAddress" class="form-control" />
+                                                    <span asp-validation-for="BankAddress" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+
+                                            <div id="ChequeDetails">
+
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="ChequeDDNo" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="ChequeDDNo" class="form-control" />
+                                                    <span asp-validation-for="ChequeDDNo" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="ChequeDDDate" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="ChequeDDDate" class="form-control" />
+                                                    <span asp-validation-for="ChequeDDDate" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="ChequeDDBank" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="ChequeDDBank" class="form-control" />
+                                                    <span asp-validation-for="ChequeDDBank" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="ChequeDDBranch" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="ChequeDDBranch" class="form-control" />
+                                                    <span asp-validation-for="ChequeDDBranch" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-2 ">
+                                                    <label asp-for="RoutingNumber" class="control-label required space"></label>
+
+                                                </div>
+                                                <div class="form-group col-4">
+
+                                                    <input asp-for="RoutingNumber" class="form-control" />
+                                                    <span asp-validation-for="RoutingNumber" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="form-group col-6">
+
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="PaymentDate" class="control-label required space"></label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="PaymentDate" class="form-control" id="paymentdate_SEM" />
+                                                <span asp-validation-for="PaymentDate" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="Unit" class="control-label space"></label>
+
+                                            </div>
+
+
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="Unit" class="form-control" type="number" />
+                                                @*<span asp-validation-for="Unit" class="text-danger"></span>*@
+
+                                            </div>
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="VendorCategory" class="control-label space"></label>
+
+                                            </div>
+
+
+                                            <div class="form-group col-4">
+
+                                                @*<input asp-for="VendorCategory" class="form-control " />*@
+                                                <div id="Drop_Format_SEM_6">
+                                                    @Html.DropDownListFor(
+                                               x => x.VendorCategory,
+                                                new SelectList(ViewBag.Vendorcategory, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Vendor_SEM", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="VendorCategory" class="text-danger"></span>
+
+                                            </div>
+
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="RemindAt" class="control-label required space"></label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="RemindAt" class="form-control" id="reminddate_SEM" />
+                                                <span asp-validation-for="RemindAt" class="text-danger"></span>
+
+                                            </div>
+
+                                            <div class="form-group col-2 ">
+                                                <label asp-for="DocName" class="control-label space"></label>
+
+                                            </div>
+
+
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="DocName" class="form-control" type="file" id="DocmentName" accept=".doc, .docx, .pdf, .jpeg, .jpg, .png, .gif" />
+                                                @{ if (Model != null && Model.DocNameEdit != "")
+                                                    {
+                                                        <input asp-for="DocNameEdit" class="form-control" type="text" readonly id="DocNameEdit" />
+
+                                                    } }
+                                                <span asp-validation-for="DocName" class="text-danger"></span>
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+                                                <label asp-for="Description" class="control-label space"></label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <textarea asp-for="Description" class="form-control" rows="10" style="height:85px"></textarea>
+
+
+                                            </div>
+
+
+
+
+                                            <div style=" display: flex; gap: 30px;">
+
+                                                <div class="form-group col-3"></div>
+
+                                                <div class="form-group col-2">
+
+                                                    <button style=" padding: 6px;" class="btn btn-pill btn-outline-primary btn-aprimary" id="backtosearch_SEM">Back To Search</button>
+
+                                                </div>
+                                                <div class="form-group col-1">
+                                                    <input type="button" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
+
+                                                </div>
+
+                                                <div class="form-group col-1">
+                                                    <input type="submit" value="Save" id="Save_SEM" class="btn btn-pill btn-outline-success btn-air-success"  />
+                                                </div>
+                                                <div>
+                                                    @*<input type="button" value="Print" class="btn btn-danger" id="Print_SEM" />*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                               <div id="appendprint_SEM">
+
+                               </div>
+                                
+                                
+                                
+                                
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+@*<script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<script src="~/js/SEMscripts.js"></script>

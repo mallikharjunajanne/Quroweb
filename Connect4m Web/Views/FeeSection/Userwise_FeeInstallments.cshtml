@@ -1,0 +1,37 @@
+﻿
+@{
+      Layout = null;
+}
+
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>Particulars</th>
+            <th></th>
+            <th></th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var items in ViewBag.Details)
+        {
+            <tr>
+                <td>@items.Createdate</td>
+                <td>
+                    <span onclick="FeeInstallment_ReportsDetailsByUserID(@items.UserId, @items.UserReceiptGenerationID, '@items.Createdate')" style="color:black;font-weight:bold;cursor:pointer;">
+                        @items.modename
+                    </span>
+                </td>
+                <td>@items.typename</td>
+                <td>@items.Amount</td>
+                <td>@items.balance</td>
+            </tr>
+        }
+    </tbody>
+</table>

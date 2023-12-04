@@ -1,0 +1,156 @@
+﻿
+@{
+    //  Layout = null;
+    ViewData["Title"] = "Trail2";
+}
+
+@*<h1>Trail2</h1>*@
+
+<link href="~/css/Videodesign.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...insert_integrity_here...=" crossorigin="anonymous" />
+
+<div class="video-container">
+
+
+    <video id="my-video" src="~/Videos/8thClass.mp4"></video>
+    <div id="play-pause-btn" class="play-btn">
+        <i class="fas fa-play"></i>
+    </div>
+
+    <div class="controls" id="custom-controls">
+        <button id="play-pause-button">Play/Pause</button>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="1">
+        <button id="mute-button">Mute/Unmute</button>
+        <input id="seek-slider" type="range" min="0" step="0.1" class="slider" value="0">
+        <span id="current-time">00:00</span>/<span id="total-duration">00:00</span>
+        <button id="fullscreen-button">Fullscreen</button>
+    </div>
+</div>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var videoplay = document.getElementById('my-video');
+        var playPauseButton = document.getElementById('play-pause-button');
+        var muteButton = document.getElementById('mute-button');
+        var volumeSlider = document.getElementById('volume-slider');
+        var seekSlider = document.getElementById('seek-slider');
+        var currentTimeSpan = document.getElementById('current-time');
+        var totalDurationSpan = document.getElementById('total-duration');
+        var fullscreenButton = document.getElementById('fullscreen-button');
+        var playPauseBtn = document.getElementById('play-pause-btn');
+        videoplay.addEventListener('click', togglePlayPause);
+
+
+
+        videoplay.addEventListener('timeupdate', updateProgress);
+        function updateProgress() {
+            const progressValue = (videoplay.currentTime / videoplay.duration) * 100;
+            seekSlider.value = progressValue;
+
+            //  alert(progressValue);
+        }
+
+        videoplay.controls = false;
+
+
+        var hideTimeout;
+        function togglePlayPause() {
+            if (videoplay.paused || videoplay.ended) {
+                videoplay.play();
+                playPauseBtn.style.display = 'flex';
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                hideTimeout = setTimeout(function () {
+                    playPauseBtn.style.display = 'none';
+                }, 2000);
+
+            } else {
+                videoplay.pause();
+                playPauseBtn.style.display = 'flex';
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+
+        playPauseButton.addEventListener('click', function () {
+            if (videoplay.paused) {
+                videoplay.play();
+                playPauseButton.innerHTML = 'Pause';
+            } else {
+                videoplay.pause();
+                playPauseButton.innerHTML = 'Play';
+            }
+        });
+
+        muteButton.addEventListener('click', function () {
+            if (videoplay.muted) {
+                videoplay.muted = false;
+                muteButton.innerHTML = 'Mute';
+            } else {
+                videoplay.muted = true;
+                muteButton.innerHTML = 'Unmute';
+            }
+        });
+
+        volumeSlider.addEventListener('input', function () {
+            videoplay.volume = volumeSlider.value;
+        });
+
+        seekSlider.addEventListener('input', function () {
+            var seekTo = videoplay.duration * (seekSlider.value / 100);
+            videoplay.currentTime = seekTo;
+        });
+
+        videoplay.addEventListener('timeupdate', function () {
+            var currentTime = videoplay.currentTime;
+            var duration = videoplay.duration;
+
+            currentTimeSpan.innerHTML = formatTime(currentTime);
+            totalDurationSpan.innerHTML = formatTime(duration);
+        });
+        //  fullscreenButton.addEventListener('click', handleFullscreenChange);
+        fullscreenButton.addEventListener('click', function () {
+
+            if (videoplay.requestFullscreen) {
+                videoplay.requestFullscreen();
+            } else if (videoplay.mozRequestFullScreen) {
+                videoplay.mozRequestFullScreen();
+            } else if (videoplay.webkitRequestFullscreen) {
+                videoplay.webkitRequestFullscreen();
+            } else if (videoplay.msRequestFullscreen) {
+                videoplay.msRequestFullscreen();
+            }
+        });
+
+        function formatTime(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+        }
+    });
+    function updateSeekSlider() {
+        var seekPosition = (videoplay.currentTime / videoplay.duration) * 100;
+        seekSlider.value = seekPosition;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+<script>
+
+</script>

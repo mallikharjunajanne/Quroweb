@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewData["Title"] = "FileTransfer";
+}
+
+<h1>FileTransfer</h1>
+
+
+
+<form id="myForm" class="myForm">
+
+    <input type="file" name="file" id="myFile1" />
+    <input type="text" name="Name" value="John" />
+    <input type="email" name="Email" value="john@example.com" />
+
+    <input type="file" name="file" id="myFile" />
+</form>
+
+<button id="submitBtn">Submit</button>
+
+
+<form id="form1">
+    <input type="file" id="fileInput1">
+</form>
+
+<form id="form2">
+    <input type="file" id="fileInput2">
+</form>
+
+<button id="appendButton">Append File</button>
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#appendButton').click(function () {
+            debugger;
+            var file1 = $('#fileInput1').prop('files')[0]; // Get the selected file from the first input
+            var file2 = $('#fileInput2').prop('files')[0];
+
+            var originalFiles = $('#fileInput1').prop('files'); // Get the files from the original input
+
+            if (originalFiles.length > 0) {
+                var clonedInput = $('#fileInput1').clone(); // Clone the original input element
+                clonedInput.prop('id', 'fileInput2'); // Set the ID of the cloned input element
+
+                // Replace the target input element with the cloned input element
+                $('#fileInput2').replaceWith(clonedInput);
+
+                // Update the files property of the cloned input element
+                clonedInput.prop('files', originalFiles);
+
+               
+            }
+
+
+
+            //$("#fileInput2")[0].files = $("#fileInput1")[0].files;
+
+            //if (file1) {
+            //    // Clone the original file input
+            //    var clonedInput = $('#fileInput2').clone();
+
+            //    // Clear the cloned input's value (if any)
+            //    clonedInput.val('');
+
+            //    // Replace the original input with the cloned input
+            //    $('#fileInput2').replaceWith(clonedInput);
+
+            //    // Add the selected file from the first input to the cloned input
+            //    clonedInput.prop('files', file1);
+            //}
+        });
+  
+
+        $(document).ready(function () {
+            $('#myFile1').one(function () {
+            var file = this.files[0]; // Get the selected file from the first input
+
+            // Set the selected file to the second input
+            $('#myFile').prop('files', this.files);
+        });
+  /*  });*/
+
+
+    //$(document).ready(function () {
+    //    $('#submitBtn').click(function (e) {
+    //        e.preventDefault(); // Prevent the default form submission
+
+
+    //        var input = $(this);
+    //        $('.myForm').each(function () {
+    //            var form = $(this);
+    //            var formData = {};
+    //            debugger;
+    //            form.find(':input').each(function () {
+    //                var input = $(this);
+    //                /*formData[input.attr('name')] = input.val();*/
+    //                debugger;
+    //                if (input.attr('type') === 'file') {
+    //                    /*var fileInput = $('#fileInput')[0];*/
+    //                    debugger;
+    //                    // Add the file to the formData object
+    //                    /*formData.file = fileInput.files[0];*/
+
+    //                    //var fileInput = document.getElementById('fileInput'); // Replace with the actual ID of your file input element
+    //                    //var file = fileInput.files[0]; // Assuming you want to append the first selected file
+    //                    //formData.append('file', file);
+
+    //                    /* var file = this.files[0];*/
+    //                    $('#myFile').prop('files', this.files);
+    //                    //var files = input[0].files;
+    //                    //debugger;
+    //                    ///* var formData1 = new FormData(form[0]);*/
+    //                    //for (var i = 0; i < files.length; i++) {
+    //                    //    var file = files[i];
+    //                    //    /* formData.append(input.attr('name') + '[' + i + ']', file);*/
+    //                    //}
+
+    //                } else {
+    //                    formData[input.attr('name')] = input.val();
+    //                }
+    //            });
+    //        });
+    //        var formDataList = [];
+    //        var formDataArray = [];
+    //        /*       var formDataList = [];*/
+    //        debugger;
+
+
+    //        // Loop through each form
+    //        $('.myForm tbody tr').each(function () {
+    //            var form = $(this);
+    //            var formData = {};
+    //            debugger;
+
+
+
+
+
+    //            //Loop through each form field
+    //            form.find(':input').each(function () {
+    //                var input = $(this);
+    //                /*formData[input.attr('name')] = input.val();*/
+    //                debugger;
+    //                if (input.attr('type') === 'file') {
+    //                    /*var fileInput = $('#fileInput')[0];*/
+    //                    debugger;
+    //                    // Add the file to the formData object
+    //                    /*formData.file = fileInput.files[0];*/
+
+    //                    //var fileInput = document.getElementById('fileInput'); // Replace with the actual ID of your file input element
+    //                    //var file = fileInput.files[0]; // Assuming you want to append the first selected file
+    //                    //formData.append('file', file);
+
+    //                    var files = input[0].files;
+    //                    debugger;
+    //                    /* var formData1 = new FormData(form[0]);*/
+    //                    for (var i = 0; i < files.length; i++) {
+    //                        var file = files[i];
+    //                        /* formData.append(input.attr('name') + '[' + i + ']', file);*/
+    //                    }
+
+    //                } else {
+    //                    formData[input.attr('name')] = input.val();
+    //                }
+    //            });
+
+    //            //Add the form data to the list
+    //            formDataList.push(formData);
+    //        });
+
+    //        // Send the form data list via AJAX
+    //        $.ajax({
+    //            url: "/Attendance/SubmitFormData", // Replace with your controller and action
+    //            type: 'POST',
+
+
+    //            data: formDataList,
+    //            processData: false,
+    //            contentType: false,
+    //            /*   dataType: 'json',*/
+
+    //            //data: JSON.stringify(formDataList), // Convert the list to JSON string
+    //            ////   dataType: 'json',
+    //            //// processData: false,
+    //            ////contentType: 'application/json', // Set the content type to JSON
+    //            ////dataType: 'json',
+    //            success: function (response) {
+    //                // Handle the success response
+    //                console.log(response);
+    //            },
+    //            error: function (xhr, status, error) {
+    //                // Handle the error response
+    //                console.log(xhr.responseText);
+    //            }
+    //        });
+    //    });
+    
+    });
+</script>

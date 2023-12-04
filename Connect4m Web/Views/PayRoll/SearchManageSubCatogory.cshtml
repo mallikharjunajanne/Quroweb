@@ -1,0 +1,154 @@
+﻿@model Connect4m_Web.Models.LMSproperties.ManageSubCategory
+@{
+    ViewData["Title"] = "SearchManageSubCatogory";
+    Layout = null;
+}
+
+
+
+<style>
+    #appendinsertmanagecategory {
+        display: none
+    }
+</style>
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <h6><span>MANAGE SUB CATEGORY</span></h6>
+
+                    <div class="card-header pb-0">
+                        <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 68%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="addnewmanagesubcategorybtn">
+                            Create New Sub Category
+                        </button>
+
+                    </div>
+
+                    <div id="appendsearchmanagesubcategory">
+
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH SUB CATEGORY</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                            <div class="row padding-search">
+                                <div class="row">
+
+                                    <form id="Serach_MSC">
+                                        <div class="row">
+
+                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="PayrollSubCategoryName" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="PayrollSubCategoryName" class="form-control" id="PayrollSubCategoryName" />
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="isLeaveApplicable" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4" style="display:flex">
+
+                                                <input asp-for="isLeaveApplicable" type="radio" name="isLeaveApplicable" value="0" style="flex: 0.5;" checked /><span>PayRoll</span>
+                                                <input asp-for="isLeaveApplicable" type="radio" name="isLeaveApplicable" value="1" style="flex: 0.5;" /><span>Leave</span>
+                                                <input asp-for="isLeaveApplicable" type="radio" name="isLeaveApplicable" value="2" style="flex: 0.5;" /><span>Both</span>
+
+                                            </div>
+                                            <div class="col-3"></div>
+
+                                            <div style=" display: flex; gap: 17px;">
+                                                <div class="col-3"></div>
+                                                <input type="button" value="Previous Page" id="backtopage_MSC" onclick="nextpage('SearchManageCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
+                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
+                                                <input type="button" value="Search" id="sub_tblMSC" class="btn btn-pill btn-outline-success btn-air-success" />
+                                                <input type="button" value="Next Page" id="Nextpage_MSC" onclick="nextpage('SearchManageEmployees',null)"  class="btn btn-pill btn-outline-info btn-air-info" />
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MSC" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                                </h5>
+                            </div>
+
+                            <div id="eg1" style="color: black; background-color: whitesmoke">
+                                <table class=" table table-bordered" id="tblMSCsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                    <thead>
+                                        <tr style="border-color: black;">
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                S.No
+                                            </th>
+                                            <th style=" border-color: blue; width: 92px !important;" class="bg-primary">
+                                                S.No
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Sub Category
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Category
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Description
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Delete
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div id="appendinsertmanagesubcategory">
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script src="~/js/PayRoll_4.js"></script>
+

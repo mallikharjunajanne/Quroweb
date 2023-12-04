@@ -1,0 +1,938 @@
+﻿
+@{
+    ViewData["Title"] = "ManageFeeConcedingTypes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        span.validation {
+            display: block;
+            color: red;
+        }
+       
+
+    </style>
+    <link href="~/css/maps/Manage_fee_ConcedingStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+
+    <div class="card-header pb-0">
+        <div style=" font-size: 20px; text-align: center;">
+            <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: 2px; ">MANAGE FEE CONCEDING(DISCOUNT) TYPES</h1>
+        </div>
+    </div>
+    <div class="card" style="margin-left:2px;">
+
+        <div style=" margin-left: 73%; ">
+            <a class="btn btn-primary" style="color: white; font-size: 13px; margin-left: 8%; border-radius: 15px; height: 35px; border: 1px solid black !important; margin-bottom: 0px; font-family: auto; font-weight: 900;" href="#" onclick="Create_NewFeeDiscountType(event);">Create Fee Discount Type</a>
+        </div>
+        <div id="FeeTypesDiscountTbl_Divid">
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="HeaderBtn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width: 100%;"> SEARCH FEE DISCOUNT TYPES</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <form class="form theme-form" id="SEARCH_FEE_TYPES_FORM">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="form-group row g-3">
+                                            <div id="Ct_Lg_DivId" class="row" style=" margin-top: 10px; margin-left: 35px;">
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-4 col-form-label">Fee Discount Type</label>
+                                                    <div class="col-sm-9">
+                                                        :<input type="text" name="ConcedingTypeName" class="Text_CSS" style="font-size:14px;"/>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; grid-gap: 10px; margin-left: 203px; margin-top: 10px; ">
+                                                    <input type="reset" value="Clear" class="btn btn-outline-danger">
+                                                    <input type="submit" value="Search" class="btn btn-outline-success"  onclick="searchDiscountDisplayData(event);">
+                                                  
+                                                    <a href="/FeeSection/ManageFeeTypes"  class="btn btn-outline-info NextPageBtn">Next Page</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Table Html And Table Data Bind Code Start*@
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <span id="ErrorMessage_SpanId" style="color: red; font-size: 12px; margin-left: 8px;"></span>
+                        <h5 class="mb-0">
+                            <button class="HeaderBtn" aria-controls="collapse11" style="width: 100%;">YOUR SEARCH RESULTED :<span id="TableCount" class="TableCount_SpId"></span> RECORDS.</button>
+                        </h5>
+
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <div id="FeeDiscountTable">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Fee Discount Type</th>
+                                                <th>Amount</th>
+                                                <th>Description</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <div id="DiscountTbl_pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Table Html And Table Data Bind Code End*@
+        </div>
+
+
+        @*Create New Fee type Code Start*@
+        <div id="CreateFeeDiscountType_Divid" style=" margin-top: -14px;">
+            <div style="color: red; font-size: 12px;">
+                <div id="validation2" style="color: red;"></div>
+                <div id="validationMessage" style="color: red;"></div>
+                <p id="MessageID"></p>
+            </div>
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="HeaderBtn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width: 100%;">  SAVE FEE DISCOUNT TYPE</button>
+                            </h5>                            
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <form class="form theme-form" id="Create_NewDiscount_FeeType">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="form-group row g-3">
+                                            <div class="row" style=" margin-top: 10px;">
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-5 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Discount Type :</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="FeeDiscountType"  style="width: 28%; outline: none; margin-left: 15px; border: 1px solid; font-size: 12px; " />
+                                                    </div>
+                                                </div>
+
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <span class="col-sm-5 col-form-label"><font style="color: red; font-size: 13px;">*</font>Amount  :</span>
+                                                    <input type="text" id="Amount" class="Text_CSS" style=" width: 26.40%; height: 27px;  outline: none; margin-left: 15px; border: 1px solid; font-size: 12px; " onkeypress="return isNumber(event)" maxlength="8"/>
+                                                </div>
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-5 col-form-label"><font style="color: red; font-size: 13px;"></font>Description :</label>
+                                                    <textarea class="DescriptionTA" id="description" style=" height: 100px; width: 353px; outline: none; margin-left: 15px; border: 1px solid; font-size: 15px; font-style: italic; MARGIN-TOP: 10PX;"></textarea>
+                                                </div>
+                                                <div style=" display: flex; grid-gap: 16px; margin-left: 230px; margin-top: 10px;">
+                                                    <input type="reset" value="Clear" id="Clear_Btn" class="btn btn-outline-warning">
+                                                    <input type="submit" id="backToSearchBtn" value="Back to Search" class="btn btn-outline-info" onclick="backToSearch(event);">
+                                                    <input type="submit" id="Create_NewDiscount_FeeType" value="Save" class="btn btn-outline-primary" onclick="Save_CreateFeeDiscountType(event);">
+                                                    <a href="/FeeSection/ManageFeeTypes" class="btn btn-outline-info NextPageBtn">Next Page</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Create New Fee type Code End*@
+
+
+
+        @*Discount Fee Type Update View Code Start*@
+
+
+        <div id="UpdateDiscountFeeType_Divid" style="margin-top: -14px;">
+            <div style="color: red; font-size: 12px;">
+                <div id="validation2s" style="color: red;"></div>
+                <div id="validationMessages" style="color: red;"></div>
+                <p id="UpdateMessageID"></p>
+            </div>
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="HeaderBtn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width: 100%;">  UPDATE FEE DISCOUNT TYPE</button>
+                            </h5>
+                            @*<h5 class="mb-0">
+                                <button class="btn btn-link  collapsed HeaderBtn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">
+                                    
+                                </button>
+                            </h5>*@
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+
+                                <form class="form theme-form" id="Create_NewDiscount_FeeType">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="form-group row g-3">
+                                            <div class="row" style=" margin-top: 10px; height: 250px;">
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <input type="hidden" id="InstanceidTxt_id" />
+                                                    <input type="hidden" id="CTypeId_Txtid" />
+
+                                                    <label class="col-sm-4 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Discount Type :</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="CNameEdit_Txtid" class="Text_CSS" style=" width: 28%; outline: none; margin-left: 15px; border: 1px solid; font-size: 12px;" />
+                                                    </div>
+                                                </div>
+
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <span class="col-sm-4 col-form-label"><font style="color: red; font-size: 13px;">*</font>Amount  :</span>
+                                                    <input type="text" id="AmountEdit_Txtid" class="Text_CSS" style=" width: 26.40%; height: 27px; outline: none; margin-left: 15px; border: 1px solid; font-size: 12px;" onkeypress="return isNumber(event)" maxlength="8"/>
+                                                </div>
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-4 col-form-label"><font style="color: red; font-size: 13px;"></font>Description :</label>
+                                                    <textarea class="DescriptionTA" id="DEdit_Txtid" style="height: 100px; width: 353px; outline: none; margin-left: 15px; border: 1px solid; font-size: 15px; font-style: italic; MARGIN-TOP: 10PX;"></textarea>
+                                                </div>
+                                                <div style=" display: flex; grid-gap: 16px; margin-left: 210px; margin-top: 10px;">
+                                                    <input type="button" value="Delete"  id="deletebutton" style="height: 32px; width: 13%; " class="btn btn-danger" onclick="Update_View_Delete(event);">
+                                                    <input type="submit" id="EditTobackSearchBtn" value="Back to Search" class="btn btn-primary" style="height:32px;" onclick="EditTobackSearch(event);">
+                                                    <input type="submit" id="Update_FeeTypeBtn" value="Update" class="btn btn-success" style="height: 32px;" onclick="UpdateDiscountFeeType(event);">
+                                                    <a href="/FeeSection/ManageFeeTypes" class="btn btn-outline-info NextPageBtn" style=" height: 32px;">Next Page</a>
+                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Discount Fee Type Update View Code End*@
+
+    </div>
+
+
+
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@*<script src="~/js/Manage_fee_Conceding.js"></script>*@
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#FeeTypesDiscountTbl_Divid").show();
+        $("#CreateFeeDiscountType_Divid").hide();
+        $("#UpdateDiscountFeeType_Divid").hide();
+
+
+
+        Fee_DiscountTbl_Callingfunction();
+
+    });
+
+
+
+
+    /*---------------------------------  IN CREATE VIEW  BACK TO SEARCH HIDE SOME DIV IDS AND SHOW SOME DIV IDS FUNCTION CODE END ---------------------------------  */
+
+    function searchDiscountDisplayData(event) {
+        event.preventDefault();
+
+        // Get the search input value
+        var ConcedingTypeName = document.getElementsByName("ConcedingTypeName")[0].value;
+
+
+        // Call the Feesection_TbLData_Callingfunction and pass the search value as a parameter
+        Fee_DiscountTbl_Callingfunction(ConcedingTypeName);
+    }
+
+    /*--------------------------  TbLData FUNCTION START-------------------------- */
+    function Fee_DiscountTbl_Callingfunction(ConcedingTypeName) {
+
+
+        $.ajax({
+            url: '/FeeSection/Tbl_FeeConcedingTypes',
+            method: 'GET',
+            data: { ConcedingTypeName: ConcedingTypeName },
+            success: function (response) {
+
+                    debugger;
+
+                var CountTabledata = response.length;
+
+                $('#TableCount').text(CountTabledata);
+
+                console.log(response); // Log the response object in the browser's console
+
+
+
+                var table = $('#FeeDiscountTable');
+                var tbody = table.find('tbody');
+                var rowsPerPage = 10; // Number of rows to display per page
+
+                // Clear the existing table body
+                tbody.empty();
+
+                // Iterate over the data and create table rows
+                $.each(response, function (index, Discounttbl) {
+                    var row = $('<tr></tr>');
+
+                    if (index % 2 === 0) {
+                        row.addClass('even-row');
+                    } else {
+                        row.addClass('odd-row');
+                    }
+
+
+                    // Create table cells and populate with data
+
+
+                    var cell1 = $('<td class="editable-cell"></td>').css('cursor', 'pointer');
+                    var text = $('<span></span>').text(Discounttbl.concedingTypeName).css({
+                        'color': 'black',
+                        'font-weight': 'bold',
+                        'text-decoration':'underline'                       
+                    }).attr('onclick', 'FeeType_Edit(' + Discounttbl.concedingTypeId + ')');
+                    cell1.append(text);
+
+
+                    var cell2 = $('<td></td>').text(Discounttbl.amountFormatted);
+                    var cell3 = $('<td></td>').text(Discounttbl.description);
+                    var cell4 = $('<td></td>').css('text-align', 'center');
+                    var deleteIcon = $('<i></i>').addClass('fas fa-trash-alt'); // Assuming you're using Font Awesome icons
+                    deleteIcon.data('row', row);
+                    cell4.append(deleteIcon);
+
+
+                    var cell5 = $('<td hidden></td>').text(Discounttbl.concedingTypeId);
+
+
+
+
+
+                    // Append the cells to the row
+                    row.append(cell1);
+                    row.append(cell2);
+                    row.append(cell3);
+                    row.append(cell4);
+                    row.append(cell5);
+
+
+                    // Append the row to the table body
+                    tbody.append(row);
+                });
+
+                // Perform pagination
+                var numPages = Math.ceil(response.length / rowsPerPage);
+                var pagination = $('#DiscountTbl_pagination');
+                pagination.empty();
+
+                // Create pagination links
+                var previousLink = $('<a class="DiscountTbl_pagination" style="margin: 0 2px;" href="#">Previous</a>');
+                pagination.append(previousLink);
+
+                for (var i = 1; i <= numPages; i++) {
+                    var link = $('<a class="DiscountTbl_pagination" style="margin: 0 2px;" href="#">' + i + '</a>');
+                    pagination.append(link);
+                }
+
+                var nextLink = $('<a class="DiscountTbl_pagination" style="margin: 0 2px;" href="#">Next</a>');
+                pagination.append(nextLink);
+
+                // Show the first page by default
+                showPage(1);
+
+                // Adjust pagination alignment
+                pagination.css('text-align', 'center');
+
+                // Handle pagination link click event
+                pagination.on('click', '.DiscountTbl_pagination', function (e) {
+                    e.preventDefault();
+                    var page = $(this).text();
+                    if (page === "Previous") {
+                        var currentPage = $('.DiscountTbl_pagination.active').text();
+                        page = parseInt(currentPage) - 1;
+                        if (page < 1) {
+                            page = 1;
+                        }
+                    } else if (page === "Next") {
+                        var currentPage = $('.DiscountTbl_pagination.active').text();
+                        page = parseInt(currentPage) + 1;
+                        if (page > numPages) {
+                            page = numPages;
+                        }
+                    } else {
+                        page = parseInt(page);
+                    }
+                    showPage(page);
+                });
+
+                // Function to display the specified page
+                function showPage(page) {
+                    var start = (page - 1) * rowsPerPage;
+                    var end = start + rowsPerPage;
+
+                    tbody.find('tr').hide(); // Hide all rows
+                    tbody.find('tr').slice(start, end).show(); // Show rows for the specified page
+
+                    if (response.length <= rowsPerPage) {
+                        pagination.hide();
+                    } else {
+                        pagination.show();
+                    }
+
+                    $('.DiscountTbl_pagination').removeClass('active');
+                    $('.DiscountTbl_pagination').eq(page).addClass('active');
+                }
+
+            },
+            error: function () {
+                console.log('Error retrieving data.');
+            }
+        });
+    }
+    /*--------------------------  TbLData FUNCTION End-------------------------- */
+    function backToSearch(event) {
+        event.preventDefault();
+
+        Fee_DiscountTbl_Callingfunction();
+
+        $("#ErrorMessage_SpanId").html('');
+        $("#MessageID").html('');
+       
+        
+
+
+
+        $("#validationMessages").html('');
+        $("#validation2s").html('');
+
+        $("#validationMessages").text('');
+        $("#validation2s").text('');
+
+        $("#UpdateMessageID").html('');
+        $("#UpdatevalidationMessage").html('');
+
+
+        $("#FeeTypesDiscountTbl_Divid").show();
+        $("#CreateFeeDiscountType_Divid").hide();
+        $("#UpdateDiscountFeeType_Divid").hide();
+
+     /* Create View Fields Clear This code start*/
+       $("#FeeDiscountType").val('');
+        $("#Amount").val('');
+        $("#description").val('');
+
+     /* Create View Fields Clear This code End*/
+
+    }
+
+
+
+    /*----------Create  New Fee Discount Type table Hide and fileds are showing code start------------------------*/
+    function Create_NewFeeDiscountType(event) {
+        /* debugger;*/
+        event.preventDefault();
+
+        debugger;
+        /*----------- Messages Ids data Clear------------------*/
+        $("#ErrorMessage_SpanId").html('');
+        $("#MessageID").html('');
+        $("#validationMessage").html('');
+        $("#validation2").html('');
+        /*----------- Messages Ids data Clear------------------*/
+        Fee_DiscountTbl_Callingfunction();
+        // Show/hide the div elements based on the link clicked
+        $('#UpdateDiscountFeeType_Divid').hide();
+        $("#FeeTypesDiscountTbl_Divid").hide();
+        $("#CreateFeeDiscountType_Divid").show();
+
+
+    }
+    /*----------Create  New Fee Discount Type table Hide and fileds are showing code End------------------------*/
+
+
+    /*--------------------------  VALIDATION FUNCTION START-------------------------- */
+    function validateForm() {
+          debugger;
+
+
+        var ConcedingTypeName = document.getElementById("FeeDiscountType").value;
+        var Amount = document.getElementById("Amount").value;
+
+
+        var validationMessage = "";
+        var hasError = false;
+
+        if (ConcedingTypeName === "") {
+            validationMessage += "Fee Discount Type is required.<br>";
+            hasError = true;
+        }
+
+        if (Amount === "") {
+            validationMessage += "Amount is required.<br>";
+            hasError = true;
+        }
+
+
+        if (hasError) {
+            $('#validation2').html("Following fields have invalid data :");
+            $("#validationMessage").html(validationMessage);
+            return false; // Return false to prevent form submission
+        } else {
+            $("#validationMessage").html("");
+            return true; // Return true to proceed with form submission
+        }
+    }
+    /*--------------------------  VALIDATION FUNCTION END -------------------------- */
+
+    /* ------Clear Button Function Code Start -------   */
+    $('#Clear_Btn').click(function () {
+      
+        $('#MessageID').text('');
+        $('#validation2').text('');
+        $('#validationMessage').text('');
+
+    });
+
+
+    /* ------Clear Button Function Code End-------   */
+
+
+    /*------Only Digits allow Another Characters are not allowed Code start----------   */
+    function isNumber(event) {
+        // Get the input value
+        var inputValue = event.key;
+
+        // Check if the input value is a number or a valid decimal point
+        if (!/^\d*\.?\d*$/.test(inputValue)) {
+            // Prevent the input if it's not a number or a valid decimal point
+            event.preventDefault();
+        }
+    }
+
+    /*------Only Digits allow Another Characters are not allowed Code End----------   */
+    /*--------------------------  Create New Fee Type Functions Start -------------------------- */
+
+
+
+    function Save_CreateFeeDiscountType(event) {
+        event.preventDefault();
+
+        /* debugger;*/
+        if (validateForm()) {
+
+            $('#validation2').text('');
+
+            debugger
+            // Retrieve form input values
+            var ConcedingTypeName = document.getElementById("FeeDiscountType").value;
+            var Amount = document.getElementById("Amount").value;
+
+            var Description = document.getElementById("description").value;
+
+            debugger;
+            // Create an object to hold the form values
+            var formData = {
+                ConcedingTypeName: ConcedingTypeName,
+                Amount: Amount,
+                Description: Description
+            };
+
+            // Call the ManageFeeTypes function and pass the form data
+            Create_DiscountTypes(formData);
+        }
+    }
+
+    function Create_DiscountTypes(formData) {
+        debugger;
+
+        var ConcedingTypeName = document.getElementById("FeeDiscountType").value;
+
+        $.ajax({
+            url: '/FeeSection/ManageFeeConcedingTypes',
+            method: 'POST',
+            data: formData,
+            success: function (response) {
+                // Handle the response as needed
+                debugger;
+                console.log(response);
+
+                if (response == "1") {
+                    // Handle the case when the record is inserted successfully
+                    $("#MessageID").text("Record inserted successfully!");
+                    // Perform any additional actions or page redirection if needed
+                }
+                else if (response == "2") {
+                    $("#MessageID").text("Record inserted successfully!");
+                }
+                else if (response == "-1") {
+
+                    $("#MessageID").text("Fee Type with Name " + '"' + ConcedingTypeName + '"' + " already exists.");
+
+                }else {
+                    // Handle the case when the record insertion fails
+                    $("#MessageID").text("Failed to insert the record. Please try again.");
+                    // Perform any additional error handling or display error messages
+                }
+            },
+            error: function () {
+                console.log('Error saving fee type.');
+            }
+        });
+    }
+
+    /*-------------------------- Create New Fee Type Functions End---------------------------------------------*/
+
+
+
+
+
+    /*-----------EDIT FUNCTIONS CODE START---------------*/
+    /*---------------------------------  Update validateForm code Start---------------------------------  */
+
+    function UpdatevalidateForm() {
+            debugger;
+
+
+        var ConcedingTypeName = document.getElementById("CNameEdit_Txtid").value;
+        var Amount = document.getElementById("AmountEdit_Txtid").value;
+
+
+
+
+        var Update_validationMessage = "";
+        var hasError = false;
+
+        if (ConcedingTypeName === "") {
+            Update_validationMessage += "Fee Discount Type is required.<br>";
+            hasError = true;
+        }
+        if (Amount === "") {
+            Update_validationMessage += "Amount is required.<br>";
+            hasError = true;
+        }
+        
+       
+
+        if (hasError) {
+            $('#validation2s').html("Following fields have invalid data :");
+            $("#validationMessages").html(Update_validationMessage);
+            return false; // Return false to prevent form submission
+        } else {
+            $("#UpdatevalidationMessage").html("");
+            return true; // Return true to proceed with form submission
+        }
+    }
+
+    /*---------------------------------  Update validateForm code End---------------------------------  */
+
+
+
+
+
+    /*---------------------------------  Update Field Geting values function code Start---------------------------------  */
+
+    function UpdateDiscountFeeType(event) {
+        event.preventDefault();
+
+
+        /*------- Update Validation calling this--------------------*/
+        if (UpdatevalidateForm()) {
+
+            debugger;
+
+
+            $('#UpdatevalidationMessage').text('');
+            $('#validationMessages').text('');
+            $('#validation2s').text('');
+           
+
+
+            debugger;
+
+            var ConcedingTypeName = document.getElementById("CNameEdit_Txtid").value;
+            var Amount = document.getElementById("AmountEdit_Txtid").value;
+            var description = document.getElementById("DEdit_Txtid").value;
+            var InstanceId = document.getElementById("InstanceidTxt_id").value;
+            var ConcedingTypeId = document.getElementById("CTypeId_Txtid").value;
+
+            //alert("InstanceId=" + InstanceId + "ConcedingTypeId=" + ConcedingTypeId);
+                var UpdateFee_Data = {
+                    InstanceId: InstanceId,
+                    ConcedingTypeId: ConcedingTypeId,
+                    ConcedingTypeName: ConcedingTypeName,
+                    Amount: Amount,
+                    Description: description
+
+                };
+
+                // Call the Update  ManageFeeTypes function and pass the form data
+                Update_FeeTypes(UpdateFee_Data);
+
+        }
+    }
+
+    /*---------------------------------  Update Field Geting values function code End---------------------------------  */
+
+
+
+
+    /*---------------------------------  Update Field Geting values tTo pass Action Method function code Start---------------------------------  */
+
+    function Update_FeeTypes(UpdateFee_Data) {
+
+
+        var ConcedingTypeName = document.getElementById("CNameEdit_Txtid").value;
+
+        $.ajax({
+            url: '/FeeSection/DiscountFT_Edit',
+            method: 'POST',
+            data: UpdateFee_Data,
+            success: function (response) {
+              
+                if (response == "1") {
+                 
+                    
+                    $("#UpdateMessageID").text("Record updated successfully.");
+                   
+                } else if (response == "3") {
+                    $("#UpdateMessageID").text('Cannot Update DiscountType(s) for FeeType' + '"' + ConcedingTypeName + '"' + ',It is Associated with Few Students.');
+                }
+
+
+                else if (response == "2") {
+                    $("#UpdateMessageID").text("Record updated successfully.");
+                }
+                else if (response == "0") {
+
+                    $("#UpdateMessageID").text("Fee Type with Name " + '"' + ConcedingTypeName + '"' + " already exists.");
+
+                } else if (response == "") {
+
+                    $('#UpdateMessageID').text('Record updated successfully.');
+                }
+                else {
+                   
+                    $("#UpdateMessageID").text("Failed to insert the record. Please try again.");
+                   
+                }
+            },
+            error: function () {
+                console.log('Error saving fee type.');
+            }
+        });
+    }
+
+    /*---------------------------------  Update Field Geting values tTo pass Action Method function code End---------------------------------  */
+
+
+
+    /*---------------------------------  Edit Fields Geting values To pass parameter Action Method and Append that values In fileds function code start---------------------------------  */
+
+    function FeeType_Edit(concedingTypeId) {
+        debugger;
+
+        $('#validationMessages').text('');
+        $('#validation2s').text('');
+        $('#UpdateMessageID').text('');
+
+
+        $.ajax({
+            url: '/FeeSection/DiscountFT_Edit', // Update with the appropriate URL
+            method: 'GET',
+            data: {
+                ConcedingTypeId: concedingTypeId
+            },
+            success: function (response) {
+                   debugger;
+                // Populate the form fields with the received data
+                $('#CNameEdit_Txtid').val(response.concedingTypeName);
+                $('#AmountEdit_Txtid').val(response.amountFormatted);
+                $('#DEdit_Txtid').val(response.description);
+                $('#InstanceidTxt_id').val(response.instanceId);
+                $('#CTypeId_Txtid').val(response.concedingTypeId);
+
+
+
+
+
+                // Show the update section
+                $('#FeeTypesDiscountTbl_Divid').hide();
+                $('#CreateFeeDiscountType_Divid').hide();
+                $('#UpdateDiscountFeeType_Divid').show();
+            },
+            error: function () {
+                console.log('Error fetching Fee Type data.');
+            }
+        });
+    }
+    /*---------------------------------  Edit Fields Geting values To pass parameter Action Method and Append that values In fileds function code End---------------------------------  */
+
+
+    /*---------------------------------  IN EDIT VIEW  BACK TO SEARCH HIDE SOME DIV IDS AND SHOW SOME DIV IDS FUNCTION CODE START ---------------------------------  */
+
+    function EditTobackSearch(event) {
+
+
+        event.preventDefault();
+
+        Fee_DiscountTbl_Callingfunction();
+        $("#ErrorMessage_SpanId").html('');
+        $("#MessageID").html('');
+
+        $("#UpdateMessageID").html('');
+        $("#UpdatevalidationMessage").html('');
+
+        $('#FeeTypesDiscountTbl_Divid').show();
+        $('#CreateFeeDiscountType_Divid').hide();
+        $('#UpdateDiscountFeeType_Divid').hide();
+              
+
+        /* Update View Fields Value Clear This code start*/
+
+        $("#CNameEdit_Txtid").val('');
+        $("#AmountEdit_Txtid").val('');
+        $("#DEdit_Txtid").val('');
+       
+        $("#CTypeId_Txtid").val('');
+
+        /* Update View Fields Value Clear This code End*/
+    }
+    /*---------------------------------  IN EDIT VIEW  BACK TO SEARCH HIDE SOME DIV IDS AND SHOW SOME DIV IDS FUNCTION CODE END ---------------------------------  */
+
+
+    /*  Edit Function End */
+    /*-----------EDIT FUNCTIONS CODE END---------------*/
+
+
+    /*=============================================== DELETE DISCOUNT FEE  TYPE FUNCTIONS START============================================*/
+
+    /*--------------------------  Delete FUNCTION START-------------------------- */
+    function Update_View_Delete(event) {
+        debugger;
+        event.preventDefault();
+        var concedingTypeId = document.getElementById("CTypeId_Txtid").value;
+        if (confirm('Are you sure you want to delete this FeeType?\nClick OK to delete or Cancel to stop deleting.')) {
+
+            var deleteButton = document.getElementById("deletebutton"); // Replace "deleteButton" with the actual ID of your button
+            if (deleteButton) {
+                deleteButton.disabled = true;
+            }
+
+
+            $.ajax({
+                url: '/FeeSection/Delete_Manage_FeeDisountType',
+                method: 'POST',
+                data: {
+                    concedingTypeId: concedingTypeId
+                },
+                success: function (response) {
+                    if (response == 1) {
+                        $('#FeeTypesDiscountTbl_Divid').hide();
+                        Fee_DiscountTbl_Callingfunction();
+                        $('#CreateFeeDiscountType_Divid').hide();
+                        $('#UpdateDiscountFeeType_Divid').show();
+
+                        $('#UpdateMessageID').text('Record deleted successfully.');
+                    }
+                    else {
+                        $('#UpdateMessageID').text('Deletion failed');
+                    }
+                }
+            });
+        }
+
+    }
+
+
+
+    
+
+
+    $('#FeeDiscountTable').on('click', '.fa-trash-alt', function () {
+        var row = $(this).data('row');
+
+        //exec stp_tblFeeConcedingTypes_DELETE ConcedingTypeId=1970,InstanceId=545
+
+        var concedingTypeId = $(this).closest('tr').find('td:nth-child(5)').text();
+      
+
+        if (confirm('Are you sure you want to delete this FeeType?\nClick OK to delete or Cancel to stop deleting.')) {
+            deleteDiscountFeeType( concedingTypeId, row);
+        }
+    });
+
+    function deleteDiscountFeeType( concedingTypeId, row) {
+
+
+        $.ajax({
+            url: '/FeeSection/Delete_Manage_FeeDisountType',
+            method: 'POST',
+            data: {          
+                concedingTypeId: concedingTypeId
+            },
+            success: function (response) {
+                debugger;
+                /*alert(response);*/
+                if (response == '1') {
+                    $('#ErrorMessage_SpanId').text('Record deleted successfully.');
+                    row.remove();
+                    Fee_DiscountTbl_Callingfunction();
+                    window.scrollTo(0, 0);
+                } else if (response == '2') {
+                    $('#ErrorMessage_SpanId').text('Deletion failed');
+                } else if (response == '-1') {
+                    $('#ErrorMessage_SpanId').text('This DiscountType is Associated with one of Fee Types you cannot delete it.');
+                }
+                else {
+                    alert('NUll');
+                }
+            },
+            error: function () {
+                console.log('Error deleting Fee Type.');
+            }
+        });
+    }
+    /*--------------------------  Delete FUNCTION END -------------------------- */
+
+
+    /*=============================================== DELETE DISCOUNT FEE  TYPE FUNCTIONS END===================================================*/
+
+
+
+</script>

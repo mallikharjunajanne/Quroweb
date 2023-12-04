@@ -1,0 +1,453 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<style>
+    /* Adjust the following styles to your preference */
+    .table-responsive {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+
+        .table-responsive table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+
+        .table-responsive td {
+            width: 2.8%;
+        }
+
+
+    .Set_Fee_Users_Table {
+        width: 99%;      
+    }
+
+        .Set_Fee_Users_Table th {
+            width: 17.8%;
+           
+        }
+
+        .Set_Fee_Users_Table td {
+            color: black;
+            font-size: 15px;
+            /* border: 1px solid #D90;
+            padding: 1px;
+            font-family: auto;*/
+        }
+
+        .Set_Fee_Users_Table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    .RecordsCount_Span {
+        background-color: #fd761e;
+        color: white;
+        border-radius: 10px;
+        font-size: 15px;
+        padding: 5px;
+        font-weight: bold;
+    }
+
+    .order-label {
+        margin-left: 18px;
+        font-size: 14px;
+    }
+
+    .sort-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        position: relative;
+        text-decoration: underline;
+        color: green;
+
+    }
+
+        .sort-button::after {
+            content: "▼";
+            margin-left: 5px;
+        }
+
+        .sort-button.up::after {
+            content: "▲";
+        }
+
+        .sort-button.clicked::after {
+            content: " "; /* Empty content to remove the arrow */
+        }
+
+    .Inputtext:focus {
+        outline-color: rgba(0,0,0,0);
+        border: 1px solid black;
+        font-weight: 100 !important;
+        filter: drop-shadow(0px 0px 1px black);
+        border-radius: 4px;
+    }
+
+    .search-icon {
+        font-size: 13px;
+        cursor: pointer;
+        color: #555;
+        margin-top: 15px;
+    }
+
+</style>
+
+@model FeeDetailsViewModel
+@{
+    var groupedUsers = Model.UsersList.GroupBy(user => user.UserId);
+    var totalGroups = groupedUsers.Count();
+
+}
+
+@*@{
+        var groupedUsers = Model.UsersList.GroupBy(user => user.UserId);
+    }*@
+<div id="SetFee_ForUsers_table_DIVID">
+    <div style=" margin-left: 16px;">
+        <label class="DueDate"><font style="color: red; font-size: 13px;">*</font>Due Date:</label>
+        <input type="date" id="duedatedata" style=" outline: none;" />
+
+        <span class="order-label">Order By:</span>
+       
+        <input type="button" value="Name" onclick="sortTable('Name')" class="sort-button" />
+        <input type="button" value="Reg.No" onclick="sortTables('RegNo')" class="sort-button" />
+    </div>
+
+    <div class="default-according style-1" id="accordionoc">
+        <div class="card">
+            <div>
+                <h5 class="mb-0">
+                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse1" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width: 99%"> <span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span> </button>
+                </h5>
+            </div>
+
+
+            <div style="width: 100%;">
+                <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
+                    <thead style="background-color:white;">
+                        <tr style=" background-color: #DDDEEE;">
+                            <td rowspan="2"><b>S.No</b></td>
+                            <td rowspan="2" data-sort-col="Name"><b>Name</b></td>
+                            <td rowspan="2" data-sort-col="RegNo"><b>Reg. No</b></td>
+                            <td rowspan="2" class="hideable"><b>Route Name</b></td>
+                            <td rowspan="2" class="hideable"><b>Stop Name</b></td>
+
+                        </tr>
+                        <tr style="background-color: #DDDEEE;" id="mainContainer">
+                            @{var TrCount = 8; }
+                            @foreach (var FeeTypeNames in Model.FeeTypeCheckedTextNames)
+                            {
+
+                                var AmountTxtId = $"txtSame_{FeeTypeNames}";
+
+                                var CheckboxId = $"Amount_Chaing_checkbox_{FeeTypeNames}";
+
+
+                                <td class="setContainer"><table class="table2 table-responsive" border="1" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(221, 153, 0); margin-top: 0px;"><tbody><tr><td align="center">Enter Amount: <input type="text" class="red-border" id="@AmountTxtId" style="width:60px;border:1px solid #D90;" maxlength="8">&nbsp;<input type="checkbox" id="@CheckboxId" onclick="toggleSameAmount(this,'@FeeTypeNames','@TrCount')">Set same amount for all users</td></tr><tr><td align="center"><b id="Term_Names_SPid_0">@FeeTypeNames</b></td></tr></tbody></table><table class="table3" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(0, 0, 0); margin-top: 0px;"><tbody><tr><td style="width: 50%; text-align:center;"><b>Fee Amount</b></td><td style="width: 50%;text-align:center;"><b>Comments</b></td></tr></tbody></table></td>
+                                TrCount++;
+
+                            }
+                        </tr>
+                    </thead>
+                    <tbody id="SetFeeForUser_tbody">
+                        @{
+                            int Sno = 1;
+                        }
+                        @foreach (var group in groupedUsers)
+                        {
+                            var user = group.First();
+
+                        <tr style="background-color:#DDDEDF;">
+                            <td>@Sno</td>
+                            <td>@user.FirstName</td>
+                            <td hidden id="UserId">@user.UserId</td>
+                            <td hidden id="FeeTypeid">@user.FeeTypeid</td>
+                            <td hidden id="ConcedingAmount">@user.ConcedingAmount</td>
+                            <td hidden id="DueDate">
+                                @user.DueDate
+
+                                <script>
+
+                                $(document).ready(function () {
+                                    var formattedDate = formatDate("@user.DueDate");
+                                    $('#duedatedata').val(formattedDate);
+                                });
+
+                                function formatDate(dateString) {
+                                    var parts = dateString.split("/");
+                                    if (parts.length === 3) {
+                                        return parts[2] + "-" + parts[1] + "-" + parts[0];
+                                    }
+                                    return "";
+                                }
+                                </script>
+                            </td>
+                            <td>@user.InstanceUserCode</td>
+
+                            @if (!string.IsNullOrEmpty(user.RouteName))
+                            {
+                                <td class="hideable">@user.RouteName</td>
+                            }
+                            else
+                            {
+                                <td class="hideable" style="display: none;"></td>
+                            }
+                            @if (!string.IsNullOrEmpty(user.StopName))
+                            {
+                                <td class="hideable">@user.StopName</td>
+                            }
+                            else
+                            {
+                                <td class="hideable" style="display: none;"></td>
+                            }
+
+
+
+                            @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
+                            {
+                                var matchingUser = group.FirstOrDefault(u => u.FeeTypeid == feeType);
+
+
+                                var inputId = $"txtFA_{user.UserId}_{feeType}_{user.FirstName}";
+                                var textareaId = $"textarea_{user.UserId}_{feeType}_{user.FirstName}";
+
+                                <td>
+                                    <div style="display: flex;">
+
+                                        <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext" style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;" oninput="validateNumberInput(this)" />
+                                        @if (matchingUser.DisplayIcon == "1")
+                                        {
+                                            <span class="search-icon">🔍</span>
+
+                                        }
+                                        <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
+
+                                        <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
+
+                                        <textarea id="@textareaId" style=" margin-left: @(matchingUser.DisplayIcon == "1" ? "81px" : "100px"); height: 37px; width: 46%; " oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
+                                       
+                                        <span id="charCount_@textareaId" style="font-size: 8px; margin-top: 28px; color: black; font-family: serif;"></span>
+
+                                    </div>
+                                </td>
+                            }
+
+                        </tr>
+
+                            Sno++;
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            @{
+                                int totalColspan = 5 + Model.FeeTypeCheckedTextNames.Count();
+                            }
+                            <td align="center" colspan="@totalColspan">
+                                <input type="submit" value="Submit" onclick="InsertFeeDetails()" class="btn btn-pill btn-outline-success-2x" style="width: 11%; letter-spacing: 3px; border-radius: 8px;" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.hideable').each(function () {
+
+            debugger;
+
+            var isAnyVisible = $('#SetFeeForUser_tbody .hideable:visible').length > 0;
+            if (!isAnyVisible) {
+                $(this).hide();
+            }
+        });
+    });
+
+    function limitTextareaCharacters(textareaElement, maxLength) {
+        var inputValue = textareaElement.value;
+        if (inputValue.length > maxLength) {
+            textareaElement.value = inputValue.substring(0, maxLength); // Truncate the input to the maximum length
+        }
+    }
+
+    function updateCharacterCount(textareaElement, countElementId, maxLength) {
+        var remainingChars = maxLength - textareaElement.value.length;
+        var countElement = document.getElementById(countElementId);
+
+        if (remainingChars >= 0) {
+            countElement.textContent = remainingChars + ' characters remaining';
+        } else {
+            countElement.textContent = 'Exceeded character limit';
+        }
+    }
+
+
+    function validateNumberInput(inputElement) {
+        var inputValue = inputElement.value;
+        var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+        inputElement.value = numericValue; // Update the input value
+    }
+
+
+
+    function toggleSameAmount(checkbox, FeeTypeNames, TrCount) {
+        var tr = checkbox.closest("tr");
+
+        debugger;
+
+        var tableBody = document.getElementById('SetFeeForUser_tbody');
+        var rows = tableBody.getElementsByTagName('tr');
+
+
+        var container = checkbox.closest('.setContainer');
+        var textBox = container.querySelector('.red-border');
+
+        var SetAmounttextbox = textBox.value;
+
+
+
+        debugger;
+
+        for (var i = 0; i < rows.length; i++) {
+
+            var row = rows[i];
+
+            var tdoftab = $(row).find('td:nth-child(' + TrCount + ')');
+            $(tdoftab).find('input[type="text"]').val(SetAmounttextbox);
+            debugger;
+            //var inputTextbox = $(tdoftab).find('input[type="text"]');
+
+            //if (inputTextbox.val() == "") {
+
+            //    inputTextbox.val(SetAmounttextbox);
+
+            //}
+
+        }
+
+
+
+
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   
+    var currentSortOrder = 'asc'; // Default sorting order
+
+    function sortTable(columnName) {
+
+        var button = event.currentTarget;
+        var isAscending = button.classList.contains("up");
+
+        button.classList.toggle("up", !isAscending);
+        button.classList.toggle("clicked", true);
+
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("SetFeeForUser_tbody");
+        switching = true;
+        debugger;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 0; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                debugger;
+                x = rows[i].getElementsByTagName('td')[1];
+                y = rows[i + 1].getElementsByTagName('td')[1];
+
+                var comparison = x.textContent.localeCompare(y.textContent, undefined, { sensitivity: 'base' });
+
+                if (currentSortOrder === 'asc' && comparison > 0) {
+                    shouldSwitch = true;
+                    break;
+                } else if (currentSortOrder === 'desc' && comparison < 0) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+
+        // Toggle the sorting order for the next click
+        currentSortOrder = (currentSortOrder === 'asc') ? 'desc' : 'asc';
+        currentSortOrder = isAscending ? 'desc' : 'asc';
+    }
+
+   
+
+    var currentSortOrders = 'asc';
+
+    function sortTables(columnName) {
+        var button = event.currentTarget;
+        var isAscending = button.classList.contains("up");
+
+        debugger;
+
+        button.classList.toggle("up", !isAscending);
+        button.classList.toggle("clicked", true);
+
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("SetFeeForUser_tbody");
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 0; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = parseFloat(rows[i].getElementsByTagName('td')[6].textContent); // Parse to float
+                y = parseFloat(rows[i + 1].getElementsByTagName('td')[6].textContent); // Parse to float
+
+                if (currentSortOrders === 'asc' && x > y) {
+                    shouldSwitch = true;
+                    break;
+                } else if (currentSortOrders === 'desc' && x < y) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+
+        // Toggle the sorting order for the next click
+        currentSortOrders = isAscending ? 'desc' : 'asc';
+    }
+
+
+</script>
+
+
+
+
+

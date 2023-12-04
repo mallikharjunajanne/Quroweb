@@ -1,0 +1,936 @@
+﻿
+@{
+    ViewData["Title"] = "StudentLeaveApproval";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Themes/assets/css/StyleSheets/StudentLeaveApproval.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+
+        <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />*@
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+
+    @*<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">*@
+
+    <style>
+        .ExportExcelLink:hover {
+            text-decoration: underline;
+            color: blue;
+            background-color: aqua;
+        }
+
+        .ExportExcelLink {
+            text-decoration: none; /* Removes the underline by default */
+            color: black; /* Optionally set the color of the text */
+        }
+        /*#FmAppliedLeavesHistory_SearchRecordsForScrollid {
+            height: 200px;*/
+        /*overflow-y: scroll;*/
+        /*}*/
+        #FmAppliedLeavesHistory_SearchRecordsForScrollid {
+            max-height: 150px; /* set the maximum desired height */
+            overflow-y: auto;
+        }
+
+        #FmAppliedLeavesSummery_SearchRecordsForScrollid {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .popup {
+            display: none; /* Hide the popup by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            overflow: auto;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            width: 1000px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            max-height: 650px;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(77,138,255,0.1);
+            border-color: #ecf3fa;
+            /*color: #4d8aff;*/
+            /* //color: white;*/
+            color: #4d8aff;
+        }
+
+        input[type="text"]:focus {
+            border-color: dodgerblue;
+            outline: none;
+            /* border-top-color: dodgerblue;*/
+        }
+
+
+        input[type="date"]:focus {
+            border-color: dodgerblue;
+            outline: none;
+        }
+
+
+        .ErrorMessageSpan {
+            display: block;
+            font-size: 12px;
+            color: red;
+        }
+        /*this form pagination number highlight*/
+        /*.LeaveLevels_SearchRecords_Table_pagination_page.active {
+        background-color: black;
+        color: white;
+        cursor: default;
+        text-decoration: none;
+        pointer-events: none;*/
+        /* Add any additional styles for the active page number */
+        /*}*/
+
+        /*
+        .tableid {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .tableid td {
+                font-size: 11px;
+            }
+
+            .tableid th {
+                font-size: 11px;
+            }
+
+            .tableid td, #tableid th {
+                border: 1px solid #ddd;
+                padding: 0px;
+            }
+
+            .tableid tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .tableid tr:hover {
+                background-color: #ddd;
+            }
+
+            .tableid th {
+                padding-top: 0px;
+                padding-bottom: 0px;
+                text-align: left;
+                background-color: deepskyblue;
+                color: white;
+            }*/
+    </style>
+
+
+    <!-- ✅ load jQuery ✅ -->
+    <!-- ✅ load DataTables ✅ -->
+
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12 col-xl-6 xl-100">
+            <div class="card">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" id="ctl00_ContentPlaceHolder1_lnkApproveReject"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve / Reject</a></li>
+                    <li class="nav-item" id="ctl00_ContentPlaceHolder1_lnkApproved"><a class="nav-link" id="profile-tabs" onclick="lnkApproved_callingFun(event)" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved Leaves</a></li>
+                    <li class="nav-item" id="ctl00_ContentPlaceHolder1_lnkRejected"><a class="nav-link " id="contact-tab" data-bs-toggle="tab" onclick="lnkRejected_callingFun(event)" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Rejected Leaves</a></li>
+                </ul>
+
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h6 style="text-align: center; color: black; margin-top: -22px; "><strong id="HeadingNAme">LEAVE APPROVAL</strong></h6>
+                    </div>
+                    <div class="card-body" style="padding-top: 8px">
+
+
+                        <div class="tab-content" id="myTabContent">
+                            @*------------------------------Tab code end----*@
+
+                            @*--------------tab 1----------------div code start----*@
+
+                            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
+
+
+                            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="default-according style-1" id="accordionoc12345">
+                                    <div class="card">
+                                        @*<div class="card-header " style="background-color:black ;">*@
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
+
+                                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
+
+                                                    SEARCH STUDENTS
+                                                </button>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <form id="ApproveReject_Form" class="form" style="font-size:11px">
+
+                                                        <div class="row">
+                                                            <div class="row">
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-3">
+                                                                    <label class="control-label"> Department  :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-3">
+
+                                                                    <select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit; height:20px" asp-items="@(new SelectList(""))">
+                                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                                        <option value=''> Select a Department</option>
+
+                                                                    </select>
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label"> Class :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+
+                                                                    <select id="DdlClassId" name="Classid" class=" input-air-primary" style="width: 230px; color: black; font-size: inherit;  height: 20px" asp-items="@(new SelectList(""))" disabled>
+                                                                        <option value=""> Please select a section </option>
+
+                                                                    </select>
+                                                                </div>
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-3">
+                                                                    <label class="control-label" style=" height: 30px;"> Leave Submitted From Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-3">
+                                                                    <input name="Fromdate" id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;"> Leave Submitted To Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input name="Todate" id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                            <div style="margin-left:40%">
+                                                                <input type="button" class="btn btn-light " onclick="FN_ClearValues()" id="ctl00_ContentPlaceHolder1_btnClearSerach" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+                                                                @*<input type="submit"  class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />*@
+                                                                <input type="submit" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApplied_SearchRecords','32','0','ctl00_ContentPlaceHolder1_lblNumRecords','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmApplied_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentLeaveApproval')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <br />
+                                    @*searched result table*@
+                                    @*<a id="ExportExcelLink_ApproveReject" class="ExportExcelLink" onclick="ExportExcelLink('TblApplied_SearchRecords','StudentLeaveApproval')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
+
+                                    <div class="default-according style-1" id="accordionoc123456">
+                                        <div class="card" id="FmApplied_SearchRecords_Div">
+                                            <div class="card-header " style="background-color:black ;">
+                                                <h5 class="mb-0">
+
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="ctl00_ContentPlaceHolder1_lblNumRecords">No Records</span></button>
+                                                </h5>
+                                            </div>
+
+                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                                                <div class="card ">
+                                                    @*<div class="card-body" style="padding:0px;">*@
+                                                    <form id="FmApplied_SearchRecords" class="table-responsive">
+
+                                                        <table id="TblApplied_SearchRecords" class="compact cell-border display tableid">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Student Name</th>
+                                                                    <th>Admission Number</th>
+                                                                    <th>Class - Section</th>
+                                                                    <th>Leave Type</th>
+                                                                    <th>From Date</th>
+                                                                    <th>To Date</th>
+                                                                    <th>No. of Days</th>
+                                                                    <th>Comments</th>
+                                                                    <th>Applied By</th>
+                                                                    <th>Date Applied On</th>
+                                                                    <th>Waiting Status</th>
+                                                                    <th>View File</th>
+                                                                    <th>Approve/Reject</th>
+                                                                    <th>Attendance Type</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                            @*<tfoot>
+                                                                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblApplied_SearchRecords_pagination"></div></td></tr>
+
+                                                                </tfoot>*@
+                                                        </table>
+
+                                                    </form>
+                                                    @*</div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    @*This is Popup*@
+                                    <div id="popup" class="popup" style=" z-index:900;">
+                                        <div id="popup-content" class="popup-content">
+
+                                            <div class="card" id="popup">
+                                                <div class="card-body" style="padding: 3px;">
+                                                    <div class="w3-container">
+
+                                                        @*<a onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Cancel</a>*@
+
+                                                        <div>
+                                                            <div>
+
+                                                                @*<div class="w3-center">
+                                                                        <br>
+                                                                        <span onclick="document.getElementById('popup').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+                                                                        <br>
+                                                                    </div>*@
+
+                                                                @*start *@
+                                                                <div>
+
+                                                                    <div class="default-according style-1" id="accordionoc123456">
+                                                                        <div class="card">
+                                                                            <div class="card-header " style=" background-color: lightgray;">
+                                                                                <h5 class="mb-0">
+                                                                                    <button style="float: none; text-align: center;" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="" aria-controls="collapse11"><span style="color:black">PAST LEAVES DETAILS:</span></button>
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="card-header " style="background-color:black ;">
+                                                                                <h5 class="mb-0" style="font-size: 5px;">
+                                                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="" aria-controls="collapse11" style="font-size:8px;"><span id="ctl00_ContentPlaceHolder1_grdLeavesToApprove_ctl02_lblLeaveHistoryNumRecords"> No Data Found.</span></button>
+                                                                                </h5>
+                                                                            </div>
+
+                                                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                                                                                <div class="card ">
+                                                                                    <div class="card-body" id="FmAppliedLeavesHistory_SearchRecordsForScrollid" style="padding:0px;">
+                                                                                        <form id="FmAppliedLeavesHistory_SearchRecords">
+
+                                                                                            <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-responsive tableid">
+                                                                                                <thead>
+                                                                                                    <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
+                                                                                                        <th scope="col">Sl. No.</th>
+                                                                                                        <th scope="col">From Date</th>
+                                                                                                        <th scope="col">To Date</th>
+                                                                                                        <th scope="col">Leave Type</th>
+                                                                                                        <th scope="col">Approved / Rejected Remarks</th>
+                                                                                                        <th scope="col">Leave Status</th>
+                                                                                                        <th scope="col">View File</th>
+                                                                                                        <th scope="col">Approved / Rejected Date</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                </tbody>
+                                                                                                <tfoot>
+                                                                                                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblAppliedLeavesHistory_SearchRecords_pagination"></div></td></tr>
+
+                                                                                                </tfoot>
+                                                                                            </table>
+
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                    <br />
+
+
+                                                                    @*------summery*@
+                                                                    <div class="default-according style-1" id="accordionoc123456">
+                                                                        <div class="card">
+                                                                            <div class="card-header " style="background-color: lightgray;">
+                                                                                <h5 class="mb-0">
+                                                                                    <button style="float: none; text-align: center;" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="" aria-controls="collapse11"><span style="color:black"> LEAVES SUMMARY:</span></button>
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="card-header " style="background-color:black ;">
+                                                                                <h5 class="mb-0">
+                                                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="" aria-controls="collapse11" style="font-size:8px;">  <span id="ctl00_ContentPlaceHolder1_grdLeavesToApprove_ctl02_lblLeaveTypesSummaryNumRecords">  No Data Found.</span></button>
+                                                                                </h5>
+                                                                            </div>
+
+                                                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                                                                                <div class="card ">
+                                                                                    <div class="card-body" id="FmAppliedLeavesSummery_SearchRecordsForScrollid" style="padding:0px;">
+                                                                                        <form id="FmAppliedLeavesSummery_SearchRecords">
+
+                                                                                            <table id="TblAppliedLeavesSummery_SearchRecords" class="table table-responsive tableid">
+                                                                                                <thead>
+                                                                                                    <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
+                                                                                                        <th scope="col">Sl. No.</th>
+
+                                                                                                        <th scope="col">Leave Type</th>
+                                                                                                        <th scope="col">Leaves Count</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                </tbody>
+                                                                                            </table>
+
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <br />
+                                                                    @*--------Form-----list box*@
+                                                                    <form id="Fm_ApproveandReject_PopUp" class="form theme-form" style="margin-left:20%;font-size:12px">
+                                                                        <div class="row">
+                                                                            <div class="col">
+
+
+                                                                                <div class="mb-0 row" id="Attendence_Div">
+                                                                                    <label class="col-sm-3 col-form-label  form-label"> &nbsp;&nbsp;Attendance Percentage :&nbsp;</label>
+                                                                                    <div class="col-sm-9">
+                                                                                        <label id="AttendancePercentage" style="width: 300px; padding-top: 6px; margin-left: 10px;"></label>
+
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="mb-1 row ">
+                                                                                    <label class="col-sm-3 col-form-label  form-label"> Type :&nbsp;</label>
+                                                                                    <div class="col ">
+
+                                                                                        <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 5px;">
+                                                                                            <div class="radio radio-primary">
+                                                                                                <input name="SanctionId" style="padding-top: 0px" id="SanctionedradioBtn" class="check" type="radio" y value="1">
+                                                                                                <label class="mb-0" for="SanctionedradioBtn">Sanctioned</label>
+                                                                                            </div>
+                                                                                            &nbsp;&nbsp;
+                                                                                            <div class="radio radio-primary">
+                                                                                                <input name="SanctionId" id="NonSanctionedradioBtn" class="check" type="radio" value="2">
+                                                                                                <label class="mb-0" for="NonSanctionedradioBtn">Non Sanctioned</label>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="mb-1 row ">
+
+                                                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 29px;">&nbsp; Remarks  : &nbsp;</label>
+                                                                                    <div class="col-sm-9">
+                                                                                        @*<textarea id="TXTareaRemarks_Popup" name="Comments" style="width: 230px; resize: none;border-style:ridge;" maxlength="500" class="form-control input-air-primary" rows="3" cols="20"></textarea>*@
+                                                                                        <textarea id="TXTareaRemarks_Popup" name="Comments" style="color: black; width: 230px; height: 70px; resize: none; border-color: black; font-style: inherit" maxlength="500" class="input-air-primary" rows="3" cols="20"></textarea>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                @*<input type="text" name="Userid" id="Userid_Popup" />*@
+                                                                                <input type="hidden" name="StudentLeaveDetailsID" id="StudentLeaveDetailsID_Popup" />
+                                                                                <input type="hidden" name="InstanceClassificationId" id="InstanceClassificationId_Popup" />
+                                                                                <input type="hidden" name="InstanceSubClassificationId" id="InstanceSubClassificationId_Popup" />
+                                                                                <input type="hidden" id="TblApplied_SearchRecords_Tr_Id" />
+
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="margin-left:150px">
+                                                                            <input type="button" class="btn btn-primary  " onclick="StudentLeaveApproval_Save(event, this.value)" id="BtnApprove" style="padding:4px 12px;border-radius:6px;" value="Approve" />&nbsp;&nbsp;&nbsp;
+
+                                                                            <input type="button" class="btn btn-danger " onclick="StudentLeaveApproval_Save(event, this.value)" id="BtnReject" style="padding:4px 12px;border-radius:6px;" value="Reject" />&nbsp;&nbsp;&nbsp;
+
+                                                                            <input type="button" onclick="document.getElementById('popup').style.display='none'" class="btn btn-light " id="BtnCancel" style="padding:3px 8px;border-radius:6px;" value="Cancel" />
+                                                                        </div>
+                                                                    </form>
+                                                                    <br />
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            @*--------------tab 1----------------div code end----*@
+
+
+
+
+                            @*----------tab 2--------------------div code start----*@
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+                                <div class="default-according style-1" id="accordionoc12345">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
+
+                                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
+
+                                                    SEARCH FOR APPROVED LEAVES
+                                                </button>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <form id="Approved_Form" class="form" style="font-size:11px">
+
+                                                        <div class="row">
+                                                            <div class="row">
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label"><i style="color:red">*</i> From Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtStartDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label"><i style="color:red">*</i>To Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtEndDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+
+                                                                </div>
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;">First Name :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtfirstname" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;"> Last Name :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtlastname" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;">Admission Number :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtAdmNo" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                            <div style="margin-left:376px">
+                                                                <input type="button" class="btn btn-light " onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" id="ctl00_ContentPlaceHolder1_btnApproveClear" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+
+                                                                <input type="submit" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApproved_SearchRecords','31','1','ctl00_ContentPlaceHolder1_lblApprovedNumRecords','ExportExcelLink_Approved','ctl00_ContentPlaceHolder1_txtStartDate','ctl00_ContentPlaceHolder1_txtEndDate','FmApproved_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentApprovedLeaves')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <br />
+                                    @*searched result table*@
+                                    @*<a id="ExportExcelLink_Approved" class="ExportExcelLink" onclick="ExportExcelLink('TblApproved_SearchRecords','StudentApprovedLeaves')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
+
+                                    <div class="default-according style-1" id="accordionoc123456">
+                                        <div class="card" id="FmApproved_SearchRecords_Div">
+                                            <div class="card-header " style="background-color:black ;">
+                                                <h5 class="mb-0">
+
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="ctl00_ContentPlaceHolder1_lblApprovedNumRecords">No Records</span></button>
+                                                </h5>
+                                            </div>
+
+                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                                <div class="card ">
+
+                                                    <form id="FmApproved_SearchRecords" class="table-responsive">
+
+                                                        <table id="TblApproved_SearchRecords" class="compact cell-border display tableid ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Student Name</th>
+                                                                    <th>Admission Number</th>
+                                                                    <th>Class - Section</th>
+                                                                    <th>Leave Type</th>
+                                                                    <th>From Date</th>
+                                                                    <th>To Date</th>
+                                                                    <th>No. of Days</th>
+                                                                    <th>Comments</th>
+                                                                    <th>Applied By</th>
+                                                                    <th>Approved Date</th>
+                                                                    <th>Approved By</th>
+                                                                    <th>View File</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                            @*<tfoot>
+                                                                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblApproved_SearchRecords_pagination"></div></td></tr>
+                                                                </tfoot>*@
+                                                        </table>
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*------------------------------div code end----*@
+
+
+
+
+                            @*--------tab 3----------------------div code start----*@
+
+                            <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+
+                                <div class="default-according style-1" id="accordionoc12345">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
+
+                                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
+
+                                                    SEARCH FOR REJECTED LEAVES
+                                                </button>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <form id="Rejected_Form" class="form" style="font-size:11px">
+                                                        <div class="row">
+                                                            <div class="row">
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label"><i style="color:red">*</i> From Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtRejectFromDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label"><i style="color:red">*</i>To Date :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtRejectToDate" type="date" style=" width: 110px; font-size: 12px; color: black; height: 20px;" />
+
+
+                                                                </div>
+
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;">First Name :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtFirstNameReject" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;"> Last Name :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtLastNameReject" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                                    <label class="control-label" style=" height: 30px;">Admission Number :&nbsp; </label>
+                                                                </div>
+                                                                <div class="form-group col-4">
+                                                                    <input id="ctl00_ContentPlaceHolder1_txtAdmNoReject" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div style="margin-left:40%">
+                                                                <input type="button" class="btn btn-light " onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject')" id="ctl00_ContentPlaceHolder1_btnRejectClear" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+
+                                                                <input type="submit" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblRejected_SearchRecords','30','2','ctl00_ContentPlaceHolder1_lblRejectedNumRecords','ExportExcelLink_Rejected','ctl00_ContentPlaceHolder1_txtRejectFromDate','ctl00_ContentPlaceHolder1_txtRejectToDate','FmRejected_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject','StudentRejectedLeaves')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnRejectSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <br />
+                                    @*searched result table*@
+                                    @*<a id="ExportExcelLink_Rejected" class="ExportExcelLink" onclick="ExportExcelLink('TblRejected_SearchRecords','StudentRejectedLeaves')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
+
+                                    <div class="default-according style-1" id="accordionoc123456">
+                                        <div class="card" id="FmRejected_SearchRecords_Div">
+                                            <div class="card-header " style="background-color:black ;">
+                                                <h5 class="mb-0">
+
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="ctl00_ContentPlaceHolder1_lblRejectedNumRecords">No Records</span></button>
+                                                </h5>
+                                            </div>
+
+                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                                                <div class="card ">
+
+                                                    <form id="FmRejected_SearchRecords" class="table-responsive">
+
+                                                        <table id="TblRejected_SearchRecords" class="compact cell-border display tableid">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Student Name</th>
+                                                                    <th>Admission Number</th>
+                                                                    <th>Class - Section</th>
+                                                                    <th>Leave Type</th>
+                                                                    <th>From Date</th>
+                                                                    <th>To Date</th>
+                                                                    <th>No. of Days</th>
+                                                                    <th>Comments</th>
+                                                                    <th>Applied By</th>
+                                                                    <th>Rejected Date</th>
+                                                                    <th>Rejected By</th>
+                                                                    <th>View File</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                            @*<tfoot>
+                                                                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblRejected_SearchRecords_pagination"></div></td></tr>
+                                                                </tfoot>*@
+                                                        </table>
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            @*------------------------------div code end----*@
+
+
+
+                            @*----------------------------Tab code start-----*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+@*<button id="exportExcelButton"> export excel</button>*@
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/StudentLeaveApproval.js"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<script type="text/javascript">
+    var js = jQuery.noConflict(true);
+
+
+    //this is not using
+    // var js = jQuery.noConflict(true);
+    //$(document).ready(function () {
+
+
+    //    debugger;
+    //    var dataTable = js('#example').DataTable({
+    //        bFilter: false,
+    //        bSort: false,
+    //        bPaginate: true,
+    //        jQuery: false,
+    //        bInfo: false,
+    //        dom: 'Bfrtip',
+    //        buttons: [
+    //            {
+    //                extend: 'copyHtml5',
+    //                exportOptions: {
+    //                    columns: [0, ':visible']
+    //                }
+    //            },
+    //            {
+    //                extend: 'excelHtml5',
+    //                exportOptions: {
+    //                    columns: ':visible'
+    //                }
+    //            },
+    //            {
+    //                extend: 'pdfHtml5',
+    //                exportOptions: {
+    //                    columns: [0, 1, 2, 5]
+    //                }
+    //            },
+    //            'colvis'
+    //        ],
+    //        columnDefs: [
+    //            {
+    //                target: 3,
+    //                visible: false,
+    //                searchable: false
+    //            }
+    //        ]
+    //    });
+
+    //    //js('#example').on('page.dt', function () {
+    //    //    debugger;
+    //    //    dataTable.ajax.reload(null, false); // Reload the table data without refreshing the page
+    //    //});
+
+    //    js('#example tbody').on('click', 'tr', function () {
+    //        var rowData = dataTable.row(this).data();
+    //        var hiddenColumnValue = rowData[3]; // Index 3 corresponds to the hidden column
+    //        alert(hiddenColumnValue);
+    //    });
+
+    //});
+
+
+</script>
+
+@*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+
+        //function call12() {
+        //    var val = $(this).closest('tr').find('td:eq(3)').text();
+        //    alert(val)
+        //}
+    </script>*@
+
+
+
+@*this for export to excel*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script>
+
+        function ExportExcelLink(LeaveLevels_SearchRecords_Table, ExelsheetName) {
+            var sheet = XLSX.utils.table_to_sheet(document.getElementById(LeaveLevels_SearchRecords_Table));
+
+            debugger;
+
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
+
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xls');
+        }
+
+    </script>*@

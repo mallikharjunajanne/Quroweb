@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+    <div class="card" id="SearchPage">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                    SEARCH LEAVE TYPES
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+            <div class="card ">
+                <div class="card-body">
+                    <form id="FmSearchLeavesType">
+                        <div style="margin-left:20%;font-size:12px" id="ApplyShortLeavePage_Form">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Leave Type :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="TxtLeavetype" style="height: 19px;">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 26px;">Description :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <textarea id="TxtDescription" onkeyup="CharacterCountingFunction('TxtDescription','250','TextareacountSPAN')" style="color:black;width: 230px; resize: none;border-color:black;font-style:inherit" maxlength="250" class="input-air-primary" rows="3" cols="20"></textarea>
+                                            <span> <i style="font-size: 10px;"><span id="TextareacountSPAN"></span> </i></span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left:206px">
+                                        <input type="button" class="btn btn-light " onclick="FN_ClearValues('FmSearchLeavesType','TxtDescription')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
+                                        <input type="submit" class="btn btn-primary active" onclick="LeaveTypesCAllingTableView(event)" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">
+                                    </div>
+                                </div>
+                            </div>                    
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    @*searched result table*@
+    <div id="LeaveTypesCAllingTableView_Id">
+
+    </div>
+
+
+
+

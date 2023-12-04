@@ -1,0 +1,264 @@
+﻿.topnav {
+    overflow: hidden;
+    margin-left: 9%;
+    color: black;
+    margin-top: 14px;
+    border-bottom: 1px solid;
+    width: 71%;
+}
+
+    .topnav button {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 17px;
+        border-block: 1px;
+        background-color: white;
+    }
+
+        .topnav button:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav button.active {
+            background-color: #500ef6;
+            color: white;
+        }
+
+#below-video-content {
+    color: black;
+    font-weight: 700;
+}
+
+
+/*   -------- ------------------      extra     ---------------            */
+
+
+
+.main-container {
+    padding: 50px;
+}
+
+.box {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(8, minmax(100px, 1fr));
+}
+
+    .box a {
+        transition: transform .3s;
+    }
+
+        .box a:hover {
+            transition: transform .3s;
+            -ms-transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+
+    .box img {
+        border-radius: 2px;
+    }
+
+img {
+    max-width: 100%;
+}
+
+@media(max-width: 700px) {
+
+    header {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "nt nt nt  .  .  . sb . . . "
+            "mn mn mn mn mn mn  mn mn mn mn";
+    }
+
+    .box {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
+    }
+
+    .sub-links ul {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* -------------------------- Hover ---------------------------------*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+a .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    border: 1px solid red;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+    /*  font-size:9px;*/
+}
+
+#tool-head {
+    font-size: 20px;
+    color: #500ef6;
+    font-weight: 700;
+}
+
+#tool-time, #tool-question, #tool-marks-total, #tool-marks-gained {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+a .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+a:hover .tooltiptext {
+    visibility: visible;
+}
+
+/*    ----------------     Note Design  At Below The Video      ------------------- */
+.fa-plus:before {
+    content: "+";
+    padding: 3px;
+    background-color: black;
+    color: white;
+    font-size: 19px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 6px;
+}
+
+#create-bookmark-container {
+    border-radius: 0;
+    -webkit-appearance: none;
+    padding: 0 1.6rem;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    flex: 1;
+    width: 60%;
+    margin-left: 225px;
+    margin-top: 20px;
+    height: 41px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+#bookmark-span {
+    flex: 1;
+    cursor: pointer;
+}
+
+#video-write-notes textarea {
+    width: 59%;
+    border: 1px solid;
+    height: 100px;
+    font-size: 14px;
+    font-family: serif;
+}
+
+#video-write-notes {
+    display: flex;
+    margin-left: 20%;
+    margin-top: 26px;
+}
+
+#notebook-save-cancel {
+    margin-left: 61%;
+    margin-top: 10px;
+    cursor:pointer;
+}
+
+#bookmark-save {
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    padding: 9px;
+    cursor: pointer;
+}
+
+#bookmark-cancel {
+    padding: 10px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#bookmark-current-time-after {
+    background-color: black;
+    color: white;
+    padding: 6px;
+    border-radius: 16px;
+}
+
+.video-write-notes {
+    display: none;
+}
+#LMS_listofnotes {
+    max-height: 441px;
+    overflow-y: scroll;
+}
+#LMS_listofnotes i {
+    cursor: pointer;
+}
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+}
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display:none;
+    text-align:center;
+}
+#genratepdfnotes {
+    background-color: aqua;
+    width: fit-content;
+    position: inherit;
+    margin-left: 68%;
+    z-index: 999;
+    padding: 4px;
+    cursor: pointer;
+    border: 1px solid;
+    margin-top: 12px;
+}

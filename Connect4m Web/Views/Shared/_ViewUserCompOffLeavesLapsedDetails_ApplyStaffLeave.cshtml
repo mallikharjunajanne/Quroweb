@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@*_ViewUserCompOffLeavesLapsedDetails_ApplyStaffLeave*@
+
+
+
+@model List<AttendanceModel>
+
+
+    <html>
+    <head>
+        <title>Compensatory Lapsed Leaves</title>
+        <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+        
+    </head>
+    <body>
+        <br />
+        <span align="center" style="font-size: 13px;margin: 39%;">Compensatory Lapsed Leaves</span>
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card"  >
+              
+
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+
+                    <div class="card ">
+
+                        <form>
+                            <table id="grdLeaveHistory" style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
+                                <thead>
+                                    <tr style="border-top-left-radius: 15px;">
+                                        <th style="background-color:cadetblue;" colspan="7">
+                                            <span id="lblNumRecords" style="color: cadetblue;" class="WhiteLabel">Y</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Sl. No.</th>
+                                        <th>Leave Type</th>
+                                        <th>Compensate Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Lapsed day</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var i = 1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.Leavetype</td>
+                                            <td>@item.LeaveFromdate</td>
+                                            <td>@item.LeaveTodate</td>
+
+                                            @if (item.LeaveNoOfDays1 == "1")
+                                            {
+                                                <td>Full Day</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Off day</td>
+                                            }
+
+                                        </tr>
+                                        i++;
+                                    }
+
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+    </html>

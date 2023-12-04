@@ -1,0 +1,79 @@
+﻿
+.istar {
+    color: red;
+    font-size: 15px;
+}
+/*.Dropdown {
+    border-right: #b4b4b4 1px solid;
+    border-top: #b4b4b4 1px solid;
+    font-weight: normal;
+    font-size: 10px;
+    border-left: #b4b4b4 1px solid;
+    color: #000000;
+    border-bottom: #b4b4b4 1px solid;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}*/
+
+/*-------------Fast */
+.HeaderBtn {
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    width: 99%;
+    margin-left: 6px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: left;
+}
+
+
+.FastAd_HeaderBtn {
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    width: 99%;
+    margin-left: 6px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.lbl {
+    color: black;
+    font-family: none;
+}
+
+.Datetxtbox {
+    border: 1px solid;
+    height: 25px;
+    width: 40%;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: none;
+}
+
+.DropTxtbox {
+    height: 25px;
+    width: 40%;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: none;
+}
+
+.Droplistbox {
+    height: 70px;
+    width: 41%;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: none;
+}
+
+
+
+

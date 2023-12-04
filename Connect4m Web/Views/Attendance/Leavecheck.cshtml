@@ -1,0 +1,396 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "Leavecheck";
+}
+
+
+@*<form action="..." method="post">
+    <input type="text" name="ClassName" placeholder="Your name">
+    <input type="email" name="StudentName" placeholder="Your email">
+    <textarea name="AdmissionNumber" placeholder="Your message"></textarea>
+    <input type="submit" value="Submit">
+</form>
+
+<form action="..." method="post">
+    <input type="text" name="ClassName" placeholder="Your name">
+    <input type="email" name="StudentName" placeholder="Your email">
+    <textarea name="AdmissionNumber" placeholder="Your message"></textarea>
+    <input type="submit" value="Submit">
+</form>*@
+
+<form id="form1">
+    <input type="text" name="ClassName" placeholder="Your name">
+    <input type="email" name="StudentName" placeholder="Your email">
+
+    <input type="file" name="file" placeholder="Your name">
+</form>
+
+<form id="form2">
+    <input type="text" name="ClassName" placeholder="Your name">
+    <input type="email" name="StudentName" placeholder="Your email">
+
+    <input type="file" name="file" placeholder="Your name">
+</form>
+
+<button id="submitBtn">Submit</button>
+
+
+
+
+@*<form id="myForm">
+        <input type="text" name="ClassName" value="John" />
+        <input type="email" name="StudentName" value="john@example.com" />
+        <input type="checkbox" name="AdmissionNumber" checked />
+        <input type="submit" value="Submit" />
+    </form>
+    <form id="myForm1">
+        <input type="text" name="ClassName" value="John" />
+        <input type="email" name="StudentName" value="john@example.com" />
+        <input type="checkbox" name="AdmissionNumber" checked />
+        <input type="submit" value="Submit" />
+    </form>*@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#submitBtn').click(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Create a new instance of FormData
+            var combinedFormData = new FormData();
+
+            // Get each form and its FormData
+            var form1Data = new FormData($('#form1')[0]);
+            var form2Data = new FormData($('#form2')[0]);
+
+            // Append the FormData to the combined FormData
+            appendFormData(combinedFormData, form1Data);
+            appendFormData(combinedFormData, form2Data);
+
+            // Send the combined FormData via AJAX
+            $.ajax({
+                url: "/Attendance/Leavecheck",
+                type: 'POST',
+                data: combinedFormData,
+                processData: false, // Prevent jQuery from processing the data
+                contentType: false, // Prevent jQuery from setting the content type
+                success: function (response) {
+                    // Handle the success response
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        // Function to append FormData to another FormData
+        function appendFormData(target, source) {
+            for (var pair of source.entries()) {
+                target.append(pair[0], pair[1]);
+            }
+        }
+    });
+
+
+    //$(document).ready(function () {
+    //    // Get the multiple forms
+    //    var forms = $('form');
+
+    //    // Create a function to submit the forms
+    //    function submitForms() {
+    //        // Create a FormData object for each form
+    //        var formData = new FormData(this);
+
+    //        // Add the form data to the FormData object
+    //        formData.append('ClassName', $('input[name="ClassName"]').val());
+    //        formData.append('StudentName', $('input[name="StudentName"]').val());
+    //        formData.append('AdmissionNumber', $('textarea[name="AdmissionNumber"]').val());
+    //        debugger;
+    //        // Submit the forms using Ajax
+    //        $.ajax({
+    //            url: "/Attendance/Leavecheck",
+    //            type: 'POST',
+    //            data: formData,
+    //            processData: false,
+    //            contentType: false,
+    //            success: function (data) {
+    //                window.location = "/Attendance/Leavecheck";
+    //                // Do something with the response data
+    //            },
+    //            error: function (error) {
+    //                // Handle the error
+    //            }
+    //        });
+    //    }
+    //    debugger;
+    //    // Attach the submit function to each form
+    //    forms.each(function () {
+    //        $(this).submit(submitForms);
+    //    });
+    //});
+
+
+</script>
+
+
+<h1>Leavecheck</h1>
+
+@foreach (var item in ViewBag.st)
+{
+    <tr>
+        <td>@item.Studentid</td>
+
+        <td>@item.StudentName</td>
+    </tr>
+}
+
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Existing table rows -->
+    </tbody>
+</table>
+
+<button id="addRowBtn">Add Row</button>
+
+<input type="text" id="valr" value="123" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#addRowBtn").click(function () {
+            var name = "<input type='text' class='form-control' name='name'>";
+            var age = "<input type='text' class='form-control' name='age' >";
+            var email12 = $("#valr").val();
+            var email = "<input type='text' class='form-control' name='email' value='" + email12 + "' > ";
+
+            var newRow = "<tr>" +
+                "<td>" + name + "</td>" +
+                "<td>" + age + "</td>" +
+                "<td>" + email + "</td>" +
+                "</tr>";
+
+            $("#myTable tbody").append(newRow);
+        });
+    });
+</script>
+
+<script>
+
+    $('#List_Sale_F').on('click', 'div', function () {
+
+
+        //  document.getElementById("tab2").style.display = "none";
+
+        var ID = $(this).find('#id_For_Edit').val();
+
+        //   window.location.href = "/format/Sale_Format?ID=" + ID;
+
+        $.ajax({
+            url: "/Format/Sale_Format?ID=" + ID,
+            type: "GET",
+            success: function (response) {
+                debugger;
+
+                $("#get_formats").html(response);
+
+                $("#get_format #submitButton").val("Edit Sales");
+
+            }
+        })
+
+    })
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        function listofall() {
+            $.ajax({
+                url: "/Get_All_Format/List_Sale_Format?ClientID=" + $("#clientid").val(),
+                type: "GET",
+
+                success: function (response) {
+                    $("#listofforma").html(response);
+                }
+            });
+        }
+        $("#listofformat").text(" ");
+        listofall();
+        _retivingalldata(1);
+
+        $("#myForm").submit(function (event) {
+
+            event.preventDefault(); // prevent the form from submitting
+            var formData = $(this).serialize(); // get the form data
+
+
+            if ($("#submitButton").val() == "Edit Sales") {
+                //  alert("if condition true");
+                $.ajax({
+                    url: "/Format/Sale_Format_Edit",
+                    type: "GET",
+                    data: formData,
+                    success: function (result) {
+                        // alert("success");
+                        $("#returnmessage").show().delay(5000).fadeOut()
+                        var element = document.getElementById("returnmessage");
+                        if (result == 1) {
+
+                            try {
+                                element.classList.remove("fail");
+                                element.classList.add("succe");
+                            }
+                            catch {
+                                element.classList.add("succe");
+                            }
+                            listofall();
+                            debugger;
+                            document.getElementById("returnmessage").innerHTML = "Successfully Updated The Sale Document";
+                            //  $("#get_formats").reset();
+                            //    document.getElementById("get_formats").reset();
+                            //$("$myForm").reset();
+                            // formObject.reset();
+                            // $('#myFormm')[0].reset();
+                            //document.getElementById("myForm").reset();
+                            $('#myForm').find('input').val('');
+                            //$('#myForm').find('input:number').val('');
+                            // $('#myForm').find('input:date').val('');
+
+
+                            $("#get_format #submitButton").val("Save Sales");
+
+                        }
+                        else {
+                            try {
+                                element.classList.remove("succe");
+                                element.classList.add("fail");
+                            }
+                            catch {
+                                element.classList.add("fail");
+                            }
+                            //if (result == -1) {
+                            //    document.getElementById("Salesdate").innerHTML = "Date must not be later than today";
+                            //}
+                            element.classList.add("fail");
+                            document.getElementById("returnmessage").innerHTML = "Please Enter All Fields";
+                        }
+
+
+                        // handle the response from the server
+                    },
+                    error: function (xhr, status, error) {
+                        // alert($("#submitButton").val());
+                        alert("Error");
+                        // handle the error
+                    }
+                });
+
+            }
+            else {
+
+
+                $.ajax({
+                    url: "/Format/Sale_Format",
+                    type: "POST",
+                    data: formData,
+                    success: function (result) {
+                        debugger;
+
+                        $("#returnmessage").show().delay(5000).fadeOut()
+                        var element = document.getElementById("returnmessage");
+                        if (result == 1) {
+
+                            try {
+                                element.classList.remove("fail");
+                                element.classList.add("succe");
+                            }
+                            catch {
+                                element.classList.add("succe");
+                            }
+                            listofall();
+
+                            document.getElementById("returnmessage").innerHTML = "Successfully Added The New Sale Document";
+                            document.getElementById("myForm").reset();
+
+                        }
+                        else {
+                            try {
+                                element.classList.remove("succe");
+                                element.classList.add("fail");
+                            }
+                            catch {
+                                element.classList.add("fail");
+                            }
+                            //if (result == -1) {
+                            //    $('#get_format #Salesdate').html("Date must not be later than today");
+                            //    document.getElementById("Salesdate").innerHTML = "Date must not be later than today";
+                            //}
+                            element.classList.add("fail");
+                            document.getElementById("returnmessage").innerHTML = "Please Enter All Fields";
+                        }
+
+
+                        // handle the response from the server
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error");
+                        // handle the error
+                    }
+                });
+
+            }
+        });
+
+    });
+</script>
+
+
+
+
+<input type="file" id="firstFileInput">
+<br />
+<input type="file" id="secondFileInput">
+
+
+@*<input type="file" id="fileInput">*@
+<button id="addFileNameBtn">Add File Name</button>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#addFileNameBtn').click(function () {
+
+            var fileName = 'example.txt'; // Replace with the desired file name
+            alert(fileName)
+            $('#fileInput').val(fileName);
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#firstFileInput').on('change', function () {
+            var selectedFile = this.files[0]; // Get the selected file from the first input
+            alert(selectedFile)
+            if (selectedFile) {
+                // Append the selected file to the second input
+                $('#secondFileInput').prop('files', [selectedFile]);
+            }
+        });
+    });
+
+</script>
+
+

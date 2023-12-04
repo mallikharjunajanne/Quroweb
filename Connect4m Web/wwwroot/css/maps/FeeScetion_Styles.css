@@ -1,0 +1,159 @@
+﻿
+
+
+.FeeType_Tbl {
+    width: 102.5%;
+    border-collapse: collapse;
+    /* border: 8px solid #DD7; */
+    margin-top: -17px;
+    background-color: white;
+    margin-left: -11px;
+}
+    .FeeType_Tbl th {
+        border: 1px solid #DC5;
+        background-color: blanchedalmond;
+        font-size: 14px;
+        text-align: center;
+        font-family: auto;
+        color: black;
+        padding: 5px;
+    }
+    .FeeType_Tbl td {
+        border: 1px solid #DC5;
+        font-family: auto;
+        padding: 5px;
+    }
+.RecordsCount_Span {
+    background-color: #fd761e;
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.FeeType_Txt {
+    width: 48%;
+    border: 1px solid #ccc;
+    /* padding: 5px; */
+    /* box-sizing: border-box; */
+    height: 32px;
+    /* width: 100%; */
+    /* padding: 4px; */
+    border: 1px solid #D17;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+}
+/*Header Button Start*/
+.HeaderBtn {
+    /* background-color: black;
+    color: white;
+    border-radius: 15px;
+    width: 99%;
+    margin-left: 0px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;*/
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    width: 99%;
+    margin-left: 6px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: left;
+}
+/*Header Button End*/
+/*Tras bin Css start*/
+.delete-link {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+}
+
+    .delete-link::before {
+        content: "\f2ed";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 5px;
+    }
+/*Tras bin Css End*/
+
+
+
+
+
+/*New Fee Type Create Btn Style*/
+.NewTypebtn {
+   /* text-align: right;
+    font-weight: 600;*/
+    text-align: right;
+    font-weight: 300;
+    color: black;
+}
+
+/*Listbox Styles */
+.DD_Lb {
+    width: 35%;
+    height: 72px;
+}
+.DescriptionTA {
+    height: 50px;
+    width: 200px;
+    resize: none;
+    /* filter: drop-shadow(2px 4px 6px black); */
+    border: 6px solid red;
+}
+/*table Styles Code Starting */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    border: 1px solid #ddd;
+   /* padding: 8px;*/
+    background-color: #F2F395;
+    font-size: 12px;
+    text-align: center;
+}
+td {
+    border: 1px solid #ddd; 
+    /*padding: 8px;*/
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+/*table Styles Code End */
+
+
+
+/*pagination Adding styles*/
+
+.pagination {
+    list-style: none;
+    padding-left: 30%;
+    column-gap: 1%;
+}
+.previous-link {
+    /* Add your desired styles here */
+    /* Example styles: */
+    color: blue;
+    font-weight: bold;
+    /* Add any other styles you want to apply */
+}
+.Last-link {
+    color: blue;
+    font-weight: bold;
+}

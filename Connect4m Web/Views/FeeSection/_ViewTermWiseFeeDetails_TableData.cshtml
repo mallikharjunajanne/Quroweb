@@ -1,0 +1,108 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div style="display:flex;">
+    <div>
+        <input type="button" value="Export To Excel" />
+    </div>
+    @*<div style=" margin: 0px 0px 0px 83%; ">
+            <input type="button" value="Print" />
+        </div>*@
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <span id="ErrorMessage_SpanId" style="color: red; font-size: 12px; margin-left: 8px;"></span>
+                <h5 class="mb-0">
+
+                    <button class="Headers_Btn" aria-controls="collapse11" style="width: 100%;">FEE SUMMARY</button>
+                </h5>
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="overflow-y: scroll; max-height: 650px;">
+                    <table class="tabledata">
+                        <thead>
+                            <tr>
+                                <th>Term</th>
+                                <th>Challan Count</th>
+                                <th>Challan Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Table0)
+                            {
+                                <tr>
+                                    <td>@item.TermName</td>
+                                    <td>@item.CountFee</td>
+                                    <td>@item.FeeAmount</td>
+                                    <td>@item.PayedAmount</td>
+                                    <td>@item.Amount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <h5 class="mb-0">
+
+                    <button class="Headers_Btn" aria-controls="collapse11" style="width: 100%;"></button>
+                </h5>
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                    <div class="table-responsive" style="overflow-y: scroll; max-height: 600px;">
+                        <table class="tabledata ">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        UserId
+                                    </th>
+                                    <th>	Challan Id</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>hallticket</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+                                    <th>Term</th>
+                                    <th>Challan Amount</th>
+                                    <th>Paid</th>
+                                    <th>Due</th>
+                                    <th>Fine/Excess Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Table1)
+                                {
+                                    <tr>
+                                        <td>@item.UserId</td>
+                                        <td>@item.UserReceiptGenerationID</td>
+                                        <td>@item.FirstName</td>
+                                        <td>@item.LastName</td>
+                                        <td>@item.hallticket</td>
+                                        <td>@item.ClassificationName</td>
+                                        <td>@item.SubClassificationName</td>
+                                        <td>@item.TermName</td>
+                                        <td>@item.PayedAmount</td>
+                                        <td>@item.FeeAmount</td>
+                                        <td>@item.Amount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

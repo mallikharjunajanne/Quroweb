@@ -1,0 +1,209 @@
+﻿
+
+
+#ViewBtn:hover {
+    background-color: coral;
+    color: #ffffff;
+}
+
+#CancelBtn:hover {
+    background-color: darkgoldenrod;
+}
+
+#LeaveReason_Td:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+
+option:empty {
+    display: none;
+}
+
+.nav-item:hover {
+    background-color: rgba(77,138,255,0.1);
+    border-color: #ecf3fa;
+    /*color: #4d8aff;*/
+    /* //color: white;*/
+    color: #4d8aff;
+}
+/*this  is for give break */
+
+
+/*this form pagination number highlight*/
+.GetMyAppliedLeaves_Table_pagination_Class.active {
+    background-color: black;
+    color: white;
+    cursor: default;
+    /* text-decoration: none;
+    pointer-events: none*/
+    /* Add any additional styles for the active page number */
+}
+/*this form pagination number highlight*/
+.MySavedLeaves_Table_pagination_Class.active {
+    background-color: black;
+    color: white;
+    cursor: default;
+    /* text-decoration: none;
+    pointer-events: none;*/
+    /* Add any additional styles for the active page number */
+}
+.MyLeaveDetails_Table_pagination_Class:active{
+    background-color:black;
+    color:white;
+    cursor:default;
+}
+
+/*
+#tableid, .tableid {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    #tableid td, .tableid td {
+        font-size: 11px;
+    }
+
+    #tableid th, .tableid th {
+        font-size: 12px;
+    }
+
+    #tableid td, #tableid th, .tableid td, .tableid th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+
+
+    #tableid tr:nth-child(even), .tableid tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #tableid tr:hover, .tableid tr:hover {
+        background-color: #ddd;
+    }
+
+    #tableid th, .tableid th {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        text-align: left;
+        background-color: deepskyblue;
+        color: white;
+    }
+*/
+
+/*
+.tableid {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .tableid td {
+        font-size: 11px;
+    }
+
+    .tableid th {
+        font-size: 12px;
+    }
+
+    .tableid td, .tableid th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+
+
+    .tableid tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .tableid tr:hover {
+        background-color: #ddd;
+    }
+
+    .tableid th {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        text-align: left;
+        background-color: deepskyblue;
+        color: white;
+    }
+*/
+
+
+
+
+
+#myForm input {
+    font-size: inherit;
+}
+
+#GetMyAppliedLeaves_Table_Print td, th {
+    border: 1px solid;
+}
+
+p span {
+    display: block;
+    font-size: 12px;
+    color: red;
+    font-weight: 600; 
+}
+
+
+/*this form print table*/
+
+.BCcolor {
+    border: 4px solid #000000;
+}
+
+.BCcolor2 {
+    border: 2px solid #000000;
+}
+
+.subLeavetitle {
+    /* font-family: Times New Roman;*/
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.Leavetitle {
+    /*font-family: Times New Roman;*/
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    letter-spacing: 1px;
+    height: 10px;
+    text-transform: uppercase;
+}
+
+.bonafidetxt {
+    font-family: Arial;
+    font-size: 12px;
+    font-style: normal;
+    color: #000000;
+    height: 50px;
+    width: 100px;
+}
+
+.dottedbonafidetxt {
+    font-family: Arial;
+    font-size: 11px;
+    font-style: normal;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #000000;
+    height: 15px;
+    border-bottom: 3px dotted #000000;
+}
+
+/*body {*/
+/*font-family: Times New Roman;*/
+/*font-size: 15px;
+                                                                        color: #000000;
+                                                                    }*/

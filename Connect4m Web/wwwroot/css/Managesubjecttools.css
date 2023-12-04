@@ -1,0 +1,254 @@
+﻿
+
+.padding-search {
+    padding: 26px;
+}
+.form-control {
+    border: 1px solid #c5b9b9;
+    border-radius: 2px;
+    background-color: white;
+    height: 30px;
+    font: 14px arial;
+}
+select {
+    padding-top: 1px !important;
+}
+.form-control:focus {
+    border: 1px solid black;
+    background-color: white;
+    font-weight: 600 !important;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+
+#Insertsubjecttool .form-control {
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: white;
+    height: 30px;
+}
+
+#Insertsubjecttool .form-control:focus {
+        border: 2px solid black;
+        background-color: white;
+    }
+
+#Insertsubjecttool .row > div {
+    text-align: end;
+    position: relative;
+}
+#Insertsubjecttool {
+    margin-left: 83px;
+}
+
+
+
+.card label {
+    font-weight: 600;
+    font: 14px arial;
+}
+.button-subject {   
+    top: 23px;
+}
+    .button-subject input {
+        width: 68px;
+        height: 25px;
+        font-size: 13px;
+        border-radius: 18px;
+        color: black;
+    }
+    .button-subject #mst_clear {
+        background-color: #ff4136;
+        color: white;
+    }
+    .button-subject #mst_search {
+        background-color: #0074d9;
+        color: white;
+    }
+.text-white {
+  /*  color: black !important;*/
+}
+.table [class*='bg-'] {
+    color: black;
+    border: 2px solid black;
+}
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+   /* border: 1px solid;*/
+}
+    .dataTables_wrapper table.dataTable tbody td, .dataTables_wrapper table.dataTable tbody th {
+      /*  background-color: #fff;*/
+        border: 1px solid black !important;
+        padding: 5px !important;
+        font-size: 13px;
+        font-weight: 600;
+    }
+/*#tblsubjecttools*/ thead th {
+    border: 1px solid black !important;
+    text-align:center;
+}
+#tblsubjecttools .fa-trash-o {
+    font-size: 18px;
+    color: red;
+    margin-left: 38%;
+    cursor:pointer;
+}
+.default-according .card .card-header .btn-link {
+    font-size: 11px;
+}
+/*#tblsubjecttools*/
+tr:nth-child(even) {
+    background-color: #fff !important;
+    /*  color: ##65655662;*/
+}
+#tblsubjecttools td:nth-child(1) {
+    cursor: pointer !important;
+}
+#tblSEMsearchresults td:nth-child(2):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    background-color: lightblue;
+}
+#tblSEMsearchresults td:nth-child(2){
+    font-weight:900;
+}
+    /*#tblSEMsearchresults td:nth-child(2):hover::after{
+        position: absolute;
+        content: 'Edit';
+        transform: translateY(-85%) translateX(-27px);
+        background-color: red;
+        padding: 2px;
+        color: white;
+        font-weight: 500;
+    }*/
+
+/*    #tblSEMsearchresults td:nth-child(2)::before {
+        content: "";
+        position: absolute;
+        left: 163px;
+        border: 10px solid #ccbebe;
+       
+        border-top-right-radius: 50%;
+       
+        transform: rotate(10deg);
+     
+        transform: translateY(-50%);
+        transform: rotate(-48deg) translateY(-100%);
+    }*/
+
+
+}
+.dataTables_wrapper .dataTables_info {
+    display: none;
+}
+/*#tblsubjecttools*/ tr:hover {
+    background-color: antiquewhite !important;
+   /* cursor: pointer !important;*/
+}
+.dataTables_wrapper .dataTables_paginate {
+    margin-left: 304px !important;
+    float: left;
+    color: black !important;
+    font-weight: 900 !important;
+    background-color: antiquewhite;
+    border: 1px solid;
+}
+div:where(.swal2-container) div:where(.swal2-popup) {
+    font-size:10px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+border:2px solid;
+}
+#Insertsubjecttool textarea {
+    height: 75px !important;
+    width: 457px;
+}
+#Decide_Up_Save, #formInstanceSubjectToolId {
+    display: none;
+}
+#Drop_Format-MS select, #SubClassificationId_MS {
+    font-size: 14px;
+    margin-left: -1px;
+    text-align: center;
+    width: 100%;
+    line-height: 0.8;
+}
+
+/*   ----------------------   Manage Subjects   ---------------------------------------------*/
+#checks .col-1 {
+    width: 11%;
+  
+}
+#checks .form-control {
+    width: 119px;
+    height: 26px;
+}
+#checks {
+    margin-top: 61px;
+}
+    #checks .col-2 {
+        margin-left: 4%;
+    }
+    #checks .control-label {
+        font-size: 11px;
+        width: 85px;
+    }
+.card .card-body {
+    padding: 2px;
+}
+.card {
+   margin-bottom: 1px;
+}
+.Department_list #classficationnames_MS {
+   
+   /* grid-gap: 28px;*/
+  
+    padding-top: 12px;
+}
+#classficationnames_MS {
+    padding: 5px;
+    border: 1px solid #0122;
+}
+.save_Ms {
+    display: flex;
+    gap: 25px;
+    
+    margin-left: 34%;
+}
+/*  -------------------------- table --------------*/
+#subclass_table {
+    font-size: 11px;
+}
+    #subclass_table th {
+        font-weight: 700;
+        background-color: #E8E8E8;
+    }
+    #subclass_table .form-control {
+        height: 20px;
+        background-color: white;
+        padding: 4px;
+        font-size: 11px;font-weight:700;
+    }
+    #subclass_table tr td {
+        vertical-align: middle;
+        FONT-SIZE: 11px;
+    }
+    #subclass_table thead, #subclass_table tbody, #subclass_table tfoot, #subclass_table tr, #subclass_table td, #subclass_table th {
+        border: 1px solid #575252;
+        font-weight:700;
+    }
+    #subclass_table .mentorlist-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 72px;
+    }
+   .table td {
+        padding: 7px;
+    }
+#subclass_table tr:hover {
+    background-color: antiquewhite !important;
+    cursor: context-menu !important;
+}

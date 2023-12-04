@@ -1,0 +1,265 @@
+﻿
+body {
+}
+
+
+.Headers_Btn {
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    margin-left: 3px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 29px;
+    font-size: 14px;
+    font-weight: bolder;
+    width: 99%;
+}
+
+.Header_text_span {
+    /* color: white;
+    font-size: 13px;
+    font-weight: bolder;*/
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.Header_Count_text {
+    background-color: white;
+    color: red;
+    border-radius: 16px;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 600;
+}
+.TableCountSp_id {   
+    background-color: white;
+    color: red;
+    border-radius: 34px;
+    font-size: 12px;
+    padding: 2px;
+    font-weight: 800;
+}
+
+.form-grop {
+    margin-top: 4px;
+    margin-left: 24px;
+    text-align: right;
+}
+
+.Descriptionlbl {
+    margin-top: 17px;
+    margin-left: 40px;
+    text-align: right;
+}
+
+
+input[type="text"] {
+    width: 90%;
+    font-size: 13px;
+}
+
+.Coollinktable thead th {
+    background-color: #CDE;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #CCA;
+}
+
+.Coollinktable tbody tr td {
+    color: black;
+    font-weight: 500;
+    font: 13px arial;
+    border: 1px solid #CCA;
+}
+
+.Linknametd {
+    color: #2C2C5F;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tdUrl {
+    color: black;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.trasicon {
+    font-size: 17px;
+    color: black;
+    cursor: pointer;
+    border-radius: 35px;
+}
+
+.Required {
+    color: red;
+    font-size: 15px;
+}
+
+.NoticeTypedd {
+    width: 90%;
+    height: 25px;
+    margin-top: 3px;
+    font-size: 13px;
+    font-style: unset;
+}
+    .NoticeTypedd:focus {
+        border: 2px solid blue;
+        border-radius: 3px;
+    }
+
+
+
+    input[type="text"] {
+        width: 90%;
+        outline: none;
+    }
+
+input[type="text"]:focus{
+    border-color:blue;
+    border-radius:3px;
+
+}
+input[type="date"] {
+    width: 90%;
+    outline: none;
+    font-size: 13px;
+}
+input[type="date"]:focus {
+    border-color: blue;
+    border-radius: 3px;
+}
+
+
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically center the content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1998;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+
+.loading-text {
+    margin-top: 39px;
+    font-size: 12px;
+    margin-left: 123px;
+    color: #fd2d63;
+    font-weight: bold;
+}
+
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 0px solid #011015;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 9998;
+}
+
+    .spinner:nth-child(1) {
+        border-bottom-width: 8px;
+        border-color: #fd2d63;
+        animation: rotate1 3s linear infinite;
+    }
+
+    .spinner:nth-child(2) {
+        border-right-width: 8px;
+        border-color: rgb(0, 162, 265);
+        animation: rotate2 3s linear infinite;
+    }
+
+    .spinner:nth-child(3) {
+        border-top-width: 8px;
+        border-color: rgb(0, 247, 255);
+        animation: rotate3 3s linear infinite;
+    }
+
+@keyframes rotate1 {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(50deg) rotateY(-10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate3 {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+
+.Noticetable {
+    width: 100%;
+}
+
+    .Noticetable thead th {
+        color: Black;
+        background-color: #E8E8EF;
+        font-size: 11px;
+        font-weight: bold;
+        height: 25px;
+    }
+
+    .Noticetable tbody td {
+        /*color: black;*/
+        /* font-weight: 500;*/
+        /*font: 13px arial;
+    border: 1px solid #CCA;*/
+        /* color: black; */
+        font: 11px arial;
+        color: #333333;
+        /* font-weight: 500; */
+        /* font: 13px arial; */
+        border: 1px solid #CCA;
+    }
+
+
+.fa.fa-trash {
+    color: red;
+    font-size: 17px;
+}
+
+.EdittdSpan {
+   
+    cursor: pointer;
+    color: #2C2C2C;
+    font-size: 11px;
+    font-weight: bold;
+}

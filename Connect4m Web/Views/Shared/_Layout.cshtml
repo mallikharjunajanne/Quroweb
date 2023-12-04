@@ -1,0 +1,411 @@
+﻿@*@model SchoolConnect4M_Aspcore.Models.SidebarViewModel*@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/assets/css/color-1.css" rel="stylesheet" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <title></title>
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/feather-icon.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css">
+
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">
+
+
+
+    @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+        <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+    <!----Loading Spinner own code by Rakesh-->
+    <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+    @*added by sreekanth for datatable*@
+    <link href="~/css/loading.css" rel="stylesheet" />
+    <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/texts.css" rel="stylesheet" />
+    <link href="~/css/CommonStyle.css" rel="stylesheet" />
+
+    <style>
+        .page-wrapper.compact-wrapper .page-main-header {
+            margin-left: 0 !important;
+            width: calc(100% - 1px) !important;
+        }
+    </style>
+</head>
+<body>
+    <!--Arjun Layout-->
+    <!-- Loading Spinner own code By Rakesh-->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+
+
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        <!-- Page Header Start-->
+        <div class="page-main-header">
+            <div class="main-header-right row m-0">
+                <div class="main-header-left">
+                    @*  <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="~/assets/images/logo/logo.png" alt=""></a></div>*@
+                </div>
+                <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center" id="sidebar-toggle"></i></div>
+                <div class="left-menu-header col">
+                    <ul>
+                        <li>
+                            <form class="form-inline search-form">
+                                <div class="search-bg"><i class="fa fa-search"></i></div>
+                                <input class="form-control-plaintext" placeholder="Search here....">
+                            </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right col pull-right right-menu">
+                    <ul class="nav-menus">
+                        <li class="onhover-dropdown">
+                            <div class="notification-box"><i data-feather="shopping-bag"></i><span class="badge badge-pill badge-secondary">4</span></div>
+                            <div class="notification-dropdown cart onhover-show-div">
+                                <div class="m-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p> <b>5 </b>Items in Cart</p>
+                                        </div>
+                                        <div class="col text-end">
+                                            <p class="m-0">Cart Subtotal</p>
+                                            <h5 class="txt-primary f-w-700">5000$</h5>
+                                        </div>
+                                    </div><a class="btn btn-dark w-100 mt-1" href="checkout.html">Process To Checkout</a>
+                                </div>
+                                <ul class="border-top custom-scrollbar">
+                                    <li>
+                                        <div class="media">
+                                            @*<img src="~/assets/images/product/small/tshirt.png" alt="">*@
+                                            <div class="media-body">
+                                                <a href="product.html">Woman T-shirt - yellow</a>
+                                                <h6 class="price">200$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            @*<img src="~/assets/images/product/small/bag.png" alt="">*@
+                                            <div class="media-body">
+                                                <a href="product.html">Woman bag - purple</a>
+                                                <h6 class="price">100$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            @*<img src="~/assets/images/product/small/headphone.png" alt="">*@
+                                            <div class="media-body">
+                                                <a href="product.html">Unisex headphone - Red</a>
+                                                <h6 class="price">2000$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            @*<img src="~/assets/images/product/small/chair.png" alt="">*@
+                                            <div class="media-body">
+                                                <a href="product.html">Ergonomic Chair</a>
+                                                <h6 class="price">920$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="m-3 mt-1"><a class="btn btn-light w-100 mt-3" href="cart.html">View cart</a></div>
+                            </div>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <div class="notification-box"><i data-feather="bell"></i><span class="badge badge-pill badge-primary">4</span></div>
+                            <div class="notification-dropdown onhover-show-div">
+                                <div class="m-3"><a class="btn btn-dark w-100" href="email_inbox.html">You have 4 notifications</a></div>
+                                <ul class="border-top">
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-warning"></i>Delivery Complete<span class="pull-right">6 hr  </span></a></p>
+                                    </li>
+                                </ul>
+                                <div class="m-3 mt-1"><a class="btn btn-light w-100" href="email_inbox.html">View all</a></div>
+                            </div>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <i data-feather="message-square"></i>
+                            <div class="chat-dropdown onhover-show-div">
+                                <div class="m-3"><a class="btn btn-dark w-100" href="chat.html">You have 3 message</a></div>
+                                <ul class="border-top custom-scrollbar">
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/assets/images/avtar/emoji/7.png" alt="">
+                                            <div class="status-circle online"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Erica Hughes</span></a>
+                                                <p class="f-12 light-font">okay, trying now.</p>
+                                            </div>
+                                            <p class="badge badge-primary">32 min</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/assets/images/avtar/emoji/8.png" alt="">
+                                            <div class="status-circle away"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Kori Thomas</span></a>
+                                                <p class="f-12 light-font">i could help in some of bug?</p>
+                                            </div>
+                                            <p class="badge badge-success">58 min</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/assets/images/avtar/emoji/4.png" alt="">
+                                            <div class="status-circle offline"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Ain Chavez</span></a>
+                                                <p class="f-12 light-font">It's working awesome :)</p>
+                                            </div>
+                                            <p class="badge badge-danger">1 hr</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/assets/images/avtar/emoji/1.png" alt="">
+                                            <div class="status-circle offline"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Johan deo</span></a>
+                                                <p class="f-12 light-font">Great Thanks you !!</p>
+                                            </div>
+                                            <p class="badge badge-danger">2 hr</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="m-3"><a class="btn btn-light w-100" href="chat.html">View all</a></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="mode"><i class="fa fa-moon-o"></i></div>
+                        </li>
+                        <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
+                        <li class="onhover-dropdown">
+                            <div class="media profile-media"><img class="rounded-circle" src="~/assets/images/avtar/emoji/9.png" alt=""></div>
+                            <ul class="profile-dropdown onhover-show-div">
+                                <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
+                                <li><a href="user-profile.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
+                                <li><a href="kanban.html"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+                                <li><a href="edit-profile.html"><i data-feather="settings"></i><span>Settings</span></a></li>
+                                <li><a class="btn btn-light w-100" href="/Attendance/LogoutPage"><i data-feather="log-in"></i>Log out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-lg-none col mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
+            </div>
+        </div>
+
+        <!-- Page Header Ends                              -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper sidebar-icon">
+            <!-- Page Sidebar Start-->
+            <header class="main-nav">
+                <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="~/assets/images/logo/logo.png" alt=""></a></div>
+                <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="~/assets/images/logo/logo-icon.png" alt=""></a></div>
+                <div class="morden-logo"><a href="index.html"><img class="img-fluid" src="~/assets/images/logo/morden-logo.png" alt=""></a></div>
+                <nav>
+                    <div class="main-navbar">
+                        <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+                        <div id="mainnav">
+                            @*=========================================    Start The  Nav Bar=====================*@
+                            <ul class="nav-menu custom-scrollbar">
+                            </ul>
+                            @*=========================================    End The  Nav Bar=====================*@
+
+                        </div>
+                        <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- Page Sidebar Ends-->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="page-header dash-breadcrumb">
+
+                        <div class="alert alert-success dark alert-dismissible fade show" role="alert" style="border: 1px solid black;">
+
+                            <p style="overflow: visible !important; white-space: pre-wrap;max-width: 95% !important;text-align:initial "> </p>
+                            <button class="btn-close" type="button" aria-label="Close" style=" background-color: bisque;"></button>
+                        </div>
+
+                        <div class="alert alert-danger dark alert-dismissible" role="alert" style="border: 1px solid black;">
+
+                            <p style="overflow: visible !important; white-space: pre-wrap; max-width: 95% !important; text-align: initial "></p>
+                            <button class="btn-close" type="button" aria-label="Close" style=" background-color: bisque;"></button>
+                        </div>
+
+
+                        <div id="loading" >
+                            <div id="loading-text">
+
+                                <img src="~/Images/buffering_image.gif" />
+                            </div>
+                        </div>
+                        <div id="loading1">
+                            <div id="loading-text1">
+
+                                <img src="~/Images/buffering_image.gif" />
+                            </div>
+                        </div>
+
+                        @RenderBody()
+
+                    </div>
+                </div>
+                @RenderSection("Scripts", required: false)
+            </div>
+            <!-- tap on top starts-->
+            <div class="tap-top"><i class="icon-control-eject"></i></div>
+            <!-- tap on tap ends-->
+            <!-- footer start-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 footer-copyright">
+                            <p class="mb-0">Copyright 2023 © ADS SOFTEK Pvt.Ltd All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- latest jquery-->
+    <script src="~/assets/js/jquery-3.5.1.min.js"></script>
+    <!-- feather icon js-->
+    <script src="~/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/assets/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="~/js/Rolewise_Menu.js"></script>
+
+    <script src="~/assets/js/config.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/assets/js/bootstrap/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- Plugins JS start-->
+
+    <script src="~/assets/js/dashboard/dashboard_3.js"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    @*<script src="~/assets/js/theme-customizer/customizer.js"></script>*@
+    <script src="~/assets/js/script.js"></script>
+    @*<script src="~/js/Get_ClassificationNames.js"></script>*@
+    @*<script src="~/js/Disable_Inspect.js"></script>*@
+    <!-- login js-->
+    <!-- Plugin used-->
+    <!--  This for pagination with my code By Rakesh-->
+
+
+    <script src="~/js/PaginationToTables.js"></script>
+    <script src="~/js/GeneralFunctions.js"></script>
+
+
+    <!--  This for  with my code By Sreekanth-->
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+
+    @*added by sreekanth for datatable*@
+    @*<script src="~/datatable/datatable.min.js"></script>
+        <script src="~/datatable/jquery.datatables.min.js"></script>*@
+
+    <script src="~/js/cookies.js"></script>
+    <script src="~/js/CommonScripts.js"></script>
+    <script src="~/js/PayRoll.js"></script>
+    <script src="~/assets/js/sidebar-menu.js"></script>
+
+</body>
+</html>
+
+@*@RenderSection("Scripts", required: false)*@

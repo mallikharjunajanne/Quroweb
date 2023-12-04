@@ -1,0 +1,188 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Connect4m_Web.Models.ExaminationModel
+@*_Create_Update_Pview_ManageExams*@
+
+<div class="default-according style-1" id="accordionoc9">
+    <div class="card" id="CreateNewPage">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon1200" aria-controls="collapse11">
+                        <span id="AddNewText_Span_CreatePage">
+                            SAVE EXAM NAME
+                        </span>
+                        <span style="margin-left: 561px;"> <span style="color:red">*</span> INDICATES REQUIRED FIELDS</span>
+                    </button>
+            </h5>
+        </div>
+
+        <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
+            <div class="card ">
+                <div class="card-body">
+                    @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
+                    <form id="FmExamsCreatePage">
+                        <div style="margin-left:20%;font-size:12px" id="FmExamsCreate_Div">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Academic Year :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <select id='DdlAcademicYearCreatePage1'  name="AcademicYearId" class="input-air-primary" style="width: 230px; color: black; font-size: inherit; height: 27px;" asp-items="@(new SelectList(""))">
+                                                <option value=''>---------Select--------</option>
+                                                <option value="1737">2016-2017</option>
+                                                <option value="1203">2015-2016</option>
+                                                <option value="761">2014-2015</option>
+                                                <option value="655">2013-2014</option>
+                                                <option value="534">2011-2012</option>
+                                                <option value="688">2009-2010</option>
+                                                <option value="689">2008-2009</option>
+                                                <option value="690">2007-2008</option>
+                                                <option value="694">2006-2007</option>
+                                                <option value="691">2005-2006</option>
+                                                <option value="692">2004-2005</option>
+                                                <option value="693">2003-2004</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;"><i style="color:red">*</i>Exam Name :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="text"  name="ExamName" id="TxtExamNameCreatePage1" style="height: 27px; width: 230px;">
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="padding-top: 0px; margin-left: 0px; margin-top: 3px; "><i style="color:red">*</i> Exam For :&nbsp;</label>
+                                        <div class="col-sm-9" style="    padding-top: 6px;    padding: 0px;margin-top: -6px;">
+                                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5">
+                                                <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" style="padding-top: 0px" id="TermExam" class="check" type="radio" value="1">
+                                                    <label class="mb-0" for="TermExam">Term Exam</label>
+                                                </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" id="KT" class="check" type="radio" value="3">
+                                                    <label class="mb-0" for="KT">KT</label>
+                                                </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" style="padding-top: 0px" id="ATKT" class="check" type="radio" value="4">
+                                                    <label class="mb-0" for="ATKT">ATKT</label>
+                                                </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" id="FinalExam" class="check" type="radio" value="5">
+                                                    <label class="mb-0" for="FinalExam">Final Exam</label>
+                                                </div>
+                                                &nbsp;  <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" style="padding-top: 0px" id="Admissions" class="check" type="radio" value="0">
+                                                    <label class="mb-0" for="Admissions">Admissions</label>
+                                                </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input  name="ExamForAcademics" id="University" class="check" type="radio" value="2">
+                                                    <label class="mb-0" for="University">University</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;">Display Order   :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="text"  maxlength="3" oninput="restrictCharacters(this)" name="Displayorder" id="TxtDisplayorderCreatePage" style="height: 27px; width: 230px;">
+                                            <input type="hidden" name="Id" id="TxtExamidCreatePage" >
+                                        </div>
+                                    </div>
+                                    <div style="margin-left:156px">
+                                        <input type="button" class="btn btn-pill btn-outline-primary btn-air-primary" onclick="BackTOSearhExams(event)" id="BtnBacktosearch" style="padding:4px 20px;" value="Back to Search">&nbsp;&nbsp;&nbsp;
+                                        <input type="button" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="CommonClearFunction('FmExamsCreatePage')" id="BtnClear" style="padding:4px 20px;" value="Clear">&nbsp;&nbsp;&nbsp;
+                                        <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" onclick="SaveExams(event,'FmExamsCreatePage')" id="BtnSave" style="padding:4px 19px;" value="Save">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create_Update_Pview_ManageExams">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ExamName" class="control-label"></label>
+                    <input asp-for="ExamName" class="form-control" />
+                    <span asp-validation-for="ExamName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AcademicYearId" class="control-label"></label>
+                    <input asp-for="AcademicYearId" class="form-control" />
+                    <span asp-validation-for="AcademicYearId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExaternalExam" class="control-label"></label>
+                    <input asp-for="ExaternalExam" class="form-control" />
+                    <span asp-validation-for="ExaternalExam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Displayorder" class="control-label"></label>
+                    <input asp-for="Displayorder" class="form-control" />
+                    <span asp-validation-for="Displayorder" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExamForAcademics" class="control-label"></label>
+                    <input asp-for="ExamForAcademics" class="form-control" />
+                    <span asp-validation-for="ExamForAcademics" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InstanceID" class="control-label"></label>
+                    <input asp-for="InstanceID" class="form-control" />
+                    <span asp-validation-for="InstanceID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <input asp-for="UserId" class="form-control" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InstanceClassificationId" class="control-label"></label>
+                    <input asp-for="InstanceClassificationId" class="form-control" />
+                    <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InstanceSubClassificationId" class="control-label"></label>
+                    <input asp-for="InstanceSubClassificationId" class="form-control" />
+                    <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ScreenName" class="control-label"></label>
+                    <input asp-for="ScreenName" class="form-control" />
+                    <span asp-validation-for="ScreenName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.LMSQuRsults>
+
+@{
+   Layout = null;
+    ViewData["Title"] = "GettingResults";
+}
+@{
+    var groupedData = Model.GroupBy(item => item.TestId);
+}
+<link href="~/css/TableDesign.css" rel="stylesheet" />
+<div style=" max-height: 500px; overflow-y: scroll;">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>
+                    S.NO
+                </th>
+                <th>
+                    RESULTS
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1; }
+
+            @foreach (var group in groupedData)
+            {
+                int marks = 0;
+                int actualmarks = 0;
+
+
+                @foreach (var item in group)
+                {
+                    actualmarks = actualmarks + Convert.ToInt32(item.ActualMarks);
+                }
+                @foreach (var item in group)
+                {
+                    marks = marks + item.GainMarks;
+                }
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        <div id="testdate"><div style="background-color: aliceblue"> @group.First().DisplayName <span style='font-size:30px;'>&#8594;</span> </div> <div style=" border: 2px solid; padding: 3px; margin-left: auto; font-size:14px;">Test Date :@group.First().createddate</div></div>
+
+                        <div> Total Questions : @group.First().TotalQuestions</div>
+                        <div> Number Of Attempts : @group.First().NumberOfAttempts</div>
+                        <div> Gained Marks :<span style=" background-color: blueviolet; color: white; border-radius: 20px; font-weight: 900; padding: 3px;">@marks/@actualmarks</span></div>
+
+
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+
+        </tbody>
+    </table>
+</div>

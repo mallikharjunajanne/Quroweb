@@ -1,0 +1,613 @@
+﻿
+@{
+    ViewData["Title"] = "ApplyShortLeaves";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Themes/assets/css/StyleSheets/ApplyShortLeaves.css" rel="stylesheet" />  
+
+
+    @*<link href="~/datatable/jquery.dataTables.css" rel="stylesheet" />
+        <link href="~/datatable/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <!--<div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>-->
+
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>APPLY SHORT LEAVE</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+
+            <a style="font-size: 12px; font-weight: bold; cursor: pointer; margin-left: 790px; color: blue; text-decoration: underline; " onclick="LnkApplyShortLeave()">Apply Short Leave</a>
+
+            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="Date_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="FromTimeHrs_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="ToTimeHrs_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="FromTimeMinates_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="ToTimeMinates_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="Comments_Span_Error"></span>
+
+            <div class="default-according style-1" id="accordionoc12345">
+
+                @*-----------------------------Short Leave Details Table-----------------------*@
+
+                <div class="default-according style-1" id="accordionoc123456">
+                    <div class="card" id="AppliedShortLeaves_SearchRecords_Div">
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"> <span id="CountOfRecords_AppliedShortLeaves">No Records</span></button>
+                            </h5>
+                        </div>
+
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                            <div class="card ">
+
+                                <form id="FmAppliedShortLeaves_SearchRecords">
+
+                                    <table id="TblAppliedShortLeaves_SearchRecords" class="table table-responsive tableid">
+                                        <thead>
+                                            <tr>
+                                                <th style="padding-right: 0px; text-align: center;">View Status</th>
+                                                <th>Reason</th>
+                                                <th>Date</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>Total Time</th>
+                                                <th>Status</th>
+                                                <th style="text-align: center;">Cancel</th>
+                                                <th style="text-align: center;">Print</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr><td style="padding:2px" colspan="9"><div style="text-align:center" id="TblAppliedShortLeaves_SearchRecords_pagination"></div></td></tr>
+
+                                        </tfoot>
+                                    </table>
+                                    @*<div id="TblAppliedShortLeaves_SearchRecords_pagination">
+
+                                        </div>*@
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                @*-----------------------------Print And Cancel And View  Details Table-----------------------*@
+                @*<a id="A1" href="#" onclick="javascript:CallPrint('PrintBTN')">PRINT</a>*@
+                <a id="PrintBTN" style="font-size: 12px; color: blue; font-weight: 800; cursor: pointer; margin-left: 860px; text-decoration: underline;" onclick="javascript:CallPrint('printDetails_Form')"></a>
+
+                <div class="default-according style-1" id="accordionoc_VIEW">
+                    <div class="card">
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon_VIEW" aria-expanded="true" aria-controls="collapse112"><span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span> </button>
+                            </h5>
+                        </div>
+
+                        <div class="collapse show" id="collapseicon_VIEW" aria-labelledby="collapseicon_VIEW" data-bs-parent="#accordionoc_VIEW" style="">
+
+                            <div class="card ">
+                                <form id="GetMyAppliedLeaves_Form_VIEW">
+
+                                    @*<table id="data-table" class="table table-bordered">*@
+                                    <table id="GetMyAppliedLeaves_Table_VIEW" class=" display nowrap  tableid" style="width:100%">
+
+
+                                        @*<table id="tableid" class="table table-responsive">*@
+                                        <thead>
+                                            <tr>
+                                                <th>Submitted By</th>
+                                                <th>Assigned To</th>
+                                                <th>Comments</th>
+                                                <th>Approval Status</th>
+                                                <th>	Overall Status</th>
+                                                <th>	Date</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr><td colspan="10"><div style="text-align:center" id="GetMyAppliedLeaves_Table_VIEW_pagination"></div></td></tr>
+
+
+
+                                        </tfoot>
+                                    </table>
+
+                                </form>
+
+
+                                <form id="printDetails_Form">
+
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <link href="~/Themes/assets/css/StyleSheets/ApplyShortLeaves.css" rel="stylesheet" />
+                                                <table>
+                                                </table><table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top">
+                                                                <table width="100%" cellspacing="0" cellpadding="3" align="center" class="BCcolor">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table id="SchoolnameTable" width="100%" cellspacing="0">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td width="95px" align="center" rowspan="2" valign="top">
+                                                                                                                                <img src="https://www.connect4m.com/R3Images/FeeHeaderPhotos/545/Jnanadeeplogo.png" style=" margin-left: 5%;" alt="">
+                                                                                                                            </td>
+                                                                                                                            <td class="Leavetitle">
+                                                                                                                                <b class="schooltitle"><span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_instancename"></span></b><br>
+                                                                                                                                <span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_ADDRESS"></span><br>
+                                                                                                                                <br>
+                                                                                                                                <b class="subLeavetitle">APPLIED SHORT LEAVE DETAILS</b>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td style="height: 5px;">
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td style="height: 15px;">
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table id="GetMyAppliedLeaves_Table_Print" width="100%" border="1" cellspacing="0">
+                                                                                                                                    <thead>
+                                                                                                                                        <tr style='border: 1px solid;' class="subLeavetitle"> <th>S.No </th><th>Submitted By </th><th> Department </th>  <th>Date of Joining </th><th> Submitted To </th> <th>Leave Type </th><th> Date</th><th>From Time (24hrs)</th>  <th>To Time (24hrs)</th> <th> Status</th></tr>
+
+                                                                                                                                    </thead>
+                                                                                                                                    <tbody>
+                                                                                                                                        @*<tr> <td class="bonafidetxt" nowrap="" align="center"> &nbsp; 1</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp;Administration</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 10 Mar 2004</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; CL</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0.5</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Self-Approved</td> </tr>*@
+
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                                <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="height: 15px;">
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                            </td>
+                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                            </td>
+                                                                                                                                            <td nowrap="" style="height: 50px; width : 50px">
+                                                                                                                                                <table id="TotalNoofDays_TABLE" border="1" style="height: 50px; width : 50px">
+                                                                                                                                                    <thead>
+                                                                                                                                                        <tr>
+                                                                                                                                                            <td nowrap="" class="subLeavetitle" align="center" style="height: 20px; width:128px">
+                                                                                                                                                                Total Time:
+
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+                                                                                                                                                    </thead>
+                                                                                                                                                    <tbody>
+                                                                                                                                                        <tr>
+
+                                                                                                                                                            <td id="TotalNoofDays_TABLE_TD" nowrap="" style="border:1px solid;height:10px;" align="center" class="bonafidetxt">
+                                                                                                                                                                @*0.5*@
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+                                                                                                                                                    </tbody>
+                                                                                                                                                </table>
+
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+                @*-----------------------------Monthly sHORT lEAVES Details Table-----------------------*@
+                <a id="lnkShowMyPermissions" onclick="TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, '1', 'TblMonthlyAppliedShortLeaves_SearchRecords', 'CountOfRecords_MonthlyAppliedShortLeaves', 'MonthlyAppliedShortLeaves_SearchRecords_Div')" style="color: Blue; font-weight: bold; text-decoration: underline; cursor: pointer; font-size: 12px; display: block; ">Show My Short Leaves</a>
+
+                <div class="default-according style-1" id="accordionoc123456">
+                    <div class="card" id="MonthlyAppliedShortLeaves_SearchRecords_Div">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#E6E6E6">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b style=" font-size: 12px; font-family: Arial, Helvetica, sans-serif;">Note:</b>
+                                        <ul style=" margin-left: 6%; font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
+                                            <li>* Monthly Apply Short Leaves  Limit =   2  </li>
+                                            <li>* Yearly Apply Short Leaves  Limit  =   15  </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-header " style="background-color:black;">
+                            <h5 class="mb-0">
+
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon15" aria-expanded="true" aria-controls="collapse11"> <span id="CountOfRecords_MonthlyAppliedShortLeaves">No Records</span></button>
+                            </h5>
+                        </div>
+
+                        <div class="collapse show" id="collapseicon15" aria-labelledby="collapseicon" data-bs-parent="#accordionoc1234567" style="">
+
+                            <div class="card ">
+
+                                <form id="FmMonthlyAppliedShortLeaves_SearchRecords">
+
+                                    <table id="TblMonthlyAppliedShortLeaves_SearchRecords" class="table table-responsive tableid">
+                                        <thead>
+                                            <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
+                                                <th>Month</th>
+                                                <th>Total Applied</th>
+                                                <th>Total Approved</th>
+                                                <th>Approved Used</th>
+                                                <th>Approved Not Used</th>
+                                                <th>Waiting for Approval</th>
+                                                <th>Rejected</th>
+                                                <th>Cancelled</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot id="TblMonthlyAppliedShortLeaves_SearchRecordsFooter">
+                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblMonthlyAppliedShortLeaves_SearchRecords_pagination"></div></td></tr>
+
+                                        </tfoot>
+                                    </table>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            @*-------------------------------------Apply Short Leave-----page start------------------*@
+            <div class="default-according style-1" id="accordionoc9">
+
+                <div class="card" id="ApplyShortLeavePage">
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon120" aria-expanded="true" aria-controls="collapse11">
+                                APPLY SHORT LEAVE
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon120" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
+
+                        <div class="card ">
+                            <div class="card-body">
+                                <form id="FmApplyShortLeave">
+                                    <div style="margin-left:20%;font-size:12px" id="ApplyShortLeavePage_Form">
+                                        <div class="row">
+                                            <div class="col">
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i> Date :&nbsp;</label>
+
+                                                    <div class="col-sm-9">
+                                                        <input type="date" name="Fromdate" id="TxtDate" style="height: 19px;" />
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i>From Time :&nbsp;</label>
+                                                    <div class=" col col-sm-9">
+
+
+                                                        <select id="FromTimeHours" name="FromTimeHrs" class=" input-air-primary " style="width: 80px; color: black; font-size: inherit;">
+                                                            <option value="">Select</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+
+                                                        </select>
+                                                        <span style="font-size: 11px; font-weight: 400;">Hrs.</span>&nbsp;&nbsp;
+
+                                                        <select id="FromTimeMinates" name="FromTimeMin" class=" input-air-primary " style="width: 80px; color: black; font-size: inherit;">
+                                                            <option value="">Select</option>
+                                                            <option value="00">00</option>
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                            <option value="24">24</option>
+                                                            <option value="25">25</option>
+                                                            <option value="26">26</option>
+                                                            <option value="27">27</option>
+                                                            <option value="28">28</option>
+                                                            <option value="29">29</option>
+                                                            <option value="30">30</option>
+                                                            <option value="31">31</option>
+                                                            <option value="32">32</option>
+                                                            <option value="33">33</option>
+                                                            <option value="34">34</option>
+                                                            <option value="35">35</option>
+                                                            <option value="36">36</option>
+                                                            <option value="37">37</option>
+                                                            <option value="38">38</option>
+                                                            <option value="39">39</option>
+                                                            <option value="40">40</option>
+                                                            <option value="41">41</option>
+                                                            <option value="42">42</option>
+                                                            <option value="43">43</option>
+                                                            <option value="44">44</option>
+                                                            <option value="45">45</option>
+                                                            <option value="46">46</option>
+                                                            <option value="47">47</option>
+                                                            <option value="48">48</option>
+                                                            <option value="49">49</option>
+                                                            <option value="50">50</option>
+                                                            <option value="51">51</option>
+                                                            <option value="52">52</option>
+                                                            <option value="53">53</option>
+                                                            <option value="54">54</option>
+                                                            <option value="55">55</option>
+                                                            <option value="56">56</option>
+                                                            <option value="57">57</option>
+                                                            <option value="58">58</option>
+                                                            <option value="59">59</option>
+
+                                                        </select>
+
+                                                        <span style="font-size: 11px; font-weight: 400;">Mins.</span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i>To Time :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <select id="ToTimeHours" name="ToTimeHrs" class="input-air-primary " style="width: 80px; color: black; font-size: inherit;">
+                                                            <option value="">Select</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+
+                                                        </select>
+                                                        <span style="font-size: 11px; font-weight: 400;">Hrs.</span>&nbsp;&nbsp;
+                                                        <select id="ToTimeMinates" name="ToTimeMin" class="input-air-primary " style="width: 80px; color: black; font-size: inherit;">
+                                                            <option value="">Select</option>
+                                                            <option value="00">00</option>
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                            <option value="24">24</option>
+                                                            <option value="25">25</option>
+                                                            <option value="26">26</option>
+                                                            <option value="27">27</option>
+                                                            <option value="28">28</option>
+                                                            <option value="29">29</option>
+                                                            <option value="30">30</option>
+                                                            <option value="31">31</option>
+                                                            <option value="32">32</option>
+                                                            <option value="33">33</option>
+                                                            <option value="34">34</option>
+                                                            <option value="35">35</option>
+                                                            <option value="36">36</option>
+                                                            <option value="37">37</option>
+                                                            <option value="38">38</option>
+                                                            <option value="39">39</option>
+                                                            <option value="40">40</option>
+                                                            <option value="41">41</option>
+                                                            <option value="42">42</option>
+                                                            <option value="43">43</option>
+                                                            <option value="44">44</option>
+                                                            <option value="45">45</option>
+                                                            <option value="46">46</option>
+                                                            <option value="47">47</option>
+                                                            <option value="48">48</option>
+                                                            <option value="49">49</option>
+                                                            <option value="50">50</option>
+                                                            <option value="51">51</option>
+                                                            <option value="52">52</option>
+                                                            <option value="53">53</option>
+                                                            <option value="54">54</option>
+                                                            <option value="55">55</option>
+                                                            <option value="56">56</option>
+                                                            <option value="57">57</option>
+                                                            <option value="58">58</option>
+                                                            <option value="59">59</option>
+
+                                                        </select>
+                                                        <span style="font-size: 11px; font-weight: 400;">Mins.</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 26px;"><i style="color:red;">*</i>Reason :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea id="TxtAreaReason" name="Comments" style="color:black;width: 230px; resize: none;border-color:black;font-style:inherit" maxlength="500" class="input-air-primary" rows="3" cols="20"></textarea><br />
+                                                        <label> <i style="font-size: 10px;"><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-left:150px">
+                                            <input type="button" class="btn btn-primary " onclick="BackToDisplayShortLeaves(this.id)" id="Backbutton1" style="padding:4px 12px;border-radius:6px;" value="Back" />&nbsp;&nbsp;&nbsp;
+
+                                            @*<button id="clearbutton1" class="btn btn-light " style="padding:4px 12px;border-radius:6px;">Clear</button>&nbsp;&nbsp;&nbsp;*@
+                                            <input type="button" class="btn btn-light " onclick="FN_ClearValues(this.id,'FmApplyShortLeave','AppliedEmployeesNames_Id')" id="clearbutton1" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+
+                                            <input type="submit" class="btn btn-success active" id="savebuttonId" style="padding:3px 8px;border-radius:6px;" value="Submit" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="~/js/ApplyShortLeaves.js"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+

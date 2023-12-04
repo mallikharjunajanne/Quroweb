@@ -1,0 +1,389 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.UserScreen.Postnoticetabledate>
+@{
+    ViewData["Title"] = "ManageNotices_PostNoticeSearchtabledata";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Page Title</title>
+    <!-- Include necessary libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+    <div class="default-according style-1" id="accordionoc1">
+        <div class="card-header bg-primary">
+            <h5 class="mb-0">
+                <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
+                <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99%;">
+                    YOUR SEARCH RESULTED  <span id="Search_result_count">@ViewBag.SMSTemplateScount</span> RECORDS.
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">
+            <div class="card-body" style="padding: 10px;">
+                <div style="display:flex;">
+                    <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;" id="twentyusersonlydiv">
+                        <input class="form-check-input" type="checkbox" id="selecttwentyusersonly" onclick="Onlytwenty_users_addpostnotice('@ViewBag.ExcludeUserIds');">
+                        <label style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="Select the below 20 user(s).">Select the below 20 user(s).</label>
+                    </div>
+                    <div class="form-check form-check-inline col-6" style=" margin-right: -3rem;" id="alladdusers_addpostnoticediv">
+                        <input class="form-check-input" type="checkbox" id="Selectealladdusers_addpostnotice_Id" onclick="Selectealladdusers_addpostnotice('@ViewBag.SMSTemplateScount','@ViewBag.ExcludeUserIds')" value="@ViewBag.SMSTemplateScount">
+                        <label id="" style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@ViewBag.SMSTemplateScount">Select all the  @ViewBag.SMSTemplateScount user(s) resulted with my search criteria.</label>
+                    </div>
+                    <div class="form-check form-check-inline col-6" style=" margin-right: -3rem;" id="SelectCurrentPageUsersdiv">
+                        <input class="form-check-input" type="checkbox" id="chkSelectCurrentPageUsers_Id" @*onclick="Selectealladdusers_addpostnotice('@ViewBag.SMSTemplateScount','@ViewBag.ExcludeUserIds')"*@ value="@ViewBag.SMSTemplateScount">
+                        <label id="chkSelectCurrentPageUserslbl" style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@ViewBag.SMSTemplateScount"> Select the below @ViewBag.SMSTemplateScount user(s).</label>
+                    </div>
+                </div>
+                <table id="PostNoticetblid_searchandadduserspostthisnotice" class="display" style="width: 100%;">
+                    <thead>
+                        <tr style="font-size: 13px; font-family: auto; border: 1px solid #DC5 !important; ">
+                            <th style=" border: 1px solid #DC5 !important;">Select User</th>
+                            <th style=" border: 1px solid #DC5 !important;">Name</th>
+                            <th style=" border: 1px solid #DC5 !important;">Admission Number</th>
+                            <th style=" border: 1px solid #DC5 !important;">Role</th>
+                            <th style=" border: 1px solid #DC5 !important;">Department</th>
+                            <th style=" border: 1px solid #DC5 !important;">Class</th>
+                            <th style=" border: 1px solid #DC5 !important;">Email</th>
+                            <th style=" border: 1px solid #DC5 !important;">Student/Staff Mobile No.</th>
+                            <th style=" border: 1px solid #DC5 !important;">Parent Mobile No.</th>
+                            <th style=" border: 1px solid #DC5 !important;">Father Name</th>                        
+                        </tr>
+                    </thead>
+                  <tbody>                        
+                        @{ int Rowno = 0;}
+                        @foreach (var tblitemvalue in Model)
+                        {
+                            <tr style=" font-size: 13px; font-family: auto; border: 1px solid #DC5 !important;" id="@Rowno">
+                                <td style=" border: 1px solid #DC5 !important; text-align: center;">
+                                    <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                        <input class="form-check-input" type="checkbox" value="@tblitemvalue.UserId" name="Usercheckboxes" id="User_checkbox_@Rowno" onclick="AddUsertopostnotice(@tblitemvalue.UserId, '@Rowno','@ViewBag.ExcludeUserIds');">
+                                        <label style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@tblitemvalue.UserId"></label>
+                                    </div>
+                                </td>
+                                <td style=" border: 1px solid #DC5 !important;"> @tblitemvalue.FirstName</td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.AdmissionNumber</td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.RoleName</td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.ClassificationName</td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.SubClassificationName</td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.PortalEmail</td>
+                                <td style=" border: 1px solid #DC5 !important;"></td>
+                                <td style=" border: 1px solid #DC5 !important;"></td>
+                                <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FatherName</td>
+                            </tr>
+                            Rowno++;
+                        }
+                    </tbody>
+                </table>   
+                <div id="Postnoticetable_pagination">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+@*<script src="~/js/ManageNotices.js"></script>*@
+
+
+<script>
+ $(document).ready(function () {
+     Pagination_Tabledata();
+  });
+    function Pagination_Tabledata() {
+
+        var rowsPerPage = 20;
+        var totalItems = @Model.Count();
+
+        var Twentyuserschk_div= document.getElementById('twentyusersonlydiv');
+        var Alluserschk_div = document.getElementById('alladdusers_addpostnoticediv');
+        var CurrentPagechk_div = document.getElementById('SelectCurrentPageUsersdiv');
+        //var chkSelectCurrentPageUserslbl = document.getElementById('chkSelectCurrentPageUserslbl');
+
+
+        if (totalItems >= 0) {
+            if (totalItems > rowsPerPage) {
+
+                Twentyuserschk_div.style.display = "block";
+                Alluserschk_div.style.display = "block";
+                CurrentPagechk_div.style.display = "none";
+
+                var numPages = Math.ceil(totalItems / rowsPerPage);
+                var currentPage = 1;
+
+                var pagination = $('#Postnoticetable_pagination');
+                pagination.empty();
+
+                var startIndex = 1;
+                var endIndex = Math.min(numPages, 10);
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    var link = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">' + i + '</a>');
+                    pagination.append(link);
+                }
+
+                if (endIndex < numPages) {
+                    pagination.append($('<span style="margin: 0 2px;">&hellip;</span>'));
+                    var lastPageLink = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">>>></a>');
+                    pagination.append(lastPageLink);
+                }
+
+                showPage(currentPage);
+
+                pagination.css('text-align', 'center');
+
+                pagination.on('click', '.Postnoticetable_pagination', function (e) {
+                    e.preventDefault();
+                    var linkText = $(this).text();
+                    if (linkText === ">>>") {
+                        currentPage = numPages;
+                    } else {
+                        currentPage = parseInt(linkText);
+                    }
+                    showPage(currentPage);
+                });
+
+                function showPage(page) {
+                    var start = (page - 1) * rowsPerPage;
+                    var end = Math.min(start + rowsPerPage, totalItems);
+
+                    $("#PostNoticetblid_searchandadduserspostthisnotice tbody tr").hide();
+                    $("#PostNoticetblid_searchandadduserspostthisnotice tbody tr").slice(start, end).show();
+
+                    var newStartIndex = Math.max(1, page - 4);
+                    var newEndIndex = Math.min(newStartIndex + 9, numPages);
+
+                    if (newEndIndex === numPages) {
+                        newStartIndex = Math.max(1, numPages - 9);
+                    }
+
+                    pagination.empty();
+
+                    for (var i = newStartIndex; i <= newEndIndex; i++) {
+                        var link = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">' + i + '</a>');
+                        pagination.append(link);
+                    }
+
+                    if (newEndIndex < numPages) {
+                        pagination.append($('<span style="margin: 0 2px;">&hellip;</span>'));
+                        var lastPageLink = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">>>></a>');
+                        pagination.append(lastPageLink);
+                    }
+
+                    $('.Postnoticetable_pagination').removeClass('active');
+                    $('.Postnoticetable_pagination').eq(page - newStartIndex).addClass('active')
+                        .css({
+                            'cursor': 'unset',
+                            'background-color': 'yellow',
+                            'padding': '2px',
+                            'border-radius': '16px',
+                            'color': 'black'
+                        });
+                }
+
+            }
+            else {
+
+                //chkSelectCurrentPageUserslbl.style.display = "block";
+                Twentyuserschk_div.style.display = "none";
+                Alluserschk_div.style.display = "none";
+                CurrentPagechk_div.style.display = "block";
+            }
+        } else {
+            Twentyuserschk_div.style.display = "none";
+            Alluserschk_div.style.display = "none";
+            CurrentPagechk_div.style.display = "none";
+        }
+    }
+
+</script>
+
+
+
+
+<script>
+
+    @* function Onlytwenty_users_addpostnotice() {
+        debugger;
+        var Usersdata = [];
+
+        var leng = $('#PostNoticetblid_searchandadduserspostthisnotice tr').length;
+        var trLength = $('#PostNoticetblid_searchandadduserspostthisnotice tr').find('td').length;
+
+        for (var i = 0; i < 21; i++) {
+
+            var Checkboxvalues = $('#User_checkbox_' + i).val();
+            Usersdata.push(Checkboxvalues);
+
+        }
+
+
+        var Userids = Usersdata.join(',');
+        var ExcludeUserIds = Usersdata.join(',');
+        var rowId = 1;
+
+        var row = document.getElementById(rowId);
+        var checkbox = document.getElementById('selecttwentyusersonly');
+        var rowusers = [];
+        var checkedIds = [];
+        var validornot;
+
+        if (row) {
+
+            if (checkbox.checked) {
+
+                row.style.display = 'none';
+                rowusers.push({ "Userid": Userids });
+                checkedIds.push({ "rowId": rowId });
+                validornot = true;
+
+            } else {
+
+                row.style.display = '';
+
+            }
+        }
+        if (validornot) {
+
+            handle_searchuserstopostnotice_without_btnclick_tabledata(Userids);
+
+            $.ajax({
+                //url: "/Admin/SELUsersByUserIds?UserIds=" + Userid,
+                url: "/Admin/SELUsersByUserIds?UserIds=" + Userids,
+                type: "GET",
+                success: function (response) {
+                    $('#PostNoticeAddinguserstable_Div').show();
+                    $('#PostNoticeAddinguserstable_Div').html(response);
+                }
+            });
+
+        } else {
+            checkbox.checked = false;
+        }
+    }
+
+    function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid) {
+        $('#PostNoticeAddinguserstable_Div').hide();
+
+        debugger;
+        var form = document.getElementById("Searchuserstopostnotice_searchform");
+        var formData = new FormData(form);
+        formData.append('InstanceId', Instanceid);
+
+        var userName = $('#Ps_UserNametxt').val() || '';
+        var roleId = $('#Instancerole_id').val() || '';
+        var firstName = $('#Ps_Firstnametxt').val() || '';
+        var lastName = $('#Ps_lastnametxt').val() || '';
+        var instanceClassificationId = $('#Classificationid').val() || '';
+        var instanceSubClassificationId = $('#Subclassificationid').val() || '';
+        var instanceUserCode = $('#Ps_InstanceUsercode_txt').val() || '';
+        var portalEmail = $('#Ps_Emailtxt').val() || '';
+        var routeId = $('#Route_id').val() || '';
+        var collegeHostel = $('#CollegeHostel_id').val() || '';
+        var ExcludeUserIds = '';
+        if (Userid != "") {
+            ExcludeUserIds = Userid;
+        } else {
+            ExcludeUserIds = '';
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Admin/ManageNotices_PostNoticeSearchtabledata",
+            data: {
+                InstanceId: Instanceid,
+                UserName: userName,
+                InstanceRoleId: roleId,
+                FirstName: firstName,
+                LastName: lastName,
+                InstanceClassificationId: instanceClassificationId,
+                InstanceSubClassificationId: instanceSubClassificationId,
+                InstanceUserCodes: instanceUserCode,
+                PortalEmail: portalEmail,
+                RouteId: routeId,
+                CollegeHostel: collegeHostel,
+                ExcludeUserIds: ExcludeUserIds
+            },
+            success: function (response) {
+                $('#PostnoticeSearch_tabledata_Divid').html(response);
+            },
+            error: function (error) {
+                alert("Something went wrong.....!/n Please try again");
+            }
+        });
+    }
+
+    var rowsPerPage = 20;
+    var totalItems = @ViewBag.SMSTemplateScount;
+    initializePagination(rowsPerPage, totalItems);
+    function initializePagination(rowsPerPage, totalItems) {
+        if (totalItems >= 0) {
+            var numPages = Math.ceil(totalItems / rowsPerPage);
+            var currentPage = 1;
+
+            var pagination = $('#Postnoticetable_pagination');
+            pagination.empty();
+
+            function updatePaginationLinks() {
+                var startIndex = Math.max(1, currentPage - 4);
+                var endIndex = Math.min(startIndex + 9, numPages);
+
+                pagination.empty();
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    var link = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">' + i + '</a>');
+                    pagination.append(link);
+                }
+
+                if (endIndex < numPages) {
+                    pagination.append($('<span style="margin: 0 2px;">&hellip;</span>'));
+                    var lastPageLink = $('<a class="Postnoticetable_pagination" style="margin: 0 2px;color: black;" href="#">>>></a>');
+                    pagination.append(lastPageLink);
+                }
+
+                $('.Postnoticetable_pagination').removeClass('active');
+                $('.Postnoticetable_pagination').eq(currentPage - startIndex).addClass('active')
+                    .css({
+                        'cursor': 'unset',
+                        'background-color': 'yellow',
+                        'padding': '2px',
+                        'border-radius': '16px',
+                        'color': 'black'
+                    });
+            }
+
+            updatePaginationLinks();
+            showPage(currentPage);
+
+            pagination.css('text-align', 'center');
+
+            pagination.on('click', '.Postnoticetable_pagination', function (e) {
+                e.preventDefault();
+                var linkText = $(this).text();
+                if (linkText === ">>>") {
+                    currentPage = numPages;
+                } else {
+                    currentPage = parseInt(linkText);
+                }
+                updatePaginationLinks();
+                showPage(currentPage);
+            });
+
+            function showPage(page) {
+                var start = (page - 1) * rowsPerPage;
+                var end = Math.min(start + rowsPerPage, totalItems);
+
+                $("#PostNoticetblid_searchandadduserspostthisnotice tbody tr").hide();
+                $("#PostNoticetblid_searchandadduserspostthisnotice tbody tr").slice(start, end).show();
+            }
+        }
+    }*@
+</script>

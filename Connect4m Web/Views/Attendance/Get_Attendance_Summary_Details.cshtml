@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Attendance_Summary>
+
+@{
+    Layout = null;
+}
+
+<link href="~/css/maps/Summary.css" rel="stylesheet" />
+
+<div class="card">
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc2">
+            <div class="card">
+                <p class="ErrorMessage">Total Number Of @ViewBag.Records Records </p>
+
+                <div class="card-header bg-primary">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">ATTENDANCE SUMMARY</button>
+                    </h5>
+                </div>
+               
+                <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+                    <div class="card-body">
+                        <div class="col-sm-12 col-lg-12 col-xl-12">
+                            <div>
+                                <table class="FeeType_Tbl">
+                                    <tbody>
+                                        <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
+                                            <th align="left" scope="col">Slot</th>
+                                            <th align="left" scope="col">Faculty Name</th>
+                                            <th align="left" scope="col">Total Classes</th>
+                                            <th align="left" scope="col">Present</th>
+                                            <th align="left" scope="col">Absent</th>
+                                            <th align="left" scope="col">Percentage</th>
+                                            <th align="left" scope="col">Required(%)</th>
+                                        </tr>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr style="background-color:White;height:24px;">
+                                                <td align="left" style="width:300px;"> @Html.DisplayFor(modelItem => item.SubjectSlotName)</td>
+
+                                                <td align="left">  @Html.DisplayFor(modelItem => item.Mentors)</td>
+                                                <td align="left">   @Html.DisplayFor(modelItem => item.TotalClasses)</td>
+                                                <td align="left">     @Html.DisplayFor(modelItem => item.TotalPresent)</td>
+                                                <td align="left"> @Html.DisplayFor(modelItem => item.TotalAbsent)</td>
+                                                @{
+                                                    double attendancePercentage = Convert.ToDouble(item.AttendancePercentage);
+                                                    string textColor = (attendancePercentage < 70) ? "red" : "green";
+                                                }
+                                                <td align="left" style="color: @textColor;">@Html.DisplayFor(modelItem => item.AttendancePercentage)</td>
+
+
+                                                @*@{double i = @Convert.ToDouble(item.AttendancePercentage);}
+                                                    @if (i < 70)
+                                                    {
+                                                        <td align="left" style="color:red;"> @item.AttendancePercentage</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td align="left">@Html.DisplayFor(modelItem => item.AttendancePercentage)</td>
+
+                                                    }*@
+                                                <td align="left">@Html.DisplayFor(modelItem => item.AttendanceRequiredPercent)</td>
+                                            </tr>
+                                        }
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

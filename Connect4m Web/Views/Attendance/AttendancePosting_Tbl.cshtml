@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Admin_Attendance_Posting>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .checkbox-clicked {
+            /* Styles for when checkbox is clicked (checked) */
+            /* Example styles */
+            background-color: #f00;
+            color: #fff;
+        }
+
+        .checkbox-unchecked {
+            /* Styles for when checkbox is unchecked */
+            /* Example styles */
+            background-color: #fff;
+            color: #000;
+        }
+        .S_btn {
+            width: 7%;
+            height: 28px;
+            margin-top: 16px;
+            margin-left: 26%;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="Checkboxes">
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">SMS to Students</label>
+        </span>
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">SMS to Parents</label>
+        </span>
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">Send EMail to Students</label>
+        </span>
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">Send EMail to Parents</label>
+        </span>
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">Send SMS to On duty students</label>
+        </span>
+        <br />
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">Check All</label>
+        </span>
+        <span>
+            <input type="checkbox">
+            <label for="myCheckbox">Check All On duty</label>
+        </span>
+    </div>
+
+
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i></button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                    <div class="card-body">
+
+
+                        
+                        
+                        
+                        <div class="S_btn" style="display: flex; grid-gap: 16px;">
+                            <input type="submit" value="Get Attendance Form" id="Get_atd_btn" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+  
+

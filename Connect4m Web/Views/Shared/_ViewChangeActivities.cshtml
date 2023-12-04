@@ -1,0 +1,194 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*_ViewChangeActivities*@
+@{
+
+    var Title = ""; var MainHeading = "";
+    if (ViewBag.ActivityName == "ViewSubjects")
+    {
+        Title = "View Subjects"; MainHeading = "Subjects Details";
+    }
+    else if (ViewBag.ActivityName == "ViewSubjects")
+    {
+        Title = "Departments and Classes"; MainHeading = "Departments and Classes";
+    }
+    else
+    {
+        @model List<AttendanceModel>
+        Title = "View Change Activities"; MainHeading = "View Change Activities";
+    }
+}
+
+<html>
+<head>
+    <title>@Title</title>
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#TblHistory').DataTable();
+        });
+
+        //this is not using
+        //var js = jQuery.noConflict(true);
+        //$(document).ready(function () {
+        //    debugger;
+        //    var dataTable = js('#TblHistory').DataTable({
+        //        bFilter: false,
+        //        bSort: false,
+        //        bPaginate: true,
+        //        jQuery: false,
+        //        bInfo: false,
+        //        dom: 'Bfrtip',
+
+        //        //columnDefs: [
+        //        //    {
+        //        //        target: 3,
+        //        //        visible: false,
+        //        //        searchable: false
+        //        //    }
+        //        //]
+        //    });
+        //});
+
+
+    </script>
+
+</head>
+<body style="text-align: center;">
+    <br />
+    <span align="center" style="font-size: 16px;margin: 39%;">@MainHeading</span>
+    <div class="default-according style-1" id="accordionoc">
+        <div class="card">
+            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                <div class="card ">
+                    @if (ViewBag.ActivityName == "ViewSubjects")
+                    {
+                        <table id="TblHistory" style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Subject Name</th>
+                                    <th>Subject Code</th>
+                                    <th>Subject Display Order</th>
+                                    <th>Mentor Name</th>
+                                    <th>Department</th>
+                                    <th>SubDepartment</th>
+                                    <th>Subject Type</th>
+                                    <th>Attendance Required</th>
+                                    <th>Include In Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var i = 1;}
+                                @foreach (var item in ViewBag.SubjectDetailsList)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.SubjectName</td>
+                                        <td class="CenterAlign">@item.SubjectCode</td>
+                                        <td class="CenterAlign">@item.DisplayOrder1</td>
+                                        <td>@item.MentorName</td>
+                                        <td>@item.DepartmentName</td>
+                                        <td>@item.ClassName</td>
+                                        <td>@item.SubjectTypeName</td>
+                                        <td>@item.AttendanceRequired1</td>
+                                        <td>
+                                            @(item.IncludeInTotal1 == 1 ? "Yes" : "No")
+
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else if (ViewBag.ActivityName == "ViewDepartments_Class")
+                    {
+                        <table style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>	Department Id</th>
+                                    <th>Department Name</th>
+                                    <th>	Class Id</th>
+                                    <th>	Class Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var i = 1;}
+                                @foreach (var item in ViewBag.SubjectDetailsList)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td class="CenterAlign">@item.InstanceClassificationId</td>
+                                        <td>@item.DepartmentName</td>
+                                        <td class="CenterAlign">@item.InstanceSubClassificationId</td>
+                                        <td>@item.ClassName</td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+
+                    }
+                    else
+                    {
+
+                        <table style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Key</th>
+                                    <th>Current</th>
+                                    <th>Previous</th>
+                                    <th>Changed By</th>
+                                    <th>Previously Chaged By</th>
+                                    <th>Changed On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var i = 1;}
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.AuditKey</td>
+                                        <td class="CenterAlign">@item.CurrentValue</td>
+                                        <td class="CenterAlign">@item.PreviousValue</td>
+                                        <td>@item.CurrentValueCreatedBy</td>
+                                        <td>@item.PreviousValueCreatedBy</td>
+                                        <td>@item.CreatedDate</td>
+
+                                        @*@if (item.LeaveNoOfDays1 == "1")
+                                            {
+                                                <td>Full Day</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Off day</td>
+                                            }*@
+
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

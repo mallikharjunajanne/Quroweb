@@ -1,0 +1,109 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Fee_Section
+
+@{
+    ViewData["Title"] = "FeeType_Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <link href="~/css/maps/FeeScetion_Styles.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0">
+            <div style=" font-size: 20px; text-align: center;">
+                <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: -13px; ">MANAGE FEE TYPES</h1>
+            </div>
+        </div>
+        <div id="CreateFeeType_Divid">          
+            <div style="color:red; font-size:13px;">
+                <div id="validation2" style="color: red;"></div>
+                <div id="validationMessage" style="color: red;"></div>
+                <p id="MessageID"></p>
+            </div>
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="height: 37px; background-color: pink; border-radius: 14px; filter: drop-shadow(1px 0px 3px black);">
+                                    UPDATE FEE TYPE
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <form class="form theme-form" id="Create_New_FeeType">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="form-group row g-3">
+                                            <div class="row" style=" margin-top: 10px;">
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Type :</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" asp-for="FeeType"  id="feeType" style="width: 48%; border: 1px solid #ccc; padding: 5px; box-sizing: border-box; height: 27px;" />
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; grid-gap: 16px; width: 161%; margin-left: 0px; ">
+                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Type is for :</label>
+                                                    <span style="width: 30%; ">
+                                                        <input type="radio" asp-for="FeeTypeStatus" id="Fee_Typeis_for" value="0" name="FeeTypeStatus" checked />Current Academic Year Payments
+                                                    </span>
+
+                                                    <span>
+                                                        <input type="radio" asp-for="FeeTypeStatus" id="Fee_Typeis_for" value="1" name="FeeTypeStatus" />Previous Academic Year Dues
+                                                    </span>
+                                                </div>
+
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Discount Types :</label>
+                                                    <select id="ddData" asp-for="ConcedingTypeId" asp-items="@ViewBag.Discount_Types_DDValues" multiple class="box form-select input-air-primary digits DD_Lb" style="width: 334px;">
+                                                    </select>
+
+
+                                                </div>
+
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <span class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Quantity :</span>
+                                                    <span class="radio-style">
+                                                        <input type="radio" asp-for="Quantity" name="quantity" id="quantityNo" value="0" checked>
+                                                        No
+                                                    </span>
+                                                    <span class="radio-style">
+                                                        <input type="radio" asp-for="Quantity" name="quantity" id="quantityYes" value="1">
+                                                        Yes
+                                                    </span>
+                                                </div>
+                                                <div style="display: flex; grid-gap: 16px;" id="AmotID">
+                                                    <span class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Amount :</span>
+                                                    <input type="text" id="Amount" asp-for="Amount"/>
+                                                </div>
+
+                                                <div style="display: flex; grid-gap: 16px;">
+                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Description :</label>
+                                                    <textarea class="DescriptionTA" id="description" asp-for="Description"></textarea>
+                                                </div>
+                                                <div style=" display: flex; grid-gap: 16px; margin-left: 87px; margin-top: 10px;">
+                                                    <input type="reset" value="Previous Page" style="height:27px;">
+                                                    <input type="submit" asp-action="Delete_FeeType" value="Delete" style="height: 27px; width: 13%; ">
+                                                    <input type="submit" asp-action="ManageFeeTypes" value="Back to Search" style="height:27px;">
+                                                    <input type="submit" id="Create_New_FeeType" value="Update" style="height:27px;">
+                                                    <input type="submit" value="Next Page" style="height:27px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>       
+</body>
+</html>

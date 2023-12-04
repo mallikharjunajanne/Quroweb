@@ -1,0 +1,101 @@
+﻿@model Connect4m_Web.Models.AttendanceModel
+@{
+    ViewData["Title"] = "CreateLeaveTypePageView";
+    Layout = null;
+}
+
+<div class="default-according style-1" id="accordionoc9">
+
+    <div class="card" id="CreateLeaveTypePage">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon1200" aria-controls="collapse11">
+                    <span id="CreateLeaveType_Span_CreatePage">  SAVE LEAVE TYPE</span> <span style="margin-left: 561px;"> * INDICATES REQUIRED FIELDS</span>
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
+            <div class="card ">
+                <div class="card-body">
+                    <form id="FmCreateLeaveType">
+                        <div style="margin-right:-58%;font-size:12px" id="CreateLeaveType_FormDiv">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i>Leave Type :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="Leavetype" id="TxtLeavetype_Createpage" style=" width: 21%;">
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i>Leave Short Name :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="ShortName" id="TxtLeaveShortName_Createpage" style=" width: 21%;">
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 26px;">Description  :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <textarea id="TxtAreaDescription_Createpage" name="Description" onkeyup="CharacterCountingFunction('TxtAreaDescription_Createpage','50','TextareaDescriptioncountSPAN')" style="color:black;width: 230px; resize: none;border-color:black;font-style:inherit" maxlength="50" class="input-air-primary" rows="3" cols="25"></textarea>
+                                            <span> <i style="font-size: 10px;"><span id="TextareaDescriptioncountSPAN"></span></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Carry Forward :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="checkbox" asp-for="Carryforward_bool" id="TxtCarryForward_Createpage" style="height: 19px; margin-top: 2px;">
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Allow Leave Apply for Past Days :&nbsp;</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="checkbox" asp-for="AllowPastDates_bool" id="TxtAllowLeaveApplyforPastDays_Createpage" checked="checked" style="height: 19px;">
+
+                                            @*<input type="image" class="imgAuditIconAllowPastDays" id="imgAuditIconAllowPastDays" src="~/IconImages/searchbtn image.png" style="border-width: 0px; height: 13px; margin-left: 10px; margin-top: 7px; " onclick="clearspanBySearchImgIcon(event)" hidden>*@
+                                            @if (ViewBag.Leavetypeid != 0 && ViewBag.LeavetypeidCount > 0)
+                                            {
+                                                <input type="image" class="imgAuditIconAllowPastDays" id="imgAuditIconAllowPastDays" src="~/IconImages/searchbtn image.png" style="border-width: 0px; height: 13px; margin-left: 10px; margin-top: 7px; " onclick="_ViewChangeActivities(event,'tblLeaveType', @ViewBag.Leavetypeid, 'AllowPastDates')">
+                                            }
+                                            <!--<div id="targetElement">-->
+                                            <!-- Other content here -->
+                                            <!--</div>-->
+
+                                        </div>
+                                        
+                                    </div>
+                                    <div hidden>
+                                        <input type="hidden" asp-for="Leavetypeid" id="HdnLeavetypeid">
+                                        <input type="hidden"  id="HdnPaginationTextActiveid">
+                                    </div>
+
+                                    <div style="margin-left:23%">
+                                        <input type="button" class="button button2" onclick="BackTOSearhLeaveTypes(event)" id="BtnBacktoList" style="padding:0px 3px;border-radius:5px;" value="Back To Search">&nbsp;&nbsp;&nbsp;
+
+                                        <input type="button" class="button button5" onclick="FN_ClearValues('FmCreateLeaveType','TxtAreaDescription_Createpage')" id="BtnClear" style="padding:0px 19px;border-radius:5px;" value="Clear">&nbsp;&nbsp;&nbsp;
+
+                                        <input type="submit" class="button button1" id="BtnSave" onclick="FN_LeaveTypes_Save(event)" style="padding:0px 17px;border-radius:5px;" value="Save">
+
+                                        @*<input type="button" class="btn btn-primary " onclick="BackTOSearhLeaveTypes(event)" id="BtnBacktoList" style="padding:4px 12px;border-radius:6px;" value="Back To Search">&nbsp;&nbsp;&nbsp;
+
+        <input type="button" class="btn btn-light " onclick="FN_ClearValues('FmCreateLeaveType','TxtAreaDescription_Createpage')" id="BtnClear" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
+
+        <input type="submit" class="btn btn-success active" id="BtnSave" onclick="FN_LeaveTypes_Save(event)" style="padding:3px 8px;border-radius:6px;" value="Save">*@
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+

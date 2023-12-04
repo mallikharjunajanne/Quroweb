@@ -1,0 +1,43 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<style>
+
+    .arrow-list {
+        list-style: none;
+        padding: 0;
+        font: 13px arial;
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+    .Coollinktxt {
+        text-decoration: none;
+        font-size: 13px;
+        color: #2c2c2c;
+        font-weight: bold;
+        padding-top: 8px;
+    }
+
+    .arrow-right {
+        margin-left: 5px;
+        font-size: 12px;
+        color: palevioletred;
+    }
+
+</style>
+
+<div style=" margin-top: -14px;">  
+    <ul class="arrow-list" id="Coollinkslist_Ul">
+        @foreach (var link in Model)
+        {
+            <li>
+                <span class="arrow-right">&#9654;</span>
+                <a href="@link.LinkURL" target="_blank" class="Coollinktxt">@link.LinkName</a>                
+            </li>
+        }
+    </ul>
+    <div id="Pagination_div" style="text-align:center;"></div>
+
+</div>

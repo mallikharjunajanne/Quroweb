@@ -1,0 +1,114 @@
+﻿@model Connect4m_Web.Models.LMSproperties.Subclassfications_MS
+@*@model List<SelectListItem>*@
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Subclassfications_MS";
+}
+<link href="~/css/Managesubjecttools.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<table class="table" id="subclass_table">
+    <thead>
+        <tr>
+            <th>
+                Select
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Subject Code
+            </th>
+            <th>
+                Subject order
+            </th>
+            <th>
+                Attendance Required
+            </th>
+            <th>
+                Subject Type
+            </th>
+            <th>
+                Short Name
+            </th>
+            <th>
+                Allocate Mentor
+            </th>
+            <th>
+                Total Periods
+            </th>
+            <th>
+                Include In Total
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var sub in Model.subclassfication)
+        {
+
+
+        <tr>
+            <td>
+                <input type="checkbox" value="@sub.InstanceSubClassificationId" />
+            </td>
+            <td>
+                @sub.SubClassificationName
+            </td>
+         
+
+            <td style="width: 160px;">
+                <input type="text" class="form-control" />
+            </td>
+            <td>
+                <input type="text" class="form-control" />
+            </td>
+            <td >
+                <span style="display:flex">
+                    <input type="text" class="form-control" style="width: 63%;" /><span style="color: red; font-size: 14px;">%</span>
+                </span>
+            </td>
+            <td>
+                <select id="Subjectfor_MS" asp-items="@ViewBag.Subjectlist_MS">
+                </select>
+            </td>
+            <td style="width: 160px;">
+                <input type="text" class="form-control" />
+            </td>
+
+
+            <td style=" overflow-y: scroll; width: 283px;">
+                <div class="mentorlist-container">
+                    <div class="mentorlist-columns">
+                        @foreach (var mentorlist in Model.mentors)
+                        {
+                            <div class="mentorlist-item">
+                                <input type="checkbox" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorName" name="selectedMentors" />
+                                <label for="mentor-@mentorlist.MentorName">@mentorlist.MentorName</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </td>
+
+
+
+            <td>
+                <input type="text" class="form-control" />
+            </td>
+            <td>
+                <input type="radio" name="IncludeInTotal" />&nbsp;&nbsp;
+                <input type="radio" name="IncludeInTotal" />   Yes No
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,422 @@
+﻿
+
+@model Connect4m_Web.Models.AttendanceModel
+@{
+    ViewData["Title"] = "LeaveCancellation";
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <style>
+
+
+        /*THese form datalist table*/
+        /* #TblLeaveDeligationAuthorityList_SearchedRecords_paginate {
+            margin-right: 27%;
+        }*/
+
+        /*.hover {
+            color: bisque;*/
+        /* Define your hover styles here */
+        /*}*/
+
+
+
+
+
+        option:empty {
+            display: none;
+        }
+
+
+        .Commentpopup {
+            display: none; /* Hide the popup by default */
+            z-index: 1;
+            position: fixed;
+            top: 0;
+            left: 75%;
+            /*width: 100%;
+            height: 100%;*/
+            /*background-color: rgba(0, 0, 0, 0.5);*/ /* Semi-transparent background */
+        }
+
+        .Commentpopup-content {
+            background-color: #dfdeff;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .Commentpopup.open {
+            display: block; /* Show the popup when it's open */
+        }
+
+
+            .Commentpopup.open ~ a {
+                pointer-events: none; /* Disable pointer events on links */
+            }
+    </style>
+
+
+
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+    <link href="~/Themes/assets/css/StyleSheets/LeaveDelegation.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/LeaveDelegation.js"></script>
+    @*<script src="~/js/ApplyStaffLeave.js"></script>*@
+    <script src="~/js/LeaveCancellation.js"></script>
+    <script src="~/js/GeneralFunctions.js"></script>
+
+
+    <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Datatable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+
+        var js = jQuery.noConflict(true);
+        $(document).ready(function () {
+            debugger;
+            _LeavesSearchPage_PagePartialViewFunction();
+           // TblDataTableWithColumns_CallingFunction(event, 'nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails', 'TblLeavesSearchedResultPage_Div');
+
+        });
+    </script>
+
+    @*<script src="~/js/PaginationToTables.js"></script>*@
+    @*<script src="~/js/Common Scripts.js"></script>*@
+
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />*@
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />*@
+
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <!--<div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>-->
+
+
+
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>LEAVES CANCELLATION</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+            <span class="ErrorMessageSpan" id="followingfieldsErrorSPAN"></span>
+            <span class="ErrorMessageSpan" id="successMessage"></span>
+            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="LeavetypeERROR"></span>
+            <span class="ErrorMessageSpan" id="DescriptionidERROR"></span>
+            <span class="ErrorMessageSpan" id="FromdateERROR"></span>
+            <span class="ErrorMessageSpan" id="TodateERROR"></span>
+            <span class="ErrorMessageSpan" id="DaystypeERROR"></span>
+            <span class="ErrorMessageSpan" id="Datechecking"></span>
+            <span class="ErrorMessageSpan" id="DaysessionERROR"></span>
+            @*<span class="ErrorMessageSpan" id="DaystypeERROR"></span>*@
+
+
+            @*-----_EditLeavesPage_LeaveCancellation_Div Result page*@
+            <div id="_EditLeavesPage_LeaveCancellation_Div">
+            </div>
+
+            @*-----LeavesSearchPage_Div Result page*@
+            <div id="LeavesSearchPage_Div">
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+</html>
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+
+@*<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>*@
+
+
+
+
+
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />*@
+
+
+@*<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>*@
+
+
+@*<script src="~/Datatable/datatable.min.js"></script>*@
+
+@*<script type="text/javascript">
+        var js = jQuery.noConflict(true);
+        //  To get Partial View of Add LeavesSearchPage
+        function _TblLeavesSearchedResultPage_PagePartialViewFunction(event, val) {
+
+            debugger;
+            try {
+                debugger;
+                $(".ErrorMessageSpan").empty();
+                if (val != "stop") {
+                    event.preventDefault();
+                }
+                var Fromdate = $("#TxtFromDate").val();
+                var Todate = $("#TxtToDate").val();
+                if (Fromdate != "" || Todate != "") {
+
+                    if (Fromdate === "") {
+                        if (Todate != "") {
+                            $("#Main_Span_Error").text('Please Select From Date also');
+                            return;
+                        }
+                    }
+
+                    if (Todate === "") {
+                        if (Fromdate != "") {
+                            $("#Main_Span_Error").text('Please Select To Date also');
+                            return;
+                        }
+                    }
+
+                    if (Date.parse(Todate) < Date.parse(Fromdate)) {
+                        $("#Main_Span_Error").text("'From Date' cannot be greater than 'To Date'. ");
+                        return;
+                    }
+                }
+                TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation", 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', "FmLeavesSearchPage_SearchDetails");
+
+                //  TblDataTableWithColumns_CallingFunction(event, "noStop", Url, tablename, TableCountsId, FormId)
+                // var formdata = new FormData($("#FmAddUserPage_SearchDetails")[0]);
+                //var formdata = new FormData($("#FmLeavesSearchPage_SearchDetails")[0]);
+
+
+                //if (val != "stop") {
+
+                //    $("#loadingOverlay").show();
+                //}
+
+                //// Make AJAX call to the controller action
+                //$.ajax({
+                //    url: "/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation",
+                //    type: "POST",
+                //    data: formdata,
+                //    contentType: false,
+                //    processData: false,
+                //    success: function (response) {
+                //        debugger;
+                //        // $("#counts").text(data.length);
+                //        //    bindDatatableSEM(data);
+
+
+
+
+                //        //   var num = 0;
+                //        var table = js('#TblLeaveDeligationAuthorityList_SearchedRecords').DataTable();
+                //     var currentPage = table.page.info().page;//for current pagination
+
+                //        table.destroy();
+
+                //        // table.destroy();
+                //        $("#counts").text(response.length);
+
+                //        var Newtable = js("#TblLeaveDeligationAuthorityList_SearchedRecords").DataTable({
+                //            //dom: 'Bfrtip',
+                //            //dom: "<'table-responsive'tr><'Bfrtip'><'hover'><'cell-border'>",
+                //            //buttons: [
+                //            //    {
+                //            //        extend: 'pdfHtml5',
+                //            //        exportOptions: {
+                //            //            columns: [1, 2]
+                //            //        },
+                //            //    },
+                //            //    {
+                //            //        extend: 'excelHtml5',
+                //            //        exportOptions: {
+                //            //            columns: [0, 1, 2, 5]
+                //            //        }
+                //            //    }
+                //            //],
+                //            //stateSave: true, // Maintain state
+                //            //columnDefs: [
+                //            //    {
+                //            //        targets: [1, 5, 6], width: '10%'
+                //            //    },
+                //            //    {
+                //            //        //"targets": 9, // your case first column
+                //            //        //"className": "text-center",
+                //            //        className: 'text-center', targets: [9, 11]
+                //            //    },
+
+                //            //],
+
+                //            //"columnDefs": [{
+                //            //    "targets": [0],
+                //            //    "orderable": false
+                //            //}],
+                //            bInfo: false,
+                //            bProcessing: false,
+                //            bLengthChange: false,
+                //            bfilter: false,
+                //            bSort: true,
+                //            searching: false,
+                //            aaSorting: [],
+                //            paging: true,
+                //            bPaginate: false,
+                //            data: response,
+                //            columns: [
+                //                {
+                //                    data: "LeaveApplicationId",
+                //                    visible: false,
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveApplicationId
+                //                    }
+                //                },
+                //                {
+                //                    data: "FirstName",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.firstName
+                //                    }
+                //                },
+                //                {
+                //                    data: "ClassificationName",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.classificationName
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveReason",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveReason
+                //                    }
+                //                },
+                //                {
+                //                    data: "Leavetype",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leavetype
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveFromdate",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveFromdate
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveTodate",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveTodate
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveNoOfDays1",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveNoOfDays1
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveStatus",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leaveStatus
+                //                    }
+                //                },
+                //                {
+                //                    data: "Batchid",
+                //                    render: function (data, type, row, meta) {
+                //                        if (row.leaveCancelledFlag != "True") {
+                //                            return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer; " class="badge badge-primary" title="Cancel Leave">Cancel</span>';
+                //                        }
+                //                        else {
+                //                            return ' Cancelled';
+                //                        }
+                //                    }
+                //                },
+                //                {
+                //                    data: "Leavecomments",
+                //                    render: function (data, type, row, meta) {
+                //                        return row.leavecomments
+                //                    }
+                //                },
+                //                {
+                //                    data: "LeaveCancelledFlag",
+                //                    render: function (data, type, row, meta) {
+                //                        var Value = "";
+                //                        if (row.leaveCancelledFlag == "True") {
+
+                //                        }
+                //                        else if (row.leavetype == " P" || row.leavetype == "P") {
+                //                            Value = '<a class="fa fa-edit" style="font-size: 15px; color: red;"></a>';
+                //                        }
+                //                        else {
+                //                           Value = '<a class="fa fa-edit" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="font - size: 16px !important; color: red; cursor: pointer; "></a>';
+                //                        }
+                //                        return Value
+                //                    }
+                //                }
+                //            ]
+
+                //        });
+                //       Newtable.page(currentPage).draw('page');
+                //        //  $('.dataTables_paginate').css('text-align', 'center');
+
+                //        // Center align the pagination using a more specific CSS selector
+                //        // $('.dataTables_wrapper .dataTables_paginate').css('text-align', 'center');
+
+
+                //        //newTable.page(tabletargetpageTblLeaveDeligationAuthorityList_SearchedRecords).draw('page');
+                //        // table.page(tabletargetpageTblLeaveDeligationAuthorityList_SearchedRecords).draw('page');
+
+
+
+                //        // $("#TblLeavesSearchedResultPage_Div").empty();
+
+                //        //   $("#TblLeavesSearchedResultPage_Div").html(data);
+
+
+                //        //  Pagination($("#counts").text(), 'TblLeaveDeligationAuthorityList_SearchedRecords');
+                //        //  DepartmentsDropdown_Caliingfunction('DdlDepartment', '1', 'SelectName');
+                        $("#TblLeavesSearchedResultPage_Div").show();
+                //        $("#loadingOverlay").hide();
+                //    },
+                //    error: function () {
+                //        $("#loadingOverlay").hide();
+                //        $("#Main_Span_Error").text("Something Error");
+                //    }
+
+                //});
+            } catch (e) {
+                $("#loadingOverlay").hide();
+                $("#Main_Span_Error").text("Something Error");
+            }
+        }
+
+
+    </script>*@
+
+
+

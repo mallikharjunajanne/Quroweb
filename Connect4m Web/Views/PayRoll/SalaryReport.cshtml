@@ -1,0 +1,251 @@
+﻿@model Connect4m_Web.Models.LMSproperties.PGEsearch
+@{
+    ViewData["Title"] = "SalaryReport";
+    Layout = null;
+}
+
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+<style>
+    .dataTable td:nth-child(2) {
+        color: #2B2B2B;
+        /*  text-decoration: underline;*/
+        font-weight: 600 !important;
+    }
+
+        .dataTable td:nth-child(2):hover {
+            cursor: context-menu !important;
+            color: #2B2B2B;
+            text-decoration: none;
+            font-weight: 600;
+            background-color: antiquewhite;
+        }
+</style>
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <h6><span>SALARY REPORT</span></h6>
+
+
+                    <div>
+
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH FOR EMPLOYEES</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                            <div class="row padding-search">
+                                <div class="row">
+
+
+                                    <form id="Serach_SR">
+                                        <div class="row">
+
+                                            <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforSR" disabled hidden />
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space required"> Category</label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.Category,
+                                                new SelectList(ViewBag.Category, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Category_SR", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="Category" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space required">Sub Category </label>
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.SubCategory,
+                                                new SelectList(ViewBag.SubCategory, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SubCategory_SR", @style = "color:black;", @disabled = true })
+
+                                                </div>
+                                                <span asp-validation-for="SubCategory" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space">Department</label>
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_2">
+                                                    @Html.DropDownListFor(
+                                               x => x.Department,
+                                                new SelectList(ViewBag.Department, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Department_SR", @style = "color:black;" })
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+
+
+                                                <label class="control-label required space">Year </label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.Years,
+                                                new SelectList(ViewBag.Years, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Years_SR", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="Years" class="text-danger"></span>
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space required"> Month</label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.Months,
+                                                new SelectList(ViewBag.Months, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Months_SR", @style = "color:black;" })
+
+                                                </div>
+                                                <span asp-validation-for="Months" class="text-danger"></span>
+
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div id="dateforSR" style="display:none">
+
+                                          
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space "> From Date</label>
+
+                                            </div>
+                                            <div class="form-group col-4" id="startdate_SR">
+                                                
+
+
+                                            </div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2">
+                                                <label class="control-label space ">To Date</label>
+
+                                            </div>
+                                            <div class="form-group col-4" id="enddate_SR">
+                                                
+
+
+                                            </div>
+                                            <div class="col-3"></div>
+
+                                        </div>
+
+
+
+
+                                            <div style=" display: flex; gap: 17px;">
+                                                <div class="col-4"></div>
+
+                                                <input type="button" value="Previous Page" id="backtopage_ME" onclick="nextpage('SearchEmployeeDetails',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
+                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                                <input type="submit" value="Get Report" id="sub_tblSR" class="btn btn-pill btn-outline-success btn-air-success" />
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="card" style="display:none" id="hideshowreport">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_ME" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                                </h5>
+                            </div>
+
+                            <div id="eg1" style="color: black; background-color: whitesmoke">
+                                <table class=" table table-bordered" id="tblSRsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                    <thead>
+                                        <tr style="border-color: black;">
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                S.No
+                                            </th>
+                                           
+                                            <th style="border-color: blue; width: 76px !important; " class="bg-primary">
+                                                  Emp.No
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                               User Name
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Category
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Sub Category
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Department
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Gross Salary
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Net Salary
+                                            </th>
+                                           
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+
+<script src="~/js/PayRoll_8.js"></script>
+
+
+
+
+

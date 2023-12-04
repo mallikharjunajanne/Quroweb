@@ -1,0 +1,100 @@
+﻿
+@{
+    Layout = null;
+}
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+
+<style>
+    table.dataTable input, table.dataTable select {
+        border: 1px solid #100f0f57;
+        height: 20px;
+        background-color: white;
+        font-weight: 800;
+    }
+
+    .form-control {
+        padding: 4px !important;
+    }
+
+    .dataTable td:nth-child(2) {
+        color: black;
+        /*  text-decoration: underline;*/
+        font-weight: 600 !important;
+    }
+
+    .dataTable td:nth-child(1) {
+        text-align: center !important;
+    }
+
+
+    .dataTable td:nth-child(2):hover {
+        cursor: auto !important;
+        color: black;
+        font-weight: 600;
+        text-decoration: none;
+        background-color: antiquewhite;
+    }
+    /* .dataTables_wrapper table.dataTable thead th{
+            background-color: #dfd3d3 !important;
+    }*/
+    .bg-primary {
+        background-color: transparent !important;
+    }
+
+    .container-fluid {
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+  
+</style>
+<div class="col-sm-12 " id="dispalyordersupdate">
+    <div class="card">
+        <div class="form-group col-12 errorofallemployeeattendence" style="color: red; margin: 7px 6px 10px 7px; font-weight: 900;"></div>
+
+        <div class="card-header bg-primary">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_DO" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+            </h5>
+        </div>
+        <div id="eg1" style="color: black; background-color: whitesmoke">
+            <table class=" table table-bordered" id="tblDisplayOrder" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                <thead>
+                    <tr style="border-color: black;">
+
+                        <th style=" border-color: blue;" class="bg-primary">
+                            SI.No
+                        </th>
+                        <th style="border-color: blue; width: 76px !important; " class="bg-primary">
+                            Menu Name
+                        </th>
+                        <th style="border-color: blue" class="bg-primary">
+                            Display Name
+                        </th>
+                        <th style="border-color: blue" class="bg-primary">
+                            Display Order
+                        </th>
+
+
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+
+    </div>
+    
+            <div style=" display: flex; gap: 22px; margin-left: 25%; padding: 29px;">
+                <input type="button" value="Back To Search" id="backtosearch_CRorder" class="btn btn-pill btn-outline-secondary btn-sm" />
+                <input type="button" value="Back To Menus" class="btn btn-pill btn-outline-warning btn-awarning" id="BacktoMenusorders" />
+
+                <input type="submit" value="Update" id="Update_CR" class="btn btn-pill btn-outline-success btn-auccess" />
+            </div>
+        
+
+</div>
+
+<script src="~/js/SearchRoles.js"></script>

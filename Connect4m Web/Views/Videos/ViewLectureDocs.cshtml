@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.ViewLectureDocsMain>
+
+@{
+    ViewData["Title"] = "ViewLectureDocs";
+}
+
+
+<link href="~/css/Viewlecturedocs.css" rel="stylesheet" />
+<link href="~/css/progressbar.css" rel="stylesheet" />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+
+                <div class="card-header pb-0">
+
+
+                </div>
+                <div class="card-body">
+                    <div class="default-according style-1" id="accordionoc">
+                        <div class="card">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">@item.ViewLectureDocs[0].ClassificationName</button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                                <div class="row padding-search">
+                                    <div class="row">
+                                        <div style="margin-top: 12%; margin-bottom: 12%;">
+
+
+                                            <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
+                                            <label style="margin-left: 19%;">   @item.ViewLectureDocs[0].ClassificationDescription</label>
+                                        </div>
+                                        @{
+
+                                            double progressbar = ((double)item.ViewLectureDocs[0].viewPoints / (double)item.ViewLectureDocs[0].TotalPoints) * 100;
+
+                                        }
+
+                                        <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(ViewBag.GetallViewvideopoints)%,#bfbed5 0);margin-left:auto">
+                                            @Convert.ToInt32(ViewBag.GetallViewvideopoints)%
+                                        </div>
+
+
+                                        @*<label>@Convert.ToInt32(@progressbar)% Completed</label>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" id="myProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: @progressbar%;">
+
+                                            </div>
+                                        </div>*@
+                                    </div>
+
+
+                                </div>
+                                <div id="VLD_ProgressDetails">
+                                    <input type="text" value="@item.ViewLectureDocs[0].InstanceClassificationId" id="VLD_Instanceclassficationid" hidden style="display:none" />
+                                    <input type="text" value="@item.ViewLectureDocs[0].InstanceSubClassificationId" id="VLD_InstanceSubClassificationId" hidden style="display:none" />
+                                    <label id="ProgramDetails">Program Details >></label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/js/ViewLecturedocs.js"></script>
+@*<script>
+      // JavaScript code to update the progress bar
+      function updateProgressBar(progress) {
+        var progressBar = document.getElementById('myProgressBar');
+        progressBar.style.width = progress + '%';
+        progressBar.setAttribute('aria-valuenow', progress);
+      }
+
+      // Example usage: Update the progress to 50%
+      updateProgressBar(50);
+    </script>*@
+
+
+

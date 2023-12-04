@@ -1,0 +1,126 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Admin_Attendance_Posting
+
+
+@{
+    ViewData["Title"] = "PostPeriodAttendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .underlined {
+            text-decoration: underline;
+        }
+        .S_btn {
+            width: 7%;
+            height: 28px;
+            margin-top: 16px;
+            margin-left: 26%;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0">
+            <div style=" font-size: 20px; text-align: center;">
+                <h1 style="background-color: cadetblue; color: snow; font-weight: 700; font-size: 25px; margin-top: -13px; "> POST ATTENDANCE</h1>
+            </div>
+        </div>
+        <div style="color:red; font-size:13px;">
+            <div id="validation2" style="color: red;"></div>
+            <div id="validationMessage" style="color: red;"></div>
+        </div>
+
+
+
+        <div>
+            <a href="#" id="Post_Previous_Attendance_Link">
+                <u>Click to Post Previous Attendance</u>
+            </a>
+            <div id="Posting_Attendance_DateId">
+                <label>StartDate:</label><input type="date" /><input type="submit" value="Shiow Periods"/>
+            </div>
+
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+
+                                <form class="form" id="myform">
+                                    <div class="form-group row g-3">
+                                        <div id="Ct_Lg_DivId" class="row">
+                                            <div class="form-group row">
+
+                                                <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Faculty:</label>
+                                                <div class="col-sm-9">
+                                                    @{
+                                                        var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
+                                                        var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
+                                                    }
+
+                                                    @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "Dropdownbox" })
+                                                </div>
+
+                                                <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Period:</label>
+                                                <div class="col-sm-9">
+                                                    <select>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+
+
+                                                <label class="col-sm-3 col-form-label"></label>
+                                                <div class="col-sm-9">
+                                                    <input type="checkbox" class="checkbox_animated">Show On Duty
+                                                </div>
+
+                                                <label></label>
+                                                <div class="S_btn" style="display: flex; grid-gap: 16px;">
+                                                    <input type="submit" value="Get Attendance Form" id="Get_atd_btn" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Posting_Attendance_DateId").hide();
+
+        $("#Post_Previous_Attendance_Link").click(function (e) {
+            e.preventDefault(); // Prevent default anchor tag behavior
+
+            // Toggle the visibility of the div
+            $("#Posting_Attendance_DateId").toggle();
+        });
+    });
+
+</script>

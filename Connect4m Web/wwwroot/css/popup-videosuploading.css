@@ -1,0 +1,218 @@
+﻿.popupContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow: auto;
+}
+
+.popupContent {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    max-height: 80%;
+  overflow-y: auto;
+}
+
+.popupContainer.active {
+    display: block;
+}
+
+#videosourse::-webkit-media-controls-timeline {
+    display: block;
+}
+
+#videosourse::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+video {
+    height: 321px;
+    width: 100%;
+}
+#video-upload {
+    padding: 5px;
+    background-color: aqua;
+    color: black;
+    filter: drop-shadow(2px 4px 6px black);
+    margin-top: 15px;
+    margin-left: 335px;
+    border: 2px solid green;
+}
+#time-text input, .displayname input {
+    border: 1px solid black;
+    padding: 3px;
+    color: black;
+    font-weight: 800;
+}
+
+    #time-text input:focus, .displayname input:focus {
+        padding: 5px;
+        border: 3px solid #0fdcf1;
+        background-color: beige;
+    }
+#add-new-time,#add-new-question {
+    WIDTH: 47px;
+    height: 28px;
+    margin-left: 95%;
+    color: black;
+    background-color: green;
+    border: 2px solid red;
+    text-align: center;
+}
+.row > div {
+    position: relative;
+    display: flex;
+}
+#questions input {
+    border: 1px solid black;
+    padding: 3px;
+    color:black;
+    font-weight:800;
+}
+#questions input:focus {
+        padding: 5px;
+        border: 3px solid #0fdcf1;
+        background-color: beige;
+    }
+#questions .col-6 input {
+    width: 74%;
+}
+#questions .row {
+    gap: 6px;
+}
+#time-text .row {
+    gap: 6px;
+}
+textarea{
+    color:black;
+    border:2px solid;
+    font-weight:800;
+}
+#questions input[type="time"] {
+    color: red;
+    font-weight: 900;
+    border: 2px solid blue;
+}
+#questions span{
+    color:black;
+    font-weight:800;
+
+}
+#add-one-more-video {
+    color: black;
+    border: 2px solid red;
+    background-color: darkkhaki;
+    font-weight: 900;
+    margin-left: 391px;
+}
+#delete-video {
+    position: fixed;
+    width: 44%;
+    margin-left: 15%;
+    color: black;
+    font-weight: 800;
+    z-index: 9999;
+    margin-top: 5%;
+  display:none;
+    border-radius: 20px;
+}
+.group {
+    margin-bottom: 10px;
+}
+
+.group-header {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.group-content {
+    /*   display: none;*/
+    padding: 10px;
+}
+hr {
+    color: black;
+    padding: 5px;
+    background-color: antiquewhite;
+}
+.group-header {
+    width: 77%;
+    background-color: darkseagreen;
+    margin-left: 108px;
+    border-radius: 92px;
+    font-weight: 900;
+    font-size: 19px;
+}
+#close-popup {
+    position: fixed;
+    margin-left: 73%;
+    padding: 6px;
+    background-color: #fd2d63;
+    color: white;
+    z-index: 999;
+    border-radius: 15px;
+    border: 2px solid black;
+}
+    #close-popup:hover {
+        background-color: #2d830f;
+        padding:8px;
+    }
+#save-all-videos {
+    margin-left: 134px;
+    background-color: deepskyblue;
+    padding: 4px;
+    width: 70px;
+    font-weight: 900;
+}
+
+/*    houes a, minutes and secs design     */
+
+.duration-picker {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.duration-picker-input {
+    width: 40px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.duration-picker-separator {
+    font-size: 16px;
+    color: #777;
+}
+/*    --   */
+/*#textitems .fa-trash-o:hover{
+    padding:
+}*/
+
+.duration-picker input:focus {
+    border: 3px solid #0fdcf1;
+    background-color: beige;
+    width: 48px;
+}
+.error-message, .error-answer {
+    color: red;
+}
+.form-control{
+    border:1px solid #11a5f1;
+}
+    .form-control:focus {
+        border: 2px solid #11a5f1;
+    }
+select:focus {
+    border: 2px solid #11a5f1;
+}
+/*#openPopup {
+    cursor: pointer !important;
+}*/

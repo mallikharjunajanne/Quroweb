@@ -1,0 +1,340 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model List<PAY_FEE_CORRECTIONS_BY_USERS>
+
+<style>
+    .SchoolName_SPId {
+        letter-spacing: 2px;
+        font-family: Times New Roman;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .SchoolAddress_SPId {
+        letter-spacing: 3px;
+        font-size: 11px;
+        font: 11px arial;
+        color: #333333;
+    }
+
+    .lbl {
+        font: 13px arial;
+        color: #333333;
+        letter-spacing: 3px;
+    }
+
+    .Stamp {
+        margin-left: 5%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .S_of_Accountant {
+        margin-left: 30%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .S_Of_Payee {
+        margin-left: 23%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .SchoolTittle {
+        font-family: Times New Roman;
+        font-size: 9px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .Signaturelbl {
+        font-family: Times New Roman;
+        font-size: 9px;
+        color: #555555;
+        letter-spacing: 4px;
+        line-height: 20px;
+        margin-right: 36px;
+    }
+
+    .Inslbl {
+        font-family: Times New Roman;
+        font-size: 11px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .Receiptlbl {
+        font-family: Times New Roman;
+        font-size: 11px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .DateAndTimeHeading {
+        text-align: right;
+        font: 13px arial;
+        color: #333333;
+        letter-spacing: 3px;
+        margin-right: 33px;
+        margin-top: 15px;
+    }
+
+    .PrintBtns {
+        margin-left: 78%;
+        display: flex;
+    }
+
+    input[type="submit"] {
+        border: none;
+    }
+</style>
+
+<div class="default-according style-2" id="accordionoc2" style=" margin-top: 53px;">
+    <div class="PrintBtns">
+        <input type="submit" value="PRINT On Dot-Matrix" id="Print_Matrix_Button" />|
+        <input type="submit" value="Print" id="Print_Button" />
+    </div>
+    <div class="card" style=" border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
+        <div>
+            <h5 class="mb-0">
+                <button class="FeeTerms_Edit_ButtonView" style="width: 100%; margin-left: 0px;">
+                    FEE RECEIPT(S)
+                </button>
+            </h5>
+        </div>
+        <div>
+            @foreach (var item in ViewBag.ChallanDetails)
+            {
+
+
+                <div style=" margin-top: 20px;">
+                    <div id="Fee_DetailsPrint">
+                        <div class="DateAndTimeHeading">
+                            @item.PaidDate<br />
+                            @item.PaidTime
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-3" style="margin-left: 46px;">
+                                    <img src="~/Images/Jnanadeeplogo.png" style=" height:65px; " />
+                                </div>
+
+                                <div class="col-7" style=" margin-top: 11px;">
+                                    <span class="SchoolName_SPId"><b>JNANADEEPA VIDYA SAMSTE</b></span><br />
+                                    <span class="SchoolAddress_SPId">Raghav Nagar,Hyderabad,Talangana - 500003</span>
+                                </div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Name :</label> </div>
+                                <div class="col-3"><label class="lbl">@item.FirstName</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Fee Amount :</label> </div>
+                                <div class="col-3"><label class="lbl">@item.FeeAmount</label> </div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Registration Number :</label> </div>
+                                <div class="col-3"><label class="lbl">@item.AdmissionNumber</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Discount Type :</label></div>
+                                <div class="col-3">
+                                    <label class="lbl">
+                                        @(item.DiscountName != "" ? item.DiscountName : "NA")
+                                    </label>
+                                </div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Department :</label></div>
+                                <div class="col-3"><label class="lbl">@item.ClassificationName</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Discount Amount :</label></div>
+                                <div class="col-3">
+                                    <label class="lbl">
+                                        @(item.ConcedingAmount == "0.00" ? "NILL" : item.ConcedingAmount)
+                                    </label>
+                                </div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Semester :</label></div>
+                                <div class="col-3"><label class="lbl">@item.SubClassificationName</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Paid Amount :</label></div>
+                                <div class="col-3"><label class="lbl">(RM) @item.Amount_Txt</label></div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Term :</label></div>
+                                <div class="col-3"><label class="lbl">@item.Term</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Due Amount :</label></div>
+                                <div class="col-3"><label class="lbl">(RM) @item.DueAmount</label> </div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Due Date :</label></div>
+                                <div class="col-3"><label class="lbl"> @item.DueDate</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Paying Amount :</label></div>
+                                <div class="col-3"><label>@item.Amount_Txt</label></div>
+
+                                <div class="col-3" style="text-align: right; height: 10%;"><label class="lbl">Fee type :</label></div>
+                                <div class="col-3"><label class="lbl">    @item.FeeType</label></div>
+
+                                <div class="col-3" style="text-align: right;"><label class="lbl">Balance Due :</label></div>
+                                <div class="col-3"><label class="lbl"></label></div>
+
+                                <div class="col-12" style=" display: flex; margin-top: 7%;">
+                                    <div class="Stamp">Stamp</div>
+                                    <div class="S_of_Accountant"> Signature Of Accountant</div>
+                                    <div class="S_Of_Payee">Signature Of Payee</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 8%;  padding: 0px; background-color: cornflowerblue;" />
+                    <div id="MatricChallanaPrint">
+                        <div style=" margin-top: 2%;">
+                            <div class="SchoolTittle">
+                                ADS SCHOOL - HYDERABAD,   H.S - 2 , Sector - 23 , Opposite Pkt. - 3
+                            </div>
+                            <div class="SchoolTittle">
+                                *****  FEE RECEIPT  *****
+                            </div>
+                            <span style=" margin-left: 12%;">
+                                -----------------------------------------------------------------------------------------------------------
+                            </span>
+                            <div class="row" style=" margin-top: 25px; width: 99%;">
+                                <div class="row">
+                                    <div class="col-3" style="text-align:right;"><label class="Receiptlbl"> RECEIPT NO :</label></div>
+                                    <div class="col-3"><label class="lbl">@item.ReceiptNo</label></div>
+
+                                    <div class="col-3" style="text-align:right;"><label class="Receiptlbl"> RECEIPT DATE :</label></div>
+                                    <div class="col-3"><label class="lbl">@item.PaidDate</label></div>
+
+                                    <div class="col-2" style="text-align:right;"><label class="Receiptlbl"> Name :</label></div>
+                                    <div class="col-2"><label class="lbl">@item.FirstName</label></div>
+
+                                    <div class="col-2" style="text-align:right;"><label class="Receiptlbl"> CLASS :</label></div>
+                                    <div class="col-2"><label class="lbl">@item.ClassificationName</label></div>
+
+                                    <div class="col-2" style="text-align:right;"><label class="Receiptlbl"> ADM.NO :</label></div>
+                                    <div class="col-2"><label class="lbl">@item.AdmissionNumber</label></div>
+
+                                </div>
+                            </div>
+                            <span style=" margin-left: 12%;">
+                                -----------------------------------------------------------------------------------------------------------
+                            </span>
+                            <div class="row" style=" margin-top: 25px; margin-left: 18%;">
+                                <div class="row">
+                                    <div class="col-5" style="text-align:right;"><label class="Inslbl">Instalment Number</label></div>
+                                    <div class="col-5"><label class="Inslbl">@item.Term</label></div>
+                                    <div class="col-5" style="text-align:right;"><label class="Inslbl">Amount</label></div>
+                                    <div class="col-5"><label class="Inslbl">	(RM) 0</label></div>
+                                    <div class="col-5" style="text-align:right;"><label class="lbl">	</label></div>
+                                    <div class="col-5"><label class="lbl"> ---------</label></div>
+                                    <div class="col-5" style="text-align:right;"><label class="Inslbl">	TOTAL FEE</label></div>
+                                    <div class="col-5"><label class="Inslbl">	(RM) 0</label></div>
+                                    <div class="col-5"><label class="lbl">	</label></div>
+                                    <div class="col-5"><label class="lbl"> ---------</label></div>
+                                </div>
+                            </div>
+
+
+                            <div style=" text-align: right;">
+                                <label class="Signaturelbl">SIGNATURE</label>
+                            </div>
+                            <span style="margin-left: 3%;">
+                                ===========================================================================================
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    //document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
+
+    //     debugger;
+
+    //    // Get the content of the div by its id
+    //    var content = document.getElementById("MatricChallanaPrint").innerHTML;
+
+    //    // Open a new blank window
+    //    var printWindow = window.open('', '', 'width=600,height=600');
+
+    //    // Populate the new window with the content
+    //    printWindow.document.open();
+    //    printWindow.document.write('<html><head><title>Print</title></head><body>');
+    //    printWindow.document.write(content);
+    //    printWindow.document.write('</body></html>');
+    //    printWindow.document.close();
+
+    //    // Trigger the print function in the new window
+    //    printWindow.print();
+    //    printWindow.close();
+    //});
+    document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
+        // Open a new blank window
+        var printWindow = window.open('', '', 'width=600,height=600');
+
+        // Populate the new window with an HTML document
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title>');
+
+        // Include the CSS stylesheet in the new window
+        printWindow.document.write('<link rel="stylesheet" type="text/css" href="styles.css">');
+
+        printWindow.document.write('</head><body>');
+
+        // Get the content of the div by its id
+        var content = document.getElementById("MatricChallanaPrint").outerHTML;
+
+        // Write the content to the new window
+        printWindow.document.write(content);
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Trigger the print function in the new window
+        printWindow.print();
+        printWindow.close();
+    });
+
+    document.getElementById("Print_Button").addEventListener("click", function () {
+
+        debugger;
+
+        // Get the content of the div by its id
+        var content = document.getElementById("Fee_DetailsPrint").innerHTML;
+
+        // Open a new blank window
+        var printWindow = window.open('', '', 'width=900,height=600');
+
+        // Populate the new window with the content
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title></head><body>');
+        printWindow.document.write(content);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Trigger the print function in the new window
+        printWindow.print();
+        printWindow.close();
+    });
+</script>

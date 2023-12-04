@@ -1,0 +1,86 @@
+﻿
+
+input[type='text']:not([disabled]) {
+    border: 1px solid;
+    border-color: fuchsia;
+}
+
+
+
+
+input[type="text"]:focus {
+    border: 1px solid;
+    border-color: dodgerblue;
+    outline: none;
+}
+
+/* This will apply the underline only on hover */
+#Leavelevelid:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+/* Optional: You can also add more styles, like changing the color or removing the underline by default */
+#Leavelevelid {
+    text-decoration: none; /* Removes the underline by default */
+    color: #333; /* Optionally set the color of the text */
+}
+
+
+.ErrorMessageSpan {
+    display: block;
+    font-size: 12px;
+    color: red;
+}
+/*this form pagination number highlight*/
+.LeaveLevels_SearchRecords_Table_pagination_page.active {
+    background-color: black;
+    color: white;
+    cursor: default;
+    /* cursor: auto;*/
+    text-decoration: none;
+    pointer-events: none;
+    /* Add any additional styles for the active page number */
+}
+
+
+
+/*.tableid {
+    font-family: Arial, Helvetica, sans-serif;*/
+    /*border-collapse: collapse;*/
+    /*width: 100%;
+}
+
+    .tableid td {
+        font-size: 11px;
+        vertical-align: middle;
+    }
+
+    .tableid th {       
+        font-size: 12px;
+    }
+
+    .tableid td, th {
+        text-align: center;
+        border: 1px solid coral;*/
+        /*border: 1px solid #ddd;*/
+        /*padding: 8px;
+    }
+
+    .tableid tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .tableid tr:hover {
+        background-color: #ddd;
+    }
+
+    .tableid th {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        text-align: left;
+        border: 1px solid coral;
+        background-color: deepskyblue;
+        color: white;
+    }*/
+

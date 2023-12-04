@@ -1,0 +1,168 @@
+﻿@model Connect4m_Web.Models.LMSproperties.Managesubjects
+
+@{
+    ViewData["Title"] = "Managesubjects";
+}
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/css/Managesubjecttools.css" rel="stylesheet" />
+<link href="~/css/texts.css" rel="stylesheet" />
+@*<link href="~/css/pagination.css" rel="stylesheet" />*@
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-header pb-0">
+            <a class="btn btn-primary" href="/Videos/UpdateManageSubjects" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
+                Create Subject
+            </a>
+
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> SEARCH FOR SUBJECT TOOLS</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                        <div class="row padding-search">
+                            <div class="row">
+
+                                <form id="Insertsubject">
+                                    <div class="row col-9">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+
+                                        <div class="form-group col-4">
+
+
+                                            <label asp-for="SubjectName" class="control-label"></label>
+                                            @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                        </div>
+                                        <div class="form-group col-8">
+
+                                            <input asp-for="SubjectName" class="form-control" id="SubjectName_Ms" />
+                                            <span asp-validation-for="SubjectName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <label asp-for="SubjectCode" class="control-label"></label>
+
+                                        </div>
+                                        <div class="form-group col-8">
+
+                                            <input asp-for="SubjectCode" class="form-control" id="SubjectCode_Ms" />
+                                            <span asp-validation-for="SubjectCode" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group col-4">
+                                            <label asp-for="ClassificationId" class="control-label"></label>
+
+                                        </div>
+                                        <div class="form-group col-8">
+
+                                            <div id="Drop_Format-MS">
+                                                @Html.DropDownListFor(
+                                            x => x.ClassificationId,
+                                            new SelectList(ViewBag.Departmentlist_MS, "Value", "Text"),
+                                            "-- Please select Your Department --", new { @class = "form-select readonly", @id = "dropdown_department_MS", @style = "color:black;" })
+                                                <span class="text-danger">  @Html.ValidationMessageFor(x => x.ClassificationId)</span>
+                                            </div>
+                                            <span asp-validation-for="ClassificationId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group col-4">
+                                            <label asp-for="SubClassificationId" class="control-label"></label>
+
+                                        </div>
+                                        <div class="form-group col-8">
+
+                                            <select id="SubClassificationId_MS" class="form-control">
+                                                <option>-- Please select a Class --</option>
+                                            </select>
+
+                                            <span asp-validation-for="SubClassificationId" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="form-group col-4">
+
+
+                                        </div>
+                                        <div class="form-group col-8" style=" text-align: start;font-weight:700">
+
+                                            <input type="checkbox" /><span>Show all Subjects</span>
+
+
+                                        </div>
+
+
+
+
+                                        <div class="col-4"></div>
+                                        <div class="form-group col-2">
+                                            <input type="reset" value="Clear" class="btn btn-danger" id="clearform" />
+
+                                        </div>
+
+                                        <div class="form-group col-2">
+                                            <input type="button" value="Search" id="sub_tblsubject" class="btn btn-success" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_sujects_MS" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                            </h5>
+                        </div>
+
+                        <div id="eg1" style="color: black; background-color: whitesmoke">
+                            <table class=" table table-bordered" id="tblsubjects" style="background-color:whitesmoke ;width:9px;border-color:red">
+                                <thead style="width:9px;">
+                                    <tr style="border-color: black;">
+                                        <th style="width: 9px; border-color: blue" class="bg-primary">
+                                            Subject
+
+                                        </th>
+                                        <th style=" width: 30%; border-color: blue" id="th2tool" class="bg-primary" hidden>
+                                            Subject Type Name
+
+                                        </th>
+
+
+
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/Managesubjects.js"></script>

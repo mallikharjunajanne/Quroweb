@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.ChangeActivity>
+<!-- Plugins css Ends-->
+<!-- Bootstrap css-->
+<!--<link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">-->
+<!-- App css-->
+<!--<link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+<link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">-->
+<!-- Responsive css-->
+<!--<link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">-->
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<style>
+    .table td {
+        border: 1px solid;
+    }
+    .table tbody tr:hover{
+        background-color:lightblue;
+    }
+    .table thead th {
+        border: 1px solid;
+    }
+    .table th, .table td {
+        padding: 9px;
+        vertical-align: top;
+        font: 13px arial;
+    }
+    body {
+        margin-left: 8%;
+    }
+</style>
+<h6 style="text-align: center; padding: 13px; margin-left: -19%;">
+    <span style="background-color: #500ef6; background-color: #500ef6; padding: 6px; color: white; filter: drop-shadow(2px 4px 6px black); border-radius: 18px;">  View Change Activity</span>
+</h6>
+<div style=" margin-left: 9%;">
+    <table class="table" style=" margin-top: -9px; width: auto; border: 1px solid black; ">
+        <thead style="background-color: bisque">
+            <tr>
+                <th>
+                   S.NO
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AuditKey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreviousValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreviousValueCreateBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentValueCreateBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentValueCreateDate)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{int i=1;
+                 }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                       @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AuditKey)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreviousValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreviousValueCreateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentValueCreateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentValueCreateDate)
+                    </td>
+
+                </tr>
+                i = i + 1;
+            }
+        </tbody>
+    </table>
+</div>

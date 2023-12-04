@@ -1,0 +1,69 @@
+﻿body {
+}
+
+.Header_Btn {
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    width: 99%;
+    margin-left: 0px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+.Challana_Users_Count {
+    color: red;
+    background-color: white;
+    border-radius: 11px;
+    font-weight: bold;
+    padding: 3px;
+}
+
+.FeeChallaReports_Users_tbl {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+    margin-top: -13px;
+}
+
+    .FeeChallaReports_Users_tbl th {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: lavender;
+        font-size: 13px;
+        font-family: none;
+        font-weight: bold;
+    }
+
+    .FeeChallaReports_Users_tbl td {
+        border: 1px solid #0069ff42;
+        font-size: 13px;
+        color: black;
+        font-family: auto;
+    }
+
+
+.FeeChallana_tbl {
+    margin-left: 10px;
+    width: 90%;
+    text-align: center;
+}
+
+    .FeeChallana_tbl th {
+        background-color: cornsilk;
+    }
+
+    .FeeChallana_tbl td {
+        text-align: center;
+        font-weight: 600;
+    }
+
+
+.error-message {
+    font-size: 13px;
+    font-weight: 600;
+    color: red;
+    font-family: none;
+}

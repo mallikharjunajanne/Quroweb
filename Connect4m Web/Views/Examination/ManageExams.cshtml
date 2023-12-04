@@ -1,0 +1,262 @@
+﻿@model Connect4m_Web.Models.ExaminationModel
+@{
+    ViewData["Title"] = "ManageExams";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+   
+    @*<button id="exportExcelButton">Export Excel</button>*@
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+  
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+
+    @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+
+    @*<script src="~/Datatable/jquery.dataTables.min.js"></script>*@
+    <script>
+        var js = jQuery.noConflict(true);
+        $(document).ready(function () {
+            //  $("#CreateNewPage").hide();
+            TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+        });
+       
+        function EditValuesGettingFunction(examid) {
+            debugger;
+           // $("#loadingOverlay").show();
+            //  var data = { Id: examid };
+            CreateNewExams();
+            var url = "/Examination/TblExamListData?Id=" + examid;
+            performCrudOperationCommonFunction("POST", url, null, function (responce) {
+                debugger;
+                $("#AddNewText_Span_CreatePage").text("UPDATE EXAM NAME");
+                $("#DdlAcademicYearCreatePage1").val(responce[0].academicYearId);
+                $("#TxtExamNameCreatePage1").val(responce[0].examName);
+                $("#TxtDisplayorderCreatePage").val(responce[0].displayorder);
+                $("#TxtExamidCreatePage").val(responce[0].id);
+
+                $('input[name="ExamForAcademics"][value="' + responce[0].exaternalExam + '"]').prop("checked", true);
+                $("#BtnSave").val("Update");
+                $("#BtnClear").prop("disabled", true);
+            });
+           // $("#loadingOverlay").hide();
+        }
+
+        function SaveExams(event, FormId) {
+            try {
+                event.preventDefault();
+                debugger;
+                $(".ErrorMessageSpan").empty();
+                var DdlAcademicYearCreatePage = $("#DdlAcademicYearCreatePage1").val();
+                var TxtExamNameCreatePage = $("#TxtExamNameCreatePage1").val();
+                var TxtExamNameCreatePage1 = $("#TxtExamNameCreatePage").val();
+                if (DdlAcademicYearCreatePage === '' || TxtExamNameCreatePage === '' || $("input[type='radio'].check").is(':checked') == false) {
+                    $("#Main_Span_Error").text('Following fields have invalid data :');
+                    window.scrollTo(0, 0);
+                    if (DdlAcademicYearCreatePage === '') {
+                        $("#DdlAcademicYearCreatePage").text("Academic Year");
+                    }
+                    if (TxtExamNameCreatePage === '') {
+                        $("#TxtExamNameCreatePage").text("Exam Name");
+                    }
+                    if ($("input[type='radio'].check").is(":checked") == false) {
+                        $("#RdoExamFor").text("Exam For");
+                    }
+                    return;
+                }
+                $("#loadingOverlay").show();
+                var data = new FormData($("#" + FormId)[0]);
+                performCrudOperationCommonFunction("POST", "/Examination/ManageExams", data, function (responce) {
+                    debugger;
+                    if (responce.message == "Record inserted successfully." || responce.message == "Record updated successfully.") {
+                        $("#BtnSave").prop('disabled', true);
+                    }
+                    $("#Main_Span_Error").text(responce.message);
+                }, function (error) {
+                    $("#Main_Span_Error").text("Something Error");
+                },true);
+                $("#loadingOverlay").hide();
+            } catch (e) {
+                $("#Main_Span_Error").text("Something Error");
+            }
+        }
+        //create new page function
+        function CreateNewExams() {
+            debugger;
+            performCrudOperationCommonFunction("POST", "/Examination/Create_Update_Pview_ManageExams", "FmExamsSearch", function (response) {
+                debugger;
+                $("#accordionoc12345").hide();
+                $("#CreateNewExams").html(response);
+            }, function (error) {
+                //console.error(error);
+            });       
+        }
+
+        function BackTOSearhExams(event) {
+            try {
+                $("#loadingOverlay").show();
+                TblDataTableWithColumns_CallingFunction(event, 'NoStop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+                $("#accordionoc12345").show();
+                $("#CreateNewExams").empty();
+                $(".ErrorMessageSpan").empty();
+                $("#loadingOverlay").hide();
+            } catch (x) {
+                $("#loadingOverlay").hide();
+                $("#Main_Span_Error").text("Something Error");
+            }
+        }
+
+        function DeleteExamsById(Examid) {
+            debugger;
+            var Deletemsg = "Exam";
+            CommonDeleteFunction("POST", "/Examination/ManageExams?ButtonName=Delete&DeleteID=" + Examid, Deletemsg, function (response) {
+                TblDataTableWithColumns_CallingFunction(event, 'NOStop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+            });
+        }
+    </script>
+
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>MANAGE EXAMS</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+            <a id="BtnCreateNewExams" class="BTNCreateNew Undeline"  onclick="CreateNewExams()">Create Exam</a>
+            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="DdlAcademicYearCreatePage"></span>
+            <span class="ErrorMessageSpan" id="TxtExamNameCreatePage"></span>
+            <span class="ErrorMessageSpan" id="RdoExamFor"></span>
+
+            <div class="default-according style-1" id="accordionoc12345">
+                <div class="card" id="SearchPage">
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                                SEARCH EXAMS
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+                        <div class="card ">
+                            <div class="card-body">
+
+                                <form id="FmExamsSearch">
+                                    <div style="margin-left:20%;font-size:12px" id="FmSearchExams_Div">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Academic Year :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <select id='DdlAcademicYear' name="AcademicYearId"  class="input-air-primary" style="width: 230px; color: black; font-size: inherit; height: 27px;" asp-items="@(new SelectList(""))">
+                                                            <option value=''>---------Select--------</option>
+                                                            <option value="1737">2016-2017</option>
+                                                            <option value="1203">2015-2016</option>
+                                                            <option value="761">2014-2015</option>
+                                                            <option value="655">2013-2014</option>
+                                                            <option value="534">2011-2012</option>
+                                                            <option value="688">2009-2010</option>
+                                                            <option value="689">2008-2009</option>
+                                                            <option value="690">2007-2008</option>
+                                                            <option value="694">2006-2007</option>
+                                                            <option value="691">2005-2006</option>
+                                                            <option value="692">2004-2005</option>
+                                                            <option value="693">2003-2004</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;">Exam Name :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text"  name="ExamName" id="TxtExamName" style="height: 27px; width: 230px;">
+                                                    </div>
+                                                </div>
+                                                <div style="margin-left:198px">
+                                                    <input type="button" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="CommonClearFunction('FmExamsSearch')" id="BtnClearSearchForm" style="padding:4px 20px;" value="Clear">&nbsp;&nbsp;&nbsp;
+                                                    <input type="submit" class="btn btn-pill btn-outline-primary btn-air-primary" onclick="TblDataTableWithColumns_CallingFunction(event, 'NOStop', '/Examination/TblExamListData', 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0,1,2,3]);" id="BtnSearchId" style="padding:4px 19px;" value="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                @*searched result table*@
+                <div id="Div_TblExamListData" style="display:none">
+                    <div class="default-according style-1" id="accordionoc123456">
+                        <div class="card" id="SearchedTablePage">
+                            <div class="card-header " style="background-color:black ;">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                <div class="card ">
+                                    <form id="Fm_TblExamListData" class="table-responsive">
+                                        @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
+                                        <table id="TblExamListData" class="display cell-border  tableid">
+                                            <thead>
+                                                <tr>
+                                                    <th>Exam Name</th>
+                                                    <th>
+                                                        Display Order
+                                                    </th>
+                                                    <th>
+                                                        Academic Year
+                                                    </th>
+                                                    <th style="text-align:center">External Exam</th>
+                                                    <th style="text-align:center">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*-----create page*@
+
+            <div id="CreateNewExams">
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*_TblAssignLeavesToStaff_AssignLeavestoStaff*@
+
+@model List<AttendanceModel>
+
+
+<div class="default-according style-1" id="accordionoc123456">
+    &nbsp;<input type="checkbox" onclick="CheckAllCheckBoxes.call(this)" id="CheckAll" />&nbsp;<span style="font-size:smaller; color:black;">Check All</span>
+    <div class="card">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle">@Model.Count</span> RECORDS </span></button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+
+
+            <div class="card ">
+               
+                @if (Model.Count > 0)
+                {
+
+                    <form id="Fm_TblAssignLeavesToStaffList_SearchedRecords" class="table-responsive">
+
+                        <table id="TblAssignLeavesToStaffList_SearchedRecords" class="  tableid">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Select</th>
+                                    <th>	Employee Name</th>
+                                    <th>	Date of Joining</th>
+                                    <th>Gender</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{var i = 0;}
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="text-align:center">
+                                            <input type="checkbox" name="val[@(i)].UserId" class="CheckBoxSelect" value="@item.UserId" />
+                                            <input type="hidden" name="val[@(i)].PayrollSubCategoryId" value="@item.PayrollSubCategoryId" />
+                                            <input type="hidden" name="val[@(i)].PayrollCategoryId" value="@item.PayrollCategoryId" />
+                                            <input type="hidden" name="val[@(i)].GenderId_Int" value="@item.GenderId_Int" />
+                                        </td>
+                                        <td>@item.FirstName</td>
+                                        <td>@item.DateofJoin</td>
+                                        <td>@item.GenderId</td>
+                                        <td>@item.ClassificationName</td>
+                                        <td>@item.SubClassificationName</td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+
+                        </table>
+                        <div style=" margin-left: 45%;">
+                            <input type="submit" value="Submit" class="button button2" onclick="SubmitLeaves(event)" id="BtnSubmit" />
+                        </div>
+                    </form>
+
+                }
+                else
+                {
+                    <div class="card-body">
+                        <p style="text-align:center">No records found</p>
+                    </div>
+                    <br />
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

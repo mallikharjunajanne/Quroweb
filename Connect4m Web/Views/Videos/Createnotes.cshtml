@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewData["Title"] = "Createnotes";
+    Layout = null;
+}
+
+<link href="~/css/navlinks_belowthevideo.css" rel="stylesheet" />
+
+<div class="alert alert-success" >
+
+</div>
+<div class="alert alert-danger">
+    
+</div>
+
+<div>
+    <button id="create-bookmark-container">
+        <span id="bookmark-span">
+            Create a new  note at
+            <span id="bookmark-current-time">
+                00:00
+            </span>
+
+        </span>
+        <i class="fa fa-plus"></i>
+
+
+
+    </button>
+</div>
+<div class="video-write-notes">
+    <div id="video-write-notes">
+        <div style=" margin-top: 9px; display: block; grid-gap: 13px;">
+            <input type="text"  hidden style="display:none" id="notesid" />
+            <span id="bookmark-current-time-after">00:00</span>
+        </div>
+        <textarea id="notes_textarea">
+
+</textarea>
+
+    </div>
+    <div id="notebook-save-cancel">
+        <input type="button" id="bookmark-cancel" value="Cancel" /><input type="button" id="bookmark-save" value="Save Note" />
+    </div>
+</div>
+
+<div id="Append_ListOfNotes"> </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/video-nav-links-content.js"></script>
+<script>
+    //---------------------------------------  Save Notes ----------------------
+    function notebooktimemain() {
+        var notebookintervels = setInterval(notebooktime, 1000);
+
+
+        function notebooktime() {
+
+            var videotime = videoo.currentTime;
+            try {
+                convertTimeToHMS(videotime);
+
+            }
+            catch {
+                clearInterval(notebookintervels);
+            }
+
+
+            //   document.getElementById('bookmark-current-time').innerHTML = videotime;
+        }
+    }
+    var bookmarkcurrenttimeafter = document.getElementById('bookmark-current-time-after');
+    var bookmarkcurrenttime = document.getElementById('bookmark-current-time');
+    function convertTimeToHMS(timeInSeconds) {
+        hours = Math.floor(timeInSeconds / 3600);
+        minutes = Math.floor((timeInSeconds % 3600) / 60);
+        seconds = Math.floor(timeInSeconds % 60);
+
+        //return {
+        //    hours: hours,
+        //    minutes: minutes,
+        //    seconds: seconds
+        //};
+
+        bookmarkcurrenttime.innerHTML = hours + ':' + minutes + ':' + seconds;
+        bookmarkcurrenttimeafter.innerHTML = hours + ':' + minutes + ':' + seconds;
+
+
+
+
+
+    }
+</script>

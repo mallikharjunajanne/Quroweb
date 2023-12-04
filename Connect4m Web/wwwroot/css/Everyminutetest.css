@@ -1,0 +1,185 @@
+﻿.form-popup {
+    position: absolute;
+    top: 0;
+    width: 155%;
+    bottom: 15px;
+    z-index: 9;
+    height: 86%;
+    margin-top: 4%;
+    overflow-y: scroll;
+    display: none;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 65%;
+    height: 92%;
+    padding: 10px;
+    background-color: bisque;
+}
+.form-popup #timerlabel {
+    position: absolute;
+    margin-left: 51%;
+    color: red;
+    padding: 8px;
+    background-color: black;
+    border-radius: 5px;
+    animation: timer 5s infinite;
+}
+
+@keyframes timer {
+    0% {
+        background-color: red;
+        color: white;
+        border: 2px solid black;
+        margin-top: 3px;
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: #921b1b;
+        color: white;
+        border: 2px solid white;
+        margin-top: 7px;
+    }
+
+    100% {
+        transform: scale(1);
+        background-color: black;
+        border: 2px solid white;
+        filter: drop-shadow(2px 4px 6px black);
+        color: red;
+        margin-top: 3px;
+    }
+    }
+}
+    .form-container label {
+        
+        color: red;
+        padding: 8px;
+        background-color: black;
+        border-radius: 5px;
+    }
+    .form-container #textsubmit {
+        margin-left: 92%;
+        height: 7%;
+        width: 7%;
+        background-color: #8E49E8;
+        color: white;
+        bottom: 0p;
+        border: 2px solid green;
+        margin-bottom: 10%;
+        margin-top: 23px;
+        text-align: center;
+    }
+        .form-container #textsubmit:hover {
+            background-color: green;
+            cursor:pointer;
+        }
+    /* Full-width input fields */
+    .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+img {
+   
+    width: 100%;
+    height: 89%;
+}
+#VLD_Optionslistsub div{
+    display:flex;
+    color:black;
+}
+#VLDQuestion {
+    font-weight: 800;
+    color: black;
+    width: 77%;
+}
+
+/*----------------------------------Exatra For    Options   In the Video--------------*/
+card {
+    max-width: 350px;
+    width: 100%;
+    margin: 170px auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.card .content {
+    margin-top: 20px;
+}
+
+#VLD_Optionslistsub .box {
+    background: #ddd;
+    margin-top: 12px;
+    padding: 10px 12px;
+    display: flex;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.clickedclass {
+    border-color: #8E49E8 !important;
+    background: #d5bbf7 !important;
+}
+
+#VLD_Optionslistsub .box:hover {
+    background: #d5bbf7;
+}
+
+input[type="radio"] {
+    height: 22px;
+    width: 22px;
+    background: #ccc;
+    border: 5px solid transparent;
+    display: inline-block;
+    margin-right: 15px;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.radiobuttoncircle {
+    border-color: #8E49E8;
+    background: #fff;
+}
+/*.box input[type="radio"]:checked + span {
+    background-color: red;
+    border: 2px solid red;
+}
+*/
+/*--------------------------   For Upload Pdfs---------------*/
+.form-popuppdf {
+    position: absolute;
+    top: 0;
+    width: 155%;
+    bottom: 15px;
+    z-index: 9;
+    height: 86%;
+    margin-top: 4%;
+    overflow-y: scroll;
+    display: none;
+}
+
+/* Add styles to the form container */
+.form-containerpdf {
+    max-width: 65%;
+    height: 92%;
+    padding: 10px;
+    background-color: bisque;
+}

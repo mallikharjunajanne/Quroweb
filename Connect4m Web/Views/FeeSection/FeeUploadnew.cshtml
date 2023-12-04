@@ -1,0 +1,445 @@
+﻿
+@model Connect4m_Web.Models.Attendenceproperites.FeeReports
+
+@{
+    ViewData["Title"] = "FeeReceiptNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .View_Edit_btn {
+            text-decoration: none;
+            padding: 2px 10px;
+            margin-right: 2px;
+            border: 1px solid #C1C267;
+            border-bottom: none;
+            background-color: #F6F6EF;
+            color: #686AA3;
+            font-size: 13px;
+        }
+
+        .Generate_Challana_btn {
+            text-decoration: none;
+            padding: 2px 10px;
+            margin-right: 2px;
+            border: 1px solid #C1C267;
+            border-bottom: none;
+            background-color: #F6F6EF;
+            color: #686AA3;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .Header_Btn {
+            background-color: black;
+            color: white;
+            border-radius: 6px;
+            margin-left: 3px;
+            font-family: emoji;
+            border: 2px solid black;
+            height: 29px;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .Clear_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .Serch_Btn {
+            width: 15%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .lbl {
+            font-weight: 600;
+            font-family: none;
+        }
+
+
+
+        .thumbnailleft {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hover-image {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 100%;
+            width: 100%;
+            /*background: white;*/
+            padding: 10px;
+            /*box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);*/
+        }
+
+        .thumbnailleft:hover .hover-image {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-1 {
+            flex-basis: 8%;
+        }
+
+        .col-5 {
+            flex-basis: 40%;
+        }
+
+        .col-form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .Input_Txts {
+            height: 23px;
+            width: 73%;
+            border-radius: 3px;
+            border: 1px solid;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" style="margin-left:1%">
+        <div class="card-header pb-0">
+            <div style=" font-size: 50px; text-align: center;">
+                <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: -13px; ">FEE CHALLAN UPLOAD</h1>
+            </div>
+        </div>
+
+
+        <div id="validation2" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">UPLOAD FEE DATA</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="row">
+                                    <div style="margin-left: 25%; " class="form-group col-2">
+                                        <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font>  No.of Rows: </label>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <input type="text" id="No_TxtId" style=" height: 23px; width: 63%; border-radius: 3px; border: 1px solid; outline: none;">
+                                    </div>
+
+                                    <div style="margin-left: 17%; height: 28%; margin-top: 8px; " class="form-group col-6">
+                                        <a href="#" id="generateExcelBtn" style=" text-decoration: underline; font-weight: 600;">Get Excel To Upload Fee Data</a>
+                                    </div>
+
+                                    <div style="margin-left: 25%; " class="form-group col-2">
+                                        <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font>Upload File</label>
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <input type="file" style=" height: 30px;" id="UploadFileTxtIdInstanceUserCode" name="InstanceUserCode" value="">
+                                    </div>
+
+                                    <div style="margin-left: 25%; margin-top: 1%; " class="form-group col-2">
+                                        <label class="control-label lbl">
+                                            <font style="color: red; font-size: 13px;">*</font>
+                                            Sheet Name:
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group col-4" style="margin-top: 1%;">
+                                        <input type="text" id="SheetNameTxtid" style=" height: 22px; width: 63%; border-radius: 3px; border: 1px solid; outline: none; ">
+                                    </div>
+                                </div>
+                                <div style=" text-align: center; margin: 22px 0px 4px -10%;">
+                                    <input type="button" value="Clear" class="btn btn-pill btn-outline-danger-2x" id="Clear_btn">
+                                    <input type="submit" value="Save Excel" class="btn btn-pill btn-outline-success-2x">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style=" margin-left: 1%; margin-top: -25px;">
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0" style=" margin-top: 3px;">
+                            <button class="collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">STEPS TO BE FOLLOWED TO UPLOAD FEE DATA THROUGH EXCEL</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <table cellpadding="0" id="tblinstructions" width="100%" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td width="227px" style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 1:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>)
+                                                <span class="hover-image">
+                                                    <img src="~/Images/GetExcel_FeeUpload.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">
+                                                Click on "Get Excel To Upload Fee Data" link to get the excel sheet to enter Fee
+                                                Data.
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 2:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>)
+                                                <span class="hover-image">
+                                                    <img src="~/Images/open.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">Click on "Open" button in the excel popup window.</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 3:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>) <span class="hover-image">
+                                                    <img src="~/Images/SaveAs97-2003.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">Save as the opened excel sheet in "Excel 97 - 2003 Workbook" format. </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 4:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>) <span class="hover-image">
+                                                    <img src="~/Images/FeeUploadData.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">Enter Fee Data and upload the sheet.</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 5:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>)
+                                                <span class="hover-image">
+                                                    <img src="~/Images/AllSubjects.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">After entering all the Fee Data Save the excel sheet.</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 6:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>) <span class="hover-image">
+                                                    <img src="~/Images/FeeUploadBrowse.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">Now in Fee upload screen click on Browse and select the same excel file. </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 7:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>) <span class="hover-image">
+                                                    <img src="~/Images/ImageQuestions.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">
+                                                The Sheet name to be entered in the Fee upload screen should be same as Sheet Name
+                                                in Excel Sheet (Copy the Sheet Name in excel and paste in Fee upload screen).
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                    <tr>
+                                        <td style="height: 32px;">
+                                            &nbsp;<b style=" font-weight: 500; font-family: none; font-size: 16px;">Step 8:-</b>&nbsp; <a class="thumbnailleft" href="#">
+                                                (<u>View screenshot</u>)
+                                                <span class="hover-image">
+                                                    <img src="~/Images/FeeUploadSaveExcel.jpg" alt="" style=" position: absolute; z-index: 111;"><br>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td style="height: 32px;">
+                                            <b style=" font-weight: 500; font-family: none; font-size: 16px;">
+                                                Click on Save Excel Button we can get the Message Saying Record inserted successfully.
+                                            </b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+<script>
+    
+
+    document.getElementById('generateExcelBtn').addEventListener('click', function () {
+        const numRows = parseInt(document.getElementById('No_TxtId').value, 10);
+
+        if (isNaN(numRows) || numRows <= 0) {
+           /* alert("Please enter a valid number of rows.");*/
+            $('#validationMessage').text('Enter a valid number of rows');
+            return;
+        }
+
+        // Create Excel data
+        const excelData = [
+            ["SL.NO", "TRANSACTION DATE(DD/MM/YYYY)", "CHEQUE NO", "CHALLAN ID", "PARTICULARS", "DR", "CR", "BAL", "SOL", "FINE", "TRANSACTIONID","STUDENTID"],
+        ];
+
+        for (let i = 1; i <= numRows; i++) {
+           
+            const rowData = [i, ""];
+            const isEmptyRow = rowData.every(cell => cell === "");
+
+            if (!isEmptyRow) {
+                excelData.push(rowData);
+            }
+        }
+
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.aoa_to_sheet(excelData);
+
+     
+        worksheet['!cols'] = [
+            { width: 10 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+            { width: 20 }, 
+        ];
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Fee Data");
+
+        // Generate Excel file
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = "FeeChallanUpload.xlsx"; // Set the desired file name
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+
+
+    
+    $('#Clear_btn').click(function () {
+        debugger;
+        $('#No_TxtId').val('');
+        $('#UploadFileTxtIdInstanceUserCode').val('');
+        $('#SheetNameTxtid').val('');
+
+        $('#validationMessage').text('');
+        $('#validation2').text('');
+
+    });
+
+</script>
+

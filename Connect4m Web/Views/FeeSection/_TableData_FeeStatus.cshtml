@@ -1,0 +1,545 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model List<Fee_Due_Remainders_FeeStatus>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+
+<link href="~/css/FeeDueRemainders.css" rel="stylesheet" />
+<div id="errorMessage" style="color: red;"></div>
+
+<div class="card">
+    <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <div>
+                    <h5 class="mb-0">
+                        <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">SMS CREDITS</span></button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                    <div class="card-body">
+                        <div>
+                            <div class="row" style="text-align: right; border: 1px solid steelblue; margin-top: -17px; ">
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+                                    <label>Total Credits</label>:
+                                </div>
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+
+                                </div>
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+                                    <label>Used Credits</label>:
+                                </div>
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+
+                                </div>
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+                                    <label>Remaining Credits</label>:
+                                </div>
+                                <div class="col-sm-5" style=" border-bottom: 1px solid; border-bottom-color: antiquewhite;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (@ViewBag.ItemsCount > 0)
+{
+
+
+
+    <button id="exportButton" style="margin-left: 10px;">Export to Excel <span class='File-Import fontawesomeicon'></span></button>
+
+    <div style="margin-left:10px;">
+        <input type="checkbox" id="Checkbox_Sms_To_Students" />&nbsp;<span style="color: blue; font-family: auto;">Sms To Students</span>
+        <input type="checkbox" id="Checkbox_Sms_To_Parents" />&nbsp;<span style="color: blue; font-family: auto;">Sms To Parents</span>
+        <input type="checkbox" id="Checkbox_Email_To_Students" />&nbsp;<span style="color: blue; font-family: auto;">Email To Students</span>
+        <input type="checkbox" id="Checkbox_Email_To_Parents" />&nbsp;<span style="color: blue; font-family: auto;">Email To Parents</span>
+    </div>
+    <div style="margin-left:10px;"><input type="checkbox" id="checkAll" />Check All</div>
+    <div class="card">
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">YOUR SEARCH RESULTED <span style=" background-color: white; color: red; border-radius: 16px; font-size: 16px; padding: 5px; font-weight: 600;">@ViewBag.ItemsCount</span> RECORDS FOR PARTIAL FEE. </span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <table class="table-responsive UsersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Sl. No</th>
+                                        <th>	Select</th>
+                                        <th>Student Name</th>
+                                        <th>	Program</th>
+                                        <th>	Batch</th>
+                                        <th>Fee Amount</th>
+                                        <th>	Discount Type	</th>
+                                        <th>	Discount Amount</th>
+                                        <th>	Paid Amount</th>
+                                        <th>	Due Amount</th>
+                                        <th>	Student Mobile</th>
+                                        <th>	StudentSmsStatus</th>
+                                        <th>	Student EMail</th>
+                                        <th>	Parent Name</th>
+                                        <th>	Parent Mobile</th>
+                                        <th>	ParentSmsStatus</th>
+                                        <th>	Parent EMail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int SNO = 1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@SNO</td>
+                                            <td align="center" width="180px"><input type="checkbox" id="Check_Box_@item.Studentid" class="userCheckbox" /></td>
+                                            <td align="left">
+                                                <span style="font-weight: 600; cursor: pointer; text-decoration: underline; color: blue; " class="user-info" onclick="navigateToUserInfoAction('@item.Studentid', 'div_@item.Studentid')" data-user-id="@item.Studentid">@item.StudentName</span>
+                                                <div id="div_@item.Studentid"></div>
+                                            </td>
+                                            <td>@item.Program</td>
+                                            <td>@item.Batch</td>
+                                            <td>@item.FeeAmount</td>
+                                            <td>@item.ConcedingTypeName</td>
+                                            <td>@item.ConcedingAmount</td>
+                                            <td>@item.FeePaid</td>
+                                            <td>@item.DueAmount</td>
+                                            <td>@item.StudentMobile   950596410(@SNO)</td>
+                                            <td>@item.StudentSmsStatus</td>
+                                            <td>@item.StudentEmail ponnarakesh752@gmail.com</td>
+                                            <td>@item.ParentName</td>
+                                            <td>@item.ParentPhone  1234567890</td>
+                                            <td>@item.ParentSmsStatus</td>
+                                            <td>@item.ParentEmail  mallikharjunajanne@gmail.com</td>
+                                        </tr>
+                                        SNO++;
+                                    }
+                                </tbody>
+                            </table>
+                            <div style="text-align: center;">
+                                <input type="submit" class="btn btn-outline-primary" value="GoToStep2" id="GoToStep2Button" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="Message_Send_Preview_DivId">
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">TYPE MESSAGE </span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div class="row" style=" text-align: left; margin-left: -10px; border-top: 1px solid; border-bottom: 1px solid; border-color: whitesmoke;">
+                                <div class="col-sm-5" style=" text-align: right;">
+                                    <label style=" margin-top: 12px; font-family: auto; font-size: 14px;">Type Message</label>:
+                                </div>
+                                <div class="col-sm-5">
+                                    <textarea style=" height: 94px; width: 90%; font-style: italic; color: tomato;" id="subjectTextarea_Id"></textarea>
+                                </div>
+                                <div style=" text-align: left; margin-left: -10px; border-top: 1px solid; border-bottom: 1px solid; border-color: whitesmoke;">
+                                    <span style="font-family: auto; color: black;">
+                                        NOTE:The Messege Type here will send as subject for Email and Concatinates to Default Message.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center;">
+                                <input type="submit" id="PreviewBtn" value="Preview" style="width: 10%;" />
+                                <span class="Spantext" title="NOTE: Preview will come for selected users if they have Mobile Number and SmsStatus true.">
+                                    <i>?</i>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p style="color: red; margin-top: -52px; position: absolute; margin-left: 10px; ">Your search resulted 0 records.</p>
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>*@
+
+
+
+
+<script>
+
+    $('#Message_Send_Preview_DivId').hide();
+
+
+
+    $('#checkAll').click(function () {
+        debugger;
+
+        $('.userCheckbox').prop('checked', $(this).prop('checked'));
+    });
+
+    // Update the "Check All" checkbox state when individual checkboxes are clicked
+    $('.userCheckbox').click(function () {
+        /*  debugger;*/
+
+        if ($('.userCheckbox:checked').length === $('.userCheckbox').length) {
+            $('#checkAll').prop('checked', true);
+        } else {
+            $('#checkAll').prop('checked', false);
+        }
+    });
+
+
+
+
+    var selectedStudentMobileNumbers = [];
+    var selectedParentMobileNumbers = [];
+    var selectedStudentEmail = [];
+    var selectedParentEmail = [];
+    $('#GoToStep2Button').click(function (e) {
+        e.preventDefault();
+        var tableCheckboxes = document.querySelectorAll('.userCheckbox');
+        var tableCheckboxesChecked = false;
+        for (var i = 0; i < tableCheckboxes.length; i++) {
+            if (tableCheckboxes[i].checked) {
+                tableCheckboxesChecked = true;
+                break;
+            }
+        }
+
+        // Check if any of the checkboxes are unchecked
+        if (
+            !$('#Checkbox_Sms_To_Students').prop('checked') &&
+            !$('#Checkbox_Sms_To_Parents').prop('checked') &&
+            !$('#Checkbox_Email_To_Students').prop('checked') &&
+            !$('#Checkbox_Email_To_Parents').prop('checked')
+
+        ) {
+
+            // Display an error message
+            $('#errorMessage').text('Please make atleast one selection to send SMS or EMAIL.');
+
+        } else if (!tableCheckboxesChecked) {
+
+            // Display an error message for the table checkboxes
+            $('#errorMessage').text('Please select at least one student to send SMS or EMAIL.');
+
+        } else {
+
+
+
+
+            $('.userCheckbox:checked').each(function () {
+
+                debugger;
+
+                var $row = $(this).closest('tr');
+                var studentMobile = $row.find('td:eq(10)').text();
+                var studentEmail = $row.find('td:eq(12)').text();
+                var parentMobile = $row.find('td:eq(14)').text();
+                var parentEmail = $row.find('td:eq(16)').text();
+
+                debugger;
+
+                // Determine which communication options are selected
+                if ($('#Checkbox_Sms_To_Students').prop('checked')) {
+                    selectedStudentMobileNumbers.push(studentMobile);
+                }
+                if ($('#Checkbox_Sms_To_Parents').prop('checked')) {
+                    selectedParentMobileNumbers.push(parentMobile);
+                }
+                if ($('#Checkbox_Email_To_Students').prop('checked')) {
+                    selectedStudentEmail.push(studentEmail);
+                }
+                if ($('#Checkbox_Email_To_Parents').prop('checked')) {
+                    selectedParentEmail.push(parentEmail);
+                }
+            });
+
+            console.log('Selected Student Mobile Numbers:', selectedStudentMobileNumbers);
+            console.log('Selected Parent Mobile Numbers:', selectedParentMobileNumbers);
+            console.log('Selected Student Email:', selectedStudentEmail);
+            console.log('Selected Parent Email:', selectedParentEmail);
+
+            var collectedData = {
+                studentMobileNumbers: selectedStudentMobileNumbers,
+                parentMobileNumbers: selectedParentMobileNumbers,
+                studentEmails: selectedStudentEmail,
+                parentEmails: selectedParentEmail
+            }
+
+            console.log('Collected Data:', collectedData);
+            $('#Message_Send_Preview_DivId').show();
+
+            $('#errorMessage').text('');
+
+
+        }
+
+    });
+
+    $('#PreviewBtn').click(function (e) {
+
+        debugger;
+
+
+        var collectedData = {
+            studentMobileNumbers: selectedStudentMobileNumbers,
+            parentMobileNumbers: selectedParentMobileNumbers,
+            studentEmails: selectedStudentEmail,
+            parentEmails: selectedParentEmail
+        }
+
+        console.log('Collected Data:', collectedData);
+
+
+        e.preventDefault();
+        var Subject = $('#subjectTextarea_Id').val();
+
+        if (typeof collectedData === 'undefined') {
+            alert('Please select at least one student to send SMS or EMAIL.');
+            return;
+        }
+
+        debugger;
+
+
+        var collectedDataJson = encodeURIComponent(JSON.stringify(collectedData));
+
+
+        $.ajax({
+            url: '/FeeSection/FeeStatus_Mails_and_Sms?CollectedData=' + collectedDataJson + "&Subject=" + Subject,
+            method: 'POST',
+
+            contentType: 'application/json',
+            success: function (response) {
+
+                console.log('Data sent successfully');
+            }
+
+        });
+
+    });
+
+
+
+    var selectedStudentMobileNumbers = [];
+    var selectedParentMobileNumbers = [];
+    var selectedStudentEmail = [];
+    var selectedParentEmail = [];
+
+
+    $(document).on('changes', '#Checkbox_Sms_To_Students', function () {
+
+        debugger;
+        if ($(this).prop('checked')) {
+
+            $('.userCheckbox:checked').each(function () {
+
+                debugger;
+
+                var $row = $(this).closest('tr');
+                var studentMobile = $row.find('td:eq(10)').text();
+
+
+                selectedStudentMobileNumbers.push(studentMobile);
+            });
+
+
+            console.log(selectedStudentMobileNumbers);
+        }
+    });
+
+
+    $(document).on('changes', '#Checkbox_Email_To_Students', function () {
+
+        debugger;
+        if ($(this).prop('checked')) {
+
+            $('.userCheckbox:checked').each(function () {
+
+                debugger;
+
+                var $row = $(this).closest('tr');
+                var studentEmail = $row.find('td:eq(12)').text();
+
+
+                selectedStudentEmail.push(studentEmail);
+            });
+
+
+            console.log(selectedStudentEmail);
+        }
+    });
+
+
+
+    $(document).on('changes', '#Checkbox_Sms_To_Parents', function () {
+
+        debugger;
+        if ($(this).prop('checked')) {
+
+            $('.userCheckbox:checked').each(function () {
+
+                debugger;
+
+                var $row = $(this).closest('tr');
+                var ParentMobile = $row.find('td:eq(14)').text();
+
+
+
+                selectedParentMobileNumbers.push(ParentMobile);
+            });
+
+
+            console.log(selectedParentMobileNumbers);
+        }
+    });
+
+
+    $(document).on('changes', '#Checkbox_Email_To_Parents', function () {
+
+        debugger;
+        if ($(this).prop('checked')) {
+
+            $('.userCheckbox:checked').each(function () {
+
+                debugger;
+
+                var $row = $(this).closest('tr');
+                var ParentEmail = $row.find('td:eq(16)').text();
+
+
+                selectedParentEmail.push(ParentEmail);
+            });
+
+
+            console.log(selectedParentEmail);
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script>
+
+    //function ExportExcelLink(LeaveLevels_SearchRecords_Table, ExelsheetName) {
+    //    var sheet = XLSX.utils.table_to_sheet(document.getElementById(LeaveLevels_SearchRecords_Table));
+
+    //    debugger;
+
+    //    var wb = XLSX.utils.book_new();
+    //    XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
+
+    //    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+    //    function s2ab(s) {
+    //        var buf = new ArrayBuffer(s.length);
+    //        var view = new Uint8Array(buf);
+    //        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    //        return buf;
+    //    }
+
+    //    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xls');
+    //}
+
+</script>
+
+<script>
+
+    document.getElementById('exportButton').addEventListener('click', function () {
+
+        var wb = XLSX.utils.book_new();
+
+        debugger;
+
+
+        var ws = XLSX.utils.table_to_sheet(document.querySelector('.table-responsive.UsersTable'));
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+
+        //var blob = XLSX.write(wb, { bookType: '.xlsx', type: 'base64' });
+        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'binary', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var url = URL.createObjectURL(new Blob([blob]));
+
+
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = 'Reports.xlsx';
+        link.click();
+
+        URL.revokeObjectURL(url);
+    });
+
+
+</script>
+
+
+
+
+
+
+<script>
+    function navigateToUserInfoAction(Studentid, Divid) {
+        debugger;
+
+        var divElement = document.getElementById(Divid);
+
+        var InstanceId = $('#Instance_TxtId').val();
+        var FeeTermId = $('#FeeTermId_DD').val();
+
+        if (divElement) {
+            if (divElement.style.display === "none") {
+                divElement.style.display = "block";
+            } else {
+                divElement.style.display = "none";
+            }
+        }
+
+        var url = '/FeeSection/FeeStatus_ByIndividual?Studentid=' + Studentid + "&InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId;
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (data) {
+                debugger;
+
+                $("#" + Divid).html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>

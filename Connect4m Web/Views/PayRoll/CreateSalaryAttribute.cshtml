@@ -1,0 +1,262 @@
+﻿@model Connect4m_Web.Models.LMSproperties.PayRollproperties
+
+@{
+    ViewData["Title"] = "CreateSalaryAttribute";
+    Layout = null;
+}
+
+
+
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card">
+
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" @*data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"*@>
+                                    <span id="updatesalaryattribute" style=" font-weight: 900;">CREATE</span> INSTANCE SALARY ATTRIBUTES   <span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span>
+
+                                </button>
+                            </h5>
+                        </div>
+                        @*<div class="alert alert-success">
+
+                            </div>
+                            <div class="alert alert-danger">
+
+                            </div>*@
+                        <div @*class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc"*@>
+
+                            <div class="row padding-search">
+                                <div class="row">
+
+                                    <form id="Insert_CSA">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="text" asp-for="InstanceSalaryAttributeId" name="InstanceSalaryAttributeId" hidden style="display:none" readonly />
+
+                                        <div class="row">
+
+                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeMasterId" class="control-label required space"></label>
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.SalaryAttributeMasterId,
+                                                new SelectList(ViewBag.SalaryAttributeMasterId, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeMasterId_CSA", @style = "color:black;" })
+
+                                                </div>
+
+                                                <span asp-validation-for="SalaryAttributeMasterId" class="text-danger"></span>
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeName" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4" style="display:flex">
+
+                                                <input asp-for="SalaryAttributeName" class="form-control" />
+
+                                                @if (Model?.DISPLAYICON_ATTRIBUTENAME == 1)
+                                                {
+                                                    <div>
+                                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@Model?.InstanceSalaryAttributeId,'SalaryAttributeName','InstanceSalaryAttributes');" />
+
+                                                    </div>
+                                                 }
+                                                <span asp-validation-for="SalaryAttributeName" class="text-danger"></span>
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeType" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3" style="display: flex; gap: 4px;">
+                                                    @Html.DropDownListFor(
+                                               x => x.SalaryAttributeType,
+                                                new SelectList(ViewBag.SalaryAttributeType, "Value", "Text"),
+                                              "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;" })
+                                                    @if (Model?.DISPLAYICON_ATTRIBUTETYPE == 1)
+                                                    {
+                                                        <div>
+                                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'SalaryAttributeType','InstanceSalaryAttributes');"/>
+
+                                                        </div>
+                                                    }
+                                                </div>
+                                               
+                                                <span asp-validation-for="SalaryAttributeType" class="text-danger"></span>
+
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="IsActive" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4" style="display:flex">
+                                                <input type="checkbox" asp-for="IsActive" class="form-check-input"  />
+
+                                                @if (Model?.DISPLAYICON_ISACTIVE == 1)
+                                                {
+                                                    <div>
+                                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;"  onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'IsActive','InstanceSalaryAttributes');"/>
+
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalDependsOn" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3" style="display: flex;">
+                                                    @Html.DropDownListFor(
+                                               x => x.SalDependsOn,
+                                                new SelectList(ViewBag.SalDependsOn, "Value", "Text"),
+                                              "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalDependsOn_CSA", @style = "color:black;" })
+                                                    @if (Model?.DISPLAYICON_SALARYDEPENDSON == 1)
+                                                    {
+                                                        <div>
+                                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'SalaryDependsOn','InstanceSalaryAttributes');" />
+
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <span asp-validation-for="SalDependsOn" class="text-danger"></span>
+
+                                            </div>
+                                            <div id="appendislossofpay" class="form-group col-6" style="display: @(Model?.SalDependsOn == 1 ? "contents" : "none");">
+                                                <div class="form-group col-2">
+                                                    <label asp-for="isLossofpaydedication" class="control-label  space"></label>
+                                                </div>
+                                                <div class="form-group col-4" style="display: flex;">
+                                                    <input type="checkbox" asp-for="isLossofpaydedication" class="form-check-input" />
+                                                    @if (Model?.DISPLAYICON_ISLOSSOFPAY == 1)
+                                                    {
+                                                        <div>
+                                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;"  onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'LossOfPay','InstanceSalaryAttributes');"/>
+
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="StartDate" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4" style="display: flex;">
+
+                                                <input asp-for="StartDate" class="form-control" id="StartDate" />
+                                                @if (Model?.DISPLAYICON_STARTDATE == 1)
+                                                {
+                                                    <div>
+                                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'StartDate','InstanceSalaryAttributes');" />
+
+                                                    </div>
+                                                }
+                                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                                               
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="EndDate" class="control-label required space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4" style="display: flex;">
+
+
+                                                <input asp-for="EndDate" class="form-control" id="EndDate" />
+                                                @if (Model?.DISPLAYICON_ENDDATE == 1)
+                                                {
+                                                    <div>
+                                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.InstanceSalaryAttributeId,'EndDate','InstanceSalaryAttributes');" />
+
+                                                    </div>
+                                                }
+                                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                                                <span class="compare"></span>
+
+                                            </div>
+                                            <div style=" display: flex; gap: 17px;">
+                                                <div class="col-3"></div>
+
+
+                                                @*<button style="padding: 6px;" class="btn btn-pill btn-outline-primary btn-aprimary" id="backtosearch_CSA">Back To Search</button>*@
+                                                <input type="button" value="Back To Search" id="backtosearch_CSA" class="btn btn-pill btn-outline-secondary btn-sm" />
+
+
+                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="clearform" />
+
+
+
+
+                                                <input type="submit" value="Save" id="Save_CSA" class="btn btn-pill btn-outline-success btn-auccess" />
+
+                                                <input type="button" value="Next Page" id="Nextpage_CSA" onclick="nextpage('SearchSalaryAttributesForRoles',null)" class="btn btn-pill btn-outline-info btn-air-info" />
+
+                                                @*<button style=" padding: 6px;" class="btn btn-pill btn-outline-info btn-air-info" id="Nextpage_CSA">Next Page</button>*@
+
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="~/js/PayRoll_1.js"></script>

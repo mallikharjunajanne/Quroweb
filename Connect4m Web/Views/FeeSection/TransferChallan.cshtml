@@ -1,0 +1,235 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.TransferChallan
+
+@{
+    ViewData["Title"] = "TransferChallan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+
+
+        .Header_Btn {
+            background-color: black;
+            color: white;
+            border-radius: 15px;
+            width: 99%;
+            margin-left: 0px;
+            font-family: emoji;
+            border: 2px solid black;
+            height: 32px;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .Clear_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .Serch_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+        .lbl {
+            font-weight: 600;
+            font-family: none;
+            margin-left: -18%;
+        }
+    </style>
+
+</head>
+<body>
+    <div style=" font-size: 20px; text-align: center;">
+        <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: 0px; ">GENERATE FEE CHALLAN</h1>
+    </div>
+    <div class="card" style="margin-left: 16px;">
+
+
+        <div class="card-header pb-0">
+            <div style="color: red; font-size: 12px;">
+                <div id="validation2" style="color: red;"></div>
+                <div id="validationMessage" style="color: red;"></div>
+
+                <p id="MessageID"></p>
+            </div>
+            <span id="ErrorMessage_SpanId1" style=" color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
+        </div>
+        <div id="Search_Challana_NumberDivId" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
+                                PAID CHALLAN DETAILS
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form asp-action="From_Challana_Users_Details" id="searchForm">
+                                    <span asp-validation-for="UserReceiptGenerationID" style=" color:red;margin-left: -11px; position: absolute; margin-top: -75px; font-family: none; font-weight: 600;"></span>
+                                    <div class="row">
+                                        <div class="row">
+                                            <div style="margin-left: 30%; " class="form-group col-2">
+                                                <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font> Paid Challan No: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" asp-for="InstanceId" id="InstanceId_DD" value="@ViewBag.InstanceId" />
+                                                <input type="hidden" asp-for="CreatedBy" id="LoginUserId_DD" value="@ViewBag.CreatedBy" />
+                                                <input type="text" asp-for="UserReceiptGenerationID" id="From_UserReceiptGenerationID" style="height: 23px; width: 73%; margin-left: -24px; border-radius: 3px; border: 1px solid; outline: none; " />
+                                            </div>
+                                        </div>
+                                        <div style=" text-align: center; margin-top: 0px; margin-left: -6%;">
+                                            <input type="button" value="Clear" id="Clear_Btn" class="btn btn-pill btn-outline-danger-2x" />@*class="Clear_Btn"*@
+                                            <input type="submit" value="Details" class="btn btn-pill btn-outline-success-2x" onclick="From_Challana_Users(event);"> @*class="Serch_Btn"*@
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="FromChallana_Numbers_Details_DivId" class="card-body">
+
+        </div>
+        <div id="To_Challana_Users_Details_DivId">
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+        debugger;
+
+        $('#To_Users_DivId').hide();
+
+        $('#GotoStep2').on('click', function () {
+            alert('Its working button');
+
+            $('#To_Users_DivId').show(); // Show the div
+        });
+
+    });
+
+    $('#Clear_Btn').click(function () {
+
+        $('#From_UserReceiptGenerationID').val('');
+        $('#MessageID').text('');
+        $('#validationMessage').text('');
+        $('#validation2').text('');
+        $('#ErrorMessage_SpanId1').text('');
+        location.reload();
+        
+        
+     
+
+    });
+
+
+
+    function From_Challana_Users(event) {
+        event.preventDefault();
+        debugger;
+        var FromChallano = $('#From_UserReceiptGenerationID').val();
+
+        var fromchallanaNumber = "#" + FromChallano;
+        if (FromChallano != "") {
+
+            $('#ErrorMessage_SpanId1').text('');
+
+            debugger;
+            var form = $('#searchForm');
+            var url = form.attr('action');
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form.serialize(), // Serialize the form data
+                success: function (response) {
+                 
+                    debugger;
+                    if (response[0].errorMessage == fromchallanaNumber) {
+
+                        $('#ErrorMessage_SpanId1').text('Challan ' + FromChallano + 'not yet generated.');
+                    } else {
+                    $('#FromChallana_Numbers_Details_DivId').html(response); // Update the target div with the response data
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+        else {
+            $('#ErrorMessage_SpanId1').text('Please Enter Challana No.');
+        }
+
+       
+    }
+
+   
+
+
+    function To_Challana_Users(event) {
+
+        event.preventDefault(); 
+
+
+        var To_UserReceiptGenerationID = $('#To_UserReceiptGenerationID').val();
+
+        debugger;
+        if (To_UserReceiptGenerationID =="") {
+
+           
+            $('#ErrorMessage_SpanId1').text('Please enter to challan id.');
+            return false;
+        }
+       
+
+        debugger;
+        var form = $('#TO_UsersForm'); 
+        var url = form.attr('action'); 
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: form.serialize(), // Serialize the form data
+            success: function (data) {
+                $('#To_Challana_Users_Details_DivId').html(data); // Update the target div with the response data
+                $('#ErrorMessage_SpanId1').text('');
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+  
+</script>

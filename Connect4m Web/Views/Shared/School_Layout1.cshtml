@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="~/Themes/assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/Themes/assets/images/favicon.png" type="image/x-icon">
+    <title></title>
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/feather-icon.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/date-picker.css">
+
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/Themes/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/Themes/assets/css/responsive.css">
+
+
+    <!----Loading Spinner own code-->
+    <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+
+    <link href="~/Themes/assets/css/StyleSheets/CommonStyle.css" rel="stylesheet" />
+    <link href="~/Themes/assets/css/StyleSheets/texts.css" rel="stylesheet" />
+</head>
+<body>
+
+
+    <!-- Loading Spinner own code -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+
+
+    <!-- Loader starts-->
+    <div class="loader-wrapper">
+        <div class="main-loader">
+            <div class="bar-0"></div>
+            <div class="bar-1"></div>
+            <div class="bar-2"></div>
+            <div class="bar-3"></div>
+            <div class="bar-4"></div>
+        </div>
+        <div class="loading">Loading....    </div>
+    </div>
+    <!-- Loader ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        <!-- Page Header Start-->
+        <div class="page-main-header">
+            <div class="main-header-right row m-0">
+                <div class="main-header-left">
+                    <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="~/Themes/assets/images/logo/logo.png" alt=""></a></div>
+                </div>
+                <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center" id="sidebar-toggle"></i></div>
+                <div class="left-menu-header col">
+                    <ul>
+                        <li>
+                            <form class="form-inline search-form">
+                                <div class="search-bg"><i class="fa fa-search"></i></div>
+                                <input class="form-control-plaintext" placeholder="Search here....">
+                            </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right col pull-right right-menu">
+                    <ul class="nav-menus">
+                        <li class="onhover-dropdown">
+                            <div class="notification-box"><i data-feather="shopping-bag"></i><span class="badge badge-pill badge-secondary">4</span></div>
+                            <div class="notification-dropdown cart onhover-show-div">
+                                <div class="m-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p> <b>5 </b>Items in Cart</p>
+                                        </div>
+                                        <div class="col text-end">
+                                            <p class="m-0">Cart Subtotal</p>
+                                            <h5 class="txt-primary f-w-700">5000$</h5>
+                                        </div>
+                                    </div><a class="btn btn-dark w-100 mt-1" href="checkout.html">Process To Checkout</a>
+                                </div>
+                                <ul class="border-top custom-scrollbar">
+                                    <li>
+                                        <div class="media">
+                                            <img src="~/Themes/assets/images/product/small/tshirt.png" alt="">
+                                            <div class="media-body">
+                                                <a href="product.html">Woman T-shirt - yellow</a>
+                                                <h6 class="price">200$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img src="~/Themes/assets/images/product/small/bag.png" alt="">
+                                            <div class="media-body">
+                                                <a href="product.html">Woman bag - purple</a>
+                                                <h6 class="price">100$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img src="~/Themes/assets/images/product/small/headphone.png" alt="">
+                                            <div class="media-body">
+                                                <a href="product.html">Unisex headphone - Red</a>
+                                                <h6 class="price">2000$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img src="~/Themes/assets/images/product/small/chair.png" alt="">
+                                            <div class="media-body">
+                                                <a href="product.html">Ergonomic Chair</a>
+                                                <h6 class="price">920$</h6>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <h6 class="qty">
+                                                            Qty
+                                                            <input class="form-control" type="number" placeholder="1">
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i data-feather="trash-2"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="m-3 mt-1"><a class="btn btn-light w-100 mt-3" href="cart.html">View cart</a></div>
+                            </div>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <div class="notification-box"><i data-feather="bell"></i><span class="badge badge-pill badge-primary">4</span></div>
+                            <div class="notification-dropdown onhover-show-div">
+                                <div class="m-3"><a class="btn btn-dark w-100" href="email_inbox.html">You have 4 notifications</a></div>
+                                <ul class="border-top">
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></a></p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0 ps-4 p-relative"><a href="to-do.html"><i class="fa fa-circle me-3 font-warning"></i>Delivery Complete<span class="pull-right">6 hr  </span></a></p>
+                                    </li>
+                                </ul>
+                                <div class="m-3 mt-1"><a class="btn btn-light w-100" href="email_inbox.html">View all</a></div>
+                            </div>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <i data-feather="message-square"></i>
+                            <div class="chat-dropdown onhover-show-div">
+                                <div class="m-3"><a class="btn btn-dark w-100" href="chat.html">You have 3 message</a></div>
+                                <ul class="border-top custom-scrollbar">
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/Themes/assets/images/avtar/emoji/7.png" alt="">
+                                            <div class="status-circle online"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Erica Hughes</span></a>
+                                                <p class="f-12 light-font">okay, trying now.</p>
+                                            </div>
+                                            <p class="badge badge-primary">32 min</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/Themes/assets/images/avtar/emoji/8.png" alt="">
+                                            <div class="status-circle away"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Kori Thomas</span></a>
+                                                <p class="f-12 light-font">i could help in some of bug?</p>
+                                            </div>
+                                            <p class="badge badge-success">58 min</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/Themes/assets/images/avtar/emoji/4.png" alt="">
+                                            <div class="status-circle offline"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Ain Chavez</span></a>
+                                                <p class="f-12 light-font">It's working awesome :)</p>
+                                            </div>
+                                            <p class="badge badge-danger">1 hr</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <img class="img-fluid rounded-circle me-3" src="~/Themes/assets/images/avtar/emoji/1.png" alt="">
+                                            <div class="status-circle offline"></div>
+                                            <div class="media-body">
+                                                <a href="chat.html"><span>Johan deo</span></a>
+                                                <p class="f-12 light-font">Great Thanks you !!</p>
+                                            </div>
+                                            <p class="badge badge-danger">2 hr</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="m-3"><a class="btn btn-light w-100" href="chat.html">View all</a></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="mode"><i class="fa fa-moon-o"></i></div>
+                        </li>
+                        <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
+                        <li class="onhover-dropdown">
+                            <div class="media profile-media"><img class="rounded-circle" src="~/Themes/assets/images/avtar/emoji/9.png" alt=""></div>
+                            <ul class="profile-dropdown onhover-show-div">
+                                <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
+                                <li><a href="user-profile.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
+                                <li><a href="kanban.html"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+                                <li><a href="edit-profile.html"><i data-feather="settings"></i><span>Settings</span></a></li>
+                                <li><a class="btn btn-light w-100" href="login.html"><i data-feather="log-in"></i>Log out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-lg-none col mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
+            </div>
+        </div>
+        <!-- Page Header Ends                              -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper sidebar-icon">
+            <!-- Page Sidebar Start-->
+            <header class="main-nav">
+                <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="~/Themes/assets/images/logo/logo.png" alt=""></a></div>
+                <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="~/Themes/assets/images/logo/logo-icon.png" alt=""></a></div>
+                <div class="morden-logo"><a href="index.html"><img class="img-fluid" src="~/Themes/assets/images/logo/morden-logo.png" alt=""></a></div>
+                <nav>
+                    <div class="main-navbar">
+                        <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+                        <div id="mainnav">
+                            <ul class="nav-menu custom-scrollbar">
+                                <li class="back-btn">
+                                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                                </li>
+
+                                 <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Results/PostResults"><i data-feather="git-pull-request"> </i><span>Post Results</span></a></li>
+                               
+                                <li class="dropdown">
+                                    <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="home"></i><span>EXAMINATION SECTION</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="/Examination/ManageSubjects">Manage Subjects</a></li>
+                                        <li><a href="/Examination/ManageExams">Manage Exams</a></li>
+                                        <li><a href="/Examination/BulkUploadSubjects">Bulk Upload Subjects</a></li>
+                                        <li><a href="/Examination/ManageSubjectAssociation">Manage Subject Association</a></li>
+                                        <li><a href="/Examination/ManageSubjectAssociationForMBA">MNG SUB ASSN FOR CO-SCHOLASTIC</a></li>
+                                       </ul>
+                                </li>
+
+
+
+                                <li class="dropdown">
+                                    <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="home"></i><span>LEAVE MANAGEMENT</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="/Attendance/ManageLeaveTypes">ManageLeaveTypes</a></li>
+                                        <li><a href="/Attendance/LeaveAllocation">Leave Allocation</a></li>
+                                        <li><a href="/Attendance/LeaveLevels">LeaveLevels</a></li>
+                                        <li><a href="/Attendance/LeaveDelegation">Leave Delegation</a></li>
+                                        <li><a href="/Attendance/ManagePastDaysLeave">Manage Past Days Leave</a></li>
+                                        <li><a href="/Attendance/AllocateLeavesLeaveCategoryWise">Allocate Leaves By LMS Category</a></li>
+                                        <li><a href="/Attendance/AssignLeavestoStaff">Assign Leaves To Staff</a></li>
+                                        <li><a href="/Attendance/ManageCompansatoryLeaves">Manage Compansatory Leaves</a></li>
+                                        <li><a href="/Attendance/LeaveCancellation">Leave Cancellation</a></li>
+                                        <li><a href="/Attendance/ManageStaffLeave">Manage Staff Leave</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="home"></i><span>Staff Leave Management</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="/Attendance/ApplyStaffLeave">Apply Staff Leave</a></li>
+                                        <li><a href="/Attendance/ApplyShortLeaves">Apply Short Leave</a></li>
+                                        <li><a href="/Attendance/ConvertShortLeaves">Convert Short Leaves</a></li>
+                                        <li><a href="/Attendance/LeaveApproval">Leave Approval</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="home"></i><span>Student Leave Management</span></a>
+                                    <ul class="nav-submenu menu-content">
+                                        <li><a href="/Attendance/ApplyStudentLeave">Apply Student Leave</a></li>
+                                        <li><a href="/Attendance/StudentLeaveApproval">Approve Student Leave</a></li>
+
+                                    </ul>
+                                </li>
+
+                                @*<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/ApplyStudentLeave"><i data-feather="git-pull-request"> </i><span>Apply Student Leave     </span></a></li>*@
+                                <!--<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/ApplyStaffLeave"><i data-feather="monitor"> </i><span>Apply Staff Leave  </span></a></li>-->
+                                @*<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/StudentLeaveApproval"><i data-feather="monitor"> </i><span>Approve Student Leave</span></a></li>*@
+                                <!--<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/LeaveApproval"><i data-feather="monitor"> </i><span>Leave Approval</span></a></li>
+    <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/ApplyShortLeaves"><i data-feather="monitor"> </i><span>Apply Short Leave</span></a></li>
+    <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/ConvertShortLeaves"><i data-feather="monitor"> </i><span>Convert Short Leaves</span></a></li>-->
+                                @*<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/ManageLeaveTypes"><i data-feather="monitor"> </i><span>ManageLeaveTypes </span></a></li>*@
+
+
+                                @*Check Below links*@
+
+                                @*<li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/Leavecheck"><i data-feather="monitor"> </i><span>Leavecheck  </span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/SubmitFormData"><i data-feather="monitor"> </i><span>formcheck  </span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/SubmitFormDataFILE"><i data-feather="monitor"> </i><span>file check  </span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="/Attendance/FileTransfer"><i data-feather="monitor"> </i><span>File Copy check</span></a></li>*@
+
+
+
+
+
+
+
+                                @*<li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="airplay"></i><span>Widgets</span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="general-widget.html">General</a></li>
+                <li><a href="chart-widget.html">Chart</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="layout"></i><span>Page layout</span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="box-layout.html">Boxed</a></li>
+                <li><a href="layout-rtl.html">RTL             </a></li>
+                <li><a href="layout-dark.html">Dark Layout             </a></li>
+                <li><a href="footer-light.html">Footer Light</a></li>
+                <li><a href="footer-dark.html">Footer Dark</a></li>
+                <li><a href="footer-fixed.html">Footer Fixed</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="box"></i><span>Project  </span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="projects.html">Project List</a></li>
+                <li><a href="projectcreate.html">Create new</a></li>
+            </ul>
+        </li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="file-manager.html"><i data-feather="git-pull-request"> </i><span>File manager       </span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="kanban.html"><i data-feather="monitor"> </i><span>kanban Board</span></a></li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="shopping-bag"></i><span>Ecommerce          </span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="product.html">Product</a></li>
+                <li><a href="product-page.html">Product page</a></li>
+                <li><a href="list-products.html">Product list</a></li>
+                <li><a href="payment-details.html">Payment Details</a></li>
+                <li><a href="order-history.html">Order History</a></li>
+                <li><a href="invoice-template.html">Invoice</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="list-wish.html">Wishlist</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="mail"></i><span>Email</span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="email_inbox.html">Mail Inbox</a></li>
+                <li><a href="email_read.html">Read mail</a></li>
+                <li><a href="email_compose.html">Compose</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="message-circle"></i><span>Chat</span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="chat.html">Chat App</a></li>
+                <li><a href="chat-video.html">Video chat</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="users"></i><span>Users</span></a>
+            <ul class="nav-submenu menu-content">
+                <li><a href="/School/ApplyStudentLeave">Users Profile</a></li>
+                <li><a href="edit-profile.html">Users Edit</a></li>
+                <li><a href="user-cards.html">Users Cards</a></li>
+            </ul>
+        </li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="bookmark.html"><i data-feather="heart"> </i><span>Bookmarks</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="contacts.html"><i data-feather="list"> </i><span>Contacts</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="task.html"><i data-feather="check-square"> </i><span>Tasks</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="calendar-basic.html"><i data-feather="calendar"> </i><span>Calender</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="social-app.html"><i data-feather="zap"> </i><span>Social App</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="to-do.html"><i data-feather="clock"> </i><span>To-Do</span></a></li>
+        <li class="dropdown"><a class="nav-link menu-title link-nav" href="search.html"><i data-feather="search"> </i><span>Search Result</span></a></li>*@
+
+
+
+                            </ul>
+                        </div>
+                        <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+                    </div>
+                </nav>
+            </header>
+            <!-- Page Sidebar Ends-->
+            <div class="page-body">
+
+                <div class="container-fluid">
+                    <div class="page-header dash-breadcrumb">
+                        <!--These are field required field message-->
+                        <div class="alert alert-success dark alert-dismissible fade show" role="alert" style="border: 1px solid black;">
+                            <p style="overflow: visible !important; white-space: pre-wrap;max-width: 95% !important;text-align:initial "> </p>
+                            <button class="btn-close" type="button" aria-label="Close" style=" background-color: bisque;"></button>
+                        </div>
+
+                        <div class="alert alert-danger dark alert-dismissible" role="alert" style="border: 1px solid black;">
+                            <p style="overflow: visible !important; white-space: pre-wrap; max-width: 95% !important; text-align: initial "></p>
+                            <button class="btn-close" type="button" aria-label="Close" style=" background-color: bisque;"></button>
+                        </div>
+
+
+                        @*<div id="loading">
+            <div id="loading-text">
+                <img src="~/Images/buffering_image.gif" />
+            </div>
+        </div>*@
+
+                        @RenderBody()
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- tap on top starts-->
+            <div class="tap-top"><i class="icon-control-eject"></i></div>
+            <!-- tap on tap ends-->
+            <!-- footer start-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 footer-copyright">
+                            <p class="mb-0">Copyright 2022 © wingo All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- latest jquery-->
+    <script src="~/Themes/assets/js/jquery-3.5.1.min.js"></script>
+    <!-- feather icon js-->
+    <script src="~/Themes/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/Themes/assets/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="~/Themes/assets/js/sidebar-menu.js"></script>
+    <script src="~/Themes/assets/js/config.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/Themes/assets/js/bootstrap/popper.min.js"></script>
+    <script src="~/Themes/assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- Plugins JS start-->
+
+    <script src="~/Themes/assets/js/dashboard/dashboard_3.js"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    @*<script src="~/Themes/assets/js/theme-customizer/customizer.js"></script>*@  @*//I COMMENTED THIS*@
+    <script src="~/Themes/assets/js/script.js"></script>
+    <!-- login js-->
+    <!-- Plugin used-->
+    <!--  This for pagination with my code-->
+    <script src="~/js/PaginationToTables.js"></script>
+    <script src="~/js/GeneralFunctions.js"></script>
+
+
+
+
+    @*validation scripts*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

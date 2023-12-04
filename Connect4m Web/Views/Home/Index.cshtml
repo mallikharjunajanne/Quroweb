@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple PDF Viewer mallikharjuna hero</title>
+</head>
+<body>
+    <h1>Simple PDF Viewer</h1> 
+    <div id="pdfContainer"></div> <!-- Add a div container for the canvas -->
+    <script>
+        const url = '/LMSDocs/Instance545/22184file (22).pdf'; // Replace with the URL of the PDF you want to view
+        const canvas = document.createElement('canvas'); // Create a canvas element
+        const ctx = canvas.getContext('2d');
+        let pdfData;
+
+        async function loadPDF(url) {
+            const response = await fetch(url);
+            pdfData = await response.arrayBuffer();
+
+            renderPDF(pdfData);
+        }
+
+        async function renderPDF(data) {
+            const pdf = new DataView(data);
+
+            // Get the first page
+            const page = await getPage(pdf, 1);
+
+            // Render the page on the canvas
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport,
+            };
+
+            // Clear the canvas before rendering
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            await page.render(renderContext);
+
+            // Append the canvas to the "pdfContainer" div
+            const pdfContainer = document.getElementById('pdfContainer');
+            pdfContainer.appendChild(canvas);
+        }
+
+        async function getPage(data, pageNumber) {
+            const pageStartRegex = /\/Type\s*\/Page/;
+
+            // Find the start of the specified page
+            const pageStart = findPageStart(data, pageNumber, pageStartRegex);
+
+            if (pageStart === -1) {
+                console.error('Page not found');
+                return null;
+            }
+
+            // Parse the page object
+            const page = parsePageObject(data, pageStart);
+
+            return page;
+        }
+
+        function findPageStart(data, pageNumber, pageStartRegex) {
+            const textDecoder = new TextDecoder('utf-8');
+            const pdfText = textDecoder.decode(data);
+            const matches = pdfText.match(new RegExp(pageStartRegex.source, 'g'));
+
+            if (matches && matches.length >= pageNumber) {
+                const startIndex = pdfText.indexOf(matches[pageNumber - 1]);
+                return startIndex;
+            }
+
+            return -1;
+        }
+
+        function parsePageObject(data, start) {
+            // In this simplified example, we won't parse the entire page object.
+            // You would need to implement a full PDF parser for more complex documents.
+            // This function simply returns a placeholder object for demonstration purposes.
+            return {
+                getViewport: function (options) {
+                    return {
+                        width: 612,  // Adjust these values according to the actual PDF page size
+                        height: 792,
+                    };
+                },
+                render: async function (renderContext) {
+                    // You can implement rendering logic here.
+                    // This is a placeholder for rendering the page.
+                    console.log('Rendering page...');
+                },
+            };
+        }
+
+        loadPDF(url);
+    </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+﻿
+/*body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}*/
+
+#video-container {
+    display: flex;
+    height: 100vh;
+}
+
+    #video-container video {
+        flex: 1;
+    }
+
+#chapters-panel {
+    flex: 1;
+/*    height: 48vh;
+*/    height: 59vh;
+    overflow-y: scroll;
+    background-color: #f0f0f0;
+    /* display: none; */
+    display: flex;
+    margin-left: 77%;
+    border-radius: 30px;
+    position: absolute;
+    top: 10px;
+    margin-top: 4%;
+    color: black;
+    top: 8px;
+    width: 23%;
+    z-index: 1;
+    filter: drop-shadow(black -3px 12px 21px);
+}
+
+    #chapters-panel ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #chapters-panel li {
+        /*  display: flex;
+                        align-items: center;
+                        padding: 10px;
+                        border-radius: 5px;
+                        background-color: #f9f9f9;
+                        cursor: pointer;*/
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        filter: drop-shadow(black -5px 12px 21px);
+    }
+
+#show-panel-button {
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    /* border-radius: 12px;*/
+    border: 1px solid green;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+}
+    #show-panel-button:hover, #Hide-panel-button:hover {
+        background-color: #500ef6;
+    }
+    #goBackButton {
+        background-color: black;
+        color: white;
+        font-weight: 700;
+        /* border-radius: 12px;*/
+        text-decoration:none;
+        border: 1px solid white;
+        padding: 8px;
+        text-align: center;
+    }
+    #goBackButton:hover {
+        background-color: orangered;
+        cursor: pointer;
+        font-weight: 900;
+    }
+#Hide-panel-button {
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    /* border-radius: 12px;*/
+    border: 1px solid red;
+    padding: 8px;
+    cursor:pointer;
+    text-align: center;
+}
+
+.chapter-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+    /* display: block;*/
+    margin: auto;
+}
+
+.chapter-thumbnail img {
+    width: 100px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.chapter-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#chapters-panel li:hover {
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: aquamarine;
+    /* display:none;*/
+    /* filter: drop-shadow(black -5px 12px 21px);*/
+}
+
+.hoverclass {
+    margin-right: 5px;
+    margin-left: 5px;
+    /*  background-color: aquamarine;*/
+}
+
+#chapters-panel a {
+    text-decoration: none;
+}
+
+
+
+
+video::-webkit-media-controls-timeline {
+    display: none;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+video::-webkit-media-controls {
+    display: none;
+}
+.hide::-webkit-media{
+    display:none
+}
+
+
+
+#customControls {
+    /*position: absolute;*/
+    /*   top: 60%;
+                    left: 80%;
+                    transform: translate(-50%, -50%);*/ /* Center the element horizontally and vertically */
+    /*width: 71%;*/ /* Adjust the width as needed */
+    /*background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;*/
+    /* margin-top: 512px;*/
+    /*margin-top: 394px;*/
+}
+
+#progressBarr {
+   /* width: 100%;
+    height: 5px;
+    background-color: white;
+    position: relative;*/
+}
+
+#progressBarFill {
+   /* height: 100%;
+    background-color: red;*/
+  /*  Adjust color as desired width: 0;*/
+}
+
+#marksContainer {
+   /* position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;*/
+}
+
+.mark {
+   /* width: 11px;
+    height: 15px;
+    background-color: blue;
+    Adjust color as desired position: relative;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    margin-top: 9px;*/
+}
+
+    .mark::before {
+        /*content: attr(data-time);
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;*/
+    }
+
+    .mark:hover::before {
+        opacity: 1;
+        width: 29px;
+        height: 20px;
+    }
+
+
+
+/* video::-webkit-media-controls-timeline {
+                    position: relative;
+                }
+
+                    video::-webkit-media-controls-timeline::cue {
+                        position: absolute;
+                        height: 10px;
+                        width: 10px;
+                        border-radius: 50%;
+                        background-color: #000;
+                    }
+
+                    video::-webkit-media-controls-timeline::cue(cue-small) {
+                        height: 5px;
+                        width: 5px;
+                    }
+
+                    video::-webkit-media-controls-timeline::cue(cue-at-20s) {
+                        left: calc(20 / 60 * 100%);
+                        top: 0;
+                    }
+
+                    video::-webkit-media-controls-timeline::cue(cue-at-40s) {
+                        left: calc(40 / 60 * 100%);
+                        top: 0;
+                    }
+
+                    video::-webkit-media-controls-timeline::cue(cue-at-60s) {
+                        left: calc(60 / 60 * 100%);
+                        top: 0;
+                    }
+        */
+
+
+
+
+
+/*  Nav items design bottom of the video */
+
+.navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .navigation li {
+        display: inline-block;
+    }
+
+    .navigation a {
+        display: block;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #333;
+    }
+
+        .navigation a:hover {
+            background-color: #eee;
+        }
+
+    .navigation .activ {
+        background-color: #333;
+        color: #fff;
+    }

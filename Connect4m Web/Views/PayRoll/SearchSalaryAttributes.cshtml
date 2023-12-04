@@ -1,0 +1,236 @@
+﻿@model Connect4m_Web.Models.LMSproperties.PayRollproperties
+
+@{
+    ViewData["Title"] = "SearchSalaryAttributes";
+    Layout = null;
+}
+@*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+<style>
+    #appendforinsertsalaryattribute {
+        display: none;
+    }
+</style>
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <h6><span>CONFIGURE SALARY ATTRIBUTES</span></h6>
+
+
+                    <div class="card-header pb-0">
+                        <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 68%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="addnewsalaryattributebtn">
+                            Create Instance Salary Attributes
+
+                        </button>
+
+                    </div>
+                    <div id="appendsearchsalaryattribute">
+
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH SALARY ATTRIBUTES</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                            <div class="row padding-search">
+                                <div class="row">
+
+                                    <form id="Serach_CSA">
+                                        <div class="row">
+
+                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeMasterId" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.SalaryAttributeMasterId,
+                                                new SelectList(ViewBag.SalaryAttributeMasterId, "Value", "Text"),
+                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeMasterId_CSA", @style = "color:black;" })
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeName" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="SalaryAttributeName" class="form-control" id="SalaryAttributeName" />
+
+                                            </div>
+
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="SalaryAttributeType" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_3">
+                                                    @Html.DropDownListFor(
+                                               x => x.SalaryAttributeType,
+                                                new SelectList(ViewBag.SalaryAttributeType, "Value", "Text"),
+                                              "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;" })
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="IsActive" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <div id="Drop_Format_SEM_2">
+                                                    @Html.DropDownListFor(
+                                               x => x.IsActive,
+                                                new SelectList(ViewBag.IsActive, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_IsActive_CSA", @style = "color:black;" })
+
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="StartDate" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+                                                <input asp-for="StartDate" class="form-control" id="StartDate" />
+
+
+                                            </div>
+                                            <div class="form-group col-2">
+
+
+                                                <label asp-for="EndDate" class="control-label space"></label>
+                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+
+                                            </div>
+                                            <div class="form-group col-4">
+
+
+                                                <input asp-for="EndDate" class="form-control" id="EndDate" />
+
+                                            </div>
+                                          
+                                            <div style=" display: flex; gap: 17px;">
+                                                <div class="col-4"></div>
+                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
+
+
+                                                <input type="button" value="Search" id="sub_tblCSA" class="btn btn-pill btn-outline-success btn-air-success" />
+                                                <input type="button" value="Next Page" id="Nextpage_CSA" onclick="nextpage('SearchSalaryAttributesForRoles',null)"  class="btn btn-pill btn-outline-info btn-air-info" />
+
+                                            </div>
+                                            </div>
+</form>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h6><span>MANAGE INSTANCE SALARY ATTRIBUTES</span></h6>
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_CSA" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                                </h5>
+                            </div>
+
+                            <div id="eg1" style="color: black; background-color: whitesmoke">
+                                <table class=" table table-bordered" id="tblCSAsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                    <thead>
+                                        <tr style="border-color: black;">
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                S.No
+                                            </th>
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                S.No
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Attribute Name
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Type
+
+                                            </th>
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                StartDate
+
+                                            </th>
+                                            <th style=" border-color: blue" class="bg-primary">
+                                                EndDate
+
+                                            </th>
+                                            <th style="border-color: blue; " class="bg-primary">
+                                                IsActive
+
+                                            </th>
+                                            <th style="border-color: blue" class="bg-primary">
+                                                Delete
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="appendforinsertsalaryattribute">
+
+</div>
+
+@*<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>*@
+@*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@*<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>*@
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+@*<script src="~/js/CommonScripts.js"></script>*@
+<script src="~/js/PayRoll_1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

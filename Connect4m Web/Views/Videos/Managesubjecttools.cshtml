@@ -1,0 +1,129 @@
+﻿@model Connect4m_Web.Models.LMSproperties.Managesubjecttools
+@{
+    ViewData["Title"] = "Managesubjecttools";
+    //Layout = null;
+}
+
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/css/texts.css" rel="stylesheet" />
+<link href="~/css/Managesubjecttools.css" rel="stylesheet" />
+@*<link href="~/css/loading.css" rel="stylesheet" />
+    <div id="loading">
+        <div id="loading-text">
+
+            <img src="~/Images/buffering_image.gif" />
+        </div>
+    </div>*@
+
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-header pb-0">
+            <a class="btn btn-primary" href="/Videos/Insertsubjecttool" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
+                Create Subject Tool
+            </a>
+
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> SEARCH FOR SUBJECT TOOLS</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                        <div class="row padding-search">
+                            <div class="col-lg-2">
+
+
+                            </div>
+                            <div class="col-lg-3">
+                                <lable> Subject Tool Name</lable>
+
+                            </div>
+
+                            <div class="col-lg-4">
+                                <input type="text" id="subject_tool_name" class="form-control" />
+
+                            </div>
+                            <div class="col-lg-3">
+
+
+                            </div>
+                            <div class="col-lg-5">
+
+
+                            </div>
+                            <div class="col-lg-2 button-subject">
+                                <input type="button" id="mst_clear" value="Clear" />
+
+                            </div>
+                            <div class="col-lg-2 button-subject">
+                                <input type="button" id="mst_search" value="Search" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_subtools" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                            </h5>
+                        </div>
+
+                        <div id="eg1" style="color: black; background-color: whitesmoke">
+                            <table class=" table table-bordered" id="tblsubjecttools" style="background-color:whitesmoke ;width:9px;border-color:red">
+                                <thead style="width:9px;">
+                                    <tr style="border-color: black;">
+                                        <th style="width: 9px; border-color: blue" class="bg-primary" hidden>
+                                            Instance Subject ToolId
+
+                                        </th>
+                                        <th style=" width: 30%; border-color: blue" id="th2tool" class="bg-primary">
+                                            Subject Tool Name
+
+                                        </th>
+                                        <th class="bg-primary" style="border-color: blue;" id="th3description">
+                                            Description
+                                        </th>
+                                        <th style="width: 8px; border-color: blue;" id="th4delete" class="bg-primary">
+                                            Delete
+                                        </th>
+
+
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>*@
+
+
+
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+<script src="~/js/Searchsubjecttools.js"></script>

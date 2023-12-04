@@ -1,0 +1,93 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.NoticeTypes
+@{
+    ViewData["Title"] = "CreateSmsNNotice";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="default-according style-1" id="accordionoc1">
+        <div class="card" style="margin-bottom: 10px;">
+            <div class="card-header bg-primary">
+                <h5 class="mb-0">
+                    <button class="collapsed  btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                        <span class="Header_text_<span></span>">
+                            SAVE NOTICE
+                        </span>
+                    </button>
+                </h5>
+            </div>
+            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space">Notice Type </label></div>
+                            <div class="form-group col-4">
+                                @Html.DropDownListFor(Model => Model.CategoryName, (List<SelectListItem>)ViewBag.NoticeTypedd, "---Select----", new { @class = "form-select", @id = "ENoticeTypedd_Id", style = "width:90%;" })
+                            </div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space"> Notice Subject </label></div>
+                            <div class="form-group col-4">  <textarea class="form-control"></textarea></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space"> Description </label></div>
+                            <div class="form-group col-4">  <textarea class="form-control"></textarea></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="col-2"></div>
+                            <div class="col-6" style="font-size: smaller; color: rgb(89, 92, 150); line-height: 16px; ">
+                                <b> NOTE:</b> Invalid Characters in sending SMS:<b> % & < > "</b>
+                                Some Characters like <b> ` ~ ^ + $</b> may not deliver properly to all mobiles.<br />
+                                <b>Messages sent between 9PM and 9AM will be delivered after 9AM</b>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space">Start Date  </label></div>
+                            <div class="form-group col-4">  <input type="date" id="StartDateTXT" class="form-control" /></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space">End Date  </label></div>
+                            <div class="form-group col-4">  <input type="date" id="EndDateTXT" class="form-control" /></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="form-group col-2"><label class="form-grop control-label space"> Attach document </label></div>
+                            <div class="form-group col-4">  <input type="file" class="form-control" style="padding: 0; width: 90%; " /></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div id="NoticeDisplayloginrRadio_btn" class="col-12" style="display: flex;">
+                                <div class="col-3"></div>
+                                <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label class="form-grop required space">Display this Notice in Login   </label></div>
+                                <div class="form-group col-4" style=" margin: 8px;">
+                                    <div class="radio radio-primary">
+                                        <input id="radio1" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
+                                        <label class="mb-0" for="radio1">No</label>
+                                        <input id="radio2" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
+                                        <label class="mb-0" for="radio2">Yes</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" style="text-align: center;">
+                                <input type="button" id="Clearcoollink_Btn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
+                                <input type="submit" id="SearchNotice_Btn" class="btn btn-pill btn-outline-success btn-air-success" value="Search" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Notice_sms.js"></script>

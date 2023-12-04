@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.GeneratedPdfs>
+
+@{
+    ViewData["Title"] = "ListofPdfs";
+    Layout = null;
+}
+<link href="~/css/TableDesign.css" rel="stylesheet" />
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>
+                S NO
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PdfName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.GeneratedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span>@i</span>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PdfName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeneratedDate)
+                </td>
+                <td>
+                    <button onclick="showGeneratedPDF('@item.PdfPath','@item.PdfName')" class="ButtomDesign">Show PDF</button>
+                </td>
+            </tr>
+            i = i + 1;
+        }
+    </tbody>
+</table>
+<script src="~/js/ViewLecturedocs.js"></script>

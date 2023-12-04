@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.WriteaNotes>
+
+@{
+    ViewData["Title"] = "ListofNotes";
+    Layout = null;
+}
+<style>
+    #create-bookmark-container2 {
+        border-radius: 0;
+        -webkit-appearance: none;
+        padding: 0 1.6rem;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        flex: 1;
+        width: 60%;
+        margin-top: 20px;
+        height: 41px;
+        background-color: antiquewhite;
+        border: none;
+    }
+
+    #span_notebook {
+        text-align: center;
+        color: blue;
+        filter: drop-shadow(2px 4px 6px black);
+        background-color: #BBB1A5;
+        /* color: white; */
+        padding: 3px 8px;
+        text-transform: uppercase;
+        width: 755px;
+        border: 1px solid;
+        margin-left: 18%;
+    }
+
+    #main_listofnotes {
+        width: 100%;
+        margin-left: 225px;
+    }
+
+    .notestextares {
+        width: 62%;
+        background-color: #1223;
+        /* margin-top: 9px; */
+        white-space: pre-line;
+        padding: 25px;
+        padding: 1px 0px 9px 22px;
+        border: 1px solid;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+</style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/Everyminutetest.css" rel="stylesheet" />
+@*<button onclick="downloadCode()">Generate PDF</button>*@
+<div id="genratepdfnotes">Generate PDF</div>
+@*<div class="form-popuppdf" id="myyFormpdf">
+    <form class="form-containerpdf">
+        <input type="text" id="pdfgenerationtext" />
+        <div class="btn btn-success" id="pdfgenerationfinalbtn">Set Display Name</div>
+    </form>
+</div>*@
+<div id="LMS_listofnotes">
+
+    <h3 id="span_notebook"> Note Book</h3>
+    @{int i = 1; }
+    @foreach (var item in Model)
+    {
+        <div id="main_listofnotes">
+            <div id="listofnotessub2">
+                <button id="create-bookmark-container2">
+                    <span id="bookmark-span">
+                        <span>@i) </span>
+                        <span style=" background-color: black; color: white; padding: 6px; border-radius: 16px;">
+                            @item.TimeHours:@item.TimeMinutes:@item.TimeSeconds
+                        </span>
+
+                    </span>
+
+
+                    <i class="fa fa-edit" style="font-size: 24px;flex: 0.1;"></i>
+                    <i class="fa fa-trash-o" style="font-size:24px;color:red"></i>
+                </button>
+                <div class="notestextares">
+                    @item.NotesDescription
+                </div>
+            </div>
+
+            <div class="video-write-notes" style="display:none">
+                <div id="video-write-notes" style="  margin-left: 0%;">
+                    <div style="margin-top: 9px; display: block; grid-gap: 13px; color: white; padding: 4px; border-radius: 14px; ">
+                        <input type="text" value="@item.NotesId" hidden style="display:none" id="notesid" />
+                        <span style="background-color: black; color: white; padding: 6px; display: flex; border-radius: 16px; ">  @item.TimeHours:@item.TimeMinutes:@item.TimeSeconds</span>
+                    </div>
+                    <textarea id="notes_textarea">
+@item.NotesDescription
+</textarea>
+
+                </div>
+                <div id="notebook-save-cancel" class="notestextares" style=" margin-left: 0%;background-color:white;border:solid">
+                    <input type="button" id="bookmark-cancel" value="Cancel" style="border: 1px solid black; background-color: #1233" /><input type="button" id="bookmark-save" value="Update Note" />
+                </div>
+            </div>
+        </div>
+        i++;
+    }
+</div>
+<div class="form-popuppdf" id="myyFormpdf">
+    <form class="form-containerpdf" >
+        <input type="text" id="pdfgenerationtext"/>
+       <div class="btn btn-success" id="pdfgenerationfinalbtn">Set Display Name</div>
+    </form>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>*@
+
+        @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>*@
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>-->
+        @*<script>
+                function downloadCode() {
+                    const element = document.getElementById("LMS_listofnotes");
+                    document.getElementById("LMS_listofnotes").style.border = "1px solid black";
+                    html2pdf().from(element).save();
+                }
+
+            </script>*@

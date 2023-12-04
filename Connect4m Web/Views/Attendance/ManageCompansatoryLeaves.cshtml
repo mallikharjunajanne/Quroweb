@@ -1,0 +1,685 @@
+﻿
+@{
+    ViewData["Title"] = "ManageCompansatoryLeaves";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <link href="~/Themes/assets/css/StyleSheets/LeaveApproval.css" rel="stylesheet" />
+    <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/LeaveDelegation.js"></script>
+    <script src="~/js/GeneralFunctions.js"></script>
+    @*<script src="~/js/LeaveCancellation.js"></script>*@
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12 col-xl-6 xl-100">
+            <div class="card">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkCompensatoryLeavesSummery_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Compensatory Leaves Summery</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="lnkCompensatoryLeavesDetails_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Compensatory Leaves Details</a></li>
+                    <li class="nav-item"><a class="nav-link " onclick="lnkAddCompensatoryLeaves_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Add Compensatory Leaves </a></li>
+                </ul>
+
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h6 style="margin-left: -5%; text-align: center; color: black; margin-top: -18px;"><strong>MANAGE COMPENSATORY LEAVES</strong></h6>
+                    </div>
+                    <div class="card-body" style=" padding-top: 0px;">
+                        <!-- Loading overlay element -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">Loading...</div>
+                        </div>
+
+                        <div class="tab-content" id="myTabContent">
+                            @*------------------------------Tab code end----*@
+
+
+                            @*------------------------------div code start----*@
+
+
+
+                            @*--------------tab 1----------------div code start----*@
+
+                            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="DdlDepartment_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="DdlUser_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="TxtFromDate_Span_Error"></span>
+                            <span class="ErrorMessageSpan" id="TxtDayType_Span_Error"></span>
+
+
+                            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+
+                                <div class="default-according style-1" id="accordionoc">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">EMPLOYEE COMPENSATORY LEAVES STATUS HAVING  <span id="TblLeavesSummerycounts" class="number-circle">0</span> RECORD(S) </button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+
+                                            <div class="card table-responsive " id="Div_TblLeavesSummery">
+
+                                                <table id="TblLeavesSummery" class="display cell-border compact  tableid" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Employee Name</th>
+                                                            <th>Department</th>
+                                                            <th>Leave Type</th>
+                                                            <th>Total</th>
+                                                            <th>Lapsed</th>
+                                                            <th>Used</th>
+                                                            <th>Approved</th>
+                                                            <th>In Process</th>
+                                                            <th>Available</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            @*-------------tab 1-----------------div code end----*@
+
+
+
+                            @*-------------------tab 2-----------div code start----*@
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+                                <div class="default-according style-1">
+
+
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                                                    COMPENSATORY LEAVES SEARCH
+                                                </button>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <form id="FmCOMPENSATORYLEAVESSEARCH">
+                                                        <div style="margin-left:20%;font-size:12px">
+                                                            <div class="row">
+                                                                <div class="col">
+
+                                                                    <div class="mb-2 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Department  :&nbsp;</label>
+
+                                                                        <div class="col-sm-9">
+                                                                            <select id='DdlDepartment' name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                                                <option value=''>Select a Department</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="mb-2 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">Employee  :&nbsp;</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="DdlEmployee" name="UserId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Please select Employee</option></select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="margin-left:172px">
+
+                                                                        <input type="button" class="btn btn-light " onclick="FN_ClearValues('FmCOMPENSATORYLEAVESSEARCH','DdlEmployee')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
+
+                                                                        <input type="submit" class="btn btn-success active" onclick="TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts','FmCOMPENSATORYLEAVESSEARCH');" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <br />
+
+                                @*-----GetSearchedRecords Result page*@
+                                <div id="COMPENSATORYLEAVESSEARCH">
+                                    <div class="default-according style-1" id="accordionoc123456">
+                                        <div class="card">
+                                            <div class="card-header " style="background-color:black ;">
+                                                <h5 class="mb-0">
+
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle"></span> RECORDS </span></button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                                <div class="card " style="position: inherit;">
+
+                                                    <form id="FmTblcompensatoryLeaves_SearchedRecords" class="table-responsive">
+                                                        <table id="TblcompensatoryLeaves_SearchedRecords" class="cell-border compact display tableid">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>CampOfleaveid</th>
+                                                                    <th>Employee Name</th>
+                                                                    <th>Department</th>
+                                                                    <th>Leave Type</th>
+                                                                    <th>Compensate Date</th>
+                                                                    <th>Day</th>
+                                                                    <th>	Expiry Date</th>
+                                                                    <th>Is Lapsed</th>
+                                                                    <th>Is Applied</th>
+                                                                    <th>Created On</th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            @*---------------------tab 2---------div code end----*@
+
+
+
+                            @*---------------------tab 3---------div code start----*@
+                            <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                                <div class="default-according style-1" id="accordionoc123457">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12ok" aria-expanded="true" aria-controls="collapse11">
+                                                    MANAGE COMPENSATORY LEAVES
+                                                    <span style=" margin-left: 53%;">
+                                                        * INDICATES REQUIRED FIELDS
+                                                    </span>
+                                                </button>
+
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon12ok" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123457" style="">
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <form id="FmAddCompensatory">
+                                                        <div style="margin-left:20%;font-size:12px">
+                                                            <div class="row">
+                                                                <div class="col">
+
+                                                                    <div class="mb-2 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red">*</i>Department  :&nbsp;</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id='DdlDepartment_save' name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee_save','0','selectname')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                                                <option value=''>Select a Department</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="mb-2 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red">*</i>Employee  :&nbsp;</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select id="DdlEmployee_save" name="UserId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Please select Employee</option></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="mb-2 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style="padding: 0px; margin-top: 3px; "><i style="color:red">*</i>Compensate Date :&nbsp;</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input id="txtCompensateDate" name="Fromdate" type="date" style=" font-size: 12px; color: black; height: 20px;" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="mb-1 row">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style="padding-top: 0px; margin-left: 0px; margin-top: 3px; "><i style="color:red">*</i>Day Type :&nbsp;</label>
+                                                                        <div class="col-sm-9" style=" margin-left: -15px;    padding-top: 6px;    padding: 0px;margin-top: -6px;">
+                                                                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                                                <div class="radio radio-primary">
+                                                                                    <input name="Daystype" style="padding-top: 0px" id="Full_Day" class="check" type="radio" value="0">
+                                                                                    <label class="mb-0" for="Full_Day">Full Day</label>
+                                                                                </div>
+                                                                                &nbsp;
+                                                                                <div class="radio radio-primary">
+                                                                                    <input name="Daystype" id="Half_Day" class="check" type="radio" value="1">
+                                                                                    <label class="mb-0" for="Half_Day">Half Day</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-1 row" id="DaySession" style="display:none">
+                                                                        <label class="col-sm-3 col-form-label  form-label" style="padding-top: 0px; margin-top: 3px; "><i style="color:red">*</i>Day Session :&nbsp;</label>
+                                                                        <div class="col-sm-9" style=" margin-left: -15px;    padding-top: 6px;    padding: 0px;margin-top: -6px;">
+                                                                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                                                <div class="radio radio-primary">
+                                                                                    <input name="Daysession" style="padding-top: 0px" id="radioinline11" class="check1" type="radio" value="1">
+                                                                                    <label class="mb-0" for="radioinline11"> Morning</label>
+                                                                                </div>
+                                                                                &nbsp;
+                                                                                <div class="radio radio-primary">
+                                                                                    <input name="Daysession" id="radioinline21" class="check1" type="radio" value="2">
+                                                                                    <label class="mb-0" for="radioinline21">Afternoon</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <input type="hidden" name="Leavetypeid" id="CompOffLeaveID" />
+                                                                    <div style="margin-left:173px">
+                                                                        <input type="button" onclick="FN_ClearValues('FmAddCompensatory', 'DdlEmployee_save',this.value)" class="btn btn-light " id="BtnClearform" style="padding:3px 8px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;
+                                                                        <input type="button" onclick="SaveCompensatoryleaves(event)" class="btn btn-primary active" id="BtnSaveId" style="padding:3px 8px;border-radius:6px;" value="Save" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*----------------------tab 3--------div code end----*@
+
+                            @*----------------------------Tab code start-----*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+<script src="~/Datatable/datatable.min.js"></script>
+<script type="text/javascript">
+    var js = jQuery.noConflict(true);
+    $("input[type='radio'].check").click(function () {
+        debugger;
+        $("#radioinline11").prop("checked", false);
+        $("#radioinline21").prop("checked", false);
+        if ($(this).is(":checked")) {
+            if ($(this).val() == "1") {
+                $("#DaySession").show();
+
+            } else {
+                $("#DaySession").hide();
+            }
+        }
+    });
+
+    function DeleteCompensatoryLeavesFunction(CompOffLeaveID) {
+
+        $("#ErrorMessageSpan").empty();
+        Swal.fire({
+            title: "Are you sure?",
+            text: ("You want to delete the Camp Off Details !"),
+            //type: "warning", -  doesn't exist
+            showCancelButton: true,
+            showCloseButton: true, // optional
+            showConfirmButton: true, // optional
+            confirmButtonColor: '#d33',
+            confirmButtonText: "Yes",
+            icon: "warning",
+            //closeOnConfirm: false -  doesn't exist
+        })
+            .then(function (isConfirm) {
+                if (isConfirm.isConfirmed) {
+                    $.ajax({
+                        url: "/Attendance/ManageCompansatoryLeaves?ButtonName=Delete&CompOffLeaveID=" + CompOffLeaveID,
+                        type: "Post",
+                        success: function (responce) {
+
+                            if (responce.message == "Record deleted successfully.") {
+                                TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
+
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Deleted!",
+                                    text: (responce.message),
+                                });
+                                //$("#Main_Span_Error").text(responce.message);
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Failed!",
+                                    text: (responce.message),
+                                });
+                                // $("#Main_Span_Error").text(responce.message);
+                            }
+                            $("#loadingOverlay").hide();
+                        },
+                        error: function (xhr, status, error) {
+                            $("#loadingOverlay").hide();
+                            $("#Main_Span_Error").text("Something Error");
+                        }
+                    });
+                }
+                else {
+                    return; //close popup
+                }
+            });    
+    }
+
+    //  To get edit page
+    function EditCompensatoryLeavesFunction(CompOffLeaveID) {
+        try {
+            debugger;
+            // var CompOffLeaveID = $(this).closest('tr').find('td:eq(0)').text();
+            $("#ErrorMessageSpan").empty();
+            $("#loadingOverlay").show();
+            $.ajax({
+                url: "/Attendance/TblCompensatoryLeavesSummery_CallingFunction?CompOffLeaveID=" + CompOffLeaveID + "&submitButton=" + "EDITBTN",
+                type: "GET",
+                success: function (responce) {
+                    debugger;
+                    //lnkAddCompensatoryLeaves_callingFun(event);
+
+                    $('#contact-tab').tab('show');
+                    //  $("#contact-tab").click();
+
+                    FN_ClearValues('FmAddCompensatory', 'DdlEmployee_save');
+                    DepartmentsDropdown_Caliingfunction('DdlDepartment_save', responce[0].instanceClassificationId, 'Edit', "SelectName");
+
+                    AppliedEmployeeNames_Caliingfunction(this.id, 'DdlEmployee_save', responce[0].userId, 'Edit', responce[0].instanceClassificationId)
+
+
+                    $("#txtCompensateDate").val(responce[0].fromdate.split('T')[0]);
+
+                    $("#CompOffLeaveID").val(responce[0].leavetypeid);
+
+                    if (responce[0].daystype == "") {
+                        $("#Half_Day").prop('checked', false);
+                        $("#Full_Day").prop('checked', true);
+                        $("#DaySession").hide();
+                    }
+                    else {
+                        $("#DaySession").show();
+                        $("#Half_Day").prop('checked', true);
+                        $("#Full_Day").prop('checked', false);
+                        if (responce[0].daystype == "2") {
+                            $("#radioinline11").prop('checked', false);
+                            $("#radioinline21").prop('checked', true);
+                        } else {
+                            $("#radioinline11").prop('checked', true);
+                            $("#radioinline21").prop('checked', false);
+                        }
+                    }
+
+
+                    window.scrollTo(0, 0);
+                    $("#BtnSaveId").prop('disabled', false);
+                    $("#BtnSaveId").val("Update");
+                    $("#BtnClearform").val("Back to Search");
+                    $("#BtnClearform").prop("disabled", false);
+
+                    $("#loadingOverlay").hide();
+                },
+                error() {
+                    $("#loadingOverlay").hide();
+                    $("#Main_Span_Error").text("Something Error");
+                }
+            });
+        } catch (e) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+
+    //This is for save and Update Leave 
+    function SaveCompensatoryleaves(event) {
+        try {
+            debugger;
+            event.preventDefault();
+            window.scrollTo(0, 0);
+            $(".ErrorMessageSpan").empty();
+
+            var DdlDepartment = $("#DdlDepartment_save").val();
+            var DdlUser = $("#DdlEmployee_save").val();
+            var TxtFromDate = $("#txtCompensateDate").val();
+            var c = 0;
+            if (DdlDepartment === "" || DdlDepartment === "0" || DdlUser === "" || TxtFromDate === "" || $("input[type='radio'].check").is(":checked") == false || $("input[type='radio'].check1").is(":checked") == false) {
+
+                debugger;
+                if (DdlDepartment === "" || DdlDepartment === "0") {
+                    $("#DdlDepartment_Span_Error").text('Department');
+                    c++;
+                }
+                if (DdlUser === "") {
+                    $("#DdlUser_Span_Error").text('Employee');
+                    c++;
+                }
+                if (TxtFromDate === "") {
+                    $("#TxtFromDate_Span_Error").text('Compensate Date');
+                    c++;
+                }
+                if ($("input[type='radio'].check").is(":checked") == false) {
+                    $("#TxtDayType_Span_Error").text('Day Type');
+                    c++;
+                }
+                debugger;
+                if ($("input[type='radio'].check").is(":checked") == true && $("input[type='radio'].check:checked").val() == "1") {
+                    if ($("input[type='radio'].check1").is(":checked") == false) {
+                        $("#TxtDayType_Span_Error").text('Day Session');
+                        c++;
+                    }
+                }
+                if (c > 0) {
+                    $("#Main_Span_Error").text('Following fields have invalid data :');
+                    return;
+                }
+                //  return;
+            }
+
+
+            debugger;
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var TodayDate = year + '-' + month + '-' + day;
+
+
+            if (Date.parse(TxtFromDate) > Date.parse(TodayDate)) {
+                $("#Main_Span_Error").text('Compensate Date should not be greater than todays date.');
+                return;
+            }
+
+            var date = new Date(TxtFromDate);
+            date.setDate(date.getDate() + 90);
+            TodayDate = date.getDate().toString().padStart(2, '0') + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getFullYear() ;
+
+
+            var today1 = new Date(TxtFromDate);
+             year = today1.getFullYear();
+             month = ('0' + (today1.getMonth() + 1)).slice(-2);
+             day = ('0' + today1.getDate()).slice(-2);
+            TxtFromDate = day + '-' + month + '-' + year;
+
+            var formData = new FormData($("#FmAddCompensatory")[0]);
+            //var formData = new FormData(this);
+            var ButtonName = $("#BtnSaveId").val();
+            // var formData = new FormData(this);
+
+            
+            Swal.fire({
+                /*title: "Are you sure?",*/
+                text: ("For the selected Compensate Date '" + TxtFromDate + "' Expiry Date will be  '" + TodayDate+"'  by adding 90 days to Compensate Date."),
+                //type: "warning", -  doesn't exist
+                showCancelButton: false,
+                showCloseButton: true, // optional
+                showConfirmButton: true, // optional
+                confirmButtonColor: 'blue',
+                confirmButtonText: "Ok",
+                icon: "info",
+                //closeOnConfirm: false -  doesn't exist
+            })
+                .then(function (isConfirm) {
+                    if (isConfirm.isConfirmed) {
+                        $("#loadingOverlay").show();
+                        $.ajax({
+                            url: "/Attendance/ManageCompansatoryLeaves?ButtonName=" + ButtonName,
+                            type: "POST",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (responce) {
+                                if (responce.message == "Record Saved successfully." || responce.message == "Record updated successfully.") {
+                                    if (ButtonName != "Update") {
+                                        $("#BtnClearform").prop('disabled', true);
+                                    }
+                                    $("#BtnSaveId").prop('disabled', true);                             
+                                    $("#Main_Span_Error").text(responce.message);
+                                }
+                                else {                               
+                                     $("#Main_Span_Error").text(responce.message);
+                                }
+                                $("#loadingOverlay").hide();
+                            },
+                            error: function (xhr, status, error) {
+                                $("#loadingOverlay").hide();
+                                $("#Main_Span_Error").text("Something Error");
+                            }
+                        });
+                    }
+                    else {
+                        return; //close popup
+                    }
+                });
+
+
+        } catch (x) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+
+
+    function lnkCompensatoryLeavesSummery_callingFun(Formid) {
+
+        try {
+            $("#ErrorMessageSpan").empty();
+            TblDataTableWithColumns_CallingFunction(event, 'noStop', "/Attendance/TblCompensatoryLeavesSummery_CallingFunction", 'TblLeavesSummery', 'TblLeavesSummerycounts');
+
+        } catch (e) {
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+    function lnkCompensatoryLeavesDetails_callingFun(event) {
+        try {
+            debugger;
+            $("#ErrorMessageSpan").empty();
+            FN_ClearValues('FmCOMPENSATORYLEAVESSEARCH', 'DdlEmployee');
+            DepartmentsDropdown_Caliingfunction('DdlDepartment', '1', 'SelectName');
+            TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
+        } catch (e) {
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+    function lnkAddCompensatoryLeaves_callingFun(event) {
+        debugger;
+        try {
+            $("#ErrorMessageSpan").empty();
+            $("#DaySession").hide();
+            $("#BtnSaveId").prop('disabled', false);
+            $("#BtnClearform").prop('disabled', false);
+            $("#BtnSaveId").val("Save");
+            $("#BtnClearform").val("Clear");
+            FN_ClearValues('FmAddCompensatory', 'DdlEmployee_save');
+            DepartmentsDropdown_Caliingfunction('DdlDepartment_save', '1', 'SelectName');
+        } catch (e) {
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+
+    function FN_ClearValues(FormId, Dropdownid, BTNvalue) {
+        try {
+            debugger;
+            $("#ErrorMessageSpan").empty();
+
+
+            document.getElementById(FormId).reset(); // Reset the form
+            if (BTNvalue == "Back to Search") {
+                $("#profile-tabs").tab('show');
+                TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
+            } else {
+
+
+                // document.getElementById('FmAddCompensatory').reset();
+                $("#" + Dropdownid).empty();
+                $("#" + Dropdownid).append('<option value="">Please select Employee</option>');
+                $("#" + Dropdownid).prop("disabled", true);
+            }
+            //if (valuefornotclear != "no")
+            //    $(".ErrorMessageSpan").empty();
+
+        } catch (x) {
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+
+    $(document).ready(function () {
+        TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Attendance/TblCompensatoryLeavesSummery_CallingFunction", 'TblLeavesSummery', 'TblLeavesSummerycounts');
+    });
+
+
+    //function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, TableCountsId, FormId) {
+
+</script>

@@ -1,0 +1,900 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feereceipt
+@{
+    ViewData["Title"] = "Feereceipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/GenarateFeeChallana.css" rel="stylesheet" />
+    <style>
+
+
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+     
+
+        input[type="checkbox"] {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+           
+            input[type="checkbox"]:checked {
+              
+                border: 2px solid #008000; 
+                background-color: #008000; 
+                color: #fff; 
+            }
+
+    
+    </style>
+</head>
+<body>
+    <div style=" font-size: 20px; text-align: center;">
+        <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: 0px; ">GENERATE FEE CHALLAN</h1>
+    </div>
+    <div class="card" style="margin-left: 16px;">
+
+
+        <div class="card-header pb-0">
+            <div style="color: red; font-size: 12px;">
+                <div id="validation2" style="color: red;"></div>
+                <div id="validationMessage" style="color: red;"></div>
+
+                <p id="MessageID"></p>
+            </div>
+            <span id="ErrorMessage_SpanId1" style=" color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
+        </div>
+        <div id="Feereceipt_SerachFields_DIVID" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
+                                SEARCH USERS
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form asp-action="Feereceipt" id="searchForm">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-2">
+                                                <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font> Department: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" asp-for="InstanceId" id="InstanceId_DD" value="@ViewBag.InstanceId" />
+                                                <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="dropdownDD">
+                                                </select>
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-1">
+                                                <label class="control-label lbl" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font> Class: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="dropdownDD">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div style=" text-align: center; margin-top: 14px;">
+                                            <input type="button" value="Clear" id="Clear_Btn" class="btn btn-pill btn-outline-danger-2x" />
+                                            <input type="submit" value="Search" class="btn btn-pill btn-outline-success-2x" onclick="SearchBankAccountsData(event);">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="User_Tbl_data" style="margin-top: -43px; width: 102%;">
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+
+                        <span style=" margin-left: 26px; font-size: 15px;"></span>
+
+                        <input type="checkbox" id="CheckAll_UserIds" style=" width: 16px; height: 16px; margin-left: 16px; margin-top: 3px;" /> <label style="margin-left: 36px; margin-top: -18px; font-family: none; ">
+                            Check All
+                        </label>
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="btn   Header_Btn" style="font-weight: bolder; color:white;">YOUR SEARCH RESULTED  :<span id="TableCount" style="color: red; background-color: white; border-radius: 11px; font-weight: bold; padding: 3px; "></span> RECORDS.</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" aria-labelledby="" data-bs-parent="#">
+                            @*<div class="card-body">*@
+                            <div id="FeeRecipt_Table" style=" margin-top: 5px;">
+                                <table class="FeeRecipttable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center; width: 5%; ">Select</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Class</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                                <div id="ManageBankAccounts_pagination"></div>
+                            </div>
+                            @*</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Table Html And Table Data Bind Code End*@
+    </div>
+
+    <div>
+
+        <div class="card-body" style="width: 102%; margin-top: -14px;">
+            <div id="FEE_TERM_DETAILS_DIVID">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <div id="validation2GFCS" style="color: red;"></div>
+                        <div id="validationMessageGFCS" style="color: red;"></div>
+                        <span id="ErrorMessageChallana_SpanId" style="color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="btn  collapsed Header_Btn" aria-controls="collapse11" style="font-weight: bolder; color:white;"> FEE TERM DETAILS</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                            <div class="card-body">
+                                <form asp-action="GetFeeReceiptdetails_ByUserIdsFeeTermsFeeTypes" id="feeChallanForm">
+                                    <div class="row">
+                                        <div class="row" style=" margin-left: 92px;">
+                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-3">
+                                                <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font> Fee Terms: </label>
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <select asp-for="FeeTermId" id="FeeTermId_DD" class="MultipuleDropdown"  multiple>
+                                                </select>
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-3">
+                                                <label class="control-label lbl" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font> Fee Types: </label>
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <select asp-for="FeeTypeIds" id="FeeTypeId_DD" class="MultipuleDropdown"  multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: 24%;">
+                                            <input type="submit" value="Generate Fee Challan for Selected Students." class="GFCSS_Btn btn btn-pill btn-outline-primary-2x PreviousPageBtn" />@*onclick="generateFeeChallanselectedstudnts();" *@
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="Challana_User_DIVID" style=" width: 102%; margin-top: -22px;">
+            <div class="card-body">
+                <div class="default-according style-1" id="accordionoc">
+                    <div class="card">
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed Header_Btn" aria-controls="collapse11" style="font-weight: bolder; color:white;"> YOUR SEARCH RESULTED <span id="Challan_Count_SPID" style="color: red; background-color: white; border-radius: 11px; font-weight: bold; padding: 3px;"></span> RECORDS.</button>
+                        </h5>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                            <div class="card-body" style="padding: 0px;">
+                                <table id="Challan_CreatedUserS_Tbl" class="ChalanaCreatedUsersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Fee Term</th>
+                                            <th>Fee Type</th>
+                                            <th>Fee Amount</th>
+                                            <th>Challan No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="Challan_CreatedUserS_TblBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        debugger;
+        $('#User_Tbl_data').hide();
+        $('#FEE_TERM_DETAILS_DIVID').hide();
+        $('#Challana_User_DIVID').hide();
+
+    });
+
+    $('#Clear_Btn').click(function () {
+
+        $('#validationMessage').text('');
+        $('#validation2').text('');
+        $('#MessageID').text('');
+        $('#MessageID').text('');
+
+    });
+
+    /*----Fee Terms DROPDOWN FUNCTION CODE START---*/
+
+    function FeeTerms_dropdown_Function() {
+
+        /*  debugger;*/
+        var dropdown = document.getElementById("FeeTermId_DD");
+
+        // Clear existing options
+        dropdown.innerHTML = "";
+        /*debugger;*/
+        // Get the InstanceId value from the hidden input field
+        const instanceId = document.getElementById("InstanceId_DD").value;
+
+        // Construct the fetch URL with the InstanceId as a query parameter
+        const fetchURL = `/FeeSection/FeeTerms_DD?InstanceId=${instanceId}`;
+
+        fetch(fetchURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+                // Get the dropdown element
+                const dropdown = document.getElementById("FeeTermId_DD");
+
+                // Clear existing options
+                dropdown.innerHTML = "";
+
+                // Create the "--select--" option
+                const selectOption = document.createElement("option");
+                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
+                selectOption.textContent = "-----Select------"; // Set the display text for the option
+                dropdown.appendChild(selectOption);
+
+                // Iterate through each item in the data
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', FeeTerms_dropdown_Function);
+
+    /*----Fee Terms DROPDOWN FUNCTION CODE END---*/
+
+
+
+    /*--------FeeType DROPDOWN GET BY FeeTerm  dropdown CODE START -----------*/
+
+    function sendFeeType_BY_FeeTermSelectedValue() {
+        /*debugger;*/
+        var InstanceClassificationdropdownValue = document.getElementById("FeeTermId_DD");
+        var selecteValue = InstanceClassificationdropdownValue.value;
+        const instanceId = document.getElementById("InstanceId_DD").value;
+
+        fetch("/FeeSection/Feereceipt_FeeType_DD?InstanceId=" + instanceId + "&FeeTermIds=" + selecteValue)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /*  debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+                // Get the dropdown element
+                const dropdown_DD = document.getElementById("FeeTypeId_DD");
+
+                // Clear existing options
+                dropdown_DD.innerHTML = "";
+
+                // Create the  option
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "---------Select-----------";
+                dropdown_DD.appendChild(selectOption);
+
+                // Iterate through each item in the data
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown_DD.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    // Attach the event listener to the dropdown
+    var dropdown = document.getElementById("FeeTermId_DD");
+    dropdown.addEventListener("change", sendFeeType_BY_FeeTermSelectedValue);
+
+    /*--------FeeType DROPDOWN GET BY FeeTerm dropdown  CODE  END-----------*/
+
+
+
+
+
+
+
+
+
+
+    /*----ROLE DROPDOWN FUNCTION CODE START---*/
+
+    function Role_dropdown_Function() {
+
+        /*  debugger;*/
+        var dropdown = document.getElementById("InstanceClassificationId_DD");
+
+        // Clear existing options
+        dropdown.innerHTML = "";
+        /* debugger;*/
+        // Get the InstanceId value from the hidden input field
+        const instanceId = document.getElementById("InstanceId_DD").value;
+
+        // Construct the fetch URL with the InstanceId as a query parameter
+        const fetchURL = `/FeeSection/Feereceipt_Classification_DD?InstanceId=${instanceId}`;
+
+        fetch(fetchURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+                // Get the dropdown element
+                const dropdown = document.getElementById("InstanceClassificationId_DD");
+
+                // Clear existing options
+                dropdown.innerHTML = "";
+
+                // Create the "--select--" option
+                const selectOption = document.createElement("option");
+                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
+                selectOption.textContent = "-----Select------"; // Set the display text for the option
+                dropdown.appendChild(selectOption);
+
+                // Iterate through each item in the data
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', Role_dropdown_Function);
+
+    /*----ROLE DROPDOWN FUNCTION CODE END---*/
+
+
+
+    /*--------Department DROPDOWN GET BY Class dropdown CODE START -----------*/
+
+    function sendDepartment_BY_ClassSelectedValue() {
+        /* debugger;*/
+        var InstanceClassificationdropdownValue = document.getElementById("InstanceClassificationId_DD");
+        var INCselectedValue = InstanceClassificationdropdownValue.value;
+        const instanceId = document.getElementById("InstanceId_DD").value;
+
+        fetch("/FeeSection/FeereceiptClass_DD?InstanceClassificationId=" + INCselectedValue + "&instanceId=" + instanceId)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /*  debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+                // Get the dropdown element
+                const dropdown = document.getElementById("InstanceSubClassificationId_DD");
+
+                // Clear existing options
+                dropdown.innerHTML = "";
+
+                // Create the  option
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "---------Select-----------";
+                dropdown.appendChild(selectOption);
+
+                // Iterate through each item in the data
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    // Attach the event listener to the dropdown
+    var dropdown = document.getElementById("InstanceClassificationId_DD");
+    dropdown.addEventListener("change", sendDepartment_BY_ClassSelectedValue);
+
+    /*--------Department DROPDOWN GET BY Class dropdown  CODE  END-----------*/
+
+
+
+
+
+
+
+    /*--------Search Fee Recipt Users Table data function  code start---------------------------------*/
+    function SearchBankAccountsData(event) {
+
+        /* debugger;*/
+        event.preventDefault();
+
+
+
+        // Get the search input value
+
+        var InstanceId = $('#InstanceId_DD').val();
+        var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
+        var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
+
+
+
+
+        // Call the Feesection_TbLData_Callingfunction and pass the search value as a parameter
+        ManageBankAccounts_TbLData_function(InstanceId, InstanceClassificationId, InstanceSubClassificationId);
+    }
+    /*--------Search Fee Recipt Users Table data function code end---------------------------------*/
+
+    /*--------------------------  VALIDATION FUNCTION START-------------------------- */
+    function validateForm() {
+        /*  debugger;*/
+
+
+        var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
+        var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
+
+
+
+        var validationMessage = "";
+        var hasError = false;
+
+        if (InstanceClassificationId === "") {
+            validationMessage += "Department  <br>";
+            hasError = true;
+        }
+        if (InstanceSubClassificationId === "") {
+            validationMessage += "Class <br>";
+            hasError = true;
+        }
+
+
+
+        if (hasError) {
+            $('#validation2').html("Following fields have invalid data :");
+            $("#validationMessage").html(validationMessage);
+            return false; // Return false to prevent form submission
+        } else {
+            $("#validationMessage").html("");
+            return true; // Return true to proceed with form submission
+        }
+    }
+    /*--------------------------  VALIDATION FUNCTION END -------------------------- */
+
+    /*---------------------Fee Recipt User Table function code start-------------------------------*/
+
+    function ManageBankAccounts_TbLData_function(InstanceId, InstanceClassificationId, InstanceSubClassificationId) {
+        var footerAdded = false;
+        /*debugger;*/
+        if (validateForm()) {
+
+            $('#validation2').text('');
+
+            $.ajax({
+                url: '/FeeSection/Feereceipt',
+                method: 'POST',
+                data: {
+                    InstanceId: InstanceId,
+                    ClassificationId: InstanceClassificationId,
+                    SubClassificationId: InstanceSubClassificationId
+                },
+                success: function (response) {
+                    var footerAdded = $('table').data('footerAdded');
+
+                    debugger;
+
+                    $('#User_Tbl_data').show();
+
+                    $('#FEE_TERM_DETAILS_DIVID').hide();
+                    $('#Challana_User_DIVID').hide();
+
+
+
+                    var CountTabledata = response.length;
+                    $('#TableCount').text(CountTabledata);
+
+                    console.log(response); // Log the response object in the browser's console
+
+                    var table = $('#FeeRecipt_Table');
+                    var tbody = table.find('tbody');
+
+                    // Clear the existing table body
+                    tbody.empty();
+
+                    $.each(response, function (index, bacTable) {
+                        var row = $('<tr></tr>');
+
+                        var cell1 = $('<td class="editable-cell"></td>').css({
+                            'cursor': 'pointer',
+                            'text-align': 'center'
+                        });
+                        var userId = bacTable.userId;
+                        var checkboxId = 'checkbox_' + userId; // Generating a unique id for each checkbox
+
+                        var checkbox = $('<input type="checkbox"/>')
+                            .attr('id', checkboxId) // Set the id attribute
+                            .attr('value', userId)
+                            .prop('name', 'selectedUserIds[]')
+                            .addClass('user-checkbox') // Add a class to the checkbox
+                            .css({
+                                'width': '20px',
+                                'height': '20px',
+                            });
+
+                        cell1.append(checkbox);
+                        var cell2 = $('<td></td>').text(bacTable.firstName);
+                        var cell3 = $('<td></td>').text(bacTable.classificationName);
+                        var cell4 = $('<td></td>').text(bacTable.subClassificationName);
+
+                        // Append the cells to the row
+                        row.append(cell1);
+                        row.append(cell2);
+                        row.append(cell3);
+                        row.append(cell4);
+
+                        $('table tbody').append(row);
+                    });
+
+
+                    if (!footerAdded) {
+                        var footerRow = $('<tr></tr>');
+
+                        var goToStep2Button = $('<button></button>').text('Go to Step 2').addClass('go-to-step2-button btn btn-pill btn-outline-primary-2x PreviousPageBtn');
+                        goToStep2Button.css({
+                            'width': '16%',
+                            'margin-left': '45%',
+                            'text-align': 'center',
+                            'border': '1px solid black',
+                            'font-weight': '500',
+                            'font-size': '16px'
+                        });
+
+                        var colspan = 4;
+                        var centeredCell = $('<td colspan="' + colspan + '"></td>').append(goToStep2Button);
+                        footerRow.append(centeredCell);
+
+                        $('table tfoot').append(footerRow);
+                        $('table').data('footerAdded', true);
+                    }
+
+
+                },
+                error: function () {
+                    console.log('Error retrieving data.');
+                }
+
+
+            });
+        }
+    }
+    /*----------------------Fee Recipt User Table function code end-------------------------------*/
+    // Check/uncheck all checkboxes with the class "user-checkbox"
+    function checkAllCheckboxes(checked) {
+        debugger;
+        $('.user-checkbox').prop('checked', checked);
+    }
+
+    // Click event for the "Check All" checkbox
+    $('#CheckAll_UserIds').click(function () {
+        debugger;
+        var checked = $(this).prop('checked');
+        checkAllCheckboxes(checked);
+    });
+
+
+    // Click event for the "Go to Step 2" button
+    $('table').on('click', '.go-to-step2-button', function () {
+        debugger;
+
+        var selectedUserIds = [];
+
+        if ($('.user-checkbox:checked').length === 0) {
+            window.scroll(0, 0);
+            $('#FEE_TERM_DETAILS_DIVID').hide();
+            $('#Challana_User_DIVID').hide();
+
+            $('#ErrorMessage_SpanId1').text('Please Select Atleast one Student to Generate Challan for Fee.');
+            return;
+        }
+
+        $('#ErrorMessage_SpanId1').text('');
+
+        FeeTerms_dropdown_Function();
+        sendFeeType_BY_FeeTermSelectedValue();
+
+
+        $('#ErrorMessageChallana_SpanId').text('');
+
+        $('.user-checkbox:checked').each(function () {
+            selectedUserIds.push($(this).val());
+        });
+
+        // Call the AJAX function to pass the selected user IDs to the Chalan_genarat method
+        chalanGenerate(selectedUserIds);
+    });
+
+    // Click event for checkboxes with the class "user-checkbox"
+    $('table').delegate('.user-checkbox', 'click', function () {
+        debugger;
+
+        var userId = $(this).val();
+        var isChecked = $(this).prop('checked');
+        /* alert("User ID: " + userId + ", Checked: " + isChecked);*/
+    });
+
+    /*-------============================== Goto  Step 2 button click fire function  code start====================--------------------*/
+
+    function chalanGenerate(userIds) {
+        debugger;
+
+        /*alert(userIds);*/
+        $('#FEE_TERM_DETAILS_DIVID').show();
+        console.log("Selected User IDs:", userIds);
+
+        var selectedUserIdsValues = userIds;
+
+    }
+
+    /*-------============================== Goto  Step 2 button click fire function  code start====================--------------------*/
+
+
+
+    function validation_GFCS() {
+
+
+        /* debugger;*/
+        var FeeTypeId = $('#FeeTypeId_DD').val();
+        var FeeTermId = $('#FeeTermId_DD').val();
+
+
+
+        var validationMessage = "";
+        var hasError = false;
+
+        if (FeeTypeId === null || FeeTypeId.length === 0) {
+
+            validationMessage += "Select Fee Terms<br>";
+            hasError = true;
+
+        }
+        if (FeeTermId === null || FeeTermId.length === 0) {
+            validationMessage += "Select Fee Types <br>";
+            hasError = true;
+        }
+
+
+
+        if (hasError) {
+            $('#validation2GFCS').html("Following fields have invalid data :");
+            $("#validationMessageGFCS").html(validationMessage);
+            return false; // Return false to prevent form submission
+        } else {
+            $("#validationMessageGFCS").html("");
+            return true; // Return true to proceed with form submission
+        }
+    }
+
+
+
+    /* ----=============== Generate fee challan for selected studnts button click fire this function start code----==================== */
+
+
+
+    $('#feeChallanForm').submit(function (event) {
+        debugger;
+
+        event.preventDefault(); // Prevent default form submission
+
+        FeeTypeIdsSelectedValues = $('#FeeTermId_DD').val();
+
+
+        debugger;
+
+        if (FeeTypeIdsSelectedValues.length > 1) {
+
+            $('#ErrorMessageChallana_SpanId').text("Please Select only one Fee Term to Generate challan for Miscellaneous Fee.");
+
+            alert("one value selected ");
+
+
+
+        } else {
+            if (validation_GFCS()) {
+
+
+                FeeTypeIds = $('#FeeTypeId_DD').val();
+                FeeTermId = $('#FeeTermId_DD').val();
+                debugger;
+
+
+
+
+
+                debugger;
+                var formData = new FormData(this);
+
+
+
+                var selectedUserIds = [];
+                $('input.user-checkbox:checked:not(.user-checkbox[value="on"])').each(function () {
+
+                    selectedUserIds.push($(this).val());
+
+                });
+
+                console.log(selectedUserIds);
+
+
+
+                var InstanceId = $('#InstanceId_DD').val();
+
+                
+
+                $.ajax({
+                    url: '/FeeSection/Feereceipt_Users_Challan_Result_Tbl?FeeTypeIds=' + FeeTypeIds + '&FeeTermId=' + FeeTermId + '&UserIds=' + selectedUserIds + '&InstanceId=' + InstanceId,
+                    type: 'POST',
+
+                    processData: false, // Prevent jQuery from processing the data
+                    contentType: false, // Let the server handle the content type
+                    success: function (response) {
+
+                        debugger;
+
+                        console.log(response);
+
+                        debugger;
+
+                        $('#Challana_User_DIVID').show();
+
+                        var ChallanaCount = response.length;
+
+                        $('#Challan_Count_SPID').text(ChallanaCount);
+
+                        if (ChallanaCount > 0) {
+
+                            $('#ErrorMessageChallana_SpanId').text('Challan is already generated for below user(s).');
+
+                        } else if (ChallanaCount == 0) {
+
+                            $('#Challana_User_DIVID').hide();
+                            $('#ErrorMessageChallana_SpanId').text('Fees Haven' + "'" + 't scheduled for selected user(s).');
+
+                        }
+
+                      
+
+                        var table = $('#Challan_CreatedUserS_Tbl');
+                        var tbody = table.find('#Challan_CreatedUserS_TblBody');
+
+
+                        tbody.empty();
+
+                        $.each(response, function (index, dataEntry) {
+                            var row = $('<tr></tr>');
+
+                           
+                            var cell1 = $('<td></td>').text(dataEntry.firstName);
+                            var cell2 = $('<td></td>').text(dataEntry.termName);
+                            var cell3 = $('<td></td>').text(dataEntry.feeType);
+                            //var cell4 = $('<td></td>').text(dataEntry.amount);
+                            var cell4 = $('<td></td>').text(parseFloat(dataEntry.amount).toFixed(2));
+                            var cell5 = $('<td></td>').text(dataEntry.userReceiptGenerationID).css('font-weight', 'bold');
+
+                          
+
+                            
+                            row.append(cell1);
+                            row.append(cell2);
+                            row.append(cell3);
+                            row.append(cell4);
+                            row.append(cell5);
+
+                            
+                            tbody.append(row);
+                        });
+
+                    },
+                    error: function (xhr, textStatus, error) {
+                      
+                        console.log(xhr.responseText);
+                    }
+                })
+
+            }
+
+        }
+    });
+
+
+
+    /* ----=============== Generate fee challan for selected studnts button click fire this function End code----==================== */
+
+</script>
+
+
+
+@*Goto Button 2 Click  any one checkbox Error Message *@

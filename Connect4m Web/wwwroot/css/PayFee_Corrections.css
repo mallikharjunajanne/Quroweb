@@ -1,0 +1,673 @@
+﻿
+
+.Print_Btns {
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+.lbl {
+    height: 30px;
+    font-family: auto;
+    font-size: 13px;
+}
+
+.Dpd {
+    height: 24px;
+    width: 70%;
+    border-radius: 3px;
+    font-family: auto;
+    font-size: 13px;
+}
+
+.NextPageBtn {
+    border-radius: 8px;
+    cursor: pointer;
+    border: none !important;
+    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+}
+
+.PreviousPageBtn {
+    border-radius: 8px;
+    cursor: pointer;
+    border: none !important;
+    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+}
+
+.Header_text_span {
+    color: white;
+    font-size: 13px;
+    font-weight: bolder;
+}
+
+
+
+
+.RecordsCount_Span {
+    background-color: #fd761e;
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+
+.Name_Header_Btn {
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    width: 99%;
+    margin-left: 3px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.UserNameStyles_SpId {
+    color: red;
+    font-size: 13px;
+    margin-left: 18px;
+    font-family: 'icofont';
+    font-weight: 600;
+}
+
+.FeeTerms_Edit_ButtonView {
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    width: 99%;
+    margin-left: 6px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: left;
+}
+
+.Header_Btn {
+    /* height: 29px;
+    background-color: cornsilk;
+    border-radius: 6px;
+    filter: drop-shadow(1px 1px 3px black);
+    text-align: left;
+    color: black;
+    text-decoration: none;*/
+    margin-top: 11px;
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    margin-left: 3px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 29px;
+    font-size: 14px;
+    font-weight: bolder;
+    width: 99%;
+}
+
+.Search_User_PVPBtns {
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: sienna;
+    color: white;
+}
+
+.Search_User_SeaBtns {
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: orchid;
+    color: white;
+}
+
+
+.Search_User_CLRBtns {
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: red;
+    color: white;
+}
+
+.Search_User_NXTBtns {
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: blue;
+    color: white;
+}
+
+.Search_User_NFBtns {
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: seagreen;
+    color: white;
+}
+
+.UserDetails_searchBtn {
+    width: 18%;
+    margin-left: 40%;
+    background-color: mediumblue;
+    color: white;
+    font-weight: 800;
+    border-radius: 11px;
+    border-color: wheat;
+}
+
+.SaveUpdateResest_Btn {
+    width: 20%;
+    margin-left: 0%;
+    background-color: brown;
+    color: white;
+    font-weight: 800;
+    border-radius: 11px;
+    border-color: wheat;
+}
+
+.Add_UpdateFee_Btn {
+    width: 23%;
+    margin-left: 0%;
+    background-color: teal;
+    color: white;
+    font-weight: 800;
+    border-radius: 11px;
+    border-color: wheat;
+}
+
+
+input[type="text"]:focus {
+    border: 2px solid blue;
+    outline: none;
+}
+
+.dropdown-style {
+    height: 25px;
+    width: 66%;
+    border-radius: 4px;
+    padding: 0px;
+    font-size: 13px;
+}
+
+
+/*table Styles Code Starting */
+
+.SearchUserNames_tbl {
+    width: 103%;
+    border-collapse: collapse;
+    border: 0px solid #DD7;
+    margin-top: -16px;
+    background-color: white;
+    margin-left: -15px;
+}
+
+    .SearchUserNames_tbl tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .SearchUserNames_tbl th {
+        padding: 5px;
+        border: 1px solid #DC5;
+        background-color: blanchedalmond;
+        font-size: 14px;
+        text-align: center;
+        font-family: auto;
+    }
+
+    .SearchUserNames_tbl td {
+        border: 1px solid #DC5;
+        font-family: auto;
+        padding: 5px;
+    }
+
+    .SearchUserNames_tbl tr:hover {
+        background-color: #f5f5f5;
+    }
+
+
+table {
+    width: 99%;
+    /* border-collapse: collapse; */
+    /* border: 8px solid #DD7; */
+    margin-top: -16px;
+    background-color: white;
+    margin-left: 6px;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    /* padding: 6px;*/
+    border: 2px solid #DC5;
+    /* background-color: cyan;*/
+    font-size: 14px;
+    text-align: center;
+    font-family: auto;
+}
+
+td {
+    /* border: 1px solid #ddd;
+    padding: 8px;*/
+    border: 1px solid #DC5;
+    /*  padding: 9px;*/
+    font-family: auto;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+/*table Styles Code End */
+
+.pagination {
+    text-align: center;
+}
+
+
+
+.Search_FeeTable {
+    width: 99%;
+    border-collapse: collapse;
+    border: 1px solid #DC2;
+    margin-top: -18px;
+    background-color: white;
+    margin-left: 7px;
+}
+
+    .Search_FeeTable td {
+        border: 1px solid #DC5;
+        /* padding: 0px; */
+        font-family: auto;
+    }
+
+    .Search_FeeTable th {
+        border: 1px solid #DC5;
+        /* padding: 0px; */
+        font-family: auto;
+    }
+
+    .Search_FeeTable tfoot {
+        background-color: lightgoldenrodyellow;
+    }
+
+.Update_FeeTable {
+    width: 99%;
+    border-collapse: collapse;
+   
+    margin-top: -16px;
+    background-color: white;
+    margin-left: 8px;
+}
+
+    .Update_FeeTable thead th {
+        border: 2px solid #DC5;
+        background-color: blanchedalmond;
+        font-size: 14px;
+        text-align: center;
+        font-family: auto;
+        color: black;
+    }
+
+    .Update_FeeTable td {
+        border: 1px solid #DC5;
+        font-family: auto;
+    }
+
+.search-icon {
+    font-size: 14px;
+    cursor: pointer;
+    color: #555;
+    padding: 5px;
+}
+
+
+/*--------------------==========LOADING SPINNER STYLES START==============--------------------------*/
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically center the content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1998;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+
+.loading-text {
+    margin-top: 39px;
+    font-size: 12px;
+    margin-left: 123px;
+    color: #fd2d63;
+    font-weight: bold;
+}
+
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 0px solid #011015;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 9998;
+}
+
+    .spinner:nth-child(1) {
+        border-bottom-width: 8px;
+        border-color: #fd2d63;
+        animation: rotate1 3s linear infinite;
+    }
+
+    .spinner:nth-child(2) {
+        border-right-width: 8px;
+        border-color: rgb(0, 162, 265);
+        animation: rotate2 3s linear infinite;
+    }
+
+    .spinner:nth-child(3) {
+        border-top-width: 8px;
+        border-color: rgb(0, 247, 255);
+        animation: rotate3 3s linear infinite;
+    }
+
+@keyframes rotate1 {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(50deg) rotateY(-10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate3 {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+
+
+/*--------------------==========LOADING SPINNER STYLES END==============--------------------------*/
+
+
+
+
+/*----CHALLANA CREATED VIEW STYLES CODE START------*/
+.ChallanaCreated_Btn {
+    font-size: 13px;
+    height: 30px;
+    width: 100%;
+    background-color: lightcyan;
+    border-radius: 3px;
+    border-color: black;
+    border-bottom-color: black
+}
+
+.Challana_Time_SpanId {
+    margin-left: 82%;
+    font-family: auto;
+    font-size: 15px;
+}
+
+.Challana_Table {
+    width: 100%;
+    margin-top: 0px;
+    background-color: white;
+    margin-left: 0px;
+    border-color: white;
+}
+
+    .Challana_Table tr {
+        border: none;
+    }
+
+    .Challana_Table td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table1 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table1 tr {
+        border: none;
+    }
+
+    .Challana_Table1 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table2 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table2 tr {
+        border: none;
+    }
+
+    .Challana_Table2 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table3 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table3 tr {
+        border: none;
+    }
+
+    .Challana_Table3 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table4 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table4 tr {
+        border: none;
+    }
+
+    .Challana_Table4 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table5 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table5 tr {
+        border: none;
+    }
+
+    .Challana_Table5 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table6 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table6 tr {
+        border: none;
+    }
+
+    .Challana_Table6 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table7 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table7 tr {
+        border: none;
+    }
+
+    .Challana_Table7 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.Challana_Table8 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table8 tr {
+        border: none;
+    }
+
+    .Challana_Table8 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+
+.Challana_Table9 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table9 tr {
+        border: none;
+    }
+
+    .Challana_Table9 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+
+.Challana_Table10 {
+    margin-left: 11px;
+    width: 97%;
+    margin-top: 0px;
+    background-color: white;
+    border-color: white;
+}
+
+    .Challana_Table10 tr {
+        border: none;
+    }
+
+    .Challana_Table10 td {
+        border: none;
+        font-size: 14px;
+        font-family: math;
+        letter-spacing: 4px;
+    }
+
+.schooltitle {
+    font-family: Times New Roman;
+    font-size: 9px;
+    color: #555555;
+    letter-spacing: 4px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.subschooltitle {
+    font-family: Times New Roman;
+    font-size: 9px;
+    color: #555555;
+    letter-spacing: 4px;
+    line-height: 20px;
+}
+
+/*----CHALLANA CREATED VIEW STYLES CODE END------*/

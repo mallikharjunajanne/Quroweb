@@ -1,0 +1,344 @@
+﻿
+@*@{
+    Layout = null;
+    }*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/Chapter_wise_Video_playing.css" rel="stylesheet" />
+
+    <link href="~/css/Everyminutetest.css" rel="stylesheet" />
+
+    <link href="~/css/player.css" rel="stylesheet" />
+    <link href="~/css/texts.css" rel="stylesheet" />
+    <link href="~/css/buttons.css" rel="stylesheet" />
+
+
+
+
+    <link href="~/css/Videodesign-m.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&display=swap"
+          rel="stylesheet" />
+</head>
+<body>
+    <div class="form-popup" id="myyForm">
+
+        <form class="form-container" id="12form">
+            <label>Remaining Time :<span id="timer">00:10</span></label>
+            <img style=" height: 19%;" src="~/Images/multiple-choice.png" />
+            <div>
+                <div>
+                    <input type="radio" name="ra" />A  <input type="radio" name="ra" /> B <input type="radio" name="ra" />  C <input type="radio" name="ra" /> D
+                </div>
+
+                <input type="submit" class="btn-dark" id="textsubmit" value="Submit" />
+            </div>
+
+        </form>
+
+
+    </div>
+    @*<div id="video-container">*@
+
+    <main class="wrapper">
+        <div class="player">
+            <div class="player-overlay" data-fullscreen="false">
+                <div class="container">
+                    <div class="information-container">
+                        @*<h1 class="title">Rain</h1>*@
+                        <p class="description">
+                                This is an example paragraph that serves to exemplify a
+                                description of a video
+                            </p>
+
+                    </div>
+                    <div class="player-container">
+                        <div class="video-progress">
+                            <div class="video-progress-filled"></div>
+                        </div>
+                        <div class="player-controls">
+                            <div class="player-buttons">
+                                <button aria-label="play"
+                                        class="button play"
+                                        title="play"
+                                        type="button"></button>
+                                <button aria-label="pause"
+                                        class="button pause"
+                                        hidden
+                                        title="pause"
+                                        type="button"></button>
+                                <button aria-label="backward"
+                                        class="button backward"
+                                        title="backward"
+                                        type="button"></button>
+                                <button aria-label="forward"
+                                        class="button forward"
+                                        title="forward"
+                                        type="button"></button>
+                                <button aria-label="volume"
+                                        class="button volume"
+                                        title="volume"
+                                        type="button"></button>
+                                <button aria-label="silence"
+                                        class="button silence"
+                                        hidden
+                                        title="silence"
+                                        type="button"></button>
+                                <div class="volume-progress">
+                                    <div class="volume-progress-filled"></div>
+                                </div>
+                                <div class="time-container">
+                                    <p class="current-time">0:00</p>
+                                    <p class="time-separator">/</p>
+                                    <p class="duration-video">0:00</p>
+                                </div>
+                            </div>
+                            <div class="expand-container">
+                                <button aria-label="expand"
+                                        class="button expand"
+                                        title="expand"
+                                        type="button"></button>
+                                <button aria-label="reduce"
+                                        class="button reduce"
+                                        hidden
+                                        title="reduce"
+                                        type="button"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <video class="video" id="video"
+                   @*poster="./assets/poster.png"*@
+                   src="/Videos/8thClass.mp4"></video>
+        </div>
+
+
+
+
+
+
+
+
+    </main>
+
+    @*</div>*@
+    @* Renderining the nav links below the video *@
+
+    <canvas id="canvas" style="display: none;"></canvas>
+    <button id="show-panel-button" onclick="showPanel()">Show Panel</button>
+    <button id="Hide-panel-button" onclick="HidePanel()">Hide Panel</button>
+    <div id="chapters-panel">
+        <ul id="chapter-list">
+            <li id="10" onclick="seekToTime(10)">
+
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">00:10 </a>Chapter 1</div>
+            </li>
+            <li id="20" onclick="seekToTime(20)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">00:20 </a>Chapter 2</div>
+            </li>
+
+            <li id="40" onclick="seekToTime(40)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">00:40 </a>Chapter 3</div>
+            </li>
+            <li id="60" onclick="seekToTime(60)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">01:00 </a>Chapter 4</div>
+            </li>
+            <li id="80" onclick="seekToTime(80)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">01:20 </a>Chapter 5</div>
+            </li>
+            <li id="100" onclick="seekToTime(100)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">01:40 </a>Chapter 6</div>
+            </li>
+
+            <li id="120" onclick="seekToTime(120)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">02:00 </a>Chapter 7</div>
+            </li>
+            <li id="140" onclick="seekToTime(140)">
+                <div class="chapter-thumbnail">
+                    <img alt="Chapter 1">
+                </div>
+                <div class="chapter-title"><a href="#">02:20 </a>Chapter 8</div>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+
+    <div id="customControls" hidden>
+        <div id="progressBar">
+            <div id="progressBarFill">
+                <div id="marksContainer">
+                    <div class="mark" data-time="30"></div>
+                    <div class="mark" data-time="60"></div>
+                    <div class="mark" data-time="90"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="wrapper">-->
+    <!-- HEADER -->
+    <!--<header>
+        <div class="netflixLogo">
+            <a id="logo" href="#home"><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/logo.PNG?raw=true" alt="Logo Image"></a>
+        </div>
+        <nav class="main-nav">
+            <a href="#home">Home</a>
+            <a href="#tvShows">TV Shows</a>
+            <a href="#movies">Movies</a>
+            <a href="#originals">Originals</a>
+            <a href="#">Recently Added</a>
+            <a target="_blank" href="https://codepen.io/cb2307/full/NzaOrm">Portfolio</a>
+        </nav>
+        <nav class="sub-nav">
+            <a href="#"><i class="fas fa-search sub-nav-logo"></i></a>
+            <a href="#"><i class="fas fa-bell sub-nav-logo"></i></a>
+            <a href="#">Account</a>
+        </nav>
+    </header>-->
+    <!-- END OF HEADER -->
+    <!-- MAIN CONTAINER -->
+    <!--<section class="main-container">
+        <div class="location" id="home">
+            <h1 id="home">Popular on Netflix</h1>
+            <div class="box">
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p2.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p3.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p4.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p5.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p6.PNG?raw=true" alt=""></a>
+
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p7.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p8.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p9.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p10.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p11.PNG?raw=true" alt=""></a>
+                <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p12.PNG?raw=true" alt=""></a>
+            </div>
+        </div>
+
+
+        <h1 id="myList">Trending Now</h1>
+        <div class="box">
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t1.PNG?raw=true" alt="">this is One Video</a>
+            <label>this is One Video</label>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t2.PNG?raw=true" alt="">this is One Video</a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t3.PNG?raw=true" alt="">this is One Video</a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t4.PNG?raw=true" alt="">this is One Video</a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t5.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/t6.PNG?raw=true" alt=""></a>
+        </div>
+
+        <h1 id="tvShows">TV Shows</h1>
+        <div class="box">
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv1.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv2.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv3.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv4.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv5.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv6.PNG?raw=true" alt=""></a>
+
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv7.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv8.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv9.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv10.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv11.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/tv12.PNG?raw=true" alt=""></a>
+        </div>
+
+
+        <h1 id="movies">Blockbuster Action & Adventure</h1>
+        <div class="box">
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m1.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m2.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m3.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m4.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m5.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/m6.PNG?raw=true" alt=""></a>
+        </div>
+
+        <h1 id="originals">Netflix Originals</h1>
+        <div class="box">
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o1.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o2.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o3.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o4.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o5.PNG?raw=true" alt=""></a>
+            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/o6.PNG?raw=true" alt=""></a>
+        </div>-->
+    <!-- END OF MAIN CONTAINER -->
+    <!-- LINKS -->
+    <!--<section class="link">
+        <div class="logos">
+            <a href="#"><i class="fab fa-facebook-square fa-2x logo"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-2x logo"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-2x logo"></i></a>
+            <a href="#"><i class="fab fa-youtube fa-2x logo"></i></a>
+        </div>
+        <div class="sub-links">
+            <ul>
+                <li><a href="#">Audio and Subtitles</a></li>
+                <li><a href="#">Audio Description</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Gift Cards</a></li>
+                <li><a href="#">Media Center</a></li>
+                <li><a href="#">Investor Relations</a></li>
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Legal Notices</a></li>
+                <li><a href="#">Corporate Information</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </section>-->
+    <!-- END OF LINKS -->
+    <!-- FOOTER -->
+    <!--<footer>
+                <p>&copy 1997-2018 Netflix, Inc.</p>
+                <p>Carlos Avila &copy 2018</p>
+            </footer>
+    </div>-->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/video_playing.js"></script>
+
+    <script src="~/js/chapter_wise_video_playing.js"></script>
+
+
+
+</body>
+</html>

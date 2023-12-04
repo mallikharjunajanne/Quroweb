@@ -1,0 +1,97 @@
+﻿
+
+
+.progress-bar {
+    position: relative;
+    padding: 0;
+    width: 36%;
+    height: 20px;
+    background-color: #e22525;
+    border: none;
+    position: absolute;
+    height: 7px;
+    margin: 11px 0px 0px 0px;
+    background-color: #673AB7;
+}
+
+.circle-label {
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    background-color: black; /* Circle color */
+    border-radius: 50%; /* Makes it a circle */
+    display: inline-block;
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+   
+}
+    .circle-label:hover {
+        cursor: pointer;
+        background-color: #33ff00 !important;
+        color: BLACK;
+        BORDER: 1px solid;
+    }
+
+
+    .circle-label:nth-child(1) {
+        left: 0;
+    }
+
+    .circle-label:nth-child(2) {
+        left: 14.28%; /* 100% / 7 circles */
+    }
+
+    .circle-label:nth-child(3) {
+        left: 28.57%;
+    }
+
+    .circle-label:nth-child(4) {
+        left: 42.85%;
+    }
+
+    .circle-label:nth-child(5) {
+        left: 57.14%;
+    }
+
+    .circle-label:nth-child(6) {
+        left: 71.42%;
+    }
+
+    .circle-label:nth-child(7) {
+        left: 85.71%;
+    }
+    .circle-label:nth-child(8) {
+        left: 97%;
+    }
+
+.name-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 55px;
+    margin-top: 10px;
+}
+    .name-container span {
+        font-weight: 500 !important;
+        font: 11px arial;
+    }
+.progress .inner {
+    width: 94%;
+    border: none;
+    position: absolute;
+    background-color: azure;
+    height: 7px;
+    margin: 11px 0px 0px 0px;
+}
+.progress .outer {
+    background-color: #500ef6;
+    border: none;
+    width: 25%;
+    z-index: 1;
+}
+
+

@@ -1,0 +1,66 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.PostAttendance
+
+@{
+    ViewData["Title"] = "Fast_Attedance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Fast_Attedance</h1>
+
+<h4>FastAttedance</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Fast_Attedance">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-append date form-group" data-date-format="dd-mm-yyyy">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" />
+                @*<input class="span2" id="dp3" type="text" readonly><i class="fa fa-calendar"></i>*@
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassificationName" class="control-label"></label>
+                <input asp-for="ClassificationName"  />
+                <span asp-validation-for="ClassificationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubClassificationName" class="control-label"></label>
+                <input asp-for="SubClassificationName"/>
+                <span asp-validation-for="SubClassificationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            // Initialize Datepicker
+            $('#dp3').datepicker();
+
+            // Other code...
+        });
+    })(jQuery);
+
+</script>

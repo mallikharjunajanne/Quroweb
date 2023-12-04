@@ -1,0 +1,884 @@
+﻿@model Connect4m_Web.Models.LMSproperties.Uploaddocs
+
+<style>
+    select {
+        width: 23em;
+        height: 10em;
+        /*        filter: drop-shadow(2px 4px 6px black);
+    */ /*border: 1px solid green;*/
+        border: 1px solid #11a5f1;
+    }
+
+    label {
+        color: black;
+        font-weight: 900;
+    }
+
+    option {
+        color: black;
+        font-weight: 500;
+    }
+
+    .col-1 {
+        display: flex;
+    }
+
+    input[type="radio" i] {
+        width: 40px;
+        background-color: black;
+        font-weight: 900;
+    }
+
+    input[type="button" ] {
+        width: 82%;
+        color: black;
+        font-weight: 900;
+        height: 40px;
+        filter: drop-shadow(2px 4px 6px black);
+        border: 2px solid green;
+    }
+
+    /* i {
+            font-size: 34px;
+            color: blue;
+            top: 16px;
+            margin-top: 1px;
+            margin-left: 10px;
+        }*/
+    h3 {
+        font-size: 1.75rem;
+        text-align: center;
+        color: black;
+        /* filter: drop-shadow(2px 4px 6px black);*/
+        background-color: aliceblue;
+    }
+
+    .form-control {
+        width: 82%;
+    }
+
+    div:where(.swal2-container).swal2-center {
+        z-index: 9999;
+    }
+
+    .switch-state {
+        background-color: aquamarine;
+    }
+
+    #filesdisplaynames .form-control {
+        width: 50%;
+    }
+
+    #filesdisplaynames input[type="button" ] {
+        width: 28%;
+        margin-left: 12%;
+        color: black;
+        font-weight: 900;
+        height: 40px;
+        /* filter: drop-shadow(2px 4px 6px black); */
+        border: 2px solid green;
+    }
+    input[type="button" ] {
+        width: 82%;
+        color: black;
+        font-weight: 900;
+        height: 40px;
+        filter: drop-shadow(2px 4px 6px black);
+        border: 2px solid green !important;
+    }
+</style>
+<link href="~/css/popup-videosuploading.css" rel="stylesheet" />
+
+<h3>UPLOAD LECTURES / DOCS</h3>
+
+@*   ------     Pop Up Design  ---------------------*@
+
+
+
+
+<div id="popupContainer" class="popupContainer">
+
+    <div class="popupContent" id="popupinner">
+        <span id="close-popup">Close</span>
+        <div class="alert alert-secondary dark" id="delete-video">
+
+        </div>
+        <div class="group" id="group-of-all">
+            <button class="group-header" onclick="toggleGroup(1)">
+                Video 1
+            </button>
+            <div class="group-content" id="group1">
+                <form>
+                    <div id="Edit_items" style="margin-left:8px">
+
+
+                        <div id="quno" style="color: black; width: 306px; background-color: thistle; border-radius: 11px; "><label style="color:black"><i class="fa fa-dot-circle-o" style="font-size:25px;color:black"></i>  Chapter Wise Videos Uploading</label>@*<label style="margin-left: 58%; color: red; background-color: white" id="Photo_Delete_All">Delete</label>*@</div>
+                        <br />
+
+                        <div id="video-container-src">
+
+                            <video controls="controls" id="videosourse">
+                                <source src="Videos/movi" id="videosrc" type="video/mp4" />
+                            </video>
+
+                            <div class="filename" id="filename" style="display:flex">
+                                <input type="file" id="video-upload" accept="video/*">
+                                @*<input type="file" id="file1" >
+                                    <input type="file" id="file2" >*@
+
+                            </div>
+                            <div class="displayname" style="display:flex">
+                                <span>Display Name</span><input type="text" id="displayname" />
+                            </div>
+                        </div>
+
+                        <br />
+                        <div id="time-text">
+                            <div class="row" id="textitems">
+                                <div class="col-2"></div> <label class="col-2">TIME</label><div class="col-1"></div><label class="col-6">CHAPTER NAMES</label><div class="col-1"></div>
+                                @*<div id="chapterlist">*@
+                                <div class="chapters">
+                                    <div class="col-2"></div> <div class="duration-picker col-2">
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="MM" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="SS" />
+                                    </div><div class="col-1"></div><input type="text" class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                                </div>
+                                <div class="chapters">
+                                    <div class="col-2"></div> <div class="duration-picker col-2">
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="MM" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="SS" />
+                                    </div><div class="col-1"></div><input type="text" class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                                </div>
+                                <div class="chapters">
+                                    <div class="col-2 "></div> <div class="duration-picker col-2">
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="MM" />
+                                        <span class="duration-picker-separator">:</span>
+                                        <input type="number" class="duration-picker-input" min="0" step="1" max="59" placeholder="SS" />
+                                    </div>
+                                    <div class="col-1"></div><input type="text" class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                                </div>
+                                @*<div class="col-2"></div> <input type="time" class="col-2" /><div class="col-1"></div><input type="text" class="col-6" /><div class="col-1 fa fa-trash-o" style="font-size:20px;color:red"> </div>
+                                    <div class="col-2"></div><input type="time" class="col-2" /><div class="col-1"></div><input type="text" class="col-6" /><div class="col-1 fa fa-trash-o" style="font-size:20px;color:red"> </div>*@
+                            </div>
+                        </div>
+                        <label id="add-new-time">ADD</label>
+                    </div>
+
+                    <br />
+                    <div id="quno" style="color: black; width: 300px; background-color: thistle; border-radius: 11px; "><label style="color:black"><i class="fa fa-dot-circle-o" style="font-size:30px;color:black"></i> Question's Uploading</label>@*<label style="margin-left: 60%; color: red; background-color: white" id="Video_Delete_All">Delete</label>*@</div>
+                    <br />
+                    <div id="questions-main">
+                        <div id="questions">
+                            <div class="row ques">
+                                <div class="duration-picker col-1">
+                                    <input type="number" class="duration-picker-input" min="0" step="1" placeholder="HH" />
+                                    <span class="duration-picker-separator">:</span>
+                                    <input type="number" class="duration-picker-input" min="0" step="1" placeholder="MM" />
+                                    <span class="duration-picker-separator">:</span>
+                                    <input type="number" class="duration-picker-input" min="0" step="1" placeholder="SS" />
+                                </div>
+                                <div class="textarea">
+                                    <span>Question</span>
+                                    <textarea class="col-11"></textarea>
+                                </div>
+
+                                <div class="col-6 opt">
+                                    <span>1)</span><input type="text" class="col-6 1" />
+
+                                </div>
+                                <div class="col-6 opt">
+                                    <span>2)</span><input type="text" class="col-6 2" />
+
+                                </div>
+                                <div class="col-6 opt">
+                                    <span>3)</span><input type="text" class="col-6 3" />
+
+                                </div>
+                                <div class="col-4" style="margin-left:auto">
+                                    <span>Marks</span> <input id="Marks" type="text" />
+
+                                </div>
+                                <div class="col-6 opt">
+                                    <span>4)</span><input type="text" class="col-6 4" />
+
+                                </div>
+
+
+                                <div class="col-4" style="margin-left:auto">
+                                    <span>Answer(1/2/3/4)</span> <input id="answer" type="text" />
+
+                                </div>
+                                <i class="col-1 fa fa-trash-o" style="font-size:20px;color:red" id="Qusetion-delete"></i>
+                                <hr />
+                            </div>
+
+                        </div>
+                        <label id="add-new-question"> ADD</label>
+                    </div>
+
+
+                    @*</div>*@
+                </form>
+            </div>
+        </div>
+        <br />
+        <button id="add-one-more-video">Add One More Video</button>
+        <button id="save-all-videos">SAVE</button>
+    </div>
+
+</div>
+
+
+
+
+@*-------------------Files Uploading     -----*@
+<div id="popupforfilesuploading" class="popupContainer">
+    <div class="popupContent">
+        <span id="close-popup">Close</span>
+        <div id="fileinput">
+            <input type="file" id="UploadDocuments" asp-for="UploadDocs" multiple accept="application/pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" />
+
+        </div>
+        <br />
+        <div id="filesdisplaynames">
+
+        </div>
+    </div>
+</div>
+<a class="btn btn-primary" href="/Videos/SearchUploadlecturedocs" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
+    Search Upload Lecture Docs
+</a>
+<input type="text" value="@ViewBag.updateknown" id="videosupdateknown" hidden style="display:none" />
+
+<form enctype="multipart/form-data" id="uploadlecturedocsform">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="text" asp-for="SubjectVideoId" name="SubjectVideoId" hidden style="display:none" readonly />
+    <div class="row" style=" font-size: 11px;">
+        <div class="row">
+            <div></div>
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+
+                <label asp-for="Department" class="control-label"></label>
+            </div>
+            <div class="form-group col-5">
+
+
+
+                <select name="Department" asp-for="Department" id="Department" multiple asp-items="@ViewBag.Departmentlist">
+                </select>
+                <span asp-validation-for="Department" class="text-danger"></span>
+
+            </div>
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+
+                <label asp-for="ClassificationIds" class="control-label"></label>
+
+
+
+            </div>
+            <div class="form-group col-5">
+                <select asp-for="ClassificationIds" id="ClassificationIds" multiple>
+                </select>
+
+
+                <span asp-validation-for="ClassificationIds" class="text-danger"></span>
+
+
+            </div>
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+                <label asp-for="InstanceSubClassificationId" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5">
+
+
+                <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId" multiple>
+                </select>
+                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+                <label asp-for="InstanceSubjectsId" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5">
+
+
+                <select asp-for="InstanceSubjectsId" id="InstanceSubjectsId" multiple>
+                </select>
+                <span asp-validation-for="InstanceSubjectsId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+
+                @*<i class="fa fa-asterisk" style="font-size:8px;color:red"></i>*@
+                <label asp-for="UploadDocs" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5" id="validtioncheckforfiles">
+
+                <input type="button" id="openfilespopup" value="Choose Files" class="form-control" />
+                <div class="media-body text-end icon-state" id="fileuploadoff">
+                    <label class="switch">
+                        <input type="checkbox" checked=""><span class="switch-state"></span>
+                    </label>
+                </div>
+                @*<div>
+                        <input type="radio" name="Upload" checked="checked" /><label>Lectures / Docs</label><input type="radio" name="Upload" /><label> Online Test</label>
+                    </div>*@
+
+                <span asp-validation-for="UploadDocs" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+                <label asp-for="VideoPath" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5" id="validtioncheckforvideos">
+                <input type="button" value="Choose Videos" id="openPopup" />
+                <div class="media-body text-end icon-state" id="popoupoffon">
+                    <label class="switch">
+                        <input type="checkbox" checked=""><span class="switch-state"></span>
+                    </label>
+                </div>
+                @*<input asp-for="VideoPath" multiple type="file" accept="video/mp4,video/x-m4v,video/*" class="form-control" />
+                    <i id="view_Videos" class="fa fa-eye" style=" font-size: 34px; color: blue; top: 16px; margin-top: 1px; margin-left: 10px;"></i>*@
+                <span asp-validation-for="VideoPath" class="text-danger"></span>
+            </div>
+
+
+            @*<div class="form-group col-1">
+                    <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+                    <label asp-for="DocsDisplayname" class="control-label"></label>
+
+
+                </div>
+                <div class="form-group col-5">
+
+                    <input asp-for="DocsDisplayname" class="form-control" id="DocsDisplayname" />
+
+
+                    <span asp-validation-for="DocsDisplayname" class="text-danger"></span>
+                </div>*@
+
+
+            <div class="form-group col-1">
+                <label asp-for="DisplayOrder" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5">
+
+
+                <input asp-for="DisplayOrder" class="form-control" />
+
+                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group col-1">
+
+                <label asp-for="IsRestriction" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5">
+                <div>
+                    <input type="radio" value="1" name="IsRestriction" /><label>YES</label><input type="radio" name="IsRestriction" value="0" checked="checked" /><label> NO</label>
+                </div>
+
+                <span asp-validation-for="IsRestriction" class="text-danger"></span>
+            </div>
+
+
+            @*<div class="form-group col-1">
+                    <label asp-for="Duration" class="control-label"></label>
+
+
+                </div>
+                <div class="form-group col-5">
+
+                    <input asp-for="Duration" class="form-control" />
+
+
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>*@
+
+
+
+
+
+            <div class="form-group col-1">
+                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
+
+                <label asp-for="Points" class="control-label"></label>
+
+
+            </div>
+            <div class="form-group col-5">
+
+                <input asp-for="Points" class="form-control" id="Points" />
+
+
+                <span asp-validation-for="Points" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6" @*style="margin-left:20%;"*@>
+                <input type="submit" id="submitButton" value=" Save/Upload" class="form-control" style="color: white; background-color: green; font-weight: 900; height: 37px;" />
+
+            </div>
+
+
+
+        </div>
+    </div>
+</form>
+<input type="text" value="@ViewBag.videpathviewbag" hidden id="filepathupdate" />
+<input type="text" value="@ViewBag.docsdisplayname" hidden id="docsdisplaynameupdate" />
+
+
+
+@if (ViewBag.dropdownlist != null)
+{
+
+    <input type="text" id="viewbagClassificationIds" value="@ViewBag.dropdownlist[0].ClassificationIds" hidden style="display:none" />
+    <input type="text" id="viewbagInstanceSubClassificationId" value="@ViewBag.dropdownlist[0].InstanceSubClassificationId" hidden style="display:none" />
+    <input type="text" id="viewbagSubjectToolId" value="@ViewBag.dropdownlist[0].SubjectToolId" hidden style="display:none" />
+    <input type="text" id="viewbagInstanceSubjectsId" value="@ViewBag.dropdownlist[0].InstanceSubjectsId" hidden style="display:none" />
+}
+
+@*<input type="file" id="fileInputt">
+    <input type="file" id="fileOutputt">*@
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+
+@*<script src="~/js/multiselect-dropdown.js"></script>*@
+<script src="~/js/dropdown-change.js"></script>
+<script src="~/js/popup-videosuploading.js"></script>
+<script src="~/js/videos-upload-admin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@*---------------------------------------When Click  On Update of Uploading Lecture Docs Getting The Selected List Items*@
+@*257261226766/accounts.pdf*@
+
+
+<script>
+    $(document).ready(function () {
+
+        var videosupdateknownValue = $('#videosupdateknown').val();
+
+        if (videosupdateknownValue == "1215") {
+
+
+
+            var classificationValues = $('#viewbagClassificationIds').val();
+            $('#Department').val(classificationValues);
+
+
+
+            var instanceSubClassificationValues = $('#viewbagInstanceSubClassificationId').val();
+            setTimeout(function () {
+                departmentchange(classificationValues, instanceSubClassificationValues);
+            }, 500);
+
+
+
+
+
+
+            var instanceSubjectsValues = $('#viewbagSubjectToolId').val();
+
+            setTimeout(function () {
+                classficationchange(classificationValues, instanceSubClassificationValues, instanceSubjectsValues);
+            }, 800);
+            // alert(instanceSubjectsValues);
+
+
+            /**/
+            var subjecttoolid = $('#viewbagInstanceSubjectsId').val();
+            /**/
+            setTimeout(function () {
+
+                instancesubclassficationchange(instanceSubjectsValues, subjecttoolid);
+            }, 950);
+
+
+        }
+
+
+    })
+
+
+
+
+</script>
+
+<script>
+   // debugger;
+    if (document.getElementById('videosupdateknown').value == "1215") {
+      //  alert("Update & Upload");
+        document.getElementById('submitButton').value="Update & Upload";
+        var ViwbagChapters = @Html.Raw(Json.Serialize(ViewBag.Chapterlist));
+        var ViwbagQuestions = @Html.Raw(Json.Serialize(ViewBag.Questinoslist));
+        var ViwbagOptions = @Html.Raw(Json.Serialize(ViewBag.Optionslist));
+        if (ViwbagChapters.length == 0 ) {
+            var checkboxElement1 = document.querySelector('#popoupoffon input[type="checkbox"]');
+            checkboxElement1.click();
+        }
+
+
+        //-----------------------------------------------------------------------(append)   Update for Chapters,Questions, Answers
+        if (ViwbagChapters.length != 0) {
+
+            var chapterlistid = document.getElementById('textitems');
+            chapterlistid.innerHTML = '';
+            var div = document.createElement("div");
+
+            div.innerHTML = '<div class="col-2"></div> <label class="col-2">TIME</label><div class="col-1"></div><label class="col-6">CHAPTER NAMES</label><div class="col-1"></div>';
+            chapterlistid.appendChild(div);
+            //chapterlistid.appendChild($('<div class="col-2"></div> <label class="col-2">TIME</label><div class="col-1"></div><label class="col-6">CHAPTER NAMES</label><div class="col-1"></div>'))
+
+            for (var a = 0; a < ViwbagChapters.length; a++) {
+
+                //console.log(ViwbagChapters[a].chapterId);
+                //console.log(ViwbagChapters[a].displayname);
+                //console.log(ViwbagChapters[a].headingname);
+                //console.log(ViwbagChapters[a].instanceId);
+                //console.log(ViwbagChapters[a].subjectVideoId);
+                //console.log(ViwbagChapters[a].timehours);
+                //console.log(ViwbagChapters[a].timeminutes);
+                //console.log(ViwbagChapters[a].timesecomds);
+                //console.log(ViwbagChapters[a].videoPath);
+                //----------------------------------------------------------------------  Time And Chapter Names Apppend to
+                //  var chapterlistid = document.getElementById('chapterlist');
+                // chapterlistid.innerHTML = '';
+                // chapterlistid.appendChild($('<div class="chapters"><div class= "col-2" ></div> <div class="duration-picker col-2"><input type="number" value=' + ViwbagChapters[a].timehours + 'class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" /><span class="duration-picker-separator">:</span><input type="number" value=' + ViwbagChapters[a].timeminutes + ' class="duration-picker-input" min="0" step="1" max="59" placeholder="MM" /><span class="duration-picker-separator">:</span><input type="number" value=' + ViwbagChapters[a].timesecomds + ' class="duration-picker-input" min="0" step="1" max="59" placeholder="SS" /></div><div class="col-1"></div><input type="text" value=' + ViwbagChapters[a].headingname + ' class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div></div >'));
+
+                var divWrapper = document.createElement('div');
+                divWrapper.className = 'chapters';
+                var div1 = document.createElement('div');
+                div1.className = 'col-2';
+                divWrapper.appendChild(div1);
+
+                var chapterId = document.createElement('input');
+                chapterId.value = ViwbagChapters[a].chapterId;
+                chapterId.className = 'chapterid-input';
+                chapterId.style.display = 'none';
+                divWrapper.appendChild(chapterId);
+
+
+
+
+                var divDurationPicker = document.createElement('div');
+                divDurationPicker.className = 'duration-picker col-2';
+
+                var inputHour = document.createElement('input');
+                inputHour.type = 'number';
+                inputHour.value = ViwbagChapters[a].timehours;
+                inputHour.className = 'duration-picker-input';
+                inputHour.min = '0';
+                inputHour.step = '1';
+                inputHour.max = '23';
+                inputHour.placeholder = 'HH';
+
+                var spanSeparator1 = document.createElement('span');
+                spanSeparator1.className = 'duration-picker-separator';
+                spanSeparator1.textContent = ':';
+
+                var inputMinute = document.createElement('input');
+                inputMinute.type = 'number';
+                inputMinute.value = ViwbagChapters[a].timeminutes;
+                inputMinute.className = 'duration-picker-input';
+                inputMinute.min = '0';
+                inputMinute.step = '1';
+                inputMinute.max = '59';
+                inputMinute.placeholder = 'MM';
+
+                var spanSeparator2 = document.createElement('span');
+                spanSeparator2.className = 'duration-picker-separator';
+                spanSeparator2.textContent = ':';
+
+                var inputSecond = document.createElement('input');
+                inputSecond.type = 'number';
+                inputSecond.value = ViwbagChapters[a].timesecomds;
+                inputSecond.className = 'duration-picker-input';
+                inputSecond.min = '0';
+                inputSecond.step = '1';
+                inputSecond.max = '59';
+                inputSecond.placeholder = 'SS';
+
+                divDurationPicker.appendChild(inputHour);
+                divDurationPicker.appendChild(spanSeparator1);
+                divDurationPicker.appendChild(inputMinute);
+                divDurationPicker.appendChild(spanSeparator2);
+                divDurationPicker.appendChild(inputSecond);
+
+
+
+                var inputText = document.createElement('input');
+                inputText.type = 'text';
+                inputText.value = ViwbagChapters[a].headingname;
+                inputText.className = 'col-6';
+
+                var deleteIcon = document.createElement('div');
+                deleteIcon.className = 'fa fa-trash-o';
+                deleteIcon.style.fontSize = '20px';
+                deleteIcon.style.color = 'red';
+
+                divWrapper.appendChild(divDurationPicker);
+
+                var div2 = document.createElement('div');
+                div2.className = 'col-1';
+                divWrapper.appendChild(div2);
+
+                divWrapper.appendChild(inputText);
+                divWrapper.appendChild(deleteIcon);
+
+                chapterlistid.appendChild(divWrapper);
+
+
+
+            }
+            //----------------------------------------------------------------------  FIle Append To video
+            var videoContainer = $(".group-content #video-container-src");
+            var videoElement = videoContainer.find("video");
+            var videoSource = videoContainer.find("source");
+
+            videoSource.attr("src", '/LMSVideos/Instance545/' + ViwbagChapters[0].videoPath);
+            videoElement[0].load();
+            //-----------------------------------------------------------------------------file name append
+            var filePath = "/LMSVideos/Instance545/" + ViwbagChapters[0].videoPath;
+            var fileInput = document.getElementById('filename');
+            var file = new File([filePath], filePath.split('/').pop());
+            var filenameD = document.createElement('div');
+            filenameD.style.marginTop = "2%";
+            filenameD.className = "filenameupdate";
+            filenameD.style.backgroundColor = "antiquewhite";
+            filenameD.innerHTML = file.name;
+            fileInput.appendChild(filenameD);
+            //----------------------------------------------------------------------Display name append to
+            //   $("#displayname").text()
+            document.getElementById("displayname").value = ViwbagChapters[0].displayname;
+
+
+
+
+
+
+
+
+
+
+            // fileInputt[0].files = file[0];
+            //ileInput.files[0] = file;
+
+            // document.getElementById('video-upload').files = ' /LMSVideos/Instance545 /' + ViwbagChapters[0].videoPath;
+
+
+
+
+
+        }
+        if (ViwbagQuestions.length != 0) {
+            var questionparent = document.getElementById('questions');
+            questionparent.innerHTML = " ";
+            for (var b = 0; b < ViwbagQuestions.length; b++) {
+
+                var questionid = document.createElement('input');
+                questionid.value = ViwbagQuestions[b].questionId;
+                questionid.className = 'question-input';
+                questionid.style.display = 'none';
+
+
+
+
+                var AnswerId = document.createElement('input');
+                AnswerId.value = ViwbagOptions[b].answerId;
+                AnswerId.className = 'answer-input';
+                AnswerId.style.display = 'none';
+
+
+                var questionDiv = document.createElement('div');
+                questionDiv.className = 'row ques';
+
+                var durationPickerDiv = document.createElement('div');
+                durationPickerDiv.className = 'duration-picker col-1';
+
+                durationPickerDiv.innerHTML = '<input type="number" value="' + ViwbagQuestions[b].timehours + '" class="duration-picker-input" min="0" step="1" placeholder="HH" />' +
+                    '<span class="duration-picker-separator">:</span>' +
+                    '<input type="number" value="' + ViwbagQuestions[b].timeminutes + '" class="duration-picker-input" min="0" step="1" placeholder="MM" />' +
+                    '<span class="duration-picker-separator">:</span>' +
+                    '<input type="number" value="' + ViwbagQuestions[b].timesecomds + '" class="duration-picker-input" min="0" step="1" placeholder="SS" />';
+
+                var textareaDiv = document.createElement('div');
+                textareaDiv.className = 'textarea';
+                textareaDiv.innerHTML = '<span>Question</span><textarea class="col-11">' + ViwbagQuestions[b].questionname + '</textarea>';
+
+                var optionsDiv = document.createElement('div');
+                optionsDiv.className = 'col-6 opt';
+                optionsDiv.innerHTML = '<span>1)</span><input type="text" value="' + ViwbagOptions[b].option1 + '" class="col-6 1" />';
+
+                var optionsDiv2 = document.createElement('div');
+                optionsDiv2.className = 'col-6 opt';
+                optionsDiv2.innerHTML = '<span>2)</span><input type="text" value="' + ViwbagOptions[b].option2 + '" class="col-6 2" />';
+                var optionsDiv3 = document.createElement('div');
+                optionsDiv3.className = 'col-6 opt';
+                optionsDiv3.innerHTML = '<span>3)</span><input type="text" value="' + ViwbagOptions[b].option3 + '" class="col-6 3" />';
+  
+                var marksofq = document.createElement('div');
+                marksofq.className = 'col-4';
+                marksofq.style.marginLeft = 'auto';
+                marksofq.innerHTML = '<span>Marks</span><input type="text" id="Marks" value="' + ViwbagOptions[b].marksofquestion + '"/>';
+
+                var optionsDiv4 = document.createElement('div');
+                optionsDiv4.className = 'col-6 opt';
+                optionsDiv4.innerHTML = '<span>4)</span><input type="text" value="' + ViwbagOptions[b].option4 + '" class="col-6 4" />';
+
+                // Create and append other optionsDiv elements (2, 3, 4) similarly
+
+                var answerDiv = document.createElement('div');
+                answerDiv.className = 'col-4';
+                answerDiv.innerHTML = '<span>Answer(1/2/3/4)</span> <input id="answer" value="' + ViwbagOptions[b].answerofquestion + '" type="text" />';
+
+                var deleteIcon = document.createElement('i');
+                deleteIcon.className = 'col-1 fa fa-trash-o';
+                deleteIcon.style = 'font-size:20px;color:red';
+                deleteIcon.id = 'Qusetion-delete';
+
+                var hrElement = document.createElement('hr');
+
+                questionDiv.appendChild(questionid);
+                questionDiv.appendChild(AnswerId);
+                questionDiv.appendChild(durationPickerDiv);
+                questionDiv.appendChild(textareaDiv);
+                questionDiv.appendChild(optionsDiv);
+                questionDiv.appendChild(optionsDiv2);
+                questionDiv.appendChild(optionsDiv3);
+                questionDiv.appendChild(marksofq);
+                questionDiv.appendChild(optionsDiv4);
+                questionDiv.appendChild(answerDiv);
+                questionDiv.appendChild(deleteIcon);
+                questionDiv.appendChild(hrElement);
+
+                questionparent.appendChild(questionDiv);
+
+
+            }
+
+        }
+        document.getElementById('add-one-more-video').style.display = "none";
+
+        //--------------------------------------------------------------------------------------  File Atteched To The  Input Type=file (in update)
+
+        const fileInp = document.querySelector('#UploadDocuments');
+        var filepathupdate = document.getElementById('filepathupdate').value;
+        // alert(filePath)
+        debugger;
+        try {
+            if (filepathupdate != null) {
+
+                var file_extension2 = filepathupdate.substring(filepathupdate.lastIndexOf('.') + 1);
+                if (file_extension2 != "no") {
+                    const myFil = new File(['Hello World!'], filepathupdate, {
+                        type: 'text/plain',
+                        lastModified: new Date(),
+                    });
+
+                    // Now let's create a DataTransfer to get a FileList
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(myFil);
+                    fileInp.files = dataTransfer.files;
+                    var newValue = document.getElementById('docsdisplaynameupdate').value;
+                    uploaddocumentchange(newValue);
+
+
+
+                }
+                else {
+                    var checkboxElement1 = document.querySelector('#fileuploadoff input[type="checkbox"]');
+                    checkboxElement1.click();
+                }
+
+
+                fileInp.removeAttribute("multiple");
+
+
+                // checkboxElement1.dispatchEvent(event1);
+            }
+        }
+        catch {
+
+        }
+
+    }
+</script>
+
+@*<script>
+        $(document).on('click', 'uploadlecturedocsform', function () {
+
+        })
+
+    </script>*@
+
+
+
+
+
+
+
+
+
+<!--<script>
+
+        if ('videosupdateknownValue' === '1215') {
+          //  try {-->
+@*var classificationValues = @Html.Raw(Json.Serialize(Model.ClassificationIds));
+    var instanceSubClassificationValues = @Html.Raw(Json.Serialize(Model.InstanceSubClassificationId));
+    var instanceSubjectsValues = @Html.Raw(Json.Serialize(Model.SubjectToolId));
+    var subjecttoolid = @Html.Raw(Json.Serialize(Model.InstanceSubjectsId));*@
+
+<!--$(document).ready(function () {
+                    $('#Department').val(classificationValues);
+
+                    setTimeout(function () {
+                        departmentchange(classificationValues, instanceSubClassificationValues);
+                    }, 100);
+
+                    setTimeout(function () {
+                        classficationchange(classificationValues, instanceSubClassificationValues, instanceSubjectsValues);
+                    }, 200);
+
+                    setTimeout(function () {
+                        instancesubclassficationchange(instanceSubjectsValues, subjecttoolid);
+                    }, 250);
+                });
+
+        }
+
+</script>-->

@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model List<FeeReports>
+
+    <link href="~/css/FeeChallana_Report.css" rel="stylesheet" />
+
+
+    <div id="userTableContainer">
+        <table class="FeeChallana_tbl">
+            <thead>
+                <tr>
+                    <th>Challan No</th>
+                    <th>Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td style="cursor: pointer;" onclick="openNewWindow('@item.UserReceiptGenerationID', '@item.UserId')">@item.UserReceiptGenerationID</td>
+
+                    @*<td>@item.UserReceiptGenerationID</td>*@
+                    <td>
+                        <a href="#" class="delete-link" data-id="@item.UserReceiptGenerationID" onclick="deleteUserChallana('@item.UserReceiptGenerationID')">
+                            <span><i class="fa fa-trash" style="font-size:15px;"></i></span>
+                        </a>
+                    </td>
+
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+

@@ -1,0 +1,906 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.StudentAttendanceRegister
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .S_btn {
+            width: 7%;
+            height: 28px;
+            margin-left: 19%;
+        }
+
+        .Dropdownbox {
+            width: 191px;
+            height: 23px;
+            border: 2px solid #999;
+            font-size: 15px;
+            color: brown;
+            background-color: azure;
+            border-radius: 5px;
+        }
+
+
+        /*Image Popup Show Styles*/
+
+        .ScreenShotImage span {
+            display: none;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .ScreenShotImage:hover span {
+            display: inline-block;
+        }
+
+        .ScreenShotImage {
+            position: relative;
+        }
+
+            .ScreenShotImage:hover::before {
+                display: none;
+                position: absolute;
+            }
+
+
+
+        #myTable .Table_report {
+            border: 1px solid green;
+            border-width: thin;
+            border-style: double;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        #myTable thead, #myTable tbody, #myTable tfoot, #myTable tr, #myTable td, #myTable th {
+            border: 1px solid !important;
+            font-weight: 700;
+        }
+
+        .Table_report thead {
+            font-size: 10px;
+            background-color: #ADDFFF;
+            color: #000000;
+        }
+
+        .Table_report tbody {
+            font-size: 10px;
+        }
+
+        #myTbl .Table_Avgreport {
+            border: 1px solid green;
+            border-width: thin;
+            border-style: double;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        #myTbl thead, #myTbl tbody, #myTbl tfoot, #myTbl tr, #myTbl td, #myTbl th {
+            border: 1px solid !important;
+            font-weight: 700;
+        }
+
+        .Table_Avgreport thead {
+            font-size: 10px;
+            /* background-color: #ADDFFF;*/
+            color: #000000;
+        }
+
+        .Table_Avgreport tbody {
+            font-size: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/print.css" media="print" />
+    <style>
+    /* Page styles */
+    @@media print {
+        /* Page-specific styles go here */
+        @@page {
+            size: legal;
+            zoom: 0.5;
+        }
+    }
+
+    /* Print styles */
+    #myTable .Table_report {
+        border: 1px solid green;
+        border-width: thin;
+        border-style: double;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    #myTable thead,
+    #myTable tbody,
+    #myTable tfoot,
+    #myTable tr,
+    #myTable td,
+    #myTable th {
+        border: 1px solid !important;
+        font-weight: 700;
+    }
+
+    .Table_report thead {
+        font-size: 10px;
+        background-color: #ADDFFF;
+        color: #000000;
+    }
+
+    .Table_report tbody {
+        font-size: 10px;
+    }
+
+    #myTbl .Table_Avgreport {
+        border: 1px solid green;
+        border-width: thin;
+        border-style: double;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    #myTbl thead,
+    #myTbl tbody,
+    #myTbl tfoot,
+    #myTbl tr,
+    #myTbl td,
+    #myTbl th {
+        border: 1px solid !important;
+        font-weight: 700;
+    }
+
+    .Table_Avgreport thead {
+        font-size: 10px;
+        /* background-color: #ADDFFF;*/
+        color: #000000;
+    }
+
+    .Table_Avgreport tbody {
+        font-size: 10px;
+    }
+
+    .Table_report td,
+    .Table_report th {
+        word-break: normal;
+    }
+    </style>
+
+
+
+
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0">
+            <div style=" font-size: 20px; text-align: center;">
+                <h1 style="background-color: white; color: darkorange; font-weight: 700; font-size: 25px; margin-top: -13px;">STUDENT REGISTER</h1>
+            </div>
+        </div>
+        <div style="color:red; font-size:13px;">
+            <div id="validation2" style="color: red;"></div>
+            <div id="validationMessage" style="color: red;"></div>
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1">
+                <div class="card">
+                    <div style="color: red; font-size: 13px;">
+                        <p style="font-size: 12px;"></p>
+
+                    </div>
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="background-color: tomato;"><i class="icofont icofont-student-alt"></i>SEARCH STUDENT REGISTER</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <form id="myForm">
+                                <div class="form-group row">
+                                    <label asp-for="Month" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Month :</label>
+                                    <div class="col-sm-9">
+                                        <select asp-for="Month" class="Dropdownbox" id="Month">
+                                            <option value="">---------Select---------</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                        <span id="MonthError" style="color: red; font-size: 13px;"></span>
+                                    </div>
+
+                                    <label asp-for="Year" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Year :</label>
+                                    <div class="col-sm-9">
+                                        <select asp-for="Year" class="Dropdownbox" id="Year">
+                                            <option value="">---------Select---------</option>
+                                            <option value="2010">2010</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                        </select>
+                                        <span id="YearError" style="color: red; font-size: 13px;"></span>
+                                    </div>
+
+                                    <label asp-for="ClassificationName" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Department :</label>
+                                    <div class="col-sm-9" id="Str_DP_ID">
+                                        @Html.DropDownListFor(Model => Model.InstanceClassificationId, new SelectList(ViewBag.Slot_Subjectnames, "Value", "Text"), "Select Department", new { @id = "Str_Cfn_Id", @class = "Dropdownbox" })
+                                        <span id="DepartmentError" style="color: red; font-size: 13px;"></span>
+                                    </div>
+
+                                    <label asp-for="SubClassificationName" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Class :</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(Model => Model.InstanceSubClassificationId, new SelectList(string.Empty, "Value", "Text"), "Please Select Class", new { @id = "Str_INS_DD", @class = "Dropdownbox" })
+                                        <span id="ClassError" style="color: red; font-size: 13px;"></span>
+                                    </div>
+
+                                    <div class="S_btn" style="display: flex; grid-gap: 16px;">
+                                        <input type="reset" value="Clear" />
+                                        <input type="submit" value="Search" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="register_ViewId">
+        <div class="card-body">
+            <div class="default-according style-1">
+                <div class="card">
+                    <div style="color: red; font-size: 13px;">
+                        <p style="font-size: 12px;"></p>
+
+                    </div>
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="background-color: tomato;">STEPS TO BE FOLLOWED TO TAKE PRINT</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <table width="100%" cellpadding="0" cellspacing="0" align="center" class="tablesideborders">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 24px;">
+                                            <table cellpadding="0" id="tblinstructions" width="100%" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 1:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage1" src="~/Images/Print1.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;">
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <b style="font-size: 12px;">Click on "Preferences" button on General Tab of Print window.</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 2:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage2" src="../Images/Print2.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <b style="font-size: 12px;">Click on "Orientation" Dropdown and select "Landscape" option.</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 3:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage3" src="~/Images/Print.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <b style="font-size: 12px;">Adjust left and right margins by clicking print preview option.</b>
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="EXcel_Print_btns" style="display: flex; grid-gap: 16px;">
+
+            <a href="#" id="exportButton" value="Export To Excel" style="font-weight: bold; margin-left: 18px;">Export To Excel</a>
+
+           <a href="#" id="printButton" style="margin-left: 78%; font-weight: bold;">Print</a>
+
+
+        </div>
+
+        <div class="card-body">
+            <div class="default-according style-1">
+                <div class="card">
+                    <div style="color: red; font-size: 13px;">
+                        <p style="font-size: 12px;"></p>
+
+                    </div>
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="background-color: tomato;">ATTENDANCE DETAILS </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div class="table-responsive" id="printDiv">
+                                <div>
+                                    <table width="100%" border="0" style="background-color: white; color: slateblue; font-weight: bolder; background-color: white; color: slateblue; font-weight: bolder;">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" colspan="3" style="font-size:12px;font-weight:color:#000000;">
+                                                    <b>Note: </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="font-size:10px;font-weight:200;">
+                                                    <ul>
+                                                        <li> P-- Present </li>
+                                                        <li> A-- Absent </li>
+                                                        <li> OS-- Out of Station </li>
+                                                        <li> UW-- Urgent Work </li>
+                                                        <li> OL-- Official Leave </li>
+
+
+                                                    </ul>
+                                                </td>
+                                                <td align="left" style="font-size:10px;font-weight:200;">
+                                                    <ul>
+
+                                                        <li> DA-- Doctor Appointment  </li>
+                                                        <li> NA-- No Application </li>
+                                                        <li> NE-- No Examination </li>
+
+                                                        <li> PL-- Preparatory Leave </li>
+                                                        <li> UFR-- Urgent Family Reason  </li>
+                                                    </ul>
+                                                </td>
+                                                <td align="left" style="font-size:10px;font-weight:200;">
+                                                    <ul>
+                                                        <li> 1HP-- First half Present </li>
+                                                        <li> 2HP-- Second half Present </li>
+                                                        <li> IL-- Illness </li>
+                                                        <li> O-- Others </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="header" style=" text-align: center; margin-left: 27%; font-weight: 500;">
+                                    <b>ADS SCHOOL</b>
+                                    <p>Student Attendance Register for the Month of  <span id="MONTHIDMONTHID"></span>,<span id="YEARID"></span>  </p>
+                                    <p>Class : <span id="Cl"></span>      , Section: <span id="Section"></span>       , No-Of Teaching Days: <span id="Teaching_Days"></span></p>
+                                </div>
+
+
+
+                                <div class="table-responsive">
+                                    <table id="myTable" class="Table_report">
+                                        <thead class="border-0" id="tablehead">
+                                            @*<tr>
+                    <td rowspan="2" align="center">&nbsp; S.No.&nbsp;</td>
+                    <td align="center" rowspan="2">  Name of Student  </td>
+                    <td align="center" rowspan="2">  Gender  </td>
+                    <td rowspan="2" align="center">  Date of Birth  </td>
+                    <td rowspan="2" align="center">  Religion  </td>
+                    <td rowspan="2" align="center">  Category  </td>
+                    <td rowspan="2" align="center">  Economically Weaker Section  </td>
+                    <td rowspan="2" align="center">  Repeater  </td>
+                    <td rowspan="2" align="center">  Joined Back After dropout thorugh bridge courses  </td>
+                    <td colspan="30" align="center">Day of the month</td>
+                    <td align="center" colspan="3"> Present </td>
+                    <td rowspan="2" align="center">  No of days participated in extracurricular activities  </td>
+                    <td align="center" colspan="2">  Absent  </td>
+                    <td align="center" colspan="2"> Attendance%  </td>
+                </tr>
+                <tr>
+                    <td align="center" style="width:8px">1</td>
+                    <td align="center" style="width:8px">2</td>
+                    <td align="center" style="width:8px">3</td>
+                    <td align="center" style="width:8px">4</td>
+                    <td align="center" style="width:8px">5</td>
+                    <td align="center" style="width:8px">6</td>
+                    <td align="center" style="width:8px">7</td>
+                    <td align="center" style="width:8px">8</td>
+                    <td align="center" style="width:8px">9</td>
+                    <td align="center" style="width:8px">10</td>
+                    <td align="center" style="width:8px">11</td>
+                    <td align="center" style="width:8px">12</td>
+                    <td align="center" style="width:8px">13</td>
+                    <td align="center" style="width:8px">14</td>
+                    <td align="center" style="width:8px">15</td>
+                    <td align="center" style="width:8px">16</td>
+                    <td align="center" style="width:8px">17</td>
+                    <td align="center" style="width:8px">18</td>
+                    <td align="center" style="width:8px">19</td>
+                    <td align="center" style="width:8px">20</td>
+                    <td align="center" style="width:8px">21</td>
+                    <td align="center" style="width:8px">22</td>
+                    <td align="center" style="width:8px">23</td>
+                    <td align="center" style="width:8px">24</td>
+                    <td align="center" style="width:8px">25</td>
+                    <td align="center" style="width:8px">26</td>
+                    <td align="center" style="width:8px">27</td>
+                    <td align="center" style="width:8px">28</td>
+                    <td align="center" style="width:8px">29</td>
+                    <td align="center" style="width:8px">30</td>
+                    <td align="center"> Sep&nbsp; </td>
+                    <td align="center">Carry Fwd&nbsp; </td>
+                    <td align="center">Total&nbsp; </td>
+
+                    <td align="center">Sep&nbsp; </td>
+                    <td align="center">Total&nbsp;&nbsp; </td>
+                    <td align="center">Month&nbsp; </td>
+                    <td align="center">Till Date&nbsp; </td>
+                </tr>*@
+                                        </thead>
+                                        <tbody id="tableBody">
+                                        </tbody>
+                                        <tfoot id="tablefooter">
+                                            <tr>
+                                                <td colspan="50" style="font-size: 10px; font-weight: bold; color: #000000;">&nbsp;</td>
+                                            </tr>
+
+
+
+
+
+                                        
+                                          
+                                            @*<tr>
+                                                <td colspan="9" style="font-size: 11px;">Absent Students</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">3.0</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">1.0</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Total Enrollment SC</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Attendance SC</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td colspan="8">0</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Total Enrollment OBC</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Attendance OBC</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td colspan="8">0</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Total Enrollment ST</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Attendance ST</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td colspan="8">0</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Total Enrollment Muslims</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" style="font-size: 11px;">Student Attendance Muslims</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;"></td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td align="center" style="width:8px; font-size: 11px;">-</td>
+                                                <td colspan="8">0</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="50" style="font-size: 10px; font-weight: bold; color: #000000;">&nbsp;</td>
+                                            </tr>
+                                            <tr><td colspan="49" style="color:black; font-size:10px;"> Signature of Teacher </td></tr>*@
+                                        </tfoot>
+                                    </table>
+
+                                    <table>
+                                        <tbody id="Student_Absentes">
+                                        </tbody>
+                                    </table>
+
+                                    <br />
+                                    <table id="myTbl" class="Table_Avgreport">
+                                        <thead>
+                                            <tr><th colspan="2">Average Attendacne for the month</th></tr>
+                                            <tr>
+                                                <th>Category of Student</th>
+                                                <th>Average Attendance Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="AvgTblbody" style=" text-align: center; font-weight: 900;">
+                                        </tbody>
+                                    </table>
+
+                                    @*<div style="margin-left: 60%; position: absolute; margin-top: -12%;">
+                                        <span>Signature of Teacher________________________</span>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
+
+<script src="~/js/Student_Attendance_register.js"></script>
+
+<!-- Make sure to place this script tag after the definition of printDiv -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+
+
+
+<script>
+    document.getElementById("exportButton").addEventListener("click", function () {
+
+        debugger;
+        // Get the content of the printDiv
+        var divContents = document.getElementById("printDiv").innerHTML;
+
+        // Create a workbook with a worksheet
+        var workbook = XLSX.utils.book_new();
+        var worksheet = XLSX.utils.aoa_to_sheet([[divContents]]);
+
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        // Export the workbook to Excel file
+        var excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+
+        // Save the Excel file
+        saveExcelFile(excelBuffer, "exported_data.xlsx");
+    });
+
+    function saveExcelFile(buffer, fileName) {
+        var blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        if (navigator.msSaveBlob) {
+            // For IE 10+
+            navigator.msSaveBlob(blob, fileName);
+        } else {
+            // For modern browsers
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fileName);
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+</script>
+

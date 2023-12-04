@@ -1,0 +1,74 @@
+﻿
+<form id="searchForm" action="" method="post">
+    <div class="row">
+        <div class="row">
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label"> Registration Number: </label>
+            </div>
+            <div class="col-4">
+                <input type="hidden" value="545" data-val="true" data-val-required="The InstanceId field is required." id="InstanceId" name="InstanceId">
+                <input type="text" style=" height: 25px;" id="InstanceUserCode" name="InstanceUserCode" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label"> User Name: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="UserName" name="UserName" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 30px;"> First Name: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="FirstName" name="FirstName" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class=" col-2">
+                <label class="control-label" style="height: 25px; "> Last Name: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="LastName" name="LastName" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 25px;"> Department : </label>
+            </div>
+            <div class="col-4">
+                <select id="classificationDropdown" style="height: 25px; width: 100%; border-radius: 4px; " name="InstanceClassificationId"><option value="">Select a Department</option><option value="6690">Administration</option><option value="8541">Contract Staff</option><option value="8538">HR</option><option value="806">JUNIOR-PROGRAM</option><option value="811">MIDDLE-PROGRAM</option><option value="9043">Music Department</option><option value="8539">Planning</option><option value="9065">School Of Business Management</option><option value="813">SENIOR-PROGRAM</option><option value="8540">Training</option></select>
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 25px;"> Class : </label>
+            </div>
+            <div class="col-4">
+                <select id="SubclassificationDropdown" class="dropdown-style" name="InstanceSubClassificationId">
+                </select>
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 25px;"> Parent Name: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="ParentName" name="ParentName" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 25px;"> Mobile Number: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="MobilePhone" name="MobilePhone" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-2">
+                <label class="control-label" style=" height: 25px;"> Email ID: </label>
+            </div>
+            <div class="col-4">
+                <input type="text" style=" height: 25px;" id="PortalEmail" name="PortalEmail" value="">
+            </div>
+            <div style="padding: 0px; text-align: end; margin-top: 5px;" class=" col-2">
+                <label class="control-label" style=" height: 25px;"> Student Quota/Type : </label>
+            </div>
+            <div class="col-4">
+                <select id="PFU_StudentQuota_DDID" style="height: 25px; width: 100%; border-radius: 4px; " name="StudentQuota"><option value="">---------Select-------</option><option value="578">Anganwadi</option><option value="576">Contract</option><option value="579">Contractual - Part Time</option><option value="81">Depositor</option><option value="577">Part-Time</option><option value="80">Regular</option></select>
+            </div>
+
+        </div>
+        <div style=" text-align: center;">           
+            <input type="submit" value="Clear" style="width: 10%;">
+            <input type="submit" value="Search" name="Search_PayFeeUser" id="Search_PayFeeUser" style="width: 10%;">   
+        </div>
+    </div>
+</form>

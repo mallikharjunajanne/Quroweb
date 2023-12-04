@@ -1,0 +1,216 @@
+﻿@*@model IEnumerable<Connect4m_Web.Models.TransferChallan>*@
+@model Connect4m_Web.Models.Attendenceproperites.TransferChallan
+@{
+    ViewData["Title"] = "From_Challana_Users_Details";
+    Layout = null;
+}
+
+<style>
+    .From_ChallanaUsers_Details_tbl {
+        /* width: 100%;
+        margin-top: 4px;
+        border: 1px solid lightblue;
+        font-family: none;*/
+        width: 100%;
+        margin-top: -6px;
+        border: 1px solid lightblue;
+        font-family: none;
+    }
+
+        .From_ChallanaUsers_Details_tbl th {
+            /*padding: 18px;
+            font-family: none;
+            font-size: 14px;*/
+            padding: 4px;
+            font-family: none;
+            font-size: 14px;
+            border: 1px solid;
+            text-align: center;
+            border-color: skyblue;
+        }
+
+        .From_ChallanaUsers_Details_tbl tr:nth-child(even) {
+            background-color: #ef8b6f05;
+        }
+
+        .From_ChallanaUsers_Details_tbl tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .From_ChallanaUsers_Details_tbl td {
+            border: 1px solid black;
+            padding: 4px;
+            border-color: lightblue;
+            text-align: center;
+        }
+
+    .Header_Btn {
+        background-color: black;
+        color: white;
+        border-radius: 15px;
+        width: 99%;
+        margin-left: 0px;
+        font-family: emoji;
+        border: 2px solid black;
+        height: 32px;
+        font-size: 14px;
+        font-weight: bolder;
+    }
+    .TXTCss {
+        height: 23px;
+        width: 73%;
+        margin-left: -11px;
+        border-radius: 4px;
+        border: 1px solid;
+        outline: none;
+    }
+</style>
+
+
+    <div id="FromChallanaUsersDetialsTable">
+
+
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <div>
+
+                    <h5 class="mb-0">
+                        <button class="btn  collapsed Header_Btn">
+                            YOUR SEARCH RESULTED :<span id="RecordsCounts" style=" background-color: papayawhip; color: red; border-radius: 10px; font-size: 15px;">@ViewBag.ChallanaUsersCOunt</span> RECORDS.
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                    <div class="card-body">
+                        <div id="searchFormContainer">
+                            <table class="From_ChallanaUsers_Details_tbl">
+                                <thead>
+                                    <tr>
+                                        <th>Challan No</th>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                        <th>Fee Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (@ViewBag.ErrorMessage == 0)
+                                    {
+                                        @foreach (var item in @ViewBag.ChallanaUsers)
+                                        {
+                                    <tr>
+                                        <td style="font-weight:bold;">@item.UserReceiptGenerationID</td>
+                                        <td>@item.Name</td>
+                                        <td>@String.Format("{0:0.00}", item.Amounts)</td>
+                                        @*<td>@item.Amount</td>*@
+
+                                        @if (item.ReceiptStatus == "")
+                                        {
+                                            <td>Not Paid</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.ReceiptStatus</td>
+                                        }
+
+
+                                    </tr>
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                       @*<div>*@
+                                           <span style=" color: red; font-family: none; position: absolute; margin-top: -23%; font-weight: 600;">Challan @ViewBag.ErrorMessage not yet generated.</span>
+                                       @*</div>*@
+                                        <tr style="text-align: center;">
+                                            <td colspan="4">No Records Found</td>
+                                            
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                            <div style="text-align: center; margin-top: 11px;">
+                                <input type="submit" value="Go To Step 2" id="GotoStep2" class="btn btn-pill btn-outline-primary-2x" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="default-according style-1" id="To_Users_DivId" style="display: none;">
+                    <div class="card">
+                        <div>
+                            <h5 class="mb-0">
+                                <button class="btn  collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
+                                    TRANSFER CHALLAN DETAILS
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <div id="searchFormContainer">
+                                    <form asp-action="To_Challana_Users_Details" id="TO_UsersForm">
+                                        <span asp-validation-for="UserReceiptGenerationID" style=" color:red;margin-left: -11px; position: absolute; margin-top: -75px; font-family: none; font-weight: 600;"></span>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div style="margin-left: 31%; " class="form-group col-2">
+                                                    <label class="control-label lbl" style="width: 134%;"><font style="color: red; font-size: 13px; width: 146%;">*</font> Transfer Challan No: </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input type="hidden" asp-for="InstanceId" id="InstanceId_textId" value="@ViewBag.InstanceId" />
+                                                    <input type="hidden" asp-for="CreatedBy" id="LoginUserId_textId" value="@ViewBag.CreatedBy" />
+                                                    <input type="text" asp-for="UserReceiptGenerationID" id="To_UserReceiptGenerationID" class="TXTCss" />
+                                                </div>
+                                            </div>
+                                            <div style=" text-align: center; margin-top: 0px; margin-left: -6%;">
+                                                <input type="button" value="Clear" id="ClearBtn" @*class="Clear_Btn"*@ class="btn btn-pill btn-outline-danger-2x" />
+                                                <input type="submit" value="Details" @*class="Serch_Btn"*@ class="btn btn-pill btn-outline-success-2x" onclick="To_Challana_Users(event);">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#ErrorMessage_DivId').hide();
+
+        $('#GotoStep2').on('click', function () {
+            /*alert("Button Its Working ");*/
+            $('#UserReceiptGenerationID').val('');
+            $('#To_Users_DivId').show();
+
+        });
+    });
+
+    $('#ClearBtn').click(function () {
+      
+        
+        $('#To_UserReceiptGenerationID').val('');
+       
+    });
+
+</script>

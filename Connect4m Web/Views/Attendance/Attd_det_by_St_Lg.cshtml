@@ -1,0 +1,189 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Details
+@{    
+    Layout =null;
+}
+
+<style>
+ /*   table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+</style>
+
+<div id="StudentLgn_Attendance_Details">
+    @if (@ViewBag.NoRecordsFound == "0")
+    {
+        <div style="color:red;">
+            <p>No Records Found :@ViewBag.NoRecordsFound</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="font-size: 70%;">BRIEF DETAILS</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div>                               
+                                <table cellpadding="0" width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td  width="30%" style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Department :</span>&nbsp;
+                                            </td>
+                                            <td width="70%">
+                                                <span  style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;">@ViewBag.departmentName</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  width="30%" style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Class :</span>&nbsp;
+                                            </td>
+                                            <td width="70%">
+                                                <span  style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;">@ViewBag.className</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  width="30%" style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Attendance Last Posted:</span>&nbsp;
+                                            </td>
+                                            <td width="70%">
+                                                <span  style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;">@ViewBag.AttendanceLastDate</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Total Present :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                <span style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;">
+                                                    @{
+                                                        int Presentcount = 0;
+                                                        int AbsentCounts = 0;
+                                                    }
+
+                                                    @foreach (var present in ViewBag.UserAttendance)
+                                                    {
+                                                        @if (present.Present == "1")
+                                                        {
+                                                            Presentcount++;
+                                                        }
+                                                        else
+                                                        {
+                                                            AbsentCounts++;
+                                                        }
+                                                    }
+                                                    @Presentcount
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Conducted Classes :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                <span style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;">@ViewBag.Records</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  style="height: 24px; text-align: right;">
+                                                <span  style="color: #424286; font-size: 13px; font-weight: bolder; font-style: normal;">Attendance Percentage :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                <span style="color:Red;font-size:11px;font-weight:normal;font-style:normal;">
+                                                    
+                                                    @{
+                                                        int totalRecords = (int)ViewBag.Records;
+                                                        double percentage = (double)@Presentcount / totalRecords * 100;
+                                                        string color = percentage >= 70 ? "green" : "red";
+                                                    }
+
+                                                    <span style="color: @color;">
+                                                        @percentage.ToString("0.00")%
+                                                    </span>
+
+                                                    @if (percentage >= 70)
+                                                    {
+                                                        <span style="color: green;">(Required attendance is 70% or above)</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color: red;">(Required attendance is below 70%)</span>
+                                                    }
+
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="font-size: 70%;">TOTAL NUMBER OF RECORDS:@ViewBag.Records</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <table cellspacing="1" cellpadding="0" border="0" style="background-color: #DDEBF9; width: 100%; border: 1px solid sandybrown;">
+                                <tbody>
+                                    <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
+                                        <th align="left" scope="col">  Date</th>
+                                        <th align="left" scope="col">  IsPresent</th>
+                                    </tr>
+
+                                    @foreach (var item in @ViewBag.UserAttendance)
+                                    {
+                                        <tr style="background-color:White;height:24px;">
+                                            <td align="left"> @item.CreatedDate</td>
+                                            <td align="left">  @item.IsPresent</td>
+                                        </tr>
+                                    }
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

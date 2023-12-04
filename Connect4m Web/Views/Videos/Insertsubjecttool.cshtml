@@ -1,0 +1,74 @@
+﻿@model Connect4m_Web.Models.LMSproperties.Managesubjecttools
+
+@{
+    ViewData["Title"] = "Insertsubjecttool";
+}
+<link href="~/css/Managesubjecttools.css" rel="stylesheet" />
+<hr />
+<input type="text"value="@ViewBag.decidemst" id="Decide_Up_Save" hidden/>
+<div class="row">
+
+    <form id="Insertsubjecttool">
+        <div class="row col-9">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="InstanceSubjectToolId" class="form-control" id="formInstanceSubjectToolId" hidden />
+
+
+            <div class="form-group col-4">
+
+
+                <label asp-for="SubjectToolName" class="control-label"></label>
+                <i class="fa fa-asterisk" style="font-size:11px;color:red"></i>
+
+            </div>
+            <div class="form-group col-8">
+
+                <input asp-for="SubjectToolName" class="form-control" />
+                <span asp-validation-for="SubjectToolName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="SubjectsDisplayOrder" class="control-label"></label>
+
+            </div>
+            <div class="form-group col-8">
+
+                <input asp-for="SubjectsDisplayOrder" class="form-control" />
+                <span asp-validation-for="SubjectsDisplayOrder" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-4" style="display:grid">
+                <label asp-for="Comments" class="control-label"></label>
+                <span style="font-weight:300">(Max of 250 Characters)</span>
+
+            </div>
+            <div class="form-group col-8">
+
+                <textarea asp-for="Comments" class="form-control"></textarea>
+                <span id="subtools_remaining_char"> 250 Character(s) remaining.  </span>
+                <span asp-validation-for="Comments" class="text-danger"></span>
+            </div>
+            <div class="col-4"></div>
+            <div class="form-group col-2">
+                <input type="reset" value="Clear" class="btn btn-danger" id="clearform"/>
+
+            </div>
+            <div class="form-group col-4">
+                <a class="btn btn-primary" href="/Videos/Managesubjecttools">Back To Search</a>
+
+            </div>
+            <div class="form-group col-2">
+                <input type="submit" value="Create" id="sub_tblsubjecttools" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="~/js/insertingsubjecttools.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

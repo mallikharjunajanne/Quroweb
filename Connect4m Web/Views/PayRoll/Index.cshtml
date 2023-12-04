@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/PayRoll.css" rel="stylesheet" />
+
+@*<style>
+        .progress-bar {
+            position: relative;
+            padding: 0;
+            width: 36%;
+            height: 20px;
+            background-color: #e22525;
+            border: none;
+            position: absolute;
+            height: 7px;
+            margin: 11px 0px 0px 0px;
+            background-color: #673AB7;
+        }
+
+        .circle-label {
+            z-index: 5;
+            width: 20px;
+            height: 20px;
+            background-color: #000; /* Circle color */
+            border-radius: 50%; /* Makes it a circle */
+            display: inline-block;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+            .circle-label:nth-child(1) {
+                left: 0;
+            }
+
+            .circle-label:nth-child(2) {
+                left: 14.28%; /* 100% / 7 circles */
+            }
+
+            .circle-label:nth-child(3) {
+                left: 28.57%;
+            }
+
+            .circle-label:nth-child(4) {
+                left: 42.85%;
+            }
+
+            .circle-label:nth-child(5) {
+                left: 57.14%;
+            }
+
+            .circle-label:nth-child(6) {
+                left: 71.42%;
+            }
+
+            .circle-label:nth-child(7) {
+                left: 85.71%;
+            }
+        .name-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+
+    </style>*@
+<div class="progress" style="height: 30px; margin-top: -22px; background-color: transparent ">
+    <div class="progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="10" aria-valuemax="100" style="width: 100%; background-color: transparent; border: none; position: relative; ">
+
+
+        <div class="circle-label">&#10004;</div>
+        <div class="circle-label">&#10004;</div>
+        <div class="circle-label">3</div>
+        <div class="circle-label">4</div>
+        <div class="circle-label">5</div>
+        <div class="circle-label">6</div>
+        <div class="circle-label">7</div>
+        <div class="circle-label">8</div>
+    </div>
+    <div class="progress-bar progress-bar-striped progress-bar-animated outer" role="progressbar" aria-valuemin="10" aria-valuemax="100" style="background-color: #500ef6; border: none; width: 25%">
+
+    </div>
+    <div class="progress-bar-striped progress-bar-animated inner" role="progressbar" aria-valuemin="10" aria-valuemax="100" style="width: 93%; border: none;">
+
+    </div>
+</div>
+<div class="name-container">
+    <span>Configure salary Attributes</span>
+    <span>Manage Salary Attributes for Roles</span>
+    <span>Manage Category</span>
+    <span>Manage Sub Category</span>
+    <span>Manage Employees</span>
+    <span>Employee Attendence Posting</span>
+    <span>Payslip Generate for Employee's</span>
+    <span>Salary Report</span>
+</div>
+
+<script>
+    function setProgressBar(curStep) {
+        var percent = parseFloat(100 / steps) * curStep;
+        percent = percent.toFixed();
+        $(".progress-bar")
+            .css("width", percent + "%")
+    }
+</script>
+@*<style>
+        .progress {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .circle-label {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff; /* Circle color */
+            border-radius: 50%; /* Makes it a circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .name-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .name {
+            text-align: center;
+            width: 30px;
+            font-size: 12px;
+        }
+
+    </style>
+    <div class="progress" style="height: 80px;">
+        <div class="circle-container">
+            <div class="circle-label">1</div>
+            <div class="circle-label">2</div>
+            <div class="circle-label">3</div>
+            <div class="circle-label">4</div>
+            <div class="circle-label">5</div>
+            <div class="circle-label">6</div>
+            <div class="circle-label">7</div>
+        </div>
+        <div class="name-container">
+            <span>Name Of The PayRoll 1</span>
+            <span>Name Of The PayRoll 2</span>
+            <span>Name Of The PayRoll 3</span>
+            <span>Name Of The PayRoll 4</span>
+            <span>Name Of The PayRoll 5</span>
+            <span>Name Of The PayRoll 6</span>
+            <span>Name Of The PayRoll 7</span>
+        </div>
+    </div>*@

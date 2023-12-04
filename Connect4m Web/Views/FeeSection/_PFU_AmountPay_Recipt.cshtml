@@ -1,0 +1,404 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model List<ChallanaDetails>
+
+
+
+@*<style>
+    .SchoolName_SPId {
+        letter-spacing: 2px;
+        font-family: Times New Roman;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .SchoolAddress_SPId {
+        letter-spacing: 3px;
+        font-size: 11px;
+        font: 11px arial;
+        color: #333333;
+    }
+
+    .lbl {
+        font: 13px arial;
+        color: #333333;
+        letter-spacing: 3px;
+    }
+
+    .Stamp {
+        margin-left: 5%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .S_of_Accountant {
+        margin-left: 30%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .S_Of_Payee {
+        margin-left: 23%;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .SchoolTittle {
+        font-family: Times New Roman;
+        font-size: 9px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .Signaturelbl {
+        font-family: Times New Roman;
+        font-size: 9px;
+        color: #555555;
+        letter-spacing: 4px;
+        line-height: 20px;
+        margin-right: 36px;
+    }
+
+    .Inslbl {
+        font-family: Times New Roman;
+        font-size: 11px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .Receiptlbl {
+        font-family: Times New Roman;
+        font-size: 11px;
+        color: #555555;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 20px;
+        font-weight: 500;
+    }
+
+    .DateAndTimeHeading {
+        text-align: right;
+        font: 13px arial;
+        color: #333333;
+        letter-spacing: 3px;
+        margin-right: 33px;
+        margin-top: 15px;
+    }
+
+    .PrintBtns {
+        margin-left: 78%;
+        display: flex;
+    }
+
+    input[type="submit"] {
+        border: none;
+    }
+</style>*@
+
+
+
+
+
+<div>
+    @foreach (var item in Model)
+    {
+       
+
+
+
+        <div  class="card" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
+          
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" id="Fee_DetailsPrint" style=" margin-top: 0px;">
+                <tr style=" line-height: 2;">
+                    <td align="center">
+                        <div class="DateAndTimeHeading" style=" text-align: right; font: 13px arial; color: #333333; letter-spacing: 3px; margin-right: 33px; margin-top: 15px;">
+                            <span id="dateSpan"></span><br />
+                            <span id="timeSpan"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr style=" line-height: 2;">
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr style=" line-height: 2;">
+                                <td width="15%" style="text-align: center;">
+                                    <img src="~/Images/Jnanadeeplogo.png" style="height: 65px;" />
+                                </td>
+                                <td width="45%">
+                                    <span class="SchoolName_SPId" style=" letter-spacing: 2px; font-family: Times New Roman; font-size: 14px; font-weight: bold;"><b>JNANADEEPA VIDYA SAMSTE</b></span><br />
+                                    <span class="SchoolAddress_SPId" style="letter-spacing: 3px; font-size: 11px; font: 11px arial; color: #333333;">Raghav Nagar, Hyderabad, Telangana - 500003</span>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+               
+                <tr style=" line-height: 2;">
+                   <td colspan="12">
+                       <div style=" margin: 41px 0px 0px 65px;"></div>
+                   </td>
+                </tr>
+               
+                <tr style=" line-height: 2;">
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="Details">
+
+                            <tr style=" line-height: 2;">
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Name:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; ">@item.Challana_UserName</label></td>
+                                <td width="20%" style="text-align: right; height: 10%;"><label  style="font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600; ">Fee Amount:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeAmount</label></td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Registration Number:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_UserRegId</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Type:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@(string.IsNullOrEmpty(item.Challana_DiscountType) ? "NA" : item.Challana_DiscountType)</label>
+                                </td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Department:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_ClassificationName</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Amount:</label></td>
+                                <td width="30%">
+                                    <label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">
+                                        @(item.Challana_DiscountAmount == null ? "NILL" : item.Challana_DiscountAmount.ToString())
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Semester:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_subclassificationName</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paid Amount:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_PaidAmount</label></td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Term:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_TermName</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Amount:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueAmount</label></td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Date:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueDate</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paying Amount:</label></td>
+                                <td width="30%"><label>@item.Challana_PayingAmount</label></td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+
+                                <td width="20%" style="text-align: right; height: 10%;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Fee type:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeType</label></td>
+                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Balance Due:</label></td>
+                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_BalanceDue</label></td>
+                            </tr>
+                            <tr style=" line-height: 2;">
+                                <td colspan="12">
+                                    <div style="display:flex;">
+                                        <div style="height: 60px; text-align: center; margin: 41px 0px 0px 65px; color: black; font-weight: bold; font-size: 16px; ">Stamp</div>
+                                        <div style="height: 60px; text-align: center; margin: 41px 77px 27px 29%; color: black; font-weight: bold; font-size: 16px; ">Signature Of Accountant</div>
+                                        <div style="height: 60px; text-align: center; margin: 41px 0px 0px 0px; color: black; font-weight: bold; font-size: 16px; ">Signature Of Payee</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <hr style="margin-top: 8%;  padding: 0px; background-color: cornflowerblue;" />
+            <div id="MatricChallanaPrint" style="margin-top:14px;">
+                <table>
+                    <tr>
+                        <td colspan="12" class="SchoolTittle" style="text-align:center;">
+                            ADS SCHOOL - HYDERABAD, H.S - 2, Sector - 23, Opposite Pkt. - 3
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="SchoolTittle" style="text-align:center;">
+                            ***** FEE RECEIPT *****
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT NO :</td>
+                        <td colspan="2" class="lbl">@item.ReturnStringValue</td>
+
+                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT DATE :</td>
+                        <td colspan="1" class="lbl">@item.Challana_UserName</td>
+                    </tr>
+                    <tr>
+                       
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">Name :</td>
+                        <td colspan="1" class="lbl">@item.Challana_UserName</td>
+                        <td  class="Receiptlbl" style=" text-align: right;">CLASS :</td>
+                        <td colspan="1" class="lbl">@item.Challana_subclassificationName</td>
+                        <td colspan="1" class="Receiptlbl" style=" text-align: right;">ADM.NO :</td>
+                        <td colspan="2" class="lbl">@item.Challana_UserRegId</td>
+                    </tr>
+                    <tr>
+                     
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="12">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="Inslbl" style="text-align: right;">Instalment Number **** </td>
+                        <td class="Inslbl">@item.Challana_TermName</td>
+                       
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="Inslbl" style="text-align: right;">Amount ****</td>
+                        <td class="Inslbl">@item.Challana_PayingAmount</td>
+                    </tr>
+                    <tr>
+                       
+                        <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
+                        <td class="lbl"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="Inslbl" style="text-align: right;">TOTAL FEE      ****           </td>
+                        <td colspan="5" class="Inslbl">@item.Challana_PayingAmount</td>
+                    </tr>
+                    <tr>
+
+                        <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
+                        <td class="lbl"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            @if (item.Description == "NULL" || item.Description == null)
+                            {
+                                <b></b>
+                            }
+                            else
+                            {
+                                <b style="margin: 0px 0px 0px 43px;">@item.Description</b>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" style="text-align: right;">
+                            <label class="Signaturelbl">SIGNATURE</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12">
+                            <hr />
+                        </td>
+                    </tr>
+                </table>                
+            </div>
+        </div>
+    }
+
+
+
+
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+     
+        updateDateTime();
+
+    
+        setInterval(updateDateTime, 1000);
+
+
+    });
+
+    function updateDateTime() {
+        const currentDate = new Date();
+        const months = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        const month = months[currentDate.getMonth()];
+        const day = currentDate.getDate();
+        const year = currentDate.getFullYear();
+        const hours = currentDate.getHours();
+        const minutes = currentDate.getMinutes();
+        const amOrPm = hours >= 12 ? "PM" : "AM";
+        const formattedHours = hours % 12 || 12;
+
+        const formattedDate = `${month} ${day} ${year}`;
+        const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
+
+        // Update the <span> elements with the formatted date and time
+        document.getElementById("dateSpan").textContent = formattedDate;
+        document.getElementById("timeSpan").textContent = formattedTime;
+    }
+
+    document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
+        // Get the content of the div with id 'MatricChallanaPrint'
+        const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
+
+        // Create a new window for printing
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title></head><body>');
+
+        // Write the content to the new window
+        printWindow.document.write(printContent);
+
+        // Close the new window after printing
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    });
+
+
+
+    document.getElementById("Print_Button").addEventListener("click", function () {
+        const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
+        printWindow.document.write(printContent);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    });
+
+
+</script>
+
+
+

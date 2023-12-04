@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style>
+        textarea {
+            resize: none;
+            width: 93%;
+            height: 71px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            /* background: url(http://www.shukatsu-note.com/wp-content/uploads/2014/12/computer-564136_1280.jpg) no-repeat;
+      background-size: cover;*/
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Tahoma, Arial, sans-serif;
+            color: #06D85F;
+            margin: 80px 0;
+        }
+
+        .box {
+            width: 40%;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.2);
+            padding: 35px;
+            border: 2px solid #fff;
+            border-radius: 20px/50px;
+            background-clip: padding-box;
+            text-align: center;
+        }
+
+        .button {
+            /* font-size: 1em;
+      padding: 10px;
+      color: #fff;
+      border: 2px solid #06D85F;
+      border-radius: 20px/50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease-out;*/
+        }
+
+            .button:hover {
+                background: #06D85F;
+            }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+            .overlay:target {
+                visibility: visible;
+                opacity: 1;
+            }
+
+        /*.popup {
+      margin: 70px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 5px;
+      width: 30%;
+      position: relative;
+      transition: all 5s ease-in-out;
+    }*/
+
+        /*.popup h2 {
+      margin-top: 0;
+      color: #333;
+      font-family: Tahoma, Arial, sans-serif;
+    }*/
+        /*.popup .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }*/
+        .popup .close:hover {
+            color: #06D85F;
+        }
+
+        .popup .content {
+            max-height: 30%;
+            overflow: auto;
+        }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Comments_popup</title>
+</head>
+<body>
+   
+
+    <div id="CH-Comments" style="text-align:center;">
+        <div class="popup" style="width: 43%; margin-left: 55%; background-color: yellowgreen; ">
+
+            <p style="font-size: 13px; letter-spacing: 1px; color: black; ">
+                Enter Comments to the date <em>@ViewBag.AttendanceDate</em> for student <em>@ViewBag.StidentName</em>
+            </p>
+            <div class="content1">
+                <textarea id="comment_Text"></textarea>
+            </div>
+            <br />
+            <input type="button" class="button" id="comment_send_btn" value="OK" />
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+
+
+<script>
+    $('#comment_send_btn').click(fun2021)
+
+    function fun2021() {
+        debugger;
+        //var comment_Texts = document.getElementById('comment_Text').value;
+        /* alert(comment_Texts);*/
+        $('#CH-Comments').hide();
+        //$.ajax({
+        //    url: "/Attendance/Post_Attendance?comment_Texts=" + comment_Texts,
+        //    type: "POST"
+        //});
+    }
+</script>

@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Sorting Example</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button onclick="sortTable(0)"> Malli Sort</button>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Sno</th>
+                <th onclick="sortTable(1)" >Name</th>
+                <th  onclick="sortTable(2)">Age</th>
+                <th onclick="sortTable(3)">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td><td>John</td>
+                <td>25</td>
+                <td>USA</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Alice</td>
+                <td>30</td>
+                <td>Canada</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Rakesh</td>
+                <td>30</td>
+                <td>Canada</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Sreekanth</td>
+                <td>30</td>
+                <td>Canada</td>
+            </tr>
+            <!-- Add more rows here -->
+        </tbody>
+    </table>
+
+    <script>
+        let lastSortedColumn = -1; // Keeps track of the last sorted column
+        let ascending = true; // Tracks the sorting order
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('myTable');
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            // Remove the header row from the array
+            const headerRow = rows.shift();
+
+            if (lastSortedColumn !== columnIndex) {
+                ascending = true; // First click, sort in ascending order
+            } else {
+                ascending = !ascending; // Toggle the sorting order on subsequent clicks
+            }
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.getElementsByTagName('td')[columnIndex];
+                const cellB = rowB.getElementsByTagName('td')[columnIndex];
+
+                let comparison = cellA.textContent.localeCompare(cellB.textContent);
+                return ascending ? comparison : -comparison; // Reverse the comparison for descending order
+            });
+
+            // Clear the table body
+            table.getElementsByTagName('tbody')[0].innerHTML = '';
+
+            // Append sorted rows to the table
+            rows.forEach(row => {
+                table.getElementsByTagName('tbody')[0].appendChild(row);
+            });
+
+            lastSortedColumn = columnIndex; // Update the last sorted column
+        }
+    </script>
+
+</body>
+</html>
+
+<script>
+    console.log("Sync Network Request Start");
+
+    function syncNetworkRequest() {
+        const response = fetch('https://localhost:44347/Videos/GettingAcademicFees?FinancialYearId=0');
+        const data = response.json();
+        console.log("Sync Network Request Data:", data);
+    }
+
+    syncNetworkRequest();
+
+    console.log("Sync Network Request End");
+    console.log("Async Network Request Start");
+
+    async function asyncNetworkRequest() {
+        const response = await fetch('https://localhost:44347/Videos/GettingAcademicFees?FinancialYearId=0');
+        const data = await response.json();
+        console.log("Async Network Request Data:", data);
+    }
+
+    asyncNetworkRequest();
+
+    console.log("Async Network Request End");
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+@*<p title="This is a tooltip">Hover over me to see a tooltip</p>*@
+
+
+
+
+
+
+
+
+
+
+
+@*@{
+        ViewData["Title"] = "Login";
+    }
+
+    <h1>Login</h1>*@
+
+@*<script>
+        $(document).ready(function() {
+            var initialNameValue = "@Model.Name"; // Get the initial value from Razor
+
+            $("#nameInput").on("change", function() {
+                var newNameValue = $(this).val();
+                if (newNameValue === "sreekanth") {
+                    $("#conditionalContent").show();
+                } else {
+                    $("#conditionalContent").hide();
+                }
+            });
+
+            // Initialize UI based on the initial name value
+            if (initialNameValue === "sreekanth") {
+                $("#conditionalContent").show();
+            } else {
+                $("#conditionalContent").hide();
+            }
+        });
+    </script>*@
+@*<input type="file" id="file1" />
+<div id="datatrans" class="btn btn-success">File transfer</div>
+<div id="dataRemove" class="btn btn-danger">Remove File</div>
+<input type="file" id="file2" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    // Attach click event handler to the "File Transfer" div
+    $(document).on('click', '#datatrans', function () {
+        // Get the selected file from the first file input
+        var fileInput = $('#file1')[0].files[0];
+
+        // Get a reference to the second file input
+        var fileInput2 = $("#file2");
+
+        // Create a DataTransfer object and add the selected file
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(fileInput);
+
+        // Assign the files from the DataTransfer object to the second file input
+        fileInput2[0].files = dataTransfer.files;
+        $('#file1').val("");
+    });
+    $(document).on('click', '#dataRemove', function () {
+        debugger;
+        $('#file1').val(""); // Clears the selected file from the file input with ID "file1"
+
+
+
+    });
+
+</script>*@
+@*// Create a new File object
+    const myFile = new File(['Hello World!'], 'myFile.txt', {
+        type: 'text/plain',
+        lastModified: new Date(),
+    });*@

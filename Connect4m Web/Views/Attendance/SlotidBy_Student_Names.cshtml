@@ -1,0 +1,14 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Summary
+
+@{
+    Layout = null;
+}
+
+
+<div class="mb-3 row">
+    @*<label asp-for="SubjectName" class="col-sm-3 col-form-label"></label>*@
+    <div class="col-sm-9" id="SubjectName">
+        @Html.DropDownListFor(Model => Model.SubjectSlotName, new SelectList(ViewBag.Student_Names, "Value", "Text"), "--Select--", new { @id = "Subjects", @class = "form-select input-air-primary digits"})
+        <span asp-validation-for="SubjectSlotName" class="text-danger"></span>
+    </div>
+</div>

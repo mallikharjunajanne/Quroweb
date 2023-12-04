@@ -1,0 +1,17 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.FastAttendance
+
+@{
+    Layout = null;
+}
+
+
+<div class="mb-3 row">
+    @*<label asp-for="SubjectName" class="col-sm-3 col-form-label"></label>*@
+    <div class="col-sm-9" id="F_IN_SubId">
+        @Html.ListBoxFor(Model => Model.SubClassificationName, new SelectList(ViewBag.InSubclass, "Value", "Text"), new { @id = "F_IC_Sub_Id", @class = "form-select input-air-primary digits Dropdown" })
+        <span asp-validation-for="SubClassificationName" class="text-danger"></span>
+    </div>
+</div>
+
+
+

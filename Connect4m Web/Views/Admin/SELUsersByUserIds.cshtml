@@ -1,0 +1,1023 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites    .UserScreen.Postnoticetabledate>
+@{
+    ViewData["Title"] = "SELUsersByUserIds";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<div class="default-according style-1" id="accordionoc1">
+    <div class="card-header bg-primary">
+        <h5 class="mb-0">
+            <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
+            <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99%;">
+                YOUR HAVE SELECTED BELOW  <span id="Search_result_count" value="@ViewBag.SMSTemplateScount">@ViewBag.SMSTemplateScount</span> USER(S) TO POST THIS NOTICE.
+            </button>
+        </h5>
+    </div>
+    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">
+        <div class="card-body" style="padding: 10px;">
+            <table id="PostNoticetblid_searchandadduserspostthisnotice_Table" style="width: 100%;" class="display">
+                <thead>
+                    <tr style="font-size: 13px; font-family: auto; border: 1px solid #DC5 !important; ">
+                        <th style=" border: 1px solid #DC5 !important;">Name</th>
+                        <th style=" border: 1px solid #DC5 !important;">Admission Number</th>
+                        <th style=" border: 1px solid #DC5 !important;">Role</th>
+                        <th style=" border: 1px solid #DC5 !important;">Department</th>
+                        <th style=" border: 1px solid #DC5 !important;">Class</th>
+                        <th style=" border: 1px solid #DC5 !important;">Email</th>
+                        <th style=" border: 1px solid #DC5 !important;">Student/Staff Mobile No.</th>
+                        <th style=" border: 1px solid #DC5 !important;">Parent Mobile No.</th>
+                        <th style=" border: 1px solid #DC5 !important;">Father Name</th>
+                        <th style=" border: 1px solid #DC5 !important;">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var Sno = 1;}
+                    @foreach (var tblitemvalue in Model)
+                    {
+                        <tr style=" font-size: 13px; font-family: auto; border: 1px solid #DC5 !important;">
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FirstName</td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.AdmissionNumber</td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.RoleName</td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.ClassificationName</td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.SubClassificationName</td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.PortalEmail</td>
+                            <td style=" border: 1px solid #DC5 !important;"></td>
+                            <td style=" border: 1px solid #DC5 !important;"></td>
+                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FatherName</td>
+                            <td align="center">
+                                <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i>
+                                <input type="hidden" id="Usersidtxt" value="@tblitemvalue.UserId" />                              
+                            </td>
+                        </tr>
+                        Sno++;
+                    }
+                </tbody>
+            </table>
+            <div id="Pagination_Postnoticeaddinguserstbl">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@*<script src="~/js/ManageNotices.js"></script>*@
+
+<script>
+     $(document).ready(function () {
+         Pagination_Table();
+  });
+    function Pagination_Table() {
+        var rowsPerPage = 20;
+
+     var totalItems = @Model.Count();
+     debugger;
+        if (totalItems >= 0) {
+            if (totalItems > rowsPerPage) {
+
+
+          var numPages = Math.ceil(totalItems / rowsPerPage);
+          var currentPage = 1;
+
+         var pagination = $('#Pagination_Postnoticeaddinguserstbl');
+          pagination.empty();
+
+          var startIndex = 1;
+          var endIndex = Math.min(numPages, 10);
+
+          for (var i = startIndex; i <= endIndex; i++) {
+              var link = $('<a class="Pagination_Postnoticeaddinguserstbl" style="margin: 0 2px;color: black;" href="#">' + i + '</a>');
+              pagination.append(link);
+          }
+
+          if (endIndex < numPages) {
+              pagination.append($('<span style="margin: 0 2px;">&hellip;</span>'));
+              var lastPageLink = $('<a class="Pagination_Postnoticeaddinguserstbl" style="margin: 0 2px;color: black;" href="#">>>></a>');
+              pagination.append(lastPageLink);
+          }
+
+          showPage(currentPage);
+
+          pagination.css('text-align', 'center');
+
+         pagination.on('click', '.Pagination_Postnoticeaddinguserstbl', function (e) {
+              e.preventDefault();
+              var linkText = $(this).text();
+              if (linkText === ">>>") {
+                  currentPage = numPages;
+              } else {
+                  currentPage = parseInt(linkText);
+              }
+              showPage(currentPage);
+          });
+
+          function showPage(page) {
+              var start = (page - 1) * rowsPerPage;
+              var end = Math.min(start + rowsPerPage, totalItems);
+
+              $("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr").hide();
+              $("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr").slice(start, end).show();
+
+              var newStartIndex = Math.max(1, page - 4);
+              var newEndIndex = Math.min(newStartIndex + 9, numPages);
+
+              if (newEndIndex === numPages) {
+                  newStartIndex = Math.max(1, numPages - 9);
+              }
+
+              pagination.empty();
+
+              for (var i = newStartIndex; i <= newEndIndex; i++) {
+                  var link = $('<a class="Pagination_Postnoticeaddinguserstbl" style="margin: 0 2px;color: black;" href="#">' + i + '</a>');
+                  pagination.append(link);
+              }
+
+              if (newEndIndex < numPages) {
+                  pagination.append($('<span style="margin: 0 2px;">&hellip;</span>'));
+                  var lastPageLink = $('<a class="Pagination_Postnoticeaddinguserstbl" style="margin: 0 2px;color: black;" href="#">>>></a>');
+                  pagination.append(lastPageLink);
+              }
+
+              $('.Pagination_Postnoticeaddinguserstbl').removeClass('active');
+              $('.Pagination_Postnoticeaddinguserstbl').eq(page - newStartIndex).addClass('active')
+                  .css({
+                      'cursor': 'unset',
+                      'background-color': 'yellow',
+                      'padding': '2px',
+                      'border-radius': '16px',
+                      'color': 'black'
+                  });
+                }
+            }
+      }
+    }
+
+    $('#PostNoticetblid_searchandadduserspostthisnotice_Table tbody').on('click', '.fa-trash-alt', function () {
+
+        if (confirm('Are you sure you want to delete the User ?\n Click ' + 'OK' + ' to delete, else click ' + 'CANCEL' + 'to stop deleting.')) {
+            var Row = $(this).closest('tr');
+            var DeleteUserid = Row.find('td:nth-child(10) #Usersidtxt').val();
+            //Row.hide();
+            Row.remove();           
+        }
+    });
+</script>
+
+
+
+
+@*<script>
+        var js = jQuery.noConflict(true);
+        $(document).ready(function () {
+            TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+        });
+
+
+        //Data table function with columns
+
+        function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, TableCountsId, FormId, DivId_Toshow, ExelTitlename, ExcelDownloadColumnsNo) {
+            try {
+                debugger;
+                //var js = jQuery.noConflict(true);
+                //$(".ErrorMessageSpan").empty();
+                //if (val != "Stop") {
+                //    event.preventDefault();
+                //}
+
+                //var formdata = new FormData($("#" + FormId)[0]);
+                //if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {
+                //    var Fromdate = $("#TxtFromDate").val();
+                //    var Todate = $("#TxtToDate").val();
+                //    if (Fromdate != "" || Todate != "") {
+                //        if (Fromdate === "") {
+                //            if (Todate != "") {
+                //                $("#Main_Span_Error").text('Please Select From Date also');
+                //                return;
+                //            }
+                //        }
+                //        if (Todate === "") {
+                //            if (Fromdate != "") {
+                //                $("#Main_Span_Error").text('Please Select To Date also');
+                //                return;
+                //            }
+                //        }
+                //        if (Date.parse(Todate) < Date.parse(Fromdate)) {
+                //            $("#Main_Span_Error").text("'From Date' cannot be greater than 'To Date'. ");
+                //            return;
+                //        }
+                //    }
+                //}
+
+                //if (val != "Stop") {
+                //    $("#loadingOverlay").show();
+                //}
+                //var paging = true;
+                //if (tablename == "TblLeaveRequested_SearchRecords") {
+                //    paging = false;
+                //}
+
+
+
+                // Make AJAX call to the controller action
+                $.ajax({
+                    //url: "/Attendance/TblCompensatoryLeavesSummery_CallingFunction",re
+                    url: Url,
+                    type: "POST",
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        debugger;
+                        var tableLength = response.length;
+                        $("#" + TableCountsId).text(tableLength);
+                        var table = js('#' + tablename).DataTable();
+                        var currentPage = table.page.info().page;
+                        table.destroy();
+                        var columns = [];
+                        debugger;
+                        /*if (FormId == 'FmCOMPENSATORYLEAVESSEARCH') {*/
+                        //tablename == "TblcompensatoryLeaves_SearchedRecords"
+                        columns = [
+                            {
+                                data: "Leavetypeid",
+                                visible: false,
+                                render: function (data, type, row, meta) {
+                                    hiddenFieldValue = row.leavetypeid;
+                                    return row.leavetypeid ///compoffleaveid
+                                }
+                            },
+                            {
+                                data: "Username",
+                                render: function (data, type, row, meta) {
+                                    if (row.leaveDetails == "No") {
+                                        return '<a style="color:blue;cursor:pointer"  class="Undeline" id="UserName" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
+                                    } else
+                                        return row.username
+                                }
+                            },
+                            {
+                                data: "ClassificationName",
+                                render: function (data, type, row, meta) {
+                                    return row.classificationName
+                                }
+                            },
+                            {
+                                data: "Leavetype",
+                                render: function (data, type, row, meta) {
+                                    return row.leavetype
+                                }
+                            },
+                            {
+                                data: "LeaveFromdate",
+                                render: function (data, type, row, meta) {
+                                    return row.leaveFromdate //	Compensate Date
+                                }
+                            },
+                            {
+                                data: "Daystype",
+                                render: function (data, type, row, meta) {
+                                    return row.daystype
+                                }
+                            },
+                            {
+                                data: "LeaveTodate",
+                                render: function (data, type, row, meta) {
+                                    return row.leaveTodate //Expiry Date
+                                }
+                            },
+
+                            {
+                                data: "LeaveDetails",
+                                className: "CenterAlign",
+                                render: function (data, type, row, meta) {
+                                    return row.leaveDetails
+                                }
+                            },
+                            {
+                                data: "Text",
+                                className: "CenterAlign",
+                                render: function (data, type, row, meta) {
+                                    return row.text
+                                }
+                            },
+                            {
+                                data: "CreatedDate",
+                                render: function (data, type, row, meta) {
+                                    var date = new Date(row.createdDate);
+
+                                    var formattedDate =
+                                        date.getDate().toString().padStart(2, '0') + '-' +
+                                        (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                                        date.getFullYear() + ' ' +
+                                        date.getHours().toString().padStart(2, '0') + ':' +
+                                        date.getMinutes().toString().padStart(2, '0') + ':' +
+                                        date.getSeconds().toString().padStart(2, '0');
+                                    return formattedDate //Created On
+                                }
+                            },
+                            {
+                                className: "CenterAlign",
+                                // data: "Leavetypeid", //campoffleaveid
+                                render: function (data, type, row, meta) {
+                                    var Value = "";
+                                    if (row.leaveDetails == "No")
+                                        Value = '<a class="fa fa-trash" style="font-size: 15px; color: red;    cursor: pointer;" id="delete" onclick="DeleteCompensatoryLeavesFunction(' + row.leavetypeid + ')"></a>';
+                                    else
+                                        value = "";
+
+                                    return Value
+                                }
+                            }
+
+                        ]
+                        //}
+                        //else if (tablename == 'TblAlloPastdaysform_SearchedRecords') {
+                        //    columns = [
+
+                        //        {
+                        //            data: "Username",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.username
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ClassificationName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.classificationName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Leavetype",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leavetype
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveFromdate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveFromdate
+                        //            }
+                        //        },
+
+                        //        {
+                        //            data: "LeaveTodate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveTodate
+                        //            }
+                        //        },
+
+                        //        {
+                        //            data: "CreatedDate",
+                        //            render: function (data, type, row, meta) {
+                        //                var date = new Date(row.createdDate);
+
+                        //                var formattedDate =
+                        //                    date.getDate().toString().padStart(2, '0') + '-' +
+                        //                    (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                        //                    date.getFullYear() + ' ' +
+                        //                    date.getHours().toString().padStart(2, '0') + ':' +
+                        //                    date.getMinutes().toString().padStart(2, '0') + ':' +
+                        //                    date.getSeconds().toString().padStart(2, '0');
+
+                        //                return formattedDate
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveStatus",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveStatus
+                        //            }
+                        //        },
+                        //        //{
+                        //        //    data: "CreatedDate",
+                        //        //    render: function (data, type, row, meta) {
+                        //        //        var date = new Date(row.createdDate);
+
+                        //        //        var formattedDate =
+                        //        //            date.getDate().toString().padStart(2, '0') + '-' +
+                        //        //            (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                        //        //            date.getFullYear() + ' ' +
+                        //        //            date.getHours().toString().padStart(2, '0') + ':' +
+                        //        //            date.getMinutes().toString().padStart(2, '0') + ':' +
+                        //        //            date.getSeconds().toString().padStart(2, '0');
+
+
+
+                        //        //        return formattedDate //Created On
+                        //        //    }
+                        //        //},
+                        //        {
+                        //            data: "LeaveAppliedDate", //campoffleaveid
+                        //            render: function (data, type, row, meta) {
+
+                        //                return row.leaveAppliedDate
+                        //            }
+                        //        }
+
+                        //    ]
+                        //}
+                        //else if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {//Leave Cancellation Screen
+                        //    columns = [
+                        //        {
+                        //            data: "LeaveApplicationId",
+                        //            visible: false,
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveApplicationId
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "FirstName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.firstName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ClassificationName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.classificationName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveReason",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveReason
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Leavetype",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leavetype
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveFromdate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveFromdate
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveTodate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveTodate
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveNoOfDays1",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveNoOfDays1
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveStatus",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveStatus
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Batchid",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                if (row.leaveCancelledFlag != "True") {
+                        //                    return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer; " class="badge badge-primary" title="Cancel Leave">Cancel</span>';
+                        //                }
+                        //                else {
+                        //                    return ' Cancelled';
+                        //                }
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Leavecomments",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leavecomments
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveCancelledFlag",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                var Value = "";
+                        //                if (row.leaveCancelledFlag == "True") {
+
+                        //                }
+                        //                else if (row.leavetype == " P" || row.leavetype == "P") {
+                        //                    Value = '<a class="fa fa-edit" style="font-size: 11px; color: red;"></a>';
+                        //                }
+                        //                else {
+                        //                    Value = '<a class="fa fa-edit" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="font - size: 16px !important; color: red; cursor: pointer; "></a>';
+                        //                }
+                        //                return Value
+                        //            }
+                        //        }
+                        //    ]
+                        //}
+                        //else if (tablename == "TblStaffList_SearchedRecords") {
+                        //    columns = [
+
+                        //        {
+                        //            data: "FirstName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.firstName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "RoleName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.roleName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "DepartmentName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.departmentName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "InstanceUserCode",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.instanceUserCode
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "PortalEmail",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.portalEmail
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "DateOfJoining",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.dateOfJoining
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Mobilephone",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.mobilephone
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Userid",
+                        //            render: function (data, type, row, meta) {
+                        //                return '<a onclick="ApplyStaffLeavePageDiv_CalingFunction.call(this,event,' + row.userid + ')" style="color:blue;cursor:pointer;font-weight:600" class="Undeline">Apply Leave</a>';
+                        //            }
+                        //        },
+                        //    ]
+                        //}
+                        //else if (tablename == "TblLeaveRequested_SearchRecords") {
+                        //    columns = [
+                        //        {
+                        //            data: "Name",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.name
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ClassificationName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.classificationName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "SubClassificationName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.subClassificationName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeaveType",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leaveType
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Reason",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.reason
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "FromdateString",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.fromdateString
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "TodateString",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.todateString
+                        //            }
+                        //        }, {
+                        //            data: "NoOfDays",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.noOfDays
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "RequestedDate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.requestedDate
+                        //            }
+                        //        }, {
+                        //            data: "ApprovedDate",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.approvedDate
+                        //            }
+                        //        }, {
+                        //            data: "ApprovalStatus",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.approvalStatus
+                        //            }
+                        //        },
+
+                        //    ]
+                        //}
+                        //else if (tablename == "TblExamListData") {
+                        //    columns = [
+                        //        {
+                        //            data: "ExamName",
+                        //            render: function (data, type, row, meta) {
+                        //                return '<a id="TBLExamid" class="Undeline" onclick="EditValuesGettingFunction(' + row.id + ')" style="cursor: pointer;font-weight: bold;color:black">' + row.examName + '</a>';
+                        //            }
+                        //        }, {
+                        //            data: "Displayorder",
+                        //            visible: false,
+                        //            render: function (data, type, row, meta) {
+                        //                return row.displayorder
+                        //            }
+                        //        }, {
+                        //            data: "AcademicYearId",
+                        //            visible: false,
+                        //            render: function (data, type, row, meta) {
+                        //                return row.academicYearId
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ExaternalExam",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.exaternalExam
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Id",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                var Value = '<a class="fa fa-trash" title="Delete" onclick="DeleteExamsById(' + row.id + ')"  style="font-size: 15px!important; color: red; cursor: pointer; "></a>';
+                        //                return Value
+                        //            }
+                        //        }
+                        //    ]
+                        //}
+                        //else if (tablename == "TblSubjectListData") {
+                        //    columns = [
+                        //        {
+                        //            data: "Name",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return '<a style="cursor:pointer" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">' + row.name + ' </a>';
+
+                        //            }
+                        //        }
+                        //    ]
+                        //}
+                        //else if (tablename == "TblBulkUploadSubjectsList") {
+                        //    columns = [
+                        //        {
+                        //            target: 1,// Assuming this is the column index where you want to display numbering
+                        //            render: function (data, type, row, meta) {
+                        //                return (meta.row + 1)
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "SubjectName",
+                        //            render: function (data, type, row, meta) {
+                        //                return '<a id="TBLSubjectid" class="Undeline" onclick="EditValuesGettingFunction(' + row.instanceSubjectId + ')" style="cursor: pointer;font-weight: bold;color:black">' + row.subjectName + '</a>';
+                        //            }
+                        //        }, {
+                        //            data: "SubjectCode",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.subjectCode
+                        //            }
+                        //        }, {
+                        //            data: "DepartmentName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.departmentName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ClassName",
+
+                        //            render: function (data, type, row, meta) {
+                        //                return row.className
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "SubjectTypeName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.subjectTypeName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "IncludeInTotalString",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.includeInTotalString
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "SubjectTypeName",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                var Value = '<a class="fa fa-trash" title="Delete" onclick="DeleteExamsById(' + row.instanceSubjectId + ')"  style="font-size: 15px!important; color: red; cursor: pointer; "></a>';
+                        //                return Value
+                        //            }
+                        //        }
+                        //    ]
+                        //}
+                        //else if (tablename == "TblUser") {//ManageSubjectAssociation Screen
+                        //    columns = [
+                        //        {
+                        //            target: 1,// Assuming this is the column index where you want to display numbering
+                        //            render: function (data, type, row, meta) {
+                        //                return (meta.row + 1)
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "UserId",
+                        //            render: function (data, type, row, meta) {
+                        //                var Text = "";
+                        //                if (row.subjectAssociationId != "") {
+                        //                    return Text = '<input id="chkSMS" type="checkbox"  checked="checked">';
+                        //                } else {
+                        //                    return Text = '<input id="chkSMS" type="checkbox"  >';
+                        //                }
+
+
+                        //            }
+                        //        }, {
+                        //            data: "InstanceUserCode",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.instanceUserCode
+                        //            }
+                        //        }, {
+                        //            data: "FirstName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.firstName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LastName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.lastName
+                        //            }
+                        //        },
+                        //    ]
+                        //}
+                        //else {
+                        //    //tablename == "TblLeavesSummery"
+                        //    columns = [
+                        //        //{
+                        //        //     data: "Leavetypeid",
+                        //        //    visible: false,
+                        //        //    render: function (data, type, row, meta) {
+                        //        //        return row.leavetypeid ///compoffleaveid
+                        //        //    }
+                        //        //},
+                        //        {
+                        //            data: "Username",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.username
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ClassificationName",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.classificationName
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Leavetype",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leavetype
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "TotalLeaves",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.totalLeaves
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "Total",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.total
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "DaysUsed",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.daysUsed
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "ApprovedNotUsedLeaves",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.approvedNotUsedLeaves
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "LeavesAwaitingApprovalLeaves",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.leavesAwaitingApprovalLeaves
+                        //            }
+                        //        },
+                        //        {
+                        //            data: "AvailableLeaves",
+                        //            className: "CenterAlign",
+                        //            render: function (data, type, row, meta) {
+                        //                return row.availableLeaves
+                        //            }
+                        //        },
+
+                        //    ]
+                        //}
+
+                        var Newtable = js("#" + tablename).DataTable({
+                            //  dom: 'Bfrtip',
+                            dom: 'Bfrtip',
+                            buttons: [
+                                //{
+                                //    extend: 'pdfHtml5',
+                                //    exportOptions: {
+                                //        columns: [1, 2, 3]
+                                //    },
+                                //}
+                                //,
+                                {
+                                    extend: 'excel',
+                                    title: ExelTitlename,
+                                    text: "Export to Excel",
+                                    exportOptions: {
+                                        columns: ExcelDownloadColumnsNo
+                                    },
+                                    customize: function (xlsx) {
+                                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                                        //// Center-align the title in the worksheet
+                                        //var titleCell = $(sheet).find('c[r^="A1"]');
+                                        //titleCell.attr('s', '2'); // Apply a style to center-align
+                                        $('c[r*="A1"]', sheet).attr('s', '2');
+
+                                        // Apply a border to the entire table
+                                        var rows = $(sheet).find('row');
+                                        rows.each(function () {
+                                            $(this).find('c').attr('s', '25'); // Apply a style with a border (s=25) to each cell
+                                        });
+                                    },
+                                },
+                                {
+                                    extend: 'print',
+                                    // title: ExelTitlename,
+                                    title: 'Leave Approval Report',
+                                    //customize: function (win) {
+
+                                    //    $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+
+                                    //    $(win.document.body)
+                                    //        .find('thead th')
+                                    //        .css('color', 'black'); // Set your desired text color
+                                    //    $(win.document.body)
+                                    //        .find('.top')
+                                    //        .css('font-size', '12px');
+                                    //},
+                                    //  messageTop: 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).',
+
+
+
+                                    messageTop: function () {
+                                        // Generate the timestamp
+                                        var now = new Date();
+                                        var formattedTime = now.toLocaleDateString(); // You can format the time as needed
+
+                                        return 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).<div class="timestamp"> Printed on  ' + formattedTime + '</div>';
+                                    },
+                                    customize: function (win) {
+                                        // Apply custom styles for print
+                                        var timestampElement = $(win.document.body).find('.timestamp');
+                                        timestampElement.css({
+                                            'position': 'absolute',
+                                            'top': '0',
+                                            'right': '0',
+                                            'font-size': '12px' // Adjust the font size as needed
+                                        });
+
+                                        $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+
+                                        $(win.document.body)
+                                            .find('thead th')
+                                            .css('color', 'black'); // Set your desired text color
+                                        $(win.document.body)
+                                            .find('.top')
+                                            .css('font-size', '12px');
+
+
+                                        // Apply black borders to all table cells
+                                        $(win.document.body).find('table').css({
+                                            'border-collapse': 'collapse',
+                                            'border': '1px solid black' // Set the border color to black
+                                        });
+
+                                        // Apply black border to table header cells (th)
+                                        $(win.document.body).find('th').css({
+                                            'border': '1px solid black' // Set the border color to black
+                                        });
+                                        $(win.document.body).find('td').css({
+                                            'border': '1px solid black' // Set the border color to black
+                                        });
+                                    },
+                                    // text: "Print",
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                                    },
+                                }
+                            ],
+                            //"columnDefs": [{
+                            //    "targets": 'nosort',
+                            //    "orderable": false
+                            //}],
+                            bInfo: false,
+                            bProcessing: false,
+                            bLengthChange: false,
+                            bfilter: false,
+                            bSort: true,
+                            searching: false,
+                            aaSorting: [],
+                            paging: paging,
+                            bPaginate: false,
+                            data: response,
+                            columns: columns,
+                            //rowGroup: {
+                            //    dataSrc: 0, // Use the first column (0-based index) for grouping
+                            //}
+                            //  rowsGroup: [1]
+                            //  rowsGroup: [// Always the array (!) of the column-selectors in specified order to which rows groupping is applied
+                            //    // (column-selector could be any of specified in https://datatables.net/reference/type/column-selector)
+                            //    'FirstName:name',
+                            //    1,
+
+                            //],
+                        });
+
+                        Newtable.page(currentPage).draw('page');
+
+                        //$("#exportExcelButton").click(function () {
+                        //    debugger;
+                        //    Newtable.button('0').trigger();
+                        //});
+
+                        if (tableLength < 1) {
+                            // $("#" + tablename).empty();
+                            $("#" + tablename).hide();
+                            $(".dataTables_paginate").hide();
+                            $(".dt-buttons").hide();
+                        } else {
+                            $("#" + tablename).show();
+                            //$(".dataTables_paginate").hide();
+                            if (tableLength < 11) {
+                                $(".dataTables_paginate").hide();
+                            } else {
+                                $(".dataTables_paginate").show();
+                            }
+                        }
+                        $("#" + DivId_Toshow).show();
+                        //  $("#TblLeavesSearchedResultPage_Div").show();
+                        $("#loadingOverlay").hide();
+                    },
+                    error: function () {
+                        $("#loadingOverlay").hide();
+                        $("#Main_Span_Error").text("Something Error");
+                    }
+                });
+                //$('#TblcompensatoryLeaves_SearchedRecords').on('click', '#UserName', function () {
+                //    // Get the hidden field value from the data-row-id attribute
+                //    debugger;
+                //    var leavetypeid = $(this).data('row-id');
+
+                //});
+            } catch (error) {
+                $("#loadingOverlay").hide();
+                $("#Main_Span_Error").text("Something Error");
+            }
+        }
+
+
+    </script>*@

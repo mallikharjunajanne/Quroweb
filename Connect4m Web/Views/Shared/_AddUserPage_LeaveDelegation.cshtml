@@ -1,0 +1,119 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<div class="default-according style-1" id="accordionoc12345">
+    <div class="card">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
+
+                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
+                    SEARCH USERS TO ADD AS LEAVE DELEGATION AUTHORITY
+                </button>
+
+            </h5>
+        </div>
+
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+            <div class="card ">
+                <div class="card-body">
+                    <form id="FmAddUserPage_SearchDetails" class="form" style="font-size:11px">
+
+                        <div class="row">
+                            <div class="row">
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label"> User Name :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <input id="TxtUserName_AddUserPage" name="Username" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;"  />
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label">Role :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <select id="DdlRole_AddUserPage" name="RoleId" onchange="GetApprovingAuthorityUserName_BY_SelectRoleId()" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option>---------Select---------</option></select>
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;">Designation :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <select id="DdlDesignation_AddUserPage" name="DesignationId"  asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option>---------Select--------</option></select>
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;"> Email ID :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <input id="TxtEmailId_AddUserPage" name="PortalEmail" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                </div>
+
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;">First Name :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <input id="TxtFirstname_AddUserPage" name="FirstName" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;"> Last Name :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <input id="TxtLastname_AddUserPage" name="LastName" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;">Department :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <select id='DdlDepartment_AddUserPage' name="InstanceClassificationId"  onchange="DdlClassId_Calingfunction(this.id,'DdlSubDepartment_AddUserPage')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                        <option value=''>Select a department</option>
+
+                                    </select>
+                                </div>
+
+                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                    <label class="control-label" style=" height: 30px;"> Sub Department :&nbsp; </label>
+                                </div>
+                                <div class="form-group col-4">
+                                    <select id='DdlSubDepartment_AddUserPage' name="InstanceSubClassificationId"  class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))" disabled>
+                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                        <option value=''>Please select a section</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div style="margin-left:376px">
+                                <input type="button" class="btn btn-light " onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" id="ctl00_ContentPlaceHolder1_btnApproveClear" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+
+                                <input type="submit" onclick="_TblLeaveDelegationAuthorityList_LeaveDeligation(event)" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<br />
+
+<div id="TblLeaveDelegationAuthorityList_SearchedRecords_Div"></div>

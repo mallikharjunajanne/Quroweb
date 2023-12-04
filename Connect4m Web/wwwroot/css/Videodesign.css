@@ -1,0 +1,141 @@
+﻿/*.video-container {
+    position: relative;
+}
+
+video {
+    width: 100%;
+}
+
+.controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  
+}
+.controls {
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+    .controls button,
+    .controls input[type="range"],
+    .controls span {
+        margin: 0 5px;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .controls button:hover {
+            color: #ccc;
+        }
+
+    .controls input[type="range"] {
+        width: 100px;
+    }
+
+    .controls span {
+        font-size: 0.9em;
+    }
+#my-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+ 
+}
+
+    .play-btn i {
+        color: #fff;
+        font-size: 24px;
+        transition: opacity 2s;
+    }*/
+/*#seek-slider::-webkit-slider-runnable-track {
+    background-color: #ccc;
+}
+
+#seek-slider::-moz-range-track {
+    background-color: #ccc;
+}
+
+#seek-slider::-ms-track {
+    background-color: #ccc;
+}*/
+/*input[type=range] {
+    height: 38px;
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+}
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 1px 1px 1px #000000;
+        background: #3071A9;
+        border-radius: 5px;
+        border: 1px solid #000000;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000000;
+        border: 1px solid #000000;
+        height: 30px;
+        width: 15px;
+        border-radius: 5px;
+        background: #FFFFFF;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -11px;
+    }*/
+
+
+/*video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}*/
+
+/*.video-container:-webkit-full-screen #custom-controls,
+.video-container:-moz-full-screen #custom-controls,
+.video-container:-ms-fullscreen #custom-controls,
+.video-container:fullscreen #custom-controls {
+    display: block;
+}*/

@@ -1,0 +1,209 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Summary
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<html>
+<head>
+    <link href="~/css/maps/Summary.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="card">
+
+        <div class="card-header pb-0">
+            <h6><span>VIEW ATTENDANCE SUMMARY</span></h6>
+        </div>
+
+        <div style="color:red; font-size:13px;">
+            <div id="validation2" style="color: red;"></div>
+            <div id="validationMessage" style="color: red;"></div>
+        </div>
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">ATTENDANCE SUMMARY</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <form class="form">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label asp-for="ClassificationName" class="form-label required space">Department </label>
+                                        </div>
+                                        <div class="form-group col-4" id="SDCFN10">
+                                            @Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Names, "Value", "Text"), "--Select--", new { @id = "CFNID1", @class = "form-select" })
+                                        </div>
+                                        <div class="col-3"></div>
+
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label asp-for="SubClassificationName" class="form-label required space">Class </label>
+                                        </div>
+                                        <div class="form-group col-4" id="SSCFNID2">
+                                            @Html.DropDownListFor(Model => Model.SubClassificationName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SCFNID1", @class = "form-select" })
+                                        </div>
+                                        <div class="col-3"></div>
+
+
+                                        <div class="col-3"></div>
+
+                                        <div class="form-group col-2">
+                                            <label class="form-label required space">Student Name </label>
+                                        </div>
+                                        <div class="form-group col-4" id="StudentNames">
+                                            @Html.DropDownListFor(Model => Model.FirstName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SN1", @class = "form-select" })
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-3"></div>
+
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2"></div>
+                                        <div class="form-group col-4">
+                                            <button  class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>
+                                            <input type="button" class="btn btn-pill btn-outline-success btn-air-success" value="Search" id="Get_atdsummary_btn">
+                                        </div>
+                                        <div class="col-3"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="Attendance_Summary_Tbl">
+
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+<script>
+    $("#SDCFN10").change(fun1012);
+    function fun1012() {
+        debugger;
+        var value = $('#CFNID1').val();
+
+        /*alert(value);*/
+        $.ajax({
+            url: "/Attendance/Get_SubClassificationNames_ByInstanceClassifications?InstanceClassificationId=" + value,
+            type: "GET",
+            success: fun10112
+        });
+        function fun10112(response) {
+            debugger;
+            $("#SCFNID1").html(response);
+        }
+
+    }
+    $("#SSCFNID2").change(fun1021);
+    function fun1021() {
+        debugger;
+
+        var InstanceClassificationId = $('#CFNID1').val();
+        var InstanceSubClassificationId = $('#SCFNID1').val();
+        //alert(InstanceClassificationId);
+        //alert(InstanceSubClassificationId);
+        $.ajax({
+            url: "/Attendance/SlotidBy_Student_Names?InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId,
+            type: "GET",
+            success: fun10121
+        });
+        function fun10121(response) {
+            debugger;
+            $("#SN1").html(response);
+        }
+    }
+</script>
+
+
+<script>
+    $("#Get_atdsummary_btn").click(fun012);
+
+    function fun012() {
+        /*debugger;*/
+        var InstanceClassificationId = $("#CFNID1").val();
+        var InstanceSubClassificationId = $("#SCFNID1").val();
+        var StudentName = $("#SN1").val();
+
+        /*debugger;*/
+        var validationMessage = "";
+        var validation2Message = "";
+        var hasError = false;
+
+        if (InstanceClassificationId === "") {
+
+            validationMessage += "Department is required.<br>";
+            hasError = true;
+        }
+
+        if (InstanceSubClassificationId === "") {
+
+            validationMessage += "Class is required.<br>";
+            hasError = true;
+        }
+
+        if (StudentName === "") {
+
+            validationMessage += "Student Name is required.<br>";
+            hasError = true;
+        }
+        if (hasError) {
+            validation2Message = "Following fields have invalid data:<br>";
+            $("#validationMessage").html(validationMessage);
+            $("#validation2").html(validation2Message);
+
+
+        } else {
+
+            $("#validationMessage").html("");
+            $("#validation2").html("");
+
+
+
+            $.ajax({
+                url: "/Attendance/Get_Attendance_Summary_Details?UserID=" + StudentName,
+                type: "GET",
+                success: function (response) {
+                    $("#Attendance_Summary_Tbl").html(response);
+                }
+                //success: fun0123
+            });
+            //function fun0123(resp) {
+            //    /* debugger;*/
+            //    $("#Attendance_Summary_Tbl").html(resp);
+            //}
+        }
+    }
+
+
+
+    //button refresh code
+
+    $("button[type='reset']").click(function () {
+        /* debugger;*/
+        // Clear the form fields
+        $("#CFNID1").val("");
+        $("#SCFNID1").val("");
+        $("#SN1").val("");
+
+        // Clear the content of Attendance_Summary_Tbl div
+        $("#Attendance_Summary_Tbl").html("");
+    });
+</script>

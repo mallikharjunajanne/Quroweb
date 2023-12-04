@@ -1,0 +1,186 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.TransferChallan
+@{
+    ViewData["Title"] = "To_Challana_Users_Details";
+    Layout = null;
+}
+
+
+<style>
+    .From_ChallanaUsers_Details_tbl {
+        width: 100%;
+        margin-top: -6px;
+        border: 1px solid lightblue;
+        font-family: none;
+    }
+
+        .From_ChallanaUsers_Details_tbl th {
+            padding: 4px;
+            font-family: none;
+            font-size: 14px;
+            border: 1px solid;
+            text-align: center;
+            border-color: skyblue;
+        }
+
+        .From_ChallanaUsers_Details_tbl tr:nth-child(even) {
+            background-color: #ef8b6f05;
+        }
+
+        .From_ChallanaUsers_Details_tbl tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .From_ChallanaUsers_Details_tbl td {
+            border: 1px solid black;
+            padding: 8px;
+            border-color: lightblue;
+        }
+
+    .Header_Btn {
+        background-color: black;
+        color: white;
+        border-radius: 15px;
+        width: 99%;
+        margin-left: 0px;
+        font-family: emoji;
+        border: 2px solid black;
+        height: 32px;
+        font-size: 14px;
+        font-weight: bolder;
+    }
+</style>
+
+
+
+
+
+<div class="default-according style-1" id="accordionoc">
+    <div class="card">
+        <div>
+            <h5 class="mb-0">
+                <button class="btn  collapsed Header_Btn">
+                    YOUR SEARCH RESULTED :<span id="RecordsCounts" style=" background-color: papayawhip; color: red; border-radius: 10px; font-size: 15px;">@ViewBag.ChallanaUsersCOunt</span> RECORDS.
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+            <div class="card-body">
+                <div id="searchFormContainer">
+                    <table class="From_ChallanaUsers_Details_tbl">
+                        <thead>
+                            <tr>
+                                <th>Challan No</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Fee Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.ChallanaUsers)
+                            {
+                            <tr>
+                                <td style="font-weight:bold;">@item.UserReceiptGenerationID</td>
+                                <td>@item.Name</td>
+                                <td>@String.Format("{0:0.00}", item.Amounts)</td>
+                                @if (item.ReceiptStatus == "")
+                                {
+                                    <td>Not Paid</td>
+                                }
+                                else
+                                {
+                                    <td>@item.ReceiptStatus</td>
+                                }
+
+
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                    <div style="text-align: center; margin-top: 11px;">
+                        <input type="submit" value="Transfer" class="btn btn-pill btn-outline-primary-2x" id="TransferChallana_btnId"style="width: 11%;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#TransferChallana_btnId').on('click', function () {
+
+            debugger;
+            var Instaceid = $('#InstanceId_textId').val();
+            var PaidChallanNo = $('#From_UserReceiptGenerationID').val();
+            var TransferChallanNo = $('#To_UserReceiptGenerationID').val();
+            var LoginUserId_DD = $('#LoginUserId_textId').val();
+
+            /*alert("Instaceid=" + Instaceid + "PaidChallanNo=" + PaidChallanNo +"TransferChallanNo="+TransferChallanNo);*/
+            var formData = new FormData();
+            formData.append('InstanceId', Instaceid);
+            formData.append('PaidChallanNo', PaidChallanNo);
+            formData.append('TransferChallanNo', TransferChallanNo);
+            formData.append('CreatedBy', LoginUserId_DD);
+
+            debugger;
+            $.ajax({
+                type: 'POST', 
+                url: '/FeeSection/TransferChallan', 
+                data: formData,
+                processData: false,
+                contentType: false, 
+                success: function (data) {
+                    /*alert(data);*/
+                    if (data == "2") {
+
+                        $('#ErrorMessage_SpanId1').text('Challan' + PaidChallanNo + ' amount and ' + TransferChallanNo + ' amount not matched. ');
+
+                    } else if (data == "0") {
+
+                        $('#ErrorMessage_SpanId1').text('Challan' + PaidChallanNo + ' not paid.');
+
+                    } else if (data == "1") {
+
+                        $('#ErrorMessage_SpanId1').text('Fee already paid for Challan ' + PaidChallanNo + '.');
+
+                    } else if (data == "3") {
+
+                        $('#ErrorMessage_SpanId1').text('Fee already paid for Challan ' + PaidChallanNo + '.');
+
+                    }
+                    else if (data == "4") {
+
+                        $('#ErrorMessage_SpanId1').text('Fee already paid for Challan ' + PaidChallanNo + '.');
+
+                    } else {
+
+                        $('#ErrorMessage_SpanId1').text('Somthing wrong');
+
+                    }
+                    console.log('Data received:', data);
+                   
+                },
+                error: function (xhr, status, error) {
+                  
+                    console.error('Error:', error);
+                }
+            });
+
+        });
+    });
+
+
+
+
+</script>

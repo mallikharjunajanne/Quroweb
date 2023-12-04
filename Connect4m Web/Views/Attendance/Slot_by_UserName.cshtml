@@ -1,0 +1,14 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.PostAttendance
+
+@{
+    Layout = null;
+}
+
+
+<div class="mb-3 row">
+    @*<label asp-for="SubjectName" class="col-sm-3 col-form-label"></label>*@
+    <div class="col-sm-9" id="StudentNames">
+        @Html.ListBoxFor(Model => Model.SubjectName, new SelectList(ViewBag.Slot_Subjectnames, "Value", "Text"), new { @id = "SN1", @class = "form-select input-air-primary digits Dropdown" })
+        <span asp-validation-for="SubjectName" class="text-danger"></span>
+    </div>
+</div>

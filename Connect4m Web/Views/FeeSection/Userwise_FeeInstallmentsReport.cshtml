@@ -1,0 +1,72 @@
+﻿
+@{    
+    Layout = null;
+}
+
+<link href="~/css/style.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<div class="card" style="text-align :center;">
+
+    <div>
+        <h6><span>ADS SCHOOL</span></h6>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="form-grop col-3">
+                <label class="space">Name of the Student</label>
+            </div>
+            <div class="form-grop col-3">
+                @Model[0].FirstName
+            </div>
+            <div class="form-grop col-3">
+                <label class="space">StudentId</label>
+            </div>
+            <div class="form-grop col-3">
+                @Model[0].hallticket
+            </div>
+            <div class="form-grop col-3">
+                <label class="space">Class</label>
+            </div>
+            <div class="form-grop col-3">
+                @Model[0].ClassificationName
+            </div>
+            <div class="form-grop col-3">
+                <label class="space">Section</label>
+            </div>
+            <div class="form-grop col-3">
+                @Model[0].SubClassificationName
+            </div>
+        </div>
+    </div>
+    <div style=" margin-left: 9%;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="font-weight: bold; font-size: 10px; color: Red; text-align: left; padding-right: 4px; border: 1px solid black;">S.No</th>
+                    <th style="font-weight: bold; font-size: 10px; color: Red; text-align: left; padding-right: 4px; border: 1px solid black;">Payment Date</th>
+                    <th style="font-weight: bold; font-size: 10px; color: Red; text-align: left; padding-right: 4px; border: 1px solid black;">Fee Term</th>
+                    <th style="font-weight: bold; font-size: 10px; color: Red; text-align: left; padding-right: 4px; border: 1px solid black;">Fee Type</th>
+                    <th style="font-weight: bold; font-size: 10px; color: Red; text-align: left; padding-right: 4px; border: 1px solid black;">Amount(CR)</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{ var i = 1;}
+                @foreach (var Reports in Model)
+                {
+
+                    <tr>
+                        <td style=" color: #222182; font-size: 10px; height: 13px; padding-right: 4px; text-align: left; border: 1px solid black;">@i</td>
+                        <td style=" color: #222182; font-size: 10px; height: 13px; padding-right: 4px; text-align: left; border: 1px solid black;">@Reports.PaymentDate</td>
+                        <td style=" color: #222182; font-size: 10px; height: 13px; padding-right: 4px; text-align: left; border: 1px solid black;">@Reports.TermName</td>
+                        <td style=" color: #222182; font-size: 10px; height: 13px; padding-right: 4px; text-align: left; border: 1px solid black;">@Reports.FeeType</td>
+                        <td style=" color: #222182; font-size: 10px; height: 13px; padding-right: 4px; text-align: left; border: 1px solid black;">@Reports.feeAmount</td>
+
+                    </tr>
+                    i++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

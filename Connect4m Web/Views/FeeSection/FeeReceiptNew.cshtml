@@ -1,0 +1,244 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.FeeReports
+
+@{
+    ViewData["Title"] = "FeeReceiptNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .Header_Btn {
+            background-color: black;
+            color: white;
+            border-radius: 15px;
+            width: 99%;
+            margin-left: 0px;
+            font-family: emoji;
+            border: 2px solid black;
+            height: 32px;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .Clear_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .Serch_Btn {
+            width: 9%;
+            border-radius: 5px;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .lbl {
+            font-weight: 600;
+            font-family: none;
+        }
+        .dropdown-style {
+            margin-left: -24px;
+            width: 72%;
+            height: 24px;
+            border: 1px solid;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+
+</head>
+<body>
+    <div style=" font-size: 20px; text-align: center;">
+        <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: 0px; ">FEE CHALLAN REPORT</h1>
+    </div>
+    <div class="card" style="margin-left: 16px;">
+
+
+        <div class="card-header pb-0">
+            <div style="color: red; font-size: 12px;">
+                <div id="validation2" style="color: red;"></div>
+                <div id="validationMessage" style="color: red;"></div>
+
+                <p id="MessageID"></p>
+            </div>
+            @*<span id="ErrorMessage_SpId" class="error-message"></span>*@
+            <span id="ErrorMessage_SpanId1" style=" color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
+        </div>
+        <div id="Search_Challana_NumberDivId" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
+                                SEARCH USERS
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form asp-action="FeeReceiptNew_Data" id="searchForm">
+                                    <span asp-validation-for="InstanceSubClassificationId"></span>
+                                    <span asp-validation-for="FirstName"></span>
+                                    <span asp-validation-for="LastName"></span>
+                                    <span style=" color:red;margin-left: -11px; position: absolute; margin-top: -75px; font-family: none; font-weight: 600;"></span>
+                                    <div class="row">
+                                        <div class="row">
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl">@*<font style="color: red; font-size: 13px;">*</font>*@ Class: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" asp-for="InstanceId" id="InstanceId_DD" value="@ViewBag.InstanceId" />
+                                                <input type="hidden" id="LoginUserId_DD" value="@ViewBag.CreatedBy" />
+                                                <select asp-for="InstanceSubClassificationId" id="SubclassificationDropdown" class="dropdown-style" name="InstanceSubClassificationId">
+                                                </select>
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl"> First Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="FirstName"id="From_UserReceiptGenerationID" style="height: 23px; width: 73%; margin-left: -24px; border-radius: 3px; border: 1px solid; outline: none; font-size: 13px; font-family: none; " />
+                                            </div>
+                                            <div style="margin-left: 25%; " class="form-group col-2">
+                                                <label class="control-label lbl"> Last Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="LastName" id="From_UserReceiptGenerationID" style="height: 23px; width: 73%; margin-left: -24px; border-radius: 3px; border: 1px solid; outline: none; font-size: 13px; font-family: none;" />
+                                            </div>
+                                        </div>
+                                        <div style=" text-align: center; margin-top: 0px;">
+                                            <input type="button" value="Clear" class="btn btn-pill btn-outline-danger-2x" onclick="clearForm()" />@*class="Clear_Btn"*@
+                                            <input type="button" value="Search" class="btn btn-pill btn-outline-success-2x" onclick="submitForm()" />                                        
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="FromChallana_Numbers_Details_DivId" class="card-body">
+
+        </div>
+        <div id="To_Challana_Users_Details_DivId">
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        SubClassificationDropdown();
+
+       
+
+    });
+
+
+
+    function SubClassificationDropdown() {
+
+        $.ajax({
+            url: '/FeeSection/FR_SubClassiFication_DD',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                $('#SubclassificationDropdown').empty();
+
+
+                data.forEach(function (item) {
+                    $('#SubclassificationDropdown').append($('<option>', {
+                        value: item.value,
+                        text: item.text
+                    }));
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Clear form fields
+    function clearForm() {
+        
+        debugger;
+
+        $('#SubclassificationDropdown').val('');
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        location.reload();
+    }
+
+// Submit form using AJAX
+    function submitForm() {
+        if (validateForm()) {
+            
+            debugger;
+            var form = $('#searchForm');
+            var url = form.attr('action');
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    $('#To_Challana_Users_Details_DivId').html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+
+    // Validate the form
+    function validateForm() {
+
+        var InstanceSubClassificationId = $('#SubclassificationDropdown').val();
+        var validationMessage = "";
+        var hasError = false;
+        
+        if (InstanceSubClassificationId === "") {
+            validationMessage += "Please Select Class <br>";
+            hasError = true;
+        }
+
+        if (hasError) {
+            $('#validation2').html("Following fields have invalid data :");
+            $("#validationMessage").html(validationMessage);
+            return false;
+        } else {
+            $("#validationMessage").html("");
+            return true;
+        }
+    }
+   
+
+
+
+
+
+</script>

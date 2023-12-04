@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.FastAttendance>
+@{
+    Layout = null;
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="~/css/FastAttedance.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="color:red;">
+        <p id="ErrorMessage"></p>
+    </div>
+    <div class="card">
+        <div class="card-body" style="margin-top: -13px;">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card" style="margin-top: 35px;">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="@*FastAd_HeaderBtn*@ btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">NOTE</button>
+                            @*<button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>*@
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2" style="">
+                        <div style="margin: 8px 0px 0px 20px; width: 92%;">
+                            <label style="font: 13px arial;">1) Please Enter Absent Students REG. NO.(s) in Mentioned formate (like 1,2,3,4 or o3c31a1201,03c31a1202,03c31a1203) only.</label>
+                            <label style="font: 13px arial;">2) If all Students are present textbox should be Empty.</label><br />
+                            <label style="font: 13px arial;">3) Only For Absenties SMS will Send.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="default-according style-1" id="accordionoc">
+        <div class="card">
+            <div style=" margin: 0px 0px 0px 22px;">
+                <input type="checkbox">  <label style="font: 13px arial;">    SMS to Students</label>
+                <input type="checkbox">  <label style="font: 13px arial;">    SMS to Parents</label>
+            </div>           
+            <div class="card-header bg-primary">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">  YOUR SEARCH RESULTED <span class="TableCountSp_id"> @ViewBag.resultCount </span>  RECORDS.</button>
+                </h5>
+            </div>
+            <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon3" data-bs-parent="#accordionoc" style="">
+                <div class="card-body" style=" padding: 10px;">
+                    <table class="FA_Table">
+                        <tbody>
+                            <tr>
+                                <th>Sl. No</th>
+                                <th>Class</th>
+                                <th id="startDateTh"><p id="startDateParagraph"></p></th>
+                            </tr>
+                            @{int Index = 1;}
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td hidden>@item.InstanceSubClassificationId</td>
+                                    <td>@Index</td>
+                                    <td>
+                                        @item.SubClassificationName
+                                    </td>
+                                    <td align="center">
+                                        <textarea class="Fast_TextArea" id="Fast_TextArea_Id1"></textarea>
+                                    </td>
+                                </tr>
+                                Index++;
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-2"></div>
+                            <div class="col-4">
+                                <input type="submit" value="Submit" id="submitBtn" class="btn btn-pill btn-outline-success-2x" />
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="~/js/FastAttendance.js"></script>
+
+

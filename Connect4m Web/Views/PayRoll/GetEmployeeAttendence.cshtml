@@ -1,0 +1,197 @@
+﻿@model Connect4m_Web.Models.LMSproperties.ManageEmployeeAttendence
+
+@{
+    ViewData["Title"] = "GetEmployeeAttendence";
+    Layout = null;
+}
+
+<style>
+    table.dataTable input, table.dataTable select {
+        border: 1px solid #100f0f57;
+        height: 20px;
+        background-color: white;
+        font-weight: 800;
+    }
+    .form-control{
+        padding :4px !important;
+    }
+    .dataTable td:nth-child(2) {
+        color: black;
+        /*  text-decoration: underline;*/
+        font-weight: 600 !important;
+    }
+
+    .dataTable td:nth-child(1) {
+        text-align: center !important;
+    }
+
+
+    .dataTable td:nth-child(2):hover {
+        cursor: auto !important;
+        color: black;
+        font-weight: 600;
+        text-decoration:none;
+        background-color: antiquewhite;
+    }
+   /* .dataTables_wrapper table.dataTable thead th{
+            background-color: #dfd3d3 !important;
+    }*/
+    .bg-primary {
+        background-color: transparent !important;
+    }
+    .container-fluid {
+        padding-right: 0px;
+        
+         padding-left: 0px; 
+         margin-right: auto; 
+         margin-left: auto;
+    }
+    #tblEAPsearchresults img:hover {
+        box-shadow: 0 0 2px 1px rgb(45 23 229 / 50%);
+        filter: drop-shadow(2px 4px 6px blue);
+        cursor: pointer
+    }
+  
+</style>
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div id="appendsearchsalaryattributeforroles">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" >NOTE</button>
+                            </h5>
+                        </div>
+                        <div>
+
+                            <div class="row padding-search" style="border: 1px solid #d3c2c2;">
+                                <div class="row">
+
+                                    <div class="row">
+
+                                        <div class=" col-6">
+                                            <label class="control-label ">
+                                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" />
+                                                --Indicates Attendance modified.
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="control-label " style="color: green;">
+                                                Green Fields--Indicates attendance already posted.
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="control-label ">
+
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="control-label " style=" color: red;">
+                                                Red Fields--Indicates attendance not yet posted.
+                                            </label>
+                                        </div>
+                                        <div class="col-12" style="background-color: #ebd9d9; height: 2px">
+
+                                        </div>
+                                        <div class="form-group col-12 errorofallemployeeattendence" style="color: red; margin: 7px 6px 10px 7px; font-weight: 900;">
+
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <input type="checkbox" class="form-check-input" />
+                                            <label class="control-label ">
+                                                Send SMS
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-2 control-label space">
+                                                Total Working Days
+                                        </div>
+                                        <div class="form-group col-2" id="totalWorkingdays" >
+                                            <input type="text" class="form-control" onkeypress="return(AllowFloat(event))"  />
+                                        </div>
+                                        <div class="form-group col-1" style="width:3%"></div>
+                                        <div class="form-group col-3">
+                                            
+                                                @Html.DropDownListFor(
+                                           x => x.DaysDrop,
+                                            new SelectList(ViewBag.DaysDrop, "Value", "Text"),
+                                        "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_DaysDrop_EAP", @style = "color:black;" })
+
+                                          
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_EAP" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                                    </h5>
+                                </div>
+
+                                <div id="attendencetable" style="color: black; background-color: whitesmoke; overflow-x: scroll; overflow-y: scroll;">
+                                    <table class=" table table-bordered" id="tblEAPsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                        <thead>
+                                            <tr style="border-color: black;">
+                                                @*<th style=" border-color: blue" >
+                                                    S.No
+                                                </th>*@
+                                                <th style=" border-color: blue; width: 92px !important;" >
+                                                    S.No
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Employee No
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Name
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Department
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Mobile No
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Email
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Working Days
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Present Days
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Absent Days
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                    Loss Of Pay Days
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                   CL
+                                                </th>
+                                                <th style="border-color: blue" >
+                                                 OD
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

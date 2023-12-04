@@ -1,0 +1,807 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Fee_Due_Remainders_FeeStatus
+@{
+    ViewData["Title"] = "FeeStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .form-group {
+            margin-bottom: 0px;
+        }
+
+        .label-normal {
+            height: 21px;
+            margin-top: 2px;
+        }
+
+        .label-modified {
+            height: 30px;
+            margin-top: 40px;
+        }
+
+
+    </style>
+   
+    <link href="~/css/FeeDueRemainders.css" rel="stylesheet" />
+ 
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0">
+            <div style=" font-size: 50px; text-align: center;">
+                <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: -13px; ">FEE DUE REMAINDERS BY SMS</h1>
+            </div>
+        </div>
+
+        <div id="ValidationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <div id="ErrorMessage" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="ErrorMessage1" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="ErrorMessag2" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">FEE STATUS DETAILS</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form id="FeeDueRemainders_Form">
+                                    <div class="row">
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label"> <font style="color: red; font-size: 13px;">*</font>Role: </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <input type="hidden" id="Instance_TxtId" value="@ViewBag.Instanceid" />
+                                            <select id="InstanceRole_Id" asp-for="InstanceRoleId" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label"> Department: </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label" style=" height: 30px;"> Class: </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label" style=" height: 30px;"> Student Quota/Type: </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select asp-for="StudentQuotaId" id="StudentQuotaId_DD" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+
+
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label" style=" height: 30px;"> <font style="color: red; font-size: 13px;">*</font>Academic Year : </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select asp-for="AcademicYearId" id="AcademicYearId_DD" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label" style=" height: 30px;">Fee Term : </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select asp-for="FeeTermId" id="FeeTermId_DD" class="Dropdown_Css">
+                                            </select>
+                                        </div>
+                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
+                                            <label class="control-label" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font>Fee Type: </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <div class="custom-dropdown" id="checkboxListFeeType_Container">
+                                                <ul class="dropdown-options" id="FeeType_checkboxListFeeType">
+                                                    <li>
+                                                    </li>
+                                                </ul>
+                                                <input type="checkbox" id="selectAllFeeTypes" /> Select All Fee Types
+                                            </div>
+                                        </div>
+
+
+                                        <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                            <label class="control-label"> Search By : </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select class="Dropdown" id="AmountType_DD" style="width:85px;">
+                                                <option value="Paid Amount">Paid Amount</option>
+                                                <option value="Due Amount">Due Amount</option>                                               
+                                            </select>
+
+                                            <select id="Operator_DD" class="Dropdown" style="width:45px;">
+                                                <option value=""></option>
+                                                <option value="<"> < </option>
+                                                <option value=">"> > </option>
+                                                <option value="<="> <= </option>
+                                                <option value=">="> >= </option>
+                                                <option value="="> = </option>
+                                            </select>
+
+                                            <input type="text" maxlength="8" id="PriceTxt_ID" class="TextBox" onpaste="return false;" style="width:65px;">
+
+                                        </div>
+
+                                        <div style=" text-align: center;">
+                                            
+                                            <a href="/FeeSection/PayFeeForUser" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>
+                                                                                    
+                                            <input type="submit" value="No Fee" id="No_FeeBtn" class="btn btn-pill btn-outline-light-2x txt-dark"/>
+                                            <input type="submit" value="Partial Fee" id="PartialFeeBtn" class="btn btn-pill btn-outline-success-2x" />
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div id="PartialContainer">
+
+    </div>
+
+  
+
+
+</body>
+</html>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        Role_Dropdown();
+
+        $('#PartialFeeBtn').click(function (e) {
+            e.preventDefault();
+
+            debugger;
+            var Validation = true;
+
+            var buttonValue = $(this).val();
+
+           /* alert(buttonValue);*/
+            var InstanceId = $('#Instance_TxtId').val();
+            var RoleId = $('#InstanceRole_Id').val();
+            var AmountType = $('#AmountType_DD').val();
+            var Operator = $('#Operator_DD').val();
+            var Price = $('#PriceTxt_ID').val();
+            var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
+            var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
+            var StudentQuota = $('#StudentQuotaId_DD').val();
+            var AcademicYearId = $('#AcademicYearId_DD').val();
+            var FeeTermId = $('#FeeTermId_DD').val();
+
+            const Selected_FeeTypeIds = [];
+            const feeTypeCheckboxes = document.querySelectorAll("#FeeType_checkboxListFeeType input[type=checkbox]:checked");
+
+            feeTypeCheckboxes.forEach(function (checkbox) {
+                Selected_FeeTypeIds.push(checkbox.value);
+            });
+
+
+
+
+
+            const formData = new FormData();
+            debugger;
+            // Append the values to the FormData object
+            if (AmountType && Operator && Price) {
+
+                formData.append('AmountType', AmountType);
+                formData.append('Operator', Operator);
+                formData.append('Price', Price);
+            }
+            else {
+                var AmountType = 1;
+                var Operator = 1;
+                var Price = 1;
+
+                formData.append('AmountType', AmountType);
+                formData.append('Operator', Operator);
+                formData.append('Price', Price);
+            }
+            formData.append('StudentQuota', StudentQuota);
+            formData.append('InstanceId', InstanceId);
+            formData.append('InstanceRoleId', RoleId);
+            formData.append('InstanceClassificationId', InstanceClassificationId);
+            formData.append('InstanceSubClassificationId', InstanceSubClassificationId);
+
+            formData.append('AcademicYearId', AcademicYearId);
+            formData.append('FeeTermId', FeeTermId);
+            //formData.append('ButtonName', buttonName);
+
+            // Append the selected FeeTypeIds as an array
+            Selected_FeeTypeIds.forEach(function (feeTypeId) {
+                formData.append('FeeTypeIds', feeTypeId);
+            });
+
+            formData.append("Selected_FeeTypeIds", Selected_FeeTypeIds);
+
+            debugger;
+            $('#ValidationMessage').html('');
+            $('#ErrorMessage').html('');
+            $('#ErrorMessage1').html('');
+            $('#ErrorMessage2').html('');
+
+            if (RoleId == "") {
+
+                $('#ValidationMessage').html('Following fields have invalid data :');
+                var ErrorMessage = 'Role';
+                $('#ErrorMessage').html(ErrorMessage);
+
+                Validation = false;
+            }
+            if (AcademicYearId == "") {
+
+                $('#ValidationMessage').html('Following fields have invalid data :');
+               // $('#ErrorMessage').html('Academic Year');
+                var ErrorMessage = 'Academic Year';
+                $('#ErrorMessage1').html(ErrorMessage);
+                Validation = false;
+            }
+
+            if (feeTypeCheckboxes.length === 0) {
+
+               // $('#ValidationMessage').html('Following fields have invalid data :');
+               // $('#ErrorMessage').html("Please select at least one Fee Type.");
+               // var ErrorMessage =  'Please select at least one Fee Type.';
+               // $('#ErrorMessage2').html(ErrorMessage);
+
+                //Validation = false;
+            }
+
+
+            if (Validation) {
+                debugger;
+
+
+                var Url = '/FeeSection/FeeStatus_TableData?' +
+                    'InstanceId=' + InstanceId +
+                    '&InstanceClassificationId=' + InstanceClassificationId +
+                    '&InstanceSubClassificationId=' + InstanceSubClassificationId +
+                    '&InstanceRoleId=' + RoleId +
+                    '&Selected_FeeTypeIds=' + Selected_FeeTypeIds +
+                    '&AcademicYearId=' + AcademicYearId +
+                    '&FeeTermId=' + FeeTermId +
+                    '&AmountType=' + AmountType +
+                    '&Operator=' + Operator +
+                    '&Price=' + Price +
+                    '&StudentQuota=' + StudentQuota +
+                    '&ButtonValue=' + buttonValue;
+
+
+
+                $.ajax({
+
+                    url: Url,
+                    type: 'GET',
+                    //  data: formData,
+                    contentType: false,
+                    processData: false,
+
+                    success: function (response) {
+                        debugger;
+                        console.log(response);
+
+                        $('#PartialContainer').empty();
+
+                        $('#PartialContainer').append(response);
+                        /* debugger;*/
+
+                    },
+                    error: function (xhr, textStatus, error) {
+                        // Handle the error in case of AJAX request failure
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+        });
+       
+
+
+        $('#No_FeeBtn').click(function (e) {
+            e.preventDefault();
+
+            debugger;
+            var Validation = true;
+
+            var buttonValue = $(this).val();
+
+            
+            var InstanceId = $('#Instance_TxtId').val();
+            var RoleId = $('#InstanceRole_Id').val();
+            var AmountType = $('#AmountType_DD').val();
+            var Operator = $('#Operator_DD').val();
+            var Price = $('#PriceTxt_ID').val();
+            var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
+            var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
+            var StudentQuota = $('#StudentQuotaId_DD').val();
+            var AcademicYearId = $('#AcademicYearId_DD').val();
+            var FeeTermId = $('#FeeTermId_DD').val();
+
+            const Selected_FeeTypeIds = [];
+            const feeTypeCheckboxes = document.querySelectorAll("#FeeType_checkboxListFeeType input[type=checkbox]:checked");
+
+            feeTypeCheckboxes.forEach(function (checkbox) {
+                Selected_FeeTypeIds.push(checkbox.value);
+            });
+
+
+
+
+
+            const formData = new FormData();
+
+            // Append the values to the FormData object
+            if (AmountType && Operator && Price) {
+
+                formData.append('AmountType', AmountType);
+                formData.append('Operator', Operator);
+                formData.append('Price', Price);
+            }
+            else {
+                var AmountType = 1;
+                var Operator = 1;
+                var Price = 1;
+
+                formData.append('AmountType', AmountType);
+                formData.append('Operator', Operator);
+                formData.append('Price', Price);
+            }
+            formData.append('StudentQuota', StudentQuota);
+            formData.append('InstanceId', InstanceId);
+            formData.append('InstanceRoleId', RoleId);
+            formData.append('InstanceClassificationId', InstanceClassificationId);
+            formData.append('InstanceSubClassificationId', InstanceSubClassificationId);
+
+            formData.append('AcademicYearId', AcademicYearId);
+            formData.append('FeeTermId', FeeTermId);
+           
+            Selected_FeeTypeIds.forEach(function (feeTypeId) {
+                formData.append('FeeTypeIds', feeTypeId);
+            });
+
+            formData.append("Selected_FeeTypeIds", Selected_FeeTypeIds);
+
+            $('#ValidationMessage').html('');
+            $('#ErrorMessage').html('');
+            $('#ErrorMessage1').html('');
+            $('#ErrorMessage2').html('');
+
+            if (RoleId == "") {
+
+                $('#ValidationMessage').html('Following fields have invalid data :');
+                var ErrorMessage = 'Role';
+                $('#ErrorMessage').html(ErrorMessage);
+
+                Validation = false;
+            }
+            if (AcademicYearId == "") {
+
+                $('#ValidationMessage').html('Following fields have invalid data :');
+                // $('#ErrorMessage').html('Academic Year');
+                var ErrorMessage = 'Academic Year';
+                $('#ErrorMessage1').html(ErrorMessage);
+                Validation = false;
+            }
+
+            if (feeTypeCheckboxes.length === 0) {
+
+               // $('#ValidationMessage').html('Following fields have invalid data :');
+                // $('#ErrorMessage').html("Please select at least one Fee Type.");
+                //var ErrorMessage = 'Please select at least one Fee Type.';
+                //$('#ErrorMessage2').html(ErrorMessage);
+
+               // Validation = false;
+            }
+
+            if (Validation) {
+                debugger;
+
+                var Url = '/FeeSection/FeeStatus_TableData?' +
+                    'InstanceId=' + InstanceId +
+                    '&InstanceClassificationId=' + InstanceClassificationId +
+                    '&InstanceSubClassificationId=' + InstanceSubClassificationId +
+                    '&InstanceRoleId=' + RoleId +
+                    '&Selected_FeeTypeIds=' + Selected_FeeTypeIds +
+                    '&AcademicYearId=' + AcademicYearId +
+                    '&FeeTermId=' + FeeTermId +
+                    '&AmountType=' + AmountType +
+                    '&Operator=' + Operator +
+                    '&Price=' + Price +
+                    '&StudentQuota=' + StudentQuota +
+                    '&ButtonValue=' + buttonValue;
+
+
+
+                $.ajax({
+
+                    url: Url,
+                    type: 'GET',
+                    //  data: formData,
+                    contentType: false,
+                    processData: false,
+
+                    success: function (response) {
+                        debugger;
+                        console.log(response);
+
+                        $('#PartialContainer').empty();
+
+                        $('#PartialContainer').append(response);
+                        /* debugger;*/
+
+                    },
+                    error: function (xhr, textStatus, error) {
+                        // Handle the error in case of AJAX request failure
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+
+        });
+
+
+        @*$('.View_Edit_btn').on('click', function () {
+
+            debugger;
+            $('#searchFormContainer').hide();
+
+            loadPartialView();
+
+        });
+
+        function loadPartialView() {
+            debugger;
+
+            $.ajax({
+                url: '@Url.Action("View_Edit_Challan_ViewId", "FeeSection")', // Replace with your actual controller and action names
+                type: 'GET',
+                success: function (result) {
+                    $('#ViewECId_partialContainer').html(result);
+                },
+            })    error: function () {
+                    console.log('An error occurred while loading the partial view.');
+                }
+            });
+        }
+
+        $('.Generate_Challana_btn').on('click', function () {
+            debugger;
+            $('#searchFormContainer').show();
+
+            $('#ViewECId_partialContainer').html('');
+        });*@
+
+
+
+    });
+
+
+
+    //function FeeStatus_Btn() {
+
+    //    debugger;
+    //    var Validation = true;
+
+
+
+    //    var InstanceId = $('#Instance_TxtId').val();
+    //    var RoleId = $('#InstanceRole_Id').val();
+    //    var AmountType = $('#AmountType_DD').val();
+    //    var Operator = $('#Operator_DD').val();
+    //    var Price = $('#PriceTxt_ID').val();
+    //    var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
+    //    var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
+    //    var StudentQuota = $('#StudentQuotaId_DD').val();
+    //    var AcademicYearId = $('#AcademicYearId_DD').val();
+    //    var FeeTermId = $('#FeeTermId_DD').val();
+
+    //    const Selected_FeeTypeIds = [];
+    //    const feeTypeCheckboxes = document.querySelectorAll("#FeeType_checkboxListFeeType input[type=checkbox]:checked");
+
+    //    feeTypeCheckboxes.forEach(function (checkbox) {
+    //        Selected_FeeTypeIds.push(checkbox.value);
+    //    });
+
+
+
+
+
+    //    const formData = new FormData();
+
+    //    // Append the values to the FormData object
+    //    formData.append('AmountType', AmountType);
+    //    formData.append('Operator', Operator);
+    //    formData.append('Price', Price);
+    //    formData.append('StudentQuota', StudentQuota);
+    //    formData.append('InstanceId', InstanceId);
+    //    formData.append('InstanceRoleId', RoleId);
+    //    formData.append('InstanceClassificationId', InstanceClassificationId);
+    //    formData.append('InstanceSubClassificationId', InstanceSubClassificationId);
+       
+    //    formData.append('AcademicYearId', AcademicYearId);
+    //    formData.append('FeeTermId', FeeTermId);
+    //    //formData.append('ButtonName', buttonName);
+
+    //    // Append the selected FeeTypeIds as an array
+    //    Selected_FeeTypeIds.forEach(function (feeTypeId) {
+    //        formData.append('FeeTypeIds', feeTypeId);
+    //    });
+
+    //    formData.append("Selected_FeeTypeIds", Selected_FeeTypeIds);
+
+    //    if (RoleId == "") {
+
+    //        $('#ValidationMessage').html('Following fields have invalid data :');
+    //        $('#ErrorMessage').html('Role');
+
+    //        Validation = false;
+    //    }
+    //    if (AcademicYearId == "") {
+
+    //        $('#ValidationMessage').html('Following fields have invalid data :');
+    //        $('#ErrorMessage').html('Academic Year');
+
+    //        Validation = false;
+    //    }
+
+    //    if (feeTypeCheckboxes.length === 0) {
+
+    //        $('#ValidationMessage').html('Following fields have invalid data :');
+    //        $('#ErrorMessage').html("Please select at least one Fee Type.");
+
+    //        Validation = false;
+    //    }
+
+
+    //    if (Validation) {
+    //        debugger;
+
+    //        var Url = '/FeeSection/FeeStatus_TableData?' +
+    //            'InstanceId=' + InstanceId +
+    //            '&InstanceClassificationId=' + InstanceClassificationId +
+    //            '&InstanceSubClassificationId=' + InstanceSubClassificationId +
+    //            '&InstanceRoleId=' + RoleId +
+    //            '&Selected_FeeTypeIds=' + Selected_FeeTypeIds +
+    //            '&AcademicYearId=' + AcademicYearId +
+    //            '&FeeTermId=' + FeeTermId +
+    //            '&AmountType=' + AmountType +
+    //            '&Operator=' + Operator +
+    //            '&Price=' + Price +
+    //            '&StudentQuota=' + StudentQuota;
+
+
+
+    //        $.ajax({
+               
+    //            url: Url,
+    //            type: 'GET',
+    //          //  data: formData,
+    //            contentType: false,
+    //            processData: false,
+               
+    //            success: function (response) {
+    //                 debugger;
+    //                console.log(response);
+
+    //                $('#PartialContainer').empty();
+
+    //                $('#PartialContainer').append(response);
+    //                /* debugger;*/
+
+    //            },
+    //            error: function (xhr, textStatus, error) {
+    //                // Handle the error in case of AJAX request failure
+    //                console.log(xhr.responseText);
+    //            }
+    //        });
+    //    }
+
+    //}
+  
+
+
+
+    /*<--------------------- DROPDOWNS DATA BINDING  FUNCTION CODE START ------------------>*/
+
+    function Role_Dropdown() {
+        /*debugger;*/
+
+        var Instanceid = $('#Instance_TxtId').val();
+
+        $.ajax({
+            url: '/FeeSection/Role_Dropdown?InstanceId=' + Instanceid, // Replace with your controller's route
+            type: 'GET',
+            success: function (data) {
+                //debugger;
+                /*------- Role Dropdown binde Code Start -----------*/
+
+                var Role_dropdown = $('#InstanceRole_Id');
+                Role_dropdown.empty();
+
+                Role_dropdown.append($('<option>').val('').text('------Select------'));
+
+                data.roleList.sort(function (a, b) {
+                    var textA = a.text.toUpperCase();
+                    var textB = b.text.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+
+                data.roleList.forEach(function (item) {
+                    Role_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+
+                /*------- Role Dropdown binde Code End -----------*/
+
+                /*------- AcademicYearId Dropdown binde Code Start -----------*/
+
+                var AcademicYearId_dropdown = $('#AcademicYearId_DD');
+                AcademicYearId_dropdown.empty();
+
+                AcademicYearId_dropdown.append($('<option>').val('').text('Select Academic Year'));
+
+                data.academicYearList.sort(function (a, b) {
+                    var textA = a.text.toUpperCase();
+                    var textB = b.text.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+
+                data.academicYearList.forEach(function (item) {
+                    AcademicYearId_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+                /*------- AcademicYearId Dropdown binde Code End -----------*/
+
+
+                /*------- Department Dropdown binde Code End -----------*/
+
+                var Department_dropdown = $('#InstanceClassificationId_DD');
+                Department_dropdown.empty();
+
+                Department_dropdown.append($('<option>').val('').text('------Select------'));
+
+                data.classificationList.sort(function (a, b) {
+                    var textA = a.text.toUpperCase();
+                    var textB = b.text.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+
+                data.classificationList.forEach(function (item) {
+                    Department_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+
+                /*------- Department Dropdown binde Code Start -----------*/
+
+                /*------- StudentQuota Dropdown binde Code Start -----------*/
+
+                var StudentQuotaId_dropdown = $('#StudentQuotaId_DD');
+                StudentQuotaId_dropdown.empty();
+
+                StudentQuotaId_dropdown.append($('<option>').val('').text('------Select------'));
+
+                data.studentQuotaList.sort(function (a, b) {
+                    var textA = a.text.toUpperCase();
+                    var textB = b.text.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+
+                data.studentQuotaList.forEach(function (item) {
+                    StudentQuotaId_dropdown.append($('<option>').val(item.value).text(item.text));
+                });
+
+                /*------- StudentQuota Dropdown binde Code End -----------*/
+            },
+            error: function () {
+                console.log('An error occurred while fetching data.');
+            }
+        });
+    }
+
+    $("#InstanceClassificationId_DD").on("change", SendDepartmentid_BY_ClassDropdown);
+    function SendDepartmentid_BY_ClassDropdown() {
+        const INCselectedValue = $("#InstanceClassificationId_DD").val();
+        const Instanceid = $("#Instance_TxtId").val();
+
+        $.get("/FeeSection/Class_Dropdown_By_Department_DropdownId", { InstanceClassificationId: INCselectedValue, InstanceId: Instanceid })
+            .done(function (data) {
+                const dropdown = $("#InstanceSubClassificationId_DD");
+                dropdown.empty().append($("<option>").val("").text("---------Select-----------"));
+                $.each(data, function (index, item) {
+                    dropdown.append($("<option>").val(item.value).text(item.text));
+                });
+            })
+            .fail(function (error) {
+                console.error("Error:", error);
+            });
+    }
+
+    $('#AcademicYearId_DD').on("change", SendAcademicYearid_BY_FeetermDropdown)
+    function SendAcademicYearid_BY_FeetermDropdown() {
+        const AcademicYearId = $('#AcademicYearId_DD').val();
+        const InstanceId = $('#Instance_TxtId').val();
+
+        $.get("/FeeSection/AcademicYear_Dropdown_By_Feeterm_DropdownId", { AcademicYearId: AcademicYearId, InstanceId: InstanceId })
+            .done(function (data) {
+                const dropdown = $("#FeeTermId_DD");
+                dropdown.empty().append($("<option>").val("").text("---------Select-----------"));
+                $.each(data, function (index, item) {
+                    dropdown.append($("<option>").val(item.value).text(item.text));
+                });
+            })
+            .fail(function (error) {
+                console.error("Error:", error);
+            });
+
+    }
+
+
+    $('#FeeTermId_DD').on("change", function () {
+        /*debugger;*/
+        const AcademicYearId = $('#AcademicYearId_DD').val();
+        const FeeTermId = $('#FeeTermId_DD').val();
+        const InstanceId = $('#Instance_TxtId').val();
+
+        // Fetch data for both the dropdown and checkboxes
+        $.get("/FeeSection/FeeTermid_Dropdown_By_FeeType_DropdownId", {
+            AcademicYearId: AcademicYearId,
+            InstanceId: InstanceId,
+            FeeTermId: FeeTermId
+        })
+            .done(function (data) {
+
+
+                // Populate the FeeType checkboxes
+                const ul = $("#FeeType_checkboxListFeeType");
+                ul.empty();
+                $.each(data, function (index, item) {
+                    const li = $("<li>");
+                    const checkbox = $("<input>").attr({
+                        type: "checkbox",
+                        value: item.value,
+                        id: `feeTypeCheckbox_${item.value}`
+                    });
+                    const label = $("<label>").attr("for", `feeTypeCheckbox_${item.value}`).text(item.text);
+
+                    li.append(checkbox, label);
+                    ul.append(li);
+                });
+
+
+            })
+            .fail(function (error) {
+                console.error("Error:", error);
+            });
+    });
+
+
+    /*<--------------------- DROPDOWNS DATA BINDING  FUNCTION CODE END ------------------>*/
+</script>

@@ -1,0 +1,399 @@
+﻿
+<style>
+    select {
+        width: 23em;
+        height: 10em;
+        /*        filter: drop-shadow(2px 4px 6px black);
+    */ /*border: 1px solid green;*/
+        border: 1px solid #11a5f1;
+    }
+
+    label {
+        color: black;
+        font-weight: 900;
+    }
+
+    option {
+        color: black;
+        font-weight: 500;
+    }
+
+    .row > div {
+        position: relative;
+        text-align: -webkit-right;
+    }
+
+    /*----------------------------------------Data TAble Design-------------------*/
+
+    .table [class*='bg-'] {
+        color: black;
+        border: 2px solid black;
+    }
+
+    .dataTables_wrapper {
+        position: relative;
+        clear: both;
+        /* border: 1px solid;*/
+    }
+
+        .dataTables_wrapper table.dataTable tbody td, .dataTables_wrapper table.dataTable tbody th {
+            /*  background-color: #fff;*/
+            border: 1px solid black !important;
+            padding: 5px !important;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+    .default-according .card .card-header .btn-link {
+        font-size: 11px;
+    }
+    /*#tblsubjecttools*/
+    tr:nth-child(even) {
+        background-color: #65655662 !important;
+        /*  color: #fff;*/
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        display: none;
+    }
+    /*#tblsubjecttools*/
+    td:nth-child(2):hover, .fa-trash-o:hover, img:hover {
+        background-color: deepskyblue !important;
+        cursor: pointer !important;
+        filter: drop-shadow(2px 4px 6px black);
+    }
+
+    td:nth-child(2) {
+        color: blue;
+        text-decoration: underline;
+    }
+
+    tr:hover {
+        background-color: antiquewhite !important;
+    }
+
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-left: 304px !important;
+        float: left;
+        color: black !important;
+        font-weight: 900 !important;
+        background-color: antiquewhite;
+        border: 1px solid;
+    }
+
+
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            border: 2px solid;
+        }
+
+    .default-according .card .card-header.bg-primary .btn, .default-according .card .card-header.bg-secondary .btn {
+        border-color: rgba(0,0,0,0);
+        background-color: #121451;
+        border: 1px solid black;
+        height: 32px;
+        width: 101% !important;
+        font-weight: 700;
+    }
+
+    .card {
+        letter-spacing: 0px;
+    }
+
+    table.dataTable thead > tr > th.sorting {
+        padding-right: 0px !important;
+    }
+
+    .dataTables_wrapper table.dataTable tbody td {
+        padding: 1px !important;
+    }
+
+    table.dataTable:not(.fixedHeader-locked):not(.fixedHeader-floating) {
+        text-align: center;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        float: left !important;
+    }
+
+    lable {
+        font-weight: 700;
+    }
+</style>
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+
+
+
+
+
+<style>
+
+    .default-according.style-1 button {
+        width: auto !important;
+    }
+
+
+
+
+    /*.buttons-print {
+        color: black;
+        background-color: deepskyblue;*/
+        /*        box-shadow: 0px 15px 20px rgb(170 163 163);*/
+    /*}
+
+    .buttons-pdf {
+        color: white;
+        background-color: #f36f17;*/
+        /* box-shadow: 0px 15px 20px rgb(0 255 216);*/
+    /*}
+
+    .buttons-excel {
+        color: white;
+        background-color: green;*/
+        /*   box-shadow: 0px 15px 20px rgb(255 0 0);*/
+    /*}*/
+</style>
+
+
+
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-header pb-0">
+            <a class="btn btn-primary" href="/Videos/UploadLecturedocs" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
+                Upload Lecture Docs
+            </a>
+
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> SEARCH FOR SUBJECT TOOLS</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                        <form id="formsearchvideouploading">
+                            <div class="row padding-search">
+
+                                <div class="col-lg-2">
+                                    <lable> Department</lable>
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <select name="Department" id="Department" multiple asp-items="@ViewBag.Departmentlist">
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1">
+
+
+                                </div>
+                                <div class="col-lg-2">
+                                    <lable> Class</lable>
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <select name="ClassificationIds" id="ClassificationIds" multiple>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1">
+
+
+                                </div>
+                                <div class="col-lg-2">
+                                    <lable> Subject</lable>
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <select name="InstanceSubClassificationId" id="InstanceSubClassificationId" multiple>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1">
+
+
+                                </div>
+                                <div class="col-lg-2">
+                                    <lable> Subject Tool</lable>
+
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <select name="InstanceSubjectsId" id="InstanceSubjectsId" multiple>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1">
+
+
+                                </div>
+                                <div class="col-lg-12">
+
+
+                                </div>
+
+                                <div class="col-lg-5">
+
+
+                                </div>
+
+
+                                <div class="col-lg-3">
+                                    <input type="button" id="videos_uploading_clear" class="btn btn-air-info" style=" background-color: orange;" value="Clear" />
+                                    <input type="submit" id="videos_uploading_search" class="btn btn-outline-success" style=" background-color: green; color: black;" value="Search" />
+
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_uploadlecturedocs" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                        </h5>
+                    </div>
+
+                    <div id="eg1" style="color: black; background-color: whitesmoke">
+                        <table class=" table table-bordered" id="tbluploadlecturedocs" style="background-color:whitesmoke ;width:9px;border-color:red">
+                            <thead>
+                                <tr>
+                                    <th hidden>
+
+                                    </th>
+                                    <th>
+                                        <label> S.NO</label>
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+
+                                    <th>
+                                        <label>Department</label>
+                                    </th>
+                                    <th>
+                                        <label> Class </label>
+                                    </th>
+                                    <th>
+                                        <label>Subject </label>
+                                    </th>
+                                    <th>
+                                        <label> Subject Tool</label>
+                                    </th>
+                                    <th>
+                                        <label>Restriction</label>
+                                    </th>
+                                    <th>
+                                        <label>Lecture /Doc Name</label>
+
+                                    </th>
+                                    <th>
+                                        <label> Lecture/Docs</label>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+                                    <th hidden>
+
+                                    </th>
+
+                                    <th hidden>
+
+                                    </th>
+
+                                    <th hidden>
+
+                                    </th>
+                                    <th>
+                                        <label> Lecture/Doc Uploaded</label>
+                                    </th>
+
+
+                                    <th>
+                                        <label>Delete</label>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                <div class="card" id="TrailVideoviewbyadmin" style="display:none">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> Video View</button>
+                        </h5>
+                    </div>
+
+                    <div id="eg1" style="color: black; background-color: #07070787">
+                        <video id="videoviewtrail" controls style="width: 50%; margin-left: 280px; filter: drop-shadow(2px 4px 6px white); " nodownload>
+
+                            <source src="~/LMSVideos/Instance545/188254Animated Video.mp4" type="video/mp4">
+
+                        </video>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/dropdown-change.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="~/js/search-edit-delete-video-upload.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+@*@{
+        string base64Data = ViewData["Base64Data"] as string;
+    }
+
+    <script>
+        function openFileInNewWindow() {
+            var dataUrl = "data:application/vnd.ms-excel," + '@base64Data';
+
+            var link = document.createElement('a');
+            link.href = dataUrl;
+            link.target = '_blank';
+            link.click();
+        }
+    </script>
+
+    <button onclick="openFileInNewWindow()">Open File</button>*@

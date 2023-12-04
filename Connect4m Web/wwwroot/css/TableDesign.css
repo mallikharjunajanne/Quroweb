@@ -1,0 +1,82 @@
+﻿.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.1em !important;
+    font-family: serif;
+    min-width: 40px;
+    font-weight: 600;
+    /*    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(2px 4px 6px black);*/
+    width: 62%;
+    margin-left: 15%;
+}
+    .styled-table tbody tr:hover {
+        font-weight: 900;
+     
+        color: black;
+        /*  font-family: Calibri;*/
+        /* cursor:pointer;*/
+    }
+
+    .styled-table td strong {
+        background-color: white !important;
+        font-size: 19px !important;
+        border: 1px solid !important;
+    }
+
+th {
+    border: 1px solid white;
+}
+
+td, th {
+    padding: 9px;
+    text-align: center;
+    border: 1px solid;
+}
+
+.styled-table thead tr {
+    background-color: #121451 !important;
+    color: white;
+    font-size: 13px;
+    text-align: left;
+}
+
+/*.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}*/
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: white !important;
+}
+
+.styled-table tbody tr:nth-of-type(odd) {
+    background-color:white !important;
+}
+
+/*  .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }*/
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+#testdate {
+
+    /* margin-left: 60%; */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+}
+.ButtomDesign {
+    background-color: #500ef6;
+    color: white;
+    padding: 3px;
+    font-weight: 800;
+    cursor: pointer;
+}
+    .ButtomDesign:hover {
+        background-color: #ddd;
+        color: black;
+    }
+

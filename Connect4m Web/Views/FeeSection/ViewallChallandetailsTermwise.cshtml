@@ -1,0 +1,191 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.ChallandetailsTermwise
+@{
+    ViewData["Title"] = "ViewallChallandetailsTermwise";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head> 
+
+<link href="~/css/ViewallChallandetailsTermwise.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="card">
+        <div class="spinner-container" id="loadingSpinnerContainer">
+            <div class="overlay">
+                <div id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                </div>
+                <div class="loading-text">Loading....</div>
+            </div>
+        </div>
+
+
+
+        <div class="card-header pb-0">
+            <div style=" font-size: 50px; text-align: center;">
+                <h6><span>VIEW STUDENT ACCOUNT</span></h6>
+            </div>
+        </div>
+        <div id="validation2" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="collapsed  btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"> <span class="Header_text_span">SEARCH USERS</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body" style=" border-bottom-color: aquamarine;">
+                            <form asp-controller="FeeSection" asp-action="ViewallChallandetailsTermwise_Tabledata" method="post" id="searchForm">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="form-grop  col-2"><label class="form-group controle-label space">Class </label></div>
+                                        <div class="form-grop  col-4">
+                                            <input type="hidden" id="Instanceid" asp-for="InstanceId" value="@ViewBag.Instance" />
+                                            <select class="form-select" asp-for="InstanceSubClassificationId" id="Classification_Vacdt">
+                                                <option>--Select Class--</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 form-group"><label class="form-grop control-label space">First Name </label></div>
+                                        <div class="col-4 form-group"><input type="text" asp-for="FirstName" class="form-control" /></div>
+
+
+                                        <div class="col-2 form-group">
+                                            <label class="form-grop control-label space">Last Name </label>
+                                        </div>
+                                        <div class="col-4 form-group"> <input type="text" asp-for="LastName" class="form-control" /></div>
+                                        <div class="form-grop  col-2">
+                                            <label class="form-grop control-label space">Student Id  </label>
+                                        </div>
+                                        <div class="col-4 form-group">
+                                            <input type="text" class="form-control" asp-for="StudentId" />
+                                        </div>
+                                        <div class="checkbox checkbox-success col-6" style=" margin: 0px 0px 0px 133px;">
+                                            <input id="checkbox-primary" type="checkbox" asp-for="Due">
+                                            <label for="checkbox-primary">Only Dues</label>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <input type="button" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                        <input type="submit" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ViewallChallandetailsTermwise_Tabledata_PartialViewContainer">
+
+    </div>
+   
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#loadingSpinnerContainer').hide();
+
+        Classdrodown_ViewallChallandetailsTermwise();
+
+        $('#searchForm').submit(function (event) {
+            event.preventDefault();
+            $('#loadingSpinnerContainer').show();
+            debugger
+            var formData = $(this).serialize();
+
+
+            debugger;
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: formData,
+                success: function (response) {
+
+                    $('#loadingSpinnerContainer').hide();
+                    $("#ViewallChallandetailsTermwise_Tabledata_PartialViewContainer").empty();
+                    $('#ViewallChallandetailsTermwise_Tabledata_PartialViewContainer').append(response);
+                }
+            });
+        });
+
+
+    });
+
+    function Classdrodown_ViewallChallandetailsTermwise() {
+
+        var Instanceid = $('#Instanceid').val();
+        $.ajax({
+            url: "/FeeSection/Classdropdown_VaCdT?Instanceid=" + Instanceid, // Replace with your actual controller and action method URL
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                const dropdown = $("#Classification_Vacdt");
+                $.each(data, function (index, item) {
+                    dropdown.append($("<option>").text(item.text).val(item.value));
+                });
+            },
+            error: function () {
+                console.error("Failed to load data from the server");
+            }
+        });
+
+    }
+
+    function FeeInstallments_getFeeDetailsByUserID(UserId) {
+
+        $.ajax({
+            url: "/FeeSection/Userwise_FeeInstallments?UserId=" + UserId,
+            type: "GET",
+            success: function (response) {
+                $("#UserWise_FeeInstallments_detailstable_" + UserId).html(response);
+            }
+        });
+    }
+
+    function FeeInstallment_ReportsDetailsByUserID(UserId, UserReceiptGenerationID, Createdate) {
+
+        debugger;
+
+        var Instanceid = $('#Instanceid').val();
+
+        var parts = Createdate.split('/');
+        var formattedDate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        var year = formattedDate.getFullYear();
+        var month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+        var day = String(formattedDate.getDate()).padStart(2, '0');
+
+        var StartDate = year + '-' + month + '-' + day;
+
+        $.ajax({
+            url: "/FeeSection/Userwise_FeeInstallmentsReport?UserId=" + UserId + "&InstanceId=" + Instanceid + "&ChallanId=" + UserReceiptGenerationID + "&StartDate=" + StartDate,
+            type: "GET",
+            success: function (response) {
+
+                var newWindow = window.open('', '_blank', 'width=600,height=400');
+                newWindow.document.open();
+                newWindow.document.write(response); 
+                newWindow.document.close();
+
+               // $("#UserWise_FeeInstallments_detailstable_" + UserId).html(response);
+            }
+        });
+    }
+</script>

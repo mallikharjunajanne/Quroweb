@@ -1,0 +1,260 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.ViewLectureDocsMainsub>
+
+
+@{
+    ViewData["Title"] = "ViewLectureDocsSubVideos";
+    // var list2 = ViewBag.GetallViewvideopoints as List<VideoViewpoints>;
+
+    // Group the data using LINQ
+    //  var groupedData = GroupBy(item => list2.FirstOrDefault(vp => vp.videoid == item.s));
+   // var groupedData = ViewBag.GetallViewvideopoints.GroupBy(item => item.);
+
+}
+<style>
+    img {
+        cursor: pointer;
+        width: 35px;
+    }
+
+    label {
+        text-decoration: underline;
+        cursor: pointer !important;
+    }
+
+    #table_displayclass {
+        width: 100%;
+        margin-left: 5%;
+        font-weight: 600;
+        margin-bottom: 21px;
+    }
+
+        #table_displayclass td:nth-child(1) {
+            font-weight: 900;
+            text-align: end;
+        }
+
+    h5 {
+        text-align: center;
+        font-weight: 900;
+    }
+
+    #ProgramDetails, #VLD_Backtoprogram {
+        background-color: #121451;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        padding: 1px 8px 1px 7px;
+        border-radius: 8px;
+        filter: drop-shadow(2px 4px 6px black);
+    }
+    tr:nth-child(even) {
+        background-color: transparent !important;
+    }
+
+</style>
+<link href="~/css/progressbar.css" rel="stylesheet" />
+<h5>VIEW LECTURES / DOCS</h5>
+
+@foreach (var item in Model)
+{<div id="VLD_ProgressDetails">
+        <input type="text" value="@item.uploadlecturedocs[0].ClassificationIds" id="VLD_Instanceclassficationid" hidden style="display:none" />
+        <input type="text" value="@item.uploadlecturedocs[0].InstanceSubClassificationId" id="VLD_InstanceSubClassificationId" hidden style="display:none" />
+        <label id="VLD_Backtoprogram"> &lt;&lt; Back To Programs </label>
+        <label id="ProgramDetails">&lt;&lt;Back To Subjects</label>
+
+    </div>
+    <table id="table_displayclass">
+        <tr><td>Department : </td><td>&nbsp; @item.uploadlecturedocs[0].ClassificationName </td></tr>
+        <tr><td> Class : </td><td>&nbsp;@item.uploadlecturedocs[0].SubClassificationName</td></tr>
+        <tr><td> Subject : </td><td>&nbsp;@item.uploadlecturedocs[0].SubjectName</td></tr>
+
+    </table>
+
+    @foreach (var item2 in item.ViewLectureDocs3)
+    {
+
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-header pb-0">
+
+
+                </div>
+                <div class="card-body">
+                    <div class="default-according style-1" id="accordionoc">
+                        <div class="card">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button id="collapse" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">@item2.SubjectToolName.ToUpper()</button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                                <div class="row padding-search">
+                                    <div class="row">
+                                        <div style="margin-top: 1%; margin-bottom: 1%;">
+                                            <table style=" width:100%;">
+                                                @foreach (var item1 in item.uploadlecturedocs)
+                                                {
+
+                                                    int viewvalue = 0;
+                                                    int viewpoint = 0;
+                                                    int totalpois = 0;
+                                                    double percent = 0;
+
+                                                    if (item1.Displayname != "undefined")
+                                                    {
+
+
+                                                        if (@item2.InstanceSubjectToolId == item1.SubjectToolIdSub)
+                                                        {
+
+                                                <tr>
+                                                    @{string img = item1.Ext1.Replace("..", "~");
+                                                    }
+                                                    @{
+                                                        string img2 = item1.Extdocs.Replace("..", "~");
+                                                    }
+                                                    <td hidden><div hidden>@item1.VideoPath</div></td>
+                                                    <td width="7%"> <img src="@Url.Content(@img)" /></td>
+                                                    <td width="73%">  <label id="VLD_VideoView">@item1.Displayname<input type="text" value="@item1.SubjectVideoId" hidden /></label></td>
+                                                    <td width="8%" > <img src="@Url.Content(@img2)" /></td>
+
+
+                                                    @foreach (var item3 in ViewBag.GetallViewvideopoints)
+                                                    {
+                                                        if (item3.SubjectVideoId == item1.SubjectVideoId)
+                                                        {
+                                                            if (img2.EndsWith("Mp4-Icon.png"))
+                                                            {
+
+
+                                                                try
+                                                                {
+
+                                                                    viewpoint = item3.Viewspoints;
+                                                                    totalpois = item3.TotalPoins;
+                                                                    percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+
+                                                                    //  percent = (viewpoint / totalpois) * 100;
+                                                                    viewvalue++;
+                                                                }
+                                                                catch
+                                                                {
+                                                                    percent = 0;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @*//    @if (viewvalue != 0)
+        //  {*@
+                                                 
+                                                    <td class="progressbarvaluetd">
+                                                        <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(percent)%,#bfbed5 0);">
+                                                        @Convert.ToInt32(percent)%
+                                                        </div>
+
+
+
+
+
+                                                    </td>
+                                                    @*//   }
+        //   else
+         //  {
+              <td> @viewvalue</td>
+         //  }*@
+
+                                                </tr>
+
+                                                        }
+
+                                                    }
+                                                }
+                                            </table>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<script src="~/js/ViewLecturedocs.js"></script>
+<script src="~/js/cookies.js"></script>
+<script>
+    $(document).ready(function () {
+        debugger;
+        try {
+            var SubjectVideoIdCookie = getCookie("SubjectVideoId");
+            var ChapterIdCookie = getCookie("ChapterId");
+            var viewpoints = getCookie("viewpoints");
+            var TotalPoins = getCookie("TotalPoins");
+            if (ChapterIdCookie != null) {
+                $.ajax({
+                    url: '/Videos/InsertVideoVewpoins?SubjectVideoId=' + SubjectVideoIdCookie + '&Viewspoints=' + viewpoints + '&TotalPoins=' + TotalPoins + "&ChapterId=" + ChapterIdCookie,
+                    type: 'GET',
+                    success: function (response) {
+
+                        // $('#below-video-content').html(response);
+
+                    }
+                })
+            }
+        }
+        catch {
+
+        }
+       
+    })
+</script>
+
+
+@*<script>
+    $(document).ready(function () {
+
+
+        function setProgress(progressContainer, progressValue) {
+            const progressInner = progressContainer.querySelector('.progress-inner');
+            const progressNumber = progressContainer.querySelector('.progress-number');
+
+            progressValue = Math.min(100, Math.max(0, progressValue)); // Ensure progress is between 0 and 100
+            progressInner.style.clipPath = `polygon(0 0, ${progressValue}% 0, ${progressValue}% 100%, 0 100%)`;
+            progressNumber.textContent = `${progressValue}%`;
+
+            if (progressValue <= 50) {
+                progressInner.style.backgroundColor = 'dodgerblue';
+            } else {
+                progressInner.style.backgroundColor = 'green';
+            }
+        }
+
+        // Loop through each <td> element and set progress from the <span> value
+        const tdElements = document.querySelectorAll('.progressbarvaluetd');
+
+        tdElements.forEach(td => {
+            debugger;
+            const progressContainer = td.querySelector('.progress-container');
+            const progressNumber = progressContainer.querySelector('.progress-number');
+            const progressValue = parseInt(progressNumber.textContent) || 0; // Parse span text content to an integer
+           // setProgress(progressContainer, progressValue);
+        });
+
+
+    })
+</script>*@

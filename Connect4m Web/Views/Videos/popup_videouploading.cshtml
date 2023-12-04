@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewData["Title"] = "popup_videouploading";
+    Layout = null;
+}
+
+
+
+
+
+
+<link href="~/css/popup-videosuploading.css" rel="stylesheet" />
+
+
+
+
+@*<div class="group" id="group-of-all">
+    <button class="group-header" onclick="toggleGroup(1)">
+        Video 1 
+    </button>
+    <div class="group-content" id="group1">*@
+<form>
+    <div id="Edit_items" style="margin-left:12px">
+
+
+        <div id="quno" style="color: black; width: 306px; background-color: thistle; border-radius: 11px; "><label style="color:black"><i class="fa fa-dot-circle-o" style="font-size:25px;color:black"></i>  Chapter Wise Videos Uploading</label>@*<label style="margin-left: 58%; color: red; background-color: white" id="Photo_Delete_All">Delete</label>*@</div>
+        <br />
+
+        <div id="video-container-src">
+
+            <video controls="controls" id="videosourse">
+                <source src="Videos/movi" id="videosrc" type="video/mp4" />
+            </video>
+
+            <div class="filename" style="display:flex">
+                <input type="file" id="video-upload" accept="video/*">
+
+            </div>
+            <div class="displayname" style="display:flex">
+                <span>Display Name</span><input type="text" id="displayname" />
+            </div>
+
+        </div>
+
+        <br />
+        <div id="time-text">
+            <div class="row" id="textitems">
+                <div class="col-2"></div> <label class="col-2">TIME</label><div class="col-1"></div><label class="col-6">CHAPTER NAMES</label><div class="col-1"></div>
+                <div class="chapters">
+                    <div class="col-2"></div> <div class="duration-picker col-2">
+    <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="MM" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="SS" />
+</div><div class="col-1"></div><input type="text" class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                </div>
+                <div class="chapters">
+                    <div class="col-2"></div> <div class="duration-picker col-2">
+    <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="MM" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="SS" />
+</div><div class="col-1"></div><input type="text" class="col-6" /><div class=" fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                </div>
+                <div class="chapters">
+                    <div class="col-2"></div> <div class="duration-picker col-2">
+    <input type="number" class="duration-picker-input" min="0" step="1" max="23" placeholder="HH" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="MM" />
+    <span class="duration-picker-separator">:</span>
+    <input type="number" class="duration-picker-input" min="0" step="1"  max="59" placeholder="SS" />
+</div><div class="col-1"></div><input type="text" class="col-6" /><div class="fa fa-trash-o" style="font-size:20px;color:red"></div>
+
+                </div>
+                @*<div class="col-2"></div> <input type="time" class="col-2" /><div class="col-1"></div><input type="text" class="col-6" /><div class="col-1 fa fa-trash-o" style="font-size:20px;color:red"> </div>
+                    <div class="col-2"></div><input type="time" class="col-2" /><div class="col-1"></div><input type="text" class="col-6" /><div class="col-1 fa fa-trash-o" style="font-size:20px;color:red"> </div>*@
+
+            </div>
+            <label id="add-new-time">ADD</label>
+        </div>
+
+        <br />
+        <div id="quno" style="color: black; width: 300px; background-color: thistle; border-radius: 11px; "><label style="color:black"><i class="fa fa-dot-circle-o" style="font-size:30px;color:black"></i> Question's Uploading</label>@*<label style="margin-left: 60%; color: red; background-color: white" id="Video_Delete_All">Delete</label>*@</div>
+        <br />
+        <div id="questions-main">
+            <div id="questions">
+                <div class="row ques">
+                    <div class="duration-picker col-1">
+                        <input type="number" class="duration-picker-input" min="0" step="1" placeholder="HH" />
+                        <span class="duration-picker-separator">:</span>
+                        <input type="number" class="duration-picker-input" min="0" step="1" placeholder="MM" />
+                        <span class="duration-picker-separator">:</span>
+                        <input type="number" class="duration-picker-input" min="0" step="1" placeholder="SS" />
+                    </div>
+                    <div class="textarea">
+                        <span>Question</span>
+                        <textarea class="col-11"></textarea>
+                    </div>
+
+                    <div class="col-6 opt">
+                        <span>1)</span><input type="text" class="col-6 1" />
+
+                    </div>
+                    <div class="col-6 opt">
+                        <span>2)</span><input type="text" class="col-6 2" />
+
+                    </div>
+                    <div class="col-6 opt">
+                        <span>3)</span><input type="text" class="col-6 3" />
+
+                    </div>
+                    <div class="col-4" style="margin-left:auto">
+                        <span>Marks</span> <input id="Marks" type="text" />
+
+                    </div>
+                    <div class="col-6 opt">
+                        <span>4)</span><input type="text" class="col-6 4" />
+
+                    </div>
+
+
+                    <div class="col-4" style="margin-left:auto">
+                        <span>Answer(1/2/3/4)</span> <input id="answer" type="text" />
+
+                    </div>
+                    <i class="col-1 fa fa-trash-o" style="font-size:20px;color:red" id="Qusetion-delete"></i>
+                    <hr />
+                </div>
+
+            </div>
+            <label id="add-new-question"> ADD</label>
+        </div>
+
+
+    </div>
+</form>
+        @*
+    </div>
+</div>*@
+<br />
+@*<button id="add-one-more-video">Add One More Video</button>*@
+
+
+
+
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+
+<script src="~/js/videos-upload-admin.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>*@
+
+
+@*<script>
+        $("#video-upload").change(function () {
+            alert("change");
+        })
+    </script>*@
+@*<script>
+    $("#video-upload").change(function (event) {
+        //  alert("change");
+        debugger;
+        alert(" Video upload");
+        var videoFile = event.target.files[0];
+        var videoURL = URL.createObjectURL(videoFile);
+        addVideo(videoURL);
+    });
+</script>*@
+
+
+
+
+
+

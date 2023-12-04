@@ -1,0 +1,249 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Attendance_Details>
+
+@{
+    Layout = null;
+}
+
+
+<style>
+</style>
+
+<link href="~/css/maps/Summary.css" rel="stylesheet" />
+
+
+
+
+<div id="AdminLgn_Attendance_Details">
+    @if (@ViewBag.NoRecordsFound == "0")
+    {
+        <div style="color:red;">
+            <p> Your Search Resulted:@ViewBag.NoRecordsFound records. </p>
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc2">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="collapsed btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">BRIEF DETAILS</button>
+
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table cellpadding="0" width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td width="40%" style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Attendance Last Posted :</span>&nbsp;
+                                            </td>
+                                            <td width="70%">
+                                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">@ViewBag.AttendanceDate</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Total Present :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">
+                                                    @{
+                                                        int Presentcount = 0;
+                                                        int AbsentCounts = 0;
+                                                    }
+
+                                                    @foreach (var present in ViewBag.UserAttendance)
+                                                    {
+                                                        @if (present.Present == "1")
+                                                        {
+                                                            Presentcount++;
+                                                        }
+                                                        else
+                                                        {
+                                                            AbsentCounts++;
+                                                        }
+                                                    }
+                                                    @Presentcount
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Conducted Classes :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">@ViewBag.Records</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="LightSeperator">
+                                            <td colspan="2" height="1">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 24px; text-align: right;">
+                                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Attendance Percentage :</span>&nbsp;
+                                            </td>
+                                            <td style="height: 24px;">
+                                                @{
+                                                    double percentage = 0.0;
+                                                    int totalRecords = (int)ViewBag.Records; // Replace with your actual total records value
+                                                    percentage = (double)Presentcount / totalRecords * 100;
+                                                }
+                                                @if (percentage < 70)
+                                                {
+                                                    <span style="font-size: 11px; font-weight: normal; font-style: normal; font-family: none; color: red; ">
+
+                                                        @percentage.ToString("0.00")% (Required attendance is 70%)
+                                                    </span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span style="font-size: 14px; font-weight: normal; font-style: normal; font-family: none; color: green;">
+                                                        @percentage.ToString("0.00")%
+                                                        (Required attendance is 70%)
+                                                    </span>
+                                                }
+
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc3">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">TOTAL NUMBER OF RECORDS:<span class="TableCount_SpanId">@ViewBag.Records</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon3" data-bs-parent="#accordionoc3">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="table-responsive">
+                                <div id="attendanceTableContainer">
+                                    <table class="DetailTbl">
+                                        <tbody>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>IsPresent</th>
+                                            </tr>
+                                            @{
+                                                var itemsPerPage = 10;
+                                                var currentPage = ViewContext.HttpContext.Request.Query["page"].Count > 0 ? int.Parse(ViewContext.HttpContext.Request.Query["page"]) : 1;
+                                                var userAttendance = @ViewBag.UserAttendance;
+                                                var totalItems = userAttendance.Count;
+                                                var totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
+
+                                                var startIndex = (currentPage - 1) * itemsPerPage;
+                                                var endIndex = Math.Min(startIndex + itemsPerPage - 1, totalItems - 1);
+                                            }
+
+                                            @for (int i = startIndex; i <= endIndex; i++)
+                                            {
+                                                var item = userAttendance[i];
+                                                <tr>
+                                                    <td align="left">@item.CreatedDate</td>
+                                                    <td align="left">@item.IsPresent</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div style="text-align: center;">
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
+
+
+
+<script>
+    var container = document.getElementById('attendanceTableContainer');
+    debugger;
+
+    var table = container.querySelector('table');
+    var pagination = container.querySelector('div');
+
+    var rows = Array.from(table.getElementsByTagName('tr'));
+    var numRows = rows.length;
+    var rowsPerPage = 10;
+    var totalPages = Math.ceil(numRows / rowsPerPage);
+
+    if (numRows >= 10) {
+
+        function showPage(page) {
+            debugger;
+            var startIndex = (page - 1) * rowsPerPage;
+            var endIndex = Math.min(startIndex + rowsPerPage, numRows);
+
+            // Hide all rows
+            rows.forEach(function (row) {
+                row.style.display = 'none';
+            });
+
+            // Show rows for the specified page
+            for (var i = startIndex; i < endIndex; i++) {
+                rows[i].style.display = 'table-row';
+            }
+        }
+
+        for (var i = 1; i <= totalPages; i++) {
+            var link = document.createElement('a');
+            link.href = '#';
+            link.textContent = i;
+            link.classList.add('pagination-link');
+            pagination.appendChild(link);
+        }
+
+        showPage(1);
+
+        pagination.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (e.target.tagName === 'A') {
+                var page = parseInt(e.target.textContent);
+                showPage(page);
+            }
+        });
+    }
+</script>

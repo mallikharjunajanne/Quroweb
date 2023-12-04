@@ -1,0 +1,180 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*_LeavesSearchPage_LeaveCancellation*@
+
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="default-according style-1">
+    <div class="card">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                    LEAVES SEARCH
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+            <div class="card ">
+                <div class="card-body">
+                    <form id="FmLeavesSearchPage_SearchDetails">
+                        <div style="margin-left:20%;font-size:12px">
+                            <div class="row">
+                                <div class="col">
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Department  :&nbsp;</label>
+
+                                        <div class="col-sm-9">
+                                            <select id='DdlDepartment' name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                <option value=''>Select a Department</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">Employee  :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <select id="DdlEmployee" name="UserId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Please select Employee</option></select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">From Date :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" id="TxtFromDate" name="Fromdate" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">To Date :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" id="TxtToDate" name="Todate" />
+                                        </div>
+                                    </div>
+
+                                    @*<input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />*@
+
+                                <div style="margin-left:172px">
+
+                                    <input type="button" class="btn btn-light " onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
+
+                                    @*<input type="submit" class="btn btn-success active" onclick="_TblLeavesSearchedResultPage_PagePartialViewFunction(event)" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">*@
+                                    <input type="submit" class="btn btn-success active" onclick=" TblDataTableWithColumns_CallingFunction(event, 'Nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div')" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">
+
+                                </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+@*-----GetSearchedRecords Result page*@
+<div id="TblLeavesSearchedResultPage_Div" style="display:none">
+    <div class="default-according style-1" id="accordionoc123456">
+        <div class="card">
+            <div class="card-header " style="background-color:black ;">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle"></span> RECORDS </span></button>
+                </h5>
+            </div>
+            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                @*-----------------------------------------Cancel Comment Popup-----------------------------*@
+                <div id="DivCancelComment" class="Commentpopup" style="display: none;">
+                    <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
+                        <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
+                            <span style="font-size: 24px;cursor:pointer">×</span>
+                        </a>
+                        <br>
+                        <span class="ErrorMessageSpan" style=" background-color: yellow;" id="CancelLeaveError"></span>
+                        <span style="margin-left: 34%;">Comments</span>
+                        <textarea style="height: 100px; width: 100%;" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment"></textarea><br />
+                        <label> <i style="font-size: 10px;"><span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</i></label>
+                        <div>
+                            <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card " style="position: inherit;">
+
+                    <form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords" class="table-responsive">
+                        <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="cell-border compact display tableid">
+                            <thead>
+                                <tr>
+                                    <th>LeaveApplicationId</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Reason</th>
+                                    <th>Leave Type</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>No of Days</th>
+                                    <th>Status</th>
+                                    <th>Cancel Leave</th>
+                                    <th>Cancel Comments</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script type="text/javascript">
+
+    //THIS for counting characters of textarea
+    $(document).ready(function () {
+        debugger;
+        //$("#TxtAreaCancelComment").on("input", function () {
+        //    debugger;
+        //    var textareavalue = $("#TxtAreaCancelComment").val();
+        //    var maxlength = 500;
+        //    var textareacount = maxlength - textareavalue.length;
+        //    $("#TextareacountSPAN").text(textareacount);
+        //});
+
+
+        //function CharactercountFunction(LabelId) {
+        //    debugger;
+        //    var textareavalue = $(this).val();
+        //    var maxlength = 500;
+        //    var textareacount = maxlength - textareavalue.length;
+        //    if (textareacount != 500) {
+        //        $("#LblTextareacount").show();
+        //    }
+        //    $("#" + LabelId).text(textareacount);
+        //}
+    });
+</script>*@

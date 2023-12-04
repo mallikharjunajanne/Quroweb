@@ -1,0 +1,640 @@
+﻿
+.col-2 {
+    text-align: right;
+}
+
+.form-control {
+    height: 34px;
+}
+
+/*  #SerachSEM label::after {
+        content: " : ";
+        display: inline-block;
+    }*/
+
+/* td:nth-child(1) {
+    font-weight: 600;
+    text-align: end;
+}*/
+
+tr:nth-child(even) {
+    background-color: #fff !important;
+}
+
+#tblSEMfees {
+    margin-bottom: 4px;
+    margin-top: 4px;
+    /*  border: 2px solid black;*/
+}
+
+.default-according.style-1 button {
+    width: auto;
+    text-align: left;
+}
+
+.buttons-pdf, .buttons-print, .buttons-excel {
+    color: black !important;
+    box-shadow: 0 5px 10px 2px rgba(88,103,221,0.19) !important;
+    background-color: white !important;
+}
+
+    .buttons-pdf:hover {
+        color: white !important;
+        background-color: #1a68ff !important;
+        border-color: #1a68ff !important;
+    }
+
+    .buttons-print:hover {
+        color: white !important;
+        background-color: #2fb447 !important;
+        border-color: #2fb447 !important;
+    }
+
+    .buttons-excel:hover {
+        color: white !important;
+        background-color: #e65c02 !important;
+        border-color: #e65c02 !important;
+    }
+
+#tblSEMsearchresults_info {
+    display: none;
+}
+
+/*#tblSEMsearchresults #SEMView_document {
+    font-size: 27px;
+    color: #500ef6;*/
+/*margin: 0px 0px 0px 27px;*/
+/*cursor: pointer;
+    margin: 0px 0px 0px 8px;
+}*/
+
+/*#tblSEMsearchresults #SEM_Expendituredetails {
+    font-size: 27px;
+    color: green;*/
+/*margin: 0px 0px 0px 27px;*/
+/*cursor: pointer;
+}*/
+
+.fa-eye:hover {
+    background-color: #d5dee3;
+    filter: drop-shadow(2px 4px 6px red);
+    border-radius: 15px;
+}
+
+.fa-trash-o:hover {
+    background-color: black;
+    cursor: pointer;
+}
+/* --------------------------    Form Design    */
+
+
+.padding-search {
+    padding: 26px;
+}
+
+.form-control, .form-select {
+    border: 1px solid #c5b9b9;
+    border-radius: 2px;
+    /*   background-color: whitesmoke;*/
+    height: 27px;
+    font: 13px arial;
+    font-weight: 500;
+}
+/*.form-select {
+    color: black;
+    border: 1px solid #7b9dbf;
+    border-radius: 2px;
+ 
+    height: 30px;
+    width: 100%;
+    font: 14px arial;
+    font-weight: 700;
+}*/
+
+select {
+    padding-top: 1px !important;
+}
+
+.form-control:focus {
+    border-color: #86b7fe;
+    background-color: white;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,0.25);
+}
+
+.errorboxshadow {
+    box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
+}
+
+.form-check-input[type="checkbox"] {
+    padding: 9px;
+}
+/* .row > div {
+    text-align: end;
+    position: relative;
+}*/
+/*#Insertsubjecttool {
+    margin-left: 83px;
+}
+*/
+
+
+.card label {
+    font-weight: 600 !important;
+    font: 13px arial;
+}
+
+.button-subject {
+    top: 23px;
+}
+
+    .button-subject input {
+        width: 68px;
+        height: 25px;
+        font-size: 13px;
+        border-radius: 18px;
+        color: black;
+    }
+
+    .button-subject #mst_clear {
+        background-color: #ff4136;
+        color: white;
+    }
+
+    .button-subject #mst_search {
+        background-color: #0074d9;
+        color: white;
+    }
+
+.text-white {
+    /*  color: black !important;*/
+}
+
+.table [class*='bg-'] {
+    color: black;
+    border: 2px solid black;
+}
+
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    /* border: 1px solid;*/
+}
+
+    .dataTables_wrapper table.dataTable tbody td, .dataTables_wrapper table.dataTable tbody th {
+        /*  background-color: #fff;*/
+        border: 1px solid #c9c0c0 !important;
+        padding: 5px !important;
+        font-size: 11px;
+        font-weight: 600;
+    }
+/*#tblsubjecttools*/ thead th {
+    border: 1px solid black !important;
+    text-align: center;
+}
+
+#tblsubjecttools .fa-trash-o {
+    font-size: 18px;
+    color: red;
+    margin-left: 38%;
+    cursor: pointer;
+}
+
+.default-according .card .card-header .btn-link {
+    font-size: 11px;
+}
+/*#tblsubjecttools*/
+tr:nth-child(even) {
+    background-color: #fff !important;
+    /*  color: ##65655662;*/
+}
+
+
+#tblSEMsearchresults td:nth-child(2) {
+    font-weight: 900;
+}
+
+
+.dataTables_wrapper .dataTables_info {
+    display: none;
+}
+/*#tblsubjecttools*/ tr:hover {
+    background-color: antiquewhite !important;
+    /* cursor: pointer !important;*/
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-left: 304px !important;
+    float: left;
+    color: black !important;
+    font-weight: 900 !important;
+    background-color: antiquewhite;
+    border: 1px solid;
+    font: 13px arial;
+    padding: 0px;
+}
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+    font-size: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border: 2px solid;
+}
+
+textarea {
+    height: 75px !important;
+    width: 457px;
+}
+
+
+
+/* select {
+    font-size: 14px;
+    margin-left: -1px;
+    text-align: center;
+    width: 100%;
+    line-height: 0.8;
+}*/ /* select {
+    font-size: 14px;
+    margin-left: -1px;
+    text-align: center;
+    width: 100%;
+    line-height: 0.8;
+}*/
+
+/*   ----------------------   Manage Subjects   ---------------------------------------------*/
+#checks .col-1 {
+    width: 11%;
+}
+
+#checks .form-control {
+    width: 119px;
+    height: 26px;
+}
+
+#checks {
+    margin-top: 61px;
+}
+
+    #checks .col-2 {
+        margin-left: 4%;
+    }
+
+    #checks .control-label {
+        font-size: 11px;
+        width: 85px;
+    }
+
+.card .card-body {
+    padding: 2px;
+}
+
+.card {
+    margin-bottom: 1px;
+}
+
+.Department_list #classficationnames_MS {
+    /* grid-gap: 28px;*/
+
+    padding-top: 12px;
+}
+
+#classficationnames_MS {
+    padding: 5px;
+    border: 1px solid #0122;
+}
+
+.save_Ms {
+    display: flex;
+    gap: 25px;
+    margin-left: 34%;
+}
+/*  -------------------------- table --------------*/
+#subclass_table {
+    font-size: 11px;
+}
+
+    #subclass_table th {
+        font-weight: 700;
+        background-color: #E8E8E8;
+    }
+
+    #subclass_table .form-control {
+        height: 20px;
+        background-color: white;
+        padding: 4px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    #subclass_table tr td {
+        vertical-align: middle;
+        FONT-SIZE: 11px;
+    }
+
+    #subclass_table thead, #subclass_table tbody, #subclass_table tfoot, #subclass_table tr, #subclass_table td, #subclass_table th {
+        border: 1px solid #575252;
+        font-weight: 700;
+    }
+
+    #subclass_table .mentorlist-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 72px;
+    }
+
+.table td {
+    padding: 7px;
+}
+
+#subclass_table tr:hover {
+    background-color: antiquewhite !important;
+    cursor: context-menu !important;
+}
+
+/*  H6 And Span Tags */
+h6 {
+    text-align: center;
+    margin: 11px;
+}
+
+    h6 span {
+        background-color: #121451;
+        COLOR: white;
+        font-weight: 600;
+        filter: drop-shadow(2px 4px 6px black);
+        padding: 4px;
+        border-radius: 15px;
+    }
+
+.dataTable td:nth-child(2) {
+    color: black;
+    /*  text-decoration: underline;*/
+    font-weight: 900 !important;
+}
+
+.dataTable td:nth-child(1) {
+    text-align: center !important;
+}
+
+
+.dataTable td:nth-child(2):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: lightblue;
+}
+
+.form-group img:hover {
+    box-shadow: 0 0 2px 1px rgb(45 23 229 / 50%);
+    filter: drop-shadow(2px 4px 6px blue);
+    cursor: pointer
+}
+
+.compare {
+    color: red;
+    font-size: small;
+}
+
+.tabchanges {
+    color: white;
+    background-color: #1a68ff !important;
+    border-color: #1a68ff !important;
+}
+
+/*Adding     code #01  ------------------     28-09-2023  */
+/*.description {
+    font-size: 21px;
+    line-height: 30px;
+    width: 796px;
+    margin-top: -370px;
+}
+
+.title {
+  font-size: 96px;
+  margin: 0;
+}*/
+.required::before {
+    content: "*";
+    color: red;
+    font-size: 12px;
+}
+
+.space::after {
+    content: " : ";
+    /* display: inline-block;*/
+    font-weight: 900;
+    padding-right: 4px;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: rgba(71,207,96,0.8);
+    border-color: #d6e9c6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    /* text-align: center;*/
+    display: none;
+    color: black;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: absolute;
+    width: 50%;
+    position: fixed;
+    top: 20%;
+    left: 73%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: rgba(255,56,108,0.8);
+    border-color: #ebccd1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display: none;
+    text-align: center;
+    color: black;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: absolute;
+    width: 50%;
+    position: fixed;
+    top: 20%;
+    left: 73%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    /*    animation: slowMotionX 5s linear infinite alternate;
+*/
+}
+
+@keyframes slowMotionX {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(-250%); /* Adjust the distance and direction as needed */
+    }
+}
+
+#Print_SEM_table {
+    position: absolute;
+    left: 30%;
+    font: 14px aria;
+}
+
+    #Print_SEM_table td:nth-child(1) {
+        text-align: end;
+        padding: 5px;
+        font-weight: 900;
+    }
+
+    #Print_SEM_table td:nth-child(2) {
+        text-align: center;
+        padding: 5px;
+        font-weight: 500;
+    }
+
+#appendprint_SEM td, #appendprint_SEM table {
+    border: 1px solid;
+}
+
+#appendprint_SEM table {
+    width: 100%;
+}
+
+#appendprint_SEM #tblappendprntdiv_sem {
+    font-weight: 900;
+    background-color: lightcyan;
+    padding: 10px;
+    text-align: center;
+}
+
+/* -------------------------  Data Table Design  -------------------*/
+.default-according.style-1 button {
+    width: auto;
+    text-align: left;
+}
+/*.buttons-pdf {
+    background-color: green !important;
+}
+
+.buttons-print {
+    background-color: black !important;
+}*/
+
+.dataTables_info {
+    display: none;
+}
+
+.dt-buttons {
+    display: inline-flex;
+    gap: 9px;
+}
+
+
+
+
+
+.SEMapprovals, .SEMapprovalsafter {
+    display: flex;
+    gap: 5px;
+}
+
+    .SEMapprovals img, .SEMapprovalsafter img, .SEMapprovalsformapopup img {
+        height: 20px;
+        width: 20px;
+    }
+
+        .SEMapprovals img:hover, .SEMapprovalsafter .fa-edit:hover, .SEMapprovalsafter .fa-eye:hover {
+            background-color: black;
+            cursor: pointer;
+            color: white
+        }
+
+    .SEMapprovals #Comments {
+        padding: 1px;
+    }
+
+    .SEMapprovalsafter .fa-edit {
+        font-size: 20px;
+    }
+
+.form-popupapprovals {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow: auto;
+}
+
+/* Add styles to the form container */
+.form-containerapprovals {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+#close-popup {
+    position: fixed;
+    margin-left: 73%;
+    padding: 6px;
+    background-color: #fd2d63;
+    color: white;
+    z-index: 999;
+    border-radius: 15px;
+    border: 2px solid black;
+}
+
+    #close-popup:hover {
+        background-color: #2d830f;
+        padding: 8px;
+    }
+
+.boldcolor {
+    font-weight: 800 !important;
+    font: 13px arial;
+}
+
+.borderonly {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.textcenter {
+    text-align: center;
+    display: block !important;
+}
+
+.textalignright {
+    text-align: right;
+    padding-right: 16px;
+    display: block;
+}
+
+.textalignleft {
+    text-align: left;
+    padding-left: 16px;
+    display: block;
+}
+
+table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc {
+    background-color: #70747496 !important
+}

@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model List<LeaveDelegationModel>
+
+
+<div class="default-according style-1" id="accordionoc123456">
+    <div class="card">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle">@Model.Count</span> RECORDS </span></button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">         
+            <div class="card ">
+                @if (Model.Count > 0)
+                {
+                    <form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords" class="table-responsive">
+                        <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="compact cell-border display  tableid">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Select</th>
+                                    <th>	First Name</th>
+                                    <th>	Role</th>
+                                    <th>Department</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="text-align:center"><input type="radio" onclick="AddUserByRadioBtn.call(this,event, this.value)" value="@item.Userid" /> </td>
+                                        <td>@item.FirstName</td>
+                                        <td>@item.RoleName</td>
+                                        <td>@item.DepartmentName</td>
+                                        <td>@item.PortalEmail</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                }
+                else
+                {
+                    <div class="card-body">
+                        <p style="text-align:center">No records found</p>
+                    </div>
+                    <br />
+                }
+            </div>
+            </div>
+        
+        </div>
+
+
+</div>
+

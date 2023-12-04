@@ -1,0 +1,118 @@
+﻿
+
+
+.Header_Btn {
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    width: 99%;
+    margin-left: 0px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 32px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.lbl {
+    font-family: none;
+    font-size: 13px;
+}
+.dropdownDD {
+    height: 25px;
+    width: 90%;
+    border-radius: 4px;
+    margin-top: 4px;
+    font-family: none;
+}
+.MultipuleDropdown {  
+    margin-top: 4px;
+    font-family: none;
+    height: 100px;
+    width: 36%;
+    border-radius: 4px;
+}
+.Clear_Btn {
+    width: 9%;
+    border-radius: 7px;
+    color: black;
+    border: 1px solid black;
+}
+.Serch_Btn {
+    width: 9%;
+    border-radius: 7px;
+    color: black;
+    border: 1px solid black;
+}
+
+.GFCSS_Btn {
+    /*  width: 38%;
+            border: 3px solid skyblue;
+            background-color: antiquewhite;
+            font-weight: 800;
+            filter: drop-shadow(1px 2px 2px black);*/
+    margin-left: 26px;
+    margin-top: 7px;
+}
+
+.ChalanaCreatedUsersTable {
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid lightblue;
+    font-family: none;
+}
+
+    .ChalanaCreatedUsersTable th {
+        padding: 18px;
+        font-family: none;
+        font-size: 14px;
+    }
+
+    .ChalanaCreatedUsersTable tr:nth-child(even) {
+        background-color: #ef8b6f05;
+    }
+
+    .ChalanaCreatedUsersTable tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .ChalanaCreatedUsersTable td {
+        border: 1px solid black;
+        padding: 8px;
+        border-color: lightblue;
+    }
+
+
+.FeeRecipttable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+    .FeeRecipttable tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .FeeRecipttable th {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: lavender;
+        font-size: 13px;
+        font-family: none;
+        font-weight: bold;
+    }
+
+    .FeeRecipttable td {
+        border: 1px solid #0069ff42;
+        font-size: 13px;
+        color: black;
+        font-family: auto;
+    }
+
+    .FeeRecipttable tr:nth-child(even) {
+        background-color: #ef8b6f05;
+    }
+
+    .FeeRecipttable tr:hover {
+        background-color: #f5f5f5;
+    }

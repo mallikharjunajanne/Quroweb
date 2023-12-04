@@ -1,0 +1,125 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+<div style="display:flex;">
+    <div>
+        <input type="button" value="Export To Excel" />
+    </div>
+    <div style=" margin: 0px 0px 0px 83%; ">
+        <input type="button" value="Print" />
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <span id="ErrorMessage_SpanId" style="color: red; font-size: 12px; margin-left: 8px;"></span>
+                <div class="card-header bg-primary">
+                    <h5 class="mb-0">
+                        <button class="collapsed btn btn-link text-white" aria-controls="collapse11" style="width: 100%;">YOUR SEARCH RESULTED :<span id="TableCount" style=" background-color: #fd761e; color: white; border-radius: 10px; font-size: 15px; padding: 5px; font-weight: bold;">@Model.Count </span> RECORDS.</button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc" style="">
+                    <table class="tabledata">
+                        <thead>
+                            <tr>
+                                <th style=" height: 24px; border-left: 1px solid #dfdfdf; font-size: 11px; font-weight: bold; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf; padding: 0px 4px; text-align: left;">Student ID</th>
+                                <th style="height: 24px; border-left: 1px solid #dfdfdf; font-size: 11px; font-weight: bold; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf; text-align: left; padding: 0px 4px;">Student Name</th>
+                                <th style=" font-size: 11px;text-align:right; font-weight: bold; padding: 0px 4px; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">Class</th>
+                                <th align="right" style=" font-size: 11px; text-align: right; font-weight: bold; padding: 0px 4px; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">Fee Amount(DR)</th>
+                                <th align="right" style=" font-size: 11px; text-align: right; font-weight: bold; padding: 0px 4px; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">Discount</th>
+                                <th align="right" style=" font-size: 11px; text-align: right; font-weight: bold; padding: 0px 4px; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf;">Fee Collected(CR)</th>
+                                <th align="right" style="font-size: 11px; text-align: right;  font-weight: bold; padding: 0px 4px; border-bottom: 1px solid #dfdfdf; border-right: 1px solid #dfdfdf; ">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                decimal totalFeeAmount = 0;
+                                decimal totaldiscountamount = 0;
+                                decimal CollectedAmount = 0;
+                                decimal BalanceAmounts = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">@item.hallticket</td>
+                                <td style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">
+                                    <span onclick="FeeInstallments_getFeeDetailsByUserID(@item.UserId)" style="color:black; font-weight:bold; cursor:pointer;">
+                                        @item.Name
+                                    </span>
+                                    <div id="UserWise_FeeInstallments_detailstable_@item.UserId">
+
+                                    </div>
+                                </td>
+                                
+                                <td style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">@item.SubClassificationName</td>
+                                <td align="right" style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">
+
+                                    @item.StudentAmountSet
+                                    @{
+                                        decimal amount;
+                                        if (decimal.TryParse(item.StudentAmountSet, out amount))
+                                        {
+                                            totalFeeAmount += amount;
+                                        }
+                                    }
+                                </td>
+                                <td align="right" style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">
+                                    @item.StudentDiscountAmount
+                                    @{
+                                        decimal Discountamount;
+                                        if (decimal.TryParse(item.StudentDiscountAmount, out Discountamount))
+                                        {
+                                            totaldiscountamount += Discountamount;
+                                        }
+                                    }
+
+                                </td>
+                                <td align="right" style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">
+                                    @item.StudentCollectedAmount
+                                    @{
+                                        decimal Collectedamount;
+                                        if (decimal.TryParse(item.StudentCollectedAmount, out Collectedamount))
+                                        {
+                                            CollectedAmount += Collectedamount;
+                                        }
+                                    }
+                                </td>
+                                <td align="right" style=" color: #424242; font-size: 11px; font-weight: normal; font-style: normal;">
+                                    @item.StudentBalance
+                                    @{
+                                        decimal BalanceAmount;
+                                        if (decimal.TryParse(item.StudentBalance, out BalanceAmount))
+                                        {
+                                            BalanceAmounts += BalanceAmount;
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="color: forestgreen; font-size: 11px; font-weight: normal; font-style: normal;" colspan="7">
+
+                                    Fee Amount :<b>@totalFeeAmount</b>
+
+                                    Discount :<b>@totaldiscountamount</b>
+
+                                    Fee Collected :<b>@CollectedAmount</b>
+
+                                    Balance :<b>@BalanceAmounts</b>
+
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

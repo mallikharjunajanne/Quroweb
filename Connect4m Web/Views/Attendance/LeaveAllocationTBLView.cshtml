@@ -1,0 +1,105 @@
+﻿
+
+@{
+    ViewData["Title"] = "LeaveAllocationTBLView";
+    Layout = null;
+}
+@model List<AttendanceModel>
+@{ if (Model != null && Model.FirstOrDefault()?.LeaveShortNamesDynamic != null)
+    {
+        <span style="font-size: 10px;">
+            NOTE: Enter a value in first text box of any leave type, and check respective check box of leave type then the value will apply to all the text boxes.
+        </span>
+        <div class="default-according style-1" id="accordionoc123456">
+            <div class="card" id="DivTBLSearchedLeavesType">
+                <div class="card-header " style="background-color:black ;">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle">@Model.Count()</span> RECORDS.</span></button>
+                    </h5>
+                </div>
+                <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                    <div class="card ">
+                        <form id="Fm_TblUserLeaveAllocationList_SearchedRecords" class="table-responsive" >
+                        @*<form id="Fm_TblUserLeaveAllocationList_SearchedRecords" class="table-responsive" >*@
+                            @{ int i = 0; var j = 0; var N = 0; var D = 0; string SourceId = "";}
+                            <table id="TblUserLeaveAllocationList_SearchedRecords"  class="  tableid">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th style="text-align: center;" >Gender</th>
+                                        <th>LMS Sub Category</th>
+                                        @foreach (var item in Model.FirstOrDefault()?.LeaveShortNamesDynamic)
+                                        {
+                                            D++;
+                                            N++;
+                                            <th class="CenterAlign"><input type="checkbox" id="chkca" onclick="if(this.checked) UpdateAllTextboxvaluesByChecked(this,'TxtNumberofdaysId0@(N)','all-textboxes@(D)')" value="@item.Key">&nbsp;@item.Key</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        D = 0;
+                                        <tr id="Row@(i)">
+                                            <td>
+                                                @item.FirstName
+                                                <input type="hidden" id="UserId" @*name="val[@i].UserId"*@ value="@item.UserId" />
+                                                @*<input type="text" id="TBLLeavetypeid" value="@item.Leavetypeid" hidden>*@
+                                            </td>
+                                            <td style="text-align:center;">
+                                                @item.ClassName
+                                            </td>
+                                            <td>
+                                                @item.PayrollSubCategoryName
+                                            </td>
+                                            @foreach (var item1 in item.LeaveShortNamesDynamic)
+                                            {
+                                                j++;
+                                                D++;
+                                                <td style="text-align: center;">
+                                                    @{ var val = item1.Value?.ToString() ?? "";
+                                                        var LastValue = val.Length;
+                                                        if (val == "{}")
+                                                        {
+                                                            val = "";
+                                                            LastValue = 0;
+                                                        }
+                                                        else
+                                                        {
+                                                            string[] parts = val.Split('$', '#');
+                                                            // string a = parts[0];
+                                                            SourceId = parts[1];
+                                                            //  string c = parts[2];
+                                                            LastValue = Convert.ToInt32(val.Substring(LastValue - 1));
+                                                            val = val.Substring(0, 1);
+                                                        }
+                                                    }
+                                                    <input type="text" class="all-textboxes@(D)" @*name="val[@i].LeavetypeDaysDynamicDictionary[@item1.Key]"*@ id="TxtNumberofdaysId@(i)@(j)" maxlength="5" title="@item1.Key" oninput="restrictCharacters(this)" value="@val" />
+                                                    @if (LastValue > 0)
+                                                    {
+                                                        <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', @SourceId, 'NoofLeaves')">
+                                                    }
+                                                </td>
+                                            }
+                                        </tr>
+                                        i++;
+                                    }
+                                </tbody>
+                            </table>
+                            <div style=" margin-left: 45%;">
+                                @*<input type="submit" value="Submit" class="button button2" onclick="SubmitLeaves(event)" id="BtnSubmit" />*@
+                                @*<input type="submit" value="Submit" class="button button2" onclick="PFU_TermsFeeTable_IN_Update(event)" id="BtnSubmit" />*@
+                                <!--<input type="submit" value="Submit" class="button button2"--> @*onclick="SubmitLeaves.call(this,event)"*@ <!--id="BtnSubmit" />-->
+                                <input type="submit" value="Submit" class="button button2" onclick="SubmitLeaves(event)" id="BtnSubmit" />
+                            </div>
+                            @*<input type="submit" value="Submit" id="BtnSubmit" onclick="FN_LeaveTypes_Save(event)" />*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                                        }else
+    {
+<span class="ErrorMessageSpan" id="NoRecords_Span_Error">No Records Found.</span>
+    }
+}

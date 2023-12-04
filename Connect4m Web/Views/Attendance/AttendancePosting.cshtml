@@ -1,0 +1,311 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Admin_Attendance_Posting
+
+
+@{
+    ViewData["Title"] = "AttendancePosting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        span.validation {
+            display: block;
+            color: red;
+        }
+        .radio-style1 {
+            /* Define your styles for the first radio button here */
+            /* Example styles */
+            border: 2px solid #f00;
+            padding: 5px;
+        }
+
+        .radio-style2 {
+            /* Define your styles for the second radio button here */
+            /* Example styles */
+            background-color: #f00;
+            color: #fff;
+            padding: 10px;
+        }
+        .Dropdownbox {
+            width: 242px;
+            height: 23px;
+            border: 2px solid #999;
+            font-size: 13px;
+            color: tomato;
+            background-color: azure;
+            border-radius: 5px;
+        }
+        .textbox {
+            width: 242px;
+            height: 23px;
+            border: 2px solid #999;
+            font-size: 13px;
+            color: tomato;
+            background-color: azure;
+            border-radius: 5px;
+        }
+        .S_btn {
+            width: 7%;
+            height: 28px;
+            margin-top: 16px;
+            margin-left: 26%;
+        }
+    </style>
+    <link href="~/css/PostAttendance.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0">
+            <div style=" font-size: 20px; text-align: center;">
+                <h1 style="background-color: cadetblue; color: snow; font-weight: 700; font-size: 25px; margin-top: -13px; ">ATTENDANCE POSTING</h1>
+            </div>
+        </div>
+        <div style="color:red; font-size:13px;">
+            <div id="validation2" style="color: red;"></div>
+            <div id="validationMessage" style="color: red;"></div>
+        </div>
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <form class="form" id="myform">
+                                <div class="form-group row g-3">
+                                    <div id="Ct_Lg_DivId" class="row">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Start Date  </label>
+                                            <div class="col-sm-9">
+                                                <input type="date" asp-for="StartDate" class="textbox" id="StartDateid" style="width:36%">
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Department:</label>
+                                            <div class="col-sm-9" id="F_IN_Class">
+                                                @Html.DropDownListFor(Model => Model.InstanceClassificationId, new SelectList(ViewBag.Names, "Value", "Text"), "--Select a Department--", new { @id = "F_IC_Id", @class = "Dropdownbox" })
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Class:</label>
+                                            <div class="col-sm-9" id="F_IN_SubId">
+                                                @Html.DropDownListFor(Model => Model.InstanceSubClassificationId, new SelectList(string.Empty, "Value", "Text"), "--Please select a class--", new { @id = "F_IC_Sub_Id", @class = "Dropdownbox" })
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Period:</label>
+                                            <div class="col-sm-9">
+                                                <select class="Dropdownbox" id="PeriodId" asp-for="Period">
+                                                    <option value="">---------Select---------</option>
+                                                    <option value="1">P1</option>
+                                                    <option value="2">P2</option>
+                                                    <option value="3">P3</option>
+                                                    <option value="4">P4</option>
+                                                    <option value="5">P5</option>
+                                                    <option value="6">P6</option>
+                                                    <option value="7">P7</option>
+                                                    <option value="8">P8</option>
+                                                </select>
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Faculty:</label>
+                                            <div class="col-sm-9">
+                                                @{
+                                                    var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
+                                                    var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
+                                                }
+
+                                                @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "Dropdownbox" })
+                                            </div>
+
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Slot:</label>
+                                            <div class="col-sm-9">
+                                                @Html.DropDownListFor(Model => Model.SubjectSlotID, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "Dropdownbox", @id = "SubjectName" })
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Sort By:</label>
+                                            <div class="col-sm-9">
+                                                <div class="radio radio-primary" style="margin-top:4px;">
+                                                    <input id="radioinline1" type="radio" name="radio1" value="FirstName Asc">
+                                                    <label class="mb-0" for="radioinline1">Name</label>
+                                                    &nbsp;&nbsp;
+                                                    <input id="radioinline2" type="radio" name="radio1" value="InstanceUserCode Asc">
+                                                    <label class="mb-0" for="radioinline2">Register No</label>
+                                                </div>
+                                            </div>
+
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <input type="checkbox" class="checkbox_animated">Show On Duty
+                                            </div>
+
+                                            
+                                            <div class="S_btn" style="display: flex; grid-gap: 16px;">                                               
+                                                <input type="submit" value="Get Attendance Form" id="Get_atd_btn"/>
+                                            </div>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Get_Admin_Attendance_Table">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
+<script>
+    $("#F_IN_Class").change(fun01);
+    function fun01() {
+        debugger;
+        var value = $('#F_IC_Id').val();
+
+        $.ajax({
+            url: "/Attendance/F_Get_Inc_By_Subclass?InstanceClassificationId=" + value,
+            type: "GET",
+            success: fun02
+        });
+        function fun02(response) {
+            /*debugger;*/
+            $("#F_IC_Sub_Id").html(response);
+        }
+    }
+
+
+    $("#F_IN_SubId").change(fun03);
+    function fun03() {
+        debugger;
+        var SubClassificationId = $('#F_IC_Sub_Id').val();
+
+        $.ajax({
+            url: "/Attendance/Slot_by_subclassification?SubClassificationId=" + SubClassificationId,
+            type: "GET",
+            success: fun04
+        });
+        function fun04(response) {
+            /*  debugger;*/
+            $("#SubjectName").html(response);
+        }
+    }
+
+
+
+
+    $(document).ready(function () {
+        debugger;
+        // Add event listener to the form's submit event
+        $("#myform").submit(function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Perform form validation
+            var StartDateid = $("#StartDateid").val();
+            var department = $("#F_IC_Id").val();
+            var classID = $("#F_IC_Sub_Id").val();
+            var period = $("#PeriodId").val();
+            var faculty = $("#Faculty_Id").val();
+            var Slot = $("#SubjectName").val();
+            var sortBy = $('input[name="radio1"]:checked');
+            var showOnDuty = $(".checkbox_animated").is(":checked");
+
+            var validationMessage = "";
+            var validation2Message = "";
+            var hasError = false;
+
+            if (StartDateid === "") {
+
+                validationMessage += "StartDateid is required.<br>";
+                hasError = true;
+            }
+
+            if (department === "") {
+
+                validationMessage += "Department is required.<br>";
+                hasError = true;
+            }
+
+            if (classID === "") {
+
+                validationMessage += "Class is required.<br>";
+                hasError = true;
+            }
+
+            if (period === "") {
+
+                validationMessage += "Period is required.<br>";
+                hasError = true;
+            }
+
+            if (faculty === "") {
+
+                validationMessage += "Teacher/Mentor is required.<br>";
+                hasError = true;
+            }
+
+            if (Slot === "") {
+
+                validationMessage += "Slot is required.<br>";
+                hasError = true;
+            }
+
+            if (hasError) {
+                validation2Message = "Following fields have invalid data:<br>";
+                $("#validationMessage").html(validationMessage);
+                $("#validation2").html(validation2Message);
+
+
+            }
+            else
+            {
+
+                $("#validationMessage").html("");
+                $("#validation2").html("");
+
+
+                debugger;
+                // Serialize the form data
+                var formData = $(this).serialize();
+
+
+
+                // AJAX request to submit the form data
+                $.ajax({
+                    url: "/Attendance/AttendancePosting_Tbl",
+                    type: "GET",
+                    data: formData,
+                    success: function (response) {
+                        $("#Get_Admin_Attendance_Table").html(response);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle the error response
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>

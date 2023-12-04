@@ -1,0 +1,172 @@
+﻿
+@model Connect4m_Web.Models.Attendenceproperites.TermWiseFeeDetails
+@{
+    ViewData["Title"] = "ViewTermWiseFeeDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        select {
+            outline: none;
+            border: 1px solid black;
+            border-radius: 3px;
+            font-size: 14.5px;
+            height: 100px;
+            border-color: unset;
+            width: 32%;
+        }
+    </style>
+
+    @*<link href="~/css/style.css" rel="stylesheet" />*@
+    <link href="~/css/ViewallChallandetailsTermwise.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="card">
+        <div class="spinner-container" id="loadingSpinnerContainer">
+            <div class="overlay">
+                <div id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                </div>
+                <div class="loading-text">Loading....</div>
+            </div>
+        </div>
+
+
+
+        <div class="card-header pb-0">
+            <div style=" font-size: 50px; text-align: center;">
+               <h6><span>VIEW ALL CHALLAN DETAILS</span></h6> 
+            </div>
+        </div>
+        <div id="validation2" style=" color: red; margin-left: 10px; font-family: none;"></div>
+        <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h5 class="mb-0">
+                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                <span class="Header_text_span">
+                                    SEARCH FEE DETAILS
+                                </span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body" style=" border-bottom-color: aquamarine;">
+                            <form asp-controller="FeeSection" asp-action="ViewTermWiseFeeDetails_TableData" method="post" id="searchForm">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-3"></div>
+
+                                        <div class="form-grop  col-2">
+
+                                            <input type="hidden" value="@ViewBag.Instance" asp-for="InstanceId" id="Instanceid_txt" />
+                                            <label class="controle-label space" style=" margin-top: 38px; ">Terms </label>
+                                        </div>
+                                        <div class="col-4">
+                                            <select multiple="multiple" class="form-select" asp-for="TermIds" id="TermWise_termwisefeedetails" style="height: 100px;">
+                                            </select>
+                                        </div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-grop col-2"></div>
+                                        <div class="form-grop col-7">
+                                            <div class="checkbox checkbox-success" style="">
+                                                <input id="checkbox-primary" asp-for="Due" type="checkbox">
+                                                <label for="checkbox-primary">Only Dues</label>
+                                                <input id="checkbox-primary-1" type="checkbox">
+                                                <label for="checkbox-primary-1">Display Details</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align:center;">
+                                    <input type="button" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                    <input type="submit" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ViewTermWiseFeeDetails_Tabledata_PartialViewContainer">
+
+    </div>
+
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#loadingSpinnerContainer').hide();
+        Termwise_ViewallChallandetailsTermwise();
+
+        $('#searchForm').submit(function (event) {
+            event.preventDefault(); 
+            $('#loadingSpinnerContainer').show();
+
+            var formData = $(this).serialize(); // Serialize the form data
+            debugger;
+            var InstanceId = $('#Instanceid_txt').val();
+            var selectedValues = $('#TermWise_termwisefeedetails').val();
+            if (selectedValues) {
+               // formData += '&TermIds=' + selectedValues.join(',');
+                formData += '&TermIds=' + selectedValues.join(',');
+            }
+            debugger;
+            $.ajax({
+                url: $(this).attr('action'), // Get the action URL from the form
+                type: $(this).attr('method'), // Get the form's method (POST)
+                //data: $(this).serialize(), // Serialize the form data
+                data: formData,// Serialize the form data
+                success: function (response) {
+                  
+                    $('#loadingSpinnerContainer').hide();
+                    $('#ViewTermWiseFeeDetails_Tabledata_PartialViewContainer').append(response);
+                }
+            });
+        });
+    });
+
+
+    function Termwise_ViewallChallandetailsTermwise() {
+
+        var Instanceid = $('#Instanceid_txt').val();
+        $.ajax({
+           
+            url: "/FeeSection/TermWisedropdown_VTFTD?Instanceid=" + Instanceid, // Replace with your actual controller and action method URL
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                const dropdown = $("#TermWise_termwisefeedetails");
+                $.each(data, function (index, item) {
+                    dropdown.append($("<option>").text(item.text).val(item.value));
+                });
+            },
+            error: function () {
+                console.error("Failed to load data from the server");
+            }
+        });
+
+    }
+</script>

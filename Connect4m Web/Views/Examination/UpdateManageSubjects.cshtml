@@ -1,0 +1,560 @@
+﻿
+
+@model IEnumerable<Connect4m_Web.Models.SubClassifications>
+
+
+@{
+    ViewData["Title"] = "UpdateManageSubjects";
+    Layout = null;
+}
+
+
+@*<link href="~/css/Managesubjecttools.css" rel="stylesheet" />*@
+@*<link href="~/Newstylesheet/style.css" rel="stylesheet" />*@
+<style>
+
+    .errorboxshadow {
+        box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
+    }
+
+    #subclass_table {
+        font-size: 11px;
+    }
+
+        #subclass_table th {
+            font-weight: 700;
+            background-color: #E8E8E8;
+        }
+
+        #subclass_table .form-control {
+            height: 20px;
+            background-color: white;
+            padding: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        #subclass_table tr td {
+            vertical-align: middle;
+            FONT-SIZE: 11px;
+        }
+
+        #subclass_table thead, #subclass_table tbody, #subclass_table tfoot, #subclass_table tr, #subclass_table td, #subclass_table th {
+            border: 1px solid #575252;
+            font-weight: 700;
+        }
+
+        #subclass_table .mentorlist-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 72px;
+        }
+
+    .table td {
+        padding: 7px;
+    }
+
+    #subclass_table tr:hover {
+        background-color: antiquewhite !important;
+        cursor: context-menu !important;
+    }
+</style>
+
+
+<div class="col-sm-12 ">
+    <div class="card">
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+
+
+                <div class="card">               
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> <span style="color:red">*</span> INDICATES MANDATORY FIELDS.</button>
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                        <div class="card ">
+                            <div class="card-body">
+                                    <div style="margin-left:20%;font-size:12px">
+                                        <div class="row">
+                                            <div class="col">
+
+                                                <div class="mb-2 row">
+                                                    <div class="col-2"> <label class="control-label">Subject Name </label></div>
+                                                    <div class="col-4"> <input type="text" value="@ViewBag.SubjectName" id="Subjectname" class="form-control" />    </div>
+                                                    @if ("Create" != ViewBag.Buttonname)
+                                                    {
+                                                        <div class="col-3">  <input type="button" value="Update Subject Name" id="BtnUpdateSubjectName" class="btn btn-success" /></div>
+                                                    }
+                                                </div>
+                                              
+                                                <div class="mb-2 row">
+                                                    <div class="col-1" style="width: 11%; margin-left: -21%;"> <label class="control-label" style=" font-size: 11px; width: 85px;">Subject Order </label></div>
+                                                    <div class="col-1"> <input type="text" oninput="restrictCharacters(this)" maxlength="2" id="TxtSubjectOrder" class="form-control" />    </div>
+                                                    <div class="col-2">  <input type="checkbox" id="ChkSubjectOrder" onclick="if(this.checked) UpdateAllTextboxvaluesByChecked1(this, 'TxtSubjectOrder', 'SubjectorderCls')" /><span class="control-label"> Check All</span></div>
+                                                    <div class="col-1" style="margin-left: 42%;"></div>
+
+
+                                                    <div class="col-1"> <label class="control-label" style=" font-size: 11px; width: 85px;">Total Periods</label></div>
+                                                    <div class="col-1"> <input type="text" oninput="restrictCharacters(this)" maxlength="2" id="TxtTotalPeriods" class="form-control" />    </div>
+                                                    <div class="col-2">  <input type="checkbox" class="btn btn-success" onclick="if (this.checked) UpdateAllTextboxvaluesByChecked1(this,'TxtTotalPeriods','TxtTotalPeriodsCls') " /><span class="control-label"> Check All</span></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    @*<span class="ErrorMessageSpan" id="Main_Span_Error"></span>*@
+    <div class="card">
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white">DEPARTMENT</button>
+                        </h5>
+                    </div>
+                    <div class="Department_list">
+                        <table id="TblDepartment_list">
+                            <thead></thead>
+                            <tbody>
+                                @{ int check = 0;
+                                    @*List<int> CheckedDepartments = new List<int>();}
+            @if (ViewBag.Buttonname != "Create")
+            {
+                @foreach (var item in Model)
+                {
+                    @foreach (var item12 in ViewBag.Editlist)
+                    {
+                        if (item12.InstanceClassificationId == item.InstanceClassificationId)
+                        {
+                            CheckedDepartments.Add(item.InstanceClassificationId);
+                            check++;
+                            break;
+                        }
+                    }
+                }*@
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    <tr id="TRDepartment">
+                                        <td id="classficationnames_MS">
+                                            @if (ViewBag.Buttonname != "Create")
+                                            {
+                                                 @foreach (var item12 in ViewBag.Editlist)
+                                               // @foreach (var item12 in CheckedDepartments)
+                                                {
+                                                    if (item12.InstanceClassificationId == item.InstanceClassificationId)
+                                                    //if (item12 == item.InstanceClassificationId)
+                                                    {
+                                                        <input type="checkbox" id="Departments" checked="checked" value="@item.InstanceClassificationId" /><span id="SubClassificationName">@item.SubClassificationName</span>@*<span hidden>@item.ProgramType</span>*@
+                                                        check++;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+
+                                            @if (check <= 0)
+                                            {<input type="checkbox" id="Departments" value="@item.InstanceClassificationId" /><span id="SubClassificationName">@item.SubClassificationName</span>@*<span hidden>@item.ProgramType</span>*@
+                                        }
+                                            <div id="subclassificationappend">
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    check = 0;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    @*<div class="Department_list">
+                            @foreach (var item in Model)
+                            {
+                                <div id="classficationnames_MS">
+                                    <input type="checkbox" id="Departments" value="@item.InstanceSubClassificationId" />&nbsp;&nbsp;<span id="SubClassificationName">@item.SubClassificationName</span><span hidden>@item.ProgramType</span>
+                                    <div id="subclassificationappend">
+                                    </div>
+                                </div>
+                            }
+                        </div>*@
+                    @*<div class="save_Ms"><a href="/Videos/Managesubjects" class="btn btn-primary">Back Tosearch</a><div class="btn btn-success" id="Saveclassfication_MS"> Save</div></div>*@
+                    <div class="save_Ms" style="margin-left: 31%;">
+                        @if ("Create" != ViewBag.Buttonname)
+                        {
+                            <input type="button" class="btn btn-secondary" id="DeleteSubClassification" value="Delete">
+                        }
+                        <a onclick="BackTOSearhExams(event)" class="btn btn-primary">Back Tosearch</a>
+                        <input type="submit" class="btn btn-success" id="Saveclassfication_MS" value="Save">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="~/js/Insertmanagesubject.js"></script>*@
+<script src="~/js/GeneralFunctions.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+
+<script>
+
+    //this for add same value in Textboxes by selecting checkbox
+    function UpdateAllTextboxvaluesByChecked1(checkbox, FirstTextBoxId, EffectiveTxtClass) {
+        debugger;
+        const AllTextboxes = document.querySelectorAll('.' + EffectiveTxtClass);
+        const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
+        //const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
+        if (checkbox.checked) {
+            AllTextboxes.forEach(textbox => {
+                //  const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked').value;
+                const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked');
+                debugger;
+
+                if (subjectOrderId) {
+                    textbox.value = FirstTxtValue;
+                }
+            });
+        }
+    }
+
+
+    //var isReadyFunction = false;
+    //$(document).ready(function () {
+    //    // Iterate through all checkboxes with the id "Departments"
+    //    $('.Department_list #Departments').each(function () {
+    //        debugger;
+    //        isReadyFunction = true;
+    //        var checkbox = $(this);
+    //        checkbox.on('click', function () {
+    //            debugger;
+    //            // Check if the checkbox has the "checked" attribute
+    //            if (checkbox.prop('checked')) {
+    //                // Your logic for checked checkboxes here
+    //                var InstanceClassificationId = $(this).val();
+    //                var closest = $(this).closest('#classficationnames_MS');
+    //                var subclassificationappend = $(closest).find('#subclassificationappend');
+    //                var SubjectName = $("#Subjectname").val();
+
+
+    //                if (isReadyFunction) {
+    //                    var Buttonname = "Update";
+    //                } else {
+    //                    var Buttonname = "Create";
+    //                }
+    //                // Execute your AJAX call or any other logic here
+    //                $.ajax({
+    //                    url: "/Examination/Subclassfications_MS?InstanceClassificationId=" + InstanceClassificationId + "&SubjectName=" + SubjectName + "&Buttonname=" + Buttonname,
+    //                    type: "GET",
+    //                    success: function (response) {
+    //                        if (response == 0) {
+    //                            subclassificationappend.html("");
+    //                        }
+    //                        else {
+    //                            subclassificationappend.html(response);
+    //                        }
+    //                    }
+    //                });
+    //            }
+    //        });
+    //    });
+    //});
+
+//---------------------------------------this is for ready function to load alll checked classes
+    $(document).ready(function () {
+        debugger;
+        // Iterate through all checkboxes with the id "Departments"
+        $('.Department_list #Departments').each(function () {
+            debugger;
+            $("#loadingOverlay").show();
+            // Check if the checkbox has the "checked" attribute
+            if ($(this).prop('checked')) {
+                // Your logic for checked checkboxes here
+                var InstanceClassificationId = $(this).val();
+                var closest = $(this).closest('#classficationnames_MS');
+                var subclassificationappend = $(closest).find('#subclassificationappend');
+                var SubjectName = $("#Subjectname").val();
+                var Buttonname = "Update";
+                var Data = { SubjectName: SubjectName, InstanceClassificationId: InstanceClassificationId };
+                // Execute your AJAX call or any other logic here
+                $.ajax({
+                    url: "/Examination/Subclassfications_MS?Buttonname=" + Buttonname,
+                    type: "GET",
+                    data:Data,
+                    success: function (response) {
+                        if (response == 0) {
+                            subclassificationappend.html("");
+                        }
+                        else {
+                            subclassificationappend.html(response);
+                        }
+                    }
+                });
+            }
+        });
+        $("#loadingOverlay").hide();
+    });
+
+
+    //----------------------------- When Click On check Box (classification) in Manage Subject get Subclassfication
+    $(document).on('click', '.Department_list #Departments', function (event) {
+        debugger;
+        $("#ErrorMessageSpan").empty();
+        var InstanceClassificationId = $(this).val();
+        var closest = $(this).closest('#classficationnames_MS');
+        var subclassificationappend = $(closest).find('#subclassificationappend');
+        if ($(this).prop('checked')) {
+            // Your logic for checked checkboxes here
+
+            var SubjectName = $("#Subjectname").val();
+            var Buttonname = "Create";
+            // Execute your AJAX call or any other logic here
+            $.ajax({
+                url: "/Examination/Subclassfications_MS?InstanceClassificationId=" + InstanceClassificationId + "&SubjectName=" + SubjectName + "&Buttonname=" + Buttonname,
+                type: "GET",
+                success: function (response) {
+                    if (response == 0) {
+                        subclassificationappend.html("");
+                    }
+                    else {
+                        subclassificationappend.html(response);
+                    }
+                }
+            });
+        } else {
+            subclassificationappend.html("");
+        }
+    })
+
+
+    //var clickedButtonValue = null; // Variable to store the clicked button value
+
+    ////This for getting clicked button Name
+    //$('.submit-btn').click(function () {
+    //    clickedButtonValue = $(this).val(); // Store the clicked button value
+    //});
+
+  //=---------------------This is For Submit
+    $(document).on("click", '#Saveclassfication_MS,#BtnUpdateSubjectName', function (event) {
+        try {
+        event.stopImmediatePropagation();
+        var ButtonName = $(this).val();
+        debugger;
+        $(".ErrorMessageSpan").empty();
+        var formData = new FormData();
+        $("#loadingOverlay").show();
+        var Subjectname = $("#Subjectname").val();
+    
+        var ClassCheckboxforCheck;
+            var ErrorAppend = $("#Main_Span_Error");
+            var ErrorDepartment = "Please Select any of the Department";
+            var ErrorClass = "Please Select any of the Class";
+
+            var ParentTable = $("#TblDepartment_list tbody tr#TRDepartment ");
+       
+
+        //to remove this erro class
+        ParentTable.find('input[type="text"],#Subjectfor_MS').removeClass("errorboxshadow");
+        $("#Subjectname").removeClass("errorboxshadow");
+
+
+            if (Subjectname == "") {
+                $(ErrorAppend).text("Subject Name is Required");
+                window.scrollTo(0, 0);
+                $("#Subjectname").addClass("errorboxshadow");
+                $("#loadingOverlay").hide();
+                return;
+            }
+
+
+        var Departmentcheckbox;
+        var DepartmentcheckboxValue;
+       // var ClassCheckbox;
+        var IsInternal;
+        var UserId;//This is TeacherBy id
+        var checkedRadio;
+        var radioValue;
+        var bFlag = 0;
+        var InstanceSubjectIdListForcheck_Available;
+        var InstanceSubjectIdList;
+            // var ParentTable = $(".Department_list");
+            // var ChildTable = $("#subclass_table tbody tr ");
+            var ParentTableCheckBoxcount = 0;
+            var ChildTableCheckBoxcount = 0;
+
+            var shouldExit = false; // Initialize a flag variable
+            //this for check a record
+            ParentTable.each(function (index) {
+                if (shouldExit) {
+                    return false; // Exit the outer loop
+                }
+                // var checkbox = $(this).find('input[type="checkbox"]#Departments');
+                Departmentcheckbox = $(this).find("td#classficationnames_MS input[type='checkbox']#Departments");
+                //if ($(this).find("td#classficationnames_MS input[type='checkbox']#Departments").is(":checked")) { //if check box is checked then it is TRUE
+
+                    if (Departmentcheckbox.is(":checked")) { //if check box is checked then it is TRUE
+
+                    // if (checkbox.is(":checked")) { //if check box is checked then it is TRUE
+                        DepartmentcheckboxValue = Departmentcheckbox.val();
+
+
+                    ParentTableCheckBoxcount++;
+                    ChildTableCheckBoxcount = 0;
+                    var departmentname = $(this).find('td #SubClassificationName').text();
+
+                    var ChildTable = $(this).find("table#subclass_table tbody tr ");
+
+                    ChildTable.each(function (Index) {
+                        ClassCheckboxforCheck = $(this).find('td:nth-child(1) input[type="checkbox"]#Classes');
+                        
+                        InstanceSubjectIdListForcheck_Available = $(this).find('td:nth-child(1) input#InstanceSubjectId');
+                       // if ($(this).find('td:nth-child(1) input[type="checkbox"]#Classes').is(":checked")) {
+                        if (ClassCheckboxforCheck.is(":checked")) {
+                            ChildTableCheckBoxcount++;
+
+                            var SubjectCode = $(this).find('td:nth-child(3) input[type="text"]').val();
+                            var SubjectOrder = $(this).find('td:nth-child(4) input[type="text"]').val();
+                            var SubjectType = $(this).find('td:nth-child(6) #Subjectfor_MS').val();
+
+                            var Classname = $(this).find('td:nth-child(2)').text();
+
+
+
+                            IsInternal = 1; //I gave default value
+                            UserId = ""; //I gave default value
+                            InstanceSubjectIdList = InstanceSubjectIdListForcheck_Available.val();
+                            if (ClassCheckboxforCheck.is(":checked")) {
+                                bFlag = 0;
+                            } else {
+                                bFlag = 1;;//it means no
+                            }
+
+                            checkedRadio = $(this).find('td:nth-child(10) input[type="radio"][name="IncludeInTotal' + ClassCheckboxforCheck.val() + '' + Index + '"]:checked');
+
+
+                            //checkedRadio = $(this).find("td:nth-child(10) input[type='radio'][name='IncludeInTotal']:checked")
+
+                            if (checkedRadio) {
+                                radioValue = checkedRadio.val();
+                            } else {
+                                radioValue = 0;//it means no
+                            }
+
+
+                            var selectedMentorCheckboxes = $(this).find('td:nth-child(8) input[name="selectedMentors"]:checked');
+                            var mentorIds = selectedMentorCheckboxes.map(function () {
+                                return $(this).val();
+                            }).get().join(',');
+
+                            formData.append("InstanceClassificationIdList", parseInt(DepartmentcheckboxValue) || 0);
+                            // formData.append("InstanceSubjectIdList", parseInt($(this).find('td:nth-child(1) input#InstanceSubjectId').val()) || 0);
+                            formData.append("InstanceSubjectIdList", parseInt(InstanceSubjectIdList) || 0);
+                            formData.append("InstanceSubjectId_AvailableCheck", "");
+                            formData.append("bFlag", parseInt(bFlag) || 0);
+                            formData.append("InstanceSubClassificationIdList", parseInt(ClassCheckboxforCheck.val()) || 0);
+                            formData.append("SubjectTypeName", Subjectname);
+                            formData.append("SubjectCodeList", $(this).find('td:nth-child(3) input[type="text"]').val());
+                            formData.append("IsInternal", parseInt(IsInternal) || 0);//pending
+                            formData.append("IncludeInTotal", parseInt(radioValue) || 0);
+                            formData.append("UserIdList", UserId); //pending
+                            formData.append("AttendanceRequired", $(this).find('td:nth-child(5) input[type="text"]').val());
+                            formData.append("DisplayOrder", $(this).find('td:nth-child(4) input[type="text"]').val());
+                            formData.append("TotalPeriods", $(this).find('td:nth-child(9) input[type="text"]').val());
+                            formData.append("MentorIds", mentorIds);
+                            formData.append("SubjectTypeId", $(this).find('td:nth-child(6) #Subjectfor_MS').val() || 0);
+                            formData.append("SubjectShortName", $(this).find('td:nth-child(7) input[type="text"]').val());
+
+
+                            if (SubjectCode == "") {
+                                $(ErrorAppend).text("Please fill the Subject Code Required of " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(3)').find('input[type="text"]').addClass('errorboxshadow');
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            } else if (SubjectOrder == "") {
+                                $(ErrorAppend).text("Please fill the Subject Order to be displayed for " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(4)').find('input[type="text"]').addClass('errorboxshadow');
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            } else if (SubjectType == "") {
+                                $(ErrorAppend).text("Please fill the Subject Type of " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(6)').find('#Subjectfor_MS').addClass('errorboxshadow');
+
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            }
+                        }
+                    });
+
+                    if (ChildTableCheckBoxcount <= 0) {
+                        $("#Main_Span_Error").text(ErrorClass + " in a " + departmentname);
+                        shouldExit = true; // Set the flag to true to exit the loops
+                        return false; // Exit the inner loop
+                    }
+                }
+            });
+
+            if (shouldExit) {
+                window.scrollTo(0, 0);
+                $("#loadingOverlay").hide();
+                return; // Exit the outer loop
+            }
+            if (ParentTableCheckBoxcount < 1) {
+                $("#Main_Span_Error").text(ErrorDepartment);
+                window.scrollTo(0, 0);
+                $("#loadingOverlay").hide();
+                return;
+            }
+            else if (ChildTableCheckBoxcount < 1) {
+                $("#Main_Span_Error").text(ErrorClass);
+                window.scrollTo(0, 0);
+                $("#loadingOverlay").hide();
+                return;
+            }
+            
+        
+        performCrudOperationCommonFunction('POST', "/Examination/ManageSubjects?ButtonName=" + ButtonName, formData, function (response) {
+            debugger;
+            if (response.message == "Record inserted successfully." || response.message == "Record updated successfully.") {
+                $("#Saveclassfication_MS").prop('disabled', true);
+            } else if (response.message == "Record deleted successfully.") {
+                location.reload();
+            }
+            $("#Main_Span_Error").text(response.message);
+            $("#loadingOverlay").hide();
+            window.scrollTo(0, 0);
+        }, function (error) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+            // errorCallback function code here
+        }, true);
+        } catch (e) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    });
+</script>

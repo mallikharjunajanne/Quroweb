@@ -1,0 +1,1306 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+
+    .card{
+
+    }
+    .Header_Btn {
+        background-color: white;
+        color: white;
+        /* border-radius: 15px; */
+        width: 100.25%;
+        margin-left: 0px;
+        font-family: emoji;
+        border: 1px solid;
+        border-style: solid;
+        border-color: red;
+        height: 32px;
+        /* border-bottom: red; */
+        font-size: 14px;
+        font-weight: bolder;
+        text-align: left;
+        color: black;
+        filter: drop-shadow(0px 0px 1px black);
+        border-bottom: 3px solid green;
+    }
+    .themecolor {
+        font-size: 13px;
+    }
+
+
+    
+</style>
+
+
+@model List<FeeReports>
+<div>
+    <div id="divDetails">
+        <span id="lblPrintMsg" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>&nbsp;
+        <table cellspacing="0" cellpadding="0" style="width: 100%">
+            <tbody>
+                <tr id="trprint">
+                    <td align="right">
+                        <a id="A1" href="#" onclick="javascript:CallPrint('tblTC')" class="themecolor">PRINT</a>
+                        &nbsp;
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+      
+        <div id="Search_Challana_NumberDivId" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    
+                        <h5 class="mb-0">
+                            <button class="collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
+                                Fee Challan
+                            </button>
+                        </h5>
+                   
+                    <div style="width: 100%; border: 1px solid; border-color: red; border-top-color: whitesmoke; margin-top: -15px; ">
+                        <table id="tblTC" cellpadding="0" width="100%" cellspacing="0" class="tablesideborders">
+                            <tbody>
+                                <tr>
+                                    <td style="height: 24px; padding-left: 15px; padding-right: 15px;">
+
+
+
+                                        @*<title>Maxfort Fee Deposite</title>*@
+
+
+                                        <style type="text/css" media="all">
+                                            tbody {
+                                                font-family: Arial;
+                                                font-size: 9px;
+                                                color: #000000;
+                                                margin: 10px;
+                                            }
+
+                                            /* body {
+                                                font-family: Arial;
+                                                font-size: 9px;
+                                                color: #000000;
+                                                line-height: 14px;
+                                                margin-top: 10px;
+                                            }*/
+
+                                            .maintitle {
+                                                font-family: Times New Roman;
+                                                font-size: 20px;
+                                                font-weight: bold;
+                                                text-transform: uppercase;
+                                                text-align: center;
+                                                line-height: 24px;
+                                            }
+
+                                            .subtitle {
+                                                font-family: Times New Roman;
+                                                font-size: 12px;
+                                                text-transform: uppercase;
+                                                text-align: center;
+                                                line-height: 20px;
+                                            }
+
+                                            .feetable {
+                                                text-transform: uppercase;
+                                                font-size: 12px;
+                                            }
+
+                                            .style2 {
+                                                height: 10px;
+                                                width: 208px;
+                                            }
+
+                                            .rupeetxt {
+                                                background: url(http://www.connect4m.com/R3Images/InstanceHeaderPhotos/641/rupeesymbol.png);
+                                                background-repeat: no-repeat;
+                                                padding-right: 15px;
+                                                background-position: right;
+                                                font-weight: bold;
+                                                font-size: 11px;
+                                            }
+                                        </style>
+                                        <table width="870px" cellpadding="0" cellspacing="0" align="center">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="425px" valign="top">
+                                                        <!-- School Slip Starts Here -->
+                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="height: 10px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center">
+                                                                        <b style="text-transform: uppercase;">ADS Student Fee Deposit Challan - Parent Copy</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="height: 5px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="maintitle">
+                                                                        ads School
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="subtitle">
+                                                                        Hyderabad Branch
+                                                                        <br>
+                                                                        A/C No. 588010100028839
+                                                                        <br>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="subtitle" style="text-transform: capitalize;">
+                                                                        Bank Branch : ..........................................
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="height: 5px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody id="ChallanaNo_ChallanaDate_Tbl1">
+                                                                                @*@foreach (var ITEM in Model)
+                                                                                    {*@
+                                                                                <tr>
+                                                                                    <td width="19%" style="padding-left: 5px; height: 18px;">
+                                                                                        <b>Challan No. :</b>
+                                                                                    </td>
+                                                                                    <td width="31%">
+                                                                                        @Model[0].InvoiceNo
+                                                                                    </td>
+                                                                                    <td width="12%" align="right">
+                                                                                        Date :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="35%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;@Model[0].ChallanGeneratedDate
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+
+                                                                                <tr>
+                                                                                    <td style="height: 7px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                @*@foreach (var item in Model)
+                                                                                    {*@
+                                                                                <tr>
+                                                                                    <td width="22%" style="padding-left: 5px; height: 18px;">
+                                                                                        Student I.D. No. :
+                                                                                    </td>
+                                                                                    <td width="78%">
+                                                                                        &nbsp;@*1923/11-12/1*@ @Model[0].AdmissionNumber
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+                                                                                <tr>
+                                                                                    <td style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                @*@foreach (var item in Model)
+                                                                                    {*@
+                                                                                <tr>
+                                                                                    <td width="21%" style="padding-left: 5px;">
+                                                                                        Student Name :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="29%">
+                                                                                        @Model[0].FirstName @*Ananya S.Kuduvalli*@
+                                                                                    </td>
+                                                                                    <td width="20%" align="right">
+                                                                                        Class &amp; Sec :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="30%">
+                                                                                        &nbsp;@Model[0].SubClassificationName @*II - A*@
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+                                                                                <tr>
+                                                                                    <td style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="96%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="70%" style="font-weight: bold; height: 24px; border-bottom: 1px solid #000000;
+                                        border-right: 1px solid #000000; font-size: 11px; text-transform: uppercase;
+                                        padding-left: 5px;">
+                                                                                        PARTICULARS &nbsp; (Term1)
+                                                                                    </td>
+                                                                                    <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                        AMOUNT
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="feetable" style="padding-left: 5px; text-transform: uppercase; height: 24px;" colspan="2">
+
+
+
+                                                                                        @*<title></title>*@
+                                                                                        <style type="text/css">
+                                                                                            .feetable {
+                                                                                                padding-left: 4px;
+                                                                                                text-align: left;
+                                                                                                font-size: 11px;
+                                                                                                font-weight: bold;
+                                                                                            }
+
+                                                                                            .feetable2a {
+                                                                                                padding-left: 4px;
+                                                                                                font-size: 11px;
+                                                                                                font-weight: bold;
+                                                                                            }
+                                                                                        </style>
+
+
+                                                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                            <tbody>
+                                                                                                @foreach (var Aitem in Model)
+                                                                                                {
+
+                                                                                                    <tr>
+                                                                                                        <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                            @Aitem.FeeType
+                                                                                                        </td>
+
+
+                                                                                                        <td width="40%" align="right" class="feetable2a" style="padding-right: 4px;">
+                                                                                                            @{
+                                                                                                                decimal amounts = decimal.Parse(Aitem.amount);
+                                                                                                                string formattedAmounts = amounts.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                            }
+                                                                                                            @formattedAmounts
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                }
+                                                                                            </tbody>
+                                                                                        </table>
+
+
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="70%" style="text-transform: uppercase; font-weight: bold; border-top: 1px solid #000000;
+                                        border-right: 1px solid #000000; height: 24px; font-size: 11px; padding-left: 5px;">
+                                                                                        TOTAL &nbsp;
+                                                                                    </td>
+                                                                                    <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                        <span id="totalAmount"></span> @*-100*@&nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="30%" style="padding-left: 9px; line-height: 24px;">
+                                                                                        Amount in words :&nbsp; <b id="totalAmount_Text"></b>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="height: 6px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="97%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="48%" valign="top">
+                                                                                        <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #000000;">
+                                                                                            <tbody>
+                                                                                                <tr style="background-color: #000000;">
+                                                                                                    <td width="30%" align="center" style="color: #ffffff; height: 20px; border-right: 1px solid #000000;">
+                                                                                                        Denomination
+                                                                                                    </td>
+                                                                                                    <td width="25%" align="center" style="color: #ffffff; border-right: 1px solid #000000;">
+                                                                                                        No
+                                                                                                    </td>
+                                                                                                    <td width="45%" align="center" style="color: #ffffff;">
+                                                                                                        Amount
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.1,000 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.500 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.100 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.50 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.20 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.10 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; padding-left: 2px;">
+                                                                                                        Total
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="47%" valign="top">
+                                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Cheque/DD No :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Bank Name :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Dated :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Depositor Phone Number :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Name &amp; Sign. of Depositor :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        <br>
+                                                                                    </td>
+                                                                                    <td width="2%">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td style="height: 5px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-left: 5px;">
+                                                                                        <b>NOTE 1 :</b> If fee is deposited through CHEQUE or DD then it will be considered
+                                                                                        as deposited only after the clearance of the instrument.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="29%" style="padding-left: 5px;" colspan="3">
+                                                                                        Received fee Rupees :
+                                                                                    </td>
+                                                                                    <td width="68%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="32%" style="padding-left: 5px;">
+                                                                                        Bank Stamp &amp; Signature :
+                                                                                    </td>
+                                                                                    <td width="65%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="3" style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" style="padding-left: 5px;">
+                                                                                        <b>NOTE 2 :</b> This fee challan is mandatory for depositing fees.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- School Slip Ends Here -->
+                                                    </td>
+                                                    <td width="10px" style="border-right: 2px dotted #000000;">
+                                                        &nbsp;
+                                                    </td>
+                                                    <td width="10px">
+                                                    </td>
+                                                    <td width="425px" valign="top">
+                                                        <!-- School Slip Starts Here -->
+                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="height: 10px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center">
+                                                                        <b style="text-transform: uppercase;">ADS Student Fee Deposit Challan - Bank Copy</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="height: 5px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="maintitle">
+                                                                        ADS School
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="subtitle">
+                                                                        Hyderabad Branch
+                                                                        <br>
+                                                                        A/C No. 588010100028839
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="subtitle" style="text-transform: capitalize;">
+                                                                        Bank Branch : ..........................................
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="height: 5px;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                @*@foreach (var items in Model)
+                                                                                    {*@
+                                                                                <tr>
+                                                                                    <td width="19%" style="padding-left: 5px; height: 18px;">
+                                                                                        <b>Challan No. :</b>
+                                                                                    </td>
+                                                                                    <td width="31%">
+                                                                                        @Model[0].InvoiceNo
+                                                                                    </td>
+                                                                                    <td width="12%" align="right">
+                                                                                        Date :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="35%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;@Model[0].ChallanGeneratedDate
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+                                                                                <tr>
+                                                                                    <td style="height: 7px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                @*@foreach (var item in Model) {*@
+
+                                                                                <tr>
+                                                                                    <td width="22%" style="padding-left: 5px; height: 18px;">
+                                                                                        Student I.D. No. :
+                                                                                    </td>
+                                                                                    <td width="78%">
+                                                                                        &nbsp;@*1923/11-12/1*@@Model[0].AdmissionNumber
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+                                                                                <tr>
+                                                                                    <td style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                @*@foreach (var item in Model)
+                                                                                    {*@
+                                                                                <tr>
+                                                                                    <td width="21%" style="padding-left: 5px;">
+                                                                                        Student Name :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="29%">
+                                                                                        @Model[0].FirstName    @*Ananya S.Kuduvalli*@
+                                                                                    </td>
+                                                                                    <td width="20%" align="right">
+                                                                                        Class &amp; Sec :&nbsp;
+                                                                                    </td>
+                                                                                    <td width="30%">
+                                                                                        &nbsp;@*II - A*@ @Model[0].SubClassificationName
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @*}*@
+                                                                                <tr>
+                                                                                    <td style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="96%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="70%" style="font-weight: bold; height: 24px; border-bottom: 1px solid #000000;
+                                        border-right: 1px solid #000000; font-size: 11px; text-transform: uppercase;
+                                        padding-left: 5px;">
+                                                                                        PARTICULARS &nbsp; (Term1)
+                                                                                    </td>
+                                                                                    <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                        AMOUNT
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="feetable" style="padding-left: 5px; text-transform: uppercase; height: 24px;" colspan="2">
+
+
+
+                                                                                        @*<title></title>*@
+                                                                                        <style type="text/css">
+                                                                                            .feetable {
+                                                                                                padding-left: 4px;
+                                                                                                text-align: left;
+                                                                                                font-size: 11px;
+                                                                                                font-weight: bold;
+                                                                                            }
+
+                                                                                            .feetable2b {
+                                                                                                padding-left: 4px;
+                                                                                                font-size: 11px;
+                                                                                                font-weight: bold;
+                                                                                            }
+                                                                                        </style>
+
+
+                                                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                            <tbody>
+                                                                                                @foreach (var AmountItem in Model)
+                                                                                                {
+
+                                                                                                    <tr>
+                                                                                                        <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                           @AmountItem.FeeType
+                                                                                                        </td>
+                                                                                                        <td width="40%" align="right" class="feetable2b" style="padding-right: 4px;">
+                                                                                                            @{
+                                                                                                                decimal amounts = decimal.Parse(AmountItem.amount);
+                                                                                                                string formattedAmounts = amounts.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                            }
+                                                                                                            @formattedAmounts
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                }
+                                                                                            </tbody>
+                                                                                        </table>
+
+
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="70%" style="text-transform: uppercase; font-weight: bold; border-top: 1px solid #000000;
+                                        border-right: 1px solid #000000; height: 24px; font-size: 11px; padding-left: 5px;">
+                                                                                        TOTAL &nbsp;
+                                                                                    </td>
+                                                                                    <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                        <span id="totalAmounts"></span> &nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="30%" style="padding-left: 9px; line-height: 24px;">
+                                                                                        Amount in words :&nbsp;<b id="totalAmount_Texts"></b>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="height: 6px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="97%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="48%" valign="top">
+                                                                                        <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #000000;">
+                                                                                            <tbody>
+                                                                                                <tr style="height: 20px; background-color: #000000;">
+                                                                                                    <td width="30%" align="center" style="color: #ffffff; height: 28px; border-right: 1px solid #000000;">
+                                                                                                        Denomination
+                                                                                                    </td>
+                                                                                                    <td width="25%" align="center" style="color: #ffffff; border-right: 1px solid #000000;">
+                                                                                                        No
+                                                                                                    </td>
+                                                                                                    <td width="45%" align="center" style="color: #ffffff;">
+                                                                                                        Amount
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.1,000 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.500 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.100 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.50 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.20 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        Rs.10 X
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp; &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; border-bottom: 1px solid #000000;
+                                                    padding-left: 2px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center" style="border-bottom: 1px solid #000000;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-right: 1px solid #000000; height: 20px; padding-left: 2px;">
+                                                                                                        Total
+                                                                                                    </td>
+                                                                                                    <td style="border-right: 1px solid #000000; text-align: center;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                    <td align="center">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="47%" valign="top">
+                                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Cheque/DD No :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Bank Name :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Dated :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Depositor Phone Number :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="height: 7px;">
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        Name &amp; Sign. of Depositor :
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="border-bottom: 1px dotted #000000; height: 20px;">
+                                                                                                        &nbsp;
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                        <br>
+                                                                                    </td>
+                                                                                    <td width="2%">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td style="height: 5px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-left: 5px;">
+                                                                                        <b>NOTE 1 :</b> If fee is deposited through CHEQUE or DD then it will be considered
+                                                                                        as deposited only after the clerance of the instrument.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="29%" style="padding-left: 5px;" colspan="3">
+                                                                                        Received fee Rupees :
+                                                                                    </td>
+                                                                                    <td width="68%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td width="32%" style="padding-left: 5px;">
+                                                                                        Bank Stamp &amp; Signature :
+                                                                                    </td>
+                                                                                    <td width="65%" style="border-bottom: 1px dotted #000000;">
+                                                                                        &nbsp;
+                                                                                    </td>
+                                                                                    <td width="3%">
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td colspan="3" style="height: 10px;">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" style="padding-left: 5px;">
+                                                                                        <b>NOTE 2 :</b> This fee challan is mandatory for depositing fees.
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <br>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- School Slip Ends Here -->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table width="100%" cellpadding="0" cellspacing="0" align="center" style="page-break-before: always;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="hndUserIds" id="hndUserIds">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <b class="xbottomG"><b class="xb4G"></b><b class="xb3G"></b><b class="xb2G"></b><b class="xb1G"></b></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    function CallPrint(elementId) {
+        var printContents = document.getElementById(elementId).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        // Open a new window
+        //var newWindow = window.open('', 'View Receipt', 'width=997,height=655,scrollbars=yes,resizable=yes');
+
+        var printWindow = window.open('', '_blank','width=997,height=655,scrollbars=yes,resizable=yes');
+        printWindow.document.open();
+
+        // Set the new window content to the table content
+        printWindow.document.write('<html><head><title>Print Table</title></head><body>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+
+        // Print and close the new window
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    }
+
+
+    // Calculate the total sum of amount values and update the target element
+    function calculateTotalAmount_a() {
+        var totalAmount_a = 0;
+
+        var amountElements_a = document.querySelectorAll('.feetable2a'); // Select all b elements within .feetable2
+
+
+        for (var i = 0; i < amountElements_a.length; i++) {
+            var amount_a = parseFloat(amountElements_a[i].textContent.replace(/,/g, '')); // Remove commas and parse
+
+            totalAmount_a += amount_a;
+
+        }
+
+        return totalAmount_a.toFixed(2); // Return the total amount formatted to two decimal places
+
+    }
+   
+
+
+
+    // Function to convert a numeric amount to words
+    function convertNumberToWords(number) {
+        var units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        var teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        var tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        var thousands = ['', 'thousand', 'million', 'billion', 'trillion'];
+
+        function convertLessThanOneThousand(number) {
+            var words = '';
+
+            if (number >= 100) {
+                words += units[Math.floor(number / 100)] + ' hundred';
+                number %= 100;
+                if (number > 0) {
+                    words += ' and ';
+                }
+            }
+
+            if (number >= 11 && number <= 19) {
+                words += teens[number - 11];
+            } else if (number >= 20 || number === 10) {
+                words += tens[Math.floor(number / 10)];
+                number %= 10;
+                if (number > 0) {
+                    words += ' ';
+                }
+            }
+
+            if (number > 0) {
+                words += units[number];
+            }
+
+            return words;
+        }
+
+        if (number === 0) {
+            return 'zero';
+        }
+
+        var wordGroups = [];
+        var numString = number.toString();
+        var numChunks = Math.ceil(numString.length / 3);
+
+        for (var i = 0; i < numChunks; i++) {
+            var chunk = parseInt(numString.slice(-3), 10);
+            numString = numString.slice(0, -3);
+
+            if (chunk !== 0) {
+                var chunkWords = convertLessThanOneThousand(chunk);
+                if (i > 0) {
+                    chunkWords += ' ' + thousands[i];
+                }
+                wordGroups.unshift(chunkWords);
+            }
+        }
+
+        return wordGroups.join(' ');
+    }
+    function convertNumberToWordss(number) {
+        var units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        var teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        var tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        var thousands = ['', 'thousand', 'million', 'billion', 'trillion'];
+
+        function convertLessThanOneThousand(number) {
+            var words = '';
+
+            if (number >= 100) {
+                words += units[Math.floor(number / 100)] + ' hundred';
+                number %= 100;
+                if (number > 0) {
+                    words += ' and ';
+                }
+            }
+
+            if (number >= 11 && number <= 19) {
+                words += teens[number - 11];
+            } else if (number >= 20 || number === 10) {
+                words += tens[Math.floor(number / 10)];
+                number %= 10;
+                if (number > 0) {
+                    words += ' ';
+                }
+            }
+
+            if (number > 0) {
+                words += units[number];
+            }
+
+            return words;
+        }
+
+        if (number === 0) {
+            return 'zero';
+        }
+
+        var wordGroups = [];
+        var numString = number.toString();
+        var numChunks = Math.ceil(numString.length / 3);
+
+        for (var i = 0; i < numChunks; i++) {
+            var chunk = parseInt(numString.slice(-3), 10);
+            numString = numString.slice(0, -3);
+
+            if (chunk !== 0) {
+                var chunkWords = convertLessThanOneThousand(chunk);
+                if (i > 0) {
+                    chunkWords += ' ' + thousands[i];
+                }
+                wordGroups.unshift(chunkWords);
+            }
+        }
+
+        return wordGroups.join(' ');
+    }
+    //var amount = 465826;
+    //var amountInWords = convertNumberToWords(amount);
+    // console.log(amountInWords);
+
+
+    // Function to calculate total amount and total amount in words for .feetable2 elements
+    function calculateTotalAmount_b() {
+        var totalAmount_b = 0;
+        var amountElements_b = document.querySelectorAll('.feetable2b'); // Select all .feetable2b elements
+
+        for (var i = 0; i < amountElements_b.length; i++) {
+            var amount_b = parseFloat(amountElements_b[i].textContent.replace(/,/g, '')); // Remove commas and parse
+            totalAmount_b += amount_b;
+        }
+
+        return totalAmount_b.toFixed(2); // Return the total amount formatted to two decimal places
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        var totalAmountElement = document.getElementById('totalAmount');
+        var totalAmountElements = document.getElementById('totalAmounts');
+
+
+
+        var totalAmount_a = calculateTotalAmount_a();
+        var totalAmount_b = calculateTotalAmount_b();
+
+        var totalAmountElement = document.getElementById('totalAmount');
+        var totalAmountElement_Text = document.getElementById('totalAmount_Text');
+
+        var totalAmountElements = document.getElementById('totalAmounts');
+        var totalAmountElement_Texts = document.getElementById('totalAmount_Texts');
+
+
+        var totalAmountInWords_a = convertNumberToWords(parseFloat(totalAmount_a));
+        var totalAmountInWords_b = convertNumberToWordss(parseFloat(totalAmount_b));
+
+
+        totalAmountElement.textContent = totalAmount_a;
+        totalAmountElement_Text.textContent = totalAmountInWords_a;
+        totalAmountElements.textContent = totalAmount_b;
+        totalAmountElement_Texts.textContent = totalAmountInWords_b;
+    });
+
+
+</script>

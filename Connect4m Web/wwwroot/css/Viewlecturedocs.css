@@ -1,0 +1,95 @@
+﻿.progress-container {
+    width: 200px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid; /* To hide the overflow of the progress bar */
+}
+
+.progress-bar {
+    width: 0; /* Initial width of the progress bar */
+    height: 100%;
+    background-color: #32CD32;
+    border-radius: 10px;
+}
+@keyframes moveBackAndForth {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(50px); /* Adjust the distance the element should move */
+    }
+/*
+    100% {
+        transform: translateX(0);
+    }*/
+}
+#ProgramDetails:hover, #ProgramDetails_sub:hover {
+    cursor: pointer;
+    color: white;
+      background-color: green;
+
+    animation: moveBackAndForth 10s linear infinite;
+}
+#ProgramDetails {
+    margin-top: 10%;
+    background-color: aquamarine;
+    font-size: 13px;
+    margin-left:40px;
+    color:white;
+}
+/* Keyframes for pulsating effect */
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+        background-color:red;
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color:yellow;
+        color:black;
+    }
+
+    100% {
+        transform: scale(1);
+        background-color: deepskyblue;
+    }
+}
+
+/* Apply the animation to the label element */
+#ProgramDetails, #ProgramDetails_sub {
+    animation: pulsate 5s infinite;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid;
+}
+h5 {
+    text-align: center;
+    font-weight: 900;
+}
+
+#VLD_Backtoprogram {
+    background-color: #121451;
+    color: white;
+    text-decoration: none;
+    padding: 1px 8px 1px 7px;
+    border-radius: 8px;
+}
+.pdf-page {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.page-number {
+    text-align: center;
+}
+
+      
+

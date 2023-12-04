@@ -1,0 +1,105 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="default-according style-1">
+
+
+    <div class="card" id="SearchPage">
+        <div class="card-header " style="background-color:black ;">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                    LEAVE DELEGATION
+                </button>
+
+            </h5>
+        </div>
+
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+            <div class="card ">
+                <div class="card-body">
+                    <form id="FmAddLeaveDelegationPage_SaveDetails">
+                        <div style="margin-left:20%;font-size:12px" id="ApplyShortLeavePage_Form">
+                            <div class="row">
+                                <div class="col">
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red;">*</i>Department  :&nbsp;</label>
+
+                                        <div class="col-sm-9">
+                                            <select id='DdlDepartment' name="InstanceClassificationId" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                <option value=''>---------Select---------</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red;">*</i>Role :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <select id="DdlRole" namr="RoleId" onchange="GetApprovingAuthorityUserName_BY_SelectRoleId()" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option value="">---------Select---------</option></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red;">*</i>Approving Authority :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <select id="DdlUser" name="Userid" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option></option></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red;">*</i>Delegate To :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <span id="DelegationToName" style="color:red"></span>
+                                            <input type="hidden" name="DelegationId" id="HdnDelegationTo_UserId" />
+                                           &nbsp; <img id="ImgSelect" src="~/IconImages/ArrowMark.gif" style="border-width: 0px;margin-top: -8px;" />
+                                            <a id="LnkSelectUser" onclick="AddUserPage_PagePartialViewFunction()" style="color:#2C2C2C;font-size:11px;font-weight:bold;cursor:pointer">Add User</a>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red;">*</i>From Date :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" id="TxtFromDate" name="Fromdate" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red;">*</i>To Date :&nbsp;</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" id="TxtToDate" name="Todate" />
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />
+
+                                    <div style="margin-left:172px">
+                                        <input type="button" class="btn btn-primary " onclick="BackTOSearhLeaveTypes(event)" id="BtnBack" style="padding:4px 12px;border-radius:6px;" value="Back">&nbsp;&nbsp;&nbsp;
+
+                                        <input type="button" class="btn btn-light " onclick="FN_ClearValuesDeleigation('FmAddLeaveDelegationPage_SaveDetails')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
+
+                                        <input type="submit" class="btn btn-success active" onclick="SaveLeavedelegation(event)" id="BtnSaveId" style="padding:3px 8px;border-radius:6px;" value="Save">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<br />
+
+@*-----AddUserPage_Div  Result page*@
+<div id="AddUserPage_Div">
+</div>

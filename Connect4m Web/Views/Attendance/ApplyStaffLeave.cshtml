@@ -1,0 +1,967 @@
+﻿@model Connect4m_Web.Models.AttendanceModel
+@{//var marginbtn="";
+    ViewData["Title"] = "ApplyStaffLeave";
+
+    var margin = "";
+
+    if (@ViewBag.ScreenName == "ManageStaffLeave")
+    {
+        Layout = null;
+        margin = "868px";//for print btn
+      //marginbtn="723px"; //for save as draft btns
+    }
+    else
+    {
+        //marginbtn="770px";
+        margin = "920px";
+    }
+}
+@if (@ViewBag.ScreenName == "ManageStaffLeave")
+{  
+    <a id="BtnAddNewLevels" class="Undeline" style=" cursor: pointer;  letter-spacing: 0px; color: blue; font-weight: 600;font-size:12px" onclick="BackTOSearhUserLeaves(event)">Back to search</a>
+}
+<html>
+<head>
+    <link href="~/Themes/assets/css/StyleSheets/ApplyStaffLeave.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <!--<div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>-->
+    @*<link href="~/datatable/jquery.dataTables.css" rel="stylesheet" />*@
+    @*<link href="~/datatable/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+    @*<link rel="stylesheet" type="text/css" href="https://code.jquery.com/jquery-3.3.1.js">*@
+
+    <div class="row">
+        <div class="col-sm-12 col-xl-6 xl-100">
+            <div class="card">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+
+                    <li class="nav-item" id="GetMyLeaveDetails_BTN"><a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" onclick="MyLeaveTabCalingFunction_Btn()" aria-selected="false">My Leaves</a></li>
+                    <li class="nav-item" id="refreshButton"><a class="nav-link" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" onclick="ApplyLeaveTabCalingFunction_Btn()" aria-selected="false">Apply Leave</a></li>
+                    <li class="nav-item" id="GetMyAppliedLeaves_BTN"><a class="nav-link " id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" onclick="LeaveStatusTabCalingFunction_Btn()" aria-selected="true">Leave Status</a></li>
+                </ul>
+
+                <div class="card">
+                    <div class="card-header pb-0" style="padding: 0px;" id="MainScreenHeadingIdDiv">
+                        <h6 style="text-align: center; color: black; margin-top: 5px; " id="MainScreenHeadingId"><strong>STAFF LEAVE DETAILS</strong></h6>
+
+
+                        @if (@ViewBag.ScreenName == "ManageStaffLeave")
+                        {
+                            <table id="EmployeeInfo" width="40%" cellpadding="0" cellspacing="0" align="center" style="background-color: #e8e8e8; border: 1px solid #d4d4d4;">
+                                <tbody>
+                                    <tr>
+                                        <td align="right" style="height: 24px;" width="41%">
+                                            <b style="font-size: 11px;">Employee Name :</b>
+                                        </td>
+                                        <td align="left">
+                                            &nbsp;
+                                            <span id="SpanEmpName" style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <b style="font-size: 11px;">Department :</b>
+                                        </td>
+                                        <td align="left">
+                                            &nbsp;
+                                            <span id="SpanEmpDept" style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 5px;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
+                    <div class="card-body" style="padding: 15px">
+
+
+                        <div class="tab-content" id="myTabContent">
+                            @*------------------------Tab 1 Start-------------------*@
+                            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                <div class="default-according style-1" id="accordionoc">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="fa fa-pencil-square"></i><span id="TableHeadingId">MY LEAVES DETAILS</span>   </button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+
+                                            <div class="card " id="MyLeaveDetails_Table_Div" style="display:none">
+
+                                                <table id="MyLeaveDetails_Table" class="table table-responsive tableid" style="width:100%">
+                                                    @*<table id="tableid" class="table table-responsive">*@
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Leave Type</th>
+                                                            <th>Total</th>
+                                                            <th>Used</th>
+                                                            <th>Approved Not Used</th>
+                                                            <th>Leaves Awaiting Approval</th>
+                                                            <th>Available</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @*@foreach (var item in ViewBag.GetMyLeaveDetails)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @item.Leavetype1
+                                                                    </td>
+                                                                    <td>
+                                                                        @item.TotalLeaves
+                                                                    </td>
+                                                                    <td>
+                                                                        @item.DaysUsed
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @item.ApprovedNotUsedLeaves
+                                                                    </td>
+                                                                    <td>
+                                                                        @item.LeavesAwaitingApprovalLeaves
+                                                                    </td>
+                                                                    <td>
+                                                                        @item.AvailableLeaves
+                                                                    </td>
+                                                                </tr>
+                                                            }*@
+                                                    </tbody>
+
+                                                    @*<tfoot id="MyLeaveDetails_Footer">
+                                                            <tr><td colspan="6"><div style="text-align:center" id="MyLeaveDetails_Table_pagination"></div></td></tr>
+
+
+
+                                                        </tfoot>*@
+                                                </table>
+                                                @*<div id="pagination"></div>*@
+                                                <span style="color: red; font-weight: 600; font-size:11px;" id="LossOfPayMessageId">Note:- Loss Of Pay is applicable when there is no leave balance in your account.</span>
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @*------------------------Tab 1 End-------------------*@
+
+
+
+                            @*------------------------Tab 2 Start-------------------*@
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <div class="default-according style-1" id="accordionoc_myFormCart">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="fa fa-pencil-square"></i>MY SAVED LEAVES</button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc_myFormCart" style="">
+
+                                            <div class="card ">
+                                                <form id="myFormCartREFRESH">
+                                                    <table id="myFormCartREFRESHTable" class="table tableid table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Reason</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>No Of  Days</th>
+                                                                <th>Status</th>
+
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        </tbody>
+                                                        <!--<tfoot>
+                                                        <tr><td style="padding:2px" colspan="10"><p style="text-align: center; font-size:10px;" id="MySavedLeaves_Table_pagination"></p></td></tr>-->
+                                                        @*<tr><td colspan="10"><div style="text-align:center" id="MySavedLeaves_Table_pagination"></div></td></tr>*@
+
+                                                        <!--</tfoot>-->
+                                                    </table>
+                                                    @*<div id="pagination"></div>*@
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+
+
+                                <p id="your-p-id" style="margin-bottom: 0rem;">
+
+                                    <span id="successMessage"></span>
+                                    <span id="followingfieldsErrorSPAN"></span>
+                                    @*<span id="roleerror" class="text-danger"></span>*@
+
+                                    <span id="LeavetypeERROR"></span>
+                                    <span id="DescriptionidERROR"></span>
+                                    <span id="DaystypeERROR"></span>
+                                    <span id="FromdateERROR"></span>
+                                    <span id="TodateERROR"></span>
+                                    <span id="DaysessionERROR"></span>
+                                    <span id="ErrorrmessageSPAN"></span>
+                                    <span id="Datechecking"></span>
+                                </p>
+                                <div class="default-according style-1" id="accordionoc1">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><i class="fa fa-pencil-square"></i> APPLY LEAVE DETAILS</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc1" style="">
+                                            <div class="card ">
+                                                <form asp-for="ApplyStudentLeave" id="myFormCart" class="myFormCart_Class" enctype="multipart/form-data" method="post">
+                                                    <table id="tableid" class="myFormCartTable">
+                                                        @*id="myFormCartTable">*@
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Edit</th>
+                                                                <th>Leave Type</th>
+                                                                <th>Reason</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>Days</th>
+                                                                <th>Day Session</th>
+                                                                <th>Comments</th>
+                                                                <th>Total Days</th>
+                                                                <th>Delete</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @*<tbody id="myTbody">*@
+                                                        </tbody>
+                                                    </table>
+
+                                                    <input type="submit" name="submitButton" id="Submit_Request_BTN" class="submit-btn" value="Submit Request" style="margin-left:770px; padding: 0px 0px; font-size: smaller;" />&nbsp;&nbsp;&nbsp;
+
+
+                                                    @if (@ViewBag.ScreenName != "ManageStaffLeave")
+                                                    {
+                                                        <input type="submit" name="submitButton" id="Save_as_Draft_BTN" class="submit-btn" style="padding: 0px 0px; font-size: smaller;" value="Save as Draft" />
+                                                    }
+
+                                                </form>
+
+                                                <div class="card-body">
+
+                                                    <form id="myForm" class="myForm_Class" style="margin-left:13%;font-size:12px">
+                                                        <div class="row sreekanth" style="margin-right: 10%; ">
+                                                            <div class="col">
+                                                                <div class="mb-2 row light-secondary">
+                                                                    <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Leave Type :</label>
+                                                                    <div class="col-sm-8">
+                                                                        @*@Html.DropDownListFor(model => model.Leavetypeid, new SelectList(ViewBag.LeaveType1, "Value", "Text"), "     -------select------- ", new { @id = "leavetype", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
+                                                                        @*@Html.DropDownListFor(model => model.Leavetypeid, new SelectList(""), "     -------select------- ", new { @id = "leavetype", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
+                                                                        <select id="leavetype" name="InputValue[0].Leavetypeid" onchange="GetLeaveDaysAvailable_CallingFuction()" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
+                                                                            <option value="">     -------select------- </option>
+                                                                        </select>
+                                                                        <input @*asp-for="Leavetype"*@ name="InputValue[0].Leavetype" type="hidden" id="LeavetypeTB" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-2 row ">
+                                                                    <label class="col-sm-4 col-form-label  form-label"> &nbsp;&nbsp;Leave Days Available :</label>
+                                                                    <div class="col-sm-8">
+                                                                        <span id="GetLeaveDaysAvailableid" style="width: 300px; padding-top: 0px; line-height: 2.5; margin-left: 18px; "></span>
+                                                                        <input type="hidden" id="GetLeaveDaysAvailableidtTotal" />
+                                                                        <input type="hidden" id="HdnLeavetypeidForGetcurrectLeavedays">
+                                                                        <input type="hidden" id="HdnGetLeaveDaysAvailabletoLeavetype">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="mb-2 row">
+                                                                    <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Short Description for Leave Reason :</label>
+                                                                    <div class="col-sm-8">
+                                                                        @*@Html.DropDownListFor(model => model.ShortDescriptionforLeave_Reason, new SelectList(ViewBag.GetShort_Description_for_Leave_Reason2, "Value", "Text"), " ---------select------ ", new { @id = "Descriptionid1", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
+                                                                        @*<select id="Descriptionid1" class="form-control input-air-primary form-select" style="width:230px;color:black;font-size:inherit" asp-items="@(new SelectList(ViewBag.GetShort_Description_for_Leave_Reason2, "Value", "Text"))">
+                                                                                <option value=""> ---------select------ </option>
+                                                                            </select>*@
+                                                                        <select id="Descriptionid1" class="form-control input-air-primary form-select" style="width:230px;color:black;font-size:inherit" asp-items="@(new SelectList(""))">
+                                                                            <option value=""> ---------select------ </option>
+                                                                        </select>
+
+                                                                        <input name="InputValue[0].ShortDescriptionforLeave_Reason" type="text" id="DescriptionidTB1" hidden />
+
+                                                                        <span style="margin-left: 15px;" id="marriagechecking_Span"><input type="checkbox" name="InputValue[0].marriagechecking" asp-for="marriagechecking" id="marriagechecking" onclick="marriagecheckingCallingFunction()" />Applying for Marriage(self)</span>
+                                                                        <label id="labelLB" style="margin-left: 15px; font-size: 9px;"></label>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                                <div class="mb-2 row ">
+                                                                    <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Day Type :</label>
+                                                                    <div class="col ">
+
+                                                                        <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                                            <div class="radio radio-primary">
+                                                                                <input @*asp-for="Daystype"*@ name="InputValue[0].Daystype" style="padding-top: 0px" id="radioinline1" class="check" type="radio" value="0">
+                                                                                <label class="mb-0" for="radioinline1">Full day</label>
+                                                                            </div>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <div class="radio radio-primary">
+                                                                                <input @*asp-for="Daystype"*@ name="InputValue[0].Daystype" id="radioinline2" class="check" type="radio" value="1">
+                                                                                <label class="mb-0" for="radioinline2">Half day</label>
+                                                                            </div>
+                                                                            @*<input asp-for="Dayname" type="text" id="Dayname"  />*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="Dates_Div">
+                                                                    <div class="mb-1 row">
+                                                                        <label class="col-sm-4 col-form-label  form-label" id="HAlfdayLB"><i style="color:red">*</i> Date :</label>
+                                                                        <label class="col-sm-4 col-form-label  form-label" id="fromdateLB"><i style="color:red">*</i>From Date :</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input @*asp-for="Fromdate"*@ name="InputValue[0].Fromdate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="fromdate" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-1 row">
+                                                                        <label class="col-sm-4 col-form-label  form-label" id="todateLB"><i style="color:red">*</i>To Date :</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input @*asp-for="Todate"*@ name="InputValue[0].Todate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="todate" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="mb-2 row " id="DaySession">
+                                                                    <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Day Session :</label>
+                                                                    <div class="col " style="margin-left: 20px;">
+                                                                        <div class="form-group m-checkbox-inline mb-0   custom-radio-ml m-t-5">
+                                                                            <div class="radio radio-primary">
+                                                                                <input @*asp-for="Daysession"*@ name="InputValue[0].Daysession" style="padding-top: 0px" id="radioinline11" class="check1" type="radio" value="1">
+                                                                                <label class="mb-0" for="radioinline11"> Morning</label>
+                                                                            </div>
+                                                                            &nbsp;&nbsp;
+                                                                            <div class="radio radio-primary">
+                                                                                <input @*asp-for="Daysession"*@ name="InputValue[0].Daysession" id="radioinline21" class="check1" type="radio" value="2">
+                                                                                <label class="mb-0" for="radioinline21">Afternoon</label>
+                                                                            </div>
+                                                                            @*<input asp-for="Daysessionname" type="text" id="Daysessionname" />*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="mb-2 row ">
+                                                                    <label class="col-sm-4 col-form-label  form-label" style="padding-top: 29px;">&nbsp; Leave Comments :<br />&nbsp; <i style="font-size:8px">(Max of 500 Characters)</i></label>
+                                                                    <div class="col-sm-8">
+                                                                        <textarea asp-for="Leavecomments" name="InputValue[0].Leavecomments" id="Textarea" style="width: 230px; font-size: inherit; resize: none; border-style: ridge;" maxlength="500" class="form-control input-air-primary" rows="3" cols="20"></textarea>
+                                                                        <label id="LblTextareacount" style="display:none"> <i style="font-size: 10px; margin-left: 15px;"><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
+                                                                        @*<span asp-validation-for="Leavecomments" class="text-danger"></span>*@
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="mb-2 row" id="MedicalLeaveDocument">
+                                                                    <label class="col-sm-4 col-form-label  form-label"> &nbsp;&nbsp;Upload Medical Certfificate :</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="file" name="InputValue[0].file" class="form-control input-air-primary" id="attachdocument" style="width: 230px;" />
+                                                                        <a class="image-link" style="cursor: pointer; font-weight: 900; text-decoration: underline; color: blue;margin-left: 2%;" id="AttachDocumentTB_FileName_LABEL"></a>&nbsp;
+                                                                        <a class="deleteFileClass" style="color: black; font-weight: 800; cursor: pointer" id="AttachDocumentTB_FileName_LABEL_DELETE"></a>
+                                                                        <span style="display: block; font-size: 10px; width: 111%; margin-left: 2%;">(Note: Only .doc;.docx;.txt;.jpeg;.jpg;.pjpeg;.gif;.png;.pdf are supported. And upload file limit is 500KB.)</span>
+                                                                        @*<input type="text" asp-for="attachdocument" name="attachdocument" id="AttachDocumentTB_FileName_TEXTBOX" hidden/>*@
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="hidden" name="InputValue[0].Batchid" id="BatchidTextbox" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div>
+
+                                                                    <div class="col-sm-8">
+
+                                                                        <input type="hidden" name="InputValue[0].LeaveApplicationId" id="LeaveApplicationId" />
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="hidden" name="InputValue[0].attachdocument" id="attachdocument_String" />
+                                                                    </div>
+                                                                </div>
+                                                                <div style="margin-left:36%">
+                                                                    <input type="reset" class="btn btn-light " onclick=" FN_ClearValues1('myForm')" id="myForm_ClearBtn" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+                                                                    <input type="submit" class="btn btn-primary active" id="savebutton" style="padding:3px 8px;border-radius:6px;" value="Add Leaves To Cart" />
+                                                                    @*@Html.ActionLink("Back", "GetRoleDropDown", new { back = @ViewBag.Sessionuser_roleid1 }, new { @class = "btn btn-primary", style = "font-size:18px;color:white" })*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <br />
+                                @*<a id="A1" href="#" onclick="javascript:CallPrint('PrintBTN')">PRINT</a>*@
+
+
+                                <a id="PrintBTN_IN_ApplyLeave" style="color: blue; font-weight: 800; cursor: pointer; margin-left: @margin; text-decoration: underline;" onclick="javascript:CallPrint('printDetails_Form_IN_ApplyLeave')"></a>
+
+                                <div class="default-according style-1" id="accordionoc_Print">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon_Print" aria-expanded="true" aria-controls="collapse112"><i class="icofont icofont-briefcase-alt-2" style="color:black"></i><span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory_IN_ApplyLeave"></span> </button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon_Print" aria-labelledby="collapseicon_Print" data-bs-parent="#accordionoc_Print" style="">
+
+                                            <div class="card ">
+
+                                                <form id="printDetails_Form_IN_ApplyLeave">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height: 24px;">
+
+                                                                <link href="~/Themes/assets/css/StyleSheets/ApplyStaffLeave.css" rel="stylesheet" />
+
+                                                                <table>
+                                                                </table><table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td valign="top">
+                                                                                <table width="100%" cellspacing="0" cellpadding="3" align="center" class="BCcolor">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table id="SchoolnameTable" width="100%" cellspacing="0">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td width="95px" align="center" rowspan="2" valign="top">
+                                                                                                                                                <img src="https://www.connect4m.com/R3Images/FeeHeaderPhotos/545/Jnanadeeplogo.png" style=" margin-left: 30%;" alt="">
+                                                                                                                                            </td>
+                                                                                                                                            <td class="Leavetitle">
+                                                                                                                                                <b class="schooltitle"><span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_instancename_IN_ApplyLeave"></span></b><br>
+                                                                                                                                                <span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_ADDRESS_IN_ApplyLeave"></span><br>
+                                                                                                                                                <br>
+                                                                                                                                                <b class="subLeavetitle">Applied Leave Details</b>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td style="height: 5px;">
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="height: 15px;">
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <table id="GetMyAppliedLeaves_Table_Print_IN_ApplyLeave" width="100%" border="1" cellspacing="0">
+                                                                                                                                                    <thead>
+                                                                                                                                                        <tr style='border: 1px solid;' class="subLeavetitle"> <th>S.No </th><th>Submitted By </th><th> Department </th>  <th>Date of Joining </th><th> Submitted To </th> <th>Leave Type </th><th>From Date</th><th>To Date</th>  <th>NO of Days</th><th> Available</th> <th> Status</th></tr>
+
+                                                                                                                                                    </thead>
+                                                                                                                                                    <tbody>
+                                                                                                                                                        @*<tr> <td class="bonafidetxt" nowrap="" align="center"> &nbsp; 1</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp;Administration</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 10 Mar 2004</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; CL</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0.5</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Self-Approved</td> </tr>*@
+
+                                                                                                                                                    </tbody>
+                                                                                                                                                </table>
+                                                                                                                                                <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                                                    <tbody>
+                                                                                                                                                        <tr>
+                                                                                                                                                            <td style="height: 15px;">
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+                                                                                                                                                        <tr>
+                                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                                            </td>
+                                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                                            </td>
+                                                                                                                                                            <td nowrap="" style="height: 50px; width : 50px">
+                                                                                                                                                                <table id="TotalNoofDays_TABLE_IN_ApplyLeave" border="1" style="height: 50px; width : 50px">
+                                                                                                                                                                    <thead>
+                                                                                                                                                                        <tr>
+                                                                                                                                                                            <td nowrap="" class="subLeavetitle" align="center" style="height: 20px; width : 128px">
+                                                                                                                                                                                Total No of Days:
+
+                                                                                                                                                                            </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    </thead>
+                                                                                                                                                                    <tbody>
+                                                                                                                                                                        <tr>
+
+                                                                                                                                                                            <td id="TotalNoofDays_TABLE_TD_IN_ApplyLeave" nowrap="" style=" border: 1px solid;" align="center" class="bonafidetxt">
+                                                                                                                                                                                @*0.5*@
+                                                                                                                                                                            </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    </tbody>
+                                                                                                                                                                </table>
+
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+
+                                                                                                                                                    </tbody>
+                                                                                                                                                </table>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*------------------------Tab 2 End-------------------*@
+
+
+                            @*------------------------Tab 3 Start-------------------*@
+                            @*this is Leave Status Page*@
+                            <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+
+                                <p id="your-p-id1">
+                                    <span id="successMessage1"></span>
+                                    <span id="followingfieldsErrorSPAN1"></span>
+                                </p>
+                                <div class="default-according style-1" id="accordionoc">
+
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="NoRecordsMsg"><i class="fa fa-pencil-square"></i>MY APPLIED LEAVES </span></button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+
+                                            <div class="card ">
+                                                <form id="GetMyAppliedLeaves_Form">
+
+                                                    @*<table id="data-table" class="table table-bordered">*@
+                                                    <table id="GetMyAppliedLeaves_Table" class=" display nowrap  tableid" style="width:100%">
+
+
+                                                        @*<table id="tableid" class="table table-responsive">*@
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="padding-right:0px;">View Status</th>
+                                                                <th>Reason</th>
+                                                                <th>Leave Type</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>No Of  Days</th>
+                                                                <th>Status</th>
+                                                                <th>Applied Date</th>
+                                                                <th>Cancel Leave</th>
+                                                                <th>Print Leave</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                        @*<tfoot>
+                                                                <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="GetMyAppliedLeaves_Table_pagination"></div></td></tr>
+
+                                                            </tfoot>*@
+                                                    </table>
+
+                                                </form>
+
+                                            </div>
+                                            @* </div>*@
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <br />
+                                @*<a id="A1" href="#" onclick="javascript:CallPrint('PrintBTN')">PRINT</a>*@
+                                <a id="PrintBTN" style="color: blue; font-weight: 800; cursor: pointer ; margin-left: @margin;  text-decoration: underline;" onclick="javascript:CallPrint('printDetails_Form')"></a>
+
+                                <div class="default-according style-1" id="accordionoc_VIEW">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color:black ;">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon_VIEW" aria-expanded="true" aria-controls="collapse112"><i class="icofont icofont-briefcase-alt-2" style="color:black"></i><span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span> </button>
+                                            </h5>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseicon_VIEW" aria-labelledby="collapseicon_VIEW" data-bs-parent="#accordionoc_VIEW" style="">
+
+                                            <div class="card ">
+                                                <form id="GetMyAppliedLeaves_Form_VIEW">
+
+                                                    @*<table id="data-table" class="table table-bordered">*@
+                                                    <table id="GetMyAppliedLeaves_Table_VIEW" class=" display nowrap  tableid" style="width:100%">
+
+                                                        @*<table id="tableid" class="table table-responsive">*@
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Submitted By</th>
+                                                                <th>Assigned To</th>
+                                                                <th>Comments</th>
+                                                                <th>Approval Status</th>
+                                                                <th>Overall Status</th>
+                                                                <th>Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                        @*<tfoot>
+                                                                <tr><td colspan="10"><div style="text-align:center" id="GetMyAppliedLeaves_Table_VIEW_pagination"></div></td></tr>
+
+
+
+                                                            </tfoot>*@
+                                                    </table>
+
+                                                </form>
+
+
+                                                <form id="printDetails_Form">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height: 24px; ">
+
+
+
+                                                                @*<style type="text/css">
+
+                                                                        .BCcolor {
+                                                                            border: 4px solid #000000;
+                                                                        }
+
+                                                                        .BCcolor2 {
+                                                                            border: 2px solid #000000;
+                                                                        }
+
+                                                                        .subLeavetitle {
+                                                                            /* font-family: Times New Roman;*/
+                                                                            font-size: 12px;
+                                                                            font-weight: bold;
+                                                                            color: #000000;
+                                                                            text-align: center;
+                                                                            letter-spacing: 1px;
+                                                                        }
+
+                                                                        .Leavetitle {
+                                                                            /*font-family: Times New Roman;*/
+                                                                            font-size: 16px;
+                                                                            font-weight: bold;
+                                                                            color: #000000;
+                                                                            text-align: center;
+                                                                            letter-spacing: 1px;
+                                                                            height: 10px;
+                                                                            text-transform: uppercase;
+                                                                        }
+
+                                                                        .bonafidetxt {
+                                                                            font-family: Arial;
+                                                                            font-size: 12px;
+                                                                            font-style: normal;
+                                                                            color: #000000;
+                                                                            height: 50px;
+                                                                            width: 100px;
+                                                                        }
+
+                                                                        .dottedbonafidetxt {
+                                                                            font-family: Arial;
+                                                                            font-size: 11px;
+                                                                            font-style: normal;
+                                                                            padding-left: 12px;
+                                                                            padding-right: 12px;
+                                                                            color: #000000;
+                                                                            height: 15px;
+                                                                            border-bottom: 3px dotted #000000;
+                                                                        }
+
+                                                                        /*body {*/
+                                                                            /*font-family: Times New Roman;*/
+                                                                            /*font-size: 15px;
+                                                                            color: #000000;
+                                                                        }*/
+                                                                    </style>*@
+
+
+
+                                                                <link href="~/Themes/assets/css/StyleSheets/ApplyStaffLeave.css" rel="stylesheet" />
+
+
+                                                                <table>
+                                                                </table><table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td valign="top">
+                                                                                <table width="100%" cellspacing="0" cellpadding="3" align="center" class="BCcolor">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table id="SchoolnameTable" width="100%" cellspacing="0">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td width="95px" align="center" rowspan="2" valign="top">
+                                                                                                                                                <img src="https://www.connect4m.com/R3Images/FeeHeaderPhotos/545/Jnanadeeplogo.png" style=" margin-left: 20%;" alt="">
+                                                                                                                                            </td>
+                                                                                                                                            <td class="Leavetitle">
+                                                                                                                                                <b class="schooltitle"><span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_instancename"></span></b><br>
+                                                                                                                                                <span style=" font-family: Times New Roman;font-weight:600" id="SchoolnameTable_ADDRESS"></span><br>
+                                                                                                                                                <br>
+                                                                                                                                                <b class="subLeavetitle">Applied Leave Details</b>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td style="height: 5px;">
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                                <table width="100%" cellspacing="0" cellpadding="2" align="center" class="BCcolor2">
+                                                                                                                    <tbody>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table width="100%" cellspacing="0" align="center">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="height: 15px;">
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <table id="GetMyAppliedLeaves_Table_Print" width="100%" border="1" cellspacing="0">
+                                                                                                                                                    <thead>
+                                                                                                                                                        <tr style='border: 1px solid;' class="subLeavetitle"> <th>S.No </th><th>Submitted By </th><th> Department </th>  <th>Date of Joining </th><th> Submitted To </th> <th>Leave Type </th><th>From Date</th><th>To Date</th>  <th>NO of Days</th><th> Available</th> <th> Status</th></tr>
+
+                                                                                                                                                    </thead>
+                                                                                                                                                    <tbody>
+                                                                                                                                                        @*<tr> <td class="bonafidetxt" nowrap="" align="center"> &nbsp; 1</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp;Administration</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 10 Mar 2004</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Admin</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; CL</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 30 May 2023</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0.5</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; 0</td><td class="bonafidetxt" nowrap="" align="center"> &nbsp; Self-Approved</td> </tr>*@
+
+                                                                                                                                                    </tbody>
+                                                                                                                                                </table>
+                                                                                                                                                <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                                                    <tbody>
+                                                                                                                                                        <tr>
+                                                                                                                                                            <td style="height: 15px;">
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+                                                                                                                                                        <tr>
+                                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                                            </td>
+                                                                                                                                                            <td style="height: 50px; width : 170px">
+                                                                                                                                                            </td>
+                                                                                                                                                            <td nowrap="" style="height: 50px; width : 50px">
+                                                                                                                                                                <table id="TotalNoofDays_TABLE" border="1" style="height: 50px; width : 50px">
+                                                                                                                                                                    <thead>
+                                                                                                                                                                        <tr>
+                                                                                                                                                                            <td nowrap="" class="subLeavetitle" align="center" style="height: 20px; width : 128px">
+                                                                                                                                                                                Total No of Days:
+
+                                                                                                                                                                            </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    </thead>
+                                                                                                                                                                    <tbody>
+                                                                                                                                                                        <tr>
+
+                                                                                                                                                                            <td id="TotalNoofDays_TABLE_TD" nowrap="" style=" border: 1px solid;" align="center" class="bonafidetxt">
+                                                                                                                                                                                @*0.5*@
+                                                                                                                                                                            </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    </tbody>
+                                                                                                                                                                </table>
+
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+
+                                                                                                                                                    </tbody>
+                                                                                                                                                </table>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            @*------------------------Tab 3 End-------------------*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="EditBTid" />
+    <input type="hidden" id="TotaldaysInTable" />
+    <input type="hidden" value="@ViewBag.Userid" id="Userid" />
+    <input type="hidden" value="@ViewBag.Instanceid" id="Instanceid" />
+    <input type="hidden" value="@ViewBag.Returnmsg" id="backval" />
+    <input type="hidden" value="@ViewBag.ScreenName" id="ScreenName" />
+</body>
+</html>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+@*<script src="~/js/StaffLeaveScripts.js"></script>*@
+<script src="~/js/ApplyStaffLeave.js"></script>
+<script src="~/js/PaginationToTables.js"></script>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+@*//This is for edit*@
+<script>
+    //$(document).ready(fun32READYFUNCTION);
+
+    $(document).ready(function () {
+
+        //$("#MyLeaveDetails_Footer").hide();
+        GetMyLeaveDetails_CallingMethod();
+
+        //This is for hide Date Label
+        $("#HAlfdayLB").hide();
+        $("#DaySession").hide();
+        $("#MedicalLeaveDocument").hide();
+        $("#Dates_Div").hide();
+        $("#myFormCart").hide();
+    });
+
+</script>
+
+
+
+
+
+
+

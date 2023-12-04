@@ -1,0 +1,260 @@
+﻿@model Connect4m_Web.Models.ExaminationModel
+@{
+    ViewData["Title"] = "ManageSubjects";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .Ddlstyle {
+            width: 230px;
+            color: black;
+            font-size: inherit;
+            height: 27px;
+        }
+
+        .errorboxshadow {
+            box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>MANAGE SUBJECTS</strong></h6>
+        </div>
+        <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+       
+        <a id="BtnCreateNewSubjects" class="BTNCreateNew Undeline" onclick="CreateNewSubjects()">Create Subject</a>
+
+        <div class="default-according style-1" id="accordionoc9">
+
+            <div class="card-body" style=" padding-top: 0px;" id="CreateNewSubjectsDiv">
+
+                @*<a id="BtnCreateNewExams" class="BTNCreateNew Undeline" href="/Examination/UpdateManageSubjects" onclick="CreateNewExams()">Create Subject</a>*@
+
+
+                <div class="card" id="CreateNewPage">
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon1200" aria-controls="collapse11">
+                                <span id="AddNewText_Span_CreatePage">
+                                    SEARCH SUBJECTS
+                                </span>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
+                        <div class="card ">
+                            <div class="card-body">
+                                @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
+                                <form id="FmSubjectSearch">
+                                    <div style="margin-left:20%;font-size:12px" id="FmExamsCreate_Div">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"> Subject Name :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="Name" id="TxtSubjectName" style="height: 27px; width: 230px;">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;">Subject Code   :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" name="SubjectCode" id="TxtSubjectCode" style="height: 27px; width: 230px;">
+
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"> Department :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <select id='DdlDepartment' name="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))">
+                                                            <option value=''>Select a Department</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"> Class :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <select id='DdlClass' name="InstanceSubClassificationId" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))" disabled>
+                                                            <option value=''>Please select a Class</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-2 row">
+                                                    <div class="col-sm-9" style=" margin-left: 25%;">
+                                                        <input type="checkbox" />
+                                                        <label>Show all Subjects</label>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-left:200px">
+                                                    <input type="button" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear" style="padding:4px 20px;" value="Clear">&nbsp;&nbsp;&nbsp;
+                                                    <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblSubjectListData', 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);" id="BtnSave" style="padding:4px 19px;" value="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                @*searched result table*@
+                <div id="Div_TblSubjectListData" style="display:none">
+                    <div class="default-according style-1" id="accordionoc123456">
+                        <div class="card" id="SearchedTablePage">
+                            <div class="card-header " style="background-color:black ;">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                <div class="card ">
+                                    <form id="Fm_TblSubjectListData" class="table-responsive">
+                                        @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
+                                        <table id="TblSubjectListData" class="display cell-border  tableid">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">Subjects</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*-----create page*@
+
+
+
+        </div>
+        <div id="CreateNewSubjects">
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script>
+   
+
+    $(document).ready(function () {
+        $("#loadingOverlay").show();
+        TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblSubjectListData", 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);
+        CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+        $("#loadingOverlay").hide();
+    });
+    var js = jQuery.noConflict(true);
+
+    //-------This is For Delete
+    $(document).ready(function () {
+        $(document).on("click", '#DeleteSubClassification', function (event) {
+            event.stopImmediatePropagation();
+            debugger;
+
+            var Subjectname = $("#Subjectname").val();
+            CommonDeleteFunction('POST', '/Examination/ManageSubjects?ButtonName=Delete&SubjectName=' + Subjectname, 'Subject', function (response) {
+                $("#loadingOverlay").show();
+                TblDataTableWithColumns_CallingFunction(event, 'NoStop', "/Examination/TblSubjectListData", 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);
+                $("#accordionoc9").show();
+                $("#CreateNewSubjects").empty();
+                $(".ErrorMessageSpan").empty();
+                $("#loadingOverlay").hide();
+                $("Main_Span_Error").text(response.message);
+            });
+        });
+    });
+
+    function EditValuesGettingFunction(subjectText) {
+        debugger;
+        var data = { SubjectName: subjectText };
+        $("#loadingOverlay").show();
+
+        performCrudOperationCommonFunction("GET", "/Examination/UpdateManageSubjects", data, function (response) {
+            debugger;
+          //  $("#CreateNewSubjects").html(response);
+            $("#accordionoc9").hide();
+            $("#CreateNewSubjects").html(response);
+           
+            $("#Saveclassfication_MS").val("Update");
+            $("#loadingOverlay").hide();
+        }, function (error) {
+           // alert(error)
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error1");
+            //console.error(error);
+        });
+
+      //  CreateNewSubjects();
+        //var url = "/Examination/TblExamListData?Id=" + examid;
+        //performCrudOperationCommonFunction("POST", url, null, function (responce) {
+        //    debugger;
+        //    $("#AddNewText_Span_CreatePage").text("UPDATE EXAM NAME");
+        //    $("#DdlAcademicYearCreatePage1").val(responce[0].academicYearId);
+        //    $("#TxtExamNameCreatePage1").val(responce[0].examName);
+        //    $("#TxtDisplayorderCreatePage").val(responce[0].displayorder);
+        //    $("#TxtExamidCreatePage").val(responce[0].id);
+
+        //    $('input[name="ExamForAcademics"][value="' + responce[0].exaternalExam + '"]').prop("checked", true);
+     //   $("#Saveclassfication_MS").val("Update");
+          //  $("#BtnClear").prop("disabled", true);
+        //});
+       
+    }
+
+    function CreateNewSubjects() {
+        try {      
+        $("#loadingOverlay").show();
+        debugger;
+            performCrudOperationCommonFunction("GET", "/Examination/UpdateManageSubjects?Buttonname=Create", "", function (response) {
+            debugger;
+            $("#accordionoc9").hide();
+            $("#CreateNewSubjects").html(response);
+        }, function (error) {
+            $("#Main_Span_Error").text("Something Error");
+            //console.error(error);
+        });
+            $("#loadingOverlay").hide();
+        } catch (x) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+    function BackTOSearhExams(event) {
+        try {
+            $("#loadingOverlay").show();
+            TblDataTableWithColumns_CallingFunction(event, 'NoStop', "/Examination/TblSubjectListData", 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);
+            $("#accordionoc9").show();
+            $("#CreateNewSubjects").empty();
+            $(".ErrorMessageSpan").empty();
+            $("#loadingOverlay").hide();
+        } catch (x) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+</script>
+
+

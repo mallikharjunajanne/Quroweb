@@ -1,0 +1,120 @@
+﻿
+
+
+.TableCount_SpId {
+    background-color: #fd761e;
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.Header_Btn {
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    margin-left: 3px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 29px;
+    font-size: 14px;
+    font-weight: bolder;
+    width: 99%;
+}
+.Header_text_span {
+    color: white;
+    font-size: 13px;
+    font-weight: bolder;
+}
+.NextPage_Btn {
+    height: 27px;
+    width: 9%;
+    border-radius: 10px;
+    color: violet;
+    font-weight: 800;
+}
+.Clr_Btn {
+    height: 27px;
+    width: 10%;
+    border-radius: 10px;
+    color: red;
+    font-weight: 800;
+}
+.Search_Btn {
+    height: 27px;
+    width: 9%;
+    border-radius: 10px;
+    color: black;
+    font-weight: 800;
+}
+
+.PreviousPage_Btn {
+    height: 27px;
+    width: 13%;
+    border-radius: 10px;
+    color: tomato;
+    font-weight: 900;
+}
+.NewCreatingBankbtn {
+    text-align: right;
+    font-weight: bolder;
+    color: black;
+    font-family: initial;
+}
+/*table Styles Code Starting */
+
+table {
+    width: 102%;
+    border-collapse: collapse;
+    border: 1px solid black;
+    margin-left: -8px;
+    margin-top: 0px;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    border: 1px solid #DC5;
+    background-color: blanchedalmond;
+    font-size: 14px;
+    text-align: center;
+    font-family: auto;
+    color: black;
+    padding: 5px;
+}
+
+td {
+    border: 1px solid #DC5;
+    font-family: auto;
+    padding: 5px;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/*table Styles Code End */
+
+.Text_CSS {
+    width: 48%;
+    border: 1px solid #D5F;
+    filter: drop-shadow(0px 0px 1px black);
+    outline: none;
+    
+}
+input[type="text"]:focus {
+    border:2px solid blue;
+    outline: none;
+}
+
+
+.TextAreaTXT {
+    height: 120px;
+    width: 380px;
+    border: 1px solid #D5F;
+    filter: drop-shadow(0px 0px 1px black);
+    outline: none;
+}

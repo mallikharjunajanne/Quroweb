@@ -1,0 +1,296 @@
+﻿body {
+}
+
+
+
+
+.red-border {
+    border: 1px solid red;
+}
+
+.NextPageBtn {
+    border-radius: 8px;
+    cursor: pointer;
+    border: none !important;
+    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+}
+
+.PreviousPageBtn {
+    border-radius: 8px;
+    cursor: pointer;
+    border: none !important;
+    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+}
+
+
+.Set_Fee_Users_Table {
+    width: 99%;
+    /* border-collapse: collapse; */
+    /* border: 8px solid #DD7; */
+    margin-top: -16px;
+    background-color: white;
+    margin-left: 0px;
+}
+
+    .Set_Fee_Users_Table th {
+        /* padding: 6px;*/
+        border: 2px solid #DC5;
+        background-color: cyan;
+        font-size: 14px;
+        text-align: center;
+        font-family: auto;
+    }
+
+    .Set_Fee_Users_Table td {
+        /*border: 1px solid #D90;*/
+        border: 1px solid white;
+        padding: 1px;
+        font-family: auto;
+    }
+
+    .Set_Fee_Users_Table tr:hover {
+        /* background-color: #f5f5f5;*/
+        background-color: #f5f5f5;
+    }
+
+
+/*----List Box Type Dropdowns Css Code Start-----*/
+
+.custom-dropdown {
+    position: relative;
+    display: inherit;
+}
+
+.dropdown-options {
+    max-height: 95px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    background-color: #fff;
+    z-index: 1;
+    position: unset;
+    border-radius: 4px;
+    width: 90%;
+    height: 100px;
+    font-family: none;
+}
+
+    .dropdown-options li {
+        padding: 0px;
+        border-bottom: 0px;
+        margin-left: 5px;
+    }
+
+        .dropdown-options li:last-child {
+            border-bottom: none;
+        }
+
+    .dropdown-options label {
+        cursor: pointer;
+        height: 13px;
+        font-size: 14px;
+        margin-left: 6px;
+        font-weight: 400;
+    }
+
+.dropdown-toggle {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/*--List Box No options Message Show Css Code Start--*/
+.NoOptions_message {
+    background-color: #1dcdbd;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bolder;
+    width: 224px;
+    margin-left: 36px;
+    margin-top: 35px;
+    border-radius: 11px;
+    filter: drop-shadow(0px 0px 13px black);
+}
+
+/*--List Box No options Message Show Css Code Start--*/
+
+/*----List Box Type Dropdowns Css Code End-----*/
+
+/*----HEADER BTN NAMES AND STYLE CODE START----*/
+.Headers_Btn {
+    /* height: 30px;
+    background-color: tomato;
+    border-radius: 8px;
+    font-family: auto;
+    border-color: tomato;*/
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    margin-left: 3px;
+    font-family: emoji;
+    border: 2px solid black;
+    height: 29px;
+    font-size: 14px;
+    font-weight: bolder;
+    width: 99%;
+}
+
+.Header_text_span {
+    /*color: cornsilk;
+    font-size: 19px;
+    font-weight: bolder;*/
+    color: white;
+    font-size: 13px;
+    font-weight: bolder;
+}
+
+/*----HEADER BTN NAMES AND STYLE CODE END----*/
+
+.control-label {
+    font-family: none;
+}
+
+.Dropdown_Css {
+    height: 24px;
+    width: 75%;
+    border-radius: 4px;
+    font-family: none;
+}
+
+.dropdown-style {
+    height: 24px;
+    width: 100%;
+    border-radius: 4px;
+    font-family: nono;
+}
+
+
+/*Table Css Code Start*/
+.table-responsive {
+    display: block;
+    overflow-x: auto;       
+    white-space: nowrap;
+  /*/ max-width: 100%;*/
+}
+
+.UsersTable {
+    border: 1px solid #DC5;
+    font-family: auto;
+    width: 102.5%;
+    border-collapse: collapse;
+    /* border: 8px solid #DD7; */
+    margin-top: -17px;
+    background-color: white;
+    margin-left: -11px;
+    /*height: 350px;*/
+    height: 500%;
+}
+    .UsersTable thead {
+        background-color: aquamarine;
+        color: black;
+    }
+    .UsersTable  th{
+        border: 1px solid #DC5;
+        font-family: auto;
+    }
+    .UsersTable tbody  td{
+        border: 1px solid #DC5;
+        font-family: auto;
+    }
+
+
+/*Table Css Code End*/
+
+.Count_SpId {
+    background-color: white;
+    color: red;
+    border-radius: 16px;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 600;
+}
+
+
+.fontawesomeicon::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.File-Import::before {
+    font: var(--fa-font-solid);
+    content: ' \f56f';
+}
+
+
+.UsersTableByIndividual {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 5px;
+    border: 1px solid #E64;
+    font-family: auto;
+    border-collapse: collapse;
+    background-color: white;
+    height: 350px;
+}
+    .UsersTableByIndividual thead {
+        background-color: cornflowerblue;
+        color: black;
+    }
+
+    .UsersTableByIndividual th {
+        border: 1px solid #9a44ee;
+        font-family: auto;
+    }
+
+    .UsersTableByIndividual tbody td {
+        border: 1px solid #9a44ee;
+        font-family: auto;
+    }
+
+
+.Spantext {
+   /* background-color: blue;
+    margin-left: 18px;
+    color: white;
+    font-size: 20px;
+    border-radius: 4px;
+    text-align: left;
+    cursor: pointer;
+    position: relative;*/
+    background-color: blue;
+    margin-left: 9px;
+    color: white;
+    font-size: 21px;
+    border-radius: 4px;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    padding: 3px;
+    padding-right: 9px;
+    padding-left: 9px;
+    padding-top: 0px;
+}
+
+    .Spantext::after {      
+        content: attr(title);
+        display: none;
+        position: absolute;
+        color: white;
+        background-color:black;
+        padding: 7px;
+        border-radius: 19px;
+        border-bottom-right-radius: 0px;
+        font-size: 14px;
+        width: 450px;
+        top: -191%;
+        left: -429px;
+    }
+
+    .Spantext:hover::after {
+        display: block;
+    }
+

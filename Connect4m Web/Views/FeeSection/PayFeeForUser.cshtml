@@ -1,0 +1,3339 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.PAY_FEE_BY_USERS
+@{
+    ViewData["Title"] = "PayFeeForUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        span.validation {
+            display: block;
+            color: red;
+        }
+
+        .NextPageBtn {
+            border-radius: 8px;
+            cursor: pointer;
+            border: none !important;
+            box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+        }
+
+        .PreviousPageBtn {
+            border-radius: 8px;
+            cursor: pointer;
+            border: none !important;
+            box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
+        }
+
+    </style>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-1 {
+            flex-basis: 8%;
+        }
+
+        .col-5 {
+            flex-basis: 40%;
+        }
+
+        .col-form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 0px;
+        }
+    </style>
+
+    <style>
+        .date-picker {
+            position: relative;
+        }
+
+            .date-picker input {
+                height: 25px;
+                font-size: 13px;
+                padding-right: 25px;
+            }
+
+            .date-picker .date-icon {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+            }
+
+
+
+    </style>
+
+    <link href="~/css/maps/PayFeeByUser.css" rel="stylesheet" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+
+    <div class="card">
+        <div class="spinner-container" id="loadingSpinnerContainer">
+
+            <div class="overlay">
+                <div id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                    <div class="spinner"></div>
+                </div>
+                <div class="loading-text">Loading....</div>
+            </div>
+        </div>
+
+     
+        <div class="card-header pb-0">
+            <div style=" font-size: 20px; text-align: center;">
+                <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: -13px; ">PAY FEE BY USERS</h1>
+            </div>
+        </div>
+        <div>
+            <span id="ErrorMessages_EditUsers" class="UsrName_SpanId"></span><br />
+            <span id="UserName_Classification_subclasification_ID" class="UsrName_SpanId"></span>
+            <span id="ErrorMessage" class="UsrName_SpanId"></span>
+        </div>
+        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">SEARCH USER </span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body">
+                            <div id="searchFormContainer">
+                                <form asp-action="PayFeeForUser" id="searchForm">
+                                    <div class="row">
+                                        <div class="row">
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style="font-size: 13px;"> Reg. No: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" asp-for="InstanceId" value="@ViewBag.InstanceId" />
+                                                <input type="text" asp-for="InstanceUserCode" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label"> User Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="UserName" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> First Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="FirstName" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Last Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="LastName" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Department : </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="classificationDropdown" asp-for="InstanceClassificationId" style="height: 25px; width: 66%; border-radius: 4px; font-size: 13px;">
+                                                </select>
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Class : </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="SubclassificationDropdown" asp-for="InstanceSubClassificationId" class="dropdown-style">
+                                                </select>
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Parent Name: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="ParentName" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Mobile Number: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="MobilePhone" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;"> Email ID: </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="PortalEmail" style=" height: 25px; width: 66%;" />
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px; margin-left: -9px; "> Student Quota/Type : </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <select id="PFU_StudentQuota_DDID" asp-for="StudentQuota" style="height: 25px; width: 66%; border-radius: 4px; font-size: 13px; ">
+                                                </select>
+                                            </div>
+                                            <div style="padding: 0px; text-align: end; margin-top: 1px;" class="form-group col-2">
+                                                <label class="control-label" style=" height: 25px;">IC Number : </label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" asp-for="ICNumber" style=" height: 25px; width: 66%;" />
+                                            </div>
+
+                                        </div>
+                                        <div style=" text-align: center; margin-left: -20px; margin-top: 13px;">
+
+                                            <a href="/FeeSection/ManageFeeDetails" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>
+                                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-danger-2x" style="" />
+                                            <input type="submit" value="Search" name="Search_PayFeeUser" id="Search_PayFeeUser"class="btn btn-pill btn-outline-success-2x" style=" " />
+                                            <input type="submit" value="NoFee" name="Search_NoFeeUser" id="Search_NoFeeUser"  class="btn btn-pill btn-outline-light-2x txt-dark" style=" width: 11%; letter-spacing: 3px;" />
+                                            <a href="/FeeSection/FeeStatus" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="SearchPayFor_UsersTbl_Divid" class="card-body">
+            <div>              
+                <span id="FeeNot_Scheduled_Vallidation_spId" style=" margin-left: 10px; color: red; font-family: auto; font-weight: bold;"></span>
+            </div>
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="Headers_Btn"  id="Header_text" data-bs-toggle="" data-bs-target="" aria-controls="" width="99%"><span class="Header_text_span">YOUR SEARCH RESULTED <span id="TableCount" style="background-color: white; color: red; border-radius: 16px; font-size: 16px; padding: 5px; font-weight: 600;"></span>  <span id="FeeTextId" class="Header_text_span"></span>  RECORDS</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                        <div class="card-body" id="TableDate_forUsers_DivId">
+                            <table id="SearchUser_tblId" class="Users_Tablestyles">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>RegNo</th>
+                                        <th>Role</th>
+                                        <th>Department</th>
+                                        <th>Class</th>
+                                        <th id="mobilenumber">Mobile Number</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <div id="FeePayforUserTbl_pagination" class="pagination" style="margin-left: 33%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="GetFeeTermDetialsByUser_DIVID">
+            <input type="hidden" id="userIdTextBox">
+            <span id="Update_SubmitvalidationMessage" style=" font-weight: bold; color: red; font-size: 12px; font-family: auto; margin-left: 8px;"></span>
+
+            <div class="row">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <div class="default-according style-1" id="accordionoc">
+                            <div class="card">
+                                <div>
+                                    <h5 class="mb-0">
+                                      <button class="Name_Header_Btn" data-bs-toggle="collapse14" data-bs-target="#collapseicon14" aria-expanded="true" aria-controls="collapse14" style=" font-size: 13px;"> SEARCH FEE DETAILS </button>
+                                    </h5>
+                                </div>
+                                <div class="collapse show" id="collapse14" aria-labelledby="collapse14" data-bs-parent="#accordionoc14" style="">
+                                    <div class="card-body" style=" border: 1px solid rosybrown; width: 99%; margin-left: 5px;">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="form-group col-3">
+                                                    <label class="control-label" style="font-size: 14px; margin-left: -15px; font-family: none; text-align: right; margin-top: 30px; ">
+                                                        Select Terms :
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-8">
+                                                    <select id="UserFee_GetFeeTermDetialsByUser_DDId" multiple style="font-family: auto; height: 85px; width: 100%; border-radius: 4px;">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input type="button" value="Search" id="UserFee_Details_SearchBtn" class="btn btn-pill btn-outline-success-2x" style="border-radius: 8px; width: 29%; margin-left: 34%; margin-top: 10px; font-size: 13px;" @*class="UserDetails_searchBtn"*@ />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-6">
+                        <div class="default-according style-1" id="accordionoc">
+                            <div class="card">
+                                <div>
+                                    <h5 class="mb-0">
+                                       
+                                        <button class="Name_Header_Btn" data-bs-toggle="collapse13" data-bs-target="#collapseicon13" aria-expanded="true" aria-controls="collapse13" style=" font-size: 13px;">MANAGE FEE DETAILS</button>
+                                       
+                                    </h5>
+                                </div>
+                                <div class="collapse show" id="collapse13" aria-labelledby="collapseicon13" data-bs-parent="#accordionoc13" style="">
+                                    <div class="card-body" id="TableDate_forUsers_DivId" style=" border: 1px solid rosybrown; width: 99%; margin-left: 5px;">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font> Fee Term: </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <select id="FeeTerms_DDId" style="height: 25px; width: 90%; border-radius: 4px; font-family: auto; font-size: 13px; ">
+                                                    </select>
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style=" font-family: auto; height: 17px; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font> Fee Type: </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <select id="Fee_Type_DDId" style="height: 25px; font-family: auto; width: 90%; border-radius: 4px; font-size: 13px;">
+                                                    </select>
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px;"> Discount Type: </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <select id="Discount_TypeDDId" style="font-family: auto; height: 25px; width: 90%; font-size: 13px; border-radius: 4px; ">
+                                                    </select>
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style=" font-family: auto; height: 17px; font-size: 13px;"> Discount Amount : </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <input type="text" style="width: 90%; height: 25px; font-size: 13px; font-family: auto; " id="DiscountAmount_TXTID" />
+                                                    <input type="hidden" style="width: 90%; height: 25px; font-size: 13px; font-family: auto; " id="paidAmount_TXTID" />
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 2px;" class="col-5" id="Quantity_DivLbl">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px; "><font style="color: red; font-size: 13px;">*</font>  Quantity: </label>
+                                                </div>
+                                                <div class="form-group col-6" id="Quantity_DivTxt">
+                                                    <input type="text" style="height: 25px; width: 90%; border-radius: 4px; font-family: auto; font-size: 13px;" id="QuantityAmount_TxtID" onkeypress="return isNumber(event)" /><span id="Span_IconId_Quantity" style="margin: 6px 0px 0px 190px; position: absolute; display: block; "><i class="fa fa-search"></i></span>
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>  Fee Amount: </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <input type="text" style="width: 90%; font-family: auto; height: 25px; font-size: 13px; " id="FeeAmount_TxtID" onkeypress="return isNumber(event)" />
+                                                </div>
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>  Due Date: </label>
+                                                </div>
+                                                <div class="date-picker form-group col-6" style="display: flex;">
+                                                    <input type="date" id="DueDate_TxtID" style=" outline: none; font-family: auto; height: 25px; font-size: 13px; width: 90%; " />
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
+                                                    <label class="control-label" style="font-family: auto; height: 17px; font-size: 13px;"> Comments : </label>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <input type="text" style="font-family: auto; height: 25px; font-size: 13px;width:90%" id="Comments_TxtID" />
+                                                </div>
+                                                <div style=" margin-left: 21%; margin-top: 14px;">
+                                                    <input type="reset" value="Clear" id="Clear_Btn" class="btn btn-pill btn-outline-secondary btn-sm" style=" border-radius: 8px; width: 29%;" />
+                                                    <input type="submit" value="Submit" id="AddFeeByUser_Btn" style=" border-radius: 8px; width: 29%;" @*class="Add_UpdateFee_Btn"*@ class="btn btn-pill btn-outline-success-2x" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="default-according style-1" id="accordionoc" style=" margin-top: 17px;">
+                <div>
+                    <span id="SubmitvalidationMessages" style="color:red;font-size:13px;"></span>
+                    <span id="SubmitvalidationMessage" style="color:red;font-size:13px;"></span>
+                </div>
+                <div class="card">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="Name_Header_Btn" style="font-size: 13px; width: 99%;">
+                                FEE DETAILS FOR : <span id="UserName_SPId">:</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div>
+                        <div style=" margin-top: 20px;">
+                            <table id="Search_By_User_FeeTableData_Id" class="Search_FeeTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width:19px;">Sl. No</th>
+                                        <th>Term</th>
+                                        <th>Fee Type</th>
+                                        <th>Fee Amt</th>
+                                        <th>Discount Type</th>
+                                        <th>Challan No</th>
+                                        <th>Paid</th>
+                                        <th>Due</th>
+                                        <th>Due Date</th>
+                                        <th>Amount</th>
+                                        <th></th>
+                                        <th>Comments</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                            <div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-14">
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-14">
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3">
+                                        <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;">Account No :</label>
+                                        <input type="hidden" id="InstanceId_TXTId" value="@ViewBag.InstanceId" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select id="BankAccounts_DDId" style=" height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;"></select>
+                                    </div>
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3">
+                                        <label class="control-label" style="height: 30px; font-family: auto; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>Payment Mode  :</label>
+                                    </div>
+                                    <div class="col-3">
+                                        <select id="Payment_Mode_DDid" style=" height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;"></select>
+                                    </div>
+
+                                    @*<div id="Cheque_DD_DivId">*@
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                        <label class="control-label" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font>Cheque/DD No  :</label>
+                                    </div>
+                                    <div class="col-3 hideable">
+                                        <input type="text" id="Cheque_DD_TxtId" class="hideable" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;" />
+                                    </div>
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                        <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>Cheque/DD Date  :</label>
+                                    </div>
+                                    <div class="col-3 hideable">
+                                        <input type="date" id="Cheque_DD_DateTxtId" class="hideable" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px; border: 1px solid;" />
+                                    </div>
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                        <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>Cheque/DD Bank Name  :</label>
+                                    </div>
+                                    <div class="col-3 hideable">
+                                        <input type="text" id="Cheque_DD_BankName_TxtId" class="hideable" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;" />
+                                    </div>
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                        <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;">Payable at  :</label>
+                                    </div>
+                                    <div class="col-3 hideable">
+                                        <input type="text" id="Payble_TxtId" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;" />
+                                    </div>
+                                    @*</div>*@
+                                    <div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3">
+                                        <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;">Description  :</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <textarea id="Description_TXTAId" style=" width: 106%; margin-left: 0%;"></textarea>
+                                    </div>
+                                    <div style=" margin-left: 37%;">                                       
+                                        <input type="submit"  class="btn btn-pill btn-outline-info-2x" value="Back To Search" onclick="backToSearch(event);" />
+                                        <input type="submit" value="Refund" class="btn btn-pill btn-outline-warning-2x"/>
+                                        <input type="submit" value="Submit" onclick="AmountPaySubmitBtn(event);" class="btn btn-pill btn-outline-success-2x" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tblFeeInstallments_GetFeeDetialsByUserFeeId">
+
+            <div id="SingleUserEdit_PartailContainer">
+
+
+            </div>
+            <div id="Challan_partialView_Container" style="display:none;">
+
+            </div>
+             
+        </div>
+
+
+
+
+        <div id="FeePaid_ChallanaCreated_DivId">
+            <div class="default-according style-2" id="PartailCOntainerViews" style="margin: -51px 0px 0px 0px; ">
+                <div>
+                    <span id="FeePaidMessage" style="color: red;  font-size: 13px; font-weight: bold; font-style: normal;"></span>
+                </div>
+                <div style=" text-align: right;">
+                    <input type="submit" value="PRINT On Dot-Matrix" id="Print_Matrix_Button" class="Print_Btns" />|
+                    <input type="submit" value="Print" id="Print_Button" class="Print_Btns" />
+                </div>
+                <div class="card" style=" border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
+                    <div>
+                        <h5 class="mb-0">
+                            <button class="FeeTerms_Edit_ButtonView" style="width: 100%; margin-left: 0px;">
+                                FEE RECEIPT(S)
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="MultipuleUsersFeeChallanas_PartailContainer">
+
+                    </div>
+
+                    <div style="display: flex; margin-left: 35%; ">
+                        <input type="button" id="PFUChallan_View_BackToSearch_btn" value="Back To Search" class="btn btn-pill btn-info-gradien" />
+                        <input type="button" id="PFUChallan_View_BackToPayFee_btn" value="Back To Pay Fee" class="btn btn-pill btn-primary-gradien" />
+                    </div>
+                </div>
+            </div>           
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script>
+    $('#PFUChallan_View_BackToSearch_btn').click(function () {
+
+
+        $('#Search_Pay_For_UsersFileds_Divid').show();
+        $('#SearchPayFor_UsersTbl_Divid').show();
+        $('#TableDate_forUsers_DivId').hide();
+        $('#UserName_Classification_subclasification_ID').text('');
+        $('#FeePaidMessage').text('');
+
+        Classification_dropdoen_Function();
+        $('#SubclassificationDropdown').text('');  //------------> SubClassification Dropdown Text
+        $('#UserName_Classification_subclasification_ID').text(''); //----------> Users Text
+        submitFormAndBindTableData();
+
+        $('#PartailCOntainerViews').html('');
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+         $('#SubmitvalidationMessages').text('');
+    });
+
+    $('#PFUChallan_View_BackToPayFee_btn').click(function () {
+
+        debugger;
+        //var userId = $("#userIdTextBox").val();
+        //table_SearchByUser_FeeDues(userId);
+
+        var userId = $("#userIdTextBox").val();
+        table_SearchByUser_FeeDues(userId);
+
+        Classification_dropdoen_Function();
+        $('#SubclassificationDropdown').val('');
+
+        $('#UserName_Classification_subclasification_ID').show();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+        $('#Search_Pay_For_UsersFileds_Divid').hide();
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').show();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+        $('#PartailCOntainerViews').hide();
+
+
+
+        $('#Description_TXTAId').val('');
+        BankAccounts_dropdown_Function();
+        Payment_Mode_dropdown_Function();
+
+        $('.hideable').hide();
+
+        $('#Cheque_DD_TxtId').val('');
+        $('#Cheque_DD_DateTxtId').val('');
+        $('#Cheque_DD_BankName_TxtId').val('');
+        $('#ChequeDDBankBranch_TXTID').val('');
+        $('#Description_TXTAId').val('');
+        $('#SubmitvalidationMessages').text('');
+
+
+
+    });
+
+
+
+
+
+    $(document).ready(function () {
+
+        displayFormattedDateTime();
+
+
+        $('#SubmitvalidationMessage').text('');
+        $('#SubmitvalidationMessages').text('');
+
+
+        $('#Search_Pay_For_UsersFileds_Divid').show();
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+
+       
+
+        submitFormAndBindTableData();
+
+        $('#loadingSpinnerContainer').hide();
+
+        $('.hideable').hide();
+
+        // Add event listener to the dropdown to handle show/hide
+        $('#Payment_Mode_DDid').on('change', function () {
+            const selectedValue = $(this).val();
+
+            if (selectedValue === "500" || selectedValue === "501") {
+                // Hide the divs if 500 or 501 is selected
+                $('.hideable').show();
+            } else {
+                // Show the divs for any other selection
+                $('.hideable').hide();
+            }
+        });
+
+
+    });
+
+
+
+
+    /*---------------------------  Clear Button Function Code is Start  ---------------------------*/
+
+    $('#Clear_Btn').click(function () {
+
+        $('#FeeTerms_DDId').text('');
+        FeeTerms_dropdown_Function();
+
+        var userId = $("#userIdTextBox").val();
+        table_SearchByUser_FeeDues(userId);
+
+        $('#Fee_Type_DDId').text('');
+        $('#Discount_TypeDDId').text('');
+        $('#DiscountAmount_TXTID').val('');
+        $('#FeeAmount_TxtID').val('');
+        $('#DueDate_TxtID').val('');
+        $('#Comments_TxtID').val('');
+        $('#Update_SubmitvalidationMessage').text('');
+
+        $('#SubmitvalidationMessage').text('');
+        $('#SubmitvalidationMessages').text('');
+
+    });
+
+    /*---------------------------  Clear Button Function Code is End  ---------------------------*/
+
+    /*---------------------------  Amount Allow Numbers Only Function Code is Start---------------------------*/
+    function isNumber(event) {
+       
+        var inputValue = event.key;
+
+       
+        if (!/^\d*\.?\d*$/.test(inputValue)) {
+           
+            event.preventDefault();
+        }
+    }
+
+    /*---------------------------  Amount Allow Numbers Only Function Code is End  ---------------------------*/
+
+
+
+
+    // Function to show/hide the div elements
+    function backToSearch(event) {
+        event.preventDefault();
+
+        Classification_dropdoen_Function();
+        $('#SubclassificationDropdown').text('');
+        $('#Search_Pay_For_UsersFileds_Divid').show();
+
+        $('#SearchPayFor_UsersTbl_Divid').show();
+        $('#UserName_Classification_subclasification_ID').text('');
+        $('#TableCount').text('');
+
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+
+
+        $('#Description_TXTAId').val('');
+        BankAccounts_dropdown_Function();
+        Payment_Mode_dropdown_Function();
+
+        $('.hideable').hide();
+
+        $('#Cheque_DD_TxtId').val('');
+        $('#Cheque_DD_DateTxtId').val('');
+        $('#Cheque_DD_BankName_TxtId').val('');
+        $('#ChequeDDBankBranch_TXTID').val('');
+        $('#Description_TXTAId').val('');
+        $('#SubmitvalidationMessages').text('');
+
+    }
+
+    /*----CLASSIFICATION DROPDOWN FUNCTION CODE START---*/
+
+    function Classification_dropdoen_Function() {
+        var dropdown = document.getElementById("classificationDropdown");
+
+
+        dropdown.innerHTML = "";
+
+        fetch("/FeeSection/PFU_Classification_DD")
+            .then(response => {
+                /*debugger;*/
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText);
+
+
+                const dropdown = document.getElementById("classificationDropdown");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "Select a Department";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', Classification_dropdoen_Function);
+
+    /*----CLASSIFICATION DROPDOWN FUNCTION CODE END---*/
+
+
+
+
+
+    /*--------SUBCLASSIFICATION DROPDOWN GET BY CLASSIFICATION CODE START -----------*/
+
+    function sendSelectedValue() {
+        /*  debugger;*/
+        var dropdownValue = document.getElementById("classificationDropdown");
+        var selectedValue = dropdownValue.value;
+
+        /*alert(selectedValue);*/
+
+        fetch("/FeeSection/PFU_SubClassification_GetByClassification?InstanceClassificationId=" + selectedValue)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /*debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+
+                const dropdown = document.getElementById("SubclassificationDropdown");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "Select a Class";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+
+    var dropdown = document.getElementById("classificationDropdown");
+    dropdown.addEventListener("change", sendSelectedValue);
+
+    /*--------SUBCLASSIFICATION DROPDOWN GET BY CLASSIFICATION CODE END-----------*/
+
+
+
+    /*----FeeTerms DROPDOWN FUNCTION CODE START---*/
+
+    function FeeTerms_dropdown_Function() {
+        var dropdown = document.getElementById("FeeTerms_DDId");
+
+
+        dropdown.innerHTML = "";
+
+        /*  debugger;*/
+        fetch("/FeeSection/PFU_tblFeeTerms_SELECTALLByAcadamicYearId_DD")
+            .then(response => {
+                /*debugger;*/
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText);
+
+
+                const dropdown = document.getElementById("FeeTerms_DDId");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "-----Select-----";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', FeeTerms_dropdown_Function);
+
+    /*----FeeTerms DROPDOWN FUNCTION CODE END---*/
+
+
+
+    /*--------FEE TYPES DROPDOWN GET BY FEE TERMS CODE START -----------*/
+
+    function sendFEE_TERMS_BY_FEETYPESelectedValue() {
+        /*  debugger;*/
+        var FeeTermdropdownValue = document.getElementById("FeeTerms_DDId");
+        var FeeTermselectedValue = FeeTermdropdownValue.value;
+
+
+        fetch("/FeeSection/PFU_FeeType_By_FeeTerms?FeeTermId=" + FeeTermselectedValue)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+
+                const dropdown = document.getElementById("Fee_Type_DDId");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "---------Select-----------";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+
+    var dropdown = document.getElementById("FeeTerms_DDId");
+    dropdown.addEventListener("change", sendFEE_TERMS_BY_FEETYPESelectedValue);
+
+    /*--------FEE TYPES DROPDOWN GET BY FEE TERMS CODE  END-----------*/
+
+
+
+
+
+    /*--------FEE TYPES DROPDOWN GET BY FEE TERMS CODE START -----------*/
+
+    function sendFEE_TYPES_BY_DISCOUNTTYPESelectedValue() {
+          debugger;
+        var FeeTypedropdownValue = document.getElementById("Fee_Type_DDId");
+        var FeeTypeselectedValue = FeeTypedropdownValue.value;
+
+
+        var FeeTypedropdownText = $('#Fee_Type_DDId option:selected').text();
+        var FeeTermdropdownText = $('#FeeTerms_DDId option:selected').text();
+
+
+
+         debugger;
+
+        fetch("/FeeSection/PFU_DiscountType_By_FeeType?FeeTypeId=" + FeeTypeselectedValue)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+
+                const data = JSON.parse(responseText); // Parse the response
+                const subddData = data.subdd_Data;
+                const pfuQuantityList = data.pfU_quantityList;
+
+
+                debugger;
+                if (pfuQuantityList && pfuQuantityList.length > 0) {
+
+                    document.getElementById("QuantityAmount_TxtID").value = "0.00"
+
+
+                    document.getElementById("Quantity_DivLbl").style.display = "block";
+                    document.getElementById("Quantity_DivTxt").style.display = "block";
+                    document.getElementById("Span_IconId_Quantity").style.display = "block";
+                } else {
+
+                    document.getElementById("QuantityAmount_TxtID").value = "";
+                    document.getElementById("Quantity_DivLbl").style.display = "none";
+                    document.getElementById("Quantity_DivTxt").style.display = "none";
+                    document.getElementById("Span_IconId_Quantity").style.display = "none";
+                }
+
+                const dropdown = document.getElementById("Discount_TypeDDId");
+
+
+                dropdown.innerHTML = "";               
+
+
+                for (let i = 0; i < subddData.length; i++) {
+                    const item = subddData[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+
+                const table = document.getElementById("Search_By_User_FeeTableData_Id");
+                /*debugger;*/
+                const rows = table.getElementsByTagName("tr");
+                for (let i = 1; i < rows.length; i++) {
+                  /*  debugger;*/
+                    const row = rows[i];
+                    const feeTermCell = row.cells[1];
+                    const feeTypeCell = row.cells[2];
+                    const PaidAmountCell = row.cells[5];
+                    const DueAmountCell = row.cells[6];
+                    const feeTerm = feeTermCell.textContent.trim();
+                    const feeType = feeTypeCell.textContent.trim();
+                    //const PaidAmount = PaidAmountCell.textContent.trim();
+                    //const DueAmount = DueAmountCell.textContent.trim();
+                    if (feeTerm === FeeTermdropdownText && feeType === FeeTypedropdownText) {
+                      /*  debugger;*/
+                        if (feeType === FeeTypedropdownText) {
+                           /* debugger;*/
+                            document.getElementById("AddFeeByUser_Btn").value = "Update";
+
+                            const feeAmount = row.cells[3].textContent.trim();
+                            const dueDate = row.cells[8].textContent.trim();
+                            const Discount_Amount = row.cells[5].textContent.trim();
+                            const PaidAmount = row.cells[7].textContent.trim();
+                            const DueAmount = row.cells[6].textContent.trim();
+
+                            function convertToDateInputFormat(dateString) {
+                                const parts = dateString.split('/');
+                                if (parts.length !== 3) return ""; // Invalid date format
+                                const [day, month, year] = parts;
+                                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                            }
+
+                       
+                            if (Discount_Amount === "Nill") {
+                                var Discount_Amounts = "0.0";
+                            } else {
+                                var Discount_Amounts = Discount_Amount;
+                            }
+                            const inputElement = document.getElementById('DueDate_TxtID');
+
+
+                            const formattedDate = convertToDateInputFormat(dueDate);
+                            inputElement.value = formattedDate;
+
+                            document.getElementById("paidAmount_TXTID").value = PaidAmount;
+                            document.getElementById("DiscountAmount_TXTID").value = Discount_Amounts;
+                            document.getElementById("FeeAmount_TxtID").value = feeAmount;
+
+
+                            break;
+                        }
+                    } else {
+
+                        $('#DiscountAmount_TXTID').val('');
+                        $('#FeeAmount_TxtID').val('');
+                        $('#DueDate_TxtID').val('');
+                        document.getElementById("AddFeeByUser_Btn").value = "Submit";
+                    }
+                }
+
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    var dropdown = document.getElementById("Fee_Type_DDId");
+    dropdown.addEventListener("change", sendFEE_TYPES_BY_DISCOUNTTYPESelectedValue);
+
+
+
+
+
+    /*--------FEE TYPES DROPDOWN GET BY FEE TERMS CODE  END-----------*/
+
+
+
+    /* -----DISCOUNT TYPE DROPDOWN BY USING  DISCOUNT AMOUNT TEXTBOX VALUE START CODE ------- */
+
+    function sendDISCOUNT_TYPE_DROPDOWN_BY_DISCOUNT_AMOUNT_TEXTBOXSelectedValue() {
+        /*  debugger;*/
+        var Discount_TypeValue = document.getElementById("Discount_TypeDDId");
+        var ConcedingTypeId = Discount_TypeValue.value;
+
+       /* debugger;*/
+
+        fetch("/FeeSection/PFU_DiscountType_By_DiscountAmount?ConcedingTypeId=" + ConcedingTypeId)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+               /* debugger;*/
+                const data = JSON.parse(responseText); // Parse the response
+
+
+                const textbox = document.getElementById("DiscountAmount_TXTID");
+
+
+                textbox.value = data.length > 0 ? data[0].text : '';
+
+
+                textbox.placeholder = "Enter discount amount";
+                textbox.maxLength = 10;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+
+    var dropdown = document.getElementById("Discount_TypeDDId");
+    dropdown.addEventListener("change", sendDISCOUNT_TYPE_DROPDOWN_BY_DISCOUNT_AMOUNT_TEXTBOXSelectedValue);
+
+
+    /* -----DISCOUNT TYPE DROPDOWN BY USING  DISCOUNT AMOUNT TEXTBOX VALUE END CODE ------- */
+
+
+
+
+    /*----BankAccounts DROPDOWN FUNCTION CODE START---*/
+
+    function BankAccounts_dropdown_Function() {
+        var dropdown = document.getElementById("BankAccounts_DDId");
+
+        /* debugger;*/
+
+        dropdown.innerHTML = "";
+
+        fetch("/FeeSection/PFU_tblInstanceBankAccounts_SELECTALL")
+            .then(response => {
+                /*debugger;*/
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText);
+
+
+                const dropdown = document.getElementById("BankAccounts_DDId");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "-----Select-----";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', BankAccounts_dropdown_Function);
+
+    /*----BankAccounts DROPDOWN FUNCTION CODE END---*/
+
+
+
+
+
+
+    /*----Payment_Mode DROPDOWN FUNCTION CODE START---*/
+
+    function Payment_Mode_dropdown_Function() {
+        var dropdown = document.getElementById("Payment_Mode_DDid");
+
+        /* debugger;*/
+
+        dropdown.innerHTML = "";
+
+        fetch("/FeeSection/PFU_PaymentMode_DD")
+            .then(response => {
+                /*debugger;*/
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data = JSON.parse(responseText);
+
+
+                const dropdown = document.getElementById("Payment_Mode_DDid");
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "-----Select-----";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data.length; i++) {
+                    const item = data[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', Payment_Mode_dropdown_Function);
+
+    /*----Payment_Mode DROPDOWN FUNCTION CODE END---*/
+
+
+    /*-------STUDENT QUOTA DROPDOWN CODE START -------------- */
+
+    function PFU_StudentQuota_dropdown_Function() {
+        var dropdown = document.getElementById("PFU_StudentQuota_DDID");
+
+
+        dropdown.innerHTML = "";
+
+        fetch("/FeeSection/PFU_StudentQuota")
+            .then(response => {
+                /*debugger;*/
+                if (!response.ok) {
+                    throw new Error("Request failed with status " + response.status);
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                /* debugger;*/
+                const data1 = JSON.parse(responseText);
+
+
+                const dropdown = document.getElementById("PFU_StudentQuota_DDID");
+
+
+                dropdown.innerHTML = "";
+
+
+                const selectOption = document.createElement("option");
+                selectOption.value = "";
+                selectOption.textContent = "---------Select-------";
+                dropdown.appendChild(selectOption);
+
+
+                for (let i = 0; i < data1.length; i++) {
+                    const item = data1[i];
+                    const option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    dropdown.appendChild(option);
+                }
+            })
+
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+    window.addEventListener('load', PFU_StudentQuota_dropdown_Function);
+
+    /*-------STUDENT QUOTA DROPDOWN CODE END -------------- */
+
+
+
+
+
+    /*-------------------------- USERS TbLData FUNCTION START-------------------------- */
+
+    function submitFormAndBindTableData() {    
+
+        document.getElementById("searchForm").addEventListener("submit", function (event) {
+            event.preventDefault();          
+
+            var buttonValue = event.submitter.value;
+
+            var formData = $(this).serializeArray();
+
+            if (buttonValue === 'Search') {
+                var searchPayUserValue = $('#Search_PayFeeUser').val();
+                $('#mobilenumber').show();
+                formData.push({
+                    name: "Search_PayUserBtn",
+                    value: searchPayUserValue
+                });
+            } else if (buttonValue === 'NoFee') {
+                var searchNoUserValue = $('#Search_NoFeeUser').val();
+                $('#mobilenumber').hide();
+                formData.push({
+                    name: "Search_PayUserBtn",
+                    value: searchNoUserValue
+                });
+            }
+
+            $.ajax({
+                url: '/FeeSection/PayFeeForUser',
+                type: 'POST',
+                data: formData,
+                success: function (response) {  
+
+                    var CountTabledata = response.length;
+                    if (buttonValue === 'Search') {
+                        $('#TableCount').text(CountTabledata);
+                        $('#FeeTextId').text('');
+                    } else if (buttonValue === 'NoFee') {
+                        $('#TableCount').text(CountTabledata);
+                        $('#FeeTextId').text('No Fee');
+                    }
+                    console.log(response);
+
+
+                    $('#TableDate_forUsers_DivId').show();
+                    var table = $('#SearchUser_tblId');
+                    var tbody = table.find('tbody');
+                    tbody.empty();
+
+                    response.sort(function (a, b) {
+                        var nameA = a.firstName.toLowerCase();
+                        var nameB = b.firstName.toLowerCase();
+                        if (nameA < nameB) return -1;
+                        if (nameA > nameB) return 1;
+                        return 0;
+                    });
+
+                    $.each(response, function (index, Userstbls) {
+                        var row = $('<tr></tr>');
+                        var cell1 = $('<td class="editable-cell"></td>').css('cursor', 'pointer');
+                        var text = $('<span></span>').text(Userstbls.firstName).css({
+                            'color': 'black',
+                            'font-weight': '600',
+                            'text-decoration':'underline'
+
+                        }).attr('onclick', 'USER_EDIT_UPDATE("' + Userstbls.userId + '", "' + Userstbls.firstName + '", "' + Userstbls.classificationName + '", "' + Userstbls.subClassificationName + '")');
+                        cell1.append(text);
+                        var cell2 = $('<td></td>').css('text-align', 'center').text(Userstbls.instanceUserCode);
+                        var cell3 = $('<td></td>').css('text-align', 'center').text(Userstbls.roleName);
+                        var cell4 = $('<td></td>').css('text-align', 'center').text(Userstbls.classificationName);
+                        var cell5 = $('<td></td>').css('text-align', 'center').text(Userstbls.subClassificationName);
+                        var cell6 = $('<td></td>').css('text-align', 'center').text(Userstbls.mobilePhone);
+                        var cell7 = $('<td></td>').css('text-align', 'center').text(Userstbls.portalEmail);
+
+                        if (buttonValue === 'NoFee') {
+                            cell6.hide();
+                        } else if (buttonValue === 'Search') {
+                            cell6.show();
+                        }
+
+                        row.append(cell1);
+                        row.append(cell2);
+                        row.append(cell3);
+                        row.append(cell4);
+                        row.append(cell5);
+                        row.append(cell6);
+                        row.append(cell7);
+                        tbody.append(row);
+                    });
+
+
+                    /*---------------------------------------------- PAGINATION CODE START ----------------------------------------------*/
+
+                    var rowsPerPage = 10;
+                    var numPages = Math.ceil(response.length / rowsPerPage);
+                    var currentPage = 1;
+
+                    var pagination = $('#FeePayforUserTbl_pagination');
+                    pagination.empty();
+
+
+                    var previousLink = $('<a class="FeePayforUserTbl_pagination" style="margin: 0 2px;" href="#">Previous</a>');
+                    pagination.append(previousLink);
+
+                    var startIndex = 1;
+                    var endIndex = Math.min(numPages, 10);
+
+                    for (var i = startIndex; i <= endIndex; i++) {
+                        var link = $('<a class="FeePayforUserTbl_pagination" style="margin: 0 2px;" href="#">' + i + '</a>');
+                        pagination.append(link);
+                    }
+
+                    var nextLink = $('<a class="FeePayforUserTbl_pagination" style="margin: 0 2px;" href="#">Next</a>');
+                    pagination.append(nextLink);
+
+
+                    showPage(currentPage);
+
+
+                    pagination.css('text-align', 'center');
+
+
+                    pagination.on('click', '.FeePayforUserTbl_pagination', function (e) {
+                        e.preventDefault();
+                        var linkText = $(this).text();
+                        if (linkText === "Previous") {
+                            currentPage = Math.max(currentPage - 1, 1);
+                        } else if (linkText === "Next") {
+                            currentPage = Math.min(currentPage + 1, numPages);
+                        } else {
+                            currentPage = parseInt(linkText);
+                        }
+                        showPage(currentPage);
+                    });
+
+
+                    function showPage(page) {
+                        var start = (page - 1) * rowsPerPage;
+                        var end = start + rowsPerPage;
+
+                        tbody.find('tr').hide();
+                        tbody.find('tr').slice(start, end).show();
+
+
+                        var newStartIndex = Math.max(1, page - 4);
+                        var newEndIndex = Math.min(newStartIndex + 9, numPages);
+
+                        if (newEndIndex === numPages) {
+                            newStartIndex = Math.max(1, numPages - 9);
+                        }
+
+                        pagination.empty();
+                        pagination.append(previousLink);
+
+                        for (var i = newStartIndex; i <= newEndIndex; i++) {
+                            var link = $('<a class="FeePayforUserTbl_pagination" style="margin: 0 2px;" href="#">' + i + '</a>');
+                            pagination.append(link);
+                        }
+
+                        pagination.append(nextLink);
+
+
+                        $('.FeePayforUserTbl_pagination').removeClass('active');
+                        $('.FeePayforUserTbl_pagination').eq(page - newStartIndex + 1).addClass('active')
+                            .css({
+                                'cursor': 'unset',
+                                'background-color': 'black',
+                                'padding': '2px',
+                                'border-radius': '16px',
+                                'color': 'pink'
+
+                            });
+
+
+                    }
+
+
+
+                    /*-------------------------------------- PAGINATION CODE END ---------------------------------------------*/
+
+                },
+                error: function () {
+                    console.log('Error retrieving data.');
+                }
+            });
+
+        });
+    }
+
+    /*-------------------------- USERS TbLData FUNCTION End-------------------------- */
+
+
+    /* --------------------------------- Edit Fields Geting values To pass parameter Action Method and Append that values In fileds function code start---------------------------------  */
+
+    function USER_EDIT_UPDATE(userId, firstName, classificationName, subClassificationName) {
+         debugger;
+
+        $('#SubmitvalidationMessage').text('');
+        $('#SubmitvalidationMessages').text('');
+        $('#FeeNot_Scheduled_Vallidation_spId').text('');
+
+       
+        $('#Description_TXTAId').val('');
+        BankAccounts_dropdown_Function();
+        Payment_Mode_dropdown_Function();
+
+        $('.hideable').hide();
+
+        $('#Cheque_DD_TxtId').val('');
+        $('#Cheque_DD_DateTxtId').val('');
+        $('#Cheque_DD_BankName_TxtId').val('');
+        $('#ChequeDDBankBranch_TXTID').val('');
+        $('#Description_TXTAId').val('');
+        $('#SubmitvalidationMessages').text('');
+
+        var Challana_UserName = firstName;
+        var Challana_ClassificationName = classificationName;
+        var Challana_subclassificationName = subClassificationName;
+
+
+
+        $("#userIdTextBox").val(userId);
+
+        $('#UserName_Classification_subclasification_ID').text('Selected User : ' + firstName + ' - ' + '"' + '' + classificationName + '' + '"' + ' - ' + '"' + subClassificationName + '"');
+        $('#UserName_SPId').text(firstName);
+
+        $.ajax({
+            url: '/FeeSection/GetFeeTermDetialsByUserId', // Update with the appropriate URL
+            method: 'GET',
+            data: {
+                UserId: userId
+            },
+            success: function (response) {
+             
+                if (response != 0) {
+
+
+                    table_SearchByUser_FeeDues(userId);
+
+                    $('#UserFee_GetFeeTermDetialsByUser_DDId').empty();
+
+
+                    for (var i = 0; i < response.length; i++) {
+                        var option = $('<option></option>').val(response[i].feeTermId).text(response[i].termName);
+                        $('#UserFee_GetFeeTermDetialsByUser_DDId').append(option);
+                    }
+
+
+
+
+                    // Show the update section
+                    $('#Search_Pay_For_UsersFileds_Divid').hide();
+                    $('#SearchPayFor_UsersTbl_Divid').hide();
+                    $('#GetFeeTermDetialsByUser_DIVID').show();
+                } else {
+                    const StudentName = firstName;
+                    const Message = "Fee Haven't Scheduled for '" + StudentName + "'";
+                    $('#FeeNot_Scheduled_Vallidation_spId').text(Message);
+                    $('#UserName_Classification_subclasification_ID').text('');
+
+                }
+            },
+            error: function () {
+                console.log('Error fetching Fee Type data.');
+            }
+        });
+    }
+    /*---------------------------------  Edit Fields Geting values To pass parameter Action Method and Append that values In fileds function code End---------------------------------  */
+
+    $('#UserFee_Details_SearchBtn').on("click", function () {
+
+        const SelectedFeeTermsids = $('#UserFee_GetFeeTermDetialsByUser_DDId').val();
+        var userId = $("#userIdTextBox").val();
+
+        $('#Update_SubmitvalidationMessage').text('');
+
+        table_SearchByUser_FeeDues(userId, SelectedFeeTermsids);
+
+    });
+
+
+    function table_SearchByUser_FeeDues(userId, SelectedFeeTermsids) {
+
+        /*debugger;*/
+        //alert(SelectedFeeTermsids);
+        $('#loadingSpinnerContainer').show();
+
+        $.ajax({
+            url: '/FeeSection/PFU_SearchUser_By_TableData',
+            type: 'GET',
+            data: {
+                UserId: userId,
+                FeeTermIds: encodeURIComponent(SelectedFeeTermsids)
+                //FeeTermIds: SelectedFeeTermsids
+            },
+
+            success: function (response) {
+               /* debugger;*/
+                try {
+
+
+                    var responseData = response[0];
+                    var tbl1Array = responseData.paY_FEE_BY_USERS_Tbl1;
+                    var tbl3Array = responseData.paY_FEE_BY_USERS_Tbl3;
+
+
+                    var table = $('#Search_By_User_FeeTableData_Id');
+                    var tbody = table.find('tbody');
+                    var tfoot = table.find('tfoot');
+
+
+                    tbody.empty();
+                    tfoot.empty();
+
+
+                    var totalAmount = 0;
+                    var Dueamounttotal = 0;
+                    var ChalanaAmount = 0;
+
+                    $.each(tbl1Array, function (index, UsersDueFeetbls) {
+
+                       /* debugger;*/
+
+                        var row = $('<tr></tr>').attr('id', 'row_' + (index + 1));
+
+
+                        var SNO = index + 1;
+                        var SNOID = SNO + 1;
+
+                        var searchIcon = $('<span class="search-icon">&#128269;</span>');
+
+
+
+                        var cell0 = $('<td></td>').css('text-align', 'center').text(SNO);
+                        var cell1 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.termName);
+                        var cell2 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.feeType);
+                        var cell3 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.feeAmount);
+
+                        totalAmount += parseFloat(UsersDueFeetbls.feeAmount);
+
+
+                        var cell4 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.discountName);
+                        //var cell5 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.concedingAmount);
+
+                        var cell5 = "";
+
+                        var concedingAmount = UsersDueFeetbls.concedingAmount;
+                        ChalanaAmount += parseFloat(UsersDueFeetbls.concedingAmount);
+                        if (concedingAmount === "0.00") {
+
+                            cell5 = $('<td></td>').css('text-align', 'center').text("Nill");
+
+
+                        } else {
+
+                            cell5 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.concedingAmount);
+
+                        }
+
+
+
+                        var cell16 = $('<td></td>')
+                            .css({
+                                'text-align': 'center',
+                                'color': 'black',
+                                'font-weight': 'bold',
+                                'cursor': 'pointer'
+                            })
+                            .attr('onclick', 'EditFeeAmount("' + UsersDueFeetbls.feeTermId + '", "' + UsersDueFeetbls.userfeeactivityId + '")')
+                            .text('Edit');
+
+                        var PayAmount = UsersDueFeetbls.payedAmount;
+                        var cell6 = "";
+
+                        if (PayAmount === "0.00") {
+
+                            cell6 = $('<td></td>').css('text-align', 'center').text("Nill");
+                            searchIcon.hide();
+                            cell16.hide();
+
+
+                        } else {
+
+                            cell6 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.payedAmount);
+
+                        }
+
+
+                        var cell7 = "";
+
+                        var dueAmount = UsersDueFeetbls.dueAmount;
+                        Dueamounttotal += parseFloat(UsersDueFeetbls.dueAmount);
+                        if (dueAmount === "0.00") {
+
+                            cell7 = $('<td></td>').css('text-align', 'center').text("Nill");
+
+                        } else {
+
+                            cell7 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.dueAmount);
+                        }
+
+                        // var cell7 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.dueAmount);
+                        var cell8 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.dueDate);
+
+
+
+                        /* debugger;*/
+                        var Amount_TXTId = 'AmountTextbox_' + SNOID;
+                        var cell9 = $('<td></td>').css({
+                            'text-align': 'center',
+                        });
+                        var textbox = $('<input type="text" />').css({
+                            'width': '76%',
+                            'height': '28px',
+                            'border': '1px solid',
+                            'border-color': 'violet'
+                        }).attr('id', Amount_TXTId);/*.val(UsersDueFeetbls.amountTextBox)*/
+                        textbox.attr('maxlength', 8);
+
+
+
+                        // Allow only numbers (digits) by using the input event to restrict input
+                        /* debugger;*/
+                        textbox.on('input', function () {
+                            /* debugger;*/
+                            this.value = this.value.replace(/\D/g, '');
+                        });
+                        cell9.append(textbox);
+
+
+
+                        var cell10 = $('<td></td>')
+                            .css('text-align', 'center')
+                            .attr('onclick', 'Searchfeetermsicon("' + UsersDueFeetbls.feeTermId + '", "' + UsersDueFeetbls.userfeeactivityId + '")')
+                            .text('');
+                        
+
+                        cell10.append(searchIcon);
+                        var InstallmentName_TXTId = 'InstallmentName_' + SNOID
+                        var cell11 = $('<td></td>').css('text-align', 'center');
+                        var textarea = $('<textarea></textarea>').attr('id', InstallmentName_TXTId);
+                        cell11.append(textarea);
+
+
+
+
+
+                        var cell12 = $('<td hidden id="academicYearId"></td>').text(UsersDueFeetbls.academicYearId);
+                        var cell13 = $('<td hidden id="feeTypeId"></td>').text(UsersDueFeetbls.feeTypeId);
+                        var cell14 = $('<td hidden id="feeTermId"></td>').text(UsersDueFeetbls.feeTermId);
+                        var cell15 = $('<td hidden id="userfeeactivityId"></td>').text(UsersDueFeetbls.userfeeactivityId);
+
+                        /* debugger;*/
+                        var cell17 = $('<td hidden id="instanceUserCode"></td>').text(UsersDueFeetbls.instanceUserCode);
+                        var cell_18 = $('<td hidden id="classificationName"></td>').text(UsersDueFeetbls.classificationName);
+                        var cell_19 = $('<td hidden id="subClassificationName"></td>').text(UsersDueFeetbls.subClassificationName);
+                        var cell_20 = $('<td hidden id="firstName"></td>').text(UsersDueFeetbls.firstName);
+
+
+
+
+                        row.append(cell0);
+                        row.append(cell1);
+                        row.append(cell2);
+                        row.append(cell3);
+                        row.append(cell4);
+                        row.append(cell5);
+                        row.append(cell6);
+                        row.append(cell7);
+                        row.append(cell8);
+                        row.append(cell9);
+                        row.append(cell10);
+                        row.append(cell11);
+                        row.append(cell12);
+                        row.append(cell13);
+                        row.append(cell14);
+                        row.append(cell15);
+                        row.append(cell16);
+                        row.append(cell17);
+
+                        row.append(cell_18);
+                        row.append(cell_19);
+                        row.append(cell_20);
+
+
+
+                        tbody.append(row);
+
+                    });
+
+                    var totalFee = 0;
+                    var totalDueAmount = 0;
+                    var dueAmount = 0;
+                    var totalAmountPayed = 0;
+                    var payedamount = 0;
+                    /*  debugger;*/
+                    $.each(tbl3Array, function (index, UsersDueFeetblsfooter) {
+                        totalFee += parseFloat(UsersDueFeetblsfooter.totalFee);
+                        totalDueAmount += parseFloat(UsersDueFeetblsfooter.totalDueAmount);
+                        totalAmountPayed += parseFloat(UsersDueFeetblsfooter.totalAmountPayed);
+                        payedamount += parseFloat(UsersDueFeetblsfooter.payedamount);
+                        dueAmount += parseFloat(UsersDueFeetblsfooter.dueAmount);
+                    });
+
+                    // Update the table footer cells
+                    tfoot.append($('<tr></tr>')
+                        .append($('<td colspan="3"></td>').css('text-align', 'center').text('TOTAL'))
+                        .append($('<td></td>').css('text-align', 'center').text(totalAmount.toFixed(2)))
+                        .append($('<td></td>').css('text-align', 'center').text(totalDueAmount.toFixed(2)))
+                        .append($('<td></td>').css('text-align', 'center').text(ChalanaAmount.toFixed(2)))
+                        .append($('<td></td>').css('text-align', 'center').text(payedamount.toFixed(2)))
+                        .append($('<td></td>').css('text-align', 'center').text(Dueamounttotal.toFixed(2)))
+                        .append('<td></td>')
+                        .append('<td></td>')
+                        .append('<td></td>')
+                        .append('<td></td>')
+                        .append('<td></td>')
+                    );
+                    // After the loop, create the footer row
+
+
+                    // Total Fee cell
+                    $('#loadingSpinnerContainer').hide();
+                }
+                catch {
+                    $('#loadingSpinnerContainer').hide();
+                    $('#UserName_Classification_subclasification_ID').html('');
+                    $('#ErrorMessage').html('Something Went Wrong Please Try Again......!');
+
+                    $('#Search_Pay_For_UsersFileds_Divid').show();
+
+                    $('#SearchPayFor_UsersTbl_Divid').show();
+                    $('#TableDate_forUsers_DivId').show();
+                    $('#GetFeeTermDetialsByUser_DIVID').hide();
+                    $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+                    $('#FeePaid_ChallanaCreated_DivId').hide();
+                }
+
+            },
+            error: function () {
+                $('#loadingSpinnerContainer').show();
+                console.log('Error retrieving data.');
+            }
+        });
+    }
+
+
+
+
+    
+
+
+    /*========================= =====SEARCH ICON CLICK FIRE FUNCTION CODE START =================================*/
+
+
+    function Searchfeetermsicon(feeTermId, userfeeactivityId) {
+
+
+        debugger;
+        //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId UserId=80781,FeeTermId=4582,UserFeeId1=417163
+
+        var UserId = $('#userIdTextBox').val();
+        var FeeTermId = feeTermId;
+        var UserFeeId1 = userfeeactivityId;
+
+
+        var Editformdata = {
+            UserId: UserId,
+            FeeTermId: FeeTermId,
+            UserFeeId1: UserFeeId1
+        }
+        $.ajax({
+            url: '/FeeSection/PFU_PaidAmount_Edit_User',
+            type: 'GET',
+            data: Editformdata,
+            success: function (response) {
+                // Open a new window with the name "UserDetails"
+                var newWindow = window.open('', 'UserDetails', 'width=600,height=600,scrollbars=yes,resizable=yes');
+
+                // Generate the HTML content for the table
+                var tableHtml = '<div style="overflow-x: auto;">'; // Add a <div> with responsive style
+                tableHtml += '<table class="Search_FeeTable">';
+                tableHtml += '<thead><tr><th colspan="12"  class="records-header">NO OF RECORDS: ' + response.length + '</th></tr>'; // Add the number of records
+                tableHtml += '<tr><th>SNO</th><th>Fee Term</th><th>Fee Type</th><th>Challan No</th><th>Paid Amt</th><th>Paid On</th><th>Collected By</th><th>Payment Mode</th><th>Account Number</th><th>Bank Name</th><th>Comments</th><th>Description</th></tr></thead>';
+
+                tableHtml += '<tbody>';
+                // Assuming the response is an array of objects with appropriate properties
+                var rowNumber = 1;
+
+                response.forEach(function (item) {
+                    tableHtml += '<tr><td style="width: 10%;">' + rowNumber + '</td><td style="width: 20%;">' + item.termName + '</td><td style="width: 30%;">' + item.feeType + '</td><td style="width: 30%;">' + item.receiptNo + '</td><td style="width: 30%;">' + item.amount + '</td><td style="width: 30%;">' + item.createdDate + '</td><td style="width: 30%;">' + item.collectedBy + '</td><td style="width: 30%;">' + item.mode + '</td><td style="width: 30%;">' + item.accountNumber + '</td><td style="width: 30%;">' + item.bankName + '</td><td style="width: 30%;">' + item.installmentName + '</td><td style="width: 30%;">' + item.description + '</td></tr>';
+
+                    rowNumber++;
+                });
+                tableHtml += '</tbody>';
+
+                tableHtml += '</table>';
+                tableHtml += '</div>'; // Close the responsive <div>
+
+                // Create a <style> element with the CSS rules
+                var styleElement = document.createElement('style');
+                styleElement.innerHTML = `
+    .Search_FeeTable {
+      width: 100%; /* Adjust the width as needed */
+      border-collapse: collapse;
+      border: 1px solid #DC2;
+      margin-top: 18px;
+      background-color: white;
+      margin-left: 7px;
+    }
+    .Search_FeeTable td {
+      border: 1px solid #DC5;
+      /* padding: 0px; */
+      font-family: auto;
+      width: 31%;
+    }
+    .Search_FeeTable th {
+      border: 1px solid #DC5;
+      /* padding: 0px; */
+      font-family: auto;
+          width: 31%;
+    }
+    .Search_FeeTable tfoot {
+      background-color: lightgoldenrodyellow;
+    }
+.records-header {
+      background-color: slategrey;
+      color: white;
+      font-size: 13px;
+      text-align: left;
+    }
+  `;
+
+                // Write the table HTML and styles to the new window's document
+                newWindow.document.write('<html><head></head><body>' + tableHtml + '</body></html>');
+                newWindow.document.head.appendChild(styleElement);
+                newWindow.document.close();
+            }
+
+
+
+        });
+
+
+
+    }
+
+    /*========================= =====SEARCH ICON CLICK FIRE FUNCTION CODE END =================================*/
+
+
+
+
+    /*--=========================-=====EDIT FEE AMOUNT FUNCTION CODE START==============================---------  */
+
+    function EditFeeAmount(feeTermId, userfeeactivityId) {
+        debugger;
+
+        $('#Update_SubmitvalidationMessage').text('');
+        $('#ErrorMessages_EditUsers').text('');
+
+        $('#loadingSpinnerContainer').show();
+
+        $('#Challan_partialView_Container').css({ 'display': 'none' });
+
+        var UserId = $('#userIdTextBox').val();
+        var FeeTermId = feeTermId;
+        var UserFeeId1 = userfeeactivityId;
+
+         //alert("Searchfeetermsicon UserId=" + UserId + "Searchfeetermsicon FeeTermId=" + FeeTermId + "Searchfeetermsicon UserFeeId1=" + UserFeeId1);
+
+        var Editformdata = {
+            UserId: UserId,
+            FeeTermId: FeeTermId,
+            UserFeeId1: UserFeeId1
+        }
+
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').show();
+
+        $.ajax({
+           // url: '/FeeSection/PFU_PaidAmount_Edit_User',
+            url: '/FeeSection/PFU_PaidAmount_Edit_SingleUser',
+            type: 'GET',
+            data: Editformdata,
+            success: function (response) {
+                debugger;
+                //var responsecount = response.length;
+                //$('#RecordsCounts').text(responsecount);
+
+                $('#SingleUserEdit_PartailContainer').html(response);
+                //var table = $('#Search_FeeDetails_ByUserUpdate');
+                //var tbody = table.find('tbody');
+                //var RowNumber = 1;
+
+                //tbody.empty();
+
+                //response.reverse();
+
+                //$.each(response, function (index, item) {
+
+                //    var SNO = index + 1;
+                //    var SNOID = SNO + 1;
+
+                //    var row = $('<tr></tr>');
+                //    var cell1 = $('<td></td>').text(RowNumber);
+                //    var cell2 = $('<td></td>').text(item.termName);
+                //    var cell3 = $('<td></td>').text(item.feeType);
+
+
+                //    var AmountUpdate_TXTId = 'AmountTextbox_' + SNOID;
+                //    var cell4 = $('<td></td>').css('text-align', 'center');
+                //    var textbox = $('<input type="text" />').css({
+                //        'height': '23px',
+                //        'width': '68%'
+                //    }).attr('id', AmountUpdate_TXTId).val(item.amount);
+                //    textbox.attr('maxlength', 8);
+                //    cell4.append(textbox);
+
+
+                //    //var cell5 = $('<td></td>').text(item.comments);
+                //    var Comments_TxtAId = 'Comments_TxtAId' + SNOID;
+                //    var cell5 = $('<td></td>').css('text-align','center');
+                //    var textarea = $('<textarea></textarea>').attr('id', Comments_TxtAId).val(item.installmentName);
+                //    cell5.append(textarea);
+
+                //    var cell6 = $('<td></td>').text(item.createdDate);
+
+                //    var cell7 = $('<td></td>').text(item.collectedBy);
+                //    var cell8 = $('<td hidden></td>').text(item.installmentId);
+
+                //    row.append(cell1);
+                //    row.append(cell2);
+                //    row.append(cell3);
+                //    row.append(cell4);
+                //    row.append(cell5);
+                //    row.append(cell6);
+                //    row.append(cell7);
+                //    row.append(cell8);
+
+
+
+                //    tbody.append(row);
+                //    RowNumber++;
+                //});
+
+                $('#loadingSpinnerContainer').hide();
+               
+            },
+            error: function () {
+                // Handle error if the AJAX request fails
+                // Hide the spinner in case of error as well
+                $('#loadingSpinnerContainer').show();
+                alert('Error: Failed to fetch data.');
+            }
+        });
+    }
+
+
+    function PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn(event) {
+        event.preventDefault();
+
+        //alert("Terms Wise Fee Paid Edit Term Wise Table in View Back To Search Its Working ");
+
+        $('#Search_Pay_For_UsersFileds_Divid').show();
+        $('#SearchPayFor_UsersTbl_Divid').show();
+        $('#TableDate_forUsers_DivId').hide();
+        $('#UserName_Classification_subclasification_ID').text('');
+
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+        $('#ErrorMessages_EditUsers').text('');
+
+
+        FeeTerms_dropdown_Function();
+        $('#Comments_TxtID').val('');
+        $('#DueDate_TxtID').val('');
+        $('#DiscountAmount_TXTID').val('');
+         $('#Discount_TypeDDId').val('');
+         $('#Fee_Type_DDId').val('');
+         $('#FeeTerms_DDId').val('');
+         $('#FeeAmount_TxtID').val('');
+
+    }
+
+
+
+
+    function PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToPayFee_btn(event) {
+        event.preventDefault();
+
+       // alert("Terms Wise Fee Paid Edit Term Wise Table in View Back To Pay Fee Its Working ");
+
+
+        var userId = $("#userIdTextBox").val();
+        table_SearchByUser_FeeDues(userId);
+
+        $('#UserName_Classification_subclasification_ID').show();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+        $('#Search_Pay_For_UsersFileds_Divid').hide();
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').show();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+        $('#ErrorMessages_EditUsers').text('');
+
+
+        FeeTerms_dropdown_Function();
+        $('#Comments_TxtID').val('');
+        $('#DueDate_TxtID').val('');
+        $('#DiscountAmount_TXTID').val('');
+        $('#Discount_TypeDDId').val('');
+        $('#Fee_Type_DDId').val('');
+        $('#FeeTerms_DDId').val('');
+        $('#FeeAmount_TxtID').val('');
+    }
+
+
+    /*---FEE TERMS WISE EDIT VIEW TABLE DATA BELLOW UPDATE BUTTON CLICK FIRE FUNCTION CODE START----*/
+  
+
+    function PFU_TermsFeeTable_IN_Update(event) {
+
+        $('#ErrorMessages_EditUsers').text('');
+        $('#PFU_TermsFeeTable_IN_Update').text('');
+        var UpdateData = [];
+        var ChallanDetails = [];
+        
+
+        var table = $('#Search_FeeDetails_ByUserUpdate');
+        var rows = table.find('tbody tr');
+
+
+
+      /*  debugger;*/
+        var ErrorMessageValidation = true;
+        var FeeAmountMessageValidation = true;
+        var updatedRowCount = 0;
+
+        rows.each(function () {
+            var row = $(this);
+
+            var Sno = row.find('td:nth-child(1)').text();
+            var Term = row.find('td:nth-child(2)').text();
+            var FeeType = row.find('td:nth-child(3)').text();
+
+
+
+            var Amount_Txt = row.find('td:nth-child(4) input[type="text"]').val();
+            var Amount_Txts = row.find('td:nth-child(4) input[type="text"]').val();
+            var Span_AmountSpan = row.find('td:nth-child(4) #AmountTxt_Spanid').text();
+            var InstallmentName_Txt = row.find('td:nth-child(5) textarea').val();
+            var Span_InstallmentName = row.find('td:nth-child(5) #Installment_Spanid').text();
+            var PaidDate = row.find('td:nth-child(6)').text();
+
+            var dateAndTime = PaidDate.split(' ');
+            var dateComponents = dateAndTime[0].split('-');
+            var day = dateComponents[0];
+            var month = dateComponents[1];
+            var year = dateComponents[2];
+
+            var formattedDate = day + '/' + month + '/' + year;
+            
+            var date = formattedDate;
+            var time = dateAndTime[1];
+
+            var FeeAmount = row.find('td:nth-child(9)').text();
+            var ReceiptNo = row.find('td:nth-child(10)').text();
+            var FirstName = row.find('td:nth-child(11)').text();
+            var ClassificationName = row.find('td:nth-child(12)').text();
+            var SubClassificationName = row.find('td:nth-child(13)').text();
+            var DueDate = row.find('td:nth-child(14)').text();
+            var DueAmount  = row.find('td:nth-child(15)').text();
+            var AdmissionNumber = row.find('td:nth-child(16)').text();
+            var ConcedingAmount = row.find('td:nth-child(17)').text();
+            var DiscountName = row.find('td:nth-child(18)').text();
+
+
+            
+
+
+            var parsedDueAmount = parseInt(DueAmount);
+            if (parsedDueAmount <= 0) {
+                ErrorMessageValidation = false;
+                return false;
+            }
+
+         
+            if (parseInt(Amount_Txt) >= parseInt(FeeAmount)) {
+              
+                ErrorMessageValidation = false;
+                return false;
+            }
+
+            debugger;
+            var PaidAmounts = + Amount_Txts;
+            if (Amount_Txt != "" && Amount_Txt != "0.0" && Amount_Txt != "0") {
+
+
+                if (Amount_Txt != Span_AmountSpan || InstallmentName_Txt != Span_InstallmentName) {
+
+                    var Amount = Amount_Txt;
+                    var InstallmentName = InstallmentName_Txt;
+                    var InstallmentId = row.find('td:nth-child(8)').text();
+                    var PaidAmount = + PaidAmounts;
+                    var DueAmount = FeeAmount - PaidAmount;
+                    UpdateData.push({ 'InstallmentId': InstallmentId, 'InstallmentName': InstallmentName, 'Amount': Amount });
+
+                    ChallanDetails.push({
+                        'ReceiptNo': ReceiptNo, 'DiscountName': DiscountName, 'DueDate': DueDate, 'FirstName': FirstName, 'ClassificationName': ClassificationName, 'SubClassificationName': SubClassificationName, 'InstallmentName': InstallmentName, 'Amount_Txt': PaidAmount, 'InstallmentId': InstallmentId, 'PaidDate': date, 'PaidTime': time, 'FeeType': FeeType, 'Term': Term, 'AdmissionNumber': AdmissionNumber, 'FeeAmount': FeeAmount, 'ConcedingAmount': ConcedingAmount, 'DueAmount': DueAmount
+                    });
+                    updatedRowCount++;
+                }
+            } else {
+                FeeAmountMessageValidation = false;
+                return false;
+            }
+           // ChallanDetails.push({'PaidAmounts': PaidAmounts});
+        });
+
+
+       
+        debugger;
+
+        if (updatedRowCount > 1) {
+
+            $('#ErrorMessages_EditUsers').text('You cannot update more than one record at a time.');
+            return false;
+
+        }else if (!ErrorMessageValidation) {
+
+            $('#ErrorMessages_EditUsers').text('Entered Amount is Exceeding the Fee Amount, Please Verify the Amount.');
+            return false;
+
+        } else if (UpdateData.length === 0) {
+
+            $('#ErrorMessages_EditUsers').text('You are not Updated Any Value');
+            return false;
+
+        } else if (!FeeAmountMessageValidation) {
+
+            $('#ErrorMessages_EditUsers').text('Please enter amount.');
+            return false;
+
+        }
+
+        debugger;
+     
+        $.ajax({
+            type: 'POST',
+            url: '/FeeSection/PFU_FeeInstallments_BulkFeeUPDATE?UpdateData=' + JSON.stringify(UpdateData) + "&ChallanDetails=" + JSON.stringify(ChallanDetails), // Update with your actual controller and action names
+            success: function (result) {
+                debugger;
+                $('#Challan_partialView_Container').css({'display':'block'});
+                $('#Challan_partialView_Container').html(result);
+            },
+            error: function (error) {
+                // Handle error
+            }
+        });
+
+    }
+
+
+    /*---FEE TERMS WISE EDIT VIEW TABLE DATA BELLOW UPDATE BUTTON CLICK FIRE FUNCTION CODE END----*/
+
+
+    /*---==============================EDIT FEE AMOUNT FUNCTION CODE END==============================---------  */
+
+
+    /*---------------------------------  IN EDIT VIEW  BACK TO SEARCH HIDE SOME DIV IDS AND SHOW SOME DIV IDS FUNCTION CODE START ---------------------------------  */
+
+    function EditTobackSearch(event) {
+
+        event.preventDefault();
+
+        Feesection_TbLData_Callingfunction();
+        $("#ErrorMessage_SpanId").html('');
+        $("#MessageID").html('');
+
+        $("#UpdateMessageID").html('');
+        $("#UpdatevalidationMessage").html('');
+
+        $("#CreateFeeDiscountType_Divid").hide();
+        $("#FeeTypesDiscountTbl_Divid").show();
+        $("#UpdateEditView_DivId").hide();
+
+    }
+    /*---------------------------------  IN EDIT VIEW  BACK TO SEARCH HIDE SOME DIV IDS AND SHOW SOME DIV IDS FUNCTION CODE END ---------------------------------  */
+
+    //Fee_Terms_EditUpdate
+
+
+
+
+    /* -----=============Add Fee and Update Fee AddFeeByUser_Btn Click Function Fire This Code Start-----=============*/
+
+    const addFeeSubmitButton = document.getElementById("AddFeeByUser_Btn");
+
+    addFeeSubmitButton.addEventListener("click", HandleAddFeeSubmit_UpdateFunction);
+
+    function AddFeeValidation() {
+
+        debugger;
+        var Comments = $('#Comments_TxtID').val();
+        var Duedate = $('#DueDate_TxtID').val();
+        var DiscountAmount = $('#DiscountAmount_TXTID').val();
+        var DiscountNameId = $('#Discount_TypeDDId').val();
+        var FeeTypeId = $('#Fee_Type_DDId').val();
+        var FeeTermId = $('#FeeTerms_DDId').val();
+        var FeeAmount = $('#FeeAmount_TxtID').val();
+
+
+        var Update_SubmitvalidationMessage = "";
+        var hasError = false;
+
+        if (FeeTermId === "") {
+            Update_SubmitvalidationMessage += "Please select Fee Term.<br>";
+            hasError = true;
+        }
+
+        if (FeeTypeId === "") {
+            Update_validationMessage += "Please select Fee Type.<br>";
+            hasError = true;
+        }
+
+        if (FeeAmount === "") {
+            Update_SubmitvalidationMessage += "Please Enter Fee Amount.<br>";
+            hasError = true;
+        }
+
+        if (Duedate === "") {
+            Update_SubmitvalidationMessage += "Please select DueDate.<br>";
+            hasError = true;
+        }
+
+
+        const selectedDate = new Date(Duedate);
+        const currentdate = new Date();
+
+        if (selectedDate <= currentdate) {
+
+            Update_SubmitvalidationMessage += "Due date should be greater than current date.<br>";
+            hasError = true;
+        }
+
+        if (DiscountAmount > FeeAmount) {
+
+            Update_SubmitvalidationMessage += "Discount Amount Should not be greater than Fee Amount.<br>";
+            hasError = true;
+
+        }
+
+
+        if (hasError) {
+
+            $('#validation').html("Following fields have invalid data :");
+            $("#Update_SubmitvalidationMessage").html(Update_SubmitvalidationMessage);
+
+            return false; // Return false to prevent form submission
+
+        } else {
+
+            $("#Update_SubmitvalidationMessage").html("");
+            return true; // Return true to proceed with form submission
+        }
+
+    }
+
+
+    function HandleAddFeeSubmit_UpdateFunction() {
+        debugger;
+        if (AddFeeValidation()) {
+
+            var Comments = $('#Comments_TxtID').val();
+            var Duedate = $('#DueDate_TxtID').val();
+            var DiscountAmount = $('#DiscountAmount_TXTID').val();
+            var DiscountNameId = $('#Discount_TypeDDId').val();
+            var FeeTypeId = $('#Fee_Type_DDId').val();
+            var FeeTermId = $('#FeeTerms_DDId').val();
+            var FeeAmount = $('#FeeAmount_TxtID').val();
+            var UserId = $('#userIdTextBox').val();
+
+            var AcademicYearId = 1;
+
+
+
+            var UpdateFee_SaveFeeData = {
+                UserId: UserId,
+                FeeTypeId: FeeTypeId,
+                AcademicYearId: AcademicYearId,
+                FeeTermId: FeeTermId,
+                ConcedingTypeId: DiscountNameId,
+
+                FeeAmount: FeeAmount,
+                ConcedingAmount: DiscountAmount,
+                DueDate: Duedate,
+                Comments: Comments
+            };
+
+            $.ajax({
+
+                url: '/FeeSection/SaveFee_UpdateFee_ByTblUser',
+                type: 'POST',
+                data: UpdateFee_SaveFeeData,
+                success: function (response) {
+
+                    var userId = $("#userIdTextBox").val();
+                    table_SearchByUser_FeeDues(userId);
+
+                    if (response == "1") {
+
+                        var userId = $("#userIdTextBox").val();
+                        table_SearchByUser_FeeDues(userId);
+
+                        $('#Update_SubmitvalidationMessage').text('Record Inserted Succesfully');
+                    } else if (response == "2") {
+
+                        var userId = $("#userIdTextBox").val();
+                        table_SearchByUser_FeeDues(userId);
+
+                        $('#Update_SubmitvalidationMessage').text('Record Updated Succesfully');
+                    }
+                    else {
+
+                        $('#Update_SubmitvalidationMessage').text('Record Not Inserted Please Try Again');
+                    }
+                }
+
+            });
+
+
+
+        }
+    }
+
+
+    /* -----=============Add Fee and Update Fee AddFeeByUser_Btn Click Function Fire This Code End-----=============*/
+
+
+
+    /*=== FEE PAYED AMOUNT BUTTON BY USING ONCLICK FUNCTION CODE START ===*/
+
+
+
+
+    /* ------------------------------------------------>      Cheque And DD Select Open Some Details Textboxes That Time validation Code is Start -------> */
+    function ValidationChequeDetails() {
+        
+
+        var ChequeDDNo = document.getElementById('Cheque_DD_TxtId');
+        var ChequeDDDate = document.getElementById('Cheque_DD_DateTxtId');
+        var ChequeDDBankName = document.getElementById('Cheque_DD_BankName_TxtId');
+
+        var validationMessage = document.getElementById('SubmitvalidationMessage');
+        var validationMessages = document.getElementById('SubmitvalidationMessages');
+        debugger;
+       
+        if (ChequeDDNo.style.display === 'block') {
+         
+            var ChequeDDNoValue = ChequeDDNo.value;
+
+           
+            if (ChequeDDNoValue.trim() === '') {
+
+                validationMessages.innerHTML = 'Following fields have invalid data :<br />';
+                validationMessage.textContent += 'Please enter Cheque/DD No.';
+                return false;
+
+            }
+        }
+        if (ChequeDDDate.style.display === 'block') {
+
+           
+            var ChequeDDDateValue = ChequeDDDate.value;
+
+          
+            if (ChequeDDDateValue.trim() === '') {
+                validationMessages.innerHTML = 'Following fields have invalid data :<br />';
+                validationMessage.textContent += 'Please enter Cheque/DD Date.';
+                return false;
+
+            }
+        }
+        if (ChequeDDBankName.style.display === 'block') {
+
+        
+            var ChequeDDBankNameValue = ChequeDDBankName.value;
+
+          
+            if (ChequeDDBankNameValue.trim() === '') {
+                validationMessages.innerHTML = 'Following fields have invalid data :<br />';
+                validationMessage.textContent += 'Please enter Cheque/DD Bank Name.';
+                return false;
+
+            }
+        }
+
+        validationMessage.textContent = '';
+        return true;
+
+
+
+    }
+ /* ------------------------------------------------>      Cheque And DD Select Open Some Details Textboxes That Time validation Code is End-------> */
+
+
+
+
+    function AmountPaySubmitBtn(event) {
+        event.preventDefault();
+
+        $('#MultipuleUsersFeeChallanas_PartailContainer').html(" ");
+
+        $('#SubmitvalidationMessage').text('');
+        $('#SubmitvalidationMessages').text('');
+        $('#Update_SubmitvalidationMessage').text('');       
+        $('#ErrorMessages_EditUsers').text('');
+        if (ValidationChequeDetails()) {
+            debugger;
+            PayementModes = $('#Payment_Mode_DDid').val();
+            if (PayementModes === '') {
+
+                $('#SubmitvalidationMessage').text('Please select a Payment Mode.');
+                return;
+            }
+
+            var formDataArray = [];
+
+            var textboxValues = [];
+            var InstallmentNames = [];
+            var tableData = [];
+
+
+            var challana_Data_Users = [];
+
+
+            var ChequeDDNoValue = document.getElementById('Cheque_DD_TxtId');   //CCDDNameOfCard ===ChequeDDNo
+            var ChequeDDDateValue = document.getElementById('Cheque_DD_DateTxtId'); //CCDDType ===ChequeDDDate
+            var ChequeDDBankValue = document.getElementById('Cheque_DD_BankName_TxtId');  //ChequeDDBank ===CCDDNameofIssuer
+
+            var ChequeDDNo = ChequeDDNoValue.value;
+            var ChequeDDDates = ChequeDDDateValue.value;
+            var ChequeDDBank = ChequeDDBankValue.value;
+
+
+            var CCDDNameOfCard = ChequeDDNo;
+            var CCDDNameofIssuer = ChequeDDBank;
+
+
+
+            debugger;
+            var originalDateStr = ChequeDDDates;
+            var ChequeDDDate = "";
+            var CCDDType = "";
+
+            if (ChequeDDDates != '') {
+
+                var parts = originalDateStr.split(' ');
+                var datePart = parts[0];
+                var timePart = '00:00:00';
+
+                var dateParts = datePart.split('-');
+                var year = dateParts[0];
+                var month = dateParts[1];
+                var day = dateParts[2];
+
+                CCDDType = day + '/' + month + '/' + year + ' ' + timePart;
+                ChequeDDDate = ChequeDDDates + ' ' + timePart;
+                console.log(CCDDType);
+
+            } else {
+                var ChequeDDDate = "";
+                var CCDDType = "";
+            }
+
+               
+
+
+            var ReceiptNo = "";
+            var PayableBranchId = "";
+            var BankAddress = "";
+            var DueAmount = "";         
+           
+
+            var tableRows = $('#Search_By_User_FeeTableData_Id tbody tr');
+            var tble = tableRows.length;
+          
+
+            /* --------  All text boxes Empty Show Error Message Code Start -------- */
+
+            debugger;
+            var TextboxIndex = 1;
+            var totalRowTextboxs = tableRows.length;
+            var AllTextBoxesValues = [];
+
+            tableRows.each(function () {
+                var rowId = $(this).attr('id');
+
+                var rowIds = TextboxIndex + 1;
+                var textboxValues = $('#AmountTextbox_' + rowIds).val();
+                AllTextBoxesValues.push(textboxValues);
+                var InstallmentNameValue = $('#InstallmentName_' + rowIds).val();
+                TextboxIndex++;
+            });
+
+            debugger;
+            var allEmpty = AllTextBoxesValues.every(function (value) {
+                return $.trim(value) === ""; // Trim and check if empty
+            });
+
+            debugger;
+            if (allEmpty) {
+
+                $('#SubmitvalidationMessage').text('Please enter fee amount .');
+                /*alert("All textboxes are empty. Please enter values.");*/
+                return false;
+            }
+            /* --------  All text boxes Empty Show Error Message Code Start -------- */
+
+
+
+            var index = 1;
+            var totalRows = tableRows.length;
+
+
+            let validationFailed = false;
+            console.log('Total Rows:', totalRows);
+
+            tableRows.each(function () {
+                var formData = [];
+                var rowValues = {};
+                Bankaccount = $('#BankAccounts_DDId').val();
+                PayementMode = $('#Payment_Mode_DDid').val();
+                Description = $('#Description_TXTAId').val();
+                InstanceId = $('#InstanceId_TXTId').val();
+                AcademicYearId = $('#academicYearId').text();
+                FeeTermId = $('#feeTermId').text();
+                FeeTypeId = $('#feeTypeId').text();
+                UserFeeId1 = $('#userfeeactivityId').text();
+
+
+               
+            
+                
+                
+                if (Bankaccount === '') {
+                    Bankaccount = "NULL";
+                }
+               
+                if (Description === '') {
+                    Description = 'NULL';
+                }
+            
+                if (ReceiptNo === '') {
+                    ReceiptNo = 'NULL';
+                }
+               
+                if (ChequeDDNo === '') {
+                    ChequeDDNo = 'NULL';
+                }
+
+              
+                if (ChequeDDDate === '') {
+                    ChequeDDDate = 'NULL';
+                }
+
+               
+                if (ChequeDDBank === '') {
+                    ChequeDDBank = 'NULL';
+                }
+               
+                if (PayableBranchId === '') {
+                    PayableBranchId = 'NULL';
+                }
+
+                if (CCDDNameOfCard === '') {
+                    CCDDNameOfCard = 'NULL';
+                }
+               
+                if (CCDDType === '') {
+                    CCDDType = 'NULL';
+                }
+               
+                if (CCDDNameofIssuer === '') {
+                    CCDDNameofIssuer = 'NULL';
+                }
+              
+                if (BankAddress === '') {
+                    BankAddress = 'NULL';
+                }
+               
+                if (DueAmount === '') {
+                    DueAmount = 'NULL';
+                }
+
+
+
+
+
+
+                var rowId = $(this).attr('id');
+
+                var rowIds = index + 1;
+                var textboxValues = $('#AmountTextbox_' + rowIds).val();
+                var InstallmentNameValue = $('#InstallmentName_' + rowIds).val();
+
+
+
+                debugger;
+
+                var cell2Text = $(this).find('td:nth-child(2)').text().trim();
+                var cell3Text = $(this).find('td:nth-child(3)').text().trim();
+                var cell4Value = parseFloat($(this).find('td:nth-child(4)').text().trim());
+                var cell5Text = $(this).find('td:nth-child(5)').text().trim();
+                var cell6Value = $(this).find('td:nth-child(6)').text().trim();
+                //var cell7Value = parseFloat($(this).find('td:nth-child(7)').text().trim());
+                var cell7Value = parseFloat($(this).find('td:nth-child(7)').text().trim());
+                var cell4Text = $(this).find('td:nth-child(4)').text().trim();
+                var cell7Text = $(this).find('td:nth-child(7)').text().trim();
+                var cell8Text = $(this).find('td:nth-child(8)').text().trim();
+                var cell9Text = $(this).find('td:nth-child(9)').text().trim();
+                var BalanceDue = cell8Text - textboxValues;
+
+
+
+
+
+                var academicYearId_cell13Text = $(this).find('td:nth-child(13)').html().trim();
+                var feeTypeId_cell14Text = $(this).find('td:nth-child(14)').html().trim();
+                var feeTermId_cell15Text = $(this).find('td:nth-child(15)').html().trim();
+                var userfeeactivityId_cell16Text = $(this).find('td:nth-child(16)').html().trim();
+
+
+
+
+                var cell18Text = $(this).find('td:nth-child(18)').text().trim();
+                var cell19Text = $(this).find('td:nth-child(19)').text().trim();
+                var cell20Text = $(this).find('td:nth-child(20)').text().trim();
+                var cell21Text = $(this).find('td:nth-child(21)').text().trim();
+                //var PaidDueAmount = cell4Value - cell7Value;
+                var PaidDueAmount = cell4Text - cell7Text;
+
+
+
+                if (textboxValues !== "") {
+                    var Inttextboxvalue = parseInt(textboxValues);
+                    if (Inttextboxvalue > PaidDueAmount) {
+
+
+                        $('#SubmitvalidationMessage').text('FeeAmount should not be Greater than Due, for Term "' + cell2Text + '" and FeeType "' + cell3Text + '"');
+                        validationFailed = true; // Set the flag to true to indicate validation failure
+                        return false; // Exit the each loop
+                    }
+                }
+               
+
+
+                rowValues['AmountTextboxValue'] = textboxValues;
+                rowValues['InstallmentNameTextareaValue'] = InstallmentNameValue;
+                tableData.push(rowValues);
+
+
+                debugger;
+
+                formData.push({ name: "BankAccountId", value: Bankaccount });
+                formData.push({ name: "PaymentModeId", value: PayementMode });
+                formData.push({ name: "Description", value: Description });
+                formData.push({ name: "InstanceId", value: InstanceId });
+
+                formData.push({ name: "ReceiptNo", value: ReceiptNo });
+                formData.push({ name: "ChequeDDNo", value: ChequeDDNo });
+                formData.push({ name: "ChequeDDDate", value: ChequeDDDate });
+                formData.push({ name: "ChequeDDBank", value: ChequeDDBank });
+                formData.push({ name: "PayableBranchId", value: PayableBranchId });
+                formData.push({ name: "CCDDNameOfCard", value: CCDDNameOfCard });
+                formData.push({ name: "CCDDType", value: CCDDType });
+                formData.push({ name: "CCDDNameofIssuer", value: CCDDNameofIssuer });
+                formData.push({ name: "BankAddress", value: BankAddress });
+                formData.push({ name: "DueAmount", value: DueAmount });
+
+                var InstallmentName = InstallmentNameValue;
+
+                formData.push({ name: "InstallmentName", value: InstallmentName });
+
+
+
+                var CCDDNo = getFormattedDate();
+                formData.push({ name: "CCDDNo", value: CCDDNo });
+
+
+                function getFormattedDate() {
+
+                    var today = new Date();
+                    var day = String(today.getDate()).padStart(2, '0');
+                    var month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+                    var year = today.getFullYear();
+                    var hours = String(today.getHours()).padStart(2, '0');
+                    var minutes = String(today.getMinutes()).padStart(2, '0');
+                    var seconds = String(today.getSeconds()).padStart(2, '0');
+
+                    return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+                }
+
+
+                console.log('Form Data:', formData);
+                /* debugger;*/
+                if (textboxValues != "") {
+
+                    if (parseInt(cell8Text) <= 0) {
+                        $('#SubmitvalidationMessage').text('No Due Amount for Term "' + cell2Text + '" and FeeType "' + cell3Text + '"');
+                        validationFailed = true;
+                        return false;
+                    }
+
+                    formData.push({ name: "AcademicYearId", value: academicYearId_cell13Text });
+                    formData.push({ name: "FeeTermId", value: feeTermId_cell15Text });
+                    formData.push({ name: "FeeTypeId", value: feeTypeId_cell14Text });
+                    formData.push({ name: "UserFeeId1", value: userfeeactivityId_cell16Text });
+
+
+                    //testing last Values 
+                    formData.push({ name: "AcademicYearId", value: academicYearId_cell13Text });
+                    formData.push({ name: "FeeTermId", value: feeTermId_cell15Text });
+                    formData.push({ name: "FeeTypeId", value: feeTypeId_cell14Text });
+                    formData.push({ name: "UserFeeId1", value: userfeeactivityId_cell16Text });
+
+
+                    var Amount = textboxValues;
+                    formData.push({ name: "Amount", value: Amount });
+
+                    //Challana Details This Values
+
+                    formData.push({ name: "Challana_TermName", value: cell2Text });
+                    formData.push({ name: "Challana_FeeType", value: cell3Text });
+                    formData.push({ name: "Challana_FeeAmount", value: cell4Value });
+                    formData.push({ name: "Challana_DiscountType", value: cell5Text });
+                    formData.push({ name: "Challana_DiscountAmount", value: cell6Value });
+                    formData.push({ name: "Challana_PaidAmount", value: cell7Value });
+                    formData.push({ name: "Challana_PayingAmount", value: textboxValues });
+                    formData.push({ name: "Challana_DueAmount", value: cell8Text });
+                    formData.push({ name: "Challana_BalanceDue", value: BalanceDue });
+                    formData.push({ name: "Challana_DueDate", value: cell9Text });
+                    formData.push({ name: "Challana_UserRegId", value: cell18Text });
+                    formData.push({ name: "Challana_ClassificationName", value: cell19Text });
+                    formData.push({ name: "Challana_subclassificationName", value: cell20Text });
+                    formData.push({ name: "Challana_UserName", value: cell21Text });
+                  
+
+                    //testing Last Values 
+
+                    var Amount = textboxValues;
+                    formData.push({ name: "Amount", value: Amount });
+
+                    $.ajax({
+                        url: '/FeeSection/PFU_AmountPay_Recipt',
+                        type: 'POST',
+                        data: formData,
+
+                        success: function (response) {
+
+                            debugger;
+                            $('#GetFeeTermDetialsByUser_DIVID').hide();
+                            $('#PartailCOntainerViews').show();
+                            $('#FeePaid_ChallanaCreated_DivId').show();
+                            $('#UserName_Classification_subclasification_ID').hide();
+                            $('#FeePaidMessage').text('Fee paid Successfully ');
+
+
+
+                            $('#MultipuleUsersFeeChallanas_PartailContainer').append(response);
+
+                            //if (response != 0) {
+                            //    var RECEIPTNO = response;
+
+                            //    $('#FeePaid_ChallanaCreated_DivId').show();
+                            //    $('#Search_Pay_For_UsersFileds_Divid').hide();
+                            //    $('#TableDate_forUsers_DivId').hide();
+
+                            //    $('#GetFeeTermDetialsByUser_DIVID').hide();
+                            //    $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+
+                            //    $('#Description_TXTAId').val('');
+                            //    BankAccounts_dropdown_Function();
+                            //    Payment_Mode_dropdown_Function();
+
+                            //    $('#UserName_Classification_subclasification_ID').hide();
+                            //    $('#AMountPaidSubmit_Message').text('Fee paid Successfully ');
+
+                            //    var Challana_Data = {
+
+                            //        Challana_TermName: cell2Text,
+                            //        Challana_FeeType: cell3Text,
+                            //        Challana_FeeAmount: cell4Value,
+                            //        Challana_DiscountType: cell5Text,
+                            //        Challana_DiscountAmount: cell6Value,
+                            //        Challana_PaidAmount: cell7Value,
+                            //        Challana_PayingAmount: textboxValues,
+                            //        Challana_DueAmount: cell8Text,
+                            //        //Challana_BalanceDue: PaidDueAmount,
+                            //        Challana_BalanceDue: BalanceDue,
+
+                            //        Challana_DueDate: cell9Text,
+                            //        Challana_UserRegId: cell18Text,
+                            //        Challana_ClassificationName: cell19Text,
+                            //        Challana_subclassificationName: cell20Text,
+                            //        Challana_UserName: cell21Text,
+                            //        Challana_RECEIPTNO: RECEIPTNO
+                            //    };
+
+                            //    //resetChallanaData();
+                            //    debugger;
+                            //    challana_Data_Users.push(Challana_Data);
+
+                            //    displayFormattedDateTime();
+                            //    ChallaFunctionNames(challana_Data_Users);
+
+
+                            //}
+
+                        }
+
+
+                    });
+
+
+                }
+
+                index++;
+            });
+
+
+
+            if (validationFailed) {
+                // Handle the case where validation failed
+                // For example, you can prevent form submission or perform other actions
+                return;
+            }
+
+
+
+
+
+            var allTextboxesFilled = textboxValues.every(value => value !== '');
+
+
+
+            console.log('Textbox Values:', textboxValues);
+
+        }
+
+
+    }
+
+    /* --CLEAR CHALLANA VALUES FUNCTION START--*/
+    function resetChallanaData() {
+        Challana_Data = {
+            Challana_TermName: null,
+            Challana_FeeType: null,
+            Challana_FeeAmount: null,
+            Challana_DiscountType: null,
+            Challana_DiscountAmount: null,
+            Challana_PaidAmount: null,
+            Challana_PayingAmount: null,
+            Challana_DueAmount: null,
+            Challana_BalanceDue: null,
+            Challana_DueDate: null,
+            Challana_UserRegId: null,
+            Challana_ClassificationName: null,
+            Challana_subclassificationName: null,
+            Challana_UserName: null,
+            Challana_RECEIPTNO: null
+        };
+    }
+
+    // Usage example:
+    resetChallanaData(); // Call this whenever you want to clear the values of Challana_Data
+
+    /* --CLEAR CHALLANA VALUES FUNCTION END--*/
+
+
+
+    $('#BackToPayFee_btn').click(function() {
+
+
+        var userId=  $("#userIdTextBox").val();
+        table_SearchByUser_FeeDues(userId);
+
+        $('#UserName_Classification_subclasification_ID').show();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+        $('#Search_Pay_For_UsersFileds_Divid').hide();
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').show();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+
+
+    });
+    $('#BackToSearch_btn').click(function () {
+
+
+        $('#Search_Pay_For_UsersFileds_Divid').show();
+        $('#TableDate_forUsers_DivId').hide();
+
+        $('#GetFeeTermDetialsByUser_DIVID').hide();
+        $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
+        $('#FeePaid_ChallanaCreated_DivId').hide();
+
+    });
+
+
+    /*=== FEE PAYED AMOUNT BUTTON BY USING ONCLICK FUNCTION CODE END ===*/
+
+
+    /*--===SPINNER FUNCTION CODE START====--*/
+
+
+    /*--===SPINNER FUNCTION CODE END====--*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*----------CHALLANA VIEW CREATED FUNCTIONS  CODE START----------------------*/
+
+
+
+
+
+
+
+
+
+    function ChallaFunctionNames(data) {
+
+        debugger;
+
+
+        const tableBody = document.getElementById("tableBody");
+        const tablefooter = document.getElementById("tablefooter");
+
+
+
+
+
+        data.forEach((row) => {
+            if (row.Challana_PayingAmount !== "") {
+
+
+                var today = new Date();
+                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                var month = months[today.getMonth()];
+                var day = String(today.getDate()).padStart(2, '0');
+                var year = today.getFullYear();
+                var hours = today.getHours();
+                var minutes = String(today.getMinutes()).padStart(2, '0');
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+
+                // Convert to 12-hour format
+                hours = hours % 12;
+                hours = hours ? hours : 12; // '0' should be '12' in 12-hour format
+
+                var formattedDateTime = month + ' ' + day + ' ' + year;
+                var formatteTime = hours + ':' + minutes + ampm;
+                var Formattedatetime = day + '/' + month + '/' + year ;
+                const Daterow = document.createElement("tr");
+                Daterow.innerHTML = `<td  colspan="4" align="right">${formattedDateTime}</td>`;
+                tableBody.appendChild(Daterow);
+
+                const timerow = document.createElement("tr");
+                timerow.innerHTML = `
+<td  colspan="" align="right"></td>
+<td  colspan="" align="right"></td>
+<td  colspan="" align="right"></td>
+<td  colspan="" align="right">${formatteTime}</td>
+`;
+                tableBody.appendChild(timerow);
+
+
+                const NameRow = document.createElement("tr");
+                NameRow.innerHTML = `
+               <td style="width: 20%;">
+        <img src="/Images/footer_logo.jpg" alt="Logo" style="max-width: 100%; height: auto;">
+    </td>
+    <td colspan="4" align="left">
+        <div style="font-family: Times New Roman; font-size: 14px; font-weight: bold;">JNANADEEPA VIDYA SAMSTE</div>
+        <div>Raghav Nagar, Hyderabad, Telangana - 500003</div>
+    </td> `;
+                tableBody.appendChild(NameRow);
+
+                //const AddressRow = document.createElement("tr");
+                //AddressRow.innerHTML = `<td colspan="4" align="left">Raghav Nagar,Hyderabad,Talangana - 500003</td>`;
+                //tableBody.appendChild(AddressRow);
+
+
+                const EmptyRow = document.createElement("tr");
+                EmptyRow.innerHTML = `<td colspan="4" style="height: 20px;"></td>`;
+                tableBody.appendChild(EmptyRow);
+
+                    const newRow1 = document.createElement("tr");
+                    newRow1.innerHTML = `
+                    <td align="right">Name :</td>
+                    <td align="left">${row.Challana_UserName}</td>
+
+                    <td align="right">Fee Amount :</td>
+                    <td align="left">${row.Challana_FeeAmount}</td>
+
+                `;
+                    tableBody.appendChild(newRow1);
+
+                    // Add the second row to the challana
+                    const newRow2 = document.createElement("tr");
+                    newRow2.innerHTML = `
+
+                    <td align="right">Registration Number :</td>
+                    <td align="left">${row.Challana_UserRegId}</td>
+
+                     <td align="right">Discount Type :</td>
+                     <td align="left">${row.Challana_DiscountType}</td>
+
+
+                `;
+                    tableBody.appendChild(newRow2);
+
+                    const newRow3 = document.createElement("tr");
+                    newRow3.innerHTML = `
+
+                    <td align="right">Department :</td>
+                    <td align="left">${row.Challana_ClassificationName}</td>
+
+                     <td align="right">Discount Amount :</td>
+                     <td align="left">${row.Challana_DiscountAmount}</td>
+
+
+                `;
+                    tableBody.appendChild(newRow3);
+
+                    const newRow4 = document.createElement("tr");
+                    newRow4.innerHTML = `
+
+                    <td align="right">Semester :</td>
+                    <td align="left">${row.Challana_subclassificationName}</td>
+
+                     <td align="right">Paid Amount :</td>
+                     <td align="left">${row.Challana_PaidAmount}</td>
+
+                `;
+                    tableBody.appendChild(newRow4);
+
+                    const newRow5 = document.createElement("tr");
+                    newRow5.innerHTML = `
+
+                    <td align="right">Term :</td>
+                    <td align="left">${row.Challana_TermName}</td>
+
+                     <td align="right">Due Amount :</td>
+                     <td align="left">${row.Challana_DueAmount}</td>
+
+                `;
+                    tableBody.appendChild(newRow5);
+
+
+
+                    const newRow6 = document.createElement("tr");
+                    newRow6.innerHTML = `
+
+                    <td align="right">Due Date :</td>
+                    <td align="left">${row.Challana_DueDate}</td>
+
+                     <td align="right">Paying Amount :</td>
+                     <td align="left">${row.Challana_PayingAmount}</td>
+
+                `;
+                    tableBody.appendChild(newRow6);
+
+                    const newRow7 = document.createElement("tr");
+                    newRow7.innerHTML = `
+
+                    <td align="right">Fee type :</td>
+                    <td align="left">${row.Challana_FeeType}</td>
+
+                     <td align="right">Balance Due :</td>
+                     <td align="left">${row.Challana_BalanceDue}</td>
+
+                `;
+                tableBody.appendChild(newRow7);
+
+
+                const separatorRow = document.createElement("tr");
+                separatorRow.innerHTML = `<td colspan="4" style="height: 20px;"></td>`;
+                tableBody.appendChild(separatorRow);
+
+                const newRow8 = document.createElement("tr");
+                newRow8.innerHTML = `
+
+                    <td width="20" style="font-size: 15px; font-weight: bold;">Stamp</td>
+                    <td width="20" style="font-size: 15px; font-weight: bold;">Signature Of Accountant</td>
+
+                    <td width="10" style="font-size: 19px; font-weight: bold;"></td>
+                    <td width="20" style="font-size: 15px; font-weight: bold;">Signature Of Payee</td>
+
+                `;
+                tableBody.appendChild(newRow8);
+
+
+
+                const EmptyRow1 = document.createElement("tr");
+                EmptyRow1.innerHTML = `<td colspan="4" style="height: 20px;"><hr/></td>`;
+                tableBody.appendChild(EmptyRow1);
+
+
+                const Footerrow1 = document.createElement("tr");
+                Footerrow1.innerHTML = `<td colspan="4"align="center">ADS SCHOOL - HYDERABAD,   H.S - 2 , Sector - 23 , Opposite Pkt. - 3</td>`;
+                tablefooter.appendChild(Footerrow1);
+
+                const Footerrow2 = document.createElement("tr");
+                Footerrow2.innerHTML = `<td colspan="4" align="center">*****  FEE RECEIPT  *****</td>`;
+                tablefooter.appendChild(Footerrow2);
+
+                const Footerrow3 = document.createElement("tr");
+                Footerrow3.innerHTML = `<td colspan="4" align="center">  <b>---------------------------------------------------------------------------------------------------------------</b></td>`;
+                tablefooter.appendChild(Footerrow3);
+
+                const Footerrow4 = document.createElement("tr");
+                Footerrow4.innerHTML = `
+                     <td align="right">RECEIPT NO :</td>
+                    <td align="left">${row.Challana_RECEIPTNO}</td>
+
+                    <td align="right">RECEIPT DATE	 :</td>
+                    <td align="left">${Formattedatetime}</td>  `;
+                tablefooter.appendChild(Footerrow4);
+
+                const Footerrow5 = document.createElement("tr");
+                Footerrow5.innerHTML = `
+                     <td align="right">NAME :</td>
+                    <td align="left">${row.Challana_UserName}</td>
+
+                    <td align="right">CLASS	 :</td>
+                    <td align="left">${row.Challana_ClassificationName}</td>
+
+                      `;
+                tablefooter.appendChild(Footerrow5);
+
+
+                const Footerrow6 = document.createElement("tr");
+                Footerrow6.innerHTML = `<td colspan="6" align="center">  <b>---------------------------------------------------------------------------------------------------------------</b></td>`;
+                tablefooter.appendChild(Footerrow6);
+
+                const Footerrow7 = document.createElement("tr");
+                Footerrow7.innerHTML = `
+                    <td align="right">Instalment Number  ...</td>
+                    <td align="left" style="text-align: center;">${row.Challana_TermName}</td>`;
+                tablefooter.appendChild(Footerrow7);
+
+                const Footerrow8 = document.createElement("tr");
+                Footerrow8.innerHTML = `
+                    <td align="right">Amoun  ...</td>
+                    <td align="left" style="border-bottom: 1px dotted; text-align: center;">${row.Challana_PayingAmount}</td>`;
+                tablefooter.appendChild(Footerrow8);
+
+
+                const Footerrow9 = document.createElement("tr");
+               Footerrow9.innerHTML = `
+                    <td align="right">TOTAL FEE  ***</td>
+                    <td align="left" style="border-bottom: 1px dotted; text-align: center;">${row.Challana_PayingAmount}</td>`;
+                tablefooter.appendChild(Footerrow9);
+
+                const Footerrow10 = document.createElement("tr");
+                Footerrow10.innerHTML = `<td  colspan="4" align="right" style="font-family: none;font-size: 15px; font-weight: bold;">SIGNATURE</td>`;
+                tablefooter.appendChild(Footerrow10);
+
+                const Footerrow11 = document.createElement("tr");
+                Footerrow11.innerHTML = `<td colspan="4" align="center">  <b>================================================================================</b></td>`;
+                tablefooter.appendChild(Footerrow11);
+
+            }
+
+        });
+
+        data.splice(0);
+
+
+    }
+
+
+
+
+    /*-------Date  code Start--------*/
+    function displayFormattedDateTime() {
+        var today = new Date();
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var month = months[today.getMonth()];
+        var day = String(today.getDate()).padStart(2, '0');
+        var year = today.getFullYear();
+        var hours = today.getHours();
+        var minutes = String(today.getMinutes()).padStart(2, '0');
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+
+        // Convert to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // '0' should be '12' in 12-hour format
+
+        var formattedDateTime = month + ' ' + day + ' ' + year;
+        var formatteTime = hours + ':' + minutes + ampm;
+        var Formattedatetime = month + '/' + day + '/' + year + '/'+ hours + ':' + minutes + ampm;
+        // Assuming you have a <span> element with the id 'formattedDateTimeSpan'
+        var spanElement = document.getElementById('Challana_Created_DateandTime');
+        var spanTimeElement = document.getElementById('Challana_Created_Time');
+        //var Challana_RecipectDate = document.getElementById('Challana_RecipectDate');
+        if (spanElement) {
+            spanElement.textContent = formattedDateTime;
+            spanTimeElement.textContent = formatteTime;
+            //Challana_RecipectDate.textContent = Formattedatetime;
+        }
+    }
+
+    /*-------Date  code End--------*/
+
+
+
+    /*----------CHALLANA VIEW CREATED FUNCTIONS  CODE END----------------------*/
+
+
+
+
+
+
+
+
+
+
+</script>
+

@@ -1,0 +1,235 @@
+﻿
+
+@model Connect4m_Web.Models.AttendanceModel
+@{
+    ViewData["Title"] = "ManageStaffLeave";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />*@
+
+
+    @*<link href="~/Themes/assets/css/StyleSheets/ManageStaffLeave.css" rel="stylesheet" />*@
+
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    @*<script src="~/js/ManageStaffLeave.js"></script>*@
+
+
+
+    @*<script src="~/js/PaginationToTables.js"></script>*@
+
+    @*<script src="~/js/LeaveDelegation.js"></script>*@
+
+
+    <script src="~/Datatable/datatable.min.js"></script>
+    <script src="~/js/ApplyStaffLeave.js"></script>
+    <script type="text/javascript">
+
+        var js = jQuery.noConflict(true);
+        //Main Ready function
+        $(document).ready(function () {
+            DdlLmsCategory_Calingfunction('DdlLmsCategory_SearchUserPage');
+            DepartmentsDropdown_Caliingfunction('DdlDepartment_SearchUserPage', "1", "1");
+            //_TblStaffUserList_ManageStaffLeave(event, 'Stop');
+            TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblStaffUserList_ManageStaffLeave', 'TblStaffList_SearchedRecords', 'counts', 'FmSearchUserPage_SearchDetails', '_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div');
+
+        });
+    </script>
+
+</head>
+<body>
+
+
+    <!-- Loading Spinner -->
+    <!--<div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>-->
+
+
+    @*@Html.Partial("_SearchLeaveTypePagePartialView")*@
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>MANAGE STAFF LEAVE</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+
+            @*<a id="BtnAAddLeaveDelegation" style=" cursor: pointer; margin-left: 812px; letter-spacing: 0px; color: blue; font-weight: 600;" onclick="AddLeaveDelegationPage_PagePartialViewFunction()">Add Delegation</a>*@
+
+            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="DdlDepartment_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="DdlRole_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="DdlUser_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="TxtFromDate_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="TxtToDate_Span_Error"></span>
+
+            <div id="PageSearchUserPage_SearchDetails_Div">
+
+
+                @*-----AddLeaveDelegationPage_Div Result page*@
+
+                <div class="default-according style-1" id="accordionoc12345">
+                    <div class="card">
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
+
+                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
+                                    USER SEARCH
+                                </button>
+
+                            </h5>
+                        </div>
+
+                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                            <div class="card ">
+                                <div class="card-body">
+                                    <form id="FmSearchUserPage_SearchDetails" class="form" style="font-size:11px">
+
+                                        <div class="row">
+                                            <div class="row">
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label"> Employee ID :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input id="TxtUserName_SearchUserPage" name="InstanceUserCode" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label">Department :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <select id="DdlDepartment_SearchUserPage" name="InstanceClassificationId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option>---------Select---------</option></select>
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;">First Name :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input id="TxtFirstname_SearchUserPage" name="FirstName" type="text" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;"> Last Name :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input id="TxtLastname_SearchUserPage" name="LastName" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;">Email ID :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input type="text" id="TxtEmailId_SearchUserPage" name="PortalEmail" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;"> Mobile Phone :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input id="TxtEmailId_SearchUserPage" name="Mobilephone" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;">LMS Category :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <select id='DdlLmsCategory_SearchUserPage' name="LMSCategoryId" onchange="DdlLmsSubCategory_Calingfunction(this.id,'DdlSubDepartment_SearchUserPage')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                        <option value=''>Select a department</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
+                                                    <label class="control-label" style=" height: 30px;"> LMS Sub Category :&nbsp; </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <select id='DdlSubDepartment_SearchUserPage' name="LMSSubCategoryId" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))" disabled>
+                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                        <option value=''>Please select a section</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div style="margin-left:376px">
+                                                <input type="button" class="btn btn-light " onclick="FN_ClearValues('FmSearchUserPage_SearchDetails')" id="ctl00_ContentPlaceHolder1_btnApproveClear" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
+
+                                                @*<input type="submit" onclick="_TblStaffUserList_ManageStaffLeave(event)" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />*@
+                                                <input type="submit" onclick="   TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/_TblStaffUserList_ManageStaffLeave', 'TblStaffList_SearchedRecords', 'counts', 'FmSearchUserPage_SearchDetails','_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                @*-----TblStaffUserList_ManageStaffLeave_SearchedRecords Result page*@
+                <div id="_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div" style="display:none">
+
+                    <div class="default-according style-1" id="accordionoc123456">
+                        <div class="card">
+                            <div class="card-header " style="background-color:black ;">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle"></span> RECORDS </span></button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                <div class="card ">
+                                    <form id="Fm_TblStaffList_SearchedRecords" class="table-responsive">
+                                        <table id="TblStaffList_SearchedRecords" class="tableid display cell-border ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Role</th>
+                                                    <th>Department</th>
+                                                    <th>Employee Id</th>
+                                                    <th>Email</th>
+                                                    <th>Date Of Joining</th>
+                                                    <th>Mobile Phone</th>
+                                                    <th style="width:42%">Apply Leave</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="ApplyStaffLeavePageDiv">              
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewData["Title"] = "ManagePastDaysLeave";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+
+    <link href="~/Themes/assets/css/StyleSheets/AssignLeavestoStaff.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
+    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="~/js/AssignLeavestoStaff.js"></script>
+    <script src="~/js/LeaveDelegation.js"></script>
+    <script src="~/js/GeneralFunctions.js"></script>
+</head>
+<body>
+
+
+
+
+    <!-- Loading Spinner -->
+    <!--<div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>-->
+
+    @*@Html.Partial("_SearchLeaveTypePagePartialView")*@
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>MANAGE PAST DAYS LEAVE</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+
+            <div class="default-according style-1">
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlDepartment_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlUser_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlLeaveType_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="AllowPastDates_bool_Span_Error"></span>
+
+                <div class="card">
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+
+                                ALLOW APPLY LEAVE FOR PAST DAYS TO EMPLOYEES
+                                <span style="margin-left: 39%;">
+                                    * INDICATES REQUIRED FIELDS
+                                </span>
+                            </button>
+
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                        <div class="card ">
+                            <div class="card-body">
+                                <form id="FmAlloPastdaysform" style="margin-left:14%;font-size:12px">
+                                    @*<div style="margin-left:17%;font-size:12px">*@
+                                    <div class="row">
+                                        <div class="col">
+
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;"><i style="color:red">*</i>Department  :&nbsp;</label>
+
+                                                <div class="col-sm-9">
+                                                    <select id='DdlDepartment' name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
+                                                        <option value=''>Select a Department</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red">*</i>Employee  :&nbsp;</label>
+                                                <div class="col-sm-9">
+                                                    <select id="DdlEmployee" name="UserId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Please select Employee</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;"><i style="color:red">*</i>Leave Type  :&nbsp;</label>
+                                                <div class="col-sm-9">
+                                                    <select id="DdlLeaveType" name="Leavetypeid" onchange="Spanclearfunction()" asp-items="@(new SelectList(ViewBag.LeaveType1,"Value","Text"))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px"><option value="">-------Select-------</option></select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-3 col-form-label   form-label" style=" margin-top:-4px;"><i style="color:red">*</i>Allow Apply Leave for Past Days  :&nbsp;</label>
+                                                <div class="col-sm-9">
+
+                                                    <input type="checkbox" name="AllowPastDaysFlagUser" id="AllowPastDates_bool" value="1" />
+                                                </div>
+                                            </div>
+                                            <div style="margin-left:33%">
+                                                <input type="submit" class="btn btn-success active" onclick="SavePastDayseaves(event)" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Allow">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*</div>*@
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            @*-----Searched Result page*@
+
+            <div id="TblAlloPastdaysform_Div" style="display:none">
+                <div class="default-according style-1" id="accordionoc123456">
+                    <div class="card">
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">EMPLOYEE PAST DAYS LEAVE APPLIED STATUS  </span></button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                            <div class="card " style="position: inherit;">
+                                <form id="Fm_TblAlloPastdaysform_SearchedRecords" class="table-responsive">
+                                    <table id="TblAlloPastdaysform_SearchedRecords" class="cell-border compact display tableid">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee</th>
+                                                <th>Department</th>
+                                                <th>Leave Type</th>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Created On</th>
+                                                <th>Applied Status</th>
+                                                <th>Used On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+@*<button id="exportExcelButton">Export Excel</button>*@
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+@*<script src="~/Datatable/datatable.min.js"></script>*@
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script>
+
+    var js = jQuery.noConflict(true);
+
+    $(document).ready(function () {
+
+        DepartmentsDropdown_Caliingfunction('DdlDepartment', '1', 'SelectName');
+
+        TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Attendance/TblAllowLeavePastDays_CallingFunction", 'TblAlloPastdaysform_SearchedRecords', 'counts', 'Fm_TblAlloPastdaysform_SearchedRecords','TblAlloPastdaysform_Div');
+    });
+    function Spanclearfunction() {
+        debugger;
+        $(".ErrorMessageSpan").empty();
+    }
+
+    //This is for save and Update Leave
+    function SavePastDayseaves(event) {
+        try {
+            debugger;
+            event.preventDefault();
+            window.scrollTo(0, 0);
+            $(".ErrorMessageSpan").empty();
+
+            var DdlDepartment = $("#DdlDepartment").val();
+            var DdlUser = $("#DdlEmployee").val();
+            var DdlLeaveType = $("#DdlLeaveType").val();
+
+            if (DdlDepartment === "" || DdlDepartment === "0" || DdlUser === "" || DdlLeaveType === "" /*|| $("#AllowPastDates_bool").is(":checked") == false*/) {
+                $("#Main_Span_Error").text('Following fields have invalid data :');
+                debugger;
+                if (DdlDepartment === "" || DdlDepartment === "0") {
+                    $("#DdlDepartment_Span_Error").text('Department');
+                }
+                if (DdlUser === "") {
+                    $("#DdlUser_Span_Error").text('Employee');
+                }
+                if (DdlLeaveType === "") {
+                    $("#DdlLeaveType_Span_Error").text('Leave Type');
+                }
+                //if ($("#AllowPastDates_bool").is(":checked") == false) {
+                //    $("#AllowPastDates_bool_Span_Error").text("Please select 'Allow Apply Leave for Past Days' check box");
+                //}
+                return;
+            }
+            else if ($("#AllowPastDates_bool").is(":checked") == false) {
+                $("#AllowPastDates_bool_Span_Error").text("Please select 'Allow Apply Leave for Past Days' check box");
+                return;
+            }
+
+
+
+            var formData = new FormData($("#FmAlloPastdaysform")[0]);
+            //var formData = new FormData(this);
+            var ButtonName = $("#BtnSaveId").val();
+            $("#loadingOverlay").show();
+            $.ajax({
+                url: "/Attendance/ManagePastDaysLeave?ButtonName=" + ButtonName,
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (responce) {
+                    $("#Main_Span_Error").text(responce.message);
+                    if (responce.message == "Leave Apply for Past Days successfully allocated to selected Employee.") {
+                        TblDataTableWithColumns_CallingFunction(event, 'noStop', "/Attendance/TblAllowLeavePastDays_CallingFunction", 'TblAlloPastdaysform_SearchedRecords', 'counts', 'Fm_TblAlloPastdaysform_SearchedRecords','TblAlloPastdaysform_Div');                      
+                    }
+                    else {
+                        //$("#Main_Span_Error").text(responce.message);
+                    }
+                    $("#loadingOverlay").hide();
+                },
+                error: function (xhr, status, error) {
+                    $("#loadingOverlay").hide();
+                    $("#Main_Span_Error").text("Something Error");
+                }
+            });
+
+        } catch (x) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    }
+
+
+    //function CheckAllCheckBoxes() {
+    //    debugger;
+    //    var check = this.checked;
+    //    $(":checkbox").prop("checked", check)
+    //}
+
+</script>
+
+
+
+
+
+

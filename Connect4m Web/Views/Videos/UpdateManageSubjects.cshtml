@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<Connect4m_Web.Models.LMSproperties.SubClassifications>
+
+
+@{
+    ViewData["Title"] = "UpdateManageSubjects";
+}
+
+
+<link href="~/css/Managesubjecttools.css" rel="stylesheet" />
+
+
+<div class="col-sm-12 ">
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> <span style="color:red">*</span> INDICATES MANDATORY FIELDS.</button>
+
+
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                        <div class="row padding-search">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-2"> <label class="control-label">Subject Name </label></div>
+                                <div class="col-4"> <input type="text" class="form-control" />    </div>
+                                <div class="col-3">  <input type="button" value="Update Subject Name" class="btn btn-success" /></div>
+                                <div class="col-1"></div>
+
+                            </div>
+
+                            <div class="row" id="checks">
+
+                                <div class="col-1" style="width:11%"> <label class="control-label" style=" font-size: 11px; width: 85px;">Subject Order </label></div>
+                                <div class="col-1"> <input type="text" class="form-control" />    </div>
+                                <div class="col-2">  <input type="checkbox" /><span class="control-label"> Check All</span></div>
+                                <div class="col-1" style="margin-left: 3%;"></div>
+                                <div class="col-1"> <label class="control-label" style=" font-size: 11px; width: 85px;">Total Periods</label></div>
+                                <div class="col-1"> <input type="text" class="form-control" />    </div>
+                                <div class="col-2">  <input type="checkbox" class="btn btn-success" /><span class="control-label"> Check All</span></div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white">DEPARTMENT</button>
+
+                        </h5>
+                    </div>
+
+
+                    <div class="Department_list">
+                        @foreach (var item in Model)
+                        {
+                            <div id="classficationnames_MS">
+                                <input type="checkbox" value="@item.InstanceSubClassificationId" />&nbsp;&nbsp;<span>@item.SubClassificationName</span><span hidden>@item.ProgramType</span>
+                                <div id="subclassificationappend">
+                                </div>
+                            </div>
+
+                        }
+
+
+
+                    </div>
+                    <div class="save_Ms"><a href="/Videos/Managesubjects" class="btn btn-primary">Back Tosearch</a><div class="btn btn-success" id="Saveclassfication_MS"> Save</div></div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/js/Insertmanagesubject.js"></script>

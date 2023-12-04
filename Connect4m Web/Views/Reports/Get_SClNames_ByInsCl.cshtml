@@ -1,0 +1,13 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.StudentAttendanceRegister
+
+@{
+    Layout = null;
+}
+
+<div class="mb-3 row">
+    @*<label asp-for="SubjectName" class="col-sm-3 col-form-label"></label>*@
+    <div class="col-sm-9">
+        @Html.DropDownListFor(Model => Model.SubClassificationName, new SelectList(ViewBag.SubClassificationNames, "Value", "Text"), "--Select--", new { @id = "SCFNID1", @class = "form-select input-air-primary digits", @style = "width:36%" })
+        <span asp-validation-for="SubClassificationName" class="text-danger"></span>
+    </div>
+</div>

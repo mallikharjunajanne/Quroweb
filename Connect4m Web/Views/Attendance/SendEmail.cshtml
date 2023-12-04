@@ -1,0 +1,21 @@
+﻿
+
+@model Connect4m_Web.Models.AttendanceModel
+@{
+    ViewData["Title"] = "SendEmail";
+}
+
+<h1>GmailSending</h1>
+
+<fieldset>
+    <legend>
+        Send Email
+    </legend>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        <p>From: </p>
+        
+        <input type="submit" value="Send" />
+    }
+</fieldset> 

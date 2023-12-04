@@ -1,0 +1,177 @@
+﻿
+
+@{
+    ViewData["Title"] = "ConvertShortLeaves";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Themes/assets/css/StyleSheets/ConvertShortLeaves.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
+   
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header pb-0">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>CONVERT SHORT LEAVES TO LEAVES</strong></h6>
+        </div>
+        <div class="card-body" style=" padding-top: 0px;">
+
+            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="Monthid_Span_Error"></span>
+            <span class="ErrorMessageSpan" id="InstanceRoleId_Span_Error"></span>
+
+            <!-- Loading overlay element -->
+            @*<div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading...</div>
+            </div>*@
+
+            <div class="default-according style-1" id="accordionoc12345">
+                <div class="card" id="SearchPage">
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                                <span>SEARCH FOR EMPLOYEES</span>
+                                <span style="margin-left: 520px;">* INDICATES REQUIRED FIELDS</span>
+
+                            </button>
+
+                        </h5>
+                    </div>
+
+                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
+
+                        <div class="card ">
+                            <div class="card-body">
+                                <form id="FmSearchEmployeesShortLeaves">
+                                    <div style="margin-left:20%;font-size:12px">
+                                        <div class="row">
+                                            <div class="col">
+
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding:0;"> <i style="color:red;">*</i>Month :&nbsp;</label>
+                                                    <select id='DdlMonthid' class=" input-air-primary " style="width: 165px; color: black; font-size: inherit; height:20px">
+                                                        <option value="">---------Select---------</option>
+                                                        <option value="1">January</option>
+                                                        <option value="2">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding:0"> <i style="color:red;">*</i>Role :&nbsp;</label>
+                                                    <div class="col-sm-9">
+                                                        <select id='DdlRoles' class=" input-air-primary " onchange="GetUserName_BY_SelectRoleId_CallingFunction()" style="width: 165px; color: black; font-size: inherit; height:20px">
+                                                            <option value=''>---------Select---------</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="mb-2 row">
+                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 3px;">Users  :&nbsp;</label>
+
+                                                    <div class="col-sm-9">
+                                                        <select id='DdlUsers' class=" input-air-primary " style="width: 165px; color: black; font-size: inherit; height:20px">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-left:169px">
+                                            <input type="button" onclick="FN_ClearValues(event,'FmSearchEmployeesShortLeaves')" class="btn btn-light " id="BtnClear" style="padding:3px 8px;border-radius:6px;" value="Clear">&nbsp;
+                                            <input type="submit" onclick="TblLeaveTypesForconvertion_Calingfunction(event,'1','TblSearchEmployeesShortLeaves')" class="btn btn-primary active" id="BtnSearch" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br />
+
+
+                @*-----------------------------searched result table--------------------*@
+
+                <div class="default-according style-1" id="accordionoc123456">
+                    <div class="card" id="DivSearchedTablePage">
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_SearchEmployeesShortLeaves">No Records</span></button>
+                            </h5>
+                        </div>
+
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+
+                            <div class="card ">
+
+                                <form id="Fm_InTbl_SearchEmployeesShortLeaves" class="table-responsive">
+
+                                    <table id="TblSearchEmployeesShortLeaves" class=" tableid">
+                                        <thead>
+                                            <tr>
+                                                <th @*style="width:80px;"*@>
+                                                    <span class="checkboxclass"><input id="chkSelectAll" type="checkbox"><label style="margin-bottom:-0.5rem">Check All</label></span>
+                                                </th>
+                                                <th @*style="width:100px;"*@>Name</th>
+                                                <th @*style="width:60px;"*@>Total SLs Taken </th>
+                                                <th style="width:120px;">To be Converted Total Leaves</th>
+                                                <th @*style="width:60px;"*@>Converted Leaves</th>
+                                                <th @*style="width:60px;"*@>Remaining SLs Deducted</th>
+                                                <th @*style="width:120px;"*@>Leave Types</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+
+                                    </table>
+                                    <br />
+                                    <div style="margin-left:43%">
+                                        <input type="submit" class="btn btn-success active" id="BtnConvert" style="padding:2px 16px;border-radius:6px;" value="Convert">
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/ConvertShortLeaves.js"></script>
+
+
+
+
+
+
