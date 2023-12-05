@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Connect4m_Web.Models;
+using Connect4m_Web.Models.LMSproperties;
+using Connect4m_Web.Views;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Connect4m_Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-//using Connect4m_Web.Models;
-using Connect4m_Web.Views;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Text;
-using Connect4m_Web.Models.LMSproperties;
+//using SchoolConnect4M_Aspcore.Models;
 
 namespace Connect4m_Web.Controllers
 {
@@ -53,7 +50,7 @@ namespace Connect4m_Web.Controllers
         {
             InitializeCookieValues();
             obj.InstanceID = InstanceId;
-            List<DropdownClass> list = CommonMethodobj.CommonListMethod<ResultsModel,DropdownClass>(obj, "/DdlSubjectTypes_Calingfunction", client);
+            List<DropdownClass> list = CommonMethodobj.CommonListMethod<ResultsModel, DropdownClass>(obj, "/DdlSubjectTypes_Calingfunction", client);
 
             //  List<ResultsModel> list = CommonMethodobj.CommonListMethod(obj, "/DdlSubjectTypes_Calingfunction", client);
             //var itemsList = new List<SelectListItem>();
@@ -73,7 +70,7 @@ namespace Connect4m_Web.Controllers
             obj.InstanceID = InstanceId;
             obj.InstanceSubClassificationId = InstanceSubClassificationId;
             List<DropdownClass> list = CommonMethodobj.CommonListMethod<ResultsModel, DropdownClass>(obj, "/DdlExams_Callingfunction", client);
-            list = list.OrderBy(x => x.Text).ToList();       
+            list = list.OrderBy(x => x.Text).ToList();
             return Json(list);
         }
         public IActionResult DdlExamMode_Callingfunction(ResultsModel obj)
@@ -90,12 +87,12 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-            InitializeCookieValues();
-            obj.InstanceID = InstanceId;
-            List<MultiplelistValues> list =CommonMethodobj.CommonListMethod<ResultsModel,MultiplelistValues>(obj, "/TblExamSubjects_Calingfunction", client);
-            // list = list.OrderBy(x => x.SubjectName).ToList();
-           // ViewBag.ResultsModeList = list[0].ResultsModeList;
-            return Json(list[0]?.ExamSubjectsList?? new List<ResultsModel>());
+                InitializeCookieValues();
+                obj.InstanceID = InstanceId;
+                List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(obj, "/TblExamSubjects_Calingfunction", client);
+                // list = list.OrderBy(x => x.SubjectName).ToList();
+                // ViewBag.ResultsModeList = list[0].ResultsModeList;
+                return Json(list[0]?.ExamSubjectsList ?? new List<ResultsModel>());
             }
             catch (Exception ex)
             {
@@ -111,12 +108,14 @@ namespace Connect4m_Web.Controllers
                 {
                     string[] SubjectNames = val.SubjectsName.Split(',');
                     ViewBag.SubjectNamesList = SubjectNames;
+                    ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
+                    ViewBag.MaxMarksList = val.MaxMarksList;
+                    ViewBag.PassMarksList = val.PassMarksList;
                     InitializeCookieValues();
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
                     ViewBag.MarksUploadtype = MarksUploadtype;
                     ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
-                   
                     return View();
                 }
                 else
@@ -141,6 +140,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
+
                 InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
@@ -151,7 +151,7 @@ namespace Connect4m_Web.Controllers
                     obj.ExamModeId = 1;
                 else
                     obj.ExamModeId = 0;
-                 obj.SMSTextInXML = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
+                obj.SMSTextInXML = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
 <!DOCTYPE REQUESTCREDIT SYSTEM ""http://127.0.0.1/psms/dtd/requestcredit.dtd"">
 <REQUESTCREDIT USERNAME=""ADS"" PASSWORD=""Prasad2$$9""></REQUESTCREDIT>";
                 obj.SMSFromText = "ADSTEK";
@@ -173,6 +173,41 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+
+
+
+
+        [HttpPost]
+        public IActionResult PublishResults(ResultsModel obj)
+        {
+            try
+            {
+                InitializeCookieValues();
+                obj.InstanceID = InstanceId;
+                obj.CreatedBy = LoginUserId;
+                obj.UserId = LoginUserId;
+                obj.RoleId = Roleid;
+                if (obj.ExamModeId == 2)
+                    obj.ExamModeId = 1;
+                else
+                    obj.ExamModeId = 0;
+                returnvalue = CommonMethodobj.CommonSaveMethod(obj, "/PublishResults", client);
+                if (returnvalue != "0")
+                {
+                    return Json(new { success = true, message = returnvalue });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Something Error" });
+                }
+            }
+            catch (Exception ex)
+            {
+                // throw;
+                return Json(new { success = false, message = "Something Error" });
+            }
+        }
+
 
     }
 }

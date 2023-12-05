@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Connect4m_Web.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,11 +20,15 @@ namespace Connect4m_Web.Models
         public List<ResultsModel> ExamSubjectsList { get; set; }
         public List<ResultsModel> ResultsModeList { get; set; }
         public List<ResultsModel> StudentNamesList { get; set; }
-
         public List<UsermarksModel> UsermarksList { get; set; }
     }
     public class ResultsModel : CommonClass
-        {//New
+    {//New
+        public List<int> UseridList { get; set; }
+        public List<string> SecureMarksList { get; set; }
+        public List<string> GradeList { get; set; }
+        public string InstanceUserCode { get; set; }
+
         public IFormFile File { get; set; }
         public string Status { get; set; }
         public string RatingType { get; set; }
@@ -32,7 +37,7 @@ namespace Connect4m_Web.Models
         public string SMSFromText { get; set; }
         public string Action { get; set; }
         public List<int> SubjectIdList { get; set; }
-       // public List<int> ExamIdList { get; set; }
+         public List<int>ExamSubjectIdList { get; set; }
         public List<Double> PassMarksList { get; set; }
         public List<Double> MaxMarksList { get; set; }
         public List<DateTime> DateConductedList { get; set; }
@@ -44,7 +49,7 @@ namespace Connect4m_Web.Models
         public string DateConducted { get; set; }
         public string ActualDateConducted { get; set; }
 
-        [Required(ErrorMessage ="The subject is required")]
+        [Required(ErrorMessage = "The subject is required")]
         public List<int> SubjectsIdString { get; set; }
         public string SubjectsName { get; set; }
         public string ExamName { get; set; }
@@ -71,22 +76,6 @@ namespace Connect4m_Web.Models
 
 
         public string InstanceUserCode { get; set; }
-        public string column1 { get; set; }
-        public string column2 { get; set; }
-        public string column3 { get; set; }
-        public string column4 { get; set; }
-        public string column5 { get; set; }
-        public string column6 { get; set; }
-        public string column7 { get; set; }
-        public string column8 { get; set; }
-        public string column9 { get; set; }
-        public string column10 { get; set; }
-        public string column11 { get; set; }
-        public string column12 { get; set; }
-        public string column13 { get; set; }
-        public string column14 { get; set; }
-        public string column15 { get; set; }
-        //public int InstanceUserCode { get; set; }
-        //public int UserId { get; set; }
+       
     }
 }
