@@ -14,9 +14,12 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
+
     public class VideosController : Controller
     {
 

@@ -1,5 +1,6 @@
 ﻿using Connect4m_Web.Models;
 using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -13,6 +14,8 @@ using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
+
     public class UserScreens : Controller
     {
 

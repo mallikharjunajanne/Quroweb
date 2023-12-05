@@ -9,9 +9,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
     public class RolewiseController : Controller
     {
         private readonly HttpClientFactory _httpClientFactory;

@@ -1,4 +1,5 @@
 ﻿using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
+
     public class Admin : Controller
     {
        // Uri baseaddress = new Uri("https://localhost:44331/api/UsersScreens");

@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Authentication;
 namespace Connect4m_Web.Controllers
 {
 
-    public class AttendanceController : Controller
+    public class AttendanceController : Controller  //ManagePastDaysLeave   3777 line [Authorize]
     {
          Uri baseaddress = new Uri("https://localhost:44379/api/ApplyStudentAttendance");
         // Uri baseaddress = new Uri("https://localhost:44379/api/ApplyStudentAttendance");
@@ -86,8 +86,10 @@ namespace Connect4m_Web.Controllers
                 return ipAddress;
             }
         }
-        public IActionResult LoginPage()
+        public async Task< IActionResult> LoginPage()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             ViewBag.Layout = "LoginPage";
             return View();
         }
@@ -146,19 +148,19 @@ namespace Connect4m_Web.Controllers
                 {
                     if (Value2[0].UserDetailsList.Count > 0 && Value2[0].UserDetailsList.Count > 0)
                     {
-                        var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, val.Username),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
+            //            var claims = new List<Claim>
+            //{
+            //    new Claim(ClaimTypes.Name, val.Username),
+            //    new Claim(ClaimTypes.Role, "Admin")
+            //};
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        var authProperties = new AuthenticationProperties
-                        {
-                            IsPersistent = true, // Whether to create a persistent cookie
-                            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1) // Cookie expiration time
-                        };
+            //            var authProperties = new AuthenticationProperties
+            //            {
+            //                IsPersistent = true, // Whether to create a persistent cookie
+            //                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1) // Cookie expiration time
+            //            };
 
                      
 
@@ -180,11 +182,27 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        //  HttpContext.Session.SetString("KeyName", val.Username);
 
 
-                        //  return RedirectToAction("SchoolWelcomePage", "UserScreens");
-                        // return new UserScreens().SchoolWelcomePage(Value2);
+                        var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, val.Username),
+                    new Claim(ClaimTypes.Role, "Admin")
+                };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties
+                        {
+                            // Set additional properties if needed
+                        };
+
+                 await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+
+
+
+
+
                         return Json("correct");
                     }
                     //else
@@ -215,14 +233,22 @@ namespace Connect4m_Web.Controllers
             // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             // Redirect to the logout success page or wherever you prefer
             //  await HttpContext.SignOutAsync();
-           // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
 
             return RedirectToAction("LoginPage", "Attendance");
         }
 
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
 
+
+        [Authorize]
         public IActionResult GetStudentNameDropdown(string InstanceId,string Value)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             
@@ -323,7 +349,7 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(new SelectList(ViewBag.Studentname, "Value", "Text"));
         }
-
+        [Authorize]
         public IActionResult GetAttendancePercentage(int InstanceId, int StudentUserid, string ValueOFInstance)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             string[] ids = ValueOFInstance.Split('~');
@@ -381,7 +407,7 @@ namespace Connect4m_Web.Controllers
            
             return new JsonResult(value1);
         }
-
+        [Authorize]
         public IActionResult stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves(string Studentid,int AcadamicYearID, int Month)
         {
             //var Month = 6;
@@ -415,6 +441,7 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(ViewBag.stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves);
         }
+        [Authorize]
         public IActionResult StudentApplyLeave_SelectById_ATTENDANCEDETAILS(string Studentid)
         {
 
@@ -434,7 +461,7 @@ namespace Connect4m_Web.Controllers
            
             return new JsonResult(ViewBag.StudentApplyLeave_SelectById_ATTENDANCEDETAILS);
         }
-
+        [Authorize]
         public IActionResult stp_tblStudentApplyLeave_SelectById_Admin(string Studentid)
         {
 
@@ -454,7 +481,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult( ViewBag.StudentApplyLeave_SelectById);
         }
 
-
+        [Authorize]
 
         public IActionResult stp_tblStudentApplyLeave_DetailsById_ToEDIT(string  Studentid)
         {
@@ -473,8 +500,8 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.stp_tblStudentApplyLeave_DetailsById_ToEDIT);
         }
 
-    
 
+        [Authorize]
         private bool CheckIfFileNameExists(string fileName,int InstanceID,int Studentid)
         {
             // Perform your server-side logic to check if the file name exists
@@ -491,6 +518,7 @@ namespace Connect4m_Web.Controllers
             var filePath = Path.Combine(uploadsPath, fileName);
             return System.IO.File.Exists(filePath);
         }
+        [Authorize]
         public IActionResult ApplyStudentLeave(bool Issuccess=false)
         {
 
@@ -614,7 +642,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
        
         public IActionResult ApplyStudentLeave(AttendanceModel obj/*, IFormFile attachdocument*/, string fileName, string submitButton,int StudentLeaveDetailsID_TO_Delete)
@@ -767,10 +795,10 @@ namespace Connect4m_Web.Controllers
 
             return Json(new { success = false });
         }
-        
+
         //====================================Apply Staff Leave==================================================
 
-
+        [Authorize]
         public IActionResult STP_GetSubmittedLeaveRequestsByUserid_ToEDIT(int Batchid,int Userid)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -788,7 +816,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.stp_tblStudentApplyLeave_DetailsById_ToEDIT);
         }
 
-
+        [Authorize]
         public IActionResult GetLeaveDaysAvailable(int InstanceId, int leavetype,int Userid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
          //   int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -829,7 +857,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult GetMysavedLeaves_CallingFunction(int Userid, int leavetype)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -855,7 +883,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.GetMySavedLeaves);
         }
 
-
+        [Authorize]
         public IActionResult GetMyAppliedLeaves_ViewDetails_CAllingFUC(int Batchid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -878,7 +906,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult GetMyAppliedLeaves_PrintDetails_CAllingFunction(int Batchid, int Userid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -900,7 +928,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.GetMyAppliedLeaves_PrintDetails_CAllingFunction2);
         }
 
-
+        [Authorize]
 
         public IActionResult GetMyLeaveDetails_CallingMethod(int Userid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
@@ -938,7 +966,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.GetMyLeaveDetails);
         }
 
-
+        [Authorize]
         public IActionResult GetMyAppliedLeaves_CallingMethod(int Userid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
           //  int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -961,8 +989,8 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
-         public IActionResult GetShort_Description_for_Leave_Reason_CallingMethod()// string InstanceClassificationId, string InstanceSubClassificationId)
+        [Authorize]
+        public IActionResult GetShort_Description_for_Leave_Reason_CallingMethod()// string InstanceClassificationId, string InstanceSubClassificationId)
           {
    
             string CodeName = "LEAVEREASON";
@@ -1000,8 +1028,8 @@ namespace Connect4m_Web.Controllers
     return new JsonResult(ViewBag.GetShort_Description_for_Leave_Reason2);
 }
 
-
-         public IActionResult GetLeaveTypeDropdown_CallingMethod(int Userid )// string InstanceClassificationId, string InstanceSubClassificationId)
+        [Authorize]
+        public IActionResult GetLeaveTypeDropdown_CallingMethod(int Userid )// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -1049,7 +1077,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.LeaveType1);
         }
 
-
+        [Authorize]
         public IActionResult Delete_Cancel_Staff_Saved_Leaves(int LeaveApplicationId1,string submitButton,int Batchid,int Userid,string Comments)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -1086,7 +1114,7 @@ namespace Connect4m_Web.Controllers
             }
             return new JsonResult(new { success = false, message = "Something Error" });
         }
-
+        [Authorize]
 
         public IActionResult _ViewUserCompOffLeavesLapsedDetails(AttendanceModel val,int InstanceId,int UserID,string AcademicYearID,int Lapsed )
         {
@@ -1109,6 +1137,7 @@ namespace Connect4m_Web.Controllers
             }
             return PartialView("_ViewUserCompOffLeavesLapsedDetails_ApplyStaffLeave",Value2);
         }
+        [Authorize]
         public IActionResult ApplyStaffLeave(int Userid,string ScreenName,bool Issuccess = false)
         {
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -1303,6 +1332,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult ApplyStaffLeave(List<AttendanceModel> InputValue, string submitButton, int Userid,string  tableData,string ScreenName)
 
         //public IActionResult ApplyStaffLeave(List<AttendanceModel> InputValue,string submitButton, int LeaveApplicationId1)
@@ -1488,7 +1518,7 @@ namespace Connect4m_Web.Controllers
 
 
         //---------------------------------Leave Levels Module--------------------
-
+        [Authorize]
         public IActionResult Delete_LeaveLevels(int LeaveLevelId, string submitButton)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             LeaveLevelModel obj = new LeaveLevelModel();
@@ -1504,7 +1534,7 @@ namespace Connect4m_Web.Controllers
             }
             return new JsonResult(new { success = true, message = "Something Error" });
         }
-
+        [Authorize]
         public IActionResult LeaveLevelsDropdown_Caliingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -1524,7 +1554,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.LeaveLevelsDropdown_Caliingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.LeaveLevelsDropdown_Caliingfunction);
         }
-
+        [Authorize]
 
         public IActionResult DepartmentsDropdown_Caliingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
         {  
@@ -1547,7 +1577,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.DepartmentsDropdown_Caliingfunction);
         }
 
-    
+        [Authorize]
 
         public IActionResult AppliedEmployeeNames_Caliingfunction(int InstanceClassificationId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
@@ -1574,7 +1604,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.AppliedEmployeeNames_Caliingfunction = new SelectList(items,"Value","Text");
             return new JsonResult(ViewBag.AppliedEmployeeNames_Caliingfunction);
         }
-
+        [Authorize]
         public IActionResult Roles_InstanceRole_SELByInstanceId_CallingFunction(int InstanceClassificationId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
 
@@ -1604,7 +1634,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.Roles_InstanceRole_SELByInstanceId_CallingFunction);
         }
 
-
+        [Authorize]
         public IActionResult GetUserName_BY_SelectRoleId(int InstanceClassificationId,int InstanceRoleId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
 
@@ -1645,7 +1675,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.GetUserName_BY_SelectRoleId);
         }
 
-
+        [Authorize]
         public IActionResult LeaveLevels_In_Table_Caliingfunction(string InstanceClassificationId_DepartMent, string LevelId,string  Userid)//,List<string> values)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -1833,13 +1863,14 @@ namespace Connect4m_Web.Controllers
 
 
 
-
+        [Authorize]
 
         public IActionResult LeaveLevels()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult LeaveLevels(LeaveLevelModel obj, string EmployeeUserids)
         {
             int Instanceid = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -1875,7 +1906,7 @@ namespace Connect4m_Web.Controllers
             
         }
 
-
+        [Authorize]
 
 
         //-----------=====-------StudentLeaveApproval------------Start--------======-------------------
@@ -1909,7 +1940,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.DdlDepartmentId_Calingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.DdlDepartmentId_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult DdlClassId_Calingfunction(int InstanceClassificationId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int DelegationClasses = 1;
@@ -1937,7 +1968,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.DdlClassId_Calingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.DdlClassId_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult TblApplied_SearchRecords_Calingfunction(StudentLeaveApprovalModel val,int Status,int Tab, int Departmentid,int Classid,DateTime Fromdate,DateTime Todate,string AdmissionNumber,string LastName,string FirstName)
         {
 
@@ -1996,7 +2027,7 @@ namespace Connect4m_Web.Controllers
 
 
 
-
+        [Authorize]
         public IActionResult TblAppliedLeavesHistory_SearchRecords_Calingfunction(StudentLeaveApprovalModel val ,int Studentid)
         {
             val.Status = 30;
@@ -2018,7 +2049,7 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(ViewBag.TblAppliedLeavesHistory_SearchRecords_Calingfunction2);
         }
-
+        [Authorize]
         public IActionResult TblAppliedLeavesSummery_SearchRecords_Calingfunction(StudentLeaveApprovalModel val, int Studentid)
         {
             val.Status = 30;
@@ -2042,7 +2073,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult GetAttendancePercentagebyUserID( int StudentUserid, string ValueOFInstance)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             string[] ids = ValueOFInstance.Split('~');
@@ -2082,7 +2113,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.AttendancePercentage);
         }
 
-       
+        [Authorize]
         public IActionResult StudentLeaveApproval()
         {
             return View();
@@ -2090,6 +2121,7 @@ namespace Connect4m_Web.Controllers
 
         //save leave approvals
         [HttpPost]
+        [Authorize]
 
         public IActionResult StudentLeaveApproval(StudentLeaveApprovalModel obj,string submitButtonName)
         {
@@ -2141,7 +2173,7 @@ namespace Connect4m_Web.Controllers
 
 
         //-----------=====-------LeaveApproval---------------Start-----======-------------------
-
+        [Authorize]
 
         public IActionResult DdlDepartmentIdIOfStaff_Calingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
         {
@@ -2170,6 +2202,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.DdlDepartmentIdIOfStaff_Calingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.DdlDepartmentIdIOfStaff_Calingfunction);
         }
+        [Authorize]
         public IActionResult TblAppliedStaffLeaves_SearchRecords_Calingfunction(StaffLeaveApprovalModel val, int Departmentid, int RoleID, DateTime Fromdate, DateTime Todate, string UserName, string LastName, string FirstName)
         {
 
@@ -2207,7 +2240,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.TblAppliedStaffLeaves_SearchRecords_Calingfunction);
         }
 
-
+        [Authorize]
         public IActionResult TblApprovedStaffLeaves_SearchRecords_Calingfunction(StaffLeaveApprovalModel val, string DepartmentName,  DateTime Fromdate, DateTime Todate,string ApprovedRejectedProp)
         {
 
@@ -2242,7 +2275,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.TblApprovedStaffLeaves_SearchRecords_Calingfunction = Value2;
             return new JsonResult(ViewBag.TblApprovedStaffLeaves_SearchRecords_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult TblAppliedStaffLeavesRequestByBatchid_SearchRecords_Calingfunction(StaffLeaveApprovalModel val, int BatchId, int InstanceId)
         {
 
@@ -2270,7 +2303,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.TblAppliedStaffLeavesRequestByBatchid_SearchRecords_Calingfunction = Value2;
             return new JsonResult(ViewBag.TblAppliedStaffLeavesRequestByBatchid_SearchRecords_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult TblLeaveRequested_SearchRecords_Calingfunction(StaffLeaveApprovalModel val, int RoleID, DateTime Fromdate, DateTime Todate,string LeaveselectedType)
         {
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2310,13 +2343,14 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
 
         public IActionResult LeaveApproval()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
 
         public IActionResult LeaveApproval(StaffLeaveApprovalModel obj,string submitButtonName)
         {
@@ -2359,7 +2393,7 @@ namespace Connect4m_Web.Controllers
 
         //--------------------------------------Apply Short Leaves Module----------------------
 
-
+        [Authorize]
         public IActionResult TblAppliedShortLeaves_SearchRecords_Calingfunction(AttendanceModel val)
         {
             
@@ -2390,7 +2424,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.TblAppliedShortLeaves_SearchRecords_Calingfunction);
         }
 
-
+        [Authorize]
         public IActionResult MyAppliedShortLeaves_PrintTable_CallingFun(int Batchid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2411,7 +2445,7 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(ViewBag.MyAppliedShortLeaves_PrintTable_CallingFun);
         }
-
+        [Authorize]
         public IActionResult TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(AttendanceModel val)
         {
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2455,7 +2489,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction);
         }
 
-
+        [Authorize]
         public IActionResult Cancel_ShortLeavesOfStaff_CallingFun(int LeaveApplicationId1, string submitButton, int Batchid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2480,12 +2514,13 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(new { success = true, message = "Something Error" });
         }
 
-
+        [Authorize]
         public IActionResult ApplyShortLeaves()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult ApplyShortLeaves(AttendanceModel obj,string submitButton)
         {
             int InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
@@ -2515,7 +2550,7 @@ namespace Connect4m_Web.Controllers
             return Json(new { success = true, message = "Error", ButtonName = submitButton });
         }
 
-
+        [Authorize]
         //--------------------------------------Convert Short Leaves Module----------------------
 
 
@@ -2551,7 +2586,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.GetUserName_BY_SelectRoleId);
         }
 
-
+        [Authorize]
         public IActionResult TblLeaveTypesForconvertion_Calingfunction(AttendanceModel val, int InstanceRoleId, int Monthid,  int Userid)
         {
             //int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2584,7 +2619,7 @@ namespace Connect4m_Web.Controllers
               ViewBag.TblLeaveRequested_SearchRecords_Calingfunction = Value2;
             return new JsonResult(ViewBag.TblLeaveRequested_SearchRecords_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult CheckLeaveTypeEligibility_CalingFunction(int UserId,int LeaveTypeid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             //int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2641,12 +2676,13 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(successMessage);
         }
-
+        [Authorize]
         public IActionResult ConvertShortLeaves()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult ConvertShortLeaves(List<AttendanceModel> InputVal)
         {
 
@@ -2695,7 +2731,7 @@ namespace Connect4m_Web.Controllers
 
 
         // -------------------------------MANAGE LEAVE TYPES  Module-----------------
-
+        [Authorize]
         public IActionResult _ViewChangeActivities(string SourceId,string AuditKey,string TableName)
         {
             AttendanceModel val = new AttendanceModel();
@@ -2721,13 +2757,13 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult LoadPartialView()
         {
             return PartialView("_SearchLeaveTypePagePartialView");
         }
 
-
+        [Authorize]
         public IActionResult EditValuesGettingFunction(int Leavetypeid)
         {
             AttendanceModel val = new AttendanceModel();
@@ -2751,7 +2787,7 @@ namespace Connect4m_Web.Controllers
             //return new JsonResult(new { success = true, message = "Something Error" });
            // return View();
         }
-
+        [Authorize]
         public IActionResult CreateLeaveTypePageView(int Leavetypeid)
         {
             List<AttendanceModel> Value2 = new List<AttendanceModel>();
@@ -2776,9 +2812,9 @@ namespace Connect4m_Web.Controllers
             ViewBag.Leavetypeid = Leavetypeid;
             return View();
         }
-        
-       
 
+
+        [Authorize]
 
         public IActionResult LeaveTypesCAllingTableView(string LeaveType,string Description)
         {
@@ -2803,12 +2839,13 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult ManageLeaveTypes()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult ManageLeaveTypes(AttendanceModel obj,string ButtonName,int Leavetypeid)
         {
             if (ButtonName == "Delete")
@@ -2863,6 +2900,7 @@ namespace Connect4m_Web.Controllers
         //--------------------------------LEAVE ALLOCATION SCREEN--------------------------------
 
         //this is not using
+        [Authorize]
         public IActionResult GetTblLeaveAllocationListDvalues_CaliingFunction(AttendanceModel val)
         {
 
@@ -2890,9 +2928,9 @@ namespace Connect4m_Web.Controllers
             //ViewBag.TblAppliedShortLeaves_SearchRecords_Calingfunction = Value2;
             return new JsonResult(ViewBag.TblAppliedShortLeaves_SearchRecords_Calingfunction);
         }
-      
-        
-        
+
+
+        [Authorize]
         public IActionResult DdlLmsSubCategory_Calingfunction(int PayrollCategoryId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int DelegationClasses = 1;
@@ -2918,7 +2956,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.DdlLmsSubCategory_Calingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.DdlLmsSubCategory_Calingfunction);
         }
-
+        [Authorize]
         public IActionResult DdlLmsCategory_Calingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2944,7 +2982,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.DdlLmsCategory_Calingfunction);
         }
 
-
+        [Authorize]
         public IActionResult LeaveAllocationTBLView(AttendanceModel val,string GenderId,int PayrollCategoryId,int PayrollSubCategoryId)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -2972,12 +3010,13 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult LeaveAllocation()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         //public IActionResult LeaveAllocation(List<AttendanceModel> val, string ButtonName)
         public async Task<IActionResult> LeaveAllocation(AttendanceModel allTextboxValues, string ButtonName)
         {
@@ -3065,7 +3104,7 @@ namespace Connect4m_Web.Controllers
 
         //--------------------------Leave Delegation Screen------------------------------
 
-
+        [Authorize]
         public IActionResult _TblLeaveDelegationAuthorityList_LeaveDeligation(LeaveDelegationModel val)
         {
             //int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -3083,6 +3122,7 @@ namespace Connect4m_Web.Controllers
             Value2 = Value2.OrderBy(x => x.FirstName).ToList();
             return PartialView("_TblLeaveDelegationAuthorityList_LeaveDeligation", Value2);
         }
+        [Authorize]
         public IActionResult DdlDesignation_AddUserPage_Calingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3104,7 +3144,7 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(ViewBag.DdlDesignation_AddUserPage_Calingfunction);
         }
 
-
+        [Authorize]
         public IActionResult GetApprovingAuthorityUserName_BY_SelectRoleId(int InstanceClassificationId, int InstanceRoleId)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3135,16 +3175,17 @@ namespace Connect4m_Web.Controllers
             ViewBag.GetApprovingAuthorityUserName_BY_SelectRoleId = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.GetApprovingAuthorityUserName_BY_SelectRoleId);
         }
-
+        [Authorize]
         public IActionResult _AddUserPage_PagePartialViewFunction()
         {
             return PartialView("_AddUserPage_LeaveDelegation");
         }
+        [Authorize]
         public IActionResult _AddLeaveDelegationPage_LeaveDelegation( )
         {        
             return PartialView("_AddLeaveDelegationPage_LeaveDelegation");
         }
-
+        [Authorize]
 
         public IActionResult _TblLeaveDelegationList_LeaveDeligation(LeaveDelegationModel val)
         {
@@ -3167,12 +3208,13 @@ namespace Connect4m_Web.Controllers
            
             return PartialView("_TblLeaveDelegationList_LeaveDelegation",Value2);
         }
-
+        [Authorize]
         public IActionResult LeaveDelegation()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public IActionResult LeaveDelegation(LeaveDelegationModel val,string ButtonName,int LeaveDelegationId)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3202,7 +3244,7 @@ namespace Connect4m_Web.Controllers
 
         //-----------------============Allocate Leaves By LMS Category Screen======----------------
 
-
+        [Authorize]
         public IActionResult GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(AttendanceModel val, int PayrollCategoryId, int PayrollSubCategoryId)
         {
 
@@ -3228,13 +3270,14 @@ namespace Connect4m_Web.Controllers
             return View(Value2);
             
         }
-
+        [Authorize]
         public IActionResult AllocateLeavesLeaveCategoryWise()
         {
             return View();
         }
         [HttpPost]
-       
+        [Authorize]
+
         public IActionResult AllocateLeavesLeaveCategoryWise(List<AttendanceModel> val)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3303,7 +3346,7 @@ namespace Connect4m_Web.Controllers
 
 
         //----------------------------================Assign Leaves To Staff======------------------
-
+        [Authorize]
         public IActionResult _TblAssignLeavesToStaff_AssignLeavestoStaff(AttendanceModel val,int PayrollCategoryId,int PayrollSubCategoryId)
         {
 
@@ -3331,12 +3374,13 @@ namespace Connect4m_Web.Controllers
 
 
 
-
+        [Authorize]
         public IActionResult AssignLeavestoStaff()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
 
         public IActionResult AssignLeavestoStaff(List<AttendanceModel> val)
         {
@@ -3370,7 +3414,7 @@ namespace Connect4m_Web.Controllers
 
 
         //----------------------------------======== Manage Staff Leave ====--------------------
-
+        [Authorize]
 
         //this is not using
         public IActionResult _TblStaffUserList_ManageStaffLeave(LeaveDelegationModel val)
@@ -3397,7 +3441,7 @@ namespace Connect4m_Web.Controllers
             return Json(Value2);
         }
 
-      
+        [Authorize]
         //this is not using
         public IActionResult _ApplyStaffLeaveByUserId_ManageStaffLeave(int Userid)
         {
@@ -3437,13 +3481,13 @@ namespace Connect4m_Web.Controllers
             ViewBag.GetShort_Description_for_Leave_Reason2 = value;
             return PartialView("_ApplyStaffLeaveByUserId_ManageStaffLeave");
         }
-
+        [Authorize]
         public IActionResult ManageStaffLeave()
         {
             return View();
         }
         [HttpPost]
-
+        [Authorize]
         public IActionResult ManageStaffLeave(List<AttendanceModel> val)
         {
             return Json(new { success = false, message = "Something Error" });
@@ -3454,7 +3498,7 @@ namespace Connect4m_Web.Controllers
 
         //----------------------------------------Leave Cancellation---------------------------------
 
-
+        [Authorize]
         public IActionResult GetSubmittedLeaveRequestsDetailsByUseridLeaveIdforEdit(int LeaveApplicationId, int Userid)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3471,7 +3515,7 @@ namespace Connect4m_Web.Controllers
 
             return new JsonResult(ViewBag.GetSubmittedLeaveRequestsDetailsByUseridLeaveIdforEdit);
         }
-
+        [Authorize]
         public IActionResult _EditLeavesPage_LeaveCancellation(int Userid,int LeaveApplicationId)
         {
 
@@ -3559,7 +3603,7 @@ namespace Connect4m_Web.Controllers
             return PartialView("_EditLeavesPage_LeaveCancellation");
         }
 
-
+        [Authorize]
         public IActionResult _TblLeavesSearchedResultPage_LeaveCancellation(AttendanceModel val)
         {
            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
@@ -3579,17 +3623,18 @@ namespace Connect4m_Web.Controllers
             return Json(Value2);
         }
 
-
+        [Authorize]
         public IActionResult _LeavesSearchPage_LeaveCancellation()
         {
             return PartialView("_LeavesSearchPage_LeaveCancellation");
         }
-
+        [Authorize]
         public IActionResult LeaveCancellation()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
 
         public IActionResult LeaveCancellation(AttendanceModel val,int Userid,string submitButton)
         {
@@ -3613,7 +3658,7 @@ namespace Connect4m_Web.Controllers
 
 
         // --------------------------------------============Manage Compansatory Leaves========-----------------
-
+        [Authorize]
         public IActionResult TblCompensatoryLeavesSummery_CallingFunction(AttendanceModel val,int CompOffLeaveID,string submitButton)
         {
 
@@ -3632,6 +3677,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(Value2);
         }
+        [Authorize]
         public IActionResult TblCompensatoryLeavesDetails_CallingFunction(AttendanceModel val)
         {
 
@@ -3650,13 +3696,13 @@ namespace Connect4m_Web.Controllers
             return Json(Value2);
         }
 
-
+        [Authorize]
         public IActionResult ManageCompansatoryLeaves()
         {
             return View();
         }
         [HttpPost]
-
+        [Authorize]
         public IActionResult ManageCompansatoryLeaves(AttendanceModel val, string ButtonName,int CompOffLeaveID)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3682,7 +3728,7 @@ namespace Connect4m_Web.Controllers
         }
 
         // --------------------------------------============Manage past days Leaves  Screen========-----------------
-
+        [Authorize]
         public IActionResult TblAllowLeavePastDays_CallingFunction(AttendanceModel val)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3700,7 +3746,7 @@ namespace Connect4m_Web.Controllers
             return Json(Value2);
         }
 
-
+        [Authorize]
         public IActionResult ManagePastDaysLeave()
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
@@ -3727,7 +3773,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
         [HttpPost]
-
+        [Authorize]
         public IActionResult ManagePastDaysLeave(AttendanceModel val,string  ButtonName)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);

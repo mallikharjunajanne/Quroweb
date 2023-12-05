@@ -15,7 +15,7 @@ using DinkToPdf.Contracts;
 using DinkToPdf;
 using Microsoft.AspNetCore.Http.Features;
 using System.IO;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace LMS_Module
 {
@@ -44,7 +44,24 @@ namespace LMS_Module
             //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             //.Build();
 
-           // services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+            // services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.LoginPath = "/Attendance/AccessDenied";
+                   options.AccessDeniedPath = "/Attendance/AccessDenied"; // Specify the access denied page
+
+               });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.RequireRole("Admin"));
+            });
+
+
             services.AddSingleton<HttpClientFactory>();
             services.AddHttpContextAccessor();
 
@@ -73,6 +90,7 @@ namespace LMS_Module
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

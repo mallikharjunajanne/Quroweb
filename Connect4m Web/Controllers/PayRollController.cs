@@ -1,5 +1,6 @@
 ﻿using Connect4m_Web.Models;
 using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Controllers
 {
-                           // problem in 02  BASIC
+    [Authorize]               // problem in 02  BASIC
     public class PayRollController : Controller
     {
         private readonly HttpClientFactory _httpClientFactory;
@@ -48,20 +49,20 @@ namespace Connect4m_Web.Controllers
             StudentUserid = _userService.StudentUserid;
 
         }
-       //// public int InstanceId = 545;
-       ////-------------------College Admin
-       // public int UserId = 11337;
-       // public int RoleId = 571;
-       // public int StudentUserId = 29255;//-----Student Login
+        //// public int InstanceId = 545;
+        ////-------------------College Admin
+        // public int UserId = 11337;
+        // public int RoleId = 571;
+        // public int StudentUserId = 29255;//-----Student Login
 
 
-       // public int InstanceId = 515;//------http://collegedev.connect4m.com/    CollegeAdmin
-
+        // public int InstanceId = 515;//------http://collegedev.connect4m.com/    CollegeAdmin
+       
         public IActionResult Index()
         {
             return View();
         }
-
+      
         public IActionResult ChangeActivity(string AuditKey, int SourceId, string Name)
         {
             List<ChangeActivity> list = new List<ChangeActivity>();
@@ -76,8 +77,8 @@ namespace Connect4m_Web.Controllers
 
             return  PartialView("_ChangeActivity",list);
         }
-      
-            public List<SelectListItem> CommonDropdown(string methodname,string[] Parameters,  string text, string value)
+        [Authorize]
+        public List<SelectListItem> CommonDropdown(string methodname,string[] Parameters,  string text, string value)
         {
             List<SelectListItem> DropdownList = new List<SelectListItem>();
             CommonDropdown obj = new CommonDropdown();

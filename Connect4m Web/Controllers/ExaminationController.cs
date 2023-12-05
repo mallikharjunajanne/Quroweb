@@ -13,9 +13,12 @@ using System.IO;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Http;
 using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
+
     public class ExaminationController : Controller
     {
         //Uri baseaddress = new Uri("https://localhost:44379/api/Examination");

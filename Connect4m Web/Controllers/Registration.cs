@@ -10,9 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Connect4m_Web.Models.LMSproperties;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
+
     public class Registration : Controller
     {
         // Uri baseAddress = new Uri("https://localhost:44331/api/Attendance");

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "AccessDenied";
+    Layout = null;
+}
+<style>
+    a {
+        color: blue;
+        background-color: white;
+        padding: 6px;
+        border-radius: 22px;
+        text-decoration: none;
+    }
+        a:hover {
+            background-color: yellow;
+            border: 1px solid;
+        }
+</style>
+<div style="position: relative; text-align: center;">
+    <img src="@Url.Content("~/Images_IMP/access image.png")" alt="Access Image" style="width: 100%; height: 100%;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; background-color: red; padding: 33px; border-radius: 97px; border: 1px solid white; }">
+        <h1>Access Denied</h1>
+        <p>You do not have permission to access this resource or the link may not be available.</p>
+        <a href="/Attendance/LoginPage">Go To Login</a>
+    </div>
+</div>
