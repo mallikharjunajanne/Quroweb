@@ -200,7 +200,7 @@
 }
 else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
 {
-    
+
 
     <!--card 4-->
     <a>Export To Excel</a>
@@ -213,7 +213,7 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
         <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
             <div class="card ">
                 <form id="Fm_TblUsersSearched" class="table-responsive">
-                    @{int sno = 0; int Subjectcount = 0; int OptionalSubjectcount = 0;}
+                    @{int sno = 0; int Subjectcount = 0; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00;var Color="";}
                     <table id="TblUsersSearched" class="display cell-border  tableid">
                         <thead>
                             <tr>
@@ -223,7 +223,16 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                 @foreach (var item1 in ViewBag.SubjectNamesList)
                                 {
                                     Subjectcount++;
-                                    <th>@item1</th>
+                                    ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
+                                    MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
+                                    PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
+
+                                    <th style="color:red">
+                                        @item1
+                                        <input type="hidden" id="TH_ExamSubjectId" value="@ExamSubjectId" disabled />
+                                        <input type="hidden" id="TH_MaxMarks" value="@MaxMarks" disabled />
+                                        <input type="hidden" id="TH_PassMarks" value="@PassMarks" disabled />
+                                    </th>
                                 }
                             </tr>
                         </thead>
@@ -232,27 +241,31 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                             @foreach (var item in ViewBag.UsersDetailsList)
                             {
                                 sno++; OptionalSubjectcount = 0;
-                            <tr>
-                                <td>@sno</td>
-                                <td>@item.Name</td>
-                                <td>@item.InstanceUserCode</td>
-                                @foreach (var columnValue in item.Columns)
-                                {
-                                    if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
+                                <tr>
+                                    <td>@sno</td>
+                                    <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
+                                    <td>@item.InstanceUserCode</td>
+                                    @foreach (var columnValue in item.Columns)
                                     {
-                                        <td><input type="text" maxlength="5"  disabled /></td>
+                                        if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
+                                        {
+                                            <td><input type="text" onclick="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" disabled /></td>
+                                        }
+                                        else
+                                        {
+                                            <td><input type="text" onclick="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
+                                   @if (item.DisplayIcon[OptionalSubjectcount] == "1")
+                                   {
+                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9855684, 'NoofLeaves')">
+                                   }</td>
+                                        }
+                                        OptionalSubjectcount++;
                                     }
-                                    else
-                                    {
-                                        <td><input type="text" maxlength="5"  value="@columnValue" /></td>
-                                    }
-                                    OptionalSubjectcount++;
-                                }
-                                @*@for (int i = 1; i <= Subjectcount; i++)
-        {
-            <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
-        }*@
-                            </tr>
+                                    @*@for (int i = 1; i <= Subjectcount; i++)
+                                        {
+                                            <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
+                                        }*@
+                                </tr>
                             }
                         </tbody>
                     </table>

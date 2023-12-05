@@ -219,7 +219,8 @@
                                     <div style=" display: flex; gap: 17px;">
                                         <div class="col-4"></div>
                                         <input type="button" value="Go Back to Step 1" id="BtnBackTo_Step1" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-warning btn-air-warning" />
-                                        <input type="submit" value="Save & Go to Step 3" onclick="Div_Step3(event)" id="BtnSave_Nextpage_Step3" class="btn btn-pill btn-outline-info btn-air-info" />
+                                        @*<input type="submit" value="Save & Go to Step 3" onclick="Div_Step3(event)" id="BtnSave_Nextpage_Step3" class="btn btn-pill btn-outline-info btn-air-info" />*@
+                                        <input type="submit" value="Save & Go to Step 3" id="BtnSave_Nextpage_Step3" class="btn btn-pill btn-outline-info btn-air-info" />
                                     </div>
                                 </form>
                             </div>
@@ -321,11 +322,29 @@
             }).get();
             if (selectedValues) {
                 var selectedValuesString = selectedValues.join(", ");
-              }
+            }
             var formData = new FormData($("#FmSubjectsSearch")[0]);
-      
+
             formData.append("SubjectsName", selectedValuesString)
-           // var formData = { MarksUploadtype: "UploadWithExcelFile" };
+
+
+            var TblExamSubject = $("#TblExamSubjects tbody tr");
+
+            TblExamSubject.each(function (index) {
+                TblExamSubjectTD = $(this).find("td");
+
+               // var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
+                var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
+                var TxtPassMarks = TblExamSubjectTD.find("#TxtPassMarks").val();
+                var TxtMaxMarks = TblExamSubjectTD.find("#TxtMaxMarks").val();
+
+               // formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
+                formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
+                formData.append("PassMarksList", parseFloat(TxtPassMarks));
+                formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
+            });
+
+            // var formData = { MarksUploadtype: "UploadWithExcelFile" };
             $("#loadingOverlay").show();
             performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype, formData, function (response) {
                 // $("#Div_Step2").hide();
@@ -340,42 +359,28 @@
             $("#Main_Span_Error").text("Something Error");
         }
     });
+
+
     //---go to step 3
     function Div_Step3(event) {
         try {
             debugger;
             event.preventDefault();
+
             var data = { MarksUploadtype: "UploadWithExcelFile" };
             $("#loadingOverlay").show();
-
             performCrudOperationCommonFunction("GET", "/Results/PublishResults_Step3", data, function (response) {
-                debugger;
-                //  $("#UpdateManageSubjects").html(response);
-                $("#Div_Step2").hide();
-                $("#Div_Step3").show();
 
-
-                var data = { MarksUploadtype: "UploadWithExcelFile" };
-                $("#loadingOverlay").show();
-                performCrudOperationCommonFunction("GET", "/Results/PublishResults_Step3", data, function (response) {
-
-                    $("#Div_UploadingType").html(response);
-                    $("#loadingOverlay").hide();
-                }, function (error) {
-                    $("#loadingOverlay").hide();
-                    $("#Main_Span_Error").text("Something Error");
-                });
-
-                //$("#Div_Step3").html(response);
-                //   $("#UpdateManageSubjects").empty();
-                // $("#Saveclassfication_MS").val("Update");
+                $("#Div_UploadingType").html(response);
                 $("#loadingOverlay").hide();
             }, function (error) {
-
                 $("#loadingOverlay").hide();
                 $("#Main_Span_Error").text("Something Error");
-                //console.error(error);
             });
+            $("#Div_Step2").hide();
+            $("#Div_Step3").show();
+            $("#loadingOverlay").hide();
+
         } catch (x) {
             $("#loadingOverlay").hide();
             $("#Main_Span_Error").text("Something Error");
@@ -389,11 +394,11 @@
             var btnName = $(button).attr("id");
             $(".ErrorMessageSpan").empty();
             $("#loadingOverlay").show();
-            
+
             $("#Div_Step3").css('display', 'none');
             $("#Div_UploadingType").empty();
 
-          
+
             if (btnName == "BtnBackTo_Step2") {
 
                 TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
@@ -436,14 +441,14 @@
                         return;
                     }
                     TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
-                        
-                        $("#DepartmentName").text('Step 2 Selection: ' +
+
+                    $("#DepartmentName").text('Step 2 Selection: ' +
                         $("#DdlDepartment option:selected").text() + ' - ' +
                         $("#DdlClass option:selected").text() + ',' +
                         $("#DdlExam option:selected").text() + ',' +
-                            $("#DdlExammode option:selected").text() + '');
+                        $("#DdlExammode option:selected").text() + '');
                     $("#Div_Step2").css('display', 'block');
-                        $("#Div_Step1").css('display', 'none');
+                    $("#Div_Step1").css('display', 'none');
                 } else {
                     $('.alert-danger p').text("Pleae Enter All Required Fields");
                     $(".alert-danger").show().delay(5000).fadeOut()
@@ -455,8 +460,8 @@
         }
     })
 
-    //=---------------------This is For Submit
-    js(document).on("click", '#BtnSave_Nextpage_Step21', function (event) {
+    //=---------------------This is For save and go to step3
+    js(document).on("click", '#BtnSave_Nextpage_Step3', function (event) {
         try {
             event.preventDefault();
             //event.stopImmediatePropagation();
@@ -509,6 +514,12 @@
                     shouldExit = true; // Set the flag to true to exit the loops
                     return false; // Exit the inner loop
                 }
+                else if (parseFloat(TxtMaxMarks) < parseFloat(TxtPassMarks)) {
+                    $(ErrorAppend).text("Pass Marks can not be greater than Max Marks for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
                 // formData.append("ExamIdList", parseInt(ExamId) || 0);
                 formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
                 formData.append("PassMarksList", parseFloat(TxtPassMarks));
@@ -525,22 +536,20 @@
                 debugger;
                 var SubjectText = "";
                 if (response.message == "Record inserted successfully.") {
-                    var data = { Buttonname: "BtnCreateNew" };
+
+                    var data = { MarksUploadtype: "UploadWithExcelFile" };
                     $("#loadingOverlay").show();
-                    performCrudOperationCommonFunction("GET", "/Results/PublishResulut_Step3", data, function (response) {
-                        debugger;
-                        //  $("#UpdateManageSubjects").html(response);
+                    performCrudOperationCommonFunction("GET", "/Results/PublishResults_Step3", data, function (response) {
+
+                        $("#Div_UploadingType").html(response);
+
                         $("#Div_Step2").hide();
-                        $("#Div_Step3").html(response);
-                        //   $("#UpdateManageSubjects").empty();
-                        // $("#Saveclassfication_MS").val("Update");
+                        $("#Div_Step3").show();
                         $("#loadingOverlay").hide();
                     }, function (error) {
                         $("#loadingOverlay").hide();
                         $("#Main_Span_Error").text("Something Error");
-                        //console.error(error);
                     });
-                    //$("#BtnSave").prop('disabled', true);
                 }
                 if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
                     SubjectText = $("#DdlSubject option:selected").text();
@@ -559,6 +568,112 @@
     });
 
 
+
+
+    //=---------------------This is For save as draft
+    js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {
+        try {
+            event.preventDefault();
+            //event.stopImmediatePropagation();
+            var ButtonName = $(this).val();
+            var ButtonId = $(this).attr("id");
+            debugger;
+            $(".ErrorMessageSpan").empty();
+            var formData = new FormData($("#FmSubjectsSearch")[0]);
+            formData.append("ButtonId", ButtonId);
+            $("#loadingOverlay").show();
+
+            var TblExamSubject = $("#TblUsersSearched tbody tr");
+            TblExamSubject.find('input[type="text"]').removeClass("errorboxshadow");
+
+            var SecuredMarks;
+            var shouldExit = false;
+            var MaxMarks;
+            var Grade;
+            $('#TblUsersSearched tbody tr').each(function () {
+                if (shouldExit) {
+                    return false; // Exit the outer loop
+                }
+                var UserId = $(this).find('#UserId').val();
+                var Name = $(this).find("td:eq(1)").text();
+                $(this).find('td').each(function (tdIndex) {
+                    if (tdIndex < 3) {
+                        return;
+                    }
+                    SecuredMarks = $(this).find('input[type="text"]').val();
+                    SubjectId = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_ExamSubjectId').val();
+                    MaxMarks = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_MaxMarks').val();
+                    PassMarks = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_PassMarks').val();
+                    SubjectName = $('#TblUsersSearched thead th:eq(' + tdIndex + ')').text();
+
+                    if (SecuredMarks === "" && !$(this).find('input[type="text"]').prop('disabled') && ButtonId != "BtnSaveAsDraft") {
+                        $(ErrorAppend).text("Please enter marks For student '" + Name + "' for subject  '" + SubjectName + "'");
+                        $(this).find('input[type="text"]').addClass("errorboxshadow");
+                        shouldExit = true; // Set the flag to true to exit the loops
+                        return false; // Exit the inner loop
+                    }
+                    if (parseFloat(MaxMarks) < parseFloat(SecuredMarks)) {
+                        $(ErrorAppend).text("For student '" + Name + "' secured marks can not be greater than maximum marks for subject '" + SubjectName + "'");
+                        $(this).find('input[type="text"]').addClass("errorboxshadow");
+                        shouldExit = true; // Set the flag to true to exit the loops
+                        return false; // Exit the inner loop
+                    }
+
+                    if (parseFloat(PassMarks) <= parseFloat(SecuredMarks) && SecuredMarks != "") {
+                        Grade = "PASS";
+                    } else if (parseFloat(PassMarks) > parseFloat(SecuredMarks) && SecuredMarks != "") {
+                        Grade = "FAIL";
+                    } else if (SecuredMarks == "-"){
+                        Grade = "ABSENT";
+                        //Grade = "OPTIONAL";
+                    } else if (SecuredMarks == "" && ButtonId == "BtnPublish"){
+                        Grade = "OPTIONAL";
+                    } else {
+                        Grade = "";
+                    }
+                    formData.append("UseridList", parseInt(UserId) || 0);
+                    formData.append("SubjectIdList", parseInt(SubjectId) || 0);
+                    formData.append("SecureMarksList", parseFloat(SecuredMarks) || "");
+                    // formData.append("SecureMarksList", parseFloat(SecuredMarks));
+                    formData.append("GradeList", Grade || "");
+                    // formData.append("GradeList", Grade);
+                    formData.append("PassMarksList", parseFloat(PassMarks));
+                    formData.append("MaxMarksList", parseFloat(MaxMarks));
+                    // formData.append("DateConductedList", TxtDate);
+                    // formData.append("UserMarksString", count + ', ' + UserId + ',' + SubjectId + ',' + SecuredMarks + ', ' + Grade + ', ' + ButtonWise + ', "Empty"');
+                    //  count++;
+                });
+            });
+            if (shouldExit) {
+                //  $("#Main_Span_Error").text("Subjects overlapping.");
+                window.scrollTo(0, 0);
+                $("#loadingOverlay").hide();
+                return;
+            }
+
+            performCrudOperationCommonFunction('POST', "/Results/PublishResults?ButtonName=" + ButtonName, formData, function (response) {
+                debugger;
+                var SubjectText = "";
+                if (response.message == "Record inserted successfully.") {
+                    var data = { Buttonname: "BtnCreateNew" };
+                    $("#loadingOverlay").show();
+                    //$("#BtnSave").prop('disabled', true);
+                }
+                if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
+                    SubjectText = $("#DdlSubject option:selected").text();
+                }
+                $("#Main_Span_Error").text(response.message + SubjectText);
+                $("#loadingOverlay").hide();
+                window.scrollTo(0, 0);
+            }, function (error) {
+                $("#loadingOverlay").hide();
+                $("#Main_Span_Error").text("Something Error");
+            }, true);
+        } catch (e) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    });
 </script>
 
 

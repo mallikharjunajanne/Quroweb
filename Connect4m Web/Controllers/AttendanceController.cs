@@ -52,8 +52,6 @@ namespace Connect4m_Web.Controllers
             client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/ApplyStudentAttendance");
             _memoryCache = memoryCache;//this for storing login counts
-
-
         }
 
         private int IncrementLoginCount(string username)
@@ -251,10 +249,8 @@ namespace Connect4m_Web.Controllers
         [Authorize]
         public IActionResult GetStudentNameDropdown(string InstanceId,string Value)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
-            
             //string Value1 = "38641~8990";
-
-                string[] ids = Value.Split('~');
+            string[] ids = Value.Split('~');
             string InstanceSubClassificationId = "";
             string InstanceClassificationId = "";
             if (ids.Length !=0)
@@ -262,9 +258,6 @@ namespace Connect4m_Web.Controllers
                  InstanceSubClassificationId = ids[0];
                  InstanceClassificationId = ids[1];
             }
-             
-
-
            List<AttendanceModel> value1 = new List<AttendanceModel>();        
             HttpResponseMessage response1 = client.GetAsync(client.BaseAddress + "/GetStudentNameDropdown2?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId).Result;
                 if (response1.IsSuccessStatusCode)

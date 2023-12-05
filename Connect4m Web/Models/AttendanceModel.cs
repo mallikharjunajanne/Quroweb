@@ -44,6 +44,7 @@ namespace Connect4m_Web.Models
 
     public class CommonClass
     {
+        public string ButtonId { get; set; }//new
         public int Id { get; set; }
         public int RoleId { get; set; }
         public int CreatedBy { get; set; }

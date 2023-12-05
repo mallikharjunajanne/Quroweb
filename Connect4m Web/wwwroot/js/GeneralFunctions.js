@@ -855,7 +855,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         {
                             data: "SubjectsName",
                             render: function (data, type, row, meta) {
-                                return '' + row.subjectsName + '<input type="hidden" value="' + row.actualDateConducted + '" id=ActualDateConducted><input type="hidden" value="' + row.subjectId + '" id=SubjectId>'
+                                return '' + row.subjectsName + '<input type="hidden" value="' + row.actualDateConducted + '" id=ActualDateConducted><input type="hidden" value="' + row.subjectId + '" id=SubjectId><input type="hidden" value="' + row.examSubjectId + '" id=ExamSubjectId>'
                                // return row.subjectsName
                             }
                         }, {
@@ -876,12 +876,12 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         {
                             data: "PassMarks",
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters(this,".")" value="' + row.passMarks +'">';
+                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks +'">';
                             }
                         }, {
                             data: "MaxMarks",
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters(this,".")" value="' + row.maxMarks +'">';
+                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks +'">';
                             }
                         },
                     ]
@@ -890,13 +890,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 else {
                     //tablename == "TblLeavesSummery"
                     columns = [
-                        //{
-                        //     data: "Leavetypeid",
-                        //    visible: false,
-                        //    render: function (data, type, row, meta) {
-                        //        return row.leavetypeid ///compoffleaveid
-                        //    }
-                        //},
                         {
                             data: "Username",
                             render: function (data, type, row, meta) {
@@ -957,7 +950,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                 return row.availableLeaves
                             }
                         },
-
                     ]
                 }
                     var Newtable = js("#" + tablename).DataTable({
@@ -1223,9 +1215,21 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
 
 //-------------------------------this is for restrict the Characters
 //oninput="restrictCharacters(this)";
-function restrictCharacters(element, AllowDonts) {
+function restrictCharacters(element) {
     debugger;
-    element.value = element.value.replace('/[^0-9'+AllowDonts+']/g', '');
+    element.value = element.value.replace(/[^0-9]/g, '');
+}
+
+function restrictCharacters_AllowDots(element) {
+    debugger; //element.value = element.value.replace(/[^0-9.]/g, '');
+    element.value = element.value.replace(/[^0-9]|(?<=\..*)\./g, '');
+}
+
+function restrictCharacters_AllowDotsAndHyphen(element) {
+    debugger;
+    //element.value = element.value.replace(/[^0-9.-]/g, '');
+
+    element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
 }
 
 function CommonClearFunction(Formid) {
