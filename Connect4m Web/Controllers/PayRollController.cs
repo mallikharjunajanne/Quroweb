@@ -22,23 +22,40 @@ namespace Connect4m_Web.Controllers
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
 
+        private readonly IUserService _userService;
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        private readonly int UserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
 
-        public PayRollController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+        public PayRollController(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/PayRoll");
 
+            //=======================================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            UserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+
         }
-       // public int InstanceId = 545;
-       //-------------------College Admin
-        public int UserId = 11337;
-        public int RoleId = 571;
-        public int StudentUserId = 29255;//-----Student Login
+       //// public int InstanceId = 545;
+       ////-------------------College Admin
+       // public int UserId = 11337;
+       // public int RoleId = 571;
+       // public int StudentUserId = 29255;//-----Student Login
 
 
-        public int InstanceId = 515;//------http://collegedev.connect4m.com/    CollegeAdmin
+       // public int InstanceId = 515;//------http://collegedev.connect4m.com/    CollegeAdmin
 
         public IActionResult Index()
         {

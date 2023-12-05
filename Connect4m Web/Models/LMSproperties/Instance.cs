@@ -9,9 +9,64 @@ using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Connect4m_Web.Models.LMSproperties
 {
+    public interface IUserService
+    {
+        int InstanceId { get; }
+        int LoginUserId { get; }
+        int InstanceClassificationId { get; }
+        int InstanceSubClassificationId { get; }
+        int Roleid { get; }
+        int StudentUserid { get; }
+   
+    }
+    public class UserService : IUserService
+    {
+        public int InstanceId { get; private set; }
+        public int LoginUserId { get; private set; }
+        public int InstanceClassificationId { get; private set; }
+        public int InstanceSubClassificationId { get; private set; }
+        public int Roleid { get; private set; }
+        public int StudentUserid { get; private set; }
+       // public int ThemeName { get; private set; }
+
+        public UserService(IHttpContextAccessor httpContextAccessor)
+        {
+            // Initialize the values from cookies or any other source
+            InstanceId = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["Instanceid"]);
+            LoginUserId = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["LoginUserId"]);
+            InstanceClassificationId = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["InstanceClassificationId"]);
+            InstanceSubClassificationId = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["InstanceSubClassificationId"]);
+            Roleid = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["Roleid"]);
+            StudentUserid = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["StudentUserid"]);
+          //  ThemeName = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["ThemeName"]);
+
+            //Response.Cookies.Append("Instanceid", Value2[0].UserDetailsList[0].InstanceID.ToString());
+            //Response.Cookies.Append("LoginUserId", Value2[0].UserDetailsList[0].UserId.ToString());
+            //Response.Cookies.Append("InstanceClassificationId", Value2[0].UserDetailsList[0].InstanceClassificationId.ToString());
+            //Response.Cookies.Append("InstanceSubClassificationId", Value2[0].UserDetailsList[0].InstanceSubClassificationId.ToString());
+            //Response.Cookies.Append("Roleid", Value2[0].UserDetailsList[0].RoleId.ToString());
+            //Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
+
+
+            //Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
+            //Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
+
+            //int DelegationClasses = 1;// This for Arjun
+
+            //Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+
+
+        }
+    }
+
+
+
+
+
     public class Instance
     {
         public int InstanceId { get; set; }

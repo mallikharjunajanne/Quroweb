@@ -46,9 +46,10 @@ namespace LMS_Module
 
            // services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
             services.AddSingleton<HttpClientFactory>();
+            services.AddHttpContextAccessor();
 
             //------------------End
-
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<PdfGenerator>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation(); /*services.AddMvc().AddRazorRuntimeCompilation();*/

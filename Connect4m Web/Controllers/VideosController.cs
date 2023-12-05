@@ -26,11 +26,18 @@ namespace Connect4m_Web.Controllers
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
 
+        private readonly IUserService _userService;
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        private readonly int UserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserId;
 
 
         private readonly PdfGenerator _pdfGenerator;
 
-        public VideosController(PdfGenerator pdfGenerator, HttpClientFactory httpClientFactory, IConfiguration configuration)
+        public VideosController(PdfGenerator pdfGenerator, HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
 
             this._pdfGenerator = pdfGenerator;
@@ -42,6 +49,15 @@ namespace Connect4m_Web.Controllers
            client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/LMS");
 
+            //=======================================================  Assigning the values ti=o the the private varible
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            UserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserId = _userService.StudentUserid;
+
 
         }
 
@@ -50,10 +66,10 @@ namespace Connect4m_Web.Controllers
 
 
 
-        public int InstanceId = 545;
-        public int UserId = 217606;
-        public int RoleId = 4629;
-        public int StudentUserId = 29255;//-----Student Login
+        //public int InstanceId = 545;
+        //public int UserId = 217606;
+        //public int RoleId = 4629;
+        //public int StudentUserId = 29255;//-----Student Login
 
 
         public IActionResult Login()

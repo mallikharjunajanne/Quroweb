@@ -16,17 +16,34 @@ namespace Connect4m_Web.Controllers
     {
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public RolewiseController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+        private readonly IUserService _userService;
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        private readonly int UserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+
+        public RolewiseController(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/Roles");
+            //=======================================================
+            _userService = userService;
+
+             InstanceId = _userService.InstanceId;
+             UserId = _userService.LoginUserId;
+             InstanceClassificationId = _userService.InstanceClassificationId;
+             Roleid = _userService.Roleid;
+             StudentUserid = _userService.StudentUserid;
 
 
         }
 
-        int InstanceId = 545; public int UserId = 32891;
+     
 
 
         //--------------------------------  Search Rolewise--menu
