@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         }
         public class NoticeTypes:Insatnceids
-        {
+        {           
             public int DisplayOrder { get; set; }
             public int ENoticeId { get; set; }
             [Required(ErrorMessage = "Notice Type")]
@@ -57,19 +58,25 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             public string CategoryName { get; set; }
             public string IsPostedv { get; set; }
+            [Required]
             public string ExpiryDate { get; set; }
+            [Required]
             public string StartDate { get; set; }
             public string IsPosted { get; set; }
             public string DisplayIcon { get; set; }
 
 
-            public bool IsSMSTemplate { get; set; }            
+            public bool IsSMSTemplate { get; set; }
             public DateTime EndDate { get; set; }
+            [Required]
             public int ENoticeTypeId { get; set; }
             public int IsGlobalNotice { get; set; }
             public int GetAll { get; set; }
             public string DocSize { get; set; }
 
+            // ---->>Create Notice and SMS
+            //public IFormFile AttachedDocument { get; set; }
+            public IFormFile AttachedDocument { get; set; }
         }
 
         public class TemplateDetails : NoticeTypes
@@ -135,14 +142,26 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string MultiAdmissionNumber { get; set; }
             public string ExcludeUserIds { get; set; }
 
+            public string[] RoleIds { get; set; }
+            public string[] GroupIds { get; set; }
+            public string[] ClassificationIds { get; set; }
+            public string[] SubClassificationIds { get; set; }
+            public string[] UserIds { get; set; }
+            public string DMLTYPE { get; set; }
+            public int SendSMS { get; set; }
+            public int SendEMail { get; set; }
+            public int IncludeParents { get; set; }
+            public int ForAll { get; set; }
+            public string NotificationSubject { get; set; }
+            public string RoleName { get; set; }
+            public string MobilePhone { get; set; }
+            public DateTime? NotifcationDate { get; set; }
+            public int IsParent { get; set; }
 
 
 
 
-          
             //public string InstanceUserCode { get; set; }
-           
-       
             //public string FatherName { get; set; }
             //public string ClassificationName { get; set; }
             //public string AdmissionNumber { get; set; }
@@ -152,6 +171,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         }
 
+        public class SmsSendingResult
+        {
+            public List<TemplateDetails_SMS> PushNotifications_Notices { get; set; }
+            public List<TemplateDetails_SMS> tblENotice_GetTargetUsers { get; set; }
+            public string Printmessages { get; set; }
+            public string Message1 { get; set; }
+        }
         public class RoleList
         {
             public int InstanceRoleId { get; set; }

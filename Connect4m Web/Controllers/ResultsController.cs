@@ -13,6 +13,7 @@ using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
 using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {

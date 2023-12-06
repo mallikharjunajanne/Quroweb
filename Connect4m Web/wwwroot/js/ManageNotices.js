@@ -311,7 +311,7 @@ function Selectealladdusers_addpostnotice(Userscount, ExcludeUsersid) {
     }
     var Split_allusers = ExcludeUsersid.split(',');
     var Le = Split_allusers.length;
-    alert(Le);
+   /* alert(Le);*/
 
     var Userid = AllUsers.join(',');
     var ExcludeUserIds = AllUsers.join(',');
@@ -527,13 +527,17 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
     return checkboxValues;
 }
 $('#Postsmsbtn').on('click', function () {
+    $('#lblPostNoticeMsg').text('');
+
     var S_SmsreturnedValue;
     var P_SmsreturnedValue;
     var S_EmailreturnedValue;
     var P_EmailreturnedValue;
     var ForAll;
     var Tableuserids = [];
-
+    var ENoticeId = $('#ENoticetxtid').val();
+    var CreatedBy = $('#Loginuser_Txtid').val();
+    var instanceid = Instanceid;
     if ($('#Sendsms_chk1').is(':checked')) {
         S_SmsreturnedValue = "1";
     } else {
@@ -583,20 +587,76 @@ $('#Postsmsbtn').on('click', function () {
             Tableuserids.push(ninthColumnText);
         });
     }
-    var instanceid = Instanceid;
+    var datatosend = {
+        ENoticeId: ENoticeId,
+        CreatedBy: CreatedBy,
+        instanceid: instanceid,
+        RoleIds: Rolecheckboxvalues,
+        GroupIds: Groupcheckboxvalues,
+        ClassificationIds: Classificationcheckboxvalues,
+        SubClassificationIds: Subclassificationcheckboxvalues,
+        //UserIds: Tableuserids,
+        SendSMS: S_SmsreturnedValue,
+        SendEMail: S_EmailreturnedValue,
+        IncludeParents: P_EmailreturnedValue
+    };
+    if (Tableuserids.length > 0) {
+        datatosend.UserIds = Tableuserids;
+    }
     $.ajax({
-        url: "",
+        url: "/Admin/ENoticeMailSms_INSERT",
         type: "POST",
-        data: "",
+        data: datatosend,
         success: function (response) {
+            debugger;
+            var string1 = response.pushNotifications_Notices;
+            var Subjecttext = $('#Search_result_count').val();
 
+            var Usersli = response.tblENotice_GetTargetUsers;
+            var usersWithoutEmail = [];
+            var usersWithoutMobile = [];
+            for (var i = 0; i < Usersli.length; i++) {
+                var UserfirstName = Usersli[i].firstName;
+                if (Usersli[i].mobilePhone === "0") {
+                    usersWithoutMobile.push(UserfirstName);
+                }
+                if (Usersli[i].portalEmail === "0") {
+                    usersWithoutEmail.push(UserfirstName);
+                }
+            }
+            if (P_SmsreturnedValue == "1") {
+                if (usersWithoutMobile.length > 0) {
+                    var mobileMsg = 'Notice Posted Successfully.' + Subjecttext + ' For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists for Parent(s).';
+                    $('#lblPostNoticeMsg').append(mobileMsg);
+                }
+            }
+
+            if (S_SmsreturnedValue == "1") {
+                if (usersWithoutMobile.length > 0) {
+                    var mobileMsg = 'For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists.';
+                    $('#lblPostNoticeMsg').append(mobileMsg);
+                }
+            }
+
+            if (S_EmailreturnedValue == "1") {
+                if (usersWithoutEmail.length > 0) {
+                    var emailMsg = 'Email successfully submitted To User(s).For Student(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
+                    $('#lblPostNoticeMsg').append(emailMsg);
+                }
+            }
+
+            if (P_EmailreturnedValue == "1") {
+                if (usersWithoutEmail.length > 0) {
+                    var emailMsg = '.Email successfully submitted to Parent(s).For Parent(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
+                    $('#lblPostNoticeMsg').append(emailMsg);
+                }
+            }
+
+            //var list1 = response.printmessages;
+            // var list2 = response.message1;
         }
     });
-
-    alert(ForAll);   
-
-    alert("SMS Value:- " + S_SmsreturnedValue + "P_Sms Value:- " + P_SmsreturnedValue + "S_Email:- " + S_EmailreturnedValue + "P_EmailreturnedValue:-" + P_EmailreturnedValue);
-});                                                     
+});
 
 function Selectalluserschkvalues() {
     var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');

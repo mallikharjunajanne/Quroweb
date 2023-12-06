@@ -6,9 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 
@@ -281,6 +283,27 @@ namespace Connect4m_Web.Controllers
 
             return View();         
         }
+        [HttpPost]
+        public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
+        {
+            obj.DMLTYPE = "GETRECORDS";
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
+
+            SmsSendingResult items = new SmsSendingResult();
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<SmsSendingResult>(data2);
+            }
+            return new JsonResult(items);
+            //return View();
+        }
+
+
+
 
 
 
@@ -469,7 +492,70 @@ namespace Connect4m_Web.Controllers
         {
             var noticeTypeData = GetNoticetypdedd(InstanceId);
             ViewBag.Noticetypedd = noticeTypeData;
+            ViewBag.Instanceid = InstanceId;
             return View();
+        }
+        [HttpPost]
+        public IActionResult CreateSmsNNotice(NoticeTypes obj)
+        {
+            try
+            {
+                var Documentattachement = obj.AttachedDocument;
+                Random random = new Random();
+                int randomNumber = random.Next(1000, 999999);
+                var instanceId = obj.InstanceId;
+
+                if (Documentattachement != null)
+                {
+                    obj.NoticeDocument = Documentattachement.FileName;
+
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + instanceId);
+
+                    if (!Directory.Exists(instanceFolderPath))
+                    {
+                        Directory.CreateDirectory(instanceFolderPath);
+                    }
+
+                    string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                    var filenamedoc = randomNumber + output;
+                    var fileNamedoc = Path.GetFileName(filenamedoc);
+                    var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                    string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + instanceId, fileNamedoc);
+
+                    using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                    {
+                        Documentattachement.CopyTo(fileSrteam);
+                    }
+                }
+
+                //string jsonData = JsonConvert.SerializeObject(obj);
+                //StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Videosuploading_", content).Result;
+
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    string responseapi = response.Content.ReadAsStringAsync().Result;
+                //    int i = JsonConvert.DeserializeObject<int>(responseapi);
+                //    return Json(i);
+                //}
+                return View();
+            }
+            catch (Exception)
+            {
+                // Handle the exception here, you may log it or return an error message
+                // For example:
+                // Log the exception: logger.LogError(ex, "An error occurred while processing the request.");
+                // Return an error message
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
         }
 
         //------Create Notice and SMS  Button click view to start action methods

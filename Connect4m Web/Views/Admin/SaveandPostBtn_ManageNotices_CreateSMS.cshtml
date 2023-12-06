@@ -11,6 +11,11 @@
 </style>
 
 <div class="row">
+    <div class="col-12">
+        <span id="lblPostNoticeMsg" style="color: Red; font-size: 11px; font-weight: bold; font-style: normal;"></span>
+    </div>
+</div>
+<div class="row">
     <div class="row">
         <div class="col-3">
             <div class="default-according style-1" id="accordionoc1">
@@ -37,7 +42,7 @@
                                     <div class="col-1"></div>
                                     <div class="col-4"> <label class="form-label space">Remaining Credits  </label></div>
                                     <div class="col-4"></div>
-                                    <div class="col-3"></div>                                  
+                                    <div class="col-3"></div>
                                 </div>
                             </div>
                         </div>
@@ -76,8 +81,8 @@
                                     <div class="form-group col-2" id="Daily_div2"> <label class="form-label space">Date</label></div>
                                     <div class="form-group col-4" id="Daily_div3">
                                         <input type="date" id="datetxtid" class="form-control" style="width: 100%;" />
-                                    <input type="hidden" value="@ViewBag.StartDate" id="Startdatetxtid"/>
-                                    <input type="hidden" value="@ViewBag.EndDate" id="Enddatetxtid"/>
+                                        <input type="hidden" value="@ViewBag.StartDate" id="Startdatetxtid" />
+                                        <input type="hidden" value="@ViewBag.EndDate" id="Enddatetxtid" />
                                     </div>
                                     <div class="col-3" id="Daily_div4"></div>
                                     <div class="col-3"></div>
@@ -176,17 +181,17 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="form-group col-2"><input type="button" value="Clear" id="SchedulerClearbtn" /></div>
-                                    <div class="form-group col-4"><input type="button" value="Save" id="SchedulerSubmitbtn"/></div>
+                                    <div class="form-group col-4"><input type="button" value="Save" id="SchedulerSubmitbtn" /></div>
                                     <div class="col-3"></div>
                                     <div class="col-12" style="color: red; font-size: 12px; text-align: center;">
-                                        <span> Note1:-</span> 
+                                        <span> Note1:-</span>
                                         <span>
                                             if you select Type as "Daily" the Date Field have no effect as the<br /> SMS
                                             will be sent to the users from the Notice Start Date to End Date
                                         </span><br />
                                         <span> Note2:-</span>
                                         <span>
-                                            To send scheduled message to parents Please select<br /> Send SMS to 
+                                            To send scheduled message to parents Please select<br /> Send SMS to
                                             option given below
                                         </span>
                                     </div>
@@ -217,6 +222,7 @@
                         </div>
                         <div class="col-10 rowcol">
                             <label class="form-check-label">@ViewBag.Subject</label>
+                            <input type="hidden" id="ENoticetxtid" value="@ViewBag.List.ENoticeId" />
                         </div>
                         <div class="col-2 rowcol"></div>
                         <div class="col-10 rowcol">
@@ -225,15 +231,15 @@
                                 <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS</label>
                             </div>
                             <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk2"/>
+                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk2" />
                                 <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS to Parents</label>
                             </div>
                             <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk3"/>
+                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk3" />
                                 <label class="form-check-label" style="font: 12px arial; color: blue;">Send EMail</label>
                             </div>
                             <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk4"/>
+                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk4" />
                                 <label class="form-check-label" style="font: 12px arial; color: blue;">Send EMail to Parents</label>
                             </div>
                         </div>
@@ -256,7 +262,7 @@
                                 var Grpsno = 0;
                                 var Cls = 0;
                                 var Scl = 0;
-                             }
+                            }
                             @foreach (var item in ViewBag.List.IRoleList)
                             {
                                 <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
@@ -304,7 +310,7 @@
                             @foreach (var item in ViewBag.List.ClassificationList)
                             {
                                 <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                    <input id="Clslstchk_@Cls"class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
+                                    <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
                                     <label style=" font: 11px arial; color: #333333; ">@item.ClassificationName</label>
                                 </div>
                                 @if (item.InstanceClassificationId == 3)
@@ -454,11 +460,11 @@
                         </div>
 
                     </div>
-                </div>                                
+                </div>
             </div>
             <div style="text-align:center;">
-                <input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success"/>
-                <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success"/>
+                <input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success" />
+                <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success" />
             </div>
         </div>
     </div>
