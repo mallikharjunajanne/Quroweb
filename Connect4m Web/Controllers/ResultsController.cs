@@ -8,11 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-//using Connect4m_Web.Models;
-using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
-using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Connect4m_Web.Controllers
 {
@@ -106,11 +104,11 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-        public IActionResult PublishResults_Step3(ResultsModel val, string MarksUploadtype)
+        public IActionResult PublishResults_Step3(ResultsModel val, string MarksUploadtype,string Nextstep)
         {
             try
             {
-                if (MarksUploadtype == "UploadWithOutExcelFile")
+                if (MarksUploadtype == "UploadWithOutExcelFile" || Nextstep == "Step3")
                 {
                     string[] SubjectNames = val.SubjectsName.Split(',');
                     ViewBag.SubjectNamesList = SubjectNames;
@@ -126,6 +124,8 @@ namespace Connect4m_Web.Controllers
                 }
                 else
                 {
+                    ViewBag.UsersDetailsList =new List<UsermarksModel>();
+
                     ViewBag.MarksUploadtype = MarksUploadtype;
                     return View();
                 }

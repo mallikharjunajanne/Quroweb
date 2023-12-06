@@ -3,7 +3,9 @@
     ViewData["Title"] = "PublishResults_Step3";
     Layout = null;
 }
-
+@{ string IsDisabled = "";
+    int UsersCount = (ViewBag.UsersDetailsList as IEnumerable<object>).Count();
+}
 <!--Send sms check boxes-->
 <div>
     <span class="checkboxclass"><input id="chkSMSStudent" type="checkbox" name="chkSMSStudent" onclick="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder1$chkSMSStudent\',\'\')', 0)"><label for="chkSMSStudent">SMS to Student</label></span>
@@ -25,8 +27,11 @@
 
 @if (ViewBag.MarksUploadtype == "UploadWithExcelFile")
 {
+    IsDisabled = "disabled";
     <!--card 2-->
+
     <div style=" padding-top: 0px;" id="Div_Fileupload">
+
         <div class="card">
             <div class="card-header " style="background-color:black ;">
                 <h5 class="mb-0">
@@ -43,8 +48,12 @@
                         <form id="FmFileUpload">
                             <div style="margin-left:20%;font-size:12px" id="UpdateSubjects_Div">
                                 <div class="row">
-                                    <div><a id="_lnkGetExcel">Get Excel To Upload</a></div>
-
+                                    <div>
+                                        @if (UsersCount > 0)
+                                        {
+                                            <a id="_lnkGetExcel">Get Excel To Upload</a>
+                                        }
+                                    </div>
 
                                     <div class="form-group col-2">
                                         <label class="control-label space">Upload File </label>
@@ -197,23 +206,37 @@
             </div>
         </div>
     </div>
+
 }
 else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
 {
 
 
     <!--card 4-->
-    <a>Export To Excel</a>
+    @if (UsersCount > 0)
+    {
+<a id="_lnkExporttoexcel">Export To Excel</a>
+    }
+    else
+    {
+        IsDisabled = "disabled";
+    }
     <div class="card" id="DivUsersSearchedTbl">
         <div class="card-header " style="background-color:black ;">
             <h5 class="mb-0">
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"> <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">@((ViewBag.UsersDetailsList as IEnumerable<object>).Count())</span> RECORD(S).</span></button>
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1"
+                        aria-expanded="true" aria-controls="collapse11">
+                    <span id="CountOfRecords_LeaveLevels">
+                        YOUR SEARCH RESULTED <span id="Counts"
+                                                   class="number-circle">@((ViewBag.UsersDetailsList as IEnumerable<object>).Count())</span> RECORD(S).
+                    </span>
+                </button>
             </h5>
         </div>
         <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
             <div class="card ">
                 <form id="Fm_TblUsersSearched" class="table-responsive">
-                    @{int sno = 0; int Subjectcount = 0; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00;var Color="";}
+                    @{int sno = 0; int Subjectcount = 0; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var Color = "";}
                     <table id="TblUsersSearched" class="display cell-border  tableid">
                         <thead>
                             <tr>
@@ -253,11 +276,13 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                         }
                                         else
                                         {
-                                            <td><input type="text" onclick="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
-                                   @if (item.DisplayIcon[OptionalSubjectcount] == "1")
-                                   {
-                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9855684, 'NoofLeaves')">
-                                   }</td>
+                                            <td>
+                                                <input type="text" onclick="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
+                                                @if (item.DisplayIcon[OptionalSubjectcount] == "1")
+                                                {
+                                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9855684, 'NoofLeaves')">
+                                                }
+                                            </td>
                                         }
                                         OptionalSubjectcount++;
                                     }
@@ -278,8 +303,8 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
 <div style=" display: flex; gap: 7px;">
     <input type="button" style=" margin-left: 14%;" value="Go Back to Step 1" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-warning btn-air-warning" />
     <input type="button" value="Go Back to Step 2" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" class="btn btn-pill btn-outline-warning btn-air-warning" />
-    <input type="button" value="Save As Draft" id="BtnSaveAsDraft" onclick="BackTOSearhExams(event)" class="btn btn-pill btn-outline-info btn-air-warning" />
-    <input type="submit" value="Publish" onclick="Div_Step32(event)" id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
+    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft" onclick="BackTOSearhExams(event)" class="btn btn-pill btn-outline-info btn-air-warning" />
+    <input type="submit" value="Publish" @IsDisabled onclick="Div_Step32(event)" id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
 </div>
 
 

@@ -361,7 +361,7 @@
     });
 
 
-    //---go to step 3
+    //---go to step 3 //this is not using
     function Div_Step3(event) {
         try {
             debugger;
@@ -465,11 +465,25 @@
         try {
             event.preventDefault();
             //event.stopImmediatePropagation();
+
+            $("#loadingOverlay").show();
             var ButtonName = $(this).val();
             debugger;
             $(".ErrorMessageSpan").empty();
             var formData = new FormData($("#FmSubjectsSearch")[0]);
-            $("#loadingOverlay").show();
+
+            var selectedValues = $("#DdlSubjects option:selected").map(function () {
+                return $(this).text();
+            }).get();
+            if (selectedValues) {
+                var selectedValuesString = selectedValues.join(", ");
+            }
+
+            formData.append("SubjectsName", selectedValuesString)
+
+
+
+
             // var Subjectname = $("#Subjectname").val();
             var shouldExit = false;
             var TblExamSubject = $("#TblExamSubjects tbody tr");
@@ -478,6 +492,8 @@
             TblExamSubject.each(function (index) {
                 TblExamSubjectTD = $(this).find("td");
                 //var ExamId = TblExamSubjectTD.find("#ExamSubjectId").val();
+
+                var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
                 var HdnActualDateConducted = TblExamSubjectTD.find("#ActualDateConducted").val();
                 var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
                 var SubjectName = TblExamSubjectTD.eq(1).text();
@@ -525,6 +541,8 @@
                 formData.append("PassMarksList", parseFloat(TxtPassMarks));
                 formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
                 formData.append("DateConductedList", TxtDate);
+
+                formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
             });
             if (shouldExit) {
                 //  $("#Main_Span_Error").text("Subjects overlapping.");
@@ -537,19 +555,19 @@
                 var SubjectText = "";
                 if (response.message == "Record inserted successfully.") {
 
-                    var data = { MarksUploadtype: "UploadWithExcelFile" };
+                   // var data = { MarksUploadtype: "UploadWithExcelFile",Nextstep:"Step3" };
+                    var MarksUploadtype = "UploadWithExcelFile";
                     $("#loadingOverlay").show();
-                    performCrudOperationCommonFunction("GET", "/Results/PublishResults_Step3", data, function (response) {
-
+                    performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype + "&Nextstep=Step3", formData, function (response) {
                         $("#Div_UploadingType").html(response);
-
                         $("#Div_Step2").hide();
                         $("#Div_Step3").show();
                         $("#loadingOverlay").hide();
                     }, function (error) {
                         $("#loadingOverlay").hide();
                         $("#Main_Span_Error").text("Something Error");
-                    });
+                    }, true);
+
                 }
                 if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
                     SubjectText = $("#DdlSubject option:selected").text();
@@ -570,7 +588,7 @@
 
 
 
-    //=---------------------This is For save as draft
+    //=---------------------This is For save as draft and Publish Marks
     js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {
         try {
             event.preventDefault();
@@ -645,12 +663,10 @@
                 });
             });
             if (shouldExit) {
-                //  $("#Main_Span_Error").text("Subjects overlapping.");
                 window.scrollTo(0, 0);
                 $("#loadingOverlay").hide();
                 return;
             }
-
             performCrudOperationCommonFunction('POST', "/Results/PublishResults?ButtonName=" + ButtonName, formData, function (response) {
                 debugger;
                 var SubjectText = "";
