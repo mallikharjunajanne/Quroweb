@@ -59,7 +59,7 @@ namespace Connect4m_Web.Controllers
             UserId = _userService.LoginUserId;
             InstanceClassificationId = _userService.InstanceClassificationId;
             Roleid = _userService.Roleid;
-            StudentUserId = _userService.StudentUserid;
+            StudentUserId = _userService.LoginUserId;// Changed
 
 
         }
@@ -79,6 +79,7 @@ namespace Connect4m_Web.Controllers
         {
             //  InstanceId = 545;
             ViewBag.InitiallyVisible = true;
+
 
             return View();
         }
