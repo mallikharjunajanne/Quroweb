@@ -1,4 +1,5 @@
-﻿
+﻿ErrorMessageSpan
+
 .col-2 {
     text-align: right;
 }
@@ -395,7 +396,7 @@ h6 {
     cursor: pointer
 }
 
-.compare {
+.compare, .ErrorMessageSpan {
     color: red;
     font-size: small;
 }

@@ -10,8 +10,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
-using Connect4m_Web.Models.LMSproperties;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Connect4m_Web.Controllers
 {
@@ -120,6 +120,7 @@ namespace Connect4m_Web.Controllers
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
                     ViewBag.MarksUploadtype = MarksUploadtype;
+                    ViewBag.colours = list?.FirstOrDefault()?.UsermarksList[0].IsPublished;
                     ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
                     return View();
                 }
@@ -163,11 +164,17 @@ namespace Connect4m_Web.Controllers
 <REQUESTCREDIT USERNAME=""ADS"" PASSWORD=""Prasad2$$9""></REQUESTCREDIT>";
                 obj.SMSFromText = "ADSTEK";
                 obj.Action = "credits";//send   i gave default
-
+             
                 returnvalue = CommonMethodobj.CommonSaveMethod(obj, "/PostResults", client);
+
+                //var jsonResponse = JsonConvert.DeserializeObject<dynamic>(returnvalue);
+
+                //// Extract specific fields
+                //string errorMSG = jsonResponse.ErrorMSG;
+                //string id = jsonResponse.id;
                 if (returnvalue != "0")
                 {
-                    return Json(new { success = true, message = returnvalue });
+                    return Json(new { success = true, message = returnvalue});
                 }
                 else
                 {
@@ -180,8 +187,6 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
-
-
 
 
         [HttpPost]
@@ -198,6 +203,14 @@ namespace Connect4m_Web.Controllers
                     obj.ExamModeId = 1;
                 else
                     obj.ExamModeId = 0;
+
+
+                obj.SMSTextInXML = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
+<!DOCTYPE REQUESTCREDIT SYSTEM ""http://127.0.0.1/psms/dtd/requestcredit.dtd"">
+<REQUESTCREDIT USERNAME=""ADS"" PASSWORD=""Prasad2$$9""></REQUESTCREDIT>";
+                obj.SMSFromText = "ADSTEK";
+                obj.Action = "credits";//send   i gave default
+
                 returnvalue = CommonMethodobj.CommonSaveMethod(obj, "/PublishResults", client);
                 if (returnvalue != "0")
                 {

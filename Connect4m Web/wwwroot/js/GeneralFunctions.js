@@ -1221,16 +1221,15 @@ function restrictCharacters(element) {
 }
 
 function restrictCharacters_AllowDots(element) {
-    debugger; //element.value = element.value.replace(/[^0-9.]/g, '');
-    element.value = element.value.replace(/[^0-9]|(?<=\..*)\./g, '');
+    debugger; element.value = element.value.replace(/(\..*)\./g, '$1');
 }
 
 function restrictCharacters_AllowDotsAndHyphen(element) {
     debugger;
-    //element.value = element.value.replace(/[^0-9.-]/g, '');
-
     element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
 }
+
+
 
 function CommonClearFunction(Formid) {
     document.getElementById(Formid).reset(); // Reset the form   

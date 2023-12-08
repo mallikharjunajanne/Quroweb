@@ -56,10 +56,12 @@ namespace Connect4m_Web.Views
             if (response.IsSuccessStatusCode)
             {
                 return returnval = response.Content.ReadAsStringAsync().Result;
+               
             }
             //This is to find error
-            //var errorContent = response.Content.ReadAsStringAsync().Result;
+            var errorContent = response.Content.ReadAsStringAsync().Result;
             return "0";
         }
+
     }
 }

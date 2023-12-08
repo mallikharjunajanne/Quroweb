@@ -24,6 +24,15 @@ namespace Connect4m_Web.Models
     }
     public class ResultsModel : CommonClass
     {//New
+
+        public string SMStoStudent { get; set; }
+        public string SMStoParent { get; set; }
+        public string EMAILtoStudents { get; set; }
+        public string EMAILtoParents { get; set; }
+        public string IncludeClass { get; set; }
+
+
+
         public List<int> UseridList { get; set; }
         public List<string> SecureMarksList { get; set; }
         public List<string> GradeList { get; set; }
