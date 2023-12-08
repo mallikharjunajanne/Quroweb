@@ -114,14 +114,30 @@ function ShowUserChangeActivityAmount(SourceId, AuditKey, TableName) {
     return false;
 }
 
-function AllowFloat(event) {
+//function AllowFloat(event) {
   
+//    var keyCode = event.which || event.keyCode;
+
+
+//    if ((keyCode >= 48 && keyCode <= 57) || keyCode === 46 || keyCode === 8) {
+//        return true; // Allow the key
+//    } else {
+//        return false; // Prevent the key from being entered
+//    }
+//}
+function AllowFloat(event) {
     var keyCode = event.which || event.keyCode;
 
-
+    // Allow digits (0-9), decimal point (.), and backspace (8)
     if ((keyCode >= 48 && keyCode <= 57) || keyCode === 46 || keyCode === 8) {
+        // Check if the input already contains a decimal point
+        var currentValue = event.target.value;
+        if (keyCode === 46 && currentValue.includes('.')) {
+            return false; // Prevent entering more than one decimal point
+        }
         return true; // Allow the key
     } else {
         return false; // Prevent the key from being entered
     }
 }
+

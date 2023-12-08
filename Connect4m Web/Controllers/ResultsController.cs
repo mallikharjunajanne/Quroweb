@@ -327,11 +327,15 @@ namespace Connect4m_Web.Controllers
                 headerStyle.Font.Bold = true;
                 //  headerStyle.Font.Color.SetColor(Color.Red);
 
+                //  Worksheet protection(diasble the unuseable cells)
                 worksheet.Protection.IsProtected = true;
                 worksheet.Protection.AllowSelectLockedCells = false;
 
+                //  Set the columns count what we needed
+                int needcolumnscount = periodicTable.Columns.Count - subjectNames.Length;
+
                 // Set column headers
-                for (int columnIndex = 0; columnIndex < periodicTable.Columns.Count; columnIndex++)
+                for (int columnIndex = 0; columnIndex < needcolumnscount; columnIndex++)
                 {
                     worksheet.Cells[1, columnIndex + 1].Value = periodicTable.Columns[columnIndex].ColumnName;
                     worksheet.Cells[1, columnIndex + 1].Style.Border.Top.Style = ExcelBorderStyle.Thin;
@@ -340,18 +344,18 @@ namespace Connect4m_Web.Controllers
                     worksheet.Cells[1, columnIndex + 1].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 }
 
-                //for (int rowInde = 1; rowInde <= worksheet.Dimension.End.Row; rowInde++)
-                for (int rowInde = 2; rowInde <= periodicTable.Rows.Count; rowInde++)
-                {
-                    // Lock the first cell in each row
-                    worksheet.Cells[rowInde, 1].Style.Locked = true;
+                ////for (int rowInde = 1; rowInde <= worksheet.Dimension.End.Row; rowInde++)
+                //for (int rowInde = 2; rowInde <= periodicTable.Rows.Count; rowInde++)
+                //{
+                //    // Lock the first cell in each row
+                //    worksheet.Cells[rowInde, 1].Style.Locked = true;
 
-                    // Unlock the rest of the cells in the row
-                    for (int columnIndex = 2; columnIndex <= periodicTable.Columns.Count; columnIndex++)
-                    {
-                        worksheet.Cells[rowInde, columnIndex].Style.Locked = false;
-                    }
-                }
+                //    // Unlock the rest of the cells in the row
+                //    for (int columnIndex = 2; columnIndex <= periodicTable.Columns.Count; columnIndex++)
+                //    {
+                //        worksheet.Cells[rowInde, columnIndex].Style.Locked = false;
+                //    }
+                //}
 
 
 
@@ -363,9 +367,9 @@ namespace Connect4m_Web.Controllers
                 {
                     if (row.ItemArray.Any(cellValue => cellValue != DBNull.Value && !string.IsNullOrEmpty(cellValue.ToString())))
                     {
-
+                        int CounmnIndexdisable = needcolumnscount;
                        // worksheet.Cells[rowIndex, 1].Style.Locked = true;
-                        for (int columnIndex = 0; columnIndex < periodicTable.Columns.Count; columnIndex++)
+                        for (int columnIndex = 0; columnIndex < needcolumnscount; columnIndex++)
                         {
                             var cellValue = row[columnIndex];
 
@@ -373,18 +377,36 @@ namespace Connect4m_Web.Controllers
                             {
                                 // If the value is numeric, set the data type to number and apply a custom number format
                                 worksheet.Cells[rowIndex, columnIndex + 1].Value = numericValue;
-                                worksheet.Cells[rowIndex, columnIndex + 1].Style.Numberformat.Format = "0"; // Customize the number format as needed
+                                //worksheet.Cells[rowIndex, columnIndex + 1].Style.Numberformat.Format = "0"; // Customize the number format as needed
                             }
                           else  if (cellValue != DBNull.Value && double.TryParse(cellValue.ToString(), out double numericValue1))
                             {
                                 // If the value is numeric, set the data type to number and apply a custom number format
                                 worksheet.Cells[rowIndex, columnIndex + 1].Value = numericValue1;
-                                worksheet.Cells[rowIndex, columnIndex + 1].Style.Numberformat.Format = "#,##0.00"; // Customize the number format as needed
+                               // worksheet.Cells[rowIndex, columnIndex + 1].Style.Numberformat.Format = "#,##0.00"; // Customize the number format as needed
                             }
                             else
                             {
                                 // If the value is not numeric, set the value as string
                                 worksheet.Cells[rowIndex, columnIndex + 1].Value = cellValue.ToString();
+                            }
+                            if (columnIndex > 2)
+                            {
+                                var newcellval = row[CounmnIndexdisable].ToString().Trim();
+                                if (newcellval == "0")
+                                {
+                                    worksheet.Cells[rowIndex, columnIndex + 1].Value = "O";
+                                    worksheet.Cells[rowIndex, columnIndex+1].Style.Locked = true;
+                                    worksheet.Cells[rowIndex, columnIndex + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                                    worksheet.Cells[rowIndex, columnIndex + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                                   // worksheet.Cells[rowIndex, columnIndex + 1].Style.Fill.BackgroundColor.SetColor(Color(255, 200, 200));
+
+                                }
+                                else
+                                {
+                                    worksheet.Cells[rowIndex, columnIndex + 1].Style.Locked = false;
+                                }
+                                CounmnIndexdisable++;
                             }
 
                             // Apply regular border style for cells with data
@@ -456,7 +478,7 @@ namespace Connect4m_Web.Controllers
                 int rowIndex1 =1;
                 for (int row = periodicTable.Rows.Count; row < periodicTable.Rows.Count + 200; row++)
                 {
-                    int colslen = periodicTable.Columns.Count;
+                    int colslen = periodicTable.Columns.Count- subjectNames.Length;
                     if (rowIndex1 >= rowIndex)
                     {
                         //insideval = rowIndex1;
@@ -673,6 +695,10 @@ namespace Connect4m_Web.Controllers
                 {
                     periodicTable.Columns.Add(subjectNames[m], typeof(string));
                 }
+                for(int m=0;m<subjectNames.Length;m++)
+                {
+                    periodicTable.Columns.Add(subjectNames[m]+"Test", typeof(string));
+                }
 
 
                // DataRow dr;
@@ -680,7 +706,7 @@ namespace Connect4m_Web.Controllers
                 int subjectlength = subjectNames.Length;
                 foreach (var item in value)
                 {
-                    i = 0;
+                    i = 3;
                     DataRow dr = periodicTable.NewRow();
 
                    // dr = periodicTable.Rows.Add();
@@ -688,17 +714,14 @@ namespace Connect4m_Web.Controllers
                     dr[0] = item.UserId;
                     dr[1] = item.Name;
                     dr[2] = item.InstanceUserCode;
-                    for(int k = i; k < subjectlength; k++)
+                    for(int k = 0; k < subjectlength; k++)
                     {
-                        //if (item.Columns[k] != "")
-                        //{
-                        //    dr[k + 3] =Convert.ToInt32( item.Columns[k]);
-                        //}
-                        //else
-                        //{
                             dr[k + 3] = item.Columns[k];
-                       // }
-                       
+                        i++;
+                    }
+                    for(int k = 0; k < subjectlength; k++)
+                    {
+                            dr[k + i] = item.OptionalSubject[k];
                     }
                     periodicTable.Rows.Add(dr);
 
