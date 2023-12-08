@@ -53,4 +53,13 @@ $(document).on('click', '#FmFileUpload #_Getexceltoupload', function (event) {
     window.location.href = "/Results/ExcelDownload?" + formDataString;
 
 });
+//window.onload = function () {
+//   // alert("hii");
+//    document.getElementById("loading").style.display = "none";
+//};
 
+//// Hide loading image when the DOM is ready
+//document.addEventListener("DOMContentLoaded", function () {
+//  //  alert("Bye");
+//    document.getElementById("loading").style.display = "block";
+//});
