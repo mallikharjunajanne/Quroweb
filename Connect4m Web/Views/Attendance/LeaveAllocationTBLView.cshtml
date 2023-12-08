@@ -74,7 +74,8 @@
                                                             val = val.Substring(0, 1);
                                                         }
                                                     }
-                                                    <input type="text" class="all-textboxes@(D)" @*name="val[@i].LeavetypeDaysDynamicDictionary[@item1.Key]"*@ id="TxtNumberofdaysId@(i)@(j)" maxlength="5" title="@item1.Key" oninput="restrictCharacters(this)" value="@val" />
+                                                    <!--<input type="text" class="all-textboxes@(D)"--> @*name="val[@i].LeavetypeDaysDynamicDictionary[@item1.Key]"*@ <!--id="TxtNumberofdaysId@(i)@(j)" maxlength="5" title="@item1.Key" oninput="restrictCharacters(this)" value="@val" />-->
+                                                    <input type="text" class="all-textboxes@(D)" @*name="val[@i].LeavetypeDaysDynamicDictionary[@item1.Key]"*@ id="TxtNumberofdaysId@(i)@(j)" maxlength="5" title="@item1.Key" oninput="restrictCharacters_AllowDots(this)" value="@val" />
                                                     @if (LastValue > 0)
                                                     {
                                                         <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', @SourceId, 'NoofLeaves')">

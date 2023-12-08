@@ -250,40 +250,13 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                 <th>Name</th>
                                 <th>Registration No.</th>
 
-                                @*@{ List<string> color1 = new List<string>();}
-        @foreach (var item in ViewBag.UsersDetailsList)
-        {
-            sno++; OptionalSubjectcount = 0;
-
-            @foreach (var columnValue in item.Columns)
-            {
-                @if (item.IsPublished[OptionalSubjectcount] == "1")
-                {
-                    color1.Add(item.IsPublished[OptionalSubjectcount]);
-                }
-                OptionalSubjectcount++;
-            }
-        }*@
                                 @foreach (var item1 in ViewBag.SubjectNamesList)
                                 {
                                     Subjectcount++;
                                     ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
                                     MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
                                     PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
-                                    @*@foreach (var item in ViewBag.UsersDetailsList)
-            {
-                    @if (item.IsPublished[OptionalSubjectcount] == "1")
-                    {
-                        color= "green";
-                        break;
-                    }
-                    else if (item.IsPublished[OptionalSubjectcount] == "0")
-                    {
-                        color = "blue";
-                        break;
-                    }
-            }*@
-
+                                  
                                     @for (int i = 0; i < ViewBag.UsersDetailsList.Count; i++)
                                     {
                                         var item = ViewBag.UsersDetailsList[i];
@@ -323,7 +296,6 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                     <td>@sno</td>
                                     <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
                                     <td>@item.InstanceUserCode</td>
-                                     ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
                                     @foreach (var columnValue in item.Columns)
                                     {
                                         Subjectcount++;

@@ -1216,17 +1216,15 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
 //-------------------------------this is for restrict the Characters
 //oninput="restrictCharacters(this)";
 function restrictCharacters(element) {
-    debugger;
-    element.value = element.value.replace(/[^0-9]/g, '');
+    debugger;element.value = element.value.replace(/[^0-9]/g, '');
 }
 
 function restrictCharacters_AllowDots(element) {
-    debugger; element.value = element.value.replace(/(\..*)\./g, '$1');
+    debugger;element.value = element.value.replace(/[^\d.]|(\..*)\./g, '$1');
 }
 
 function restrictCharacters_AllowDotsAndHyphen(element) {
-    debugger;
-    element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
+    debugger;element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
 }
 
 
