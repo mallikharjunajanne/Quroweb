@@ -262,6 +262,21 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
+
+
+
+
+
+
+
+
+
+
+
+
+                return Json(new { success = false, message = "Something Error" });
+
+
                 InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
@@ -295,6 +310,8 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+
+
 
 
         #region Population Management File Export start
