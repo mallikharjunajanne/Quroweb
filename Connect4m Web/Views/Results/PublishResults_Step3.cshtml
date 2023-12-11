@@ -8,9 +8,9 @@
 }
 <!--Send sms check boxes-->
 <div>
-    <span class="checkboxclass"><input id="chkSMSStudent"onclick="ShowIncludeClass(this)" type="checkbox"><label  for="chkSMSStudent">SMS to Student</label></span>
+    <span class="checkboxclass"><input id="chkSMSStudent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSStudent">SMS to Student</label></span>
     &nbsp;
-    <span class="checkboxclass"><input id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label  for="chkSMSParent">SMS to Parent</label></span>
+    <span class="checkboxclass"><input id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSParent">SMS to Parent</label></span>
     &nbsp;
     <span class="checkboxclass"><input id="chkEMAILSTUDENTS" type="checkbox" /><label for="chkEMAILSTUDENTS">EMAIL to Students</label></span>
     &nbsp;
@@ -21,15 +21,17 @@
     <span id="lblUsed" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
     &nbsp; Remaining Credits :
     <span id="lblRem" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
-  
-        <span class="checkboxclass" id="SpnSendRating" style="display:none"><input id="chksendRating" type="checkbox" ><label id="lblSendRating">Include Class</label></span>
-       
+
+    <span class="checkboxclass" id="SpnSendRating" style="display:none"><input id="chksendRating" type="checkbox"><label id="lblSendRating">Include Class</label></span>
+
 </div>
 <!--note-->
 <div><span id="lblStatus" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</span></div>
+@{int sno = 0; int Subjectcount = 0; var subjectNamesForAlertMsg = ""; var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = "";}
 
 <span class="ErrorMessageSpan" id="StudentSMS_Error"></span>
-<span class="ErrorMessageSpan" id="ParentSMS_Error"></span><br />
+<span class="ErrorMessageSpan" id="ParentSMS_Error"></span>
+<br />
 @if (ViewBag.MarksUploadtype == "UploadWithExcelFile")
 {
     IsDisabled = "disabled";
@@ -51,18 +53,40 @@
                 <div class="card ">
                     <div class="card-body">
                         <form id="FmFileUpload">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                             <div style="margin-left:20%;font-size:12px" id="UpdateSubjects_Div">
                                 <div class="row">
                                     <div>
                                         @if (UsersCount > 0 || ViewBag.MarksUploadtype == "UploadWithExcelFile")
                                         {
-                                                                                  <a id="_Getexceltoupload" class="btn btn-pill btn-outline-info btn-air-info">Get Excel To Upload</a> 
+                                            <a id="_Getexceltoupload" class="btn btn-pill btn-outline-info btn-air-info">Get Excel To Upload</a>
+                                        }
+                                        @if (UsersCount > 0)
+                                        {
+                                            @foreach (var item1 in ViewBag.SubjectNamesList)
+                                            {
+                                                @for (int i = 0; i < ViewBag.UsersDetailsList.Count; i++)
+                                                {
+                                                    var item = ViewBag.UsersDetailsList[i];
 
+                                                    if (item.IsPublished[OptionalSubjectcount] == "1")
+                                                    {
+                                                        subjectNamesForAlertMsg += item1 + " ,";
+                                                        break;
+                                                    }
+                                                    else if (item.IsPublished[OptionalSubjectcount] == "0")
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                OptionalSubjectcount++;
+                                            }
                                         }
                                     </div>
 
                                     <div class="form-group col-2">
-                                        <label class="control-label space">Upload File </label>
+                                        <label class="control-label space required">Upload File </label>
                                     </div>
                                     <div class="form-group col-4">
                                         <div id="Drop_Format_SEM_2">
@@ -74,11 +98,11 @@
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="form-group col-2">
-                                        <label class="control-label space">Sheet Name</label>
+                                        <label class="control-label space required">Sheet Name</label>
                                     </div>
                                     <div class="form-group col-4">
-                                        <input type="text" id="txtSheetName" asp-for="Name" />
-                                        <span asp-validation-for="Name" class="ErrorMessageSpan"></span>
+                                        <input type="text" id="txtSheetName" asp-for="SheetName" />
+                                        <span asp-validation-for="SheetName" class="ErrorMessageSpan"></span>
                                     </div>
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
@@ -221,7 +245,8 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
     <!--card 4-->
     @if (UsersCount > 0)
     {
-        <a id="_lnkExporttoexcel">Export To Excel</a>
+        <a id="_lnkExporttoexcel" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</a>
+
     }
     else
     {
@@ -242,7 +267,6 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
         <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
             <div class="card ">
                 <form id="Fm_TblUsersSearched" class="table-responsive">
-                    @{int sno = 0; int Subjectcount = 0;var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = "";}
                     <table id="TblUsersSearched" class="tableid">
                         <thead>
                             <tr>
@@ -256,7 +280,7 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                     ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
                                     MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
                                     PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
-                                  
+
                                     @for (int i = 0; i < ViewBag.UsersDetailsList.Count; i++)
                                     {
                                         var item = ViewBag.UsersDetailsList[i];
@@ -264,6 +288,8 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                         if (item.IsPublished[OptionalSubjectcount] == "1")
                                         {
                                             color = "green";
+
+                                            subjectNamesForAlertMsg += item1 + " ,";
                                             break;
                                         }
                                         else if (item.IsPublished[OptionalSubjectcount] == "0")
@@ -310,7 +336,7 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                                 <input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
                                                 @if (item.DisplayIcon[OptionalSubjectcount] == "1")
                                                 {
-                                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9855684, 'NoofLeaves')">
+                                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblSubjectMarks', @item.SubjectMarks[OptionalSubjectcount], 'SecuredMarks')">
                                                 }
                                             </td>
                                         }
@@ -324,17 +350,89 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                             }
                         </tbody>
                     </table>
-
                 </form>
             </div>
         </div>
     </div>
 }
+<input type="hidden" id="HdnSubjectNamesForAlertMsg" value="@subjectNamesForAlertMsg" readonly disabled/>
+
 <div style=" display: flex; gap: 7px;">
     <input type="button" style=" margin-left: 14%;" value="Go Back to Step 1" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-primary btn-air-primary" />
     <input type="button" value="Go Back to Step 2" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" class="btn btn-pill btn-outline-warning btn-air-warning" />
-    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft"  class="btn btn-pill btn-outline-info btn-air-warning" />
-    <input type="submit" value="Publish" @IsDisabled  id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
+    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft" class="btn btn-pill btn-outline-info btn-air-warning" />
+    <input type="submit" value="Publish" @IsDisabled id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+<script>
+    //-----validate excel file
+    //js(document).on("click", "#BtnExcelValidate", function (event) {
+    $("#FmFileUpload").submit(function (event) {
+        try {
+            debugger;
+            event.preventDefault();
+            alert("1");
+            //var ButtonName = $(this).val();
+            var ButtonId = "BtnExcelValidate";
+            //var ButtonId = $(this).attr("id");
+
+            $(".ErrorMessageSpan").empty();
+
+            var formData = new FormData($("#FmSubjectsSearch")[0]);
+
+            formData.append("SheetName", $("#txtSheetName").val());
+            formData.append("ButtonId", ButtonId);
+            formData.append("EMAILtoParents", $("#chkEMAILPARENTS").is(':checked'));
+            formData.append("EMAILtoStudents", $("#chkEMAILSTUDENTS").is(':checked'));
+            formData.append("SMStoParent", $("#chkSMSParent").is(':checked'));
+            formData.append("SMStoStudent", $("#chkSMSStudent").is(':checked'));
+
+            $('#TblExamSubjects tbody tr').each(function () {
+                var ExamSubjectId = $(this).find('td #ExamSubjectId').val();
+                var PassMarks = $(this).find('td #TxtPassMarks').val();
+                var MaxMarks = $(this).find('td #TxtMaxMarks').val();
+
+                formData.append("SubjectIdList", parseInt(ExamSubjectId) || 0);
+                formData.append("PassMarksList", parseFloat(PassMarks));
+                formData.append("MaxMarksList", parseFloat(MaxMarks));
+            });
+
+            var fileInput = document.getElementById("ExcelFile");
+            formData.append("File", fileInput.files[0])
+            var formElement = document.getElementById('FmFileUpload');
+            setTimeout(function () {
+                var validationMessages = formElement.getElementsByClassName('field-validation-error');
+                // var validationMessages2 = formElement.getElementsByClassName('error2');
+                var validationmelength = validationMessages.length;
+                if (validationmelength == 0) {
+                    debugger;
+                    performCrudOperationCommonFunction('POST', "/Results/PublishResults", formData, function (response) {
+                        debugger;
+                        // var jsonResponse = JSON.parse(response.message);
+                        $("#Main_Span_Error").text(response.message);
+                        if (response.message == "Valid file. Please click on Save As Draft or Publish.") {
+                            $("#BtnExcelValidate").prop("disabled", true);
+                            $("#BtnSaveAsDraft").prop("disabled", false);
+                            $("#BtnPublish").prop("disabled", false);
+                            $("#ExcelFile").val("");
+                        }
+                        $("#loadingOverlay").hide();
+                        window.scrollTo(0, 0);
+                    }, function (error) {
+                        $("#loadingOverlay").hide();
+                        $("#Main_Span_Error").text("Something Error");
+                    }, true);
+                }
+            }, 50);
+
+        } catch (e) {
+            $("#loadingOverlay").hide();
+            $("#Main_Span_Error").text("Something Error");
+        }
+    });
+
+</script>

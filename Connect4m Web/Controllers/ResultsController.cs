@@ -21,6 +21,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System.Text.RegularExpressions;
 /*using System.Drawing*/
 
 namespace Connect4m_Web.Controllers
@@ -258,23 +259,220 @@ namespace Connect4m_Web.Controllers
 
 
         [HttpPost]
-        public IActionResult PublishResults(ResultsModel obj)
+        public IActionResult PublishResults(ResultsModel obj,string FmFileUpload)
         {
             try
-            {
+            {var ButtonId = obj.ButtonId;
+                byte[] fileBytes = new byte[0]; 
+                var text = "";
+                //if (ButtonId == "BtnExcelValidate")
+                //{
+                    if (FmFileUpload == "FmFileUpload")
+                    {
+                        string filePath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile", "ExcelFile");
+
+                        // Check if the file exists
+                        if (!System.IO.File.Exists(filePath))
+                        {
+                            return Json(new { success = false, message = "File not Uploaded, Please Upload File" });
+                        }
+
+                        // Read the file content into a byte array
+                        fileBytes = System.IO.File.ReadAllBytes(filePath);
+                    }
+                else if (ButtonId == "BtnExcelValidate")
+                {
+                        if (obj.File == null || obj.File.Length <= 0)
+                        {
+                            // return BadRequest("Invalid file");
+                            return Json(new { success = false, message = "Invalid file" });
+                        }
+                        // string folderPath = "wwwroot/PostResults Images/PostResultsExcelFile";
+                        string folderPath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile");
+
+                        // Get all files in the folder
+                        string[] files = Directory.GetFiles(folderPath);
+
+                        // Iterate through each file and delete it
+                        foreach (var file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                }
+                //else
+                //{
+                //    return Json(new { success = false, message = new { successMSG = "Something Error" } });
+                //   // return Json(new { success = false, message = "Something Error" });
+                //}
+
+                    using (var stream = new MemoryStream())
+                    {
+                        if (FmFileUpload == "FmFileUpload")
+                        {
+                            stream.Write(fileBytes, 0, fileBytes.Length);
+                        }
+                        else if(ButtonId == "BtnExcelValidate")
+                        {
+
+                            obj.File.CopyTo(stream);
+                        }
+                        using (var package = new ExcelPackage(stream))
+                        {
+                            var worksheet = package.Workbook.Worksheets[0]; // Assuming the data is on the first worksheet
+                           // int rowCount = worksheet.Dimension.Rows;
+                          //  int colCount = worksheet.Dimension.Columns;                                   // Get the sheet name
+                           // string sheetName = worksheet.Name;
+                            if (worksheet.Name != obj.SheetName && ButtonId == "BtnExcelValidate")
+                            {
+                                return Json(new { success = false, message = "Invalid File Name" });
+                            }
+                            var row1 = 1;var columnCount = 0;
+                            // for (int col = worksheet.Dimension.Start.Row; col <= worksheet.Dimension.End.Column; col++)
+                            var length = worksheet.Dimension.End.Column;
+                            for (int col = 1; col <= length; col++)
+                            {
+                                var cellValue = worksheet.Cells[row1, col].Text;
+                                if (cellValue == "" || cellValue == null)
+                                {
+                                    break;
+                                }
+                                columnCount++;
+                            }
+
+                            var col1 = 1;var RowCount1 = 0;
+                            for (int row = 1; row <= length; row++)
+                            {
+                                var cellValue = worksheet.Cells[row, col1].Text;
+                                if (cellValue == "" || cellValue == null)
+                                {
+                                    break;
+                                }
+                                RowCount1++;
+                            }
+                            // int rowCount = worksheet.Dimension.Rows;
+                            var c = 0;
+
+
+                            List<int> SubjectIdList = new List<int>();
+                            SubjectIdList = obj.SubjectIdList;
+
+
+                            List<double> PassMarksList = new List<double>();
+                            PassMarksList = obj.PassMarksList;
+
+                            List<double> MaxMarksList = new List<double>();
+                            MaxMarksList = obj.MaxMarksList;
+
+                            obj.UseridList = new List<int>();
+                            obj.SecureMarksList = new List<string>();
+                             obj.SubjectIdList = new List<int>();
+                           
+                            obj.GradeList = new List<string>();
+                             obj.PassMarksList = new List<double>();
+                             obj.MaxMarksList = new List<double>();
+                            var Grade = "";
+                            for (int row = 2; row <= RowCount1; row++) // Assuming the header is in the first row
+                            {
+                                c = 0;
+                                string UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
+                                string StudentName = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
+
+                                for (int col = 4; col <= columnCount; col++)
+                                {
+                                    var SecuredMarks = worksheet.Cells[row, col].Text;
+                                    string SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
+                                    
+                                    if (SecuredMarks == "" && SecuredMarks != "O" && obj.ButtonId != "BtnSaveAsDraft")
+                                    {
+                                        // $(ErrorAppend).text("Please enter marks For student '" + Name + "' for subject  '" + SubjectName + "'");
+                                        text = $"Please enter marks For student '{StudentName}' for subject  '{SubjectText}'";
+                                        return Json(new { success = false, message = text });
+                                    }
+                                   else if (SecuredMarks.Length > 5)
+                                    {
+                                        text = $"Marks length should be less than 5 for the user '{StudentName}' for the subject '{SubjectText}'";
+                                        return Json(new { success = false, message = text });
+                                    }
+                                  else if (!Regex.IsMatch(SecuredMarks, @"^[0-9.]+$") && SecuredMarks!= "O" && SecuredMarks != "-")
+                                    {
+                                        text = $"Please enter valid data for Student '{StudentName}' for the subject '{SubjectText}'";
+                                        return Json(new { success = false, message = text });
+                                    }
+
+                                if (ButtonId != "BtnExcelValidate")
+                                {
+                                    if (SecuredMarks == "O")
+                                    { Grade = "O"; }
+                                    else
+                                    {
+                                        if (Convert.ToDouble(MaxMarksList[c]) < Convert.ToDouble(SecuredMarks) && SecuredMarks != "O")
+                                        {
+                                            text = $"For student '{StudentName}' secured marks can not be greater than maximum marks for subject '{SubjectText}'";
+                                            return Json(new { success = false, message = text });
+                                        }
+                                        if ((PassMarksList[c]) <= Convert.ToDouble(SecuredMarks) && (SecuredMarks) != "")
+                                        {
+                                            Grade = "PASS";
+                                        }
+                                        else if ((PassMarksList[c]) > Convert.ToDouble(SecuredMarks) && SecuredMarks != "")
+                                        {
+                                            Grade = "FAIL";
+                                        }
+                                        else if (SecuredMarks == "-")
+                                        {
+                                            Grade = "ABSENT";
+                                            //Grade = "OPTIONAL";
+                                        }
+                                        else if (SecuredMarks == "" && obj.ButtonId == "BtnPublish")
+                                        {
+                                            Grade = "OPTIONAL";
+                                        }
+                                        else
+                                        {
+                                            Grade = "";
+                                        }
+                                    }
+                                    obj.UseridList.Add(Convert.ToInt32(UserId));
+                                    obj.SecureMarksList.Add(SecuredMarks);
+                                    obj.GradeList.Add(Grade);
+                                    obj.SubjectIdList.Add(SubjectIdList[c]);
+                                    obj.PassMarksList.Add(PassMarksList[c]);
+                                    obj.MaxMarksList.Add(MaxMarksList[c]);
+                                }
+                                    c++;
+                                }
+                            }
+
+                        if (ButtonId == "BtnExcelValidate")
+                        {
+                            // Reset the position of the MemoryStream to the beginning
+                            stream.Position = 0;
+                            // Get the byte array from the MemoryStream
+                            fileBytes = stream.ToArray();
+
+                            string fileName = "ExcelFile";//I gave default name
+
+                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PostResults Images/PostResultsExcelFile");
+                        
+                            // Combine the directory path and file name
+                            string filePathToSave = Path.Combine(path, fileName);
+
+                            // Write the byte array to a file on the server
+                            System.IO.File.WriteAllBytes(filePathToSave, fileBytes);
+                        
+                            return Json(new { success = true, message = "Valid file. Please click on Save As Draft or Publish." });
+                        }
+                            
+                        }
+                    }
+               // }
 
 
 
 
 
 
-
-
-
-
-
-
-                return Json(new { success = false, message = "Something Error" });
+               // return Json(new { success = false, message = "Something Error" });
 
 
                 InitializeCookieValues();
@@ -301,13 +499,13 @@ namespace Connect4m_Web.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Something Error" });
+                    return Json(new { success = false, message =new{ SuccessMSG= "Something Error"} });
                 }
             }
             catch (Exception ex)
             {
                 // throw;
-                return Json(new { success = false, message = "Something Error" });
+                return Json(new { success = false, message =new { successMSG = "Something Error" } });
             }
         }
 

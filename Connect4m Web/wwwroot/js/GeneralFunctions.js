@@ -1184,7 +1184,7 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
         //OpenIFrameModel("../Admin/ViewUserCompOffLeavesLapsedDetails.aspx?InstanceId=" + InstanceId + "&UserID=" + UserID + "&AcademicYearID=" + AcademicYearID + "&Lapsed=" + Lapsed, 700, 250)
         //return false;
 
-        if (Url == '') {
+        if (Url == '' || Url == undefined) {
             Url = "/Attendance/_ViewChangeActivities?SourceId=" + SourceId + "&AuditKey=" + AuditKey + "&TableName=" + TableName;
         }
         debugger;
@@ -1224,7 +1224,12 @@ function restrictCharacters_AllowDots(element) {
 }
 
 function restrictCharacters_AllowDotsAndHyphen(element) {
-    debugger;element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
+    debugger;
+    //const hasHyphen = /-/.test(element.value);
+    if (/-/.test(element.value)) {
+        element.value = '-';
+    }else
+        element.value = element.value.replace(/[^.\d-]|(\.)(?=.*\1)|(-)(?=.*\2)/g, '');
 }
 
 
@@ -1234,6 +1239,7 @@ function CommonClearFunction(Formid) {
 }
 
 
+//<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 
 function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used this in manage Exams Screen
   

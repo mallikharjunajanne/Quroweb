@@ -58,6 +58,7 @@
   <ItemGroup>
     <Folder Include="Views\Partialviews\" />
     <Folder Include="wwwroot\Managenoticesdocs\" />
+    <Folder Include="wwwroot\PostResults Images\PostResultsExcelFile\" />
   </ItemGroup>
 
 </Project>

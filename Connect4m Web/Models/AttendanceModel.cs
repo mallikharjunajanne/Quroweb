@@ -55,6 +55,7 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage ="The Class is Required")]
         public int InstanceSubClassificationId { get; set; }
         public string ScreenName { get; set; }
+        
         public string Name { get; set; }
         public string ButtonName { get; set; }
         public string DisplayOrders { get; set; }

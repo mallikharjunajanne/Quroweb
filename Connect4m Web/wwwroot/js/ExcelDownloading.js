@@ -2,10 +2,10 @@
 //----===================  Click On Get Excel To Upload --File
 
 
-$(document).on('click', '#FmFileUpload #_Getexceltoupload', function (event) {
+$(document).on('click', '#FmFileUpload #_Getexceltoupload,#_lnkExporttoexcel', function (event) {
 
     event.stopImmediatePropagation();
-
+    debugger;
       var selectedValues = $("#DdlSubjects option:selected").map(function () {
         return $(this).text();
     }).get();

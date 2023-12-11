@@ -37,8 +37,10 @@ namespace Connect4m_Web.Models
         public List<string> SecureMarksList { get; set; }
         public List<string> GradeList { get; set; }
         public string InstanceUserCode { get; set; }
-
+        [Required(ErrorMessage = "The file is Required")]
         public IFormFile File { get; set; }
+       // [Required(ErrorMessage = "The Sheet Name is Required")]
+        public string SheetName { get; set; }
         public string Status { get; set; }
         public string RatingType { get; set; }
         public int ResultsModeID { get; set; }
