@@ -212,8 +212,35 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        [HttpPost]
+        public IActionResult DeleteDisplayOrder()
+        {
+            RoleMenu obj = new RoleMenu();
+            obj.CreatedBy = UserId;
+            obj.InstanceId = InstanceId;
+            obj.RoleId = Convert.ToInt32(Request.Cookies["Roleid_Display"]);
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/DeleteDisplayOrder", content).Result;
+            //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/AfterCreateRole?InstanceId=" + InstanceId + "&Roleid=" + Request.Cookies["Roleid_Display"] + "&MenuId=" + Request.Cookies["MenuId_Display"]).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                int list = JsonConvert.DeserializeObject<int>(data);
+                return Json(list);
+            }
+
+            return Json(0);
+        }
+
+
+
+
+
+
+
+        [HttpPost]
+        //    Update The Display Order 
         public IActionResult UpdateDisplayOrder(RoleMenu obj)
         {
             obj.CreatedBy = UserId;
