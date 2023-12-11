@@ -189,7 +189,7 @@ $("#Create_Role").submit(function (event) {
     loaddingimg.css('display', 'block');
 
 
-   debugger;
+  // debugger;
   //  alert("hiii");
     var formdata_CSA = $(this).serialize();
    // var formdata = new FormData();
@@ -227,7 +227,7 @@ $("#Create_Role").submit(function (event) {
                         $('#ForDisplayOrder').css('display', 'block');
                         $('#ForDisplayOrder').html(response);
                         DisplayOrder();
-                        loaddingimg.css('display', 'none');
+                       // loaddingimg.css('display', 'none');
 
                     }
                 });
@@ -378,12 +378,16 @@ function DisplayOrder() {
 
                     }
                 }
-            ]
+            ],
+            initComplete: function () {
+                // Hide the loading image after DataTable initialization is complete
+                loaddingimg.css('display', 'none');
+            }
 
-
+             
         });
        
-        loaddingimg.css('display', 'none');
+        
     }
 }
 //========================   Back To search
@@ -501,37 +505,48 @@ $(document).on('click', '#dispalyordersupdate #Update_CR', function (event) {
     loaddingimg.css('display', 'none');
 
     if (numberoferrors == 0) {
-       // debugger;
-        var batchSize = 80; 
-      
-        for (var i = 0; i < tablelength; i += batchSize) {
-            loaddingimg.css('display', 'block');
+        // debugger;
+        //alert("hiii");
+        var batchSize = 80;
 
-            $('#dispalyordersupdate #Update_CR').attr('disabled', true);
-            var formData = new FormData();
+        // Step 1: DeleteDisplayOrder (GET request)
+        CommonAjaxFunction('GET', '/Rolewise/DeleteDisplayOrder', null, async function (response) {
+            // Step 2: UpdateDisplayOrder (POST requests in batches)
+            await updateDisplayOrder(response);
+        }, function (status, error) {
+            // Handle error for the GET request
+        }, false);
 
-            for (var j = i; j < Math.min(i + batchSize, tablelength); j++) {
-                formData.append('MenuId', parseInt($(parenttable[j]).find('td:nth-child(2) input[type="text"]').val()) || 0);
-                formData.append('DisplayNameList', $(parenttable[j]).find('td:nth-child(3) input[type="text"]').val()) || null;
-                formData.append('DisplayOrderList', parseInt($(parenttable[j]).find('td:nth-child(4) input[type="text"]').val()) || 0);
+        async function updateDisplayOrder(response) {
+            for (var i = 0; i < tablelength; i += batchSize) {
+                loaddingimg.css('display', 'block');
+                $('#dispalyordersupdate #Update_CR').attr('disabled', true);
+                var formData = new FormData();
 
+                for (var j = i; j < Math.min(i + batchSize, tablelength); j++) {
+                    formData.append('MenuId', parseInt($(parenttable[j]).find('td:nth-child(2) input[type="text"]').val()) || 0);
+                    formData.append('DisplayNameList', $(parenttable[j]).find('td:nth-child(3) input[type="text"]').val()) || null;
+                    formData.append('DisplayOrderList', parseInt($(parenttable[j]).find('td:nth-child(4) input[type="text"]').val()) || 0);
+                }
+
+                // CommonAjaxFunction for each batch (POST request)
+                await new Promise((resolve, reject) => {
+                    CommonAjaxFunction('POST', '/Rolewise/UpdateDisplayOrder', formData, function (response) {
+                       
+                        resolve();
+                    }, function (status, error) {
+                        // Handle error for the POST request
+                        reject(error);
+                    }, true);
+                });
             }
 
-
-            CommonAjaxFunction('POST', '/Rolewise/UpdateDisplayOrder', formData, function (response) {
-                $('.alert-success p').text("Record Updated Successfully.");
-                $(".alert-success").show().delay(5000).fadeOut()
-                $(errorappend).text('Record Updated Successfully.');
-                //loaddingimg.css('display', 'none');
-            }, function (status, error) {
-                loaddingimg.css('display', 'none');
-            }, true);
-
+            // Hide loading image after the entire for loop is completed
+            $('.alert-success p').text("Record Updated Successfully.");
+            $(".alert-success").show().delay(5000).fadeOut()
+            $(errorappend).text('Record Updated Successfully.');
             loaddingimg.css('display', 'none');
-
         }
-        //loaddingimg.css('display', 'none');
-
     }
 
 
