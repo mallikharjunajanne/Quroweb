@@ -96,7 +96,7 @@ namespace Connect4m_Web.Controllers
             if (response.IsSuccessStatusCode)
             {
                 return returnval = response.Content.ReadAsStringAsync().Result;
-            }
+            }var returnval1 = response.Content.ReadAsStringAsync().Result;
             return "0";
         }
 
@@ -335,49 +335,6 @@ namespace Connect4m_Web.Controllers
             return PartialView("_ViewChangeActivities");
         }
 
-
-        public IActionResult DownloadExcel()
-        {
-            // Dummy data (replace with your actual data retrieval logic)
-            List<YourDataModel> data = GetYourData();
-
-            // Create Excel package
-            using (var package = new ExcelPackage())
-            {
-                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
-
-                // Define headers
-                string[] headers = { "ID", "Name", "Age", "City" };
-
-                // Add headers to the worksheet
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    worksheet.Cells[1, i + 1].Value = headers[i];
-                }
-
-                // Auto fit columns for better appearance
-                worksheet.Cells.AutoFitColumns();
-
-                // Set content type and return the file
-                var stream = new MemoryStream(package.GetAsByteArray());
-                return new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                {
-                    FileDownloadName = "YourData.xlsx"
-                };
-            }
-        }
-        private List<YourDataModel> GetYourData()
-        {
-            // Replace this with your actual data retrieval logic
-            return new List<YourDataModel>
-        {
-            new YourDataModel { Id = 1, Name = "John Doe" },
-            new YourDataModel { Id = 2, Name = "Jane Doe" }
-            // Add more data as needed
-        };
-        }
-
-
         public IActionResult BulkUploadSubjects()
         {
             return View();
@@ -386,13 +343,13 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult BulkUploadSubjects(SubjectModel obj, string ButtonName,IFormFile SubjectExelFile)
         {
-            if (SubjectExelFile == null || SubjectExelFile.Length <= 0)
+            if (obj.ButtonName == "MultiSubjectsUpdate")
             {
+                if (SubjectExelFile == null || SubjectExelFile.Length <= 0)
+            {
+                return Json(new { success = false, message = "Invalid File" });
 
-                return BadRequest("Invalid file");
             }
-            try
-            {
                 using (var stream = new MemoryStream())
                 {
                     SubjectExelFile.CopyTo(stream);
@@ -403,27 +360,65 @@ namespace Connect4m_Web.Controllers
 
                         var worksheet = package.Workbook.Worksheets[0]; // Assuming the data is in the first sheet
 
-                        int rowCount = worksheet.Dimension.Rows;
-
-                        for (int row = 2; row <= rowCount; row++) // Assuming the header is in the first row
+                        if (worksheet != null && worksheet.Dimension?.Rows > 1)
                         {
-                            string value = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
-                            string value1 = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
-                            string value11 = worksheet.Cells[row, 3].Value?.ToString(); // Access each cell's value
-                            string value111 = worksheet.Cells[row, 4].Value?.ToString(); // Access each cell's value
-                            string value1111 = worksheet.Cells[row, 5].Value?.ToString(); // Access each cell's value
+                            return Json(new { success = false, message = "Sheet is not empty." });                        
                         }
 
-                        return Json(new { success = true, message = "Data imported successfully" });
+                        int rowCount = worksheet.Dimension.Rows;
+
+
+                        obj.InstanceClassificationIdList = new List<int>();
+                        obj.InstanceSubClassificationIdList = new List<int>();
+                        obj.SubjectNameList = new List<string>();
+                        obj.SubjectCodeList = new List<string>();
+                        obj.IncludeInTotalStringList = new List<string>();
+                        obj.SubjectTypeIdString = new List<string>();
+                        obj.AttendanceRequired = new List<string>();
+                        obj.DisplayOrder = new List<int>();
+                        obj.TotalPeriods = new List<string>();
+                        obj.MentorIds = new List<string>();
+
+
+                        for (int row = 2; row <= 3; row++) // Assuming the header is in the first row
+                        {
+
+                            string InstanceClassificationIdList = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
+                            string InstanceSubClassificationIdList = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
+                            string SubjectNameList = worksheet.Cells[row, 3].Value?.ToString(); // Access each cell's value
+                            string SubjectTypeIdString = worksheet.Cells[row, 4].Value?.ToString(); // Access each cell's value
+
+                            string IncludeInTotalStringList = worksheet.Cells[row, 5].Value?.ToString(); // Access each cell's value
+                            string SubjectCodeList = worksheet.Cells[row, 6].Value?.ToString(); // Access each cell's value
+                            string DisplayOrder = worksheet.Cells[row, 7].Value?.ToString(); // Access each cell's value
+
+                            string AttendanceRequired = worksheet.Cells[row, 8].Value?.ToString(); // Access each cell's value
+                            string TotalPeriods = worksheet.Cells[row, 9].Value?.ToString(); // Access each cell's value
+                            string MentorIds = worksheet.Cells[row, 10].Value?.ToString(); // Access each cell's value
+
+
+
+                            obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
+                            obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
+                            obj.SubjectNameList.Add(SubjectNameList);
+                            obj.SubjectCodeList.Add(SubjectCodeList);
+
+                            //obj.IncludeInTotal.Add(IncludeInTotalStringList);
+                            obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
+
+                            obj.SubjectTypeIdString.Add(SubjectTypeIdString);
+
+                            obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
+                            obj.AttendanceRequired.Add(AttendanceRequired);
+                            obj.TotalPeriods.Add(TotalPeriods);
+                            obj.MentorIds.Add(MentorIds);
+                        }
+
+                        // return Json(new { success = true, message = "Data imported successfully" });
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = $"Error: {ex.Message}" });
-            }
-            return Json(new { success = false, message = "Something Error" });
-
+            obj.SubjectExelFile = null;
             // List<List<string>> excelData = new List<List<string>>();
 
             //using (var stream = new MemoryStream())

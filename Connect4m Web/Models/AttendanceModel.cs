@@ -61,7 +61,8 @@ namespace Connect4m_Web.Models
         public string DisplayOrders { get; set; }
 
         public string AdmissionNumber { get; set; }
-        //This Is for Drop Downs
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
     public class AttendanceModel
     {
@@ -628,8 +629,8 @@ namespace Connect4m_Web.Models
 
         //this below for Bulk upload subjects
         public int bFlagMultipleSubjects { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+       // public string FirstName { get; set; }
+        //public string LastName { get; set; }
         public string InstanceUserCode { get; set; }
         public string SubjectAssociationId { get; set; }
         [Required]
@@ -667,17 +668,22 @@ namespace Connect4m_Web.Models
         public List<string> SubjectCodeList { get; set; }
         public int ProgramType { get; set; }
         public List<int> SubjectTypeId { get; set; }
+
+        public List<string> SubjectTypeIdString { get; set; }
         public List<string> UserIdList { get; set; }
         public List<int> IsInternal { get; set; }
         public List<int> InstanceSubClassificationIdList { get; set; }
         public List<int> InstanceClassificationIdList { get; set; }
         public List<int> IncludeInTotal { get; set; }
+
+        public List<string> IncludeInTotalStringList { get; set; }
         public List<string> AttendanceRequired { get; set; }
         public List<string> MentorIds { get; set; }
         public List<string> TotalPeriods { get; set; }
 
         public List<int> DisplayOrder { get; set; }
         public List<string> SubjectShortName { get; set; }
+        public List<string> SubjectNameList { get; set; }
     }
 
     public class SubClassifications

@@ -297,12 +297,6 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
 
         });
 
-
-        //  $("#TblLeaveDelegationList_SearchedRecords_Div").empty();
-        debugger;
-
-
-
     } catch (x) {
         $("#loadingOverlay").hide();
         $("#Main_Span_Error").text("Something Error");
@@ -680,8 +674,6 @@ function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
         $("#Main_Span_Error").text("Something Error");
     }
 };
-
-
 
 function BackTOSearhLeaveTypes(event) {
     try {

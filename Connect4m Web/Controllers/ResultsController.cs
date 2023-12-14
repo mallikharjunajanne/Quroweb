@@ -108,7 +108,12 @@ namespace Connect4m_Web.Controllers
                 List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(obj, "/TblExamSubjects_Calingfunction", client);
                 // list = list.OrderBy(x => x.SubjectName).ToList();
                 // ViewBag.ResultsModeList = list[0].ResultsModeList;
-                return Json(list[0]?.ExamSubjectsList ?? new List<ResultsModel>());
+
+
+                //return Json(list[0]?.ResultsModeList ?? new List<ResultsModel>());
+    
+                return Json(list);
+               // return Json(list[0]?.ExamSubjectsList ?? new List<ResultsModel>());
             }
             catch (Exception ex)
             {
@@ -120,8 +125,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                if (MarksUploadtype == "UploadWithOutExcelFile" || Nextstep == "Step3")
-                {
+                    ViewBag.MarksUploadtype = MarksUploadtype;
                     string[] SubjectNames = val.SubjectsName.Split(',');
                     ViewBag.SubjectNamesList = SubjectNames;
                     ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
@@ -130,82 +134,41 @@ namespace Connect4m_Web.Controllers
                     InitializeCookieValues();
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
-                    ViewBag.MarksUploadtype = MarksUploadtype;
+            
                     ViewBag.colours = list?.FirstOrDefault()?.UsermarksList[0].IsPublished;
                     ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
                     return View();
-                }
-                else
-                {
-                    ViewBag.UsersDetailsList =new List<UsermarksModel>();
+                
+                
+              
+                //if (MarksUploadtype == "UploadWithOutExcelFile" || Nextstep == "Step3")
+                //{
+                //    string[] SubjectNames = val.SubjectsName.Split(',');
+                //    ViewBag.SubjectNamesList = SubjectNames;
+                //    ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
+                //    ViewBag.MaxMarksList = val.MaxMarksList;
+                //    ViewBag.PassMarksList = val.PassMarksList;
+                //    InitializeCookieValues();
+                //    val.InstanceID = InstanceId;
+                //    List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
+                //   // ViewBag.MarksUploadtype = MarksUploadtype;
+                //    ViewBag.colours = list?.FirstOrDefault()?.UsermarksList[0].IsPublished;
+                //    ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
+                //    return View();
+                //}
+                //else
+                //{
+                //    ViewBag.UsersDetailsList =new List<UsermarksModel>();
 
-                    ViewBag.MarksUploadtype = MarksUploadtype;
-                    return View();
-                }
+                //    //ViewBag.MarksUploadtype = MarksUploadtype;
+                //    return View();
+                //}
             }
             catch (Exception ex)
             {
                 return View(0);
             }
         }
-
-        //=============================================   Excel Dowload
-        //public IActionResult ExcelDowload(ResultsModel val)
-        //{
-
-        //    string[] SubjectNames = val.SubjectsName.Split(',');
-        //    ViewBag.SubjectNamesList = SubjectNames;
-        //    ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
-        //    ViewBag.MaxMarksList = val.MaxMarksList;
-        //    ViewBag.PassMarksList = val.PassMarksList;
-        //    InitializeCookieValues();
-        //    val.InstanceID = InstanceId;
-        //    try
-        //    {
-
-        //        DataTable dt = new DataTable("Grid");
-        //        dt.Columns.AddRange(new DataColumn[3] {
-        //    new DataColumn("CustomerId"),
-        //    new DataColumn("ContactName"),
-        //    new DataColumn("City")
-        //    //new DataColumn("Country")
-        //});
-        //        // Your data retrieval logic
-        //        List<UsermarksModel> list = CommonMethodobj.CommonListMethod<ResultsModel, UsermarksModel>(val, "/DataGettingforExcel", client);
-        //        foreach (var customer in list)
-        //        {
-        //            dt.Rows.Add(customer.UserId, customer.Name, customer.InstanceUserCode);
-        //        }
-
-        //        using (XLWorkbook wb = new XLWorkbook())
-        //        {
-        //            wb.Worksheets.Add(dt);
-        //            using (MemoryStream stream = new MemoryStream())
-        //            {
-        //                wb.SaveAs(stream);
-
-        //                // Return the Excel file as a FileStreamResult
-        //                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
-        //            }
-        //        }
-
-
-
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception details
-        //        Console.WriteLine($"Exception: {ex.Message}");
-        //        Console.WriteLine($"StackTrace: {ex.StackTrace}");
-
-        //        // Return an error response or handle the exception accordingly
-        //        return StatusCode(500, "Internal Server Error");
-        //    }
-
-        //}
-     
-
 
         public IActionResult PostResults()
         {
@@ -257,16 +220,18 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
+        
         [HttpPost]
         public IActionResult PublishResults(ResultsModel obj,string FmFileUpload)
         {
             try
             {var ButtonId = obj.ButtonId;
-                byte[] fileBytes = new byte[0]; 
-                var text = "";
-                //if (ButtonId == "BtnExcelValidate")
-                //{
+                if (FmFileUpload == "FmFileUpload" || ButtonId == "BtnExcelValidate")
+                {
+                    byte[] fileBytes = new byte[0];
+                    var text = "";
+                    //if (ButtonId == "BtnExcelValidate")
+                    //{
                     if (FmFileUpload == "FmFileUpload")
                     {
                         string filePath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile", "ExcelFile");
@@ -274,18 +239,27 @@ namespace Connect4m_Web.Controllers
                         // Check if the file exists
                         if (!System.IO.File.Exists(filePath))
                         {
-                            return Json(new { success = false, message = "File not Uploaded, Please Upload File" });
+                           // return Json(new { success = false, message = new { SuccessMSG = "File not Uploaded, Please Upload File" } });
+                           return Json(new { success = false, message = "File not Uploaded, Please Upload File" });
                         }
 
                         // Read the file content into a byte array
                         fileBytes = System.IO.File.ReadAllBytes(filePath);
                     }
-                else if (ButtonId == "BtnExcelValidate")
-                {
+                    else if (ButtonId == "BtnExcelValidate")
+                    {
                         if (obj.File == null || obj.File.Length <= 0)
                         {
                             // return BadRequest("Invalid file");
                             return Json(new { success = false, message = "Invalid file" });
+                           // return Json(new { success = false, message = new { SuccessMSG = "Invalid file" } });
+                        }
+                        var allowedExtensions = new[] { ".xls" };
+                        var fileExtension = Path.GetExtension(obj.File.FileName);
+
+                        if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                        {
+                            return Json(new { success = false, message = "Invalid file extension.allowed extensions are .xls,.xlsx" });
                         }
                         // string folderPath = "wwwroot/PostResults Images/PostResultsExcelFile";
                         string folderPath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile");
@@ -298,12 +272,12 @@ namespace Connect4m_Web.Controllers
                         {
                             System.IO.File.Delete(file);
                         }
-                }
-                //else
-                //{
-                //    return Json(new { success = false, message = new { successMSG = "Something Error" } });
-                //   // return Json(new { success = false, message = "Something Error" });
-                //}
+                    }
+                    //else
+                    //{
+                    //    return Json(new { success = false, message = new { successMSG = "Something Error" } });
+                    //   // return Json(new { success = false, message = "Something Error" });
+                    //}
 
                     using (var stream = new MemoryStream())
                     {
@@ -311,7 +285,7 @@ namespace Connect4m_Web.Controllers
                         {
                             stream.Write(fileBytes, 0, fileBytes.Length);
                         }
-                        else if(ButtonId == "BtnExcelValidate")
+                        else if (ButtonId == "BtnExcelValidate")
                         {
 
                             obj.File.CopyTo(stream);
@@ -319,40 +293,65 @@ namespace Connect4m_Web.Controllers
                         using (var package = new ExcelPackage(stream))
                         {
                             var worksheet = package.Workbook.Worksheets[0]; // Assuming the data is on the first worksheet
-                           // int rowCount = worksheet.Dimension.Rows;
-                          //  int colCount = worksheet.Dimension.Columns;                                   // Get the sheet name
-                           // string sheetName = worksheet.Name;
+                                                                            // int rowCount = worksheet.Dimension.Rows;
+                                                                            //  int colCount = worksheet.Dimension.Columns;                                   // Get the sheet name
+                                                                            // string sheetName = worksheet.Name;
                             if (worksheet.Name != obj.SheetName && ButtonId == "BtnExcelValidate")
                             {
                                 return Json(new { success = false, message = "Invalid File Name" });
+                               // return Json(new { success = false, message = new { SuccessMSG = "Invalid File Name" } });
                             }
-                            var row1 = 1;var columnCount = 0;
+                            var row1 = 1; var columnCount = 0;
                             // for (int col = worksheet.Dimension.Start.Row; col <= worksheet.Dimension.End.Column; col++)
                             var length = worksheet.Dimension.End.Column;
+                            string[] SubjectNames = obj.SubjectsName.Split(',');
                             for (int col = 1; col <= length; col++)
                             {
                                 var cellValue = worksheet.Cells[row1, col].Text;
+                              
                                 if (cellValue == "" || cellValue == null)
                                 {
                                     break;
+                                }
+                                if (col > 3 && SubjectNames[col - 4] != cellValue)
+                                {
+                                    return Json(new { success = false, message = $"Invalid '{ cellValue}' Subject Name" });
+                                  //  return Json(new { success = false, message = new { SuccessMSG = $"Invalid '{ SubjectNames[col - 1]}' Subject Name" } });
                                 }
                                 columnCount++;
                             }
-
-                            var col1 = 1;var RowCount1 = 0;
-                            for (int row = 1; row <= length; row++)
+                           //var count= obj.MaxMarksList.Count;
+                            if (obj.MaxMarksList.Count + 3 != columnCount )
                             {
-                                var cellValue = worksheet.Cells[row, col1].Text;
-                                if (cellValue == "" || cellValue == null)
+                                return Json(new { success = false, message = "Mismatch of Subject" });
+                             //   return Json(new { success = false, message = new { SuccessMSG = "Mismatch of Subject" } });
+                            }
+                             var RowCount1 = 0;
+                            for (int row = 2; row <= length; row++)
+                            {
+                                //var cellValue = worksheet.Cells[row, col1].Text;
+                                var cellUserID = worksheet.Cells[row, 1].Text;
+                                if (cellUserID == "" || cellUserID == null)
                                 {
                                     break;
                                 }
+                                if ( obj.UseridList[RowCount1] !=Convert.ToInt32(cellUserID))
+                                {
+                                    return Json(new { success = false, message = $"Invalid '{ cellUserID}' User Id" });
+                                    //  return Json(new { success = false, message = new { SuccessMSG = $"Invalid '{ SubjectNames[col - 1]}' Subject Name" } });
+                                }
                                 RowCount1++;
                             }
+                            //var count = obj.UseridList.Count;
+                            if (obj.UseridList.Count != RowCount1)
+                            {
+                                return Json(new { success = false, message = "Mismatch of UserIds" });
+                                //   return Json(new { success = false, message = new { SuccessMSG = "Mismatch of Subject" } });
+                            }
+
+
                             // int rowCount = worksheet.Dimension.Rows;
                             var c = 0;
-
-
                             List<int> SubjectIdList = new List<int>();
                             SubjectIdList = obj.SubjectIdList;
 
@@ -365,13 +364,13 @@ namespace Connect4m_Web.Controllers
 
                             obj.UseridList = new List<int>();
                             obj.SecureMarksList = new List<string>();
-                             obj.SubjectIdList = new List<int>();
-                           
+                            obj.SubjectIdList = new List<int>();
+
                             obj.GradeList = new List<string>();
-                             obj.PassMarksList = new List<double>();
-                             obj.MaxMarksList = new List<double>();
+                            obj.PassMarksList = new List<double>();
+                            obj.MaxMarksList = new List<double>();
                             var Grade = "";
-                            for (int row = 2; row <= RowCount1; row++) // Assuming the header is in the first row
+                            for (int row = 2; row <= RowCount1+1; row++) // Assuming the header is in the first row
                             {
                                 c = 0;
                                 string UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
@@ -381,100 +380,98 @@ namespace Connect4m_Web.Controllers
                                 {
                                     var SecuredMarks = worksheet.Cells[row, col].Text;
                                     string SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
-                                    
+
                                     if (SecuredMarks == "" && SecuredMarks != "O" && obj.ButtonId != "BtnSaveAsDraft")
                                     {
-                                        // $(ErrorAppend).text("Please enter marks For student '" + Name + "' for subject  '" + SubjectName + "'");
                                         text = $"Please enter marks For student '{StudentName}' for subject  '{SubjectText}'";
+                                       // return Json(new { success = false, message = new { SuccessMSG = text } });
                                         return Json(new { success = false, message = text });
                                     }
-                                   else if (SecuredMarks.Length > 5)
-                                    {
-                                        text = $"Marks length should be less than 5 for the user '{StudentName}' for the subject '{SubjectText}'";
-                                        return Json(new { success = false, message = text });
-                                    }
-                                  else if (!Regex.IsMatch(SecuredMarks, @"^[0-9.]+$") && SecuredMarks!= "O" && SecuredMarks != "-")
+                                   
+                                    else if (!Regex.IsMatch(SecuredMarks, @"^[0-9.]+$") && SecuredMarks != "O" && SecuredMarks != "-")
                                     {
                                         text = $"Please enter valid data for Student '{StudentName}' for the subject '{SubjectText}'";
                                         return Json(new { success = false, message = text });
+                                        //return Json(new { success = false, message = new { SuccessMSG = text } });
                                     }
-
-                                if (ButtonId != "BtnExcelValidate")
-                                {
-                                    if (SecuredMarks == "O")
-                                    { Grade = "O"; }
-                                    else
+                                    else if (SecuredMarks != "O")
                                     {
                                         if (Convert.ToDouble(MaxMarksList[c]) < Convert.ToDouble(SecuredMarks) && SecuredMarks != "O")
                                         {
                                             text = $"For student '{StudentName}' secured marks can not be greater than maximum marks for subject '{SubjectText}'";
+                                             return Json(new { success = false, message = text });
+                                           // return Json(new { success = false, message = new { SuccessMSG = text } });
+                                        }
+                                        else if (SecuredMarks.Length > 5)
+                                        {
+                                            text = $"Marks length should be less than 5 for the user '{StudentName}' for the subject '{SubjectText}'";
                                             return Json(new { success = false, message = text });
-                                        }
-                                        if ((PassMarksList[c]) <= Convert.ToDouble(SecuredMarks) && (SecuredMarks) != "")
-                                        {
-                                            Grade = "PASS";
-                                        }
-                                        else if ((PassMarksList[c]) > Convert.ToDouble(SecuredMarks) && SecuredMarks != "")
-                                        {
-                                            Grade = "FAIL";
-                                        }
-                                        else if (SecuredMarks == "-")
-                                        {
-                                            Grade = "ABSENT";
-                                            //Grade = "OPTIONAL";
-                                        }
-                                        else if (SecuredMarks == "" && obj.ButtonId == "BtnPublish")
-                                        {
-                                            Grade = "OPTIONAL";
-                                        }
-                                        else
-                                        {
-                                            Grade = "";
+                                           // return Json(new { success = false, message = new { SuccessMSG = text } });
                                         }
                                     }
-                                    obj.UseridList.Add(Convert.ToInt32(UserId));
-                                    obj.SecureMarksList.Add(SecuredMarks);
-                                    obj.GradeList.Add(Grade);
-                                    obj.SubjectIdList.Add(SubjectIdList[c]);
-                                    obj.PassMarksList.Add(PassMarksList[c]);
-                                    obj.MaxMarksList.Add(MaxMarksList[c]);
-                                }
+                                    if (ButtonId != "BtnExcelValidate")
+                                    {
+                                        if (SecuredMarks == "O")
+                                        { Grade = "O"; }
+                                        else
+                                        {
+                                            if ((PassMarksList[c]) <= Convert.ToDouble(SecuredMarks) && (SecuredMarks) != "")
+                                            {
+                                                Grade = "PASS";
+                                            }
+                                            else if ((PassMarksList[c]) > Convert.ToDouble(SecuredMarks) && SecuredMarks != "")
+                                            {
+                                                Grade = "FAIL";
+                                            }
+                                            else if (SecuredMarks == "-")
+                                            {
+                                                Grade = "ABSENT";
+                                                //Grade = "OPTIONAL";
+                                            }
+                                            else if (SecuredMarks == "" && obj.ButtonId == "BtnPublish")
+                                            {
+                                                Grade = "OPTIONAL";
+                                            }
+                                            else
+                                            {
+                                                Grade = "";
+                                            }
+                                        }
+                                        obj.UseridList.Add(Convert.ToInt32(UserId));
+                                        obj.SecureMarksList.Add(SecuredMarks);
+                                        obj.GradeList.Add(Grade);
+                                        obj.SubjectIdList.Add(SubjectIdList[c]);
+                                        obj.PassMarksList.Add(PassMarksList[c]);
+                                        obj.MaxMarksList.Add(MaxMarksList[c]);
+                                    }
                                     c++;
                                 }
                             }
 
-                        if (ButtonId == "BtnExcelValidate")
-                        {
-                            // Reset the position of the MemoryStream to the beginning
-                            stream.Position = 0;
-                            // Get the byte array from the MemoryStream
-                            fileBytes = stream.ToArray();
+                            if (ButtonId == "BtnExcelValidate")
+                            {
+                                // Reset the position of the MemoryStream to the beginning
+                                stream.Position = 0;
+                                // Get the byte array from the MemoryStream
+                                fileBytes = stream.ToArray();
 
-                            string fileName = "ExcelFile";//I gave default name
+                                string fileName = "ExcelFile";//I gave default name
 
-                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PostResults Images/PostResultsExcelFile");
-                        
-                            // Combine the directory path and file name
-                            string filePathToSave = Path.Combine(path, fileName);
+                                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PostResults Images/PostResultsExcelFile");
 
-                            // Write the byte array to a file on the server
-                            System.IO.File.WriteAllBytes(filePathToSave, fileBytes);
-                        
-                            return Json(new { success = true, message = "Valid file. Please click on Save As Draft or Publish." });
-                        }
-                            
+                                // Combine the directory path and file name
+                                string filePathToSave = Path.Combine(path, fileName);
+
+                                // Write the byte array to a file on the server
+                                System.IO.File.WriteAllBytes(filePathToSave, fileBytes);
+
+                                return Json(new { success = true, message = "Valid file. Please click on Save As Draft or Publish." });
+                                //return Json(new { success = false, message = new { SuccessMSG = "Valid file. Please click on Save As Draft or Publish." } });
+                                }
                         }
                     }
-               // }
-
-
-
-
-
-
-               // return Json(new { success = false, message = "Something Error" });
-
-
+                    // }
+                }
                 InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
@@ -494,18 +491,34 @@ namespace Connect4m_Web.Controllers
 
                 returnvalue = CommonMethodobj.CommonSaveMethod(obj, "/PublishResults", client);
                 if (returnvalue != "0")
-                {
-                    return Json(new { success = true, message = returnvalue });
+                {var jsonResponse = JsonConvert.DeserializeObject<dynamic>(returnvalue);
+
+                    //// Extract specific fields
+                   // string errorMSG = jsonResponse.SuccessMSG;
+                    if (jsonResponse.successMSG == "Results Posted successfully.")
+                    {
+                        string folderPath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile");
+
+                        // Get all files in the folder
+                        string[] files = Directory.GetFiles(folderPath);
+
+                        // Iterate through each file and delete it
+                        foreach (var file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                    }
+                    return Json(new { success = true, message=  returnvalue });
                 }
                 else
                 {
-                    return Json(new { success = false, message =new{ SuccessMSG= "Something Error"} });
+                    return Json(new { success = false, message = "Something Error" });
                 }
             }
             catch (Exception ex)
             {
                 // throw;
-                return Json(new { success = false, message =new { successMSG = "Something Error" } });
+                return Json(new { success = false, message=  "Something Error"  });
             }
         }
 
@@ -534,8 +547,18 @@ namespace Connect4m_Web.Controllers
             {
                 var worksheet = package.Workbook.Worksheets.Add("Report");
 
-                List<UsermarksModel> list = CommonMethodobj.CommonListMethod<ResultsModel, UsermarksModel>(val, "/DataGettingforExcel", client);
-                DataTable periodicTable = GetDataTable_OpenExcelFormat(list, val.SubjectsName);
+              //  List<UsermarksModel> list = CommonMethodobj.CommonListMethod<ResultsModel, UsermarksModel>(val, "/DataGettingforExcel", client);
+
+
+                List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
+
+                //ViewBag.colours = list?.FirstOrDefault()?.UsermarksList[0].IsPublished;
+                //ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
+
+
+
+                //  DataTable periodicTable = GetDataTable_OpenExcelFormat(list, val.SubjectsName);
+                DataTable periodicTable = GetDataTable_OpenExcelFormat(list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>(), val.SubjectsName);
 
                 // Apply bold and red font style for the header row
                 var headerStyle = worksheet.Cells["A1:" + GetExcelColumnName(periodicTable.Columns.Count) + "1"].Style;
@@ -1095,8 +1118,7 @@ namespace Connect4m_Web.Controllers
 
 
 
-    #endregion Population Management File Export end
+        #endregion Population Management File Export end
 
-
-}
+    }
 }
