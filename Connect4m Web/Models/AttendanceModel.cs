@@ -640,7 +640,7 @@ namespace Connect4m_Web.Models
         public string IncludeInTotalString { get; set; }
         public string MentorName { get; set; }
         //New 
-
+        [Required(ErrorMessage="Please Upload a File")]
         public IFormFile SubjectExelFile { get; set; }
 
 
@@ -651,7 +651,10 @@ namespace Connect4m_Web.Models
 
         public List<string> InstanceSubjectId_AvailableCheck { get; set; }
         public List<int> InstanceSubjectIdList { get; set; }
+        [Required(ErrorMessage ="The Subject Type is Required")]
         public int SubjectTypeId1 { get; set; }
+
+        [Required(ErrorMessage = "The IncludeInTotal is Required")]
         public int IncludeInTotal1 { get; set; }
         public string AttendanceRequired1 { get; set; }
         public string MentorIds1 { get; set; }
@@ -663,7 +666,8 @@ namespace Connect4m_Web.Models
         public string SubjectTypeName { get; set; }
 
 
-        [Required]
+
+        [Required(ErrorMessage = "The Subject Code is Required")]
         public string SubjectCode { get; set; }
         public List<string> SubjectCodeList { get; set; }
         public int ProgramType { get; set; }

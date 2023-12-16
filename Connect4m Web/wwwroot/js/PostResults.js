@@ -4,8 +4,14 @@
 var ErrorAppend = $("#Main_Span_Error");
 $(document).ready(function () {
     $("#loadingOverlay").show();
+    debugger;
     //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
-    CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+   // var pageTitle = '@ViewData["Title"]'
+    // pageTitle is assign in PostResultsByExcel page
+    if (pageTitle == "PostResultsByExcel") {
+        CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction?ExamtypeId=1', 'DdlExam', '------Select------', false)
+    }
+   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
     CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
     $("#loadingOverlay").hide();
 });
@@ -21,6 +27,7 @@ $('#RdbNo, #RdbYes').click(function (event) {
     try {
         // event.preventDefault();
         debugger;
+        $(".ErrorMessageSpan").empty();
         const btnname = $(this).val();
         // const btnname = $(id).val();
         const MarksUploadtype = btnname === "1" ? "UploadWithOutExcelFile" : "UploadWithExcelFile";
@@ -100,7 +107,14 @@ function BackTOStep(event, button) {
 
 
 //===============================  Search Records   /Go to step 2 to post result
-js("#FmSubjectsSearch2").submit(function (event) {
+
+var ClickedBtnId = null;
+$(".submit-btn").click(function () {
+    // Set the value of a hidden input field to the name of the clicked button
+    ClickedBtnId = $(this).attr("id");
+});
+
+js("#FmSubjectsSearch").submit(function (event) {
     debugger;
     try {
         event.preventDefault();
@@ -116,31 +130,267 @@ js("#FmSubjectsSearch2").submit(function (event) {
                     $("#Main_Span_Error").text("You can not post results for more than 1 subject in ReTest mode.");
                     window.scrollTo(0, 0);
                     return;
-                } else if (selectedCount > 14) {
+                } else if (selectedCount > 15) {
                     $("#Main_Span_Error").text("You can not post results for more than 15 subjects at a time.");
                     window.scrollTo(0, 0);
                     return;
-                } $("#loadingOverlay").show();
-                TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
-                //Header Text
-                $("#DepartmentName").text('Step 2 Selection: ' +
-                    $("#DdlDepartment option:selected").text() + ' - ' +
-                    $("#DdlClass option:selected").text() + ',' +
-                    $("#DdlExam option:selected").text() + ',' +
-                    $("#DdlExammode option:selected").text() + '');
-                $("#Div_Step2").css('display', 'block');
-                $("#Div_Step1").css('display', 'none');
-                $("#loadingOverlay").hide();
+                } //$("#loadingOverlay").show();
+
+                loaddingimg.css('display', 'block');
+                var ScreenName = null;
+                if (ClickedBtnId == "BtnNextpagePostResultsByExcel_Step2") {
+                    ScreenName ="PostResultsByExcel"
+                } else if (ClickedBtnId == "BtnNextpage_Step2") {
+                    ScreenName = "PostResults"
+                } else {
+                    loaddingimg.css('display', 'none');
+                    $("#Main_Span_Error").text("Something Error");
+                }
+
+
+                // TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
+
+
+
+                TblDataTableWithColumns_CallingFunction_new(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction?ScreenName=' + ScreenName, 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
+
+
+                function TblDataTableWithColumns_CallingFunction_new(event, val, Url, tablename, TableCountsId, FormId, DivId_Toshow, ExelTitlename, ExcelDownloadColumnsNo, paging) {
+                    try {
+                        debugger;
+                        $(".ErrorMessageSpan").empty();
+                        var formdata = new FormData($("#" + FormId)[0]);
+                        if (val != "Stop") {
+                            loaddingimg.css('display', 'block');
+                        }
+                        if (paging != false) {
+                            paging = true;
+                        }
+                        $.ajax({
+                            url: Url,
+                            type: "POST",
+                            data: formdata,
+                            contentType: false,
+                            processData: false,
+                            success: function (responce) {
+                                var columns = [];
+                               // var PostResult_CheckCountList = responce[0]?.postResult_CheckCountList;
+                               
+
+                                if (responce?.[0]?.postResult_CheckCountList?.length ?? 0 > 0) {
+                               // if (PostResult_CheckCountList.length > 0) {
+
+                                    $("#Div_Step2").css('display', 'none');
+                                    $("#Div_Step1").css('display', 'block');
+                                   // $("#TblAssociatedCount tbody").empty();
+
+                                    var response = responce[0].postResult_CheckCountList;
+                                    tablename = "TblAssociatedCount";
+                                    DivId_Toshow = "Div_TblAssociatedCount";
+                                    columns = [
+                                        {
+                                            target: 1,// Assuming this is the column index where you want to display numbering
+                                            render: function (data, type, row, meta) {
+                                                return (meta.row + 1)
+                                            }
+                                        },
+                                        {
+                                            data: "SubjectsName",
+                                            render: function (data, type, row, meta) {
+                                                return row.subjectsName
+                                            }
+                                        }, {
+                                            data: "TotalStrength",
+                                            render: function (data, type, row, meta) {
+                                                return row.totalStrength;
+                                            }
+                                        },
+                                     {
+                                         data: "OptionalStrenth",
+                                            render: function (data, type, row, meta) {
+                                                return row.optionalStrenth;
+                                            }
+                                        },
+                                    ]
+                                } else {
+                                    var response = responce[0]?.examSubjectsList ?? 0;
+                                    columns = [
+                                        {
+                                            target: 1,// Assuming this is the column index where you want to display numbering
+                                            render: function (data, type, row, meta) {
+                                                return (meta.row + 1)
+                                            }
+                                        },
+                                        {
+                                            data: "SubjectsName",
+                                            render: function (data, type, row, meta) {
+                                                return '' + row.subjectsName + '<input type="hidden" value="' + row.actualDateConducted + '" id=ActualDateConducted><input type="hidden" value="' + row.subjectId + '" id=SubjectId><input type="hidden" value="' + row.examSubjectId + '" id=ExamSubjectId>'
+                                                // return row.subjectsName
+                                            }
+                                        }, {
+                                            data: "IncludeInTotal",
+                                            render: function (data, type, row, meta) {
+                                                return row.includeInTotal == "True" || row.includeInTotal == "1" ? "Yes" : "No";
+                                            }
+                                        }, {
+                                            data: "DateConducted",
+                                            render: function (data, type, row, meta) {
+                                                //  var date = row.dateConducted;
+                                                // var setteddate = date.split("T")[0];
+                                                var dateObject = formatDate(row.dateConducted);
+                                                //var dateObject = new Date(row.dateConducted);
+                                                return '<input type="date" class="" id="TxtDate"  title="Conducted Date"  value="' + dateObject + '">';
+                                            }
+                                        },
+                                        {
+                                            data: "PassMarks",
+                                            render: function (data, type, row, meta) {
+                                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks + '">';
+                                            }
+                                        }, {
+                                            data: "MaxMarks",
+                                            render: function (data, type, row, meta) {
+                                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks + '">';
+                                            }
+                                        },
+                                    ]
+                                }
+
+                                //var ReTestChecking = responce[0]?.resultsModeList;
+
+                                if (responce[0]?.resultsModeList?.[0]?.name === "Can't Allow to Retest") {
+                                    $("#Main_Span_Error").text("Can't Allow to Retest.").scrollTop(0);
+                                    return;
+                                }
+                                //these are not using   if any error got   , check with this
+                                //var ResultsModeID = ReTestChecking[0]?.resultsModeID;
+                                //var RatingType = ReTestChecking[0]?.ratingType;
+
+
+
+                              
+                                debugger;
+                                var tableLength = response.length;
+                                $("#" + TableCountsId).text(tableLength);
+                                var table = js('#' + tablename).DataTable();
+                                var currentPage = table.page.info().page;
+                                table.destroy();
+                                
+                                var Newtable = js("#" + tablename).DataTable({
+                                    //  dom: 'Bfrtip',
+                                    dom: 'Bfrtip',
+                                    bInfo: false,
+                                    bProcessing: false,
+                                    bLengthChange: false,
+                                    bfilter: false,
+                                    bSort: true,
+                                    searching: false,
+                                    aaSorting: [],
+                                    paging: paging,
+                                    bPaginate: false,
+                                    data: response,
+                                    columns: columns,
+                                });
+                                Newtable.page(currentPage).draw('page');
+
+                                if (tableLength < 1) {
+                                    $("#" + tablename).hide();
+                                    $(".dataTables_paginate").hide();
+                                    $(".dt-buttons").hide();
+                                }
+                                else {
+                                    $("#" + tablename).show();
+                                    if (tableLength < 11) {
+                                        $(".dataTables_paginate").hide();
+                                    } else {
+                                        $(".dataTables_paginate").show();
+                                    }
+                                }
+                                $("#" + DivId_Toshow).show();
+
+                                //=====Header Text
+                                if (!(responce?.[0]?.postResult_CheckCountList?.length ?? 0 > 0)) {
+                                    $("#DepartmentName").text('Step 2 Selection: ' +
+                                        $("#DdlDepartment option:selected").text() + ' - ' +
+                                        $("#DdlClass option:selected").text() + ',' +
+                                        $("#DdlExam option:selected").text() + ',' +
+                                        $("#DdlExammode option:selected").text() + '');
+                                    $("#Div_Step2").css('display', 'block');
+                                    $("#Div_Step1").css('display', 'none');
+                                    $("#Div_TblAssociatedCount").css('display', 'none');
+                                    $("#TblAssociatedCount tbody").empty();
+                                }
+                                //  $("#TblLeavesSearchedResultPage_Div").show();
+                                loaddingimg.css('display', 'none');
+                            },
+                            error: function () {
+                                loaddingimg.css('display', 'none');
+                                $("#Main_Span_Error").text("Something Error");
+                            }
+                        });
+                    } catch (error) {
+                        $("#Main_Span_Error").text("Something Error");
+                        loaddingimg.css('display', 'none');
+                    }
+                }
+
+                loaddingimg.css('display', 'none');
+                //  $("#loadingOverlay").hide();
             } else {
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
                 $(".alert-danger").show().delay(5000).fadeOut()
             }
         }, 50);
     } catch (e) {
-        $("#loadingOverlay").hide();
+        // $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 })
+
+
+
+//js("#FmSubjectsSearch").submit(function (event) {
+//    debugger;
+//    try {
+//        event.preventDefault();
+//        $(".ErrorMessageSpan").empty();
+//        var formElement = document.getElementById('FmSubjectsSearch');
+//        setTimeout(function () {
+//            var validationMessages = formElement.getElementsByClassName('field-validation-error');
+//            // var validationMessages2 = formElement.getElementsByClassName('error2');
+//            var validationmelength = validationMessages.length;
+//            if (validationmelength == 0) {
+//                var selectedCount = $('#DdlSubjects option:selected').length;
+//                if (selectedCount > 1 && $("#DdlExammode").val() == 2) {
+//                    $("#Main_Span_Error").text("You can not post results for more than 1 subject in ReTest mode.");
+//                    window.scrollTo(0, 0);
+//                    return;
+//                } else if (selectedCount > 14) {
+//                    $("#Main_Span_Error").text("You can not post results for more than 15 subjects at a time.");
+//                    window.scrollTo(0, 0);
+//                    return;
+//                } $("#loadingOverlay").show();
+//                TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
+//                //Header Text
+//                $("#DepartmentName").text('Step 2 Selection: ' +
+//                    $("#DdlDepartment option:selected").text() + ' - ' +
+//                    $("#DdlClass option:selected").text() + ',' +
+//                    $("#DdlExam option:selected").text() + ',' +
+//                    $("#DdlExammode option:selected").text() + '');
+//                $("#Div_Step2").css('display', 'block');
+//                $("#Div_Step1").css('display', 'none');
+//                $("#loadingOverlay").hide();
+//            } else {
+//                $('.alert-danger p').text("Pleae Enter All Required Fields");
+//                $(".alert-danger").show().delay(5000).fadeOut()
+//            }
+//        }, 50);
+//    } catch (e) {
+//        $("#loadingOverlay").hide();
+//        $("#Main_Span_Error").text("Something Error");
+//    }
+//})
 
 //===============================  This is For save and go to step3
 js(document).on("click", '#BtnSave_Nextpage_Step3', function (event) {
@@ -516,6 +766,7 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
 
 //--to show include class check box
 function ShowIncludeClass() {
+    $(".ErrorMessageSpan").empty();
     if ($("#chkSMSStudent").prop("checked") || $("#chkSMSParent").prop("checked")) {
         $("#SpnSendRating").css("display", "block");
     } else {

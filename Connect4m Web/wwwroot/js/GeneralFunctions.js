@@ -844,49 +844,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                     ]
                 }
-                else if (tablename == "TblExamSubjects") {//Post Results(Step2) Screen
-                    columns = [
-                        {
-                            target: 1,// Assuming this is the column index where you want to display numbering
-                            render: function (data, type, row, meta) {
-                                return (meta.row + 1)
-                            }
-                        }, 
-                        {
-                            data: "SubjectsName",
-                            render: function (data, type, row, meta) {
-                                return '' + row.subjectsName + '<input type="hidden" value="' + row.actualDateConducted + '" id=ActualDateConducted><input type="hidden" value="' + row.subjectId + '" id=SubjectId><input type="hidden" value="' + row.examSubjectId + '" id=ExamSubjectId>'
-                               // return row.subjectsName
-                            }
-                        }, {
-                            data: "IncludeInTotal",
-                            render: function (data, type, row, meta) {
-                                return row.includeInTotal == "True" || row.includeInTotal == "1" ? "Yes" : "No";
-                            }
-                        },  {
-                            data: "DateConducted",
-                            render: function (data, type, row, meta) {
-                              //  var date = row.dateConducted;
-                               // var setteddate = date.split("T")[0];
-                                var dateObject = formatDate(row.dateConducted);
-                                //var dateObject = new Date(row.dateConducted);
-                                return '<input type="date" class="" id="TxtDate"  title="Conducted Date"  value="' + dateObject + '">';
-                         }
-                        },
-                        {
-                            data: "PassMarks",
-                            render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks +'">';
-                            }
-                        }, {
-                            data: "MaxMarks",
-                            render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks +'">';
-                            }
-                        },
-                    ]
-                }
-
                 else {
                     //tablename == "TblLeavesSummery"
                     columns = [

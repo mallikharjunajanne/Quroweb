@@ -21,6 +21,8 @@ namespace Connect4m_Web.Models
         public List<ResultsModel> ResultsModeList { get; set; }
         public List<ResultsModel> StudentNamesList { get; set; }
         public List<UsermarksModel> UsermarksList { get; set; }
+
+        public List<ResultsModel> PostResult_CheckCountList { get; set; }
     }
     public class ResultsModel : CommonClass
     {//New
@@ -73,6 +75,10 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage = "The Exam Mode is required")]
         public int ExamModeId { get; set; }
         public int SortBy { get; set; }
+
+
+        public string OptionalStrenth { get; set; }
+        public string TotalStrength { get; set; }
     }
 
 

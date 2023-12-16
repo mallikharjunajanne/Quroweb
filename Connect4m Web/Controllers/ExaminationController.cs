@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Http;
 using Connect4m_Web.Models.LMSproperties;
 using Microsoft.AspNetCore.Authorization;
 using OfficeOpenXml;
+using System.Text.RegularExpressions;
+
+
 
 namespace Connect4m_Web.Controllers
 {
@@ -335,6 +338,14 @@ namespace Connect4m_Web.Controllers
             return PartialView("_ViewChangeActivities");
         }
 
+        //=============for checking 
+        static bool ContainsNonDigits(string input)
+        {
+            // Use regular expression to check if the string contains non-digits
+            return Regex.IsMatch(input, @"\D");
+        }
+
+
         public IActionResult BulkUploadSubjects()
         {
             return View();
@@ -343,32 +354,105 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult BulkUploadSubjects(SubjectModel obj, string ButtonName,IFormFile SubjectExelFile)
         {
-            if (obj.ButtonName == "MultiSubjectsUpdate")
+            //if (obj.ButtonName == "MultiSubjectsUpdate")
+            if (obj.ButtonId == "BtnSave" || obj.ButtonId == "BtnUpload")
             {
+                //string HeaderText="";
+                int errorCount = 0;
+                var text = "";
                 if (SubjectExelFile == null || SubjectExelFile.Length <= 0)
-            {
-                return Json(new { success = false, message = "Invalid File" });
+                {
+                    return Json(new { success = false, message = "Invalid File" });
+                }
+                var fileExtension = Path.GetExtension(SubjectExelFile.FileName);
 
-            }
+                if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                {
+                    return Json(new { success = false, message = "Invalid file extension.allowed extensions are .xls,.xlsx" });
+                }
+
                 using (var stream = new MemoryStream())
                 {
                     SubjectExelFile.CopyTo(stream);
+                    try
+                    {
+
                     using (var package = new ExcelPackage(stream))
                     {
+                        
                         // Provide the password to decrypt the sheet
                         package.Workbook.Worksheets[0].Protection.SetPassword("rockSt@2r1");
 
                         var worksheet = package.Workbook.Worksheets[0]; // Assuming the data is in the first sheet
 
-                        if (worksheet != null && worksheet.Dimension?.Rows > 1)
+                        //if (worksheet == null && worksheet.Dimension?.Rows < 1)
+                        //{
+                        //    return Json(new { success = false, message = "Sheet is empty,Please Enter the details." });                        
+                        //}
+                        var Totallength = worksheet.Dimension.End.Column; var columnCount = 0;
+                        string UploadingFileHeaderText;
+                        string SavedFileHeaderText;
+
+                        List<string> columnNames = new List<string>
+                          {
+                              "DepartmentId",
+                              "ClassId",
+                              "SubjectName",
+                              "SubjectType",
+                              "IncludeInTotal",
+                              "SubjectCode",
+                              "SubjectsDisplayOrder",
+                              "AttendanceRequired",
+                              "TotalPeriods",
+                              "MentorUserId"
+                          };
+                        if (obj.ButtonId == "BtnSave"){
+                            columnNames.Remove("DepartmentId");
+                            columnNames.Remove("ClassId");
+                        }
+                        //Checking Header text of first row
+                        for (int col = 1; col <= Totallength; col++)
                         {
-                            return Json(new { success = false, message = "Sheet is not empty." });                        
+                             UploadingFileHeaderText = worksheet.Cells[1, col].Text;
+                            SavedFileHeaderText = columnNames[col-1];
+                            if (UploadingFileHeaderText == null){
+                                break;
+                            }
+                            if (UploadingFileHeaderText != SavedFileHeaderText){
+                                return Json(new { success = false, message = $"Mismatch of header name in column{col}" });
+                                //  return Json(new { success = false, message = new { SuccessMSG = $"Invalid '{ SubjectNames[col - 1]}' Subject Name" } });
+                            }
+                            columnCount++;
+                        }
+                        if (columnCount != 8 && obj.ButtonId == "BtnSave"){
+                            text = $"Number of columns in excel sheet should be 8.";
+                            errorCount++;
+                        }
+                        else if (columnCount != 10 && obj.ButtonId == "BtnUpload")
+                        {
+                            text = $"Number of columns in excel sheet should be 10.";
+                            errorCount++;
                         }
 
-                        int rowCount = worksheet.Dimension.Rows;
+                        if (errorCount > 0)
+                        {
+                            return Json(new { success = false, message = text });
+                        }
+                        //Count of Rows
+                        int lastRow = worksheet.Dimension.End.Row;
+                        int rowCount = Enumerable.Range(1, lastRow)
+                         .Reverse()
+                         .FirstOrDefault(row => Enumerable.Range(1, Totallength)
+                         .Any(col => !string.IsNullOrEmpty(worksheet.Cells[row, col].Text)));
+                            if (rowCount < 2)
+                            {
+                                return Json(new { success = false, message = "Sheet is empty,Please Enter the details." });
+
+                            }
+                            //  int rowCount = worksheet.Dimension.Rows;
 
 
-                        obj.InstanceClassificationIdList = new List<int>();
+                            obj.InstanceClassificationIdList = new List<int>();
                         obj.InstanceSubClassificationIdList = new List<int>();
                         obj.SubjectNameList = new List<string>();
                         obj.SubjectCodeList = new List<string>();
@@ -380,45 +464,211 @@ namespace Connect4m_Web.Controllers
                         obj.MentorIds = new List<string>();
 
 
-                        for (int row = 2; row <= 3; row++) // Assuming the header is in the first row
-                        {
-
-                            string InstanceClassificationIdList = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
-                            string InstanceSubClassificationIdList = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
-                            string SubjectNameList = worksheet.Cells[row, 3].Value?.ToString(); // Access each cell's value
-                            string SubjectTypeIdString = worksheet.Cells[row, 4].Value?.ToString(); // Access each cell's value
-
-                            string IncludeInTotalStringList = worksheet.Cells[row, 5].Value?.ToString(); // Access each cell's value
-                            string SubjectCodeList = worksheet.Cells[row, 6].Value?.ToString(); // Access each cell's value
-                            string DisplayOrder = worksheet.Cells[row, 7].Value?.ToString(); // Access each cell's value
-
-                            string AttendanceRequired = worksheet.Cells[row, 8].Value?.ToString(); // Access each cell's value
-                            string TotalPeriods = worksheet.Cells[row, 9].Value?.ToString(); // Access each cell's value
-                            string MentorIds = worksheet.Cells[row, 10].Value?.ToString(); // Access each cell's value
+                        string InstanceClassificationIdList;
+                        string InstanceSubClassificationIdList;
+                        string SubjectNameList;
+                        string SubjectTypeIdString;
 
 
+                        string IncludeInTotalStringList;
+                        string SubjectCodeList;
+                        string DisplayOrder;
+
+                        string AttendanceRequired;
+                        string TotalPeriods;
+                        string MentorIds;
+                        string SubjectTypeIdStringToLower;
+                        string IncludeInTotalStringListTolower;
+                        int colNums=1;
+                        //return Json(new { success = false, message = "Something Error" });
+                        for (int row = 2; row <= rowCount; row++) // Assuming the header is in the first row
+                        {                            colNums = 1;
+                            InstanceClassificationIdList = obj.ButtonId == "BtnSave" ? obj.InstanceClassificationId.ToString() : worksheet.Cells[row, colNums++].Value?.ToString();
+                            InstanceSubClassificationIdList = obj.ButtonId == "BtnSave" ? obj.InstanceSubClassificationId.ToString() : worksheet.Cells[row, colNums++].Value?.ToString();
+                            SubjectNameList = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+                           SubjectTypeIdString = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+
+                           IncludeInTotalStringList = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+                           SubjectCodeList = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+                           DisplayOrder = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+
+                           AttendanceRequired = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+                           TotalPeriods = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+                           MentorIds = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
+
+                            if (string.IsNullOrWhiteSpace(InstanceClassificationIdList) && string.IsNullOrWhiteSpace(InstanceSubClassificationIdList) && string.IsNullOrWhiteSpace(SubjectNameList) && string.IsNullOrWhiteSpace(SubjectTypeIdString) && string.IsNullOrWhiteSpace(IncludeInTotalStringList) && string.IsNullOrWhiteSpace(SubjectCodeList) && string.IsNullOrWhiteSpace(DisplayOrder) && string.IsNullOrWhiteSpace(AttendanceRequired) && string.IsNullOrWhiteSpace(TotalPeriods) && string.IsNullOrWhiteSpace(MentorIds))
+                            {
+                                continue;
+                            }
+
+                            // HeaderText = worksheet.Cells[1, colNums].Value?.ToString();
+
+                            SubjectTypeIdStringToLower = SubjectTypeIdString.ToLower().Trim();
+                            IncludeInTotalStringListTolower = IncludeInTotalStringList.ToLower().Trim();
+                            if (InstanceClassificationIdList == null)
+                            {
+                                text = $"Empty cells in DepartmentId Column, Please enter DepartmentId in row{row}.";
+                                errorCount++;
+                                
+                                // return Json(new { success = false, message = text });
+                            }
+                           else if (InstanceSubClassificationIdList == null)
+                            {
+                                text = $"Empty cells in ClassId Column, Please enter ClassId in row{row}.";
+                                errorCount++;
+                            }
+                            else if (SubjectNameList == null)
+                            {
+                                text = $"Empty cells in SubjectName Column, Please enter SubjectName in row{row}.";
+                                errorCount++;
+                            }
+                            else if (SubjectTypeIdString == null)
+                            {
+                                text = $"Empty cells in SubjectType Column, Please enter SubjectType in row{row}.";
+                                errorCount++;
+                            }
+                            else if (IncludeInTotalStringList == null)
+                            {
+                                text = $"Empty cells in IncludeInTotal Column, Please enter IncludeInTotal in row{row}.";
+                                errorCount++;
+
+                            }
+                            else if (SubjectCodeList == null)
+                            {
+                                text = $"Empty cells in SubjectCode Column, Please enter SubjectCode in row{row}.";
+                                errorCount++;
+                            }
+                            else if (DisplayOrder == null)
+                            {
+                                text = $"Empty cells in DisplayOrder Column, Please enter DisplayOrder in row{row}.";
+                                errorCount++;
+                            }
+                            else if (AttendanceRequired == null)
+                            {
+                                text = $"Empty cells in AttendanceRequired Column, Please enter AttendanceRequired in row{row}.";
+                                errorCount++;
+                            }
+                            //else if (TotalPeriods == null)
+                            //{
+                            //    text = $"Empty cells in TotalPeriods Column, Please enter TotalPeriods in row{row}.";
+                            //    errorCount++;
+                            //}
+                            //else if (MentorIds == null)
+                            //{
+                            //    text = $"Empty cells in MentorUserId Column, Please enter MentorUserId in row{row}.";
+                            //    errorCount++;
+                            //}
+
+                           else if (ContainsNonDigits(InstanceClassificationIdList))
+                            {
+                                text = $"Invalid DepartmentId in row{row}.";
+                                errorCount++;
+                            }else if (ContainsNonDigits(InstanceSubClassificationIdList))
+                            {
+                                text = $"Invalid ClassId in row{row}.";
+                                errorCount++;
+                            }
+                            else if (SubjectTypeIdStringToLower != "regular" && SubjectTypeIdStringToLower != "first language" && SubjectTypeIdStringToLower != "second language" && SubjectTypeIdStringToLower != "lab")
+                            {
+                                text = $"subject type should be Regular,First Language,Second language or Lab in row{row}.";
+                                errorCount++;
+                            }
+                            else if (IncludeInTotalStringListTolower != "true" && IncludeInTotalStringListTolower != "false")
+                            {
+                                text = $"IncludeInTotal should be TRUE or FALSE  in row{row}.";
+                                errorCount++;
+                            }
+                            else if (ContainsNonDigits(DisplayOrder))
+                            {
+                                text = $"Invalid DisplayOrder in row{row}.";
+                                errorCount++;
+                            }else if (Convert.ToInt32( DisplayOrder) > 200)
+                            {
+                                text = $"Subjects Display Order should not exceed 200 in row{row}.";
+                                errorCount++;
+                            }else if (ContainsNonDigits(AttendanceRequired))
+                            {
+                                text = $"Invalid AttendanceRequired in row{row}.";
+                                errorCount++;
+                            }
+                            else if (Convert.ToInt32(AttendanceRequired) > 100)
+                            {
+                                text = $"AttendanceRequired Should not be greater than 100 in row{row}.";
+                                errorCount++;
+                            }
+                            else if (Convert.ToInt32(AttendanceRequired) > 500)
+                            {
+                                text = $"Number of Total Periods should be less than 500 in row{row}.";
+                                errorCount++;
+                            }
+                            else if (TotalPeriods != null && ContainsNonDigits(TotalPeriods)  )
+                            {
+                                text = $"Invalid TotalPeriods in row{row}.";
+                                errorCount++;
+                            }else if (MentorIds != null && ContainsNonDigits(MentorIds) )
+                            {
+                                text = $"Invalid Mentor UserId in row{row}.";
+                                errorCount++;
+                            }
+
+
+
+                            if (errorCount > 0)
+                            {
+                                return Json(new { success = false, message = text });
+                            }
 
                             obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
                             obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
-                            obj.SubjectNameList.Add(SubjectNameList);
-                            obj.SubjectCodeList.Add(SubjectCodeList);
-
+                           
+                            
+                            if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32( InstanceSubClassificationIdList)))
+                            {
+                                obj.SubjectNameList.Add(SubjectNameList);
+                            }
+                            else
+                            {//Duplicate Subject Names Exist For Same Class.
+                                if (obj.ButtonId == "BtnSave")
+                                {
+                                    return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                }
+                                return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                            }
+                            if (!obj.SubjectCodeList.Contains(SubjectCodeList))
+                            {
+                                obj.SubjectCodeList.Add(SubjectCodeList);
+                            }
+                            else
+                            {
+                                return Json(new { success = false, message = "Duplicate Subjects Code in excel sheet." });
+                                }
                             //obj.IncludeInTotal.Add(IncludeInTotalStringList);
                             obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
-
                             obj.SubjectTypeIdString.Add(SubjectTypeIdString);
-
-                            obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
+                            if (!obj.DisplayOrder.Contains(Convert.ToInt32(DisplayOrder)))
+                            {
+                                obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
+                            }
+                            else{
+                                return Json(new { success = false, message = "Duplicate Subjects Display Order in excel sheet." });
+                                }
                             obj.AttendanceRequired.Add(AttendanceRequired);
                             obj.TotalPeriods.Add(TotalPeriods);
                             obj.MentorIds.Add(MentorIds);
                         }
+                            // return Json(new { success = true, message = "Data imported successfully" });
+                        }
+                    }
+                    catch (System.IO.InvalidDataException ex)
+                    {
+                        return Json(new { success = false, message = "Invalid Excel file format.Please Save as the opened excel sheet in 'Excel Workbook' format." });
 
-                        // return Json(new { success = true, message = "Data imported successfully" });
                     }
                 }
             }
+           // return Json(new { success = false, message = "Something Error" });
             obj.SubjectExelFile = null;
+            #region
             // List<List<string>> excelData = new List<List<string>>();
 
             //using (var stream = new MemoryStream())
@@ -444,7 +694,7 @@ namespace Connect4m_Web.Controllers
             //    }
             //}
 
-
+            #endregion
 
 
 
