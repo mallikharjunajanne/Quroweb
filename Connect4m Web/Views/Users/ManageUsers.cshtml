@@ -1,0 +1,99 @@
+﻿
+
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+
+<link href="~/css/PayRoll.css" rel="stylesheet" />
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />
+<input type="text" value="@ViewBag?.url" hidden id="UsersControllerAppend" />
+
+<div class="progress" style="height: 30px; margin-top: -22px; background-color: transparent ">
+    <div role="progressbar" aria-valuemin="10" aria-valuemax="100" style="width: 100%; background-color: transparent; border: none; position: relative; ">
+
+
+        <div class="circle-label c-1" onclick="nextpage('UserSearchTab',null)">1</div>@*&#10004;*@
+        <div class="circle-label c-2" onclick="nextpage('SearchSalaryAttributesForRoles',null)">2</div>
+        <div class="circle-label c-3" onclick="nextpage('SearchManageCatogory',null)">3</div>
+        <div class="circle-label c-4" onclick="nextpage('SearchManageSubCatogory',null)">4</div>
+        <div class="circle-label c-5" onclick="nextpage('SearchManageEmployees',null)">5</div>
+        <div class="circle-label c-6" onclick="nextpage('SearchEmployeeAttendence',null)">6</div>
+        <div class="circle-label c-7" onclick="nextpage('SearchEmployeeDetails',null)">7</div>
+        <div class="circle-label c-8" onclick="nextpage('SalaryReport',null)">8</div>
+    </div>
+    <div class="progress-bar progress-bar-striped progress-bar-animated outer" role="progressbar" aria-valuemin="10" aria-valuemax="100" style="background-color: #500ef6; border: none; width:8%;" id="Progressbarouter">
+
+    </div>
+    <div class="progress-bar-striped progress-bar-animated inner" role="progressbar" aria-valuemin="10" aria-valuemax="100" style="width: 93%; border: none;">
+
+    </div>
+</div>
+<div class="name-container">
+    <span>Configure salary Attributes</span>
+    <span>Manage Salary Attributes for Roles</span>
+    <span>Manage Category</span>
+    <span>Manage Sub Category</span>
+    <span>Manage Employees</span>
+    <span>Employee Attendence Posting</span>
+    <span>Payslip Generate for Employee's</span>
+    <span>Salary Report</span>
+</div>
+
+<div id="AppendAllPayRolls">
+    <div id="InnerPayRoll">
+
+    </div>
+</div>
+
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/cookies.js"></script>
+
+@*<script src="~/js/PayRoll.js"></script>*@
+<script src="~/js/CommonScripts.js"></script>
+
+<script>
+
+    //------------------------------------------  To Contros The Steps (8)
+    //function setProgressBar(curStep, backgroundcolor) {
+    //    //debugger;
+    //    var percent = parseFloat(94 / 8) * curStep;
+    //    percent = percent.toFixed();
+    //    $('.progress ' + backgroundcolor).css('background-color', '#500ef6');
+    //    $(".progress #Progressbarouter")
+    //        .css("width", percent + "%");
+    //    for (var i = 1; i <= curStep; i++) {
+    //        $('.progress .c-' + i).css('background-color', '#500ef6');
+    //    }
+    //    for (var i = curStep + 1; i <= 8; i++) {
+    //        $('.progress .c-' + i).css('background-color', '');
+    //    }
+
+
+    //}
+
+    $(document).ready(function () {
+        var urlofpayroll = $("#UsersControllerAppend").val();
+       debugger;
+        if (urlofpayroll != undefined) {
+            loaddingimg.css('display', 'block');
+            CommonAjaxFunction('GET', '/Users/' + urlofpayroll, null, function (response) {
+                debugger;
+                $('#AppendAllPayRolls #InnerPayRoll').html(response);
+                loaddingimg.css('display', 'none');
+            }, function (status, error) {
+                loaddingimg.css('display', 'none');
+            }, false);
+        }
+    })
+</script>
+
+

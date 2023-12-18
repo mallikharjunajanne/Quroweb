@@ -29,12 +29,11 @@ else
 { @if (BtnName == "RdlSingleDept")
     {
 
-        <a href="~/UploadSingleSubjects_ExelSheet/Report.xls" class="Undeline" style="font-family:ui-serif; color:blue; margin-left:3%;">Get Excel To Upload</a>
+        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor SingleDepartment/Report.xls" class="Undeline" style="font-family:ui-serif; color:blue; margin-left:3%;">Get Excel To Upload</a>
     }
     else if (BtnName == "RdlMultipleDept")
     {
-
-        <a href="~/UploadMultipleSubjects_ExelSheet/Report.xls" class="Undeline" style="font-family:ui-serif; color:blue; margin-left:3%;">Get Excel To Upload</a>
+        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor MultipleDepartment/Report.xls" class="Undeline" style="font-family:ui-serif; color:blue; margin-left:3%;">Get Excel To Upload</a>
         <a onclick="_ViewChangeActivities(event,'','','', '/Examination/TblViewSubjectsList')" class="Undeline" style="font-family:ui-serif; color:blue; margin-left:58%;">Get Department And Class Id's</a>
     }
 
@@ -69,7 +68,6 @@ else
                     <div class="card-body">
                         @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
 
-
                         <form id="FmUpdateSubjects">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div style="margin-left:20%;font-size:12px" id="UpdateSubjects_Div">
@@ -80,19 +78,22 @@ else
                                             <div class="mb-2 row">
                                                 <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Department :&nbsp;</label>
                                                 <div class="col-sm-9">
-                                                    <select id='DdlDepartmentForSingle' name="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassForSingle', 'Please select a Class', true)" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))">
+                                                    <select id='DdlDepartmentForSingle' asp-for="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassForSingle', 'Please select a Class', true)" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))">
                                                         <option value=''>Select a Department</option>
                                                     </select>
+                                                    <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
                                                 <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Class :&nbsp;</label>
                                                 <div class="col-sm-9">
-                                                    <select id='DdlClassForSingle' name="InstanceSubClassificationId" class="input-air-primary Ddlstyle" onchange="_ViewSubjects(event,'DdlClassForSingle')" asp-items="@(new SelectList(""))" disabled>
+                                                    <select id='DdlClassForSingle' asp-for="InstanceSubClassificationId" class="input-air-primary Ddlstyle" onchange="_ViewSubjects(event,'DdlClassForSingle')" asp-items="@(new SelectList(""))" disabled>
                                                         <option value=''>Please select a Class</option>
                                                     </select>
+                                                    <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+
                                                     <span id="ViewSubjectsSymbol" style="display:none">
-                                                        <input type="image" id="_lnkViewSubjects" title="Excel should be" src="~/UploadSingleSubjects_ExelSheet/magnify.png" onclick="_ViewSubjects(event)" style="border-width:0px;">
+                                                        <input type="image" id="_lnkViewSubjects" title="Excel should be" src="/IconImages/searchbtn image.png" onclick="_ViewSubjects(event)" style="border-width:0px;">
                                                         View Subjects List
                                                     </span>
                                                 </div>
@@ -100,7 +101,9 @@ else
                                             <div class="mb-2 row">
                                                 <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Upload Subjects :&nbsp;</label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" id="SubjectFileForSingle" />
+                                                    <input type="file" asp-for="SubjectExelFile" id="SubjectFileForSingle" />
+                                                    <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
+
                                                 </div>
                                             </div>
                                             <div class="mb-2 row">
@@ -112,9 +115,8 @@ else
                                             </div>
                                             <div style="margin-left:171px">
                                                 <input type="button" class="btn btn-pill btn-outline-primary btn-air-danger" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" style="padding:4px 20px;" value="Back to Search">&nbsp;&nbsp;&nbsp;
-
                                                 <input type="reset" class="btn btn-pill btn-outline-danger btn-air-danger" id="BtnClearNew" style="padding:4px 20px;" value="Clear">&nbsp;&nbsp;&nbsp;
-                                                <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" id="BtnSave" style="padding:4px 19px;" value="Save">
+                                                <input type="submit" class="btn btn-pill btn-outline-success btn-air-success  submit-btn" id="BtnSave" style="padding:4px 19px;" value="Save">
                                             </div>
                                         }
                                         else if (BtnName == "RdlMultipleDept")
@@ -123,12 +125,14 @@ else
                                             <div class="mb-2 row">
                                                 <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Upload Subjects :&nbsp;</label>
                                                 <div class="col-sm-9">
-                                                    <input type="file" name="SubjectExelFile" id="SubjectFileForMultiple" />
+                                                    <input type="file" asp-for="SubjectExelFile" id="SubjectFileForMultiple" />
+                                                    <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
+
                                                 </div>
                                             </div>
                                             <div style="margin-left:171px">
                                                 <input type="button" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" style="padding:4px 20px;" value="Back to Search">&nbsp;&nbsp;&nbsp;
-                                                <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" id="BtnUpload" style="padding:4px 19px;" value="Upload">
+                                                <input type="submit" class=" submit-btn btn btn-pill btn-outline-success btn-air-success" id="BtnUpload" style="padding:4px 19px;" value="Upload">
                                             </div>
                                         }
                                         else
@@ -137,22 +141,24 @@ else
                                                 <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Subject Name :&nbsp;</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" asp-for="SubjectName" id="TxtSubjectNameUpd" style="height: 27px; width: 230px;">
+                                                    <span asp-validation-for="SubjectName" class="text-danger"></span>
                                                 </div>
-                                                <span asp-validation-for="SubjectName" class="text-danger"></span>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;"><i style="color:red">*</i>Subject Type   :&nbsp;</label>
                                                 <div class="col-sm-9">
 
                                                     <select id="DdlSubjectTypeUpd" asp-for="SubjectTypeId1" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(ViewBag.SubjectNames, "Value", "Text"))">
-                                                        <option>---------select---------</option>
+                                                        <option value="">---------select---------</option>
                                                     </select>
+                                                    <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 3px;"><i style="color:red">*</i>Subject Code   :&nbsp;</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" asp-for="SubjectCode" id="TxtSubjectCodeUpd" style="height: 27px; width: 230px;">
+                                                    <span asp-validation-for="SubjectCode" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -170,6 +176,7 @@ else
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <span asp-validation-for="IncludeInTotal1" class="text-danger"></span>
                                             </div>
 
                                             <div class="mb-3 row">
@@ -204,7 +211,7 @@ else
 
                                             <div style="margin-left:171px">
                                                 <input type="button" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" style="padding:4px 20px;" value="Back to Search">&nbsp;&nbsp;&nbsp;
-                                                <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" id="BtnUpdate" style="padding:4px 19px;" value="Update">
+                                                <input type="submit" class=" submit-btn btn btn-pill btn-outline-success btn-air-success" id="BtnUpdate" style="padding:4px 19px;" value="Update">
                                             </div>}
                                     </div>
                                 </div>
@@ -221,42 +228,38 @@ else
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 <script>
-
+    var ClickedBtnId = null;
+    $(".submit-btn").click(function () {
+        // Set the value of a hidden input field to the name of the clicked button
+        ClickedBtnId = $(this).attr("id");
+    });
 
 
     //-----------------------------------This is for Upload Subject details
+    // $(document).on("click", "#BtnUpload,#BtnUpdate,#BtnSave", function (event) {
     $("#FmUpdateSubjects").submit(function (event) {
         debugger;
         event.preventDefault();
-
+        $(".ErrorMessageSpan").empty();
+        // var btnid = $(this).attr("id");
+        // var btnid = ClickedBtnId;
         //  var file12 = $("#SubjectFileForMultiple").prop('files')[0];
-        var fileInput = document.getElementById("SubjectFileForMultiple");
-        //if (fileInput) {
-        //    if (fileInput.files.length > 0) {
-        //        var file12 = fileInput.files[0];
-        //        var allowedExtensions = ['.xlsx', '.xls'];
-        //        // Check the file extension
-        //        var fileExtension = '.' + file12.name.split('.').pop().toLowerCase();
-        //        if (!allowedExtensions.includes(fileExtension)) {
-        //            $('#SubjectFileForMultiple').val('');
-        //            $("#Main_Span_Error").text('Invalid file extension.allowed extensions are .xls,.xlsx');
-        //            return;
-        //        }
-        //        // Check file size
-        //        var maxSize = 500 * 1024; // 500 KB
-        //        if (file12.size > maxSize) {
-        //            $("#Main_Span_Error").text('File size exceeds the maximum limit of 500 KB.');
-        //            $('#SubjectFileForMultiple').val('');
-        //            return;
-        //        }
-        //    }
-        //}
-        var formData = new FormData(this);
-        //var formdata_CSA = $(this).serialize();
+        //  var fileInput = document.getElementById("SubjectFileForMultiple");
 
+
+        //  var formData = new FormData(this);
+        var formData = new FormData($("#FmUpdateSubjects")[0]);
+        //var formdata_CSA = $(this).serialize();
+        formData.append("ButtonId", ClickedBtnId);
         var formElement = document.getElementById('FmUpdateSubjects');
         setTimeout(function () {
             var validationMessages = formElement.getElementsByClassName('field-validation-error');
@@ -264,10 +267,18 @@ else
             var validationmelength = validationMessages.length;
             if (validationmelength == 0) {
                 debugger;
-                CommonAjaxFunction('POST', '/Examination/BulkUploadSubjects?ButtonName=MultiSubjectsUpdate', formData, function (response) {
+                // CommonAjaxFunction('POST', '/Examination/BulkUploadSubjects?ButtonName=MultiSubjectsUpdate', formData, function (response) {
+                CommonAjaxFunction('POST', '/Examination/BulkUploadSubjects', formData, function (response) {
                     debugger;
+
                     if (response.message == "Record updated successfully.") {
-                        //$("#BtnUpdate").prop('disabled', true);
+                        $("#BtnUpdate").prop('disabled', true);
+                    } else if (response.message == "Subjects inserted successfully.") {
+                        $("#" + ClickedBtnId).prop('disabled', true);
+                    }
+                    if (ClickedBtnId == "BtnSave" || ClickedBtnId == "BtnUpload") {
+                        $("#SubjectFileForSingle").val('');
+                        $("#SubjectFileForMultiple").val('');
                     }
                     $("#Main_Span_Error").text(response.message);
                     $("#loadingOverlay").hide();
@@ -284,6 +295,7 @@ else
     $("#FmUpdateSubjects1").submit(function (event) {
         debugger;
         event.preventDefault();
+        $(".ErrorMessageSpan").empty();
         var formdata_CSA = $(this).serialize();
 
         var formElement = document.getElementById('FmUpdateSubjects');

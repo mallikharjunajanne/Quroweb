@@ -237,6 +237,7 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
 
 
 //Data table function with columns
+//TblDataTableWithColumns_CallingFunction_new(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction?ScreenName=' + ScreenName, 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
 
 function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, TableCountsId, FormId, DivId_Toshow, ExelTitlename, ExcelDownloadColumnsNo, paging) {
     try {
@@ -844,48 +845,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                     ]
                 }
-                else if (tablename == "TblExamSubjects") {//Post Results(Step2) Screen
-                    columns = [
-                        {
-                            target: 1,// Assuming this is the column index where you want to display numbering
-                            render: function (data, type, row, meta) {
-                                return (meta.row + 1)
-                            }
-                        }, 
-                        {
-                            data: "SubjectsName",
-                            render: function (data, type, row, meta) {
-                                return '' + row.subjectsName + '<input type="hidden" value="' + row.actualDateConducted + '" id=ActualDateConducted><input type="hidden" value="' + row.subjectId + '" id=SubjectId><input type="hidden" value="' + row.examSubjectId + '" id=ExamSubjectId>'
-                               // return row.subjectsName
-                            }
-                        }, {
-                            data: "IncludeInTotal",
-                            render: function (data, type, row, meta) {
-                                return row.includeInTotal == "True" || row.includeInTotal == "1" ? "Yes" : "No";
-                            }
-                        },  {
-                            data: "DateConducted",
-                            render: function (data, type, row, meta) {
-                              //  var date = row.dateConducted;
-                               // var setteddate = date.split("T")[0];
-                                var dateObject = formatDate(row.dateConducted);
-                                //var dateObject = new Date(row.dateConducted);
-                                return '<input type="date" class="" id="TxtDate"  title="Conducted Date"  value="' + dateObject + '">';
-                         }
-                        },
-                        {
-                            data: "PassMarks",
-                            render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks +'">';
-                            }
-                        }, {
-                            data: "MaxMarks",
-                            render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks +'">';
-                            }
-                        },
-                    ]
-                }
 
                 else {
                     //tablename == "TblLeavesSummery"
@@ -1184,7 +1143,7 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
         //OpenIFrameModel("../Admin/ViewUserCompOffLeavesLapsedDetails.aspx?InstanceId=" + InstanceId + "&UserID=" + UserID + "&AcademicYearID=" + AcademicYearID + "&Lapsed=" + Lapsed, 700, 250)
         //return false;
 
-        if (Url == '') {
+        if (Url == '' || Url == undefined) {
             Url = "/Attendance/_ViewChangeActivities?SourceId=" + SourceId + "&AuditKey=" + AuditKey + "&TableName=" + TableName;
         }
         debugger;
@@ -1224,7 +1183,12 @@ function restrictCharacters_AllowDots(element) {
 }
 
 function restrictCharacters_AllowDotsAndHyphen(element) {
-    debugger;element.value = element.value.replace(/[^0-9-]|(?<=\..*)\./g, '');
+    debugger;
+    //const hasHyphen = /-/.test(element.value);
+    if (/-/.test(element.value)) {
+        element.value = '-';
+    }else
+        element.value = element.value.replace(/[^.\d-]|(\.)(?=.*\1)|(-)(?=.*\2)/g, '');
 }
 
 
@@ -1234,6 +1198,7 @@ function CommonClearFunction(Formid) {
 }
 
 
+//<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 
 function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used this in manage Exams Screen
   

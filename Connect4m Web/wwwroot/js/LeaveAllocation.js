@@ -31,12 +31,10 @@
 
 
 
-
+//=============================== Submit Leaves
 
 function SubmitLeaves(event) {
     try {
-
-   
     debugger;
     event.preventDefault();
     $(".ErrorMessageSpan").empty();
@@ -200,9 +198,6 @@ function SearchLeaveAllocationPartialViewFunction(event) {
                 if (data == "") {
                     $("#Main_Span_Error").text("No records found");
                 }
-
-
-
                 // Append the received partial view content to the container
                 $("#TBLAllocateLeavesSearchedTypePageView_id_Div").html(data);
                 $("#loadingOverlay").hide();

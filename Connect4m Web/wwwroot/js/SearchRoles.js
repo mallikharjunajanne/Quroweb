@@ -382,9 +382,7 @@ function DisplayOrder() {
             initComplete: function () {
                 // Hide the loading image after DataTable initialization is complete
                 loaddingimg.css('display', 'none');
-            }
-
-             
+            } 
         });
        
         

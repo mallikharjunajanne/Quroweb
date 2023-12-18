@@ -221,7 +221,8 @@
 
 <script>
 
-    //this for add same value in Textboxes by selecting checkbox
+    //==============this for add same value in Textboxes by selecting checkbox
+
     function UpdateAllTextboxvaluesByChecked1(checkbox, FirstTextBoxId, EffectiveTxtClass) {
         debugger;
         const AllTextboxes = document.querySelectorAll('.' + EffectiveTxtClass);
@@ -388,7 +389,10 @@
                 return;
             }
 
-
+            var SubjectCode;
+            var SubjectOrder;
+            var SubjectType;
+            var Classname;
         var Departmentcheckbox;
         var DepartmentcheckboxValue;
        // var ClassCheckbox;
@@ -406,6 +410,8 @@
 
             var shouldExit = false; // Initialize a flag variable
             //this for check a record
+
+
             ParentTable.each(function (index) {
                 if (shouldExit) {
                     return false; // Exit the outer loop
@@ -434,13 +440,32 @@
                         if (ClassCheckboxforCheck.is(":checked")) {
                             ChildTableCheckBoxcount++;
 
-                            var SubjectCode = $(this).find('td:nth-child(3) input[type="text"]').val();
-                            var SubjectOrder = $(this).find('td:nth-child(4) input[type="text"]').val();
-                            var SubjectType = $(this).find('td:nth-child(6) #Subjectfor_MS').val();
+                             SubjectCode = $(this).find('td:nth-child(3) input[type="text"]').val();
+                             SubjectOrder = $(this).find('td:nth-child(4) input[type="text"]').val();
+                             SubjectType = $(this).find('td:nth-child(6) #Subjectfor_MS').val();
 
-                            var Classname = $(this).find('td:nth-child(2)').text();
+                             Classname = $(this).find('td:nth-child(2)').text();
 
+                            if (SubjectCode == "") {
+                                $(ErrorAppend).text("Please fill the Subject Code Required of " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(3)').find('input[type="text"]').addClass('errorboxshadow');
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            } else if (SubjectOrder == "") {
+                                $(ErrorAppend).text("Please fill the Subject Order to be displayed for " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(4)').find('input[type="text"]').addClass('errorboxshadow');
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            } else if (SubjectType == "") {
+                                $(ErrorAppend).text("Please fill the Subject Type of " + departmentname + " -> " + Classname + "");
+                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(6)').find('#Subjectfor_MS').addClass('errorboxshadow');
 
+                                window.scrollTo(0, 0);
+                                shouldExit = true; // Set the flag to true to exit the loops
+                                return false; // Exit the inner loop
+                            }
 
                             IsInternal = 1; //I gave default value
                             UserId = ""; //I gave default value
@@ -486,27 +511,6 @@
                             formData.append("SubjectTypeId", $(this).find('td:nth-child(6) #Subjectfor_MS').val() || 0);
                             formData.append("SubjectShortName", $(this).find('td:nth-child(7) input[type="text"]').val());
 
-
-                            if (SubjectCode == "") {
-                                $(ErrorAppend).text("Please fill the Subject Code Required of " + departmentname + " -> " + Classname + "");
-                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(3)').find('input[type="text"]').addClass('errorboxshadow');
-                                window.scrollTo(0, 0);
-                                shouldExit = true; // Set the flag to true to exit the loops
-                                return false; // Exit the inner loop
-                            } else if (SubjectOrder == "") {
-                                $(ErrorAppend).text("Please fill the Subject Order to be displayed for " + departmentname + " -> " + Classname + "");
-                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(4)').find('input[type="text"]').addClass('errorboxshadow');
-                                window.scrollTo(0, 0);
-                                shouldExit = true; // Set the flag to true to exit the loops
-                                return false; // Exit the inner loop
-                            } else if (SubjectType == "") {
-                                $(ErrorAppend).text("Please fill the Subject Type of " + departmentname + " -> " + Classname + "");
-                                ClassCheckboxforCheck.closest('tr').find('td:nth-child(6)').find('#Subjectfor_MS').addClass('errorboxshadow');
-
-                                window.scrollTo(0, 0);
-                                shouldExit = true; // Set the flag to true to exit the loops
-                                return false; // Exit the inner loop
-                            }
                         }
                     });
 

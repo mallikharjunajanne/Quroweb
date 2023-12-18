@@ -5,12 +5,13 @@
 }
 @{ string IsDisabled = "";
     int UsersCount = (ViewBag.UsersDetailsList as IEnumerable<object>).Count();
+    List<int> userIds = new List<int>();
 }
 <!--Send sms check boxes-->
 <div>
-    <span class="checkboxclass"><input id="chkSMSStudent"onclick="ShowIncludeClass(this)" type="checkbox"><label  for="chkSMSStudent">SMS to Student</label></span>
+    <span class="checkboxclass"><input id="chkSMSStudent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSStudent">SMS to Student</label></span>
     &nbsp;
-    <span class="checkboxclass"><input id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label  for="chkSMSParent">SMS to Parent</label></span>
+    <span class="checkboxclass"><input id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSParent">SMS to Parent</label></span>
     &nbsp;
     <span class="checkboxclass"><input id="chkEMAILSTUDENTS" type="checkbox" /><label for="chkEMAILSTUDENTS">EMAIL to Students</label></span>
     &nbsp;
@@ -21,15 +22,18 @@
     <span id="lblUsed" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
     &nbsp; Remaining Credits :
     <span id="lblRem" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
-  
-        <span class="checkboxclass" id="SpnSendRating" style="display:none"><input id="chksendRating" type="checkbox" ><label id="lblSendRating">Include Class</label></span>
-       
+
+    <span class="checkboxclass" id="SpnSendRating" style="display:none"><input id="chksendRating" type="checkbox"><label id="lblSendRating">Include Class</label></span>
+
 </div>
 <!--note-->
 <div><span id="lblStatus" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</span></div>
+@{int sno = 0; int Subjectcount = 0; var subjectNamesForAlertMsg = ""; var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = ""; var bluecolorCount = 0;}
 
 <span class="ErrorMessageSpan" id="StudentSMS_Error"></span>
-<span class="ErrorMessageSpan" id="ParentSMS_Error"></span><br />
+<span class="ErrorMessageSpan" id="ParentSMS_Error"></span>
+<br />
+<!--This is for Uploading marks with Excel file-->
 @if (ViewBag.MarksUploadtype == "UploadWithExcelFile")
 {
     IsDisabled = "disabled";
@@ -51,42 +55,74 @@
                 <div class="card ">
                     <div class="card-body">
                         <form id="FmFileUpload">
+
+
                             <div style="margin-left:20%;font-size:12px" id="UpdateSubjects_Div">
                                 <div class="row">
-                                    <div>
+                                    <div class="form-group col-4">
+
                                         @if (UsersCount > 0 || ViewBag.MarksUploadtype == "UploadWithExcelFile")
                                         {
-                                                                                  <a id="_Getexceltoupload" class="btn btn-pill btn-outline-info btn-air-info">Get Excel To Upload</a> 
-
+                                            <a id="_Getexceltoupload" class="btn btn-pill btn-outline-info btn-air-info">Get Excel To Upload</a>
+                                        }
+                                        @if (UsersCount > 0)
+                                        {
+                                            <!--This is for store userids-->
+                                            @for (int i = 0; i < UsersCount; i++)
+                                            {
+                                                var item = ViewBag.UsersDetailsList[i];
+                                                userIds.Add(item.UserId);
+                                            }
+                                            <!--this is for Store Published subject Names-->
+                                            @foreach (var item1 in ViewBag.SubjectNamesList)
+                                            {
+                                                @for (int i = 0; i < UsersCount; i++)
+                                                {
+                                                    var item = ViewBag.UsersDetailsList[i];
+                                                    if (item.IsPublished[OptionalSubjectcount] == "1")
+                                                    {
+                                                        subjectNamesForAlertMsg += item1 + " ,";
+                                                        break;
+                                                    }
+                                                    //else if (item.IsPublished[OptionalSubjectcount] == "0")
+                                                    //{
+                                                    //    break;
+                                                    //}
+                                                }
+                                                OptionalSubjectcount++;
+                                            }
                                         }
                                     </div>
-
+                                    <div class="col-3"></div>
+                                    <div class="col-4"></div><br />
                                     <div class="form-group col-2">
-                                        <label class="control-label space">Upload File </label>
+                                        <label class="control-label space required">Upload File </label>
                                     </div>
                                     <div class="form-group col-4">
-                                        <div id="Drop_Format_SEM_2">
-                                            <input type="file" id="ExcelFile" asp-for="File" class="form-group" />
-                                            <span asp-validation-for="File" class="ErrorMessageSpan"></span>
-                                        </div>
+                                        <input type="file" id="ExcelFile" asp-for="File" class="form-control" />
+                                        @*<span asp-validation-for="File" class="ErrorMessageSpan"></span>*@
+                                        <span id="SpnExeclFile" class="ErrorMessageSpan"></span>
                                     </div>
 
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div class="form-group col-2">
-                                        <label class="control-label space">Sheet Name</label>
+                                        <label class="control-label space required">Sheet Name</label>
                                     </div>
                                     <div class="form-group col-4">
-                                        <input type="text" id="txtSheetName" asp-for="Name" />
-                                        <span asp-validation-for="Name" class="ErrorMessageSpan"></span>
+                                        <input type="text" id="txtSheetName" asp-for="SheetName" class="form-control" />
+                                        @*<span asp-validation-for="SheetName" class="ErrorMessageSpan"></span>*@
+                                        <span id="SpnSheetName" class="ErrorMessageSpan"></span>
                                     </div>
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
                                     <div style=" display: flex; gap: 17px;">
                                         <div class="col-4"></div>
                                         @*<input type="reset" value="Clear" id="BtnRefresh" class="btn btn-pill btn-outline-warning btn-air-warning" />*@
-                                        <input type="button" value="Validate Excel" id="BtnExcelValidate" class="btn btn-pill btn-outline-info btn-air-info" />
+                                        <input type="submit" value="Validate Excel" id="BtnExcelValidate" class="btn btn-pill btn-outline-info btn-air-info" />
                                     </div>
+                                    <div id="userIdsContainer" data-user-ids="@string.Join(",", @userIds)"></div>
+
                                 </div>
                             </div>
                         </form>
@@ -97,7 +133,7 @@
     </div>
     <br />
 
-    <!--card 3-->
+    <!--card 3   file uploading steps to follow-->
     <div style=" padding-top: 0px;" id="Div_FileUploadSteps">
         <div class="card">
             <div class="card-header " style="background-color:black ;">
@@ -217,124 +253,136 @@
 else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
 {
 
-
-    <!--card 4-->
+    <!--This is for Uploading marks with Excel file-->
+    <!--card 4   Table of users-->
     @if (UsersCount > 0)
     {
-        <a id="_lnkExporttoexcel">Export To Excel</a>
+        <a id="_lnkExporttoexcel" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</a>
     }
     else
     {
         IsDisabled = "disabled";
     }
     <div class="card" id="DivUsersSearchedTbl">
+
         <div class="card-header " style="background-color:black ;">
             <h5 class="mb-0">
                 <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1"
                         aria-expanded="true" aria-controls="collapse11">
                     <span id="CountOfRecords_LeaveLevels">
                         YOUR SEARCH RESULTED <span id="Counts"
-                                                   class="number-circle">@((ViewBag.UsersDetailsList as IEnumerable<object>).Count())</span> RECORD(S).
-                    </span>
-                </button>
-            </h5>
-        </div>
-        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-            <div class="card ">
-                <form id="Fm_TblUsersSearched" class="table-responsive">
-                    @{int sno = 0; int Subjectcount = 0;var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = "";}
-                    <table id="TblUsersSearched" class="tableid">
-                        <thead>
-                            <tr>
-                                <th>S.No</th>
-                                <th>Name</th>
-                                <th>Registration No.</th>
+                                                   class="number-circle">@UsersCount</span> RECORD(S).
+                                            </span>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                                    <div class="card ">
+                                        <form id="Fm_TblUsersSearched" class="table-responsive">
+                                            <table id="TblUsersSearched" class="tableid">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Name</th>
+                                                        <th>Registration No.</th>
 
-                                @foreach (var item1 in ViewBag.SubjectNamesList)
-                                {
-                                    Subjectcount++;
-                                    ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
-                                    MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
-                                    PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
-                                  
-                                    @for (int i = 0; i < ViewBag.UsersDetailsList.Count; i++)
-                                    {
-                                        var item = ViewBag.UsersDetailsList[i];
+                                                        @foreach (var item1 in ViewBag.SubjectNamesList)
+                                                        {
+                                                            Subjectcount++;
+                                                            ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
+                                                            MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
+                                                            PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
 
-                                        if (item.IsPublished[OptionalSubjectcount] == "1")
-                                        {
-                                            color = "green";
-                                            break;
-                                        }
-                                        else if (item.IsPublished[OptionalSubjectcount] == "0")
-                                        {
-                                            color = "blue";
-                                            break;
-                                        }
+                                                            @for (int i = 0; i < UsersCount; i++)
+                                                            {
+                                                                var item = ViewBag.UsersDetailsList[i];
 
-                                    }
+                                                                if (item.IsPublished[OptionalSubjectcount] == "1")
+                                                                {
+                                                                    color = "green";
 
-                                    OptionalSubjectcount++;
-                                    <th style="color:@color">
-                                        @item1
-                                        <input type="hidden" id="TH_ExamSubjectId" value="@ExamSubjectId" disabled />
-                                        <input type="hidden" id="TH_MaxMarks" value="@MaxMarks" disabled />
-                                        <input type="hidden" id="TH_PassMarks" value="@PassMarks" disabled />
-                                    </th>
-                                    color = "red";
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
+                                                                    subjectNamesForAlertMsg += item1 + " ,";
+                                                                    break;
+                                                                }
+                                                                else if (item.IsPublished[OptionalSubjectcount] == "0")
+                                                                {
+                                                                    bluecolorCount++;
+                                                                    //   color = "blue";
+                                                                    //break;
+                                                                }
 
-                            @foreach (var item in ViewBag.UsersDetailsList)
-                            {
-                                Subjectcount = 0;
+                                                            }
+                                                            if (bluecolorCount > 0)
+                                                            {
+                                                                color = "blue";
+                                                            }
 
-                                sno++; OptionalSubjectcount = 0;
-                                <tr>
-                                    <td>@sno</td>
-                                    <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
-                                    <td>@item.InstanceUserCode</td>
-                                    @foreach (var columnValue in item.Columns)
-                                    {
-                                        Subjectcount++;
-                                        subjectname = ViewBag.SubjectNamesList[Subjectcount - 1];
-                                        if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
-                                        {
-                                            <td><input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" disabled /></td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                <input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
-                                                @if (item.DisplayIcon[OptionalSubjectcount] == "1")
-                                                {
-                                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9855684, 'NoofLeaves')">
-                                                }
-                                            </td>
-                                        }
-                                        OptionalSubjectcount++;
-                                    }
-                                    @*@for (int i = 1; i <= Subjectcount; i++)
-                                        {
-                                            <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
-                                        }*@
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                                            OptionalSubjectcount++;
+                                                            <th style="color:@color">
+                                                                @item1
+                                                                <input type="hidden" id="TH_ExamSubjectId" value="@ExamSubjectId" disabled />
+                                                                <input type="hidden" id="TH_MaxMarks" value="@MaxMarks" disabled />
+                                                                <input type="hidden" id="TH_PassMarks" value="@PassMarks" disabled />
+                                                            </th>
+                                                            color = "red";
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                </form>
-            </div>
-        </div>
-    </div>
-}
+                                                    @foreach (var item in ViewBag.UsersDetailsList)
+                                                    {
+                                                        Subjectcount = 0;
+
+                                                        sno++; OptionalSubjectcount = 0;
+                                                        <tr>
+                                                            <td>@sno</td>
+                                                            <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
+                                                            <td>@item.InstanceUserCode</td>
+                                                            @foreach (var columnValue in item.Columns)
+                                                            {
+                                                                Subjectcount++;
+                                                                subjectname = ViewBag.SubjectNamesList[Subjectcount - 1];
+                                                                if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
+                                                                {
+                                                                    <td><input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" disabled /></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>
+                                                                        <input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
+                                                                        @if (item.DisplayIcon[OptionalSubjectcount] == "1")
+                                                                        {
+                                                                            <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblSubjectMarks', @item.SubjectMarks[OptionalSubjectcount], 'SecuredMarks')">
+                                                                        }
+                                                                    </td>
+                                                                }
+                                                                OptionalSubjectcount++;
+                                                            }
+                                                            @*@for (int i = 1; i <= Subjectcount; i++)
+                                                                {
+                                                                    <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
+                                                                }*@
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+<input type="hidden" id="HdnSubjectNamesForAlertMsg" value="@subjectNamesForAlertMsg" readonly disabled />
+
 <div style=" display: flex; gap: 7px;">
     <input type="button" style=" margin-left: 14%;" value="Go Back to Step 1" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-primary btn-air-primary" />
     <input type="button" value="Go Back to Step 2" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" class="btn btn-pill btn-outline-warning btn-air-warning" />
-    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft"  class="btn btn-pill btn-outline-info btn-air-warning" />
-    <input type="submit" value="Publish" @IsDisabled  id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
+    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft" class="btn btn-pill btn-outline-info btn-air-warning" />
+    <input type="submit" value="Publish" @IsDisabled id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/GeneralFunctions.js"></script>
 
+<script src="~/js/PostResults.js"></script>

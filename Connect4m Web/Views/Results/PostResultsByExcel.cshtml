@@ -1,7 +1,7 @@
 ﻿
 @model Connect4m_Web.Models.ResultsModel
 @{
-    ViewData["Title"] = "PostResults";
+    ViewData["Title"] = "PostResultsByExcel";
 }
 
 <!DOCTYPE html>
@@ -107,21 +107,7 @@
                                             </select>
                                             <span asp-validation-for="SubjectsIdString" class="ErrorMessageSpan"></span>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <label class="control-label space required">Exam Type </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <div id="Drop_Format_SEM_3">
-                                                <select id='DdlExamtype' asp-for="ExamtypeId" name="ExamtypeId" onchange="CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction', 'DdlExam', '------Select------', true,'FmSubjectsSearch')" class="form-select readonly" asp-items="@(new SelectList(""))">
-                                                    <option value=''>Select Exam Type</option>
-                                                    <option value="1">Academics</option>
-                                                    <option value="2">Final Exam</option>
-                                                </select>
-                                                <span asp-validation-for="ExamtypeId" class="ErrorMessageSpan"></span>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
@@ -129,7 +115,7 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <div id="Drop_Format_SEM_2">
-                                                <select id='DdlExam' asp-for="ExamId" name="ExamId" class="form-select readonly" asp-items="@(new SelectList(""))" disabled>
+                                                <select id='DdlExam' asp-for="ExamId" name="ExamId" class="form-select readonly" asp-items="@(new SelectList(""))">
                                                 </select>
                                                 <span asp-validation-for="ExamId" class="ErrorMessageSpan"></span>
                                             </div>
@@ -173,7 +159,7 @@
                                         <div style=" display: flex; gap: 17px;">
                                             <div class="col-4"></div>
                                             <input type="reset" value="Clear" id="BtnRefresh" class="btn btn-pill btn-outline-warning btn-air-warning" />
-                                            <input type="submit" value="Go to step 2 of Post Results" id="BtnNextpage_Step2" class="btn btn-pill btn-outline-info btn-air-info submit-btn" />
+                                            <input type="submit" value="Go to step 2 of Post Results" id="BtnNextpagePostResultsByExcel_Step2" class="btn btn-pill btn-outline-info btn-air-info submit-btn" />
                                         </div>
                                     </div>
                                 </form>
@@ -183,6 +169,43 @@
                 </div>
             </div>
         </div>
+
+        <!--Associated Count Table-->
+
+            @*Step 2 Searched Results*@
+            <div id="Div_TblAssociatedCount" style="display:none">
+                <br />
+                <div class="default-according style-1" id="accordionoc123456">
+
+                    <div class="card" >
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span >COUNT OF STUDENTS IN OPTIONAL SUBJECT IS NOT EQUAL TO THE TOTAL STRENGTH OR SELECT ALL THE SUBJECTS IN AN ELECTIVE TO POST THE RESULT</span></button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                            <div class="card ">
+                                <table id="TblAssociatedCount" class="display cell-border  tableid">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%">S.No</th>
+                                                <th>Subject Type Name</th>
+                                                <th>	Total Strength</th>
+                                                <th>	Associated Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+
+
 
         <!--This is Step 2-->
         <div id="Div_Step2">
@@ -244,7 +267,7 @@
                         <span id="DepartmentNameStep3" style="margin-left:25%;">
                             @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
                         </span>
-                    
+
                         <div class="card-header " style="background-color:black ;">
                             <h5 class="mb-0">
                                 <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001A1" aria-controls="collapse11">
@@ -260,25 +283,25 @@
                                 <div class="card-body">
                                     @*<form id="FmChooseOption">*@
 
-                                       
-                                        <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
-                                            <div class="row">
-                                                <div class="form-group col-2">
-                                                    <label class="control-label space">Upload File</label>
+
+                                    <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
+                                        <div class="row">
+                                            <div class="form-group col-2">
+                                                <label class="control-label space">Upload File</label>
+                                            </div>
+                                            <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
+                                                    <label class="mb-0" for="RdbYes">Yes</label>
                                                 </div>
-                                                <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
-                                                    <div class="radio radio-primary">
-                                                        <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
-                                                        <label class="mb-0" for="RdbYes">Yes</label>
-                                                    </div>
-                                                    &nbsp;
-                                                    <div class="radio radio-primary">
-                                                        <input id="RdbNo" name="SortBy" class="check"  type="radio" value="1">
-                                                        <label class="mb-0" for="RdbNo">No</label>
-                                                    </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbNo" name="SortBy" class="check" type="radio" value="1">
+                                                    <label class="mb-0" for="RdbNo">No</label>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                     @*</form>*@
                                 </div>
@@ -309,8 +332,11 @@
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
 
 <script src="~/js/ExcelDownloading.js"></script>
-
+<script>
+    var pageTitle = '@ViewData["Title"]';
+</script>
 <script src="~/js/PostResults.js"></script>
+
 
 
 
