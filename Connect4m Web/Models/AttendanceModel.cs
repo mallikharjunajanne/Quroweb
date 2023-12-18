@@ -46,22 +46,27 @@ namespace Connect4m_Web.Models
     {
         public string ButtonId { get; set; }//new
         public int Id { get; set; }
+        [Display(Name="Role")]
         public int RoleId { get; set; }
         public int CreatedBy { get; set; }
         public int InstanceID { get; set; }
         public int UserId { get; set; }
         [Required(ErrorMessage ="The Department is Rerquired")]
+        [Display(Name = "Department ")]
         public int InstanceClassificationId { get; set; }
         [Required(ErrorMessage ="The Class is Required")]
+        [Display(Name = "Class")]
         public int InstanceSubClassificationId { get; set; }
         public string ScreenName { get; set; }
         
         public string Name { get; set; }
         public string ButtonName { get; set; }
         public string DisplayOrders { get; set; }
-
+        [Display(Name= "Admission Number")]
         public string AdmissionNumber { get; set; }
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
     public class AttendanceModel

@@ -237,6 +237,7 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
 
 
 //Data table function with columns
+//TblDataTableWithColumns_CallingFunction_new(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction?ScreenName=' + ScreenName, 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
 
 function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, TableCountsId, FormId, DivId_Toshow, ExelTitlename, ExcelDownloadColumnsNo, paging) {
     try {
@@ -844,6 +845,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                     ]
                 }
+
                 else {
                     //tablename == "TblLeavesSummery"
                     columns = [
