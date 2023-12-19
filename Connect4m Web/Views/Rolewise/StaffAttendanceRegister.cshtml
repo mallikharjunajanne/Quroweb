@@ -1,0 +1,343 @@
+﻿@model Connect4m_Web.Models.LMSproperties.StaffAttendance
+@{
+    ViewData["Title"] = "AttendanceRegister";
+
+}
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />
+<style>
+    #appendstaffsearchatendance {
+        display: none
+    }
+
+    .dataTable td:nth-child(2) {
+        color: black;
+        /*  text-decoration: underline;*/
+        font-weight: 600 !important;
+    }
+
+    .dataTable td:nth-child(1) {
+        text-align: center !important;
+    }
+
+
+    .dataTable td:nth-child(2):hover {
+        cursor: auto !important;
+        color: black;
+        font-weight: 600;
+        text-decoration: none;
+        background-color: antiquewhite;
+    }
+
+    .dataTables_wrapper table.dataTable tbody td {
+        text-align: center;
+    }
+
+    .table > thead {
+        background-color: black;
+        color: white;
+    }
+
+    .table > :not(:last-child) > :last-child > * {
+        color: white;
+        font-weight: 900;
+        padding: 5px;
+    }
+
+    .dataTables_wrapper table.dataTable tbody td :hover {
+        background-color: black !important;
+        color: white;
+        font-weight: 900
+    }
+
+    thead tr:hover {
+        background-color: black !important;
+    }
+
+    #tblStaffattendancesearchresults tbody tr td:hover {
+        background-color: #040404;
+        color: white;
+    }
+
+    .dataTables_wrapper table.dataTable th {
+        padding: 0px;
+    }
+
+    table.dataTable thead th {
+        padding: 4px
+    }
+
+    thead {
+        height: 36px;
+    }
+
+    .container-fluid {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+</style>
+
+
+<div class="card">
+
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <h6><span>ATTENDANCE REGISTER</span></h6>
+
+                <div id="appendsearchmanageemployees">
+
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH<span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                        <div class="row padding-search">
+                            <div class="row">
+
+
+                                <form id="Serach_Staffregister">
+                                    <div class="row">
+                                        <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforSAR" disabled hidden />
+
+                                        <div class="form-group col-2">
+                                            <label class="control-label space" asp-for="InstanceUserCode"> </label>
+
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <input class="form-control" asp-for="InstanceUserCode" />
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space" asp-for="InstanceClassificationId"> </label>
+
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                                x => x.InstanceClassificationId,
+                                                new SelectList(ViewBag.Department, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_instanceclassficationstaff", @style = "color:black;" })
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space" asp-for="FirstName"> </label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <input class="form-control" asp-for="FirstName" />
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space" asp-for="LastName"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <input class="form-control" asp-for="LastName" />
+
+                                        </div>
+
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space required" asp-for="Month"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                                x => x.Month,
+                                                new SelectList(ViewBag.Months, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_staff_month", @style = "color:black;" })
+
+                                            </div>
+
+                                            <span asp-validation-for="Month" class="text-danger"></span>
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space required" asp-for="Year"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                                x => x.Year,
+                                                new SelectList(ViewBag.Years, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_staff_Year", @style = "color:black;" })
+
+                                            </div>
+                                            <span asp-validation-for="Year" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space" asp-for="PayrollCategory"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                                x => x.PayrollCategory,
+                                                new SelectList(ViewBag.PayrollCategory, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_staff_PayrollCategory", @style = "color:black;" })
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+
+                                            <label class="control-label space" asp-for="PayrollSubCategory"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_4">
+                                                @Html.DropDownListFor(
+                                           x => x.PayrollSubCategory,
+                                            new SelectList(ViewBag.PayRollSubCategory, "Value", "Text"),
+                                        new { @class = "form-select readonly", @id = "dropdown_staff_PayRollSubCategory", @style = "color:black;height:97px;", @multiple = "multiple" })
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group col-2">
+
+                                            <label class="control-label space" asp-for="LMSCategory"></label>
+
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_2">
+                                                @Html.DropDownListFor(
+                                                x => x.LMSCategory,
+                                                new SelectList(ViewBag.LMSCategory, "Value", "Text"),
+                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_staff_LMSCategory", @style = "color:black;" })
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space" asp-for="LMSSubCategory"></label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                            <div id="Drop_Format_SEM_4">
+                                                @Html.DropDownListFor(
+                                           x => x.LMSSubCategory,
+                                            new SelectList(ViewBag.LMSSubCategory, "Value", "Text"),
+                                        new { @class = "form-select readonly", @id = "dropdown_staff_LMSSubCategory", @style = "color:black;height:97px;", @multiple = "multiple" })
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div style=" display: flex; gap: 17px;">
+                                        <div class="col-4"></div>
+
+                                        <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                        <input type="submit" value="Search" id="sub_tblPGE" class="btn btn-pill btn-outline-success btn-air-success" />
+
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <!--<div class="card">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_StaffA" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                            </h5>
+                        </div>
+
+                        <div id="eg1" style="color: black; background-color: whitesmoke">
+                            <table class=" table table-bordered" id="tblStaffattendancesearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                <thead>
+                                    <tr style="border-color: black;">
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Month
+                                        </th>
+                                        <th>
+                                            Year
+                                        </th>-->
+                    @*<th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+                        <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+                        <th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th>
+                         <th>31</th>*@
+
+
+
+                    <!--</tr>
+                                </thead>
+                            </table>
+                        </div>
+
+
+
+                    </div>-->
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="appendstaffsearchatendance"></div>
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+@*
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+@*
+    <script src="~/lib/jquery/dist/jquery.js"></script>*@
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+
+<script src="~/js/Staff_Attendance.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+
+
+
+
+

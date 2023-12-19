@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewData["Title"] = "PostAttendanceSave";
+    Layout = null;
+}
+<style>
+    .table.dataTable input {
+        height: 0px !important;
+        border: 1px solid #0000009c;
+    }
+    .dataTables_wrapper table.dataTable tbody td{
+        text-align:center;
+    }
+</style>
+<div class="col-sm-12 ">
+
+    <div class="card" id="checksall">
+
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div id="appendsearchsalaryattributeforroles">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white">NOTE</button>
+                            </h5>
+                        </div>
+                        <div>
+
+                            <div class="row padding-search" style="border: 1px solid #d3c2c2;">
+                                <div class="row">
+
+                                    <div class="row">
+
+
+                                        <div class="col-6">
+                                            <label class="control-label " style="color: green;">
+                                                Green Date--Indicates attendance already posted.
+                                            </label>
+                                        </div>
+                                        <div class=" col-6">
+                                            <label class="control-label ">
+                                                <img src="~/Images_IMP/tick_16.png" style="width: 16px;" />
+                                                -- Indicates Send Sms is true.
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="control-label " style=" color: red;">
+                                                Red Date--Indicates attendance not yet posted.
+                                            </label>
+                                        </div>
+                                        <div class=" col-6">
+                                            <label class="control-label ">
+                                                <img src="~/Images_IMP/cross.png" style="width: 16px;" />
+                                                -- Indicates Send Sms is false.
+                                            </label>
+                                        </div>
+                                        <div class=" col-6">
+                                            <label class="control-label ">
+                                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" />
+                                                --Indicates Attendance modified.
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-12 errorofallemployeeattendence" style="color: red; margin: 7px 6px 10px 7px; font-weight: 900;">
+
+                                        </div>
+                                        <div style="background-color: #f3f0edf0">
+                                            <div class="form-group col-3">
+                                                <input type="checkbox" class="form-check-input" />
+                                                <label class="control-label ">
+                                                    Send SMS
+                                                </label>
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <input type="checkbox" class="form-check-input"  id="_checkallattendance"  />
+                                                <label class="control-label ">
+                                                    Check All
+                                                </label>
+                                            </div>
+                                        </div>
+                                       
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link  text-white"   data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse22"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MA" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                                        @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH FOR MENTORS  <span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span></button>*@
+
+                                    </h5>
+                                </div>
+
+                                <div id="attendencetable" style="color: black; background-color: whitesmoke; overflow-x: scroll; overflow-y: scroll;">
+                                    <table class=" table table-bordered" id="tblMAsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                        <thead>
+                                            <tr style="border-color: black;">
+                                                @*<th style=" border-color: blue" >
+                                                        S.No
+                                                    </th>*@
+                                                <th style=" width: 92px !important;">
+                                                    S.No
+                                                </th>
+                                               
+                                                <th>
+                                                    Name
+                                                </th>
+                                                <th>
+                                                    Registration No.
+                                                </th>
+                                                <th>
+                                                    Mentor Sms Status
+                                                </th>
+                                               
+                                               
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

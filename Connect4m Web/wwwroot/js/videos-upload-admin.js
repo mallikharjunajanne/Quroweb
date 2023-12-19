@@ -144,7 +144,7 @@ function uploaddocumentchange(newValue) {
     for (var e = 0; e < docs.length; e++) {
         var field = docs[e];
 
-        parent.append($('<div style="display:flex"><label>' + field.name + '</label><input type="text" class="form-control" placeholder="Enter Display Name" value="'+newValue+'"name="DocsDisplayname"  /></div><br/>'));
+        parent.append($('<div style="display:flex"><label>' + field.name + '</label><input type="text" class="form-control" placeholder="Enter Display Name" title="" value="'+newValue+'"name="DocsDisplayname"  /></div><br/>'));
 
     }
     parent.append($('<input type="button" id="filesubmit" value="Save"/>'))
