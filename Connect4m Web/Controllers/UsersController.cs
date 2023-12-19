@@ -10,6 +10,7 @@ using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace Connect4m_Web.Controllers
         HttpClient client;
         private readonly IUserService _userService;
         //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        
         private readonly int UserId;
         private readonly int InstanceId;
         private readonly int InstanceClassificationId;
@@ -27,13 +29,14 @@ namespace Connect4m_Web.Controllers
         private readonly int Roleid;
         private readonly int StudentUserid;
 
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         public UsersController(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(apiBaseAddress + "/PayRoll");
+            client.BaseAddress = new Uri(apiBaseAddress + "/Users");
 
             //=======================================================
             _userService = userService;
@@ -51,6 +54,20 @@ namespace Connect4m_Web.Controllers
             Roleid = 773;
             StudentUserid = 0;
         }
+
+        //=---------------========Manage Users Screen ================
+
+        public IActionResult TblUsersSearch(ManageUsersModel obj)
+        {
+           // InitializeCookieValues();
+            obj.InstanceID = InstanceId;
+            List<ManageUsersModel> list = CommonMethodobj.CommonListMethod<ManageUsersModel, ManageUsersModel>(obj, "/TblUsersSearch", client);
+            return Json(list);
+        }
+
+
+
+
         public IActionResult ManageUsers()
         {
             //if (url != null)

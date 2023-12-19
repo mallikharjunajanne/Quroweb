@@ -101,12 +101,13 @@ namespace LMS_Module
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-//  pattern: "{controller=Videos}/{action=Chapter_wise_Video_playing}/{id?}");
-// pattern: "{controller=Videos}/{action=SimpleExpenseManagement}/{id?}");//SimpleExpenseManagement
- // pattern: "{controller=Videos}/{action=ExpensiveReport}/{id?}");//SimpleExpenseManagement
-                                                                 //   pattern: "{controller=Home}/{action=Trail3}/{id?}");//SearchUploadlecturedocs
-                                                                 //pattern: "/PayRoll/StepsControl?url=SearchEmployeeDetails");
-        pattern: "{controller=Users}/{action=ManageUsers}/{id?}");
+        //  pattern: "{controller=Videos}/{action=Chapter_wise_Video_playing}/{id?}");
+        // pattern: "{controller=Videos}/{action=SimpleExpenseManagement}/{id?}");//SimpleExpenseManagement
+        // pattern: "{controller=Videos}/{action=ExpensiveReport}/{id?}");//SimpleExpenseManagement
+        //   pattern: "{controller=Home}/{action=Trail3}/{id?}");//SearchUploadlecturedocs
+        //pattern: "/PayRoll/StepsControl?url=SearchEmployeeDetails");
+        pattern: "{controller=Attendance}/{action=LoginPage}/{id?}");
+           // pattern: "{controller=Users}/{action=ManageUsers}/{id?}");
         });
 
 
