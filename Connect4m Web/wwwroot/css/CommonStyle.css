@@ -1,5 +1,26 @@
 ﻿
 
+/*//------for Hide /Show password input login page*/
+
+.password-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.password-input {
+    padding-right: 30px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    /*right: 10px;*/
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+
 .col-2 {
     text-align: right;
 }

@@ -37,7 +37,7 @@ $('.alert button').click(function (event) {
 
 //----------------------------------------------------------------------------------   Common Ajax Function To all
 function CommonAjaxFunction(method, url, data, successCallback, errorCallback, hasFileUpload) {
-   // debugger;
+   debugger;
     var ajaxOptions = {
         url: url,
         method: method,

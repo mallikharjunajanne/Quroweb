@@ -41,6 +41,7 @@
     <link href="~/css/loading.css" rel="stylesheet" />
     <link href="~/css/CommonStyle.css" rel="stylesheet" />
     @*@RenderSection("Scripts", required: false);*@
+   
 </head>
 <body data-screen-name="LoginPage">
     <!-- Loader starts-->
@@ -82,7 +83,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="login-header text-center">
                                 <h4>Login</h4>
-                                <h6>Welcome back! Log in to your account.</h6>
+                                @*<h6>Welcome back! Log in to your account.</h6>*@
                             </div>
                             <div class="form-group">
                                 <ul class="login-social">
@@ -141,7 +142,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="icon-email"></i></span>
                                     @*<input class="form-control" type="text" asp-for="Username" name="" required="" placeholder="User Name">*@
-                                    <input class="form-control" type="text" asp-for="Username" placeholder="User Name">
+                                    <input class="input-group-text" title="User Name" style=" width: 90%;" type="text" asp-for="Username" placeholder="User Name">
                                 </div>
                                 <span asp-validation-for="Username" class="text-danger"></span>
                             </div>
@@ -150,8 +151,11 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="icon-lock"></i></span>
                                     @*<input class="form-control" type="password" asp-for="Password" name="login[password]" required="" placeholder="*********">*@
-                                    <input class="form-control" type="password" asp-for="Password" placeholder="*********">
-                                    <div class="show-hide"><span class="show">                         </span></div>
+                                    <input class="input-group-text" id="password" title="Password" style=" width: 90%;" type="password" asp-for="Password" placeholder="*********">
+                                    <div class="show-hide">
+                                        @*<span class="show">                         </span>*@
+                                                                        <span class="toggle-password" onclick="togglePasswordVisibility()">&#x1F441;</span>
+                                                                    </div>
                                 </div>
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
@@ -159,17 +163,17 @@
                                 <div class="checkbox">
                                     <input id="checkbox1" type="checkbox" asp-for="RememberMe">
                                     <label for="checkbox1" asp-for="RememberMe">Remember password</label>
-                                </div><a class="link">Forgot password?</a>
+                                </div>@*<a class="link">Forgot password?</a>*@
                                 @*</div><a class="link" href="forget-password.html">Forgot password?</a>*@
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary btn-block" id="SubmitBtn" type="submit">Login</button>
                             </div>
-                            <p>
+                            @*<p>
                                 Are you New User?<a class="ms-2" href="log-in.html">
                                     Register New Application
                                 </a>
-                            </p>
+                            </p>*@
                         </form>
                     </div>
                 </div>
@@ -205,7 +209,23 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/js/CommonScripts.js"></script>
     <script>
-        //---------------------------------------------------------------------------------------------   When Click ON submit Button
+
+        //Hide and Show password activity
+        function togglePasswordVisibility() {
+            debugger;
+            var passwordInput = document.getElementById("password");
+            var togglePassword = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            togglePassword.innerHTML = "&#x1F440;"; // Eye icon when password is visible
+            } else {
+                passwordInput.type = "password";
+            togglePassword.innerHTML = "&#x1F441;"; // Eye slash icon when password is hidden
+            }
+        }
+
+        //---------------------------------   When Click ON submit Button
         $("#LoginForm").submit(function (event) {
             // debugger;
             event.preventDefault();
