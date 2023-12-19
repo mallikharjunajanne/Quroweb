@@ -106,7 +106,7 @@ namespace LMS_Module
  // pattern: "{controller=Videos}/{action=ExpensiveReport}/{id?}");//SimpleExpenseManagement
                                                                  //   pattern: "{controller=Home}/{action=Trail3}/{id?}");//SearchUploadlecturedocs
                                                                  //pattern: "/PayRoll/StepsControl?url=SearchEmployeeDetails");
-        pattern: "{controller=Users}/{action=ManageUsers}/{id?}");
+        pattern: "{controller=Attendance}/{action=LoginPage}/{id?}");
         });
 
 
