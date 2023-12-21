@@ -552,9 +552,24 @@ namespace Connect4m_Web.Controllers
                 double sumOfViewspoints = list3.Sum(item => item.Viewspoints);
                 double sumOfTotalpoints = list3.Sum(item => item.TotalPoins);
 
-             
 
-                ViewBag.GetallViewvideopoints = (sumOfViewspoints/sumOfTotalpoints)*100;
+
+             var val = (sumOfViewspoints / sumOfTotalpoints) * 100;
+                if(val==0 || double.IsNaN(val))
+                {
+                    ViewBag.GetallViewvideopoints = 0.00;
+                }
+                else
+                {
+                    ViewBag.GetallViewvideopoints = val;
+                }
+               
+                
+                //if (decimal.IsNaN(ViewBag.GetallViewvideopoints) || ViewBag.GetallViewvideopoints==null)
+                //{
+                //    ViewBag.GetallViewvideopoints = 0;
+                //}
+
             }
             return View(list);
 
