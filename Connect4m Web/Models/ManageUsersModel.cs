@@ -9,6 +9,8 @@ namespace Connect4m_Web.Models
     public class ManageUsersModel : CommonClass
     {
         public string UserName { get; set; }
+
+        public string Class { get; set; }
         [Display(Name = "Reg. No./Emp ID")]
         public string InstanceUserCode { get; set; }
         [Display(Name = "Email ID ")]

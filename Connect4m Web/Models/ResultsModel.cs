@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models
 {
-    public class DropdownClass
+    public class DropdownClass:CommonClass
     {
         //This Is for Drop Downs
         public int Value { get; set; }

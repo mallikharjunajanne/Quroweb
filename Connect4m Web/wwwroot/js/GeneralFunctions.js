@@ -42,9 +42,6 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
     // var js = jQuery.noConflict(true);
        var tableLength;
 
-
-        debugger;
-
         if (TableCountsId != "" || TableCountsId == 0) {
             tableLength = TableCountsId;
         } else {
@@ -56,9 +53,6 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
 
        //table.destroy();
         // var columns = [];
-        debugger;
-        
-        
         if (tablename == 'LeaveLevels_SearchRecords_Table') {
             columns = [
                 {
@@ -288,8 +282,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
          if (FormId == "FmUsersSearchForMBA") { 
             formdata.append("ScreenName", "ManageSubjectAssociationForMBA");
         }
-
-
         // Make AJAX call to the controller action
         $.ajax({
             //url: "/Attendance/TblCompensatoryLeavesSummery_CallingFunction",
@@ -845,7 +837,48 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                     ]
                 }
-
+                else if (tablename == "TblUserSearchresults") {//ManageUsers Screen
+                    columns = [
+                        {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
+                            }
+                        },
+                       {
+                           data: "FirstName",
+                            render: function (data, type, row, meta) {
+                                return row.firstName
+                            }
+                        }, {
+                           data: "RoleName",
+                            render: function (data, type, row, meta) {
+                                return row.roleName
+                            }
+                        },
+                        {
+                            data: "Class",
+                            render: function (data, type, row, meta) {
+                                return row.class
+                            }
+                        }, {
+                            data: "AdmissionNumber",
+                            render: function (data, type, row, meta) {
+                                return row.admissionNumber
+                            }
+                        }, {
+                            data: "InstanceUserCode",
+                            render: function (data, type, row, meta) {
+                                return row.instanceUserCode
+                            }
+                        }, {
+                            data: "MobilePhone",
+                            render: function (data, type, row, meta) {
+                                return row.mobilePhone
+                            }
+                        },
+                    ]
+                }
                 else {
                     //tablename == "TblLeavesSummery"
                     columns = [
