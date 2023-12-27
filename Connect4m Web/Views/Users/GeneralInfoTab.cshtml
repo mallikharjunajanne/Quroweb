@@ -2,69 +2,31 @@
 @model Connect4m_Web.Models.ManageUsersModel
 
 @{
-    ViewData["Title"] = "UserSearchTab";
-    Layout = null;
+    ViewData["Title"] = "GeneralInfoTab";
+     Layout = null;
 }
 @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
 <link href="~/css/CommonStyle.css" rel="stylesheet" />
-<style>
-    #appendforinsertsalaryattribute {
-        display: none;
-    }
-</style>
-<div class="col-sm-12 ">
 
-    <div class="card">
-
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>MANAGE USERS</span></h6>
-
-
-                    <div class="card-header pb-0">
-                        <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 68%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="addnewsalaryattributebtn">
-                            Create User
-                        </button>
-
-                    </div>
-                    <div id="appendsearchsalaryattribute">
+                   
+                    <div id="DivGeneralInfoTab">
 
                         <div class="card-header bg-primary">
                             <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH USERS</button>
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SAVE USERS<span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
                             </h5>
                         </div>
                         <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
 
                             <div class="row padding-search">
                                 <div class="row">
-
-                                    <form id="FmUsersSearch">
+                                    <form id="FmGeneralInfoTab">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <input type="text" asp-for="UserId" name="UserId" id="UserIdMe" hidden style="display:none" readonly />
-
+                                       
                                         <div class="row">
                                             <div class="form-group col-12 passwordfor"><span class="compare"></span></div>
                                             @*----------------------*@
 
-                                            <div class="form-group col-2">
-                                                <label asp-for="UserName" class="control-label  space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <input asp-for="UserName" class="form-control" id="AdmissionNumber_ME" />
-                                                <span asp-validation-for="UserName" class="text-danger"></span>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="form-group col-2">
-                                                <label asp-for="InstanceUserCode" class="control-label space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <input asp-for="InstanceUserCode" class="form-control" id="SalaryAttributeName" />
-                                            </div>
-
-                                            @*----------------------*@
                                             <div class="form-group col-2">
                                                 <label asp-for="RoleId" class="control-label space"></label>
                                             </div>
@@ -76,11 +38,46 @@
                                                 </div>
                                             </div>
                                             @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
+
+                                            <div class="form-group col-2 ClsDesignationId">
+                                                <label asp-for="DesignationId" class="control-label  space"></label>
+                                            </div>
+                                            <div class="form-group col-4 ClsDesignationId">
+                                                @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "DdlDesignationId", @style = "color:black;" })
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
                                             <div class="form-group col-2">
-                                                <label asp-for="AdmissionNumber" class="control-label space"></label>
+                                                <label asp-for="InstanceUserCode" class="control-label space">Qualification</label>
                                             </div>
                                             <div class="form-group col-4">
-                                                <input asp-for="AdmissionNumber" class="form-control" id="SalaryAttributeName" />
+                                                <input asp-for="InstanceUserCode" class="form-control" id="SalaryAttributeName" />
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2">
+                                                <label asp-for="InstanceUserCode" class="control-label space"></label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input asp-for="InstanceUserCode" class="form-control" id="SalaryAttributeName" />
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
                                             </div>
                                             @*----------------------*@
                                             <div class="form-group col-2">
@@ -90,8 +87,44 @@
                                                 <input asp-for="FirstName" class="form-control" id="StartDate" />
                                             </div>
                                             @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2">
+                                                <label asp-for="FirstName" class="control-label space"></label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input asp-for="FirstName" class="form-control" id="StartDate" />
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
                                             <div class="form-group col-2">
                                                 <label asp-for="LastName" class="control-label space"></label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input asp-for="LastName" class="form-control" id="EndDate" />
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2 ">
+                                            </div>
+                                            <div class="form-group col-4 ">
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2">
+                                                <label asp-for="SearchDateType" class="control-label space"></label>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="date" asp-for="SearchDateType" class="form-control" id="EndDate" />
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="form-group col-2">
+                                                <label asp-for="InstanceClassificationId" class="control-label space"></label>
                                             </div>
                                             <div class="form-group col-4">
                                                 <input asp-for="LastName" class="form-control" id="EndDate" />
@@ -99,29 +132,14 @@
 
                                             @*----------------------*@
                                             <div class="form-group col-2">
-                                                <label asp-for="InstanceClassificationId" class="control-label space"></label>
+                                                <label asp-for="InstanceSubClassificationId" class="control-label  space">Is User Joined</label>
                                             </div>
                                             <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" class="form-select readonly" asp-items="@(new SelectList(""))">
-                                                        <option value=''>Select a Department</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-                                            <div class="form-group col-2">
-                                                <label asp-for="InstanceSubClassificationId" class="control-label  space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                @*@Html.DropDownListFor(x => x.InstanceSubClassificationId, new SelectList(ViewBag.SalaryAttributeType, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;" })*@
-                                                <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="form-select readonly" asp-items="@(new SelectList(""))" disabled>
-                                                    <option value=''>Please select a Class</option>
-                                                </select>
+                                                <input type="checkbox" asp-for="LastName" class="form-control" id="EndDate" />
                                             </div>
                                             @*----------------------*@
                                             <div class="form-group col-2">
-                                                <label asp-for="RouteId" class="control-label space"></label>
+                                                <label asp-for="RouteId" class="control-label space">Blood group</label>
                                             </div>
                                             <div class="form-group col-4">
                                                 <div id="Drop_Format_SEM_3">
@@ -184,8 +202,8 @@
                                             </div>
                                             <div class="form-group col-4">
                                                 <input asp-for="PortalEmail" class="form-control" />
-                                            </div> 
-                                            
+                                            </div>
+
                                             @*----------------------*@
                                             <div class="form-group col-2">
                                                 <label asp-for="IsActive" class="control-label  space"></label>
@@ -196,7 +214,7 @@
 
                                             </div>
                                             @*----------------------*@
-                                        @*<div id="DivDesignationId">*@
+                                            @*<div id="DivDesignationId">*@
                                             <div class="form-group col-2 ClsDesignationId">
                                                 <label asp-for="DesignationId" class="control-label  space"></label>
                                             </div>
@@ -204,7 +222,7 @@
                                                 @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "DdlDesignationId", @style = "color:black;" })
 
                                             </div>
-                                        @*</div>*@
+                                            @*</div>*@
                                             @*----------------------*@
                                             <div class="form-group col-2">
                                                 <label asp-for="MobilePhone" class="control-label  space"></label>
@@ -213,23 +231,23 @@
                                                 <input asp-for="MobilePhone" class="form-control" />
                                             </div>
                                             @*----------------------*@
-                                            <div class="form-group col-2 ClsEmptyDiv">
+                                            <div class="form-group col-2 ">
                                             </div>
-                                            <div class="form-group col-4 ClsEmptyDiv">
+                                            <div class="form-group col-4 ">
                                             </div>
                                             @*----------------------*@
-                                        @*<div id="DivTcTaken" style="display:none">*@
+                                            @*<div id="DivTcTaken" style="display:none">*@
                                             <div class="form-group col-2 ClsTcTaken" style="display:none">
                                                 <label id="LblTcTaken" class="control-label  space"></label>
                                             </div>
-                                            <div class="form-group col-4 ClsTcTaken" style="display:none" >
+                                            <div class="form-group col-4 ClsTcTaken" style="display:none">
                                                 <select asp-for="TcTaken" id="DdlTcTaken" class="form-select readonly">
                                                     <option value="">---------Select---------</option>
                                                     <option value="1">Yes</option>
                                                     <option value="0">No</option>
                                                 </select>
                                             </div>
-                                        @*</div>*@
+                                            @*</div>*@
                                             @*----------------------*@
                                             <div class="form-group col-2 ">
                                             </div>
@@ -263,7 +281,7 @@
                                             <div class="form-group col-4 ClsParentNameForStudent">
                                                 <input asp-for="MotherLastName" class="form-control ClsTxtParent" id="EndDate" />
                                             </div>
-                                          
+
                                             @*----------------------*@
                                             <div class="form-group col-2">
                                             </div>
@@ -298,82 +316,29 @@
                                                 @*<span id="SpnSearchEndDate" class="text-danger"></span>*@
                                             </div>
                                             @*----------------------*@
-                                        <div style=" display: flex; gap: 17px;">
-                                            <div class="col-2"></div>
-                                            <div class="col-2"></div>
-                                            @*<input type="button" value="Previous Page" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
+                                            <div style=" display: flex; gap: 17px;">
+                                                <div class="col-2"></div>
+                                                <div class="col-2"></div>
+                                                @*<input type="button" value="Previous Page" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
 
-        <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />*@
+            <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />*@
 
-                                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="clearform" />
-                                            <input type="submit" value="Search" id="BtnSearch" class="btn btn-pill btn-outline-primary btn-sm" />
-                                            @*<input type="submit" value="Save & Next" id="Save_ME" class="btn btn-pill btn-outline-success btn-auccess" />*@
+                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="clearform" />
+                                                <input type="submit" value="Search" id="BtnSearch" class="btn btn-pill btn-outline-primary btn-sm" />
+                                                @*<input type="submit" value="Save & Next" id="Save_ME" class="btn btn-pill btn-outline-success btn-auccess" />*@
 
-                                            @*<input type="button" value="Next Page" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)" class="btn btn-pill btn-outline-info btn-air-info" />*@
+                                                @*<input type="button" value="Next Page" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)" class="btn btn-pill btn-outline-info btn-air-info" />*@
 
-                                        </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
 
-
                             </div>
-                        </div>
-                        <div class="card" id="DivTblUserSearchresults" style="display:none">
-                            @*<h6><span>MANAGE INSTANCE SALARY ATTRIBUTES</span></h6>*@
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="Counts" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-                                </h5>
-                            </div>
-
-                            <div id="eg1" style="color: black; background-color: whitesmoke">
-                                <table class=" table table-bordered" id="TblUserSearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                    <thead>
-                                        <tr style="border-color: black;">
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                S.No
-                                            </th>
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                Name
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Role
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Class
-
-                                            </th>
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                Admission Number
-
-                                            </th>
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                Reg.No./Emp ID
-
-                                            </th>
-                                            <th style="border-color: blue; " class="bg-primary">
-                                                MobileNumber
-
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-
                         </div>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="appendforinsertsalaryattribute">
-
-</div>
+                    
+               
 @*<link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
     <script src="~/Datatable/jquery.dataTables.js"></script>
@@ -399,22 +364,6 @@
 <script src="~/Datatable/datatable.min.js"></script>
 <script type="text/javascript">
 
-    function setOutTimeAndCheckValidation(callback) {
-        var validationmelength = document.getElementById('FmUsersSearch').getElementsByClassName('field-validation-error').length;
-        debugger;
-        if (validationmelength === 0) {
-            setTimeout(function () {
-                //handleValidationZero();
-                callback(true); // Call the callback with true indicating success
-            }, 50);
-        } else {
-            $('.alert-danger p').text("Please Enter All Required Fields");
-            $(".alert-danger").show().delay(5000).fadeOut();
-            callback(false); // Call the callback with false indicating failure
-        }
-    }
-
-   
     var js = jQuery.noConflict(true);
     //=======Ready Function
     $(document).ready(function () {
@@ -422,15 +371,15 @@
         $(".ClsParentNameForStudent").css("display", "none");
         $(".ClsTcTaken").css("display", "none");
         $(".ClsDates").css("display", "none");
-       // $(".ClsDesignationId").css("display", "none");
-        $(".ClsEmptyDiv").css("display", "none");
+        // $(".ClsDesignationId").css("display", "none");
+        $(".").css("display", "none");
         CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
 
         //TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
     });
 
 
-  //  ============ Searched Users Details in Table 
+    //  ============ Searched Users Details in Table
     $("#FmUsersSearch").submit(function (event) {
         debugger;
         try {
@@ -447,7 +396,7 @@
                     TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
                     loaddingimg.css('display', 'none');
                     $("#loadingOverlay").hide();
-                  //  loaddingimg.css('display', 'none');
+                    //  loaddingimg.css('display', 'none');
                     //  $("#loadingOverlay").hide();
                 } else {
                     $('.alert-danger p').text("Pleae Enter All Required Fields");
@@ -468,16 +417,16 @@
             //        // Handle the case when validation fails, if needed
             //    }
             //});
-    //    });
+            //    });
         } catch (e) {
             // $("#loadingOverlay").hide();
-         //   loaddingimg.css('display', 'none');
+            //   loaddingimg.css('display', 'none');
             $("#loadingOverlay").hide();
             $("#Main_Span_Error").text("Something Error");
         }
     })
 
-//=====================Showing Feilds based on Role
+    //=====================Showing Feilds based on Role
     function RoleOnChangeFunction(Roleid) {
         debugger;
         $("#DdlTcTaken").val("");
@@ -486,12 +435,12 @@
         if (Roleid == 775) {
             $(".ClsParentNameForStudent").css("display", "block");
             $(".ClsTcTaken").css("display", "block");
-            $(".ClsEmptyDiv").css("display", "none");
+            $(".").css("display", "none");
             $(".ClsDesignationId").css("display", "none");
             $("#LblTcTaken").text("Tc Taken");
         } else {
             $(".ClsParentNameForStudent").css("display", "none");
-            $(".ClsEmptyDiv").css("display", "block");
+            $(".").css("display", "block");
             $(".ClsTcTaken").css("display", "block");
             $(".ClsDesignationId").css("display", "block");
             $("#LblTcTaken").text("Hide in the portal");
@@ -502,8 +451,8 @@
     function dateWisesearching() {
         $(".ClsDates").css("display", "block");
 
-      //  $("#SpnSearchStartDate").attr('asp-validation-for', 'SearchStartDate');
-       // $("#SpnSearchEndDate").attr('asp-validation-for', 'SearchEndDate');
+        //  $("#SpnSearchStartDate").attr('asp-validation-for', 'SearchStartDate');
+        // $("#SpnSearchEndDate").attr('asp-validation-for', 'SearchEndDate');
         //if (condition) {
         //    $('[name="SearchStartDate"]').prop('required', true);
         //    $('[name="SearchEndDate"]').prop('required', true);
@@ -512,30 +461,5 @@
         ////}
     }
 
-
-
-
-
-
-    //this is not using ,if you want use
-
-    // Your condition to determine whether the fields should be required or not
-    var conditionMet = true; // Change this to your actual condition
-
-    // Function to set or remove the "required" attribute based on the condition
-    function setRequiredAttribute(condition, inputSelector) {
-        var $input = $(inputSelector);
-        if (condition) {
-            $input.prop('required', true);
-            $input.prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
-        } else {
-            $input.removeAttr('required');
-            $input.prev('label').removeClass('required'); // Optional: Remove the class from the label
-        }
-    }
-
-    // Call the function for each input field with the corresponding condition
-    //setRequiredAttribute(conditionMet, '[name="SearchStartDate"]');
-   // setRequiredAttribute(conditionMet, '[name="SearchEndDate"]');
 
 </script>

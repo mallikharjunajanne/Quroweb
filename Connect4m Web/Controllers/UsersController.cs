@@ -46,7 +46,7 @@ namespace Connect4m_Web.Controllers
             //InstanceClassificationId = _userService.InstanceClassificationId;
             //Roleid = _userService.Roleid;
             //StudentUserid = _userService.StudentUserid;
-       
+
             InstanceId = 545;
             UserId = 32891;
             InstanceClassificationId = 806;
@@ -55,27 +55,106 @@ namespace Connect4m_Web.Controllers
             StudentUserid = 0;
         }
 
-        //=---------------========Manage Users Screen ================
-
+        //--------------->>>>>>>>>>>>>========Manage Users Screen ==============<<<<<<<<<<<<<<<<<<<<==
+        //===========================Searched Users details in table
         public IActionResult TblUsersSearch(ManageUsersModel obj)
         {
-           // InitializeCookieValues();
+            // InitializeCookieValues();
+           // obj.TcTaken = 1;//i gave default
             obj.InstanceID = InstanceId;
             List<ManageUsersModel> list = CommonMethodobj.CommonListMethod<ManageUsersModel, ManageUsersModel>(obj, "/TblUsersSearch", client);
-            return Json(list);
+            return Json(list.OrderBy(x => x.FirstName).ToList());
+        }
+        //===========================Search Users details 
+
+        //not using
+        public IActionResult UserSearchTab(DropdownClass val)
+        {
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
+            return View();
         }
 
 
+        public IActionResult CreateUsers(DropdownClass val)
+        {
+            ViewBag.url = "GeneralInfoTab";
+            return View();
+        }
+        public IActionResult GeneralInfoTab(DropdownClass val)
+        {
+            ViewBag.url = "GeneralInfoTab";
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
+            return View();
+        }
+        public IActionResult PreviousSchoolInformationTab(DropdownClass val)
+        {
+            ViewBag.url = "GeneralInfoTab";
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
+            return View();
+        }
+        public IActionResult ParentDetailsTab(DropdownClass val)
+        {
+            ViewBag.url = "GeneralInfoTab";
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
+            return View();
+        }
+        public IActionResult EducationDetailsTab(DropdownClass val)
+        {
+            ViewBag.url = "GeneralInfoTab";
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
+            return View();
+        }
+        public IActionResult DdlPickUpStop_Calingfunction(DropdownClass val,int RouteId)
+        {
+               val.Id = RouteId;
+            List<DropdownClass> DdlPickUpStop = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpStop_Calingfunction", client);
+            return Json(DdlPickUpStop.OrderBy(x => x.FirstName).ToList());
+        }
 
-
-        public IActionResult ManageUsers()
+        public IActionResult ManageUsers(DropdownClass val)
         {
             //if (url != null)
             //{
                // ViewBag.url = "ManageUsers";
                 ViewBag.url = "UserSearchTab";
-           // }
-
+            // }
+            val.InstanceID = InstanceId;
+            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+            List<DropdownClass> DdlPickUpRoute = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlPickUpRoute_Calingfunction", client);
+            ViewBag.DdlInstanceRole = DdlInstanceRole.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlDesignation = DdlDesignation.OrderBy(x => x.Text).ToList();
+            ViewBag.DdlPickUpRoute = DdlPickUpRoute.OrderBy(x => x.Text).ToList();
             return View(); 
         }
         [HttpPost]
@@ -84,45 +163,6 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        public IActionResult UserSearchTab()
-        {
-            //--------------------------  Gettting Salary Attrubute  Master Id  Droppdown
-            List<SelectListItem> SalaryAttributeMasterId = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SalaryAttributes?InstanceId=" + InstanceId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                SalaryAttributeMasterId = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }
-            ViewBag.SalaryAttributeMasterId = SalaryAttributeMasterId;
-            //--------------------------  Gettting Salary Attrubute Type is Droppdown
-            List<SelectListItem> SalaryAttributeType = new List<SelectListItem>();
-            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/SalaryType").Result;
-            if (response2.IsSuccessStatusCode)
-            {
-                string data = response2.Content.ReadAsStringAsync().Result;
-                SalaryAttributeType = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }
-            ViewBag.SalaryAttributeType = SalaryAttributeType;
-            //--------------------------  Data Add for  Is Active
-            List<SelectListItem> IsActive = new List<SelectListItem>
-{
-    new SelectListItem
-    {
-        Value = "1",
-        Text = "True"
-    },
-    new SelectListItem
-    {
-        Value = "2",
-        Text = "False"
-    }
-};
-
-            ViewBag.IsActive = IsActive;
-
-            return View();
-        }
-
+       
     }
 }
