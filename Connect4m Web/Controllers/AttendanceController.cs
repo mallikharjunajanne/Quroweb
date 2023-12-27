@@ -180,6 +180,7 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+                        Response.Cookies.Append("UserNameHeader_", val.Username);
 
 
                         var claims = new List<Claim>

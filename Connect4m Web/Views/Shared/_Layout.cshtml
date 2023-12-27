@@ -86,7 +86,12 @@
                         <li>
                             <form class="form-inline search-form">
                                 <div class="search-bg"><i class="fa fa-search"></i></div>
-                                <input class="form-control-plaintext" placeholder="Search here....">
+                                <input class="form-control-plaintext" placeholder="Search here...." style="width:30%">
+                            @if (@Context.Request.Cookies["UserNameHeader_"] != null)
+                            {
+                                <div style="font-weight: 900; font-size: 27px;">@Context.Request.Cookies["UserNameHeader_"].ToUpper()</div>
+                            }
+
                             </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
                         </li>
                     </ul>

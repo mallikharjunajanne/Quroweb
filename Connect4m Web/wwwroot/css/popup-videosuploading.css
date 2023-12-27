@@ -203,6 +203,7 @@ hr {
 }
 .error-message, .error-answer {
     color: red;
+    font-size: 12px;
 }
 .form-control{
     border:1px solid #11a5f1;
