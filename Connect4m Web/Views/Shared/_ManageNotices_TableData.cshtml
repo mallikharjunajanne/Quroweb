@@ -4,54 +4,50 @@
 
 
 
-<div class="default-according style-1" id="accordionoc1">
-    <div class="card" style="margin-bottom: 10px;">
-        <div class="card-header bg-primary">
-            <h5 class="mb-0">
-                <button class="collapsed btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                    <span class="Header_text_span">
-                        YOUR SEARCH RESULTED <span class="TableCountSp_id">@ViewBag.NoticeCount</span> RECORDS.
-                    </span>
-                </button>
+
+<div class="card">
+    <div class="card-header flex-column flex-md-row">
+        <div class="head-label">
+            <h5 class="card-title mb-0">
+                <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span class="TableCountSp_id">@ViewBag.NoticeCount</span> RECORDS.</span>
             </h5>
         </div>
-        <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2" style="">
-            <div class="card-body" style=" padding: 7px; margin: -4px 0px 0px -7px;">
-                <table class="Noticetable" id="noticeTable">
-                    <thead>
-                        <tr>
-                            <th>Notice Subject</th>
-                            <th>End Date(Expiry Date)</th>
-                            <th>Posted</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                        <tr>
-                            <td><span onclick="ENoticeedit(@item.ENoticeId);" class="EdittdSpan" >@item.Subject</span></td>
-                            <td>@item.ExpiryDate</td>
-                            <td align="center">
+    </div>
+    <div class="card-body">
+        <table class="datatables-basic table dataTable no-footer dtr-column" id="noticeTable">
+            <thead>
+                <tr>
+                    <th>Notice Subject</th>
+                    <th>End Date(Expiry Date)</th>
+                    <th>Posted</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><span onclick="ENoticeedit(@item.ENoticeId);" class="EdittdSpan">@item.Subject</span></td>
+                        <td>@item.ExpiryDate</td>
+                        <td align="center">
 
-                                @if (item.IsPosted == "True")
-                                {
-                                    <img src="~/Images/Valid.gif"  width="20"height="20"/>                                    
-                                }
+                            @if (item.IsPosted == "True")
+                            {
+                                <img src="~/Images/Valid.gif" width="20" height="20" />
+                            }
 
-                            </td>
-                            <td align="center"><span onclick="DeleteNotice(@item.ENoticeId);" style="cursor:pointer;"><i class="fa fa-trash"></i></span></td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-                <div id="Noticetable_pagination">
-                   
-                </div>
-            </div>
+                        </td>
+                        <td align="center"><span onclick="DeleteNotice(@item.ENoticeId);" style="cursor:pointer;"><i class="fa fa-trash"></i></span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="Noticetable_pagination">
+
         </div>
     </div>
 </div>
+
 
 
 
@@ -61,11 +57,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-    var rowsPerPage = 10; 
+    var rowsPerPage = 10;
         var totalItems = @ViewBag.NoticeCount;
         if (totalItems >= 10) {
 
-        
+
 
     var numPages = Math.ceil(totalItems / rowsPerPage);
     var currentPage = 1;
@@ -111,10 +107,10 @@
         var start = (page - 1) * rowsPerPage;
         var end = Math.min(start + rowsPerPage, totalItems);
 
-      
+
         $("#noticeTable tbody tr").hide();
 
-      
+
         $("#noticeTable tbody tr").slice(start, end).show();
 
         var newStartIndex = Math.max(1, page - 4);
