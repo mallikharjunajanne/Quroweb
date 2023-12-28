@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 
 @model Connect4m_Web.Models.Attendenceproperites.UserScreen.NoticeTypes
 
@@ -21,28 +19,30 @@
         </div>
         <div class="collapse show" id="collapseicon4" aria-labelledby="collapseicon4" data-bs-parent="#accordionoc4" style="">
             <div class="card-body">
-                <form id="CreateNoticeType">
+                <form id="Createnoticetypeform1" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="row">
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right;"><label class="form-grop" style=" margin-left: 13px;"><font class="Required">*</font>Notice Type :</label></div>
                             <div class="form-group col-4">
-                                <input type="hidden" asp-for="InstanceId" id="Instance_STxt" value="@ViewBag.InstanceId" />
-                                <input type="hidden" asp-for="UserId" id="Userid_STxt" value="@ViewBag.Userid" />
-
                                 <select id="ENoticeTypeId_STXT" asp-for="ENoticeTypeId" class="NoticeTypedd">
                                     <option value="">---Select----</option>
                                 </select>
+                                <span asp-validation-for="ENoticeTypeId" class="text-danger"></span>
                             </div>
                             <div class="col-3"></div>
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right;"><label class="form-grop" style=" margin: 13px 0px 0px 0px;"><font class="Required">*</font>Notice Subject  :</label>                                    </div>
-                            <div class="form-group col-4"> <textarea id="Subject_STXT" asp-for="Subject" style="height: 60px; width: 300px;"></textarea></div>
+                            <div class="form-group col-4">
+                                <textarea id="Subject_STXT" asp-for="Subject" style="height: 60px; width: 300px;" class="form-control" ></textarea>
+                                <span asp-validation-for="Subject" class="text-danger"></span>
+                            </div>
                             <div class="col-3"></div>
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right;"><label style=" margin: 13px 0px 0px 25px; " class="form-grop">Description  :</label></div>
                             <div class="form-group col-4">
-                                <textarea asp-for="ENoticeDescription" id="ENoticeDescription_STXT" style="height: 60px; width: 300px;"></textarea>
+                                <textarea asp-for="ENoticeDescription" id="ENoticeDescription_STXT" style="height: 60px; width: 300px;" class="form-control" ></textarea>
                                 @* <div><span id="RemainingCharCount">1000</span> Character(s) remaining. Typed Characters: <span id="TypedCharCount">0</span></div>*@
                             </div>
                             <div class="col-3"></div>
@@ -54,15 +54,25 @@
 
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right;"><label style=" margin-left: 25px; " class="form-grop"><font class="Required">*</font>Start Date  :</label></div>
-                            <div class="form-group col-4">  <input type="date" asp-for="StartDate" id="StartDate_STXT" /></div>
+                            <div class="form-group col-4">
+                                <input type="date" asp-for="StartDate" id="StartDate_STXT"  class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
                             <div class="col-3"></div>
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right;"><label style=" margin-left: -46px;" class="form-grop"><font class="Required">*</font>End Date(Expiry Date)   :</label></div>
-                            <div class="form-group col-4">  <input type="date" asp-for="ExpiryDate" id="EndDate_STXT" /></div>
+                            <div class="form-group col-4">
+                                <input type="date" asp-for="ExpiryDate" id="EndDate_STXT" class="form-control" />
+                                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                            </div>
                             <div class="col-3"></div>
                             <div class="col-3"></div>
                             <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label style=" margin-left: -55px;">Upload Notice document   :</label></div>
-                            <div class="form-group col-4">  <input type="file" asp-for="NoticeDocument" id="NoticeDocument_STxtFile" /></div>
+                            <div class="form-group col-4">
+                                @*<input type="file" asp-for="NoticeDocument" id="NoticeDocument_STxtFile" />*@
+                                <input type="file" id="AttachedDocument" name="AttachedDocument" asp-for="AttachedDocument" class="form-control" />
+                                <span></span>
+                            </div>
                             <div class="col-3"></div>
                             <div class="col-3"></div>
                             <div id="NoticeDisplaylogin" class="col-12" style="display: flex;">
@@ -76,17 +86,20 @@
                                         <label class="mb-0" for="radioinline2">Yes</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3"></div>
-
-                            @*BY Sreekant Code*@
-                            <div style=" display: flex; gap: 17px;">
+                            </div>                           
+                            <div style=" text-align: center;" class="form-grop col-12">
                                 <div class="col-3"></div>
-                                <input type="button" id="BacktosearchNotice_SaBtn" class="btn btn-pill btn-outline-secondary btn-sm" value="Back To Search" />
-                                <input type="button" id="PostthisNotice_SaBtn" class="btn btn-pill btn-outline-primary btn-aprimary" value="Post this Notice" />
-                                <input type="button" id="Clear_SaBtn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
-                                <input type="button" id="SaveNotice_SaBtn" class="btn btn-pill btn-outline-success btn-air-success" value="Save" />
-                                <input type="button" id="savepostNotice_SaBtn" class="btn btn-pill btn-outline-info btn-air-info" value="Save and Post" />
+                                <button id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>@*BacktosearchNotice_SaBtn*@
+                                <button id="btnppostthisnotice" class="btn btn-pill btn-outline-primary btn-aprimary">Post this Notice</button>@*btnppostthisnotice*@
+                                <button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>@*btnClear*@
+                                <button id="btnsubmit" class="btn btn-pill btn-outline-success btn-air-success">Save</button>   @*SaveNotice_SaBtn*@
+                                <button id="savepostNotice_SaBtn" class="btn btn-pill btn-outline-info btn-air-info">Save and Post</button>@*btnSubmitandPost*@
+
+                                @*<input type="button" id="BacktosearchNotice_SaBtn" class="btn btn-pill btn-outline-secondary btn-sm" value="Back To Search" />
+            <input type="button" id="PostthisNotice_SaBtn" class="btn btn-pill btn-outline-primary btn-aprimary" value="Post this Notice" />
+            <input type="button" id="Clear_SaBtn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
+            <input type="button" id="SaveNotice_SaBtn" class="btn btn-pill btn-outline-success btn-air-success" value="Save" />
+            <input type="button" id="savepostNotice_SaBtn" class="btn btn-pill btn-outline-info btn-air-info" value="Save and Post" />*@
                             </div>
                         </div>
                     </div>
@@ -102,46 +115,50 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+@*<script src="~/js/Managenotice_1.js"></script>*@
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
 <script>
-    $('#BacktosearchNotice_SaBtn').click(function () {
+    $('#btnBackToSearch').click(function () {
 
-        $('#Create_NoticeView').empty();
-        $('#Search_NoticeView').show();
+        $('#Addnotice_div1').empty();
+        $('#ManagenoticeMaindiv').show();
     });
 
 
-    $('#Clear_SaBtn').click(function () {
+    //$('#btnClear').click(function () {
 
-        $('#SavevalidationMessage').text('');
-        $('#Savevalidation').text('');
-        $('#ENoticeTypeId_STXT').val('');
-        $('#Subject_STXT').val('');
-        $('#NoticeTypedd').val('');
-        $('#ENoticeDescription_STXT').val('');
-        $('#StartDate_STXT').val('');
-        $('#EndDate_STXT').val('');
-        $('#NoticeDocument_STxtFile').val('');
+    //    $('#SavevalidationMessage').text('');
+    //    $('#Savevalidation').text('');
+    //    $('#ENoticeTypeId_STXT').val('');
+    //    $('#Subject_STXT').val('');
+    //    $('#NoticeTypedd').val('');
+    //    $('#ENoticeDescription_STXT').val('');
+    //    $('#StartDate_STXT').val('');
+    //    $('#EndDate_STXT').val('');
+    //    $('#NoticeDocument_STxtFile').val('');
 
-    });
+    //});
 
-    $(document).ready(function () {
+    @*$(document).ready(function () {
 
         const PostNoticeButton = document.getElementById("PostthisNotice_SaBtn");
         PostNoticeButton.style.display = "none";
-
-       // $("#Create_NoticeView").empty();
+        debugger;
+        alert("its working ....!");
+       // $("#Addnotice_div1").empty();
         $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
         $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
 
         NoticeDropdown_CreateNotice_In_View();
 
         $("#NoticeDisplaylogin").show();
-       
+
         $("#ENoticeTypeId_STXT").change(function () {
             debugger;
-            if ($(this).val() != " ") { 
+            if ($(this).val() != " ") {
                 $("#NoticeDisplaylogin").hide();
             } else {
                 $("#NoticeDisplaylogin").show();
@@ -152,12 +169,12 @@
 
 
     function NoticeDropdown_CreateNotice_In_View() {
-        var InstanceIds = $('#Instance_STxt').val();
-       
+        /* var InstanceIds = $('#Instance_STxt').val();*/
+        debugger;
         $.ajax({
             type: "GET",
-            url: "@Url.Action("NoticeTypedd", "Admin")", 
-            data: { InstanceId: InstanceIds },
+            url: "@Url.Action("NoticeTypedd", "Admin")",
+            /*data: { InstanceId: InstanceIds },*/
             success: function (data) {
                 $.each(data, function (index, item) {
                     debugger;
@@ -171,140 +188,295 @@
             console.error("Error fetching data:", error);
         }
     });
-    }
+    }*@
 
 
 
-  
 
-    $('#SaveNotice_SaBtn').click(function () {
 
-        if (SaveValidation()) {
+    //$('#SaveNotice_SaBtn').click(function () {
 
-            $('#SavevalidationMessage').text('');
-            $('#Savevalidation').text('');
-            debugger;
-            var Subject = $('#Subject_STXT').val();
-            var formdatastring = $("#CreateNoticeType").serialize();
-            var fileInput = $("#NoticeDocument_STxtFile")[0];
-            var files = fileInput.files;
-            if (files.length > 0) {
-                var file = files[0];
-                var fileSize = file.size;
-                var fileName = file.name;
+    //    if (SaveValidation()) {
 
-                console.log("File Name: " + fileName);
-                console.log("File Size: " + fileSize + " bytes");
+    //        $('#SavevalidationMessage').text('');
+    //        $('#Savevalidation').text('');
+    //        debugger;
+    //        var Subject = $('#Subject_STXT').val();
+    //        var formdatastring = $("#Createnoticetypeform1").serialize();
+    //        var fileInput = $("#NoticeDocument_STxtFile")[0];
+    //        var files = fileInput.files;
+    //        if (files.length > 0) {
+    //            var file = files[0];
+    //            var fileSize = file.size;
+    //            var fileName = file.name;
 
-                formdatastring += "&NoticeDocument=" + encodeURIComponent(fileName);
-                formdatastring += "&DocSize=" + encodeURIComponent(fileSize);
-            }
-            var ShowInLogin= $('#radioinline1').val();
-            formdatastring += "&ShowInLogin=" + encodeURIComponent(ShowInLogin);
-            $.ajax({
-                url: "/Admin/ManageNotices_Create",
-                data: formdatastring,
-                type: "POST",
-                success: function (response) {
-                    if (response == "1") {
-                   
-                        const Clear = document.getElementById("Clear_SaBtn");
-                        const Save = document.getElementById("SaveNotice_SaBtn");
-                        const PostNoticeButton = document.getElementById("PostthisNotice_SaBtn");
-                        PostNoticeButton.style.display = "flex";
-                        if (Clear) {
-                            Clear.disabled = true;
-                        }
-                        if (Save) {
-                            Save.disabled = true;
-                        }
+    //            console.log("File Name: " + fileName);
+    //            console.log("File Size: " + fileSize + " bytes");
 
-                        $("#SavevalidationMessage").text("Record inserted successfully.");
+    //            formdatastring += "&NoticeDocument=" + encodeURIComponent(fileName);
+    //            formdatastring += "&DocSize=" + encodeURIComponent(fileSize);
+    //        }
+    //        var ShowInLogin= $('#radioinline1').val();
+    //        formdatastring += "&ShowInLogin=" + encodeURIComponent(ShowInLogin);
+    //        $.ajax({
+    //            url: "/Admin/ManageNotices_Create",
+    //            data: formdatastring,
+    //            type: "POST",
+    //            success: function (response) {
+    //                if (response == "Inserted") {
 
-                    } else if (response == "-1") {
+    //                    const Clear = document.getElementById("Clear_SaBtn");
+    //                    const Save = document.getElementById("SaveNotice_SaBtn");
+    //                    const PostNoticeButton = document.getElementById("PostthisNotice_SaBtn");
+    //                    PostNoticeButton.style.display = "flex";
+    //                    if (Clear) {
+    //                        Clear.disabled = true;
+    //                    }
+    //                    if (Save) {
+    //                        Save.disabled = true;
+    //                    }
+    //                    $("#SavevalidationMessage").text("Record inserted successfully.");
 
-                        $("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+    //                } else if (response == "Not Inserted") {
 
-                    } else {
+    //                    $("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
 
-                        $("#SavevalidationMessage").text("Something went wrong please try again...........!");
-                    }
+    //                }
+    //                //else {
+    //                //    $("#SavevalidationMessage").text("Something went wrong please try again...........!");
+    //                //}
 
-                }
-            });
-        }
+    //            }
+    //        });
+    //    }
 
+    //});
+
+    //function SaveValidation() {
+
+    //    debugger;
+
+    //    var Subject = $('#Subject_STXT').val();
+    //    var ENoticeTypeId = $('#NoticeTypedd').val();
+    //    var ENoticeDescription = $('#ENoticeDescription_STXT').val();
+    //    var StartDate = $('#StartDate_STXT').val();
+    //    var ExpiryDate = $('#EndDate_STXT').val();
+    //    var NoticeDocument = $('#NoticeDocument_STxtFile').val();
+
+    //    var validationMessage = "";
+    //    var hasError = false;
+
+    //    if (Subject === "") {
+    //        validationMessage += "Notice Subject<br>";
+    //        hasError = true;
+    //    }
+
+    //    if (ENoticeTypeId === "") {
+    //        validationMessage += "Notice Type<br>";
+    //        hasError = true;
+    //    }
+
+    //    if (StartDate === "") {
+    //        validationMessage += " Start date can not be left blank. <br>";
+    //        hasError = true;
+    //    }
+    //    if (ExpiryDate === "") {
+    //        validationMessage += " End date can not be left blank. <br>";
+    //        hasError = true;
+    //    }
+
+    //    if (StartDate > ExpiryDate) {
+    //        validationMessage += "Start date can not be greater than end date.<br>";
+    //        hasError = true;
+    //    }
+    //    var currentDate = new Date();
+    //    if (StartDate < currentDate) {
+    //        validationMessage += "Start Date can not be less than today.<br>";
+    //        hasError = true;
+    //    }
+
+    //    var allowedExtensions = [".doc", ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".txt", ".jpeg", ".jpg", ".pjpeg", ".gif", ".png", ".pdf"];
+    //    var fileInput = $("#NoticeDocument_STxtFile")[0]; // Get the DOM element
+
+    //    if (fileInput.files.length > 0) {
+    //        var fileName = fileInput.files[0].name;
+    //        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+    //        if (allowedExtensions.indexOf("." + fileExtension) === -1) {
+
+    //            validationMessage += "Uploaded file extension is invalid. Only " + allowedExtensions.join(", ") + " are supported.";
+    //            event.preventDefault();
+    //            hasError = true;
+    //        }
+    //    }
+
+
+
+    //    if (hasError) {
+    //        $('#Savevalidation').html("Following fields have invalid data :<br>");
+    //        $("#SavevalidationMessage").html(validationMessage);
+    //        return false;
+    //    } else {
+    //        $("#SavevalidationMessage").html("");
+    //        return true;
+    //    }
+
+    //}
+
+
+
+
+    //------** Save button and Save And post button click  fire functions
+    $('#Createnoticetypeform1').submit(function (event) {
+        //event.preventDefault();
+
+        //debugger;
+        //setTimeout(function () {
+        //    var validationMessages = $('.field-validation-error');
+        //    var validationMessages2 = $('.error2');
+
+        //    var validationmelength = validationMessages.length;
+
+        //    if (validationmelength == 0 && validationMessages2.length == 0) {
+        //        var formdata_ISN = new FormData($('#Createnoticetypeform1')[0]);
+
+        //        var fileInput = document.getElementById('AttachedDocument');
+        //        if (fileInput.files.length > 0) {
+        //            var file = fileInput.files[0];
+        //            formdata_ISN.append('AttachedDocument', file);
+        //        }
+
+        //        var Clickbuttonid = $(document.activeElement).attr('id');
+        //        switch (Clickbuttonid) {
+        //            case 'btnsubmit':
+        //                CallToAjax('POST', '/Admin/CreateSmsNNotice', formdata_ISN,
+        //                    function (response) {
+        //                        debugger;
+        //                        var subjectname = $('#Subjecttxtid').val();
+        //                        if (response != "000" && response != "-1") {
+
+        //                            $('#btnSave, #btnsaveandpost, #btnClear').prop('disabled', true);
+        //                            $('#btnSave, #btnsaveandpost, #btnClear').removeClass('.btn .btn-pill .btn-outline-warning .btn-air-warning,.btn-outline-success,.btn-outline-info .btn-air-info');
+        //                            $('#btnppostthisnotice').show();
+
+        //                            $('#Errormessage').text('Record inserted successfully.');
+        //                        } else if (response == "000") {
+        //                            $('#Errormessage').text('Notice with subject' + '"' + subjectname + '"' + ' already exists.');
+        //                        } else {
+        //                            $('#Errormessage').text('Already a file with the same name is attached to another notice. Please upload a new file.');
+        //                        }
+        //                    }, function (status, error) {
+
+        //                    },
+        //                    true);
+        //                break;
+        //            case 'btnSubmitandPost':
+        //                CallToAjax('POST', '/Admin/CreateSmsNNotice_PostthisnoticeBtn', formdata_ISN,
+        //                    function (response) {
+        //                        debugger;
+        //                        $('#Noticeandsms_Insertingdivid').hide();
+        //                        $('#Noticeandsms_Insertingdivid').empty();
+        //                        $('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
+
+        //                    }, function (status, error) {
+
+        //                    },
+        //                    true);
+        //                break;
+        //            case 'btnppostthisnotice':   //CreateSmsNNotice_PostthisnoticeBtn
+        //                CallToAjax('POST', '/Admin/CreateSmsNNotice_PostthisnoticeBtn', formdata_ISN,
+        //                    function (response) {
+        //                        debugger;
+        //                        $('#Noticeandsms_Insertingdivid').hide();
+        //                        $('#Noticeandsms_Insertingdivid').empty();
+        //                        $('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
+
+        //                    }, function (status, error) {
+
+        //                    },
+        //                    true);
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}, 50);
     });
 
-    function SaveValidation() {
+    //$('#Insert_Noticeandsms').submit(function (event) {
+    //    event.preventDefault();
 
-        debugger;
-             
-        var Subject = $('#Subject_STXT').val();
-        var ENoticeTypeId = $('#NoticeTypedd').val();
-        var ENoticeDescription = $('#ENoticeDescription_STXT').val();
-        var StartDate = $('#StartDate_STXT').val();
-        var ExpiryDate = $('#EndDate_STXT').val();
-        var NoticeDocument = $('#NoticeDocument_STxtFile').val();
+    //    debugger;
+    //    setTimeout(function () {
+    //        var validationMessages = $('.field-validation-error');
+    //        var validationMessages2 = $('.error2');
 
-        var validationMessage = "";
-        var hasError = false;
+    //        var validationmelength = validationMessages.length;
 
-        if (Subject === "") {
-            validationMessage += "Notice Subject<br>";
-            hasError = true;
-        }
+    //        if (validationmelength == 0 && validationMessages2.length == 0) {
+    //            var formdata_ISN = new FormData($('#Insert_Noticeandsms')[0]);
 
-        if (ENoticeTypeId === "") {
-            validationMessage += "Notice Type<br>";
-            hasError = true;
-        }
+    //            var fileInput = document.getElementById('AttachedDocument');
+    //            if (fileInput.files.length > 0) {
+    //                var file = fileInput.files[0];
+    //                formdata_ISN.append('AttachedDocument', file);
+    //            }
 
-        if (StartDate === "") {
-            validationMessage += " Start date can not be left blank. <br>";
-            hasError = true;
-        }
-        if (ExpiryDate === "") {
-            validationMessage += " End date can not be left blank. <br>";
-            hasError = true;
-        }        
+    //            var Clickbuttonid = $(document.activeElement).attr('id');
+    //            switch (Clickbuttonid) {
+    //                case 'btnSave':
+    //                    CallToAjax('POST', '/Admin/CreateSmsNNotice', formdata_ISN,
+    //                        function (response) {
+    //                            debugger;
+    //                            var subjectname = $('#Subjecttxtid').val();
+    //                            if (response != "000" && response != "-1") {
 
-        if (StartDate > ExpiryDate) {
-            validationMessage += "Start date can not be greater than end date.<br>";
-            hasError = true;
-        }
-        var currentDate = new Date();
-        if (StartDate < currentDate) {
-            validationMessage += "Start Date can not be less than today.<br>";
-            hasError = true;
-        }
+    //                                $('#btnSave, #btnsaveandpost, #btnClear').prop('disabled', true);
+    //                                $('#btnSave, #btnsaveandpost, #btnClear').removeClass('.btn .btn-pill .btn-outline-warning .btn-air-warning,.btn-outline-success,.btn-outline-info .btn-air-info');
+    //                                $('#btnppostthisnotice').show();
 
-        var allowedExtensions = [".doc", ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".txt", ".jpeg", ".jpg", ".pjpeg", ".gif", ".png", ".pdf"];
-        var fileInput = $("#NoticeDocument_STxtFile")[0]; // Get the DOM element
+    //                                $('#Errormessage').text('Record inserted successfully.');
+    //                            } else if (response == "000") {
+    //                                $('#Errormessage').text('Notice with subject' + '"' + subjectname + '"' + ' already exists.');
+    //                            } else {
+    //                                $('#Errormessage').text('Already a file with the same name is attached to another notice. Please upload a new file.');
+    //                            }
+    //                        }, function (status, error) {
 
-        if (fileInput.files.length > 0) {
-            var fileName = fileInput.files[0].name;
-            var fileExtension = fileName.split('.').pop().toLowerCase();
+    //                        },
+    //                        true);
+    //                    break;
+    //                case 'btnsaveandpost':
+    //                    CallToAjax('POST', '/Admin/CreateSmsNNotice_PostthisnoticeBtn', formdata_ISN,
+    //                        function (response) {
+    //                            debugger;
+    //                            $('#Noticeandsms_Insertingdivid').hide();
+    //                            $('#Noticeandsms_Insertingdivid').empty();
+    //                            $('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
 
-            if (allowedExtensions.indexOf("." + fileExtension) === -1) {
-                
-                validationMessage += "Uploaded file extension is invalid. Only " + allowedExtensions.join(", ") + " are supported.";
-                event.preventDefault();
-                hasError = true;
-            }
-        }
+    //                        }, function (status, error) {
 
+    //                        },
+    //                        true);
+    //                    break;
+    //                case 'btnppostthisnotice':   //CreateSmsNNotice_PostthisnoticeBtn
+    //                    CallToAjax('POST', '/Admin/CreateSmsNNotice_PostthisnoticeBtn', formdata_ISN,
+    //                        function (response) {
+    //                            debugger;
+    //                            $('#Noticeandsms_Insertingdivid').hide();
+    //                            $('#Noticeandsms_Insertingdivid').empty();
+    //                            $('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
 
-      
-        if (hasError) {
-            $('#Savevalidation').html("Following fields have invalid data :<br>");
-            $("#SavevalidationMessage").html(validationMessage);
-            return false;
-        } else {
-            $("#SavevalidationMessage").html("");
-            return true;
-        }
+    //                        }, function (status, error) {
 
-    }
+    //                        },
+    //                        true);
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }, 50);
+    //});
 
 </script>

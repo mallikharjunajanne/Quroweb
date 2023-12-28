@@ -1,0 +1,186 @@
+﻿@using Newtonsoft.Json;
+@{
+    Layout = null;
+}
+
+<style>
+    .MonthYearHeader {
+        background-color: Silver;
+        border-style: Solid;
+        height: 12pt;
+        font-size: 18px;
+    }
+
+    .Week {
+        color: #333333;
+        font-size: 11pt;
+        font-weight: bold;
+        height: 8pt;
+    }
+
+    .Weekdays {
+        border-width: 2px;
+    }
+
+    .BlurredDay {
+        filter: blur(3px); /* Apply a blur effect */
+        color: transparent; /* Hide text content */
+        pointer-events: none; /* Disable pointer events on blurred cells */
+    }
+
+    .CurrentMonth {
+        color: blue; /* Change color for the selected month's dates */
+    }
+
+    .OtherMonth {
+        color: gray; /* Change color for the dates of the previous and next months */
+    }
+</style>
+<div style="text-align: center;">
+    <label>Select Month</label>
+    <select id="selectMonth">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+    </select>
+</div>
+
+<div>
+    <table id="calendarTable" style="width: 100%; height: 750px; text-align: center; font-size: 18pt; font-family: Verdana; color: Black; border-width: 1px; border-style: Solid; border-color: #efefef; background-color: White;">
+        <tbody id="calendarBody"></tbody>
+    </table>
+</div>
+@{
+    var eventCalendarJson = JsonConvert.SerializeObject(ViewBag.EventCalendar);
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    function formatDate(date) {
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
+    function generateCalendar(month, year, eventCalendar) {
+        let table = $('#calendarBody');
+        table.empty();
+        $('#selectMonth').val(month);
+
+        let date = new Date(year, month - 1, 1);
+        let daysInMonth = new Date(year, month, 0).getDate();
+
+        let headerRow = '<tr class="Week">';
+        let weekdays = ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        weekdays.forEach(day => {
+            headerRow += `<td class="Weekdays">${day}</td>`;
+        });
+        headerRow += '</tr>';
+        table.append(headerRow);
+
+        let startingDay = date.getDay();
+        table.append('<tr>');
+
+        for (let i = 0; i < startingDay; i++) {
+            table.append('<td class="OtherMonth"></td>');
+        }
+        debugger;
+        for (let i = 1; i <= daysInMonth; i++) {
+            let cellClass = 'Weekdays';
+            let eventtitle = '';
+            let EventName = '';
+            let currentDateFormatted = formatDate(date);
+            let today = new Date(); // Get today's date
+            let isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === today.getDate();
+
+
+            debugger;
+            let eventExists = false;
+            for (let j = 0; j < eventCalendar.length; j++) {
+                let eventDate = new Date(eventCalendar[j].eventdate);
+                eventtitle = eventCalendar[j].EventTitle;
+                let formattedEventDate = formatDate(eventDate);
+
+                if (formattedEventDate === currentDateFormatted) {
+                    eventExists = true;
+                    break;
+                }
+            }
+            let cellStyle = 'width: 10%;';
+            if (eventExists) {
+                cellClass += ' EventDateStyle';
+                cellStyle += 'background-color:lightgreen;color:black;';
+                EventName = eventtitle;
+            }
+            if (isToday) {
+                cellStyle += 'width: 10%;background-color: #999999;';
+            }
+
+            //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
+            table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="${cellStyle}">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
+            date.setDate(date.getDate() + 1);
+
+            if (date.getDay() === 0 || i === daysInMonth) {
+                table.append('</tr><tr>');
+            }
+        }
+    }
+
+    function fetchData(selectedMonth, selectedYear) {
+        $.ajax({
+            url: '/UserScreens/CalendarEvents?MonthId=' + selectedMonth,
+            type: 'GET',
+            success: function (response) {
+                debugger;
+               // let eventCalendars = response.eventCalendar;
+                  let eventCalendars = @Html.Raw(eventCalendarJson);
+                generateCalendar(selectedMonth, selectedYear, eventCalendars);
+            },
+            error: function (xhr, status, error) {
+                debugger;
+                // Handle error if AJAX call fails
+                console.error(error);
+            }
+        });
+    }
+
+
+
+    $(document).ready(function () {
+        let eventCalendar = @Html.Raw(eventCalendarJson);
+        let currentMonth = new Date().getMonth() + 1;
+        let currentYear = new Date().getFullYear();
+        generateCalendar(currentMonth, currentYear, eventCalendar);
+
+        $('#selectMonth').change(function () {
+            let selectedMonth = parseInt($(this).val());
+            let selectedYear = new Date().getFullYear();
+            //generateCalendar(selectedMonth, selectedYear, eventCalendar);
+            fetchData(selectedMonth, selectedYear);
+
+        });
+        // Color dates based on eventCalendar
+        $('td.EventDateStyle').css({
+            'color': 'green',
+            'background-color': 'lightgreen',
+            'width':'10%;',
+            'border': '1px solid black' // Add border style as an example
+        });
+
+    });
+</script>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

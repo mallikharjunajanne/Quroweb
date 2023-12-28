@@ -57,6 +57,7 @@
   <ItemGroup>
     <Folder Include="Views\Partialviews\" />
     <Folder Include="wwwroot\Managenoticesdocs\" />
+    <Folder Include="wwwroot\Eventbestperformersdocs\" />
   </ItemGroup>
 
 </Project>
