@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models
 {
-    public class DropdownClass
+    public class DropdownClass:CommonClass
     {
         //This Is for Drop Downs
         public int Value { get; set; }
@@ -21,15 +21,28 @@ namespace Connect4m_Web.Models
         public List<ResultsModel> ResultsModeList { get; set; }
         public List<ResultsModel> StudentNamesList { get; set; }
         public List<UsermarksModel> UsermarksList { get; set; }
+
+        public List<ResultsModel> PostResult_CheckCountList { get; set; }
     }
     public class ResultsModel : CommonClass
     {//New
+
+        public string SMStoStudent { get; set; }
+        public string SMStoParent { get; set; }
+        public string EMAILtoStudents { get; set; }
+        public string EMAILtoParents { get; set; }
+        public string IncludeClass { get; set; }
+
+
+
         public List<int> UseridList { get; set; }
         public List<string> SecureMarksList { get; set; }
         public List<string> GradeList { get; set; }
         public string InstanceUserCode { get; set; }
-
+      //  [Required(ErrorMessage = "The file is Required")]
         public IFormFile File { get; set; }
+       // [Required(ErrorMessage = "The Sheet Name is Required")]
+        public string SheetName { get; set; }
         public string Status { get; set; }
         public string RatingType { get; set; }
         public int ResultsModeID { get; set; }
@@ -62,6 +75,10 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage = "The Exam Mode is required")]
         public int ExamModeId { get; set; }
         public int SortBy { get; set; }
+
+
+        public string OptionalStrenth { get; set; }
+        public string TotalStrength { get; set; }
     }
 
 

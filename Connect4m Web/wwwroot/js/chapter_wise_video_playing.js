@@ -24,13 +24,19 @@
 ////    });
 
 ////});
+    
+
+try {
+
 
 var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 /*var listItems = document.getElementsByTagName('li');*/
 
+} catch {
 
+}
 
 var listItems = $("#chapters-panel li");
 var seekTimes = []; // Array of seek times in seconds
@@ -167,9 +173,10 @@ var HideButton = document.getElementById("Hide-panel-button");
 //****************************************************************            scrolling  values  in the panel when mouse over on Chapters
 //var scrollpanel = document.getElementById("scroll-panel");
 
+try {
 
 var panel = document.getElementById('chapters-panel');
-var items = panel.getElementsByClassName('chapter-list"');
+var items = panel.getElementsByClassName('chapter-list');
 
 panel.addEventListener('mousemove', function (e) {
    // //debugger;
@@ -197,7 +204,9 @@ panel.addEventListener('mousemove', function (e) {
         }
     }
 });
+} catch {
 
+}
 
 
 
@@ -209,6 +218,7 @@ panel.addEventListener('mousemove', function (e) {
 //  //  console.log("pageX: " + ($(window).width() - event.pageX) + ", pageY: " + ($(window).height() - event.pageY));
 //});
 
+try {
 
 
 
@@ -222,6 +232,9 @@ function HidePanel() {
     panel.style.display = "none";
     showButton.style.display = "block";
     HideButton.style.display = "none";
+    }
+} catch {
+
 }
 //document.getElementById("10").className = "hoverclass";
 //document.getElementById("10").style.backgroundColor = "green";
@@ -253,6 +266,7 @@ for (var i = 0; i < forms.length; i++) {
 //console.log(QuestionshowtimeArray);
 
 
+try {
 
 function chapterstimer() {
    var timehover = setInterval(hovercolor, 1000);
@@ -279,6 +293,9 @@ function chapterstimer() {
             }
         }
         if (videotime + 1 >= video.duration) {
+            var videotime3 = video.currentTime;
+            // console.log(videotime);
+            setCookie("viewpoints", videotime3, 1);
             clearInterval(timehover);
     
             Calculatemarks();
@@ -323,6 +340,10 @@ function chapterstimer() {
 
     }
 }
+} catch {
+
+}
+
 // ************************************** Prograss bar  With Marks
 
 //const videoContainer = document.getElementById('video-container');
@@ -528,7 +549,7 @@ $(document).on('click', '#textsubmit', function (event) {
 })
  
 function Calculatemarks() {
-    debugger;
+  //  debugger;
 
     var result = "";
     var attempts = 0;
@@ -581,7 +602,7 @@ function Calculatemarks() {
             type: 'POST',
             success: function (response) {
                // var marksResponse = response.split(",");
-                Swal.fire("ok", 'Total Questions :'+formlemngth+'<br/> No of Attempts :'+attempts+'<br/> Your Gained Marks : '+response, "success");
+                Swal.fire("Marks", 'Total Questions :'+formlemngth+'<br/> No of Attempts :'+attempts+'<br/> Your Gained Marks : '+response, "success");
             }
             
 
@@ -589,6 +610,68 @@ function Calculatemarks() {
        // chapterstimer();
     }
 }
+
+
+
+
+//==========================    Video and File View Poins
+
+function ViewVideoPoins() {
+    debugger;
+    var SubjectVideoIdCookie = getCookie("SubjectVideoId");
+    var ChapterIdCookie = getCookie("ChapterId");
+    var viewpoints = getCookie("viewpoints");
+    var TotalPoins = getCookie("TotalPoins");
+    try {
+
+
+        //if ($('#VLD_SubjectVideoId').val() != "0") {
+        if (SubjectVideoIdCookie != null && SubjectVideoIdCookie != "0") {
+            // if (ChapterIdCookie != null) {
+
+            setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
+            setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
+            if (ChapterIdCookie == "0" || ChapterIdCookie == null) {
+                viewpoints = 1;
+                TotalPoins = 1;
+            }
+
+
+            $.ajax({
+                url: '/Videos/InsertVideoVewpoins?SubjectVideoId=' + SubjectVideoIdCookie + '&Viewspoints=' + viewpoints + '&TotalPoins=' + TotalPoins + "&ChapterId=" + ChapterIdCookie,
+                type: 'GET',
+                success: function (response) {
+
+                    // $('#below-video-content').html(response);
+
+                }
+            })
+
+
+            //  }
+            //  else {
+
+            //  }
+            setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
+            setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
+        }
+        else {
+            setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
+            setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
+        }
+    }
+    catch {
+        alert("Error");
+    }
+}
+
+
+
+
+
+
+
+
 
 
 

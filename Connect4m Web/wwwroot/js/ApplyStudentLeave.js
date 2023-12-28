@@ -9,7 +9,6 @@ function fun32READYFUNCTION() {
     //alert(selectvalue)
     $("#HAlfdayLB").hide();
 
-
     var rowcount1 = $("#StudentDataGetting_ID tbody tr").length;
 
     if (rowcount1 <= 0) {
@@ -32,10 +31,7 @@ function fun32READYFUNCTION() {
     var ReadyFunction_Count = $("#ReadyFunction_Count").val();
     var roleid = $("#Roleid").val();
     var StudentId_ByParent = $("#StudentId_ByParent").val();
-
-
     if (roleid == 776) {
-
         var conunt12 = ReadyFunction_Count + 1;
 
         $("#ReadyFunction_Count").val(conunt12);
@@ -52,7 +48,7 @@ function fun32READYFUNCTION() {
         $("#profile-tabs").show();
 
 
-        $("#ClassNAme_div").empty();
+        $("#ClassNAme_div").empty();        
         $("#StudentName_div").empty();
         $("#AdmissionNo_Div").hide();
         $("#Attendence_Div").hide();
@@ -71,8 +67,6 @@ function fun32READYFUNCTION() {
 var resetButton = document.getElementById('refreshButton');
 
 resetButton.addEventListener('click', function () {
-
-
     $("#loadingOverlay").show();
 
     document.getElementById('myForm').reset(); // Reset the form

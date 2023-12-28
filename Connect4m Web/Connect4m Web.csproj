@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Partialviews\**" />
+    <Content Remove="Views\Partialviews\**" />
+    <EmbeddedResource Remove="Views\Partialviews\**" />
+    <None Remove="Views\Partialviews\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
@@ -42,7 +49,8 @@
   <ItemGroup>
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="DinkToPdfCopy" Version="1.0.0" />
-    <PackageReference Include="EPPlus" Version="7.0.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="FFMpegCore" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.19" />
@@ -55,7 +63,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Partialviews\" />
     <Folder Include="wwwroot\Managenoticesdocs\" />
     <Folder Include="wwwroot\Eventbestperformersdocs\" />
   </ItemGroup>

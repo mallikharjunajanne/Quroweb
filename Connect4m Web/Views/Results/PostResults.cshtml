@@ -49,6 +49,8 @@
             <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>POST RESULTS</strong></h6>
         </div>
         <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+        <span class="ErrorMessageSpan" id="StudentEmail_Error"></span>
+        <span class="ErrorMessageSpan" id="ParentEmail_Error"></span>
         <div class="default-according style-1" id="Div_Step1">
             <div class="card-body" style=" padding-top: 0px;">
                 <div class="card" id="Searchpage">
@@ -73,7 +75,7 @@
                                         <div class="col-3"></div>
 
                                         <div class="form-group col-2">
-                                            <label class="control-label space">Department :</label>
+                                            <label class="control-label space required">Department</label>
                                         </div>
                                         <div class="form-group col-4">
                                             <div id="Drop_Format_SEM_3">
@@ -87,7 +89,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space">Class :</label>
+                                            <label class="control-label space required">Class </label>
                                         </div>
                                         <div class="form-group col-4">
                                             <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" onchange="CommonDropdownFunction('POST','/Results/DdlSubjectTypes_Calingfunction','DdlSubjects','',false,'FmSubjectsSearch')" class="form-select readonly" asp-items="@(new SelectList(""))" disabled>
@@ -98,7 +100,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space">Subjects :</label>
+                                            <label class="control-label space required">Subjects </label>
                                         </div>
                                         <div class="form-group col-4">
                                             <select id='DdlSubjects' multiple="multiple" style="height: 10%;" asp-for="SubjectsIdString" name="SubjectsIdString" class="form-select readonly" asp-items="@(new SelectList(""))">
@@ -108,7 +110,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space">Exam Type :</label>
+                                            <label class="control-label space required">Exam Type </label>
                                         </div>
                                         <div class="form-group col-4">
                                             <div id="Drop_Format_SEM_3">
@@ -123,7 +125,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space"> Exams :</label>
+                                            <label class="control-label space required"> Exams </label>
                                         </div>
                                         <div class="form-group col-4">
                                             <div id="Drop_Format_SEM_2">
@@ -136,7 +138,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space"> Exam Mode :</label>
+                                            <label class="control-label space required"> Exam Mode </label>
                                         </div>
                                         <div class="form-group col-4">
                                             <div id="Drop_Format_SEM_2">
@@ -150,7 +152,7 @@
                                         <div class="col-3"></div>
                                         <div class="col-3"></div>
                                         <div class="form-group col-2">
-                                            <label class="control-label space">Sort By :</label>
+                                            <label class="control-label space">Sort By </label>
                                         </div>
                                         <div class="form-group col-4  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
                                             <div class="radio radio-primary">
@@ -171,7 +173,7 @@
                                         <div style=" display: flex; gap: 17px;">
                                             <div class="col-4"></div>
                                             <input type="reset" value="Clear" id="BtnRefresh" class="btn btn-pill btn-outline-warning btn-air-warning" />
-                                            <input type="submit" value="Go to step 2 of Post Results" id="BtnNextpage_Step2" class="btn btn-pill btn-outline-info btn-air-info" />
+                                            <input type="submit" value="Go to step 2 of Post Results" id="BtnNextpage_Step2" class="btn btn-pill btn-outline-info btn-air-info submit-btn" />
                                         </div>
                                     </div>
                                 </form>
@@ -239,6 +241,10 @@
                 <!--card 1 in step 3-->
                 <div style=" padding-top: 0px;" id="ChooseOptionFile">
                     <div class="card">
+                        <span id="DepartmentNameStep3" style="margin-left:25%;">
+                            @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
+                        </span>
+                    
                         <div class="card-header " style="background-color:black ;">
                             <h5 class="mb-0">
                                 <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001A1" aria-controls="collapse11">
@@ -250,8 +256,11 @@
                         </div>
                         <div class="collapse show" id="collapseicon12001A1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc91" style="">
                             <div class="card ">
+
                                 <div class="card-body">
-                                    <form id="FmChooseOption">
+                                    @*<form id="FmChooseOption">*@
+
+                                       
                                         <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
                                             <div class="row">
                                                 <div class="form-group col-2">
@@ -259,19 +268,19 @@
                                                 </div>
                                                 <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
                                                     <div class="radio radio-primary">
-                                                        <input id="RdbYes" name="SortBy" style="padding-top: 0px;" class="check" type="radio" value="0">
+                                                        <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
                                                         <label class="mb-0" for="RdbYes">Yes</label>
                                                     </div>
                                                     &nbsp;
                                                     <div class="radio radio-primary">
-                                                        <input id="RdbNo" name="SortBy" class="check" type="radio" value="1">
+                                                        <input id="RdbNo" name="SortBy" class="check"  type="radio" value="1">
                                                         <label class="mb-0" for="RdbNo">No</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </form>
+                                    @*</form>*@
                                 </div>
                             </div>
                         </div>
@@ -291,409 +300,17 @@
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
 <script src="~/js/GeneralFunctions.js"></script>
 <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
-<script>
-    var ErrorAppend = $("#Main_Span_Error");
-    $(document).ready(function () {
-        $("#loadingOverlay").show();
-        //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
-        CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
-        CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
-        $("#loadingOverlay").hide();
-    });
-    var js = jQuery.noConflict(true);
 
+<script src="~/js/ExcelDownloading.js"></script>
 
-    js('#RdbNo,#RdbYes').click(function (event) {
-        try {
-            debugger;
-            event.preventDefault();
-            var btnname = $(this).val();
-            var MarksUploadtype;
-            if (btnname == "1") {
-                MarksUploadtype = "UploadWithOutExcelFile";
-            } else {
-                MarksUploadtype = "UploadWithExcelFile";
-            }
-            var selectedValues = $("#DdlSubjects option:selected").map(function () {
-                return $(this).text();
-            }).get();
-            if (selectedValues) {
-                var selectedValuesString = selectedValues.join(", ");
-            }
-            var formData = new FormData($("#FmSubjectsSearch")[0]);
-
-            formData.append("SubjectsName", selectedValuesString)
-
-
-            var TblExamSubject = $("#TblExamSubjects tbody tr");
-
-            TblExamSubject.each(function (index) {
-                TblExamSubjectTD = $(this).find("td");
-
-               // var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
-                var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
-                var TxtPassMarks = TblExamSubjectTD.find("#TxtPassMarks").val();
-                var TxtMaxMarks = TblExamSubjectTD.find("#TxtMaxMarks").val();
-
-               // formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
-                formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
-                formData.append("PassMarksList", parseFloat(TxtPassMarks));
-                formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
-            });
-
-            // var formData = { MarksUploadtype: "UploadWithExcelFile" };
-            $("#loadingOverlay").show();
-            performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype, formData, function (response) {
-                // $("#Div_Step2").hide();
-                $("#Div_UploadingType").html(response);
-                $("#loadingOverlay").hide();
-            }, function (error) {
-                $("#loadingOverlay").hide();
-                $("#Main_Span_Error").text("Something Error");
-            }, true);
-        } catch (x) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    });
-
-
-    //---go to step 3 //this is not using
-    function Div_Step3(event) {
-        try {
-            debugger;
-            event.preventDefault();
-
-            var data = { MarksUploadtype: "UploadWithExcelFile" };
-            $("#loadingOverlay").show();
-            performCrudOperationCommonFunction("GET", "/Results/PublishResults_Step3", data, function (response) {
-
-                $("#Div_UploadingType").html(response);
-                $("#loadingOverlay").hide();
-            }, function (error) {
-                $("#loadingOverlay").hide();
-                $("#Main_Span_Error").text("Something Error");
-            });
-            $("#Div_Step2").hide();
-            $("#Div_Step3").show();
-            $("#loadingOverlay").hide();
-
-        } catch (x) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    }
-
-    //---back to step 1
-    function BackTOStep(event, button) {
-        try {
-            debugger;
-            var btnName = $(button).attr("id");
-            $(".ErrorMessageSpan").empty();
-            $("#loadingOverlay").show();
-
-            $("#Div_Step3").css('display', 'none');
-            $("#Div_UploadingType").empty();
-
-
-            if (btnName == "BtnBackTo_Step2") {
-
-                TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
-                $("#Div_Step2").css('display', 'block');
-            } else {
-                $("#Div_Step2").css('display', 'none');
-
-                $("#TblExamSubjects tbody").empty();
-                $("#Div_Step1").css('display', 'block');
-            }
-
-            $("#loadingOverlay").hide();
-        } catch (x) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    }
-
-
-    //-----------Search Records
-    js("#FmSubjectsSearch").submit(function (event) {
-        debugger;
-        try {
-            event.preventDefault();
-            $(".ErrorMessageSpan").empty();
-            var formElement = document.getElementById('FmSubjectsSearch');
-            setTimeout(function () {
-                var validationMessages = formElement.getElementsByClassName('field-validation-error');
-                // var validationMessages2 = formElement.getElementsByClassName('error2');
-                var validationmelength = validationMessages.length;
-                if (validationmelength == 0) {
-                    var selectedCount = $('#DdlSubjects option:selected').length;
-                    if (selectedCount > 1 && $("#DdlExammode").val() == 2) {
-                        $("#Main_Span_Error").text("You can not post results for more than 1 subject in ReTest mode.");
-                        window.scrollTo(0, 0);
-                        return;
-                    } else if (selectedCount > 14) {
-                        $("#Main_Span_Error").text("You can not post results for more than 15 subjects at a time.");
-                        window.scrollTo(0, 0);
-                        return;
-                    }
-                    TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
-
-                    $("#DepartmentName").text('Step 2 Selection: ' +
-                        $("#DdlDepartment option:selected").text() + ' - ' +
-                        $("#DdlClass option:selected").text() + ',' +
-                        $("#DdlExam option:selected").text() + ',' +
-                        $("#DdlExammode option:selected").text() + '');
-                    $("#Div_Step2").css('display', 'block');
-                    $("#Div_Step1").css('display', 'none');
-                } else {
-                    $('.alert-danger p').text("Pleae Enter All Required Fields");
-                    $(".alert-danger").show().delay(5000).fadeOut()
-                }
-            }, 50);
-        } catch (e) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    })
-
-    //=---------------------This is For save and go to step3
-    js(document).on("click", '#BtnSave_Nextpage_Step3', function (event) {
-        try {
-            event.preventDefault();
-            //event.stopImmediatePropagation();
-
-            $("#loadingOverlay").show();
-            var ButtonName = $(this).val();
-            debugger;
-            $(".ErrorMessageSpan").empty();
-            var formData = new FormData($("#FmSubjectsSearch")[0]);
-
-            var selectedValues = $("#DdlSubjects option:selected").map(function () {
-                return $(this).text();
-            }).get();
-            if (selectedValues) {
-                var selectedValuesString = selectedValues.join(", ");
-            }
-
-            formData.append("SubjectsName", selectedValuesString)
-
-
-
-
-            // var Subjectname = $("#Subjectname").val();
-            var shouldExit = false;
-            var TblExamSubject = $("#TblExamSubjects tbody tr");
-            TblExamSubject.find('input[type="text"],input[type="date"]').removeClass("errorboxshadow");
-            //this for check a record
-            TblExamSubject.each(function (index) {
-                TblExamSubjectTD = $(this).find("td");
-                //var ExamId = TblExamSubjectTD.find("#ExamSubjectId").val();
-
-                var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
-                var HdnActualDateConducted = TblExamSubjectTD.find("#ActualDateConducted").val();
-                var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
-                var SubjectName = TblExamSubjectTD.eq(1).text();
-                var TxtDate = TblExamSubjectTD.find("#TxtDate").val();
-                var TxtPassMarks = TblExamSubjectTD.find("#TxtPassMarks").val();
-                var TxtMaxMarks = TblExamSubjectTD.find("#TxtMaxMarks").val();
-                if (TxtDate === "") {
-                    $(ErrorAppend).text("Conducted date can not be left blank for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                else if (TxtPassMarks === "") {
-                    $(ErrorAppend).text("Pass Marks can not be left blank for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                else if (TxtMaxMarks === "") {
-                    $(ErrorAppend).text("Max Marks can not be left blank for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtMaxMarks").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                else if (!compareDatesNotGreaterThanToday(TxtDate)) {
-                    $(ErrorAppend).text("Conducted date can not be greater than today for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                else if (new Date(TxtDate) < new Date(HdnActualDateConducted)) {
-                    $(ErrorAppend).text("ReTest Conducted date can not be less than Conducted Date for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                else if (parseFloat(TxtMaxMarks) < parseFloat(TxtPassMarks)) {
-                    $(ErrorAppend).text("Pass Marks can not be greater than Max Marks for subject '" + SubjectName + "'");
-                    TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
-                    shouldExit = true; // Set the flag to true to exit the loops
-                    return false; // Exit the inner loop
-                }
-                // formData.append("ExamIdList", parseInt(ExamId) || 0);
-                formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
-                formData.append("PassMarksList", parseFloat(TxtPassMarks));
-                formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
-                formData.append("DateConductedList", TxtDate);
-
-                formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
-            });
-            if (shouldExit) {
-                //  $("#Main_Span_Error").text("Subjects overlapping.");
-                window.scrollTo(0, 0);
-                $("#loadingOverlay").hide();
-                return;
-            }
-            performCrudOperationCommonFunction('POST', "/Results/PostResults?ButtonName=" + ButtonName, formData, function (response) {
-                debugger;
-                var SubjectText = "";
-                if (response.message == "Record inserted successfully.") {
-
-                   // var data = { MarksUploadtype: "UploadWithExcelFile",Nextstep:"Step3" };
-                    var MarksUploadtype = "UploadWithExcelFile";
-                    $("#loadingOverlay").show();
-                    performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype + "&Nextstep=Step3", formData, function (response) {
-                        $("#Div_UploadingType").html(response);
-                        $("#Div_Step2").hide();
-                        $("#Div_Step3").show();
-                        $("#loadingOverlay").hide();
-                    }, function (error) {
-                        $("#loadingOverlay").hide();
-                        $("#Main_Span_Error").text("Something Error");
-                    }, true);
-
-                }
-                if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
-                    SubjectText = $("#DdlSubject option:selected").text();
-                }
-                $("#Main_Span_Error").text(response.message + SubjectText);
-                $("#loadingOverlay").hide();
-                window.scrollTo(0, 0);
-            }, function (error) {
-                $("#loadingOverlay").hide();
-                $("#Main_Span_Error").text("Something Error");
-            }, true);
-        } catch (e) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    });
-
-
-
-
-    //=---------------------This is For save as draft and Publish Marks
-    js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {
-        try {
-            event.preventDefault();
-            //event.stopImmediatePropagation();
-            var ButtonName = $(this).val();
-            var ButtonId = $(this).attr("id");
-            debugger;
-            $(".ErrorMessageSpan").empty();
-            var formData = new FormData($("#FmSubjectsSearch")[0]);
-            formData.append("ButtonId", ButtonId);
-            $("#loadingOverlay").show();
-
-            var TblExamSubject = $("#TblUsersSearched tbody tr");
-            TblExamSubject.find('input[type="text"]').removeClass("errorboxshadow");
-
-            var SecuredMarks;
-            var shouldExit = false;
-            var MaxMarks;
-            var Grade;
-            $('#TblUsersSearched tbody tr').each(function () {
-                if (shouldExit) {
-                    return false; // Exit the outer loop
-                }
-                var UserId = $(this).find('#UserId').val();
-                var Name = $(this).find("td:eq(1)").text();
-                $(this).find('td').each(function (tdIndex) {
-                    if (tdIndex < 3) {
-                        return;
-                    }
-                    SecuredMarks = $(this).find('input[type="text"]').val();
-                    SubjectId = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_ExamSubjectId').val();
-                    MaxMarks = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_MaxMarks').val();
-                    PassMarks = $('#TblUsersSearched thead th:eq(' + tdIndex + ')  #TH_PassMarks').val();
-                    SubjectName = $('#TblUsersSearched thead th:eq(' + tdIndex + ')').text();
-
-                    if (SecuredMarks === "" && !$(this).find('input[type="text"]').prop('disabled') && ButtonId != "BtnSaveAsDraft") {
-                        $(ErrorAppend).text("Please enter marks For student '" + Name + "' for subject  '" + SubjectName + "'");
-                        $(this).find('input[type="text"]').addClass("errorboxshadow");
-                        shouldExit = true; // Set the flag to true to exit the loops
-                        return false; // Exit the inner loop
-                    }
-                    if (parseFloat(MaxMarks) < parseFloat(SecuredMarks)) {
-                        $(ErrorAppend).text("For student '" + Name + "' secured marks can not be greater than maximum marks for subject '" + SubjectName + "'");
-                        $(this).find('input[type="text"]').addClass("errorboxshadow");
-                        shouldExit = true; // Set the flag to true to exit the loops
-                        return false; // Exit the inner loop
-                    }
-
-                    if (parseFloat(PassMarks) <= parseFloat(SecuredMarks) && SecuredMarks != "") {
-                        Grade = "PASS";
-                    } else if (parseFloat(PassMarks) > parseFloat(SecuredMarks) && SecuredMarks != "") {
-                        Grade = "FAIL";
-                    } else if (SecuredMarks == "-"){
-                        Grade = "ABSENT";
-                        //Grade = "OPTIONAL";
-                    } else if (SecuredMarks == "" && ButtonId == "BtnPublish"){
-                        Grade = "OPTIONAL";
-                    } else {
-                        Grade = "";
-                    }
-                    formData.append("UseridList", parseInt(UserId) || 0);
-                    formData.append("SubjectIdList", parseInt(SubjectId) || 0);
-                    formData.append("SecureMarksList", parseFloat(SecuredMarks) || "");
-                    // formData.append("SecureMarksList", parseFloat(SecuredMarks));
-                    formData.append("GradeList", Grade || "");
-                    // formData.append("GradeList", Grade);
-                    formData.append("PassMarksList", parseFloat(PassMarks));
-                    formData.append("MaxMarksList", parseFloat(MaxMarks));
-                    // formData.append("DateConductedList", TxtDate);
-                    // formData.append("UserMarksString", count + ', ' + UserId + ',' + SubjectId + ',' + SecuredMarks + ', ' + Grade + ', ' + ButtonWise + ', "Empty"');
-                    //  count++;
-                });
-            });
-            if (shouldExit) {
-                window.scrollTo(0, 0);
-                $("#loadingOverlay").hide();
-                return;
-            }
-            performCrudOperationCommonFunction('POST', "/Results/PublishResults?ButtonName=" + ButtonName, formData, function (response) {
-                debugger;
-                var SubjectText = "";
-                if (response.message == "Record inserted successfully.") {
-                    var data = { Buttonname: "BtnCreateNew" };
-                    $("#loadingOverlay").show();
-                    //$("#BtnSave").prop('disabled', true);
-                }
-                if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
-                    SubjectText = $("#DdlSubject option:selected").text();
-                }
-                $("#Main_Span_Error").text(response.message + SubjectText);
-                $("#loadingOverlay").hide();
-                window.scrollTo(0, 0);
-            }, function (error) {
-                $("#loadingOverlay").hide();
-                $("#Main_Span_Error").text("Something Error");
-            }, true);
-        } catch (e) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    });
-</script>
-
-
-
+<script src="~/js/PostResults.js"></script>
 
 
 

@@ -9,6 +9,10 @@
 }
 <link href="~/css/TableDesign.css" rel="stylesheet" />
 <div style=" max-height: 500px; overflow-y: scroll;">
+    @if (groupedData.Count() != 0)
+            {
+
+            
     <table class="styled-table">
         <thead>
             <tr>
@@ -24,8 +28,10 @@
         <tbody>
             @{int i = 1; }
 
+            
             @foreach (var group in groupedData)
             {
+                
                 int marks = 0;
                 int actualmarks = 0;
 
@@ -55,6 +61,14 @@
                 i = i + 1;
             }
 
+
+
+
         </tbody>
     </table>
+            }
+            else
+            {
+<div style="color: red; color: red; font-size: 28px;  background-color: beige;"><span style="margin-left: 36%">No Data Found..!</span></div>
+            }
 </div>

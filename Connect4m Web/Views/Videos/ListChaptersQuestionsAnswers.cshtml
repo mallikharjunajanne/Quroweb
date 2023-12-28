@@ -1,473 +1,469 @@
 ﻿
 @model IEnumerable<Connect4m_Web.Models.LMSproperties.Listchaptersquestions>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    @{
-        Layout = null;
-    }
-
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./assets/favicon.svg" />
-    <link href="~/css/player.css" rel="stylesheet" />
-    <link href="~/css/texts.css" rel="stylesheet" />
-    <link href="~/css/buttons.css" rel="stylesheet" />
-
-    <link href="~/css/Chapter_wise_Video_playing.css" rel="stylesheet" />
-
-
-    <link href="~/css/Videodesign-m.css" rel="stylesheet" />
-    <link href="~/css/Everyminutetest.css" rel="stylesheet" />
-    <link href="~/css/navlinks_belowthevideo.css" rel="stylesheet" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&display=swap"
-          rel="stylesheet" />
-    @*<link href="~/css/TableDesign.css" rel="stylesheet" />*@
-    <style>
-        #thumbnailappendchapters video {
-            height: 73px;
-            object-fit: cover;
-            border-radius: 2px;
-            margin-right: 10px;
-            border-radius: 10px;
+  <!DOCTYPE html>
+    <html lang="en">    
+    <head>
+        @{
+            Layout = null;
         }
 
-        #pdfshow p strong {
-            text-align: center;
-        }
-        #pdfshow table {
-            background-color: white;
-            color: black;
-            font-weight: 500;
-            border-collapse: collapse;
-            width: 100%;
-        }
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="./assets/favicon.svg" />
+        <link href="~/css/player.css" rel="stylesheet" />
+        <link href="~/css/texts.css" rel="stylesheet" />
+        <link href="~/css/buttons.css" rel="stylesheet" />
 
-            #pdfshow table tr:nth-child(2), #pdfshow table tr:nth-child(1) {
-                font-weight: 900;
-                color: black;
-            }
+        <link href="~/css/Chapter_wise_Video_playing.css" rel="stylesheet" />
 
-                #pdfshow table tr:nth-child(1) td:nth-child(1) {
-                    background-color: #500ef6;
-                    color: white;
-                    filter: drop-shadow(2px 4px 6px black);
+
+        <link href="~/css/Videodesign-m.css" rel="stylesheet" />
+        <link href="~/css/Everyminutetest.css" rel="stylesheet" />
+        <link href="~/css/navlinks_belowthevideo.css" rel="stylesheet" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700&display=swap"
+              rel="stylesheet" />
+        @*<link href="~/css/TableDesign.css" rel="stylesheet" />*@
+        <style>
+                #thumbnailappendchapters video {
+                    height: 73px;
+                    object-fit: cover;
+                    border-radius: 2px;
+                    margin-right: 10px;
+                    border-radius: 10px;
                 }
 
-        #pdfshow th {
-            border: 1px solid white;
-        }
-
-        #pdfshow td, #pdfshow th {
-            padding: 9px;
-            text-align: center;
-            border: 1px solid;
-        }
-
-
-        /* #pdfshow h2,
-        #pdfshow h3 {
-            text-align: center;
-        }*/
-
-        /* #pdfshow h1.centered, #pdfshow h2.centered, #pdfshow h3.centered {
-            text-align: center;
-        }*/
-    </style>
-    <title>Video Player</title>
-</head>
-
-<body>
-    <div id="pdfcheck" hidden style="display:none">@ViewBag.pdfcheckvalue</div>
-
-    @foreach (var item in Model)
-    {
-
-        <main class="wrapper" id="wrapper1">
-            <div class="player">
-                <div class="player-overlay" data-fullscreen="false">
-                    <div class="video-header">
-                        <div style="margin-left:1%;width:37%" id="displaynameTop">
-                            @item.Listchapters[0].displayname.ToUpper()
-
-                        </div>
-
-                        <span style="color:black">
-                            Your Progress
-                        </span>
-                        <div style=" margin-left: 24%;">
-                            <div class="circular">
-
-                                <div class="inner"></div>
-                                <div class="outer"></div>
-                                <div class="numb">
-                                    0%
-                                </div>
-                                <div class="circle">
-                                    <div class="dot">
-                                        <span></span>
-                                    </div>
-                                    <div class="bar left">
-                                        <div class="progress"></div>
-                                    </div>
-                                    <div class="bar right">
-                                        <div class="progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a id="goBackButton" href="/Videos/ViewLectureDocsSubVideos?InstanceClassificationId=@ViewBag.InstanceClassificationId&InstanceSubClassificationId=@ViewBag.InstanceSubClassificationId&SubjectId=@ViewBag.SubjectId">Back</a>
-
-                        <canvas id="canvas" style="display: none;"></canvas>
-                        <button id="show-panel-button" onclick="showPanel()">Show Panel</button>
-                        <button id="Hide-panel-button" onclick="HidePanel()">Hide Panel</button>
-
-                    </div>
-                    <div id="pdfcontainer" style="display: none; ">
-
-
-                        <div id="pdfshow" style="overflow-y: scroll; height: 76vh; border: 2px solid black; text-align: center; background-color: black;"></div>
-
-                    </div>
-
-
-
-
-
-                    <div class="container" id="container2">
-                        <div class="information-container" id="informationcontainer1">
-                            @*<h1 class="title">Rain</h1>*@
-
-
-                            @*<p class="description">
-                                    You have to dream before your dreams can come true
-
-                                </p>*@
-
-
-
-                        </div>
-
-                        <div class="player-container" id="playercontainer1">
-                            <div class="video-progress">
-                                <div class="video-progress-filled"></div>
-                            </div>
-
-
-
-
-                            <div class="player-controls">
-                                <div class="player-buttons">
-                                    <button aria-label="play"
-                                            class="button play"
-                                            title="play"
-                                            type="button"></button>
-                                    <button aria-label="pause"
-                                            class="button pause"
-                                            hidden
-                                            title="pause"
-                                            type="button"></button>
-                                    <button aria-label="backward"
-                                            class="button backward"
-                                            title="backward"
-                                            type="button"></button>
-                                    <div>
-
-
-
-                                        <ul id="speedDropdown">
-                                            <li data-speed="0.5">0.5x</li>
-                                            <li data-speed="0.75">0.75x</li>
-                                            <li data-speed="1.0">1x</li>
-                                            <li data-speed="1.25">1.25x</li>
-                                            <li data-speed="1.5">1.5x</li>
-                                            <li data-speed="1.75">1.75x</li>
-                                            <li data-speed="2.0">2x</li>
-                                        </ul>
-                                        <button id="speedButton" style="margin-left: -24px; width: 45px; ">
-                                            1X
-
-                                        </button>
-
-                                    </div>
-                                    <button aria-label="forward"
-                                            class="button forward"
-                                            title="forward"
-                                            type="button"></button>
-                                    <button aria-label="volume"
-                                            class="button volume"
-                                            title="volume"
-                                            type="button"></button>
-                                    <button aria-label="silence"
-                                            class="button silence"
-                                            hidden
-                                            title="silence"
-                                            type="button"></button>
-                                    <div class="volume-progress">
-                                        <div class="volume-progress-filled"></div>
-                                    </div>
-                                    <div class="time-container">
-                                        <p class="current-time">0:00</p>
-                                        <p class="time-separator">/</p>
-                                        <p class="duration-video">0:00</p>
-                                    </div>
-                                </div>
-                                <div class="expand-container">
-                                    <button aria-label="expand"
-                                            class="button expand"
-                                            title="expand"
-                                            type="button"></button>
-                                    <button aria-label="reduce"
-                                            class="button reduce"
-                                            hidden
-                                            title="reduce"
-                                            type="button"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="thumbnailappend" style="cursor:pointer"></div>
-
-                <video class="video" id="video">
-
-                    <source src="~/LMSVideos/Instance545/@item.Listchapters[0].VideoPath" type="video/mp4">
-
-                </video>
-                @*<div id="bufferingOverlay">
-                        <img src="~/Images/Loading-Video.gif" alt="Buffering">
-                    </div>*@
-
-            </div>
-
-
-            @{ if (item.Listchapters.Count != 0)
-                {
-
-                    <div id="chapters-panel">
-                        <ul id="chapter-list">
-                            @foreach (var item2 in item.Listchapters)
-                            {
-
-                                int showtime = (Convert.ToInt32(item2.timehours) * 3600) + (Convert.ToInt32(item2.timeminutes) * 60) + Convert.ToInt32(item2.timesecomds);
-
-                                <li id="@showtime" onclick="seekToTime(@showtime)">
-
-
-                                    <div class="chapter-thumbnail">
-                                        @*<img alt="Chapter 1">*@
-                                        <div id="thumbnailappendchapters" style="cursor:pointer"></div>
-                                    </div>
-                                    @*@if (item2.timesecomds > 0 && item2.timesecomds < 10)
-                                        {*@
-                                    <div class="chapter-title"><a href="#" style="background-color: bisque;">@item2.timeminutes:@item2.timesecomds </a>@item2.headingname</div>
-
-                                    @*}
-                                        else
-                                        {
-                                            <div class="chapter-title"><a href="#">@item2.timeminutes:@item2.timesecomds </a>@item2.headingname</div>
-
-                                        }*@
-
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                #pdfshow p strong {
+                    text-align: center;
                 }
-            }
+
+                #pdfshow table {
+                    background-color: white;
+                    color: black;
+                    font-weight: 500;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                    #pdfshow table tr:nth-child(2), #pdfshow table tr:nth-child(1) {
+                        font-weight: 900;
+                        color: black;
+                    }
+
+                        #pdfshow table tr:nth-child(1) td:nth-child(1) {
+                            background-color: #500ef6;
+                            color: white;
+                            filter: drop-shadow(2px 4px 6px black);
+                        }
+
+                #pdfshow th {
+                    border: 1px solid white;
+                }
+
+                #pdfshow td, #pdfshow th {
+                    padding: 9px;
+                    text-align: center;
+                    border: 1px solid;
+                }
 
 
-            @*----------------Question And Options With Time      -----------------*@
+                /* #pdfshow h2,
+            #pdfshow h3 {
+                text-align: center;
+            }*/
 
+                /* #pdfshow h1.centered, #pdfshow h2.centered, #pdfshow h3.centered {
+                text-align: center;
+            }*/
+        </style>
+        <title>Video Player</title>
+        <link rel="icon" type="image/x-icon" href="~/Images/mp4.png">
+    </head>
 
+    <body>
+        <div id="pdfcheck" hidden style="display:none">@ViewBag.pdfcheckvalue</div>
+        @try
+        {
 
-
-
-
-        </main>
-        <input type="text" value="@item.Listchapters[0].SubjectVideoId" hidden id="VLD_SubjectVideoId" />
-        <input type="text" value="@item.Listchapters[0].ChapterId" hidden id="VLD_ChapterId" />
-        <div class="form-popup" id="myyForm">
-            <label id="timerlabel">Remaining Time :<span id="timer">00:10</span></label>
-
-            @{ int questionno = 1;
-            }
-            @foreach (var item2 in item.ListQuestions)
+            @foreach (var item in Model)
             {
 
 
 
-                @foreach (var item3 in item.ListAnswers)
-                {
+                <main class="wrapper" id="wrapper1">
+                    <div class="player">
+                        <div class="player-overlay" data-fullscreen="false">
+                            <div class="video-header" style="height: 64px;">
+                                <div style="margin-left:1%;width:37%" id="displaynameTop">
 
-                    @if (item2.QuestionId == item3.QuestionId)
-                    {
-                        int Questionshowtime = (Convert.ToInt32(item2.timehours) * 3600) + (Convert.ToInt32(item2.timeminutes) * 60) + Convert.ToInt32(item2.timesecomds);
+                                    @item.Listchapters[0].displayname.ToUpper()
 
-                        <form class="form-container @Questionshowtime" id="@Questionshowtime" style="display:none">
-                            <input type="text" value="@item3.AnswerId" id="answerid+@questionno" hidden />
-                            <input type="text" value="@item3.Answerofquestion" hidden id="answer+@questionno" />
-                            <input type="text" value="@item3.Marksofquestion" hidden id="Marks+@questionno" />
-                            <div id="VLDQuestion+@questionno" style=" font-weight: 800; color: black; width: 77%;">@questionno ) @item2.Questionname</div>
-                            <hr />
-                            <div class="card" id="VLD_optionsList">
-                                <div style="color: black; font-weight: 900; text-align: center;"><span>@item3.Marksofquestion</span> Mark's Question</div>
-                                <div class="content" id="VLD_Optionslistsub">
-                                    <div class="box"> <input type="radio" name="option+@questionno" id="rad1+@questionno"> <span>@item3.Option1</span></div>
-                                    <div class="box"><input type="radio" name="option+@questionno" id="rad2+@questionno"><span>@item3.Option2</span></div>
-                                    <div class="box">  <input type="radio" name="option+@questionno" id="rad3+@questionno"><span>@item3.Option3</span></div>
-                                    <div class="box">  <input type="radio" name="option+@questionno" id="rad4+@questionno">   <span>@item3.Option4</span></div>
+
+
 
                                 </div>
+
+                                <span style="color:black">
+                                    Your Progress
+                                </span>
+                                <div style=" margin-left: 24%;">
+                                    <div class="circular" style="display:none">
+
+                                        <div class="inner"></div>
+                                        <div class="outer"></div>
+                                        <div class="numb">
+                                            0%
+                                        </div>
+                                        <div class="circle">
+                                            <div class="dot">
+                                                <span></span>
+                                            </div>
+                                            <div class="bar left">
+                                                <div class="progress"></div>
+                                            </div>
+                                            <div class="bar right">
+                                                <div class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a id="goBackButton" href="/Videos/ViewLectureDocsSubVideos?InstanceClassificationId=@ViewBag.InstanceClassificationId&InstanceSubClassificationId=@ViewBag.InstanceSubClassificationId&SubjectId=@ViewBag.SubjectId">Back</a>
+
+                                <canvas id="canvas" style="display: none;"></canvas>
+                                <button id="show-panel-button" onclick="showPanel()">Show Panel</button>
+                                <button id="Hide-panel-button" onclick="HidePanel()">Hide Panel</button>
+
+                            </div>
+                            <div id="pdfcontainer" style="display: none; ">
+
+
+                                <div id="pdfshow" style="overflow-y: scroll; height: 76vh; border: 2px solid black; text-align: center; background-color: black;"></div>
+
                             </div>
 
-                            <div>
 
 
+
+
+                            <div class="container" id="container2">
+                                <div class="information-container" id="informationcontainer1">
+                                    @*<h1 class="title">Rain</h1>*@
+
+
+                                    @*<p class="description">
+                                        You have to dream before your dreams can come true
+
+                                    </p>*@
+
+
+
+                                </div>
+
+                                <div class="player-container" id="playercontainer1">
+                                    <div class="video-progress">
+                                        <div class="video-progress-filled"></div>
+                                    </div>
+
+
+
+
+                                    <div class="player-controls">
+                                        <div class="player-buttons">
+                                            <button aria-label="play"
+                                                    class="button play"
+                                                    title="play"
+                                                    type="button"></button>
+                                            <button aria-label="pause"
+                                                    class="button pause"
+                                                    hidden
+                                                    title="pause"
+                                                    type="button"></button>
+                                            <button aria-label="backward"
+                                                    class="button backward"
+                                                    title="backward"
+                                                    type="button"></button>
+                                            <div>
+
+
+
+                                                <ul id="speedDropdown">
+                                                    <li data-speed="0.5">0.5x</li>
+                                                    <li data-speed="0.75">0.75x</li>
+                                                    <li data-speed="1.0">1x</li>
+                                                    <li data-speed="1.25">1.25x</li>
+                                                    <li data-speed="1.5">1.5x</li>
+                                                    <li data-speed="1.75">1.75x</li>
+                                                    <li data-speed="2.0">2x</li>
+                                                </ul>
+                                                <button id="speedButton" style="margin-left: -24px; width: 45px; ">
+                                                    1X
+
+                                                </button>
+
+                                            </div>
+                                            <button aria-label="forward"
+                                                    class="button forward"
+                                                    title="forward"
+                                                    type="button"></button>
+                                            <button aria-label="volume"
+                                                    class="button volume"
+                                                    title="volume"
+                                                    type="button"></button>
+                                            <button aria-label="silence"
+                                                    class="button silence"
+                                                    hidden
+                                                    title="silence"
+                                                    type="button"></button>
+                                            <div class="volume-progress">
+                                                <div class="volume-progress-filled"></div>
+                                            </div>
+                                            <div class="time-container">
+                                                <p class="current-time">0:00</p>
+                                                <p class="time-separator">/</p>
+                                                <p class="duration-video">0:00</p>
+                                            </div>
+                                        </div>
+                                        <div class="expand-container">
+                                            <button aria-label="expand"
+                                                    class="button expand"
+                                                    title="expand"
+                                                    type="button"></button>
+                                            <button aria-label="reduce"
+                                                    class="button reduce"
+                                                    hidden
+                                                    title="reduce"
+                                                    type="button"></button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <input type="button" class=" btn btn-success" id="textsubmit" value="Submit" />
-                        </form>
+                        </div>
+                        <div id="thumbnailappend" style="cursor:pointer"></div>
+
+                        <video class="video" id="video">
+
+                            <source src="~/LMSVideos/Instance545/@item.Listchapters[0].VideoPath" type="video/mp4">
+
+                        </video>
+                        @*<div id="bufferingOverlay">
+                            <img src="~/Images/Loading-Video.gif" alt="Buffering">
+                        </div>*@
+
+                    </div>
+
+
+                    @{ if (item.Listchapters.Count != 0)
+                        {
+
+                            <div id="chapters-panel">
+                                <ul id="chapter-list">
+                                    @foreach (var item2 in item.Listchapters)
+                                    {
+
+                                        int showtime = (Convert.ToInt32(item2.timehours) * 3600) + (Convert.ToInt32(item2.timeminutes) * 60) + Convert.ToInt32(item2.timesecomds);
+
+                                        <li id="@showtime" onclick="seekToTime(@showtime)">
+
+
+                                            <div class="chapter-thumbnail">
+                                                @*<img alt="Chapter 1">*@
+                                                <div id="thumbnailappendchapters" style="cursor:pointer"></div>
+                                            </div>
+                                            @*@if (item2.timesecomds > 0 && item2.timesecomds < 10)
+                                            {*@
+                                            <div class="chapter-title"><a href="#" style="background-color: bisque;">@item2.timeminutes:@item2.timesecomds </a>@item2.headingname</div>
+
+                                            @*}
+                                            else
+                                            {
+                                                <div class="chapter-title"><a href="#">@item2.timeminutes:@item2.timesecomds </a>@item2.headingname</div>
+
+                                            }*@
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+
+
+                    @*----------------Question And Options With Time      -----------------*@
+
+
+
+
+
+
+                </main>
+                <input type="text" value="@item.Listchapters[0].SubjectVideoId" hidden id="VLD_SubjectVideoId" />
+                <input type="text" value="@item.Listchapters[0].ChapterId" hidden id="VLD_ChapterId" />
+                <div class="form-popup" id="myyForm">
+                    <label id="timerlabel">Remaining Time :<span id="timer">00:10</span></label>
+
+                    @{ int questionno = 1;
+                    }
+                    @foreach (var item2 in item.ListQuestions)
+                    {
+
+
+
+                        @foreach (var item3 in item.ListAnswers)
+                        {
+
+                            @if (item2.QuestionId == item3.QuestionId)
+                            {
+                                int Questionshowtime = (Convert.ToInt32(item2.timehours) * 3600) + (Convert.ToInt32(item2.timeminutes) * 60) + Convert.ToInt32(item2.timesecomds);
+
+                                <form class="form-container @Questionshowtime" id="@Questionshowtime" style="display:none">
+                                    <input type="text" value="@item3.AnswerId" id="answerid+@questionno" hidden />
+                                    <input type="text" value="@item3.Answerofquestion" hidden id="answer+@questionno" />
+                                    <input type="text" value="@item3.Marksofquestion" hidden id="Marks+@questionno" />
+                                    <div id="VLDQuestion+@questionno" style=" font-weight: 800; color: black; width: 77%;">@questionno ) @item2.Questionname</div>
+                                    <hr />
+                                    <div class="card" id="VLD_optionsList">
+                                        <div style="color: black; font-weight: 900; text-align: center;"><span>@item3.Marksofquestion</span> Mark's Question</div>
+                                        <div class="content" id="VLD_Optionslistsub">
+                                            <div class="box"> <input type="radio" name="option+@questionno" id="rad1+@questionno"> <span>@item3.Option1</span></div>
+                                            <div class="box"><input type="radio" name="option+@questionno" id="rad2+@questionno"><span>@item3.Option2</span></div>
+                                            <div class="box">  <input type="radio" name="option+@questionno" id="rad3+@questionno"><span>@item3.Option3</span></div>
+                                            <div class="box">  <input type="radio" name="option+@questionno" id="rad4+@questionno">   <span>@item3.Option4</span></div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+
+
+                                    </div>
+                                    <input type="button" class=" btn btn-success" id="textsubmit" value="Submit" />
+                                </form>
+
+                            }
+                        }
+
+                        questionno++;
+
+
 
                     }
-                }
-
-                questionno++;
+                </div>
 
 
 
             }
-        </div>
+            @*<input type="text" value="@ViewBag.InstanceClassificationId"id="VLD_InstanceClassificationId" hidden/>
+            <input type="text" value="@ViewBag.InstanceSubClassificationId"id="VLD_InstanceSubClassificationId" hidden/>
+            <input type="text" value="@ViewBag.SubjectId"id="VLD_SubjectId" hidden/>*@
+            @*<hr style="color:black" />*@
 
-    }
-    @*<input type="text" value="@ViewBag.InstanceClassificationId"id="VLD_InstanceClassificationId" hidden/>
-        <input type="text" value="@ViewBag.InstanceSubClassificationId"id="VLD_InstanceSubClassificationId" hidden/>
-        <input type="text" value="@ViewBag.SubjectId"id="VLD_SubjectId" hidden/>*@
-    @*<hr style="color:black" />*@
-
-    <div class="topnav">
-        <button class="abc" id="Course-Contents">Course Content</button>
-        <button class="abc">Over View</button>
-        <button class="abc" id="create-notes-navlink">Notes</button>
-        <button class="abc" id="ViewMarks">Marks</button>
-        <button class="abc" id="GettingAllGeneratedPdfs">Generated PDF's</button>
-    </div>
-
-    <div id="below-video-content">
-
-
-    </div>
-
-    <footer @*style=" filter: drop-shadow(2px 4px 6px black);"*@>
-        <div>
-            <div>
-                <div>
-                    <p style="margin-left: auto; background-color: #121451 !important; /* margin: 10px; */ padding: 20px; color: white; text-align: center; font-weight: 900;">Copyright 2023 © ADS SOFTEK Pvt.Ltd All rights reserved.</p>
-                </div>
-                @*<div class="col-md-6">
-                        <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
-                    </div>*@
+            <div class="topnav">
+                <button class="abc" id="Course-Contents">Course Content</button>
+                @*<button class="abc">Over View</button>*@
+                <button class="abc" id="create-notes-navlink">Notes</button>
+                <button class="abc" id="ViewMarks">Marks</button>
+                <button class="abc" id="GettingAllGeneratedPdfs">Generated PDF's</button>
             </div>
-        </div>
-    </footer>
+
+            <div id="below-video-content">
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            </div>
 
-    <script src="~/js/cookies.js"></script>
+            <footer @*style=" filter: drop-shadow(2px 4px 6px black);"*@>
+                <div>
+                    <div>
+                        <div>
+                            <p style="margin-left: auto; background-color: #121451 !important; /* margin: 10px; */ padding: 20px; color: white; text-align: center; font-weight: 900;">Copyright 2023 © ADS SOFTEK Pvt.Ltd All rights reserved.</p>
+                        </div>
+                        @*<div class="col-md-6">
+                            <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+                        </div>*@
+                    </div>
+                </div>
+            </footer>
 
-    <script src="~/js/CommonScripts.js"></script>
-
-    <script src="~/js/chapter_wise_video_playing.js"></script>
-
-    <script src="~/js/video_playing.js"></script>
-    <script src="~/js/video-nav-links-content.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @*open pdf*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 
 
-    @*open docs*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <!-- Include the jszip library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-    <!-- Include the FileSaver library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
-    @*open excel*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.0/mammoth.browser.min.js"></script>*@
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="~/js/ViewLecturedocs.js"></script>
+            <script src="~/js/cookies.js"></script>
 
-</body>
+            <script src="~/js/CommonScripts.js"></script>
+
+            <script src="~/js/chapter_wise_video_playing.js"></script>
+
+            <script src="~/js/video_playing.js"></script>
+            <script src="~/js/video-nav-links-content.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            @*open pdf*@
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+
+            @*open docs*@
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+            <!-- Include the jszip library -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+            <!-- Include the FileSaver library -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+            @*open excel*@
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+            @*<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.0/mammoth.browser.min.js"></script>*@
+
+            <script src="~/js/ViewLecturedocs.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // debugger;
+                    var checking = $('#pdfcheck').text();
+                    // alert(checking);
+                    if (checking != "1215") {
+                        showPDF(checking);
+                        debugger;
+                        //  setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
+                        // setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
+                        // setCookie("TotalPoins", 1, 1);
+                        //setCookie("viewpoints", 1, 1);
+                        ViewVideoPoins();
+                    }
+                    else {
+                        chapterstimer();
+
+                        ViewVideoPoins();
+
+
+                    }
+
+
+
+                })
+
+                const belowbuttos = getCookie("belowbuttons");
+
+
+                if (belowbuttos) {
+                    // debugger;
+                    $(belowbuttos).trigger("click");
+
+                }
+
+
+
+            </script>
+
+        }
+        catch
+        {
+    <div style=" color: red; position: absolute; top: 44%; left: 39%; text-transform: uppercase; font-weight: 900; font-size: 43px;">
+        <label style="color:red">File Not Found</label>
+        <a id="goBackButton" href="/Videos/ViewLectureDocsSubVideos?InstanceClassificationId=@ViewBag.InstanceClassificationId&InstanceSubClassificationId=@ViewBag.InstanceSubClassificationId&SubjectId=@ViewBag.SubjectId">Back</a>
+    </div>
+        }
+    </body>
 </html>
 
 @*<div onmouseover="generateSnapshot()" onmouseout="hideSnapshot()"></div>
     <canvas id="snapshot-canvas"></canvas>*@
-<script>
-    $(document).ready(function () {
-       // debugger;
-        var checking = $('#pdfcheck').text();
-       // alert(checking);
-        if (checking != "1215") {
-            showPDF(checking);
-        }
-        else {
-            chapterstimer();
 
-
-            var SubjectVideoIdCookie = getCookie("SubjectVideoId");
-            var ChapterIdCookie = getCookie("ChapterId");
-            var viewpoints = getCookie("viewpoints");
-            var TotalPoins = getCookie("TotalPoins");
-
-            if ($('#VLD_ChapterId').val() != "0") {
-                if (ChapterIdCookie != null) {
-
-                    setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
-                    setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
-
-
-                    $.ajax({
-                        url: '/Videos/InsertVideoVewpoins?SubjectVideoId=' + SubjectVideoIdCookie + '&Viewspoints=' + viewpoints + '&TotalPoins=' + TotalPoins + "&ChapterId=" + ChapterIdCookie,
-                        type: 'GET',
-                        success: function (response) {
-
-                            // $('#below-video-content').html(response);
-
-                        }
-                    })
-
-
-                }
-                else {
-                    setCookie("ChapterId", $('#VLD_ChapterId').val(), 1);
-                    setCookie("SubjectVideoId", $("#VLD_SubjectVideoId").val(), 1);
-                }
-
-            }
-            else if (SubjectVideoIdCookie != $("#VLD_SubjectVideoId").val()) {
-
-            }
-        }
-        
-
-
-    })
-
-    const belowbuttos = getCookie("belowbuttons");
-    
-
-    if (belowbuttos) {
-       // debugger;
-        $(belowbuttos).trigger("click");
-     
-    }
- 
-
-  
-</script>

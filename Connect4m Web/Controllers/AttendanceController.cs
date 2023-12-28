@@ -87,7 +87,6 @@ namespace Connect4m_Web.Controllers
         public async Task< IActionResult> LoginPage()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             ViewBag.Layout = "LoginPage";
             return View();
         }
@@ -180,6 +179,7 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+                        Response.Cookies.Append("UserNameHeader_", val.Username);
 
 
                         var claims = new List<Claim>
@@ -195,11 +195,6 @@ namespace Connect4m_Web.Controllers
                         };
 
                  await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-
-
-
-
 
                         return Json("correct");
                     }
@@ -640,8 +635,7 @@ namespace Connect4m_Web.Controllers
        
         public IActionResult ApplyStudentLeave(AttendanceModel obj/*, IFormFile attachdocument*/, string fileName, string submitButton,int StudentLeaveDetailsID_TO_Delete)
         {
-            
-                string successMessage = "";
+             string successMessage = "";
             if (obj.file != null && obj.file.Length > 0)
             {
 
@@ -2189,9 +2183,6 @@ namespace Connect4m_Web.Controllers
 
                 items.Add(new SelectListItem { Value = Value2[i].InstanceClassificationId.ToString(), Text = Value2[i].ClassificationName.ToString() });
             }
-
-
-
             ViewBag.DdlDepartmentIdIOfStaff_Calingfunction = new SelectList(items, "Value", "Text");
             return new JsonResult(ViewBag.DdlDepartmentIdIOfStaff_Calingfunction);
         }

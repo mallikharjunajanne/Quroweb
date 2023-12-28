@@ -27601,7 +27601,7 @@ footer {
 
     .show-hide span {
         cursor: pointer;
-        font-size: 13px;
+        font-size: 18px;
         color: #4d8aff
     }
 
@@ -43942,7 +43942,7 @@ body.dark-sidebar .page-wrapper.horizontal-wrapper .page-body-wrapper.horizontal
     border-radius: 0;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    color: #aaa
+    color: black !important
 }
 
 .nav-tabs {

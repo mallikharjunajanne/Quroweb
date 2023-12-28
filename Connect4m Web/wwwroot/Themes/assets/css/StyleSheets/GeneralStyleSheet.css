@@ -18,13 +18,13 @@
 .Undeline{
     cursor:pointer;
 }
-.swal2-popup {
+/*.swal2-popup {
     width: 26em;
     height: 20em;
 }
 .swal2-confirm, .swal2-cancel {
     padding: 3px 22px;
-}
+}*/
 /*---------------------------datalist Table--------------------*/
 /*#TblLeaveDeligationAuthorityList_SearchedRecords_paginate {
     margin-right: 27%;

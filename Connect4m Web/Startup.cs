@@ -16,11 +16,13 @@ using DinkToPdf;
 using Microsoft.AspNetCore.Http.Features;
 using System.IO;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using OfficeOpenXml;
 
 namespace LMS_Module
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -54,6 +56,7 @@ namespace LMS_Module
                    options.AccessDeniedPath = "/Attendance/AccessDenied"; // Specify the access denied page
 
                });
+
 
             services.AddAuthorization(options =>
             {
@@ -92,6 +95,7 @@ namespace LMS_Module
 
             app.UseAuthentication();
             app.UseAuthorization();
+           // ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             app.UseEndpoints(endpoints =>
             {
@@ -104,6 +108,12 @@ namespace LMS_Module
                                                                  //pattern: "/PayRoll/StepsControl?url=SearchEmployeeDetails");
         pattern: "{controller=Attendance}/{action=LoginPage}/{id?}");
         });
+
+
+            //var licenseManagerType = typeof(System.ComponentModel.LicenseManager);
+            //var usageModeProperty = licenseManagerType.GetProperty("UsageMode");
+            //usageModeProperty?.SetValue(null, System.ComponentModel.LicenseUsageMode.Runtime, null);
         }
+
     }
 }

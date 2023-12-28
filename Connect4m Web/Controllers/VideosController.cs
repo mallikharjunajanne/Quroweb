@@ -59,7 +59,7 @@ namespace Connect4m_Web.Controllers
             UserId = _userService.LoginUserId;
             InstanceClassificationId = _userService.InstanceClassificationId;
             Roleid = _userService.Roleid;
-            StudentUserId = _userService.StudentUserid;
+            StudentUserId = _userService.LoginUserId;// Changed
 
 
         }
@@ -79,6 +79,7 @@ namespace Connect4m_Web.Controllers
         {
             //  InstanceId = 545;
             ViewBag.InitiallyVisible = true;
+
 
             return View();
         }
@@ -443,11 +444,11 @@ namespace Connect4m_Web.Controllers
 
 
         //-----------------------------------------------------------------------------------Delete Upload Lecture Docs
-        public IActionResult DeleteUploadlecturedocs(int VideoId)
+        public IActionResult DeleteUploadlecturedocs(int VideoId,int isvideo)
 
         {
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DeleteUPloadlecturedocs?InstanceId=" + InstanceId + "&VideoId=" + VideoId + "&CreatedBy=" + UserId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DeleteUPloadlecturedocs?InstanceId=" + InstanceId + "&VideoId=" + VideoId + "&CreatedBy=" + UserId+ "&isvideo="+isvideo).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -548,12 +549,43 @@ namespace Connect4m_Web.Controllers
                 string data2 = response2.Content.ReadAsStringAsync().Result;
                 list3 = JsonConvert.DeserializeObject<List<VideoViewpoints>>(data2);
                 // list2.GroupBy(item => item.SubjectVideoId); 
-                double sumOfViewspoints = list3.Sum(item => item.Viewspoints);
-                double sumOfTotalpoints = list3.Sum(item => item.TotalPoins);
+                //double sumOfViewspoints = list3.Sum(item => item.Viewspoints);
+                //double sumOfTotalpoints = list3.Sum(item => item.TotalPoins);
 
-             
+                double sumOfPercentages = list3.Sum(item =>
+                {
+                    if (item.TotalPoins != 0) // Avoid division by zero
+                    {
+                        double percentage = (item.Viewspoints / item.TotalPoins) * 100;
+                        return percentage;
+                    }
+                    return 0; // Default to 0 if TotalPoints is 0
+                });
 
-                ViewBag.GetallViewvideopoints = (sumOfViewspoints/sumOfTotalpoints)*100;
+                double averagePercentage = (sumOfPercentages / list3.Count);
+
+
+               // var val = (sumOfViewspoints / sumOfTotalpoints) * 100;
+                if(averagePercentage == 0 || double.IsNaN(averagePercentage))
+                {
+                    ViewBag.GetallViewvideopoints = 0.00;
+                }
+                else
+                {
+                    ViewBag.GetallViewvideopoints = averagePercentage;
+                }
+
+
+                //if (decimal.IsNaN(ViewBag.GetallViewvideopoints) || ViewBag.GetallViewvideopoints==null)
+                //{
+                //    ViewBag.GetallViewvideopoints = 0;
+                //}
+
+
+               
+
+
+
             }
             return View(list);
 
@@ -637,7 +669,7 @@ namespace Connect4m_Web.Controllers
 
 
             List<Listchaptersquestions> list = new List<Listchaptersquestions>();
-            if (type == 1215)
+            if (type == 1215)// for pdf and others(not a video)
             {
                 //  ViewBag.pdfcheckvalue = "1215";
 
@@ -651,7 +683,7 @@ namespace Connect4m_Web.Controllers
                 // ViewBag.pdfcheckvalue = "369108file (22).pdf";//725488file (22).pdf
                 ViewBag.pdfcheckvalue = list[0].Listchapters[0].VideoPath;
             }
-            else
+            else // for Videos
             {
 
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ListChaptersQuestionsAnswers?SubjectVideoId=" + SubjectVideoId + "&InstanceId=" + InstanceId).Result;
