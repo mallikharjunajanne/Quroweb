@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewData["Title"] = "StaffattendanceSearch";
+    Layout = null;
+}
+
+
+
+<div class="col-sm-12 ">
+
+    <div class="card" id="checksall">
+
+        <div class="card-body">
+            <div style="display: flex; gap: 76%;">
+                <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_staffattendanceExportExcel" style=" border: 1px solid black !important;" />
+                <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_staffattendancePrint" style=" border: 1px solid black !important;" />
+            </div>
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_StaffA" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
+                        </h5>
+                    </div>
+
+                    <div id="eg1" style="color: black; background-color: whitesmoke; overflow-x: scroll; overflow-y: scroll;">
+                        <table class="table table-bordered" id="tblStaffattendancesearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                            <thead>
+                                <tr style="border-color: black;">
+                                    <th style=" width: 11px !important;">
+                                        S.No
+                                    </th>
+                                    <th style="width: 73px !important">
+                                        Name
+                                    </th>
+                                    <th style="width:60px !important">
+                                        Month
+                                    </th>
+                                    <th style=" width: 36px!important">
+                                        Year
+                                    </th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                    <th>6</th>
+                                    <th>7</th>
+                                    <th>8</th>
+                                    <th>9</th>
+                                    <th>10</th>
+                                    <th>11</th>
+                                    <th>12</th>
+                                    <th>13</th>
+                                    <th>14</th>
+                                    <th>15</th>
+                                    <th>16</th>
+                                    <th>17</th>
+                                    <th>18</th>
+                                    <th>19</th>
+                                    <th>20</th>
+                                    <th>21</th>
+                                    <th>22</th>
+                                    <th>23</th>
+                                    <th>24</th>
+                                    <th>25</th>
+                                    <th>26</th>
+                                    <th>27</th>
+                                    <th>28</th>
+                                    <th>29</th>
+                                    <th>30</th>
+                                    <th>31</th>
+
+
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+
+    <table id="ctl00_ContentPlaceHolder1_tblBusInfo" width="30%" cellpadding="0" cellspacing="0" align="center" style="background-color: #e8e8e8; border: 1px solid #d4d4d4;">
+        <tbody>
+            <tr>
+                <td align="left">
+                    <b>P   : Present</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>H   : School Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>CL  : Casual Leave </b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>ML  : Medical Leave </b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>LOP : Loss of pay</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>EL  : Earned Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>MAL : Maternity Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>PTL : Paternity Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>PAL : Professional Advancement Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>MAL : Maternity Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>PEL : Previous Earned Leaves</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>OD  : ON Duty</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <b>SL : Short Leave</b>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 3px;">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+

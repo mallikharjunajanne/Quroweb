@@ -540,7 +540,8 @@ $(document).ready(function () {
                         //3rd time
 
                         /*debugger;*/
-                        for (var index = 1; index < 31; index++) {
+                      //  for (var index = 1; index < 31; index++) {
+                        for (var index = 1; index <= daysInMonth; index++) {
                             var columnValue = dynamicColumns[index];
                             var cellHtml;
 
@@ -579,14 +580,24 @@ $(document).ready(function () {
 
 
                          //tableRow.append($('<td>').text(item.sep));
-                        tableRow.append($('<td>').text(item.sep));
-                        tableRow.append($('<td>').text(item.carry_Fwd));
-                        tableRow.append($('<td>').text(item.total));
-                        tableRow.append($('<td align="center">').text(item.totaExracuracitivities));
-                        tableRow.append($('<td>').text(item.totalAbsents)); 
-                        tableRow.append($('<td>').text(item.sep_));
-                        tableRow.append($('<td>').text(item.month)); 
-                        tableRow.append($('<td>').text(item.till_Date)); 
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth+1]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth+2]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 3]));
+                        tableRow.append($('<td align="center">').text(dynamicColumns[daysInMonth + 4]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 5]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 6]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 7]));
+                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 8]));
+
+                        ////tableRow.append($('<td>').text(item.sep));
+                        //tableRow.append($('<td>').text(item.sep));
+                        //tableRow.append($('<td>').text(item.carry_Fwd));
+                        //tableRow.append($('<td>').text(item.total));
+                        //tableRow.append($('<td align="center">').text(item.totaExracuracitivities));
+                        //tableRow.append($('<td>').text(item.totalAbsents)); 
+                        //tableRow.append($('<td>').text(item.sep_));
+                        //tableRow.append($('<td>').text(item.month)); 
+                        //tableRow.append($('<td>').text(item.till_Date)); 
 
                         tableBody.append(tableRow);
                     }

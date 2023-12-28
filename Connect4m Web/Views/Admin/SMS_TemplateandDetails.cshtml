@@ -9,7 +9,8 @@
 <div class="card">
     <div class="card-body">
         <div>
-            <span id="Errormessage"></span>
+            <span id="Errormessage" class="text-danger"></span>
+            @*<span id="DateErrormsg" class="text-danger"></span>*@
         </div>
         <p>
             @ViewBag.SMSTemplates[0].TemplateDescription
@@ -77,202 +78,216 @@
 
             }
         </div>
+        <form enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row" style=" margin: 25px;">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label asp-for="SDate" class="control-label required space">Start Date</label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="date" id="Startdate_txt" asp-for="SDate" class="form-control" />
+                        <span asp-validation-for="SDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label asp-for="ExDate" class="control-label required space" style=" margin-left: -34px;">End Date(Expiry Date) </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="date" id="EndDate_txt" asp-for="ExDate" class="form-control" />
+                        <span asp-validation-for="ExDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <button id="btnBackSMSTemplate" class="btn btn-pill btn-outline-primary btn-sm">Back To Select SMS Template(s)</button> @*Backtoselectsmstemplate_btn*@
+                        <button id="btnSaveandPostSMSTemplate" class="btn btn-pill btn-outline-success btn-sm">Save and Post</button> @*SaveandPost_CreateSmsbtn*@
 
-        <div class="row" style=" margin: 25px;">
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="form-group col-2">
-                    <label class="control-label required space">Start Date</label>
+                        @*<input type="button" id="Backtoselectsmstemplate_btn" value="Back To Select SMS Template(s)" class="btn btn-pill btn-outline-primary btn-sm" />
+                            <input type="button" id="SaveandPost_CreateSmsbtn" value="Save and Post" class="btn btn-pill btn-outline-success btn-sm" />*@
+                    </div>
+                    <div class="col-3"></div>
                 </div>
-                <div class="form-group col-4">
-                    <input type="date" id="Startdate_txt" asp-for="StartDate" class="form-control" />
-                </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="form-group col-2">
-                    <label class="control-label required space" style=" margin-left: -34px;">End Date(Expiry Date) </label>
-                </div>
-                <div class="form-group col-4">
-                    <input type="date" id="EndDate_txt" asp-for="EndDate" class="form-control" />
-                </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="col-6">
-                    <input type="button" id="Backtoselectsmstemplate_btn" value="Back To Select SMS Template(s)" class="btn btn-pill btn-outline-primary btn-sm" />
-                    <input type="button" id="SaveandPost_CreateSmsbtn" value="Save and Post" class="btn btn-pill btn-outline-success btn-sm" />
-                </div>
-                <div class="col-3"></div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/Managenotice_2.js"></script>
 <script>
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        $("#Backtoselectsmstemplate_btn").click(function () {
-
-            var EditSMSSubmitbutton = document.getElementById('EditSmsSubmitButton');
-            EditSMSSubmitbutton.disabled = false;
-
-
-            var radioButtons = document.querySelectorAll("input[name='Radio1']");
-            radioButtons.forEach(function (radioElement) {
-                radioElement.disabled = false;
-            });
-
-            $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').empty();
-             
-        });
+    //    //$("#Backtoselectsmstemplate_btn").click(function () {
+    //    //    /*btnBackSMSTemplate*/
+    //    //    var EditSMSSubmitbutton = document.getElementById('EditSmsSubmitButton');
+    //    //    EditSMSSubmitbutton.disabled = false;
 
 
+    //    //    var radioButtons = document.querySelectorAll("input[name='Radio1']");
+    //    //    radioButtons.forEach(function (radioElement) {
+    //    //        radioElement.disabled = false;
+    //    //    });
 
-    });
+    //    //    $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').empty();
 
-
-  
-
-    $("#SaveandPost_CreateSmsbtn").click(function () {
-        var instanceid = $('#Instance_Txtid').val();
-        var StartDate = $('#Startdate_txt').val();
-        var ExpiryDate = $('#EndDate_txt').val();
-        var Subject = $('#Subject_txt').val();
-        var DisplayIcon = $('#DisplayIcon_txt').val();
-        var CreatedBy = $('#Loginuser_Txtid').val();
-        var divText = $('#TemplateDescription_divId').text().trim();
-        var errorMessage = "";
-     
-        debugger;
-        var textValues = [];
-
-        $('.textInput').each(function () {
-            var inputNumber = $(this).attr('id').replace('txt', '');
-            var inputValue = $(this).val();
-            var inputName = $(this).attr('name');
-            if (inputValue === "") {               
-                errorMessage += "Please enter text in " + inputNumber + " text box .\n";
-                inputValue = "";
-                inputName = "";           
-            }
-            if (inputName == "textValue") {
-                textValues.push({ textValue: inputNumber, value: inputValue });
-            } else if (inputName == "dateValue") {
-                var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-                if (!dateRegex.test(inputValue)) {
-                    errorMessage += "Incorrect date format in " + inputNumber + "text box .\n";
-                } else {
-                    textValues.push({ dateValue: inputNumber, value: inputValue });
-                }
-            } else if (inputName == "timeValue") {
-                textValues.push({ timeValue: inputNumber, value: inputValue });
-            } else if (inputName == "numericValue") {
-                textValues.push({ numericValue: inputNumber, value: inputValue });
-            }
-        });
-
-       
-        debugger;
-        var Subjecttext = Subject;
+    //    //});
 
 
-        var txt = 1;
-        var date = 1;
-        var time = 1;
-        var numeric = 1;
-        for (var i = 0; i < textValues.length; i++) {
-            debugger;
 
-            if (textValues[i].textValue != undefined) {
-                var textPlaceholder = '{TEXT' + txt + '}';
-                if (Subjecttext.includes(textPlaceholder)) {
-
-                    Subjecttext = Subjecttext.replace(new RegExp(textPlaceholder, 'g'), textValues[i].value);
-                    txt++;
-                }
-            }
-            else if (textValues[i].dateValue != undefined) {
-                var datePlaceholder = '{DATE' + date + '}';
-                if (Subjecttext.includes(datePlaceholder)) {
-
-                    Subjecttext = Subjecttext.replace(new RegExp(datePlaceholder, 'g'), textValues[i].value);
-                    date++;
-                }
-            }
-            else if (textValues[i].timeValue != undefined) {
-                var timePlaceholder = '{TIME' + time + '}';
-                if (Subjecttext.includes(timePlaceholder)) {
-
-                    Subjecttext = Subjecttext.replace(new RegExp(timePlaceholder, 'g'), textValues[i].value);
-                    time++;
-                }
-            }
-            else if (textValues[i].numericValue != undefined) {
-                var numericPlaceholder = '{NUMERIC' + numeric + '}';
-                if (Subjecttext.includes(numericPlaceholder)) {
-
-                    Subjecttext = Subjecttext.replace(new RegExp(numericPlaceholder, 'g'), textValues[i].value);
-                    numeric++;
-                }
-
-            }
-        }
-
-        alert(Subjecttext);
-
-        var DisplayOrder = 1;
-        var formData  = new FormData();
-        formData.append('InstanceId', instanceid);
-        formData.append('StartDate', StartDate);
-        formData.append('EndDate', ExpiryDate);
-        formData.append('Subject', Subjecttext);
-        formData.append('DisplayIcon', DisplayIcon);
-        formData.append('CreatedBy', CreatedBy);
-        formData.append('NoticeDocument', '');
-        formData.append('DisplayOrder', DisplayOrder);
+    //});
 
 
-        $.ajax({
-            url: "/Admin/SaveandPostBtn_ManageNotices_CreateSMS",
-            type: "POST",
-            data: formData ,
-            processData: false,  // Prevent jQuery from automatically transforming the data into a query string
-            contentType: false,
-            success: function (response) {
-                debugger;
-              /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
-                $('#Managenotice_CreateSMS_Divid').hide();
-                $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
-            }
-        });
 
 
-        console.log(Subjecttext);
-       
-        if (textValues.length === 0) {
-            errorMessage += "No text inputs found.\n";
-        }
+    //$("#SaveandPost_CreateSmsbtn").click(function () {
+    //    var instanceid = $('#Instance_Txtid').val();
+    //    var StartDate = $('#Startdate_txt').val();
+    //    var ExpiryDate = $('#EndDate_txt').val();
+    //    var Subject = $('#Subject_txt').val();
+    //    var DisplayIcon = $('#DisplayIcon_txt').val();
+    //    var CreatedBy = $('#Loginuser_Txtid').val();
+    //    var divText = $('#TemplateDescription_divId').text().trim();
+    //    var errorMessage = "";
 
-        if (StartDate === "") {
-            errorMessage += "Start date is empty.\n";
-        }
+    //    debugger;
+    //    var textValues = [];
 
-        if (ExpiryDate === "") {
-            errorMessage += "End date is empty.\n";
-        }
+    //    $('.textInput').each(function () {
+    //        var inputNumber = $(this).attr('id').replace('txt', '');
+    //        var inputValue = $(this).val();
+    //        var inputName = $(this).attr('name');
+    //        if (inputValue === "") {
+    //            errorMessage += "Please enter text in " + inputNumber + " text box .\n";
+    //            inputValue = "";
+    //            inputName = "";
+    //        }
+    //        if (inputName == "textValue") {
+    //            textValues.push({ textValue: inputNumber, value: inputValue });
+    //        } else if (inputName == "dateValue") {
+    //            var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+    //            if (!dateRegex.test(inputValue)) {
+    //                errorMessage += "Incorrect date format in " + inputNumber + "text box .\n";
+    //            } else {
+    //                textValues.push({ dateValue: inputNumber, value: inputValue });
+    //            }
+    //        } else if (inputName == "timeValue") {
+    //            textValues.push({ timeValue: inputNumber, value: inputValue });
+    //        } else if (inputName == "numericValue") {
+    //            textValues.push({ numericValue: inputNumber, value: inputValue });
+    //        }
+    //    });
 
-        if (StartDate > ExpiryDate) {
-            errorMessage += "Start date cannot be greater than end date.\n";
-        }
 
-        if (errorMessage !== "") {
-            $("#Errormessage").text(errorMessage);
-            return false;
-        }
-    });
-    
+    //    debugger;
+    //    var Subjecttext = Subject;
+
+
+    //    var txt = 1;
+    //    var date = 1;
+    //    var time = 1;
+    //    var numeric = 1;
+    //    for (var i = 0; i < textValues.length; i++) {
+    //        debugger;
+
+    //        if (textValues[i].textValue != undefined) {
+    //            var textPlaceholder = '{TEXT' + txt + '}';
+    //            if (Subjecttext.includes(textPlaceholder)) {
+
+    //                Subjecttext = Subjecttext.replace(new RegExp(textPlaceholder, 'g'), textValues[i].value);
+    //                txt++;
+    //            }
+    //        }
+    //        else if (textValues[i].dateValue != undefined) {
+    //            var datePlaceholder = '{DATE' + date + '}';
+    //            if (Subjecttext.includes(datePlaceholder)) {
+
+    //                Subjecttext = Subjecttext.replace(new RegExp(datePlaceholder, 'g'), textValues[i].value);
+    //                date++;
+    //            }
+    //        }
+    //        else if (textValues[i].timeValue != undefined) {
+    //            var timePlaceholder = '{TIME' + time + '}';
+    //            if (Subjecttext.includes(timePlaceholder)) {
+
+    //                Subjecttext = Subjecttext.replace(new RegExp(timePlaceholder, 'g'), textValues[i].value);
+    //                time++;
+    //            }
+    //        }
+    //        else if (textValues[i].numericValue != undefined) {
+    //            var numericPlaceholder = '{NUMERIC' + numeric + '}';
+    //            if (Subjecttext.includes(numericPlaceholder)) {
+
+    //                Subjecttext = Subjecttext.replace(new RegExp(numericPlaceholder, 'g'), textValues[i].value);
+    //                numeric++;
+    //            }
+
+    //        }
+    //    }
+
+    //    alert(Subjecttext);
+
+    //    var DisplayOrder = 1;
+    //    var formData = new FormData();
+    //    formData.append('InstanceId', instanceid);
+    //    formData.append('StartDate', StartDate);
+    //    formData.append('EndDate', ExpiryDate);
+    //    formData.append('Subject', Subjecttext);
+    //    formData.append('DisplayIcon', DisplayIcon);
+    //    formData.append('CreatedBy', CreatedBy);
+    //    formData.append('NoticeDocument', '');
+    //    formData.append('DisplayOrder', DisplayOrder);
+
+
+    //    $.ajax({
+    //        url: "/Admin/SaveandPostBtn_ManageNotices_CreateSMS",
+    //        type: "POST",
+    //        data: formData,
+    //        processData: false,  // Prevent jQuery from automatically transforming the data into a query string
+    //        contentType: false,
+    //        success: function (response) {
+    //            debugger;
+    //            /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
+    //            $('#Managenotice_CreateSMS_Divid').hide();
+    //            $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
+    //        }
+    //    });
+
+
+    //    console.log(Subjecttext);
+
+    //    if (textValues.length === 0) {
+    //        errorMessage += "No text inputs found.\n";
+    //    }
+
+    //    if (StartDate === "") {
+    //        errorMessage += "Start date is empty.\n";
+    //    }
+
+    //    if (ExpiryDate === "") {
+    //        errorMessage += "End date is empty.\n";
+    //    }
+
+    //    if (StartDate > ExpiryDate) {
+    //        errorMessage += "Start date cannot be greater than end date.\n";
+    //    }
+
+    //    if (errorMessage !== "") {
+    //        $("#Errormessage").text(errorMessage);
+    //        return false;
+    //    }
+    //});
+
 
 
 </script>

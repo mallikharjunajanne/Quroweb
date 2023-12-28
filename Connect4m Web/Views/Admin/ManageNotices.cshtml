@@ -232,21 +232,22 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="ManageNotices_CreateSMS_ViewDivid">
-
-    </div>
-    <div id="ManageNotices_CreateSMSNNotice_ViewDivid">
-
-    </div>
-    <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id">
-
-    </div>
 
 
+        <div id="ManageNotices_CreateSMS_ViewDivid">
 
+        </div>
+        <div id="ManageNotices_CreateSMSNNotice_ViewDivid">
 
+        </div>
+        <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id">
+
+        </div>
+
+        <div id="Postnoticemailsmsdiv">
+
+        </div>
+    </div>   
 </body>
 </html>
 
@@ -256,12 +257,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
 <script src="~/js/ManageNotices.js"></script>
 
+@*<script src="~/js/Managenotice_1.js"></script>*@
+
 <script>
 
     $(document).ready(function () {
 
         managenotice_tabledata();
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#Edit_NoticeView').hide();
         var Instanceid = $('#Instance_Txtid').val();
         var Loginuser = $('#Loginuser_Txtid').val();
@@ -287,7 +290,7 @@
         });*@
 
 
-        $('#ManageNotice_AddNewSMS').on("click", function () {
+        @*$('#ManageNotice_AddNewSMS').on("click", function () {
            //var Instanceid = $('#Instance_Txtid').val();
            //var Loginuser = $('#Loginuser_Txtid').val();
             $.ajax({
@@ -295,7 +298,7 @@
                 type: "GET",
                 data: { InstanceId: Instanceid, Userid: Loginuser },
                 success: function (data) {
-                    $("#Create_NoticeView").empty();
+                    $("#Addnotice_div1").empty();
                     $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
                     $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
                     $("#ManageNotices_CreateSMS_ViewDivid").html(data);
@@ -304,9 +307,9 @@
                     console.log("Error: " + error);
                 }
             });
-        });
+        });*@
 
-        $('#ManageNotice_AddNewSMSNNotices').on("click", function () {
+        @*$('#ManageNotice_AddNewSMSNNotices').on("click", function () {
             //var Instanceid = $('#Instance_Txtid').val();
             //var Loginuser = $('#Loginuser_Txtid').val();
             $.ajax({
@@ -314,7 +317,7 @@
                 type: "GET",
                 data: { InstanceId: Instanceid, Userid: Loginuser },
                 success: function (data) {
-                    $("#Create_NoticeView").empty();
+                    $("#Addnotice_div1").empty();
                     $("#ManageNotices_CreateSMS_ViewDivid").empty();
                     $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
                     $("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
@@ -324,11 +327,11 @@
                 }
             });
 
-        });
+        });*@
     });
 
 
-    $('#SearchNotice_Btn').click(function () {
+    $('#SearchNotice_Btn_').click(function () {
 
         $('#ErrorMessage').text("");
 
@@ -351,10 +354,10 @@
 
         var InstanceId = $('#InstanceIdTXT').val();
 
-        $("#loadingSpinnerContainer").show();
+
 
         $.ajax({
-            url: "/Admin/ManageNotices_TableData",
+            url: "/Admin/ManageNotices_TableData_",
             data: {
                 InstanceId: InstanceId,
                 Subject: Subject,
@@ -367,7 +370,7 @@
             success: function (response) {
 
 
-                $("#loadingSpinnerContainer").hide();
+
 
                 $('#Noticetabledata_div').html(response);
             }
@@ -379,16 +382,16 @@
 
     $("a.btn-outline-primary").on("click", function (e) {
         e.preventDefault();
-        $("#loadingSpinnerContainer").show();
-        $('#Search_NoticeView').hide();
+
+        $('#ManagenoticeMaindiv').hide();
         $('#Edit_NoticeView').hide();
         $('#ErrorMessage').text("");
 
         $('#Managenotice_CreateSMS_Divid').remove();
 
-        $("#Create_NoticeView").load($(this).attr("href"));
+        $("#Addnotice_div1").load($(this).attr("href"));
 
-        $("#loadingSpinnerContainer").hide();
+
     });
 
 
@@ -431,11 +434,11 @@
         $('#Updatevalidation').text('');
 
         NoticeDropdown_UpdateNotice_In_View();
-        $('#Search_NoticeView').hide();
+        $('#ManagenoticeMaindiv').hide();
         $('#Edit_NoticeView').show();
         $('#ErrorMessage').text("");
 
-        $("#loadingSpinnerContainer").show();
+
 
         $.ajax({
             url: "/Admin/Edit_ENotices_ById",
@@ -443,7 +446,7 @@
             type: "GET",
             success: function (response) {
 
-                $("#loadingSpinnerContainer").hide();
+
                 debugger;
 
                 $("#InstanceId_UTXT").val(response[0].instanceId);
@@ -544,7 +547,7 @@
         $('#UpdatevalidationMessage').text('');
         $('#Updatevalidation').text('');
 
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#ErrorMessage').text("");
 
         managenotice_tabledata();
@@ -655,7 +658,7 @@
 
     $('#DeleteNotice_UpBtn').click(function () {
 
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#Edit_NoticeView').hide();
 
         var ENoticeId = $('#ENoticeId_UTXT').val();

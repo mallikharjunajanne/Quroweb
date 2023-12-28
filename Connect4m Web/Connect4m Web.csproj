@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Partialviews\**" />
+    <Content Remove="Views\Partialviews\**" />
+    <EmbeddedResource Remove="Views\Partialviews\**" />
+    <None Remove="Views\Partialviews\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
@@ -56,9 +63,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Partialviews\" />
     <Folder Include="wwwroot\Managenoticesdocs\" />
-    <Folder Include="wwwroot\PostResults Images\PostResultsExcelFile\" />
+    <Folder Include="wwwroot\Eventbestperformersdocs\" />
   </ItemGroup>
 
 </Project>

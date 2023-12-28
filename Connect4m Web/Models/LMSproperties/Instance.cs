@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Connect4m_Web.Models.LMSproperties
 {
@@ -75,6 +76,7 @@ namespace Connect4m_Web.Models.LMSproperties
         [Required]
         public int RoleId { get; set; }
         public int CreatedBy { get; set; }
+        //public string ErrorModuleName { get; set; }
     }
     public class CommonDropdown
     {
@@ -282,6 +284,30 @@ namespace Connect4m_Web.Models.LMSproperties
     }
 
 
+    ////===============================  Commonn Dropdown
+    //public class _Commonclass
+    //{
+    //    public List<SelectListItem> CommonDropdown(string methodname, string[] Parameters, string text, string value)
+    //    {
+    //        List<SelectListItem> DropdownList = new List<SelectListItem>();
+    //        CommonDropdown obj = new CommonDropdown();
+    //        obj.procedurename = methodname;
+    //        obj.Parameters = Parameters;
+    //        obj.text = text;
+    //        obj.value = value;
+    //        string jsonData = JsonConvert.SerializeObject(obj);
+    //        StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+    //        HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+    //        //  HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/"+methodname+"?Parameters=" + Parameters + "&text=" + text + "&value=" + value).Result;
+    //        if (response.IsSuccessStatusCode)
+    //        {
+    //            string data = response.Content.ReadAsStringAsync().Result;
+    //            DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+    //        }
+    //        return DropdownList;
+    //    }
+
+    //}
 
 
 }

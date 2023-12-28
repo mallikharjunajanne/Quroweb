@@ -144,7 +144,7 @@ function uploaddocumentchange(newValue) {
     for (var e = 0; e < docs.length; e++) {
         var field = docs[e];
 
-        parent.append($('<div style="display:flex"><label>' + field.name + '</label><input type="text" class="form-control" placeholder="Enter Display Name" value="'+newValue+'"name="DocsDisplayname"  /></div><br/>'));
+        parent.append($('<div style="display:flex"><label>' + field.name + '</label><input type="text" class="form-control" placeholder="Enter Display Name" title="" value="'+newValue+'"name="DocsDisplayname"  /></div><br/>'));
 
     }
     parent.append($('<input type="button" id="filesubmit" value="Save"/>'))
@@ -175,7 +175,7 @@ function fileserror() {
     for (var e = 0; e < parent.length; e++) {
         var field = $(parent[e]).val();
         if (field == "") {
-            displayErrorMessage($(parent.closest('div')));
+            displayErrorMessage($(parent.closest('div')),"Please Enter Display Name");
             errorsli++;
         }
         else {
@@ -380,7 +380,7 @@ $(document).on('change', '#video-upload', function (event) {
     //    newQuestionRow.find("input[type='text']").val("");
     //    parent.append(newQuestionRow);
 
-        parent.append($('<div class="row ques"> <div class= "duration-picker col-1" ><input type="number" class="duration-picker-input" min="0" step="1" placeholder="HH" /><span class="duration-picker-separator">:</span><input type="number" class="duration-picker-input" min="0" step="1" placeholder="MM" /><span class="duration-picker-separator">:</span><input type="number" class="duration-picker-input" min="0" step="1" placeholder="SS" /></div ><div class="textarea"><span>Question</span><textarea class="col-11"></textarea></div><div class="col-6 opt"><span>1)</span><input type="text" class="col-6 1" /></div><div class="col-6 opt"><span>2)</span><input type="text" class="col-6 2" /></div><div class="col-6 opt"><span>3)</span><input type="text" class="col-6 3" /></div> <div class="col-4" style="margin-left:auto"><span>Marks</span> <input id="Marks" type="text" /></div><div class="col-6 opt"><span>4)</span><input type="text" class="col-6 4" /></div><div class="col-4"  style="margin-left:auto"><span>Answer(1/2/3/4)</span> <input id="answer" type="text" /> </div><i class="col-1 fa fa-trash-o" style="font-size:20px;color:red" id="Qusetion-delete"></i><hr /></div >'))
+        parent.append($('<div class="row ques"> <div class= "duration-picker col-1" ><input type="number" class="duration-picker-input" min="0" step="1" placeholder="HH" /><span class="duration-picker-separator">:</span><input type="number" class="duration-picker-input" min="0" step="1" placeholder="MM" /><span class="duration-picker-separator">:</span><input type="number" class="duration-picker-input" min="0" step="1" placeholder="SS" /></div ><div class="textarea"><span>Question</span><textarea class="col-11"></textarea></div><div class="col-6 opt"><span>1)</span><input type="text" class="col-6 1" /></div><div class="col-6 opt"><span>2)</span><input type="text" class="col-6 2" /></div><div class="col-6 opt"><span>3)</span><input type="text" class="col-6 3" /></div> <div class="col-4" style="margin-left:auto"><span>Marks</span> <input id="Marks" type="number" /></div><div class="col-6 opt"><span>4)</span><input type="text" class="col-6 4" /></div><div class="col-4"  style="margin-left:auto"><span>Answer(1/2/3/4)</span> <input id="answer" type="number" /> </div><i class="col-1 fa fa-trash-o" style="font-size:20px;color:red" id="Qusetion-delete"></i><hr /></div >'))
 
 
 
@@ -520,7 +520,7 @@ $(document).on("change", ".row.ques textarea", function (event) {
 
     var quest_error = $(event.target).closest(".textarea");
     if (question == "") {
-        displayErrorMessage(quest_error);
+        displayErrorMessage(quest_error,"Please Enter Question");
     }
     else {
         removeErrorMessage(quest_error);
@@ -541,7 +541,7 @@ $(document).on("change", ".chapters input[type='text']", function (event) {
 
     var chaptererror = $(event.target).closest(".chapters").find(".fa-trash-o");
     if (chaptername == "") {
-        displayErrorMessage(chaptererror);
+        displayErrorMessage(chaptererror,"Please Enter Chapter Name");
     }
     else {
         removeErrorMessage(chaptererror);
@@ -558,7 +558,7 @@ function optionerrormessage(event) {
     var error = $(event.target).closest('.opt');
     if (optionvalue == "") {
    
-        displayErrorMessage(error);
+        displayErrorMessage(error,"Please Enter Option");
     }
     else {
     
@@ -599,7 +599,7 @@ function timeerrormessage(event) {
     var totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
     if (totalSeconds > videotime) {
-        displayErrorMessage(durationPicker);
+        displayErrorMessage(durationPicker,"Please Enter Time");
     } else {
         removeErrorMessage(durationPicker);
     }
@@ -607,12 +607,12 @@ function timeerrormessage(event) {
 
 ////------------------  -- -  -  -  - ---------------------------------------------- Display The Error Message
 
-function displayErrorMessage(durationPicker) {
+function displayErrorMessage(durationPicker,message) {
     var errorMessage = durationPicker.find(".error-message");
 
     if (errorMessage.length === 0) {
       //  durationPicker.css("border-color", "red");
-        errorMessage = $("<div class='error-message'>*Error!</div>");
+        errorMessage = $("<div class='error-message'>*"+message+"</div>");
         durationPicker.append(errorMessage);
     }
 }
@@ -655,7 +655,7 @@ $(document).on("change", "#answer", function (event) {
     if (parseInt(answer) > 4 || parseInt(answer) == 0 || isNaN(parseInt(answer))) {
       
 
-        displayErrorMessage(errorMessage);
+        displayErrorMessage(errorMessage,"Please Enter Answer");
     }
     else {
       
@@ -677,7 +677,7 @@ $(document).on("change", "#Marks", function (event) {
     if (parseInt(answer) == 0 || isNaN(parseInt(answer))) {
 
 
-        displayErrorMessage(errorMessage);
+        displayErrorMessage(errorMessage,"Please Enter Marks");
     }
     else {
 
@@ -730,7 +730,7 @@ function insertingallvideos() {
             formData.append("filenameupdate", filenameupdate);//--------->
             if (isNaN(videotime)) {
                 if (filenameupdate == null && filenameupdate == '') {
-                    displayErrorMessage(fileerror);
+                    displayErrorMessage(fileerror,"Please Upload Video");
                 }
             }
             else {
@@ -745,7 +745,7 @@ function insertingallvideos() {
             var displayname = displynames.find('input[type="text"]').val();
 
             if (displayname == "") {
-                displayErrorMessage(displynames);
+                displayErrorMessage(displynames,"Please Enter Video Display Name");
 
             }
             else {
@@ -785,13 +785,13 @@ function insertingallvideos() {
                 var totalSeconds = (parseInt(hours) * 3600) + (parseInt(minutes) * 60) + parseInt(seconds);
 
                 if (totalSeconds > videotime || isNaN(totalSeconds) || totalSeconds == 0) {
-                    displayErrorMessage(durationpicker);
+                    displayErrorMessage(durationpicker,"Please Enter Time");
                 } else {
                     removeErrorMessage(durationpicker);
                 }
                 var chaptererror = chapter.find(".fa-trash-o");
                 if (chaptername == "") {
-                    displayErrorMessage(chaptererror);
+                    displayErrorMessage(chaptererror,"Please Enter Chapter Name");
                 }
                 else {
                     removeErrorMessage(chaptererror);
@@ -827,7 +827,7 @@ function insertingallvideos() {
                 var quest_error = questionrow.find(".textarea");
 
                 if (question == "") {
-                    displayErrorMessage(quest_error);
+                    displayErrorMessage(quest_error,"Please Enter Question");
                 }
                 else {
                     removeErrorMessage(quest_error);
@@ -841,7 +841,7 @@ function insertingallvideos() {
                     var value = $(options[d]).val();
                     var error = $(options[d]).closest('.opt');
                     if (value == "") {
-                        displayErrorMessage(error);
+                        displayErrorMessage(error,"Please Enter Option "+(d+1));
                     }
                     else {
                         removeErrorMessage(error);
@@ -863,7 +863,7 @@ function insertingallvideos() {
                 var Questiontime = (parseInt(hoursq) * 3600) + (parseInt(minutesq) * 60) + parseInt(secondsq);
 
                 if (Questiontime > videotime || isNaN(Questiontime) || Questiontime == 0) {
-                    displayErrorMessage(erroforquestion);
+                    displayErrorMessage(erroforquestion,"Please Enter Time");
                 } else {
                     removeErrorMessage(erroforquestion);
                 }
@@ -875,7 +875,7 @@ function insertingallvideos() {
                 if (parseInt(answer) > 4 || parseInt(answer) == 0 || isNaN(parseInt(answer))) {
 
 
-                    displayErrorMessage(errorMessage);
+                    displayErrorMessage(errorMessage,"Please Enter Answer");
                 }
                 else {
 
@@ -892,7 +892,7 @@ function insertingallvideos() {
                 if (parseInt(Marks) == 0 || isNaN(parseInt(Marks))) {
 
 
-                    displayErrorMessage(errorMessageM);
+                    displayErrorMessage(errorMessageM,"Please Enter Marks");
                     totalerrorsinvideos++;
                 }
                 else {
@@ -1187,7 +1187,7 @@ $("#uploadlecturedocsform").submit(function (event) {
         var fileerror = $(groups).find('.filename');
 
         if (isNaN(videotime)) {
-            displayErrorMessage(fileerror);
+            displayErrorMessage(fileerror,"Please Upload Video");
             totalerrorsinvideos++;
         }
         else {
@@ -1199,7 +1199,7 @@ $("#uploadlecturedocsform").submit(function (event) {
         var displayname = displynames.find('input[type="text"]').val();
        
         if (displayname == "") {
-            displayErrorMessage(displynames);
+            displayErrorMessage(displynames,"Please Enter Video Display Name");
             totalerrorsinvideos++;
         }
         else {
@@ -1231,7 +1231,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             var totalSeconds = (parseInt(hours) * 3600) + (parseInt(minutes) * 60) + parseInt(seconds);
 
             if (totalSeconds > videotime || isNaN(totalSeconds) || totalSeconds == 0) {
-                displayErrorMessage(durationpicker);
+                displayErrorMessage(durationpicker,"Please Enter Time");
                 totalerrorsinvideos++;
             } else {
                 removeErrorMessage(durationpicker);
@@ -1240,7 +1240,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             var chaptererror = chapter.find(".fa-trash-o");
           
             if (chaptername == "") {
-                displayErrorMessage(chaptererror);
+                displayErrorMessage(chaptererror,"Please Enter Chapter Name");
                 totalerrorsinvideos++;
             }
             else {
@@ -1272,7 +1272,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             var quest_error = questionrow.find(".textarea");
 
             if (question == "") {
-                displayErrorMessage(quest_error);
+                displayErrorMessage(quest_error,"Plase Enter Question");
                 totalerrorsinvideos++;
             }
             else {
@@ -1287,7 +1287,7 @@ $("#uploadlecturedocsform").submit(function (event) {
                 var value = $(options[d]).val();
                 var error = $(options[d]).closest('.opt');
                 if (value == "") {
-                    displayErrorMessage(error);
+                    displayErrorMessage(error,"Please Enter Option "+(d+1));
                     totalerrorsinvideos++;
                 }
                 else {
@@ -1311,7 +1311,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             var Questiontime = (parseInt(hoursq) * 3600) + (parseInt(minutesq) * 60) + parseInt(secondsq);
 
             if (Questiontime > videotime || isNaN(Questiontime) || Questiontime == 0) {
-                displayErrorMessage(erroforquestion);
+                displayErrorMessage(erroforquestion,"Please Enter Time");
                 totalerrorsinvideos++;
             } else {
                 removeErrorMessage(erroforquestion);
@@ -1324,7 +1324,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             if (parseInt(answer) > 4 || parseInt(answer) == 0 || isNaN(parseInt(answer))) {
 
 
-                displayErrorMessage(errorMessage);
+                displayErrorMessage(errorMessage,"Please Enter Answer");
                 totalerrorsinvideos++;
             }
             else {
@@ -1343,7 +1343,7 @@ $("#uploadlecturedocsform").submit(function (event) {
             if (parseInt(Marks) == 0 || isNaN(parseInt(Marks))) {
 
 
-                displayErrorMessage(errorMessageM);
+                displayErrorMessage(errorMessageM,"Please Enter Marks");
                 totalerrorsinvideos++;
             }
             else {

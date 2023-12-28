@@ -55,6 +55,7 @@
     <script src="~/assets/js/config.js"></script>
 
     @*@RenderSection("Scripts", required: false);*@
+   
 </head>
 <body data-screen-name="LoginPage">
 
@@ -206,7 +207,23 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/js/CommonScripts.js"></script>
     <script>
-        //---------------------------------------------------------------------------------------------   When Click ON submit Button
+
+        //Hide and Show password activity
+        function togglePasswordVisibility() {
+            debugger;
+            var passwordInput = document.getElementById("password");
+            var togglePassword = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            togglePassword.innerHTML = "&#x1F440;"; // Eye icon when password is visible
+            } else {
+                passwordInput.type = "password";
+            togglePassword.innerHTML = "&#x1F441;"; // Eye slash icon when password is hidden
+            }
+        }
+
+        //---------------------------------   When Click ON submit Button
         $("#LoginForm").submit(function (event) {
             // debugger;
             event.preventDefault();

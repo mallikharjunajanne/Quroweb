@@ -175,12 +175,13 @@
     var js = jQuery.noConflict(true);
 
 
-
+    //===============================View Subjects details
    // function _ViewSubjects(event,InstanceClassificationId, InstanceSubClassificationId) {
     function _ViewSubjects(event,Id) {
         try {
             event.preventDefault();
             debugger;
+            $(".ErrorMessageSpan").empty();
             if (Id == "DdlClassForSingle" && $("#DdlClassForSingle").val() != "") {
                 //  $("#ViewSubjectsSymbol").css("display","block")
                 $("#ViewSubjectsSymbol").show();
@@ -201,9 +202,10 @@
         }
     }
 
-
+    //===============================values getting to edit
     function EditValuesGettingFunction(subjectId) {
         debugger;
+        $(".ErrorMessageSpan").empty();
         var data = { InstanceSubjectId: subjectId, Buttonname:"Update"};
         $("#loadingOverlay").show();
         performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
@@ -224,6 +226,7 @@
     //This is for to upload a single deprtment and multiple deprtment
     $(document).on("click", '#RdlMultipleDept,#RdlSingleDept', function (event) {
         debugger;
+        $(".ErrorMessageSpan").empty();
         var BtnName = $(this).attr("id");
         var data = {Buttonname: BtnName };
         $("#loadingOverlay").show();
@@ -257,7 +260,7 @@
         
         //    $("#loadingOverlay").hide();
 
-
+            $(".ErrorMessageSpan").empty();
             debugger;
             var data = { Buttonname: "BtnCreateNew" };
             $("#loadingOverlay").show();

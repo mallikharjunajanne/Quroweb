@@ -1,0 +1,344 @@
+﻿
+@model Connect4m_Web.Models.ResultsModel
+@{
+    ViewData["Title"] = "PostResultsByExcel";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .Ddlstyle {
+            width: 230px;
+            color: black;
+            font-size: inherit;
+            height: 27px;
+        }
+
+        .errorboxshadow {
+            box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
+        }
+
+
+        /*this are  for design input step 3 page*/
+        .thumbnailleft {
+            position: relative;
+            display: inline-block;
+        }
+
+            .thumbnailleft img {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                border: 1px solid #cbcbcb;
+                z-index: 1;
+            }
+
+            .thumbnailleft:hover img {
+                display: block;
+            }
+    </style>
+
+
+
+</head>
+<body>
+    <div class="card">
+        <div class="card-header pb-0" style="padding-top: 0px;">
+            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>POST RESULTS</strong></h6>
+        </div>
+        <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+        <span class="ErrorMessageSpan" id="StudentEmail_Error"></span>
+        <span class="ErrorMessageSpan" id="ParentEmail_Error"></span>
+        <div class="default-according style-1" id="Div_Step1">
+            <div class="card-body" style=" padding-top: 0px;">
+                <div class="card" id="Searchpage">
+
+                    <div class="card-header " style="background-color:black ;">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon1200" aria-controls="collapse11">
+                                <span> POST RESULTS </span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
+                        <div class="card ">
+                            <div class="card-body">
+                                @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
+
+                                <form id="FmSubjectsSearch">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row">
+                                        @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+
+                                        <div class="col-3"></div>
+
+                                        <div class="form-group col-2">
+                                            <label class="control-label space required">Department</label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <div id="Drop_Format_SEM_3">
+                                                <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" class="form-select readonly" asp-items="@(new SelectList(""))">
+                                                    <option value=''>Select a Department</option>
+                                                </select>
+                                                <span asp-validation-for="InstanceClassificationId" class="ErrorMessageSpan"></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space required">Class </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" onchange="CommonDropdownFunction('POST','/Results/DdlSubjectTypes_Calingfunction','DdlSubjects','',false,'FmSubjectsSearch')" class="form-select readonly" asp-items="@(new SelectList(""))" disabled>
+                                                <option value=''>Please select a Class</option>
+                                            </select>
+                                            <span asp-validation-for="InstanceSubClassificationId" class="ErrorMessageSpan"></span>
+                                        </div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space required">Subjects </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <select id='DdlSubjects' multiple="multiple" style="height: 10%;" asp-for="SubjectsIdString" name="SubjectsIdString" class="form-select readonly" asp-items="@(new SelectList(""))">
+                                            </select>
+                                            <span asp-validation-for="SubjectsIdString" class="ErrorMessageSpan"></span>
+                                        </div>
+                                       
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space required"> Exams </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <div id="Drop_Format_SEM_2">
+                                                <select id='DdlExam' asp-for="ExamId" name="ExamId" class="form-select readonly" asp-items="@(new SelectList(""))">
+                                                </select>
+                                                <span asp-validation-for="ExamId" class="ErrorMessageSpan"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space required"> Exam Mode </label>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <div id="Drop_Format_SEM_2">
+                                                <select id='DdlExammode' asp-for="ExamModeId" name="ExamModeId" class="form-select readonly" asp-items="@(new SelectList(""))">
+                                                    <option value=''>------Select------</option>
+                                                </select>
+                                                <span asp-validation-for="ExamModeId" class="ErrorMessageSpan"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2">
+                                            <label class="control-label space">Sort By </label>
+                                        </div>
+                                        <div class="form-group col-4  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                            <div class="radio radio-primary">
+                                                <input name="SortBy" asp-for="SortBy" checked="checked" style="padding-top: 0px" id="Name" class="check" type="radio" value="0">
+                                                <label class="mb-0" for="Name">Name</label>
+                                            </div>
+                                            &nbsp;
+                                            <div class="radio radio-primary">
+                                                <input name="SortBy" asp-for="SortBy" id="Registration" class="check" type="radio" value="1">
+                                                <label class="mb-0" for="Registration">
+                                                    Registration Number
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div style=" display: flex; gap: 17px;">
+                                            <div class="col-4"></div>
+                                            <input type="reset" value="Clear" id="BtnRefresh" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                            <input type="submit" value="Go to step 2 of Post Results" id="BtnNextpagePostResultsByExcel_Step2" class="btn btn-pill btn-outline-info btn-air-info submit-btn" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Associated Count Table-->
+
+            @*Step 2 Searched Results*@
+            <div id="Div_TblAssociatedCount" style="display:none">
+                <br />
+                <div class="default-according style-1" id="accordionoc123456">
+
+                    <div class="card" >
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span >COUNT OF STUDENTS IN OPTIONAL SUBJECT IS NOT EQUAL TO THE TOTAL STRENGTH OR SELECT ALL THE SUBJECTS IN AN ELECTIVE TO POST THE RESULT</span></button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                            <div class="card ">
+                                <table id="TblAssociatedCount" class="display cell-border  tableid">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%">S.No</th>
+                                                <th>Subject Type Name</th>
+                                                <th>	Total Strength</th>
+                                                <th>	Associated Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+
+
+
+        <!--This is Step 2-->
+        <div id="Div_Step2">
+            @*Step 2 Searched Results*@
+            <div id="Div_TblExamSubjects" style="display:none">
+                <div class="default-according style-1" id="accordionoc123456">
+
+                    <div class="card" id="SearchedTablePage">
+                        <span id="DepartmentName" style="margin-left:25%;">
+                            @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term,NORMAL*@
+                        </span>
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+                            <div class="card ">
+                                <form id="Fm_TblUser" class="table-responsive">
+                                    @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
+                                    <table id="TblExamSubjects" class="display cell-border  tableid">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%">S.No</th>
+                                                @*<th>ExamSubjectId</th>*@
+                                                <th style="width:11%">Subject</th>
+                                                <th>Include In Total</th>
+                                                <th>Conducted Date</th>
+                                                <th>Pass Marks</th>
+                                                <th>Max Marks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <div style=" display: flex; gap: 17px;">
+                                        <div class="col-4"></div>
+                                        <input type="button" value="Go Back to Step 1" id="BtnBackTo_Step1" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-warning btn-air-warning" />
+                                        @*<input type="submit" value="Save & Go to Step 3" onclick="Div_Step3(event)" id="BtnSave_Nextpage_Step3" class="btn btn-pill btn-outline-info btn-air-info" />*@
+                                        <input type="submit" value="Save & Go to Step 3" id="BtnSave_Nextpage_Step3" class="btn btn-pill btn-outline-info btn-air-info" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--This is Step 3-->
+
+
+        <div id="Div_Step3" style="display:none">
+            <div class="default-according style-1" id="Div_ChooseOptionFile">
+
+                <!--card 1 in step 3-->
+                <div style=" padding-top: 0px;" id="ChooseOptionFile">
+                    <div class="card">
+                        <span id="DepartmentNameStep3" style="margin-left:25%;">
+                            @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
+                        </span>
+
+                        <div class="card-header " style="background-color:black ;">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001A1" aria-controls="collapse11">
+                                    <span>
+                                        CHOOSE OPTION TO SAVE
+                                    </span>
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon12001A1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc91" style="">
+                            <div class="card ">
+
+                                <div class="card-body">
+                                    @*<form id="FmChooseOption">*@
+
+
+                                    <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
+                                        <div class="row">
+                                            <div class="form-group col-2">
+                                                <label class="control-label space">Upload File</label>
+                                            </div>
+                                            <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
+                                                    <label class="mb-0" for="RdbYes">Yes</label>
+                                                </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbNo" name="SortBy" class="check" type="radio" value="1">
+                                                    <label class="mb-0" for="RdbNo">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*</form>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Div_UploadingType">
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+<script src="~/js/GeneralFunctions.js"></script>
+<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="~/js/ExcelDownloading.js"></script>
+<script>
+    var pageTitle = '@ViewData["Title"]';
+</script>
+<script src="~/js/PostResults.js"></script>
+
+
+
+
+
+

@@ -55,8 +55,11 @@
                             <div class="col-3"></div>
 
                             <div class="col-6">
-                                <input type="submit" id="EditSmsSubmitButton" value="Edit SMS Template" class="btn btn-pill btn-outline-info btn-sm btn  " />
-                                <input type="button" id="Backtosearch_AddSms" value="Back To Search" class="btn btn-pill btn-outline-primary btn-sm" />
+                                <button id="btnSMSNext" class="btn btn-pill btn-outline-info btn-sm btn">Edit SMS Template</button>   @*EditSmsSubmitButton*@
+                                <button id="btnSMSBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>@*Backtosearch_AddSms*@
+
+                                @*<input type="submit" id="EditSmsSubmitButton" value="Edit SMS Template" class="btn btn-pill btn-outline-info btn-sm btn  " />
+                                <input type="button" id="Backtosearch_AddSms" value="Back To Search" class="btn btn-pill btn-outline-primary btn-sm" />*@
                             </div>
                             <div class="col-3"></div>
                         </div>
@@ -73,52 +76,55 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Managenotice_2.js"></script>
+
+
 <script>
-    $(document).ready(function () {
-        $('#Create_NoticeView').empty();
-        $("#EditSmsSubmitButton").on("click", function () {
+    //$(document).ready(function () {
+    //    $('#Addnotice_div1').empty();
+    //    //$("#btnSMSNext").on("click", function () {
 
-            if ($("input[name='Radio1']:checked").length != 0) {
+    //    //    if ($("input[name='Radio1']:checked").length != 0) {
 
-                $('#SmsErrormessage').text('');
+    //    //        $('#SmsErrormessage').text('');
 
-                var TemplateMasterPK = $("input[name='Radio1']:checked").val();
+    //    //        var TemplateMasterPK = $("input[name='Radio1']:checked").val();
 
-                var InstanceId = $("#Instance_Txtid").val();
+    //    //        var InstanceId = $("#Instance_Txtid").val();
 
-                var EditSMSSubmitbutton = document.getElementById('EditSmsSubmitButton');
-                EditSMSSubmitbutton.disabled = true;
+    //    //        var EditSMSSubmitbutton = document.getElementById('btnSMSNext');
+    //    //        EditSMSSubmitbutton.disabled = true;
 
-                var radioButtons = document.querySelectorAll("input[name='Radio1']");
-                radioButtons.forEach(function (radioElement) {
-                    radioElement.disabled = true;
-                });
+    //    //        var radioButtons = document.querySelectorAll("input[name='Radio1']");
+    //    //        radioButtons.forEach(function (radioElement) {
+    //    //            radioElement.disabled = true;
+    //    //        });
 
-                $.ajax({
-                    url: "/Admin/SMS_TemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK,
-                    type: "GET",
-                    success: function (response) {
-                        debugger;
-                        $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').html(response);
-                    }
-                });
-            } else {
+    //    //        $.ajax({
+    //    //            url: "/Admin/SMS_TemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK,
+    //    //            type: "GET",
+    //    //            success: function (response) {
+    //    //                debugger;
+    //    //                $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').html(response);
+    //    //            }
+    //    //        });
+    //    //    } else {
 
-                $('#SmsErrormessage').text("Please select one template.");
-                return false;
-            }
-        });
+    //    //        $('#SmsErrormessage').text("Please select one template.");
+    //    //        return false;
+    //    //    }
+    //    //});
+      
+
+    //    //$("#Backtosearch_AddSms").click(function () {
+
+    //    //    $('#ManageNotices_CreateSMS_ViewDivid').empty();
+    //    //    location.reload();
+    //    //});
 
 
-        $("#Backtosearch_AddSms").click(function () {
 
-            $('#ManageNotices_CreateSMS_ViewDivid').empty();
-            location.reload();
-        });
-
-
-
-    });
+    //});
 
     function RestrictDateChar(event) {
         var charCode = event.which || event.keyCode;

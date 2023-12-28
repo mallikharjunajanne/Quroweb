@@ -223,7 +223,6 @@
             <!--/ Statistics -->
         </div>
     </div>
-
 </body>
 </html>
 
@@ -231,33 +230,134 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
 <script>
+   $(document).ready(function () {
 
-    $(document).ready(function () {
-        var InstanceId = $("#InstanceId").val();
-        var UserId = $("#UserId").val();
-        $.ajax({
-            url: "/UserScreens/Coollinks",
-            data: { InstanceId: InstanceId },
-            type: "GET",
-            success: function (response) {
-                debugger;
-                $('#Coollinks_PartailConatiner').html(response);
-                pagination();
+
+       //function Calendarevents() {
+       //    $.ajax({
+       //        url: url,
+       //        type: method,
+       //        data: data,
+       //        success: successCallback,
+       //        error: function (xhr, status, error) {
+       //            errorCallback(xhr.status, error);
+       //        }
+       //    });
+       //}
+
+       function CallToAjax(method, url, successCallback, errorCallback) {
+                $.ajax({
+                    url: url,
+                    type: method,
+                    success: successCallback,
+                    error: function (xhr, status, error) {
+                        errorCallback(xhr.status, error);
+                    }
+                });
             }
-        });
+
+       CallToAjax('GET', '/UserScreens/Coollinks',
+           function (response) {
+               $('#Coollinks_PartailConatiner').html(response);
+               pagination();
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+       CallToAjax('GET', '/UserScreens/LeaveStatus',
+           function (response) {
+               $('#Leavestatus_PartailConatiner').html(response);
+
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+       CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',
+           function (response) {
+               
+               $('#Absenteestudents_PartailConatiner').html(response);
+               
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+
+ 
+
+       CallToAjax('GET', '/UserScreens/PostedQuestions',
+           function (response) {
+
+               $('#PostedQuestion_Containerdiv').html(response);
+
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
 
 
-        $.ajax({
-            url: "/UserScreens/FlashNews",
-            data: { InstanceId: InstanceId, UserId: UserId },
-            type: "GET",
-            success: function (response) {
-                $('#Flassnews_PartailConatiner').html(response);
-            }
-        });
 
-    });
+       CallToAjax('GET', '/UserScreens/CalendarEvents',
+           function (response) {
+
+               $('#EventsCalenderdiv').html(response);
+
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+       var FlassNews = $('#FlassNewsbtn').val();
+       var FlassNewsIsGlobalNotice = $('#FlassNewsbtn').attr('title');     
+
+       var dataToSend = {
+           ENoticeType: FlassNews,
+           IsGlobalNotice: FlassNewsIsGlobalNotice
+       };
+       datawithAjax('GET', '/UserScreens/FlashNews', dataToSend,
+           function (response) {
+               $('#Flassnews_PartailConatiner').html(response);
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+
+       function datawithAjax(method, url, data, successCallback, errorCallback) {
+           $.ajax({
+               url: url,
+               type: method,
+               data: data,
+               success: successCallback,
+               error: function (xhr, status, error) {
+                   errorCallback(xhr.status, error);
+               }
+           });   
+       }
+
+       
+       var ENoticeType = $('#ENoticebtn').val();
+       var IsGlobalNotice = $('#ENoticebtn').attr('title');
+       
+       var dataToSend = {
+           ENoticeType: ENoticeType,
+           IsGlobalNotice: IsGlobalNotice
+       };
+       datawithAjax('GET', '/UserScreens/E_Noticeboard', dataToSend,
+           function (response) {
+               $('#EnoticeConatiner').html(response);
+           },
+           function (status, error) {
+               // Handle error if needed
+           }
+       );
+   });
 
     function pagination() {
         debugger;

@@ -127,8 +127,27 @@
                                                         {
                                                             if (img2.EndsWith("Mp4-Icon.png"))
                                                             {
+                                                                if (item3.ChapterId != 0)
+                                                                {
 
+                                                                    try
+                                                                    {
 
+                                                                        viewpoint = item3.Viewspoints;
+                                                                        totalpois = item3.TotalPoins;
+                                                                        percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+
+                                                                        //  percent = (viewpoint / totalpois) * 100;
+                                                                        viewvalue++;
+                                                                    }
+                                                                    catch
+                                                                    {
+                                                                        percent = 0;
+                                                                    }
+                                                                }
+                                                            }
+                                                            else if(item3.ChapterId==0)
+                                                            {
                                                                 try
                                                                 {
 
@@ -201,11 +220,37 @@
     $(document).ready(function () {
         debugger;
         try {
+            //var SubjectVideoIdCookie = getCookie("SubjectVideoId");
+            //var ChapterIdCookie = getCookie("ChapterId");
+            //var viewpoints = getCookie("viewpoints");
+            //var TotalPoins = getCookie("TotalPoins");
+            //if (ChapterIdCookie != null) {
+            //    $.ajax({
+            //        url: '/Videos/InsertVideoVewpoins?SubjectVideoId=' + SubjectVideoIdCookie + '&Viewspoints=' + viewpoints + '&TotalPoins=' + TotalPoins + "&ChapterId=" + ChapterIdCookie,
+            //        type: 'GET',
+            //        success: function (response) {
+
+            //            // $('#below-video-content').html(response);
+
+            //        }
+            //    })
+            //}
+          
             var SubjectVideoIdCookie = getCookie("SubjectVideoId");
             var ChapterIdCookie = getCookie("ChapterId");
             var viewpoints = getCookie("viewpoints");
             var TotalPoins = getCookie("TotalPoins");
-            if (ChapterIdCookie != null) {
+
+            if (SubjectVideoIdCookie != null && SubjectVideoIdCookie != "0") {
+                // if (ChapterIdCookie != null) {
+
+               
+                if (ChapterIdCookie == "0" || ChapterIdCookie == null) {
+                    viewpoints = 1;
+                    TotalPoins = 1;
+                }
+
+
                 $.ajax({
                     url: '/Videos/InsertVideoVewpoins?SubjectVideoId=' + SubjectVideoIdCookie + '&Viewspoints=' + viewpoints + '&TotalPoins=' + TotalPoins + "&ChapterId=" + ChapterIdCookie,
                     type: 'GET',
@@ -215,10 +260,14 @@
 
                     }
                 })
+
+
+              
             }
+
         }
         catch {
-
+           
         }
        
     })

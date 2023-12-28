@@ -1,0 +1,205 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.BestPerformer
+@{
+    Layout = null;
+}
+
+<span id="Errormessages" class="text-danger" style=" margin: -20px 10px 0px 5px; "></span>
+
+<div class="col-12" id="accordionoc1">
+    <div class="card-header bg-primary">
+        <h5 class="mb-0">
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">
+                SAVE BEST PERFORMER
+            </button>
+        </h5>
+    </div>
+    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+        <form id="Insertbestperoformer" enctype="multipart/form-data">
+            @*InsertQuote*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="padding-search row">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label required  space">Title  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" asp-for="Title" id="Title " class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-1">                    </div>
+                    <div class="form-group col-6" style=" margin: 1px 0px 5px 58px;">
+                        <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                            <input id="Addeventanduserphoto"  class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Addeventanduserphoto" value="0"/>
+                            <label style=" font: 11px arial; color: #333333; ">Add Event/User Photo</label>
+                        </div>
+                    </div>   
+                    <div id="Addeventanduserphoto_Checkboxrelatedmain" style="display: contents;">                      
+                        <div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label class="form-grop control-label required  space">Description </label>
+                        </div>
+                        <div class="form-group col-4">
+                            <textarea class="form-control" asp-for="Description"></textarea>
+                        </div>
+                        <div class="col-3" ></div>
+                        <div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label class="form-grop control-label required  space">Image  </label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input type="file" class="form-control" asp-for="EventPhoto" />
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label required  space">Display Until </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="date" asp-for="DisplayUntill" id="DisplayUntill_txtid" class="form-control" />
+                        <span asp-validation-for="DisplayUntill" class="text-danger" id="Error_Sp"></span>
+                        <span class="text-danger" id="Error_Sp"></span>
+                    </div>
+                    <div class="col-3"></div>
+
+                    <div style="display:contents" id="Addeventanduserphoto_Checkboxrelated1">
+                        <div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <input type="hidden" id="SelectedBestperformerusername_txtid" asp-for="UserId" />
+                            <label class="form-grop control-label required  space">User </label>
+                        </div>
+                        <div class="form-group col-6">
+                            <span  id="SelectedBestperformerusername_spid" style="color: Red; font-weight: bold; ">Select</span>                            
+                            <img src="~/Images/BlinkingArrow.gif" />
+                            <a href="javascript:void(0);" id="Addbestperformerabtn" style="font-weight: bold; color: black;">Add Best Performer Name</a>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>                   
+
+                    <div class="col-3"></div>
+                    <div class="form-group col-1"></div>
+                    <div class="form-group col-6">
+                        <input type="button" id="Insert_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                        <input type="button" id="Insert_BackToSearchbtn" name="BackToSearch" value="BackToSearch" class="btn btn-pill btn-outline-primary btn-aprimary">
+                        <input type="submit" id="Insert_Savebtn" name="save" value="Save" class="btn btn-pill btn-outline-success btn-air-success">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="col-12" id="Addbestperformerdataaddingaccordionoc2">
+    <div class="card-header bg-primary">
+        <h5 class="mb-0">
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">
+                SEARCH USERS TO ADD AS BEST PERFORMER
+            </button>
+        </h5>
+    </div>
+    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#Addbestperformerdataaddingaccordionoc2">
+        <form id="SearchUserform_id" enctype="multipart/form-data">
+            <div class="padding-search row">
+                <div class="row">
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">User Name </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control" asp-for="UserName" />
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Role  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <select class="form-select" id="roleDropdown" asp-for="RoleID">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Reg. No. </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control" asp-for="InstanceUserCode"/>
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Email ID  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control" asp-for="PortalEmail" />
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">First Name </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control" asp-for="FirstName" />
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Last Name  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control" asp-for="LastName"/>
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Department  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <select class="form-select" id="classificationDropdown" asp-for="InstanceClassificationId">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label   space">Class   </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <select class="form-select" id="SubclassificationDropdown" asp-for="InstanceSubClassificationId">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-12" style="text-align:center;">
+                        <input type="button" id="Addingusers_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                        <input type="submit" id="Insert_Savebtn" name="save" value="Save" class="btn btn-pill btn-outline-success btn-air-success">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-12" id="Addbestperformerdataaddingtbl_accordionoc3">
+    <div class="card-header bg-primary">
+        <h5 class="mb-0">
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11">
+                YOUR SEARCH RESULTED <span id="bestperformertbl_Recordscount" style="color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"> </span>  RECORDS.
+            </button>
+        </h5>
+    </div>
+    <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon3" data-bs-parent="#Addbestperformerdataaddingtbl_accordionoc3">
+        <table class="table table-bordered" id="Bestperformertbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+            <thead>
+                <tr style="border-color: black; font-size: 12px; font-weight: bold;">
+                    <th style="width: 10%; " class="bg-primary;">SNO</th>
+                    <th style="width: 7%;" class="bg-primary">Select</th>
+                    <th style=" border-color: blue; width: 10%;" class="bg-primary">First Name</th>
+                    <th style=" border-color: blue; width: 10%;" class="bg-primary">Role</th>
+                    <th style=" border-color: blue; width: 10%;" class="bg-primary">Department</th>
+                    <th style=" border-color: blue; width: 10%;" class="bg-primary">Email</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+
+<script src="~/js/Managebestperformer.js"></script>

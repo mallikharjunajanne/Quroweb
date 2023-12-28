@@ -206,7 +206,7 @@
 
                                 </div>
                                 <div class="col-4" style="margin-left:auto">
-                                    <span>Marks</span> <input id="Marks" type="text" />
+                                    <span>Marks</span> <input id="Marks" type="number" />
 
                                 </div>
                                 <div class="col-6 opt">
@@ -216,7 +216,7 @@
 
 
                                 <div class="col-4" style="margin-left:auto">
-                                    <span>Answer(1/2/3/4)</span> <input id="answer" type="text" />
+                                    <span>Answer(1/2/3/4)</span> <input id="answer" type="number" />
 
                                 </div>
                                 <i class="col-1 fa fa-trash-o" style="font-size:20px;color:red" id="Qusetion-delete"></i>
@@ -754,7 +754,7 @@
                 var marksofq = document.createElement('div');
                 marksofq.className = 'col-4';
                 marksofq.style.marginLeft = 'auto';
-                marksofq.innerHTML = '<span>Marks</span><input type="text" id="Marks" value="' + ViwbagOptions[b].marksofquestion + '"/>';
+                marksofq.innerHTML = '<span>Marks</span><input type="number" id="Marks" value="' + ViwbagOptions[b].marksofquestion + '"/>';
 
                 var optionsDiv4 = document.createElement('div');
                 optionsDiv4.className = 'col-6 opt';
@@ -764,7 +764,7 @@
 
                 var answerDiv = document.createElement('div');
                 answerDiv.className = 'col-4';
-                answerDiv.innerHTML = '<span>Answer(1/2/3/4)</span> <input id="answer" value="' + ViwbagOptions[b].answerofquestion + '" type="text" />';
+                answerDiv.innerHTML = '<span>Answer(1/2/3/4)</span> <input id="answer" value="' + ViwbagOptions[b].answerofquestion + '" type="number" />';
 
                 var deleteIcon = document.createElement('i');
                 deleteIcon.className = 'col-1 fa fa-trash-o';
