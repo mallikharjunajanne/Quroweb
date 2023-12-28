@@ -46,7 +46,7 @@
             <div class="default-according style-1" id="accordionoc">
                 <div class="card">
                     <h6><span>Home</span></h6>
-
+                    @*-------------------------------  Flash News------------------*@
 
                     <div class="row">
                         <div class="row">
@@ -69,6 +69,10 @@
 
                                 </div>
                             </div>
+                            @*------------------------------- Birthdays in School------------------*@
+
+                            @if (ViewBag.LoginRoleName == "ADMINISTRATOR" || ViewBag.LoginRoleName != "TEACHER" || ViewBag.LoginRoleName != "School Admin")
+                            {
 
                             <div class="col-6" id="accordionoc2">
                                 <div class="card-header bg-primary">
@@ -79,13 +83,41 @@
                                 <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
 
                                     <div class="row padding-search rowheight">
-                                        <div class="row">
+                                      
+                                            <div id="_BirthdaysByInstance">
 
-                                        </div>
+
+                                            </div>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            }
+            else
+            {
+                                @*----------- Best Performers-------------*@
+                        <div class="col-6" id="accordionoc2">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse1" style="border-radius: 8px 45px 0px 40px;">
+BEST PERFORMERS
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
 
+                                <div class="row padding-search rowheight">
+
+                                    <div id="_BestPerformance">
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+            }
+                            @*-------------------------------  E Notice Board------------------*@
                             <div class="col-6" id="accordionoc3">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -105,6 +137,7 @@
 
                                 </div>
                             </div>
+                            @*------------------------------- Absent Students in the day------------------*@
                             <div class="col-6" id="accordionoc6">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -124,7 +157,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            @*-------------------------------  Cool LInks ------------------*@
                             <div class="col-6" id="accordionoc5">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -146,6 +179,7 @@
 
                                 </div>
                             </div>
+                            @*------------------------------- Leave Status ------------------*@
                             <div class="col-6" id="accordionoc4">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -165,7 +199,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            @*-------------------------------  Time Table------------------*@
                             <div class="col-6" id="accordionoc7">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -187,6 +221,7 @@
 
                                 </div>
                             </div>
+                            @*-------------------------------  New Admissions------------------*@
                             <div class="col-6" id="accordionoc8">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -205,6 +240,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @*------------------------------- Students Under Withdraw Process------------------*@
                             <div class="col-6" id="accordionoc9">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -226,6 +262,7 @@
 
                                 </div>
                             </div>
+                            @*------------------------------- Questions Posted to Me ------------------*@
                             <div class="col-6" id="accordionoc10">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
@@ -242,6 +279,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @*-------------------------------  CALENDER   ------------------*@
                             <div class="col-12" id="accordionoc11">
                                 <div class="card-header bg-primary">
                                     <h5 class="mb-0">
