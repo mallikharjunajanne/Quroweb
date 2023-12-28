@@ -5,15 +5,15 @@
 $(document).ready(function () {
     //loaddingimg.css('display', 'block');
 
-    var parentmenulist = $(".main-navbar .custom-scrollbar");
+    var parentmenulist = $(".layout-menu .menu-inner");
    // alert(parentmenulist.find('li').length);
  //   debugger;
  //   if (parentmenulist.find('li').length == 0) {
     $("#loading1").css('display', 'block');
 
         $(parentmenulist).text('');
-        parentmenulist.append('<li class="back-btn">' +
-            '<div class= "mobile-back text-end" ><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div ></li >');
+        //parentmenulist.append('<li class="back-btn">' +
+        //    '<div class= "mobile-back text-end" ><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div ></li >');
         var menuData = [];
         performCrudOperationCommonFunction("GET", "/UserScreens/RoleMenulist", null, function (response) {
            // debugger;
@@ -46,21 +46,21 @@ $(document).ready(function () {
                     
                     Notparent = 0;
                   //  if (item.instanceMenuId !== 7223 && item.instanceMenuId !== 7291) {
-                        var li = $('<li class="dropdown">');
+                    var li = $('<li class="menu-item">');
                         for (var i = 0; i < ChileMenu_Listlenth; i++) {
                             if (item.instanceMenuId === parseInt(ChileMenu_List[i].ParentMenuId)) {
                               
                                 if (item.menuUrl !== "") {
 
-                                    var a = $('<a class="nav-link menu-title" href="javascript:void(0)"><span>' + item.menuName + '</span></a>');
+                                    var a = $('<a class="menu-link menu-toggle" href="javascript:void(0)"><i class="menu-icon tf-icons ti ti-layout-sidebar"></i><span>' + item.menuName + '</span></a>');
                                     li.append(a);
                                   //  li.append('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
-                                    var ul = $('<ul class="nav-submenu menu-content">');
+                                    var ul = $('<ul class="menu-sub">');
                                     for (var newval = i; newval < ChileMenu_Listlenth; newval++) {
                                         Notparent++;
                                         if (item.instanceMenuId == parseInt(ChileMenu_List[newval].ParentMenuId)) {
                                             if (ChileMenu_List[newval].MenuUrl !== "") {
-                                                ul.append('<li><a href="' + ChileMenu_List[newval].MenuUrl + '">' + ChileMenu_List[newval].MenuName + '</a></li>');
+                                                ul.append('<li class="menu-item"><a class="menu-link" href="' + ChileMenu_List[newval].MenuUrl + '">' + ChileMenu_List[newval].MenuName + '</a></li>');
                                             }
                                         }
                                     }
@@ -74,7 +74,7 @@ $(document).ready(function () {
                         }
                         if (Notparent == 0) {
                             if (item.menuUrl !== "" && item.parentMenuId=="") {
-                                var a = $('<a class="nav-link menu-title link-nav" href="' + item.menuUrl + '"><span>' + item.menuName + '</span></a>');
+                                var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');
                                 li.append(a);
                                 parentmenulist.append(li);
                                 //console.log(li);
