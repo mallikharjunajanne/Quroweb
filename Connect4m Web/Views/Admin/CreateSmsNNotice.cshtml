@@ -73,18 +73,18 @@
                                     <div class="col-1"></div>
                                     <div class="col-3"></div>
                                     <div class="form-group col-2">
-                                        <label asp-for="StartDate" class="form-grop control-label required space">Start Date  </label>
+                                        <label asp-for="SDate" class="form-grop control-label required space">Start Date  </label>
                                     </div>
                                     <div class="form-group col-4">
-                                        <input type="date" id="StartDate" asp-for="StartDate" class="form-control" />
-                                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                                        <input type="date" id="StartDate" asp-for="SDate" class="form-control" />
+                                        <span asp-validation-for="SDate" class="text-danger"></span>
                                     </div>
                                     <div class="col-3"></div>
                                     <div class="col-3"></div>
-                                    <div class="form-group col-2"><label asp-for="ExpiryDate" class="form-grop control-label required space">End Date  </label></div>
+                                    <div class="form-group col-2"><label asp-for="ExDate" class="form-grop control-label required space">End Date  </label></div>
                                     <div class="form-group col-4">
-                                        <input type="date" id="EndDate" asp-for="ExpiryDate" class="form-control" />
-                                        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                                        <input type="date" id="EndDate" asp-for="ExDate" class="form-control" />
+                                        <span asp-validation-for="ExDate" class="text-danger"></span>
                                         <span class="text-danger compare"></span>
                                     </div>
                                     <div class="col-3"></div>
@@ -101,27 +101,20 @@
                                         <div class="col-3"></div>
                                         <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label asp-for="ShowInLogin" class="form-grop control-label required space">Display this Notice in Login   </label></div>
                                         <div class="form-group col-4" style=" margin: 8px;">
-                                            <div class="radio radio-primary">
-                                                <input id="radio1" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
-                                                <label class="mb-0" for="radio1">No</label>
-                                                <input id="radio2" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
-                                                <label class="mb-0" for="radio2">Yes</label>
+                                            <div class="radio radio-primary">                                               
+                                                <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
+                                                <label class="mb-0" for="radio55">No</label>
+                                                <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
+                                                <label class="mb-0" for="radio55">Yes</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="text-align: center;">
-
-                                        <!--<button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>--> @*btnClear*@
-                                        <!--<button id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>-->@*BacktosearchNotice_SaBtn*@
-                                        <!--<button id="btnppostthisnotice" class="btn btn-pill btn-outline-primary btn-aprimary">Post this Notice</button>-->@*btnppostthisnotice*@
-                                        <!--<button id="btnsubmit" class="btn btn-pill btn-outline-success btn-air-success">Save</button>-->   @*SaveNotice_SaBtn*@
-                                        <!--<button id="btnsaveandpost" class="btn btn-pill btn-outline-info btn-air-info">Save and Post</button>-->@*btnSubmitandPost*@
-
-                                        <input type="button" id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm" value="Back To Search" />
-                                        <input type="button" id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
-                                        <input type="submit" id="btnppostthisnotice" class="btn btn-pill btn-outline-warning btn-air-warning" value="Post this Notice" />
-                                        <input type="submit" id="btnSave" class="btn btn-pill btn-outline-success" value="Save" />
-                                        <input type="submit" id="btnsaveandpost" class="btn btn-pill btn-outline-info btn-air-info" value="Save and Post" />
+                                        <button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button> 
+                                        <button id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>
+                                        <button id="btnppostthisnotice" class="btn btn-pill btn-outline-primary btn-aprimary">Post this Notice</button>
+                                        <button id="btnSave" class="btn btn-pill btn-outline-success btn-air-success">Save</button>   
+                                        <button id="btnsaveandpost" class="btn btn-pill btn-outline-info btn-air-info">Save and Post</button>                                   
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +128,6 @@
     <div id="Noticeandsms_Inserted_Postingemailorsmsdivid">
 
     </div>
-
 </body>
 </html>
 

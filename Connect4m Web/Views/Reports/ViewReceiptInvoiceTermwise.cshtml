@@ -1,0 +1,605 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feechallanareport
+@{
+    ViewData["Title"] = "View Receipt Invoice";
+    Layout = null;
+    //var FourthPaySliplList = Model.ElementAt(3);
+}
+
+<link href="~/css/Payslipgeneration.css" rel="stylesheet" />
+
+
+<div class="card">
+    <div class="card-body">
+        <div style="display:flex;padding:4px" id="printbuttons">
+            <div id="Backtosearchpayslip"><span class="btn btn-pill btn-outline-primary btn-aprimary">Back To Search</span></div>
+            <div><span class="btn btn-pill btn-outline-info btn-air-info">Send Email</span></div>
+            @*@{
+                    if (FourthPaySliplList.AlreadyExists != "0")
+                    {
+                        <div onclick="printPaySlip('PaySlip')" style="margin-left: 37%;"><span class="btn btn-pill btn-outline-success btn-air-success">Print</span></div>
+
+                    }
+                }*@
+
+        </div>
+
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <div class="card" id="Payslipgenerationinner">
+
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white">
+                                FEE INVOICE
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="mainpayslip">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row mb-3">
+                                    <div class="borderline col-6">
+                                        <div class="col-12">
+                                            <div class="col-8">
+                                                <label class="control-label"> <b>STUDENT FEE INVOICE - PARENT COPY</b></label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label"> ads School</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label">Hyderabad Branch</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label">A/C No. 588010100028839</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="borderline col-6">
+                                        <div class="col-12">
+                                            <div class="col-8">
+                                                <label class="control-label"> <b>STUDENT FEE INVOICE - PARENT COPY</b></label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label"> ads School</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label">Hyderabad Branch</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class=" control-label">A/C No. 588010100028839</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table>
+                            <tr>
+                                @*<div class="col-1">
+                                        <span class="space"></span>
+                                    </div>*@
+                                <td>
+                                    <style type="text/css" media="all">
+                                        tbody {
+                                            font-family: Arial;
+                                            font-size: 9px;
+                                            color: #000000;
+                                            margin: 10px;
+                                        }
+
+                                        body {
+                                            font-family: Arial;
+                                            font-size: 9px;
+                                            color: #000000;
+                                            line-height: 14px;
+                                            margin-top: 10px;
+                                        }
+
+                                        .maintitle {
+                                            font-family: Times New Roman;
+                                            font-size: 20px;
+                                            font-weight: bold;
+                                            text-transform: uppercase;
+                                            text-align: center;
+                                            line-height: 24px;
+                                        }
+
+                                        .subtitle {
+                                            font-family: Times New Roman;
+                                            font-size: 12px;
+                                            text-transform: uppercase;
+                                            text-align: center;
+                                            line-height: 20px;
+                                        }
+
+                                        .feetable {
+                                            text-transform: uppercase;
+                                            font-size: 12px;
+                                        }
+
+                                        .style2 {
+                                            height: 10px;
+                                            width: 208px;
+                                        }
+
+                                        .rupeetxt {
+                                            background: url(http://www.connect4m.com/R3Images/InstanceHeaderPhotos/641/rupeesymbol.png);
+                                            background-repeat: no-repeat;
+                                            padding-right: 15px;
+                                            background-position: right;
+                                            font-weight: bold;
+                                            font-size: 11px;
+                                        }
+                                    </style>
+                                    <table width="870px" cellpadding="0" cellspacing="0" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- School Slip Starts Here -->
+                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="height: 10px;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <b>STUDENT FEE INVOICE - PARENT COPY</b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="maintitle">
+                                                                    ads School
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="subtitle">
+                                                                    Hyderabad Branch
+                                                                    <br>
+                                                                    A/C No. 588010100028839
+                                                                    <br>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="subtitle">
+                                                                    Bank Branch : ..........................................
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <b>Invoice No. :</b>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b>@ViewBag.Model1[0].InvoiceNo</b>
+                                                                                </td>
+                                                                                <td>
+                                                                                    Invoice Created :
+                                                                                </td>
+                                                                                <td>
+                                                                                    @Model.feereceiptdetails[0].ChallanGeneratedDate
+                                                                                </td>
+                                                                                <td>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                </td>
+                                                                                <td>
+                                                                                </td>
+                                                                                <td>
+                                                                                    Invoice Date :
+                                                                                </td>
+                                                                                <td>
+                                                                                    @Model.feereceiptdetails[0].DueDate
+                                                                                </td>
+                                                                                <td>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    Student I.D. No :
+                                                                                </td>
+                                                                                <td>
+                                                                                    @Model.feereceiptdetails[0].AdmissionNumber
+                                                                                </td>
+                                                                                <td>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <table>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="21%" style="padding-left: 5px;">
+                                                                                    Student Name :&nbsp;
+                                                                                </td>
+                                                                                <td width="29%">
+                                                                                    @Model.feereceiptdetails[0].FirstName
+                                                                                </td>
+                                                                                <td width="20%" align="right">
+                                                                                    Class &amp; Sec :&nbsp;
+                                                                                </td>
+                                                                                <td width="30%">
+                                                                                    &nbsp;  @Model.feereceiptdetails[0].SubClassificationName
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="height: 10px;">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br>
+                                                                    <table width="96%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="70%" style="font-weight: bold; height: 24px; border-bottom: 1px solid #000000;
+                                        border-right: 1px solid #000000; font-size: 11px; text-transform: uppercase;
+                                        padding-left: 5px;">
+                                                                                    PARTICULARS &nbsp; ( @Model.feetermdetails[0].TermName )
+                                                                                </td>
+                                                                                <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                    Before discount
+                                                                                </td>
+                                                                                <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                    Discount
+                                                                                </td>
+                                                                                <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                    After discount
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="feetable" style="padding-left: 5px; text-transform: uppercase; height: 24px;" colspan="2">
+                                                                                    <style type="text/css">
+                                                                                        .feetable {
+                                                                                            padding-left: 4px;
+                                                                                            text-align: left;
+                                                                                            font-size: 11px;
+                                                                                            font-weight: bold;
+                                                                                        }
+
+                                                                                        .feetable2a {
+                                                                                            padding-left: 4px;
+                                                                                            font-size: 11px;
+                                                                                            font-weight: bold;
+                                                                                        }
+                                                                                    </style>
+
+
+                                                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            @foreach (var Aitem in @ViewBag.Model1)
+                                                                                            {
+
+                                                                                                <tr>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @{
+                                                                                                            decimal amountss = decimal.Parse(Aitem.amount);
+                                                                                                            string formattedAmountss = amountss.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                        }
+                                                                                                        @formattedAmountss
+                                                                                                    </td>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @Aitem.DiscountAmt
+                                                                                                    </td>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @Aitem.FeeType
+                                                                                                    </td>
+
+
+                                                                                                    <td width="40%" align="right" class="feetable2a" style="padding-right: 4px;">
+                                                                                                        @{
+                                                                                                            decimal amounts = decimal.Parse(Aitem.amount);
+                                                                                                            string formattedAmounts = amounts.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                        }
+                                                                                                        @formattedAmounts
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        </tbody>
+                                                                                    </table>
+
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="70%" style="text-transform: uppercase; font-weight: bold; border-top: 1px solid #000000;
+                                        border-right: 1px solid #000000; height: 24px; font-size: 11px; padding-left: 5px;">
+                                                                                    TOTAL &nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalDiscountAmount&nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalBeforeDiscountAmount&nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalAmount&nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="32%" style="padding-left: 5px;">
+                                                                                    Signature of the Incharge :
+                                                                                </td>
+                                                                                <td width="65%" style="border-bottom: 1px dotted #000000;">
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                                <td width="3%">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- School Slip Ends Here -->
+                                                </td>
+                                                <td width="10px" style="border-right: 2px dotted #000000;">
+                                                    &nbsp;
+                                                </td>
+                                                <td width="10px">
+                                                </td>
+                                                <td width="425px" valign="top">
+                                                    <!-- School Slip Starts Here -->
+                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="height: 10px;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <b style="text-transform: uppercase;">ADS Student Fee Deposit Challan - Bank Copy</b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height: 5px;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="maintitle">
+                                                                    ADS School
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="subtitle">
+                                                                    Hyderabad Branch
+                                                                    <br>
+                                                                    A/C No. 588010100028839
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="subtitle" style="text-transform: capitalize;">
+                                                                    Bank Branch : ..........................................
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height: 5px;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="19%" style="padding-left: 5px; height: 18px;">
+                                                                                    <b>Invoice No. :</b>
+                                                                                </td>
+                                                                                <td width="31%">
+                                                                                    <b>@ViewBag.Model1[0].InvoiceNo</b>
+                                                                                </td>
+                                                                                <td width="12%" align="right">
+                                                                                    Invoice Created :&nbsp;
+                                                                                </td>
+                                                                                <td width="35%" style="border-bottom: 1px dotted #000000;">
+                                                                                    &nbsp; @Model.feereceiptdetails[0].ChallanGeneratedDate
+                                                                                </td>
+                                                                                <td width="3%">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="19%" style="padding-left: 5px; height: 18px;">
+                                                                                </td>
+                                                                                <td width="31%">
+                                                                                </td>
+                                                                                <td width="12%" align="right">
+                                                                                    Invoice Date :&nbsp;
+                                                                                </td>
+                                                                                <td width="35%" style="border-bottom: 1px dotted #000000;">
+                                                                                    &nbsp; @Model.feereceiptdetails[0].DueDate
+                                                                                </td>
+                                                                                <td width="3%">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="22%" style="padding-left: 5px; height: 18px;">
+                                                                                    Student I.D. No. :
+                                                                                </td>
+                                                                                <td width="78%">
+                                                                                    &nbsp;@ViewBag.Model1[0].AdmissionNumber
+                                                                                </td>
+                                                                                <td width="3%">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="height: 10px;">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="21%" style="padding-left: 5px;">
+                                                                                    Student Name :&nbsp;
+                                                                                </td>
+                                                                                <td width="29%">
+                                                                                    @ViewBag.Model1[0].FirstName
+                                                                                </td>
+                                                                                <td width="20%" align="right">
+                                                                                    Class &amp; Sec :&nbsp;
+                                                                                </td>
+                                                                                <td width="30%">
+                                                                                    &nbsp;@ViewBag.Model1[0].SubClassificationName
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="height: 10px;">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br>
+                                                                    <table width="96%" cellpadding="0" cellspacing="0" align="center" style="border: 1px solid #000000;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    PARTICULARS &nbsp; ( @Model.feetermdetails[0].TermName )
+                                                                                </td>
+                                                                                <td>
+                                                                                    Before discount
+                                                                                </td>
+                                                                                <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                    Discount
+                                                                                </td>
+                                                                                <td class="rupeetxt" width="30%" style="font-weight: bold; font-size: 11px; border-bottom: 1px solid #000000;" align="right">
+                                                                                    After discount
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="feetable" style="padding-left: 5px; text-transform: uppercase; height: 24px;" colspan="2">
+
+
+                                                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            @foreach (var Aitem in @ViewBag.Model1)
+                                                                                            {
+
+                                                                                                <tr>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @{
+                                                                                                            decimal amountss = decimal.Parse(Aitem.amount);
+                                                                                                            string formattedAmountss = amountss.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                        }
+                                                                                                        @formattedAmountss
+                                                                                                    </td>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @Aitem.DiscountAmt
+                                                                                                    </td>
+                                                                                                    <td width="60%" class="feetable" align="center" style="height: 24px;">
+                                                                                                        @Aitem.FeeType
+                                                                                                    </td>
+
+
+                                                                                                    <td width="40%" align="right" class="feetable2a" style="padding-right: 4px;">
+                                                                                                        @{
+                                                                                                            decimal amounts = decimal.Parse(Aitem.amount);
+                                                                                                            string formattedAmounts = amounts.ToString("N0"); // Format the decimal as a string with two decimal places
+                                                                                                        }
+                                                                                                        @formattedAmounts
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        </tbody>
+                                                                                    </table>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="70%" style="text-transform: uppercase; font-weight: bold; border-top: 1px solid #000000;
+                                        border-right: 1px solid #000000; height: 24px; font-size: 11px; padding-left: 5px;">
+                                                                                    TOTAL &nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalDiscountAmount&nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalBeforeDiscountAmount&nbsp;
+                                                                                </td>
+                                                                                <td width="30%" style="font-weight: bold; font-size: 11px; border-top: 1px solid #000000;" align="right">
+                                                                                    @Model.TotalAmount&nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <br>
+                                                                    <br>
+                                                                    <br>
+                                                                    <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="32%" style="padding-left: 5px;">
+                                                                                    Signature of the Incharge :
+                                                                                </td>
+                                                                                <td width="65%" style="border-bottom: 1px dotted #000000;">
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                                <td width="3%">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- School Slip Ends Here -->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table width="100%" cellpadding="0" cellspacing="0" align="center" style="page-break-before: always;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      
+
+
+

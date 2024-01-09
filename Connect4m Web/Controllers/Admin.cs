@@ -45,7 +45,6 @@ namespace Connect4m_Web.Controllers
 
             //=======================================================
             _userService = userService;
-
             InstanceId = _userService.InstanceId;
             UserId = _userService.LoginUserId;
             InstanceClassificationId = _userService.InstanceClassificationId;
@@ -62,18 +61,7 @@ namespace Connect4m_Web.Controllers
         #region  Main manage notice search screen
         
         public IActionResult ManageNotices()
-        {
-            //int CategoryTypeId = 5;
-
-            //List<SelectListItem> li = new List<SelectListItem>();
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/MN_NoticeTypeDD?InstanceId=" + InstanceId + "&CategoryTypeId=" + CategoryTypeId).Result;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string data = response.Content.ReadAsStringAsync().Result;
-            //    li = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            //}
-            //ViewBag.NoticeTypedd = li;
-
+        {     
             return View();
         }
 
@@ -140,6 +128,9 @@ namespace Connect4m_Web.Controllers
             return View();
             //return PartialView("_ManageNotices_Create");
         }
+
+    
+
         [HttpPost]
         public IActionResult ManageNotices_Create(NoticeTypes obj)
         {
@@ -233,7 +224,7 @@ namespace Connect4m_Web.Controllers
 
                 objs.DisplayIcon = "";
                 objs.DisplayOrder = 2;
-                objs.ShowInLogin = "0";
+                //objs.ShowInLogin = "0";
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
                 var Documentattachement = objs.AttachedDocument;
@@ -246,7 +237,7 @@ namespace Connect4m_Web.Controllers
                 if (Documentattachement != null)
                 {
                     obj.NoticeDocument = Documentattachement.FileName;
-
+                    
                     string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
 
                     if (!Directory.Exists(folderPath))
@@ -266,13 +257,13 @@ namespace Connect4m_Web.Controllers
                     var fileNamedoc = Path.GetFileName(filenamedoc);
                     var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
                     string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
-
+                    obj.DocSize = randomNumber.ToString();
                     using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
                     {
                         Documentattachement.CopyTo(fileSrteam);
                     }
                 }
-                obj.DocSize = randomNumber.ToString();
+               
                 ViewBag.Subject = obj.Subject;
                 ViewBag.StartDate = obj.StartDate;
                 ViewBag.EndDate = obj.EndDate;
@@ -287,7 +278,15 @@ namespace Connect4m_Web.Controllers
                     items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
                 }
                 ViewBag.List = items;
-                return View();
+                
+                if (items.ENoticeId !=0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return Json(items.ENoticeId);
+                }
             }
             catch (Exception)
             {
@@ -351,7 +350,7 @@ namespace Connect4m_Web.Controllers
 
         #region Create SMS
       
-        public IActionResult ManageNotices_CreateSMS()//int InstanceId
+        public IActionResult ManageNotices_CreateSMS()
         {
             List<TemplateDetails> item = new List<TemplateDetails>();
 
@@ -364,8 +363,58 @@ namespace Connect4m_Web.Controllers
             ViewBag.SMSTemplates = item;
             return View();
         }
-      
-    
+
+        public IActionResult SMS_TemplateandDetails(int TemplateMasterPK)
+        {
+            List<TemplateDetails> item = new List<TemplateDetails>();
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_SMSTemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<TemplateDetails>>(data);
+            }
+            ViewBag.SMSTemplates = item;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ManagenoticeSMS_saveNposting(TemplateDetails_SMS obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+                "</REQUESTCREDIT>";
+            obj.SMSFromText = "ADSTEK";
+            obj.Action = "credits";
+
+
+            if (obj.NoticeDocument == null)
+            {
+                obj.NoticeDocument = "";
+            }
+            ViewBag.Subject = obj.Subject;
+            ViewBag.StartDate = obj.SDate;
+            ViewBag.EndDate = obj.ExDate;
+
+            ViewBag.StartDate = obj.StartDate;
+            ViewBag.EndDate = obj.EndDate;
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
+
+            TemplateDetails_SMS items = new TemplateDetails_SMS();
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
+            }
+            ViewBag.List = items;
+
+            return View();
+        }
+
 
 
         [HttpPost]
@@ -387,7 +436,10 @@ namespace Connect4m_Web.Controllers
                 obj.NoticeDocument = "";
             }
             ViewBag.Subject = obj.Subject;
-            ViewBag.StartDate = obj.StartDate;
+            ViewBag.StartDate = obj.SDate;
+            ViewBag.EndDate = obj.ExDate;
+
+            ViewBag.StartDate = obj.StartDate;            
             ViewBag.EndDate = obj.EndDate;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
@@ -403,13 +455,16 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        
-        
+
+
+
+
+        //=====>> Old Method its showing reloading so creating new method Name:-SaveandPostBtn_ManageNotices_CreateSMS
         [HttpPost]
         public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
         {
             obj.DMLTYPE = "GETRECORDS";
-
+            obj.InstanceId = InstanceId;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
@@ -423,13 +478,17 @@ namespace Connect4m_Web.Controllers
             return new JsonResult(items);
             //return View();
         }
+       
+        
         #endregion
 
 
 
 
 
-        //int InstanceId
+        #region Department and classification dropdowns
+
+
         public IActionResult ManageNotices_InstanceClassificationSearch()
         {
             List<ClassificationList> item = new List<ClassificationList>();
@@ -443,7 +502,7 @@ namespace Connect4m_Web.Controllers
             return Json(item);
 
         }
-        //int InstanceId,
+
         public IActionResult ManageNotices_InstanceSubClassificationSearch(int InstanceClassificationId)
         {
             List<SubclassificationList> item = new List<SubclassificationList>();
@@ -457,10 +516,11 @@ namespace Connect4m_Web.Controllers
 
             return Json(item);
         }
-
-        public IActionResult ManageNotices_PostNoticeSearchtabledata(string UserName, string InstanceRoleId, string FirstName, string LastName, string InstanceClassificationId, string InstanceSubClassificationId, string InstanceUserCodes, string PortalEmail, string RouteId, string CollegeHostel, string ExcludeUserIds, string Noofusers)
+                                               
+        public IActionResult ManageNotices_PostNoticeSearchtabledata( string UserName, string InstanceRoleId, string FirstName, string LastName, string InstanceClassificationId, string InstanceSubClassificationId, string InstanceUserCodes, string PortalEmail, string RouteId, string CollegeHostel, string ExcludeUserIds, string Noofusers)
         {
             List<Postnoticetabledate> item = new List<Postnoticetabledate>();
+
             UserName = UserName ?? "";
 
             InstanceRoleId = InstanceRoleId ?? "";//-----InstanceRoleId == "" ? default : InstanceRoleId
@@ -496,7 +556,8 @@ namespace Connect4m_Web.Controllers
             {
                 string RoleId = InstanceRoleId;
                 string InstanceUserCode = InstanceUserCodes;
-                var Parameters = new {
+                var Parameters = new
+                {
                     InstanceId,
                     UserName,
                     RoleId,
@@ -528,7 +589,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.ExcludeUserIds = ExcludeUserIds;
             return View(item);
         }
-
         public IActionResult SELUsersByUserIds(string UserIds, string Noofusers)
         {
             List<Postnoticetabledate> item = new List<Postnoticetabledate>();
@@ -563,24 +623,19 @@ namespace Connect4m_Web.Controllers
             return View(item);
         }
 
+      
 
-        public IActionResult SMS_TemplateandDetails(int TemplateMasterPK)//int InstanceId,
-        {
-            List<TemplateDetails> item = new List<TemplateDetails>();
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_SMSTemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<TemplateDetails>>(data);
-            }
-            ViewBag.SMSTemplates = item;
-            return View();
-        }
+        #endregion
 
 
 
-       
+
+
+
+
+
+
 
 
         //------Create Notice and SMS  Button click view to start action methods
@@ -602,7 +657,7 @@ namespace Connect4m_Web.Controllers
 
         #region Create SMS and Notice      
 
-        public IActionResult CreateSmsNNotice()//int InstanceId,int Userid
+        public IActionResult CreateSmsNNotice()
         {
             var noticeTypeData = GetNoticetypdedd();
             ViewBag.Noticetypedd = noticeTypeData;
@@ -618,7 +673,7 @@ namespace Connect4m_Web.Controllers
                 obj.CreatedBy = UserId;
                 obj.DisplayIcon = "";
                 obj.DisplayOrder = 2;
-                obj.ShowInLogin = "0";
+                //obj.ShowInLogin = "0";
                 var instanceId = InstanceId;
                 var Documentattachement = obj.AttachedDocument;
                 Random random = new Random();
@@ -666,33 +721,33 @@ namespace Connect4m_Web.Controllers
                 return View();
             }
             catch (Exception)
-            {
-                // Handle the exception here, you may log it or return an error message
-                // For example:
-                // Log the exception: logger.LogError(ex, "An error occurred while processing the request.");
-                // Return an error message
+            {              
                 ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
                 return View();
             }
         }
 
         //Searchuserstabledata_CSN
-        public IActionResult CreateSmsNNotice_PostthisnoticeBtn(TemplateDetails_SMS obj, NoticeTypes objs)//USP_NoticessmstemplateInsert
+        public IActionResult CreateSmsNNotice_PostthisnoticeBtn(NoticeTypes obj)//TemplateDetails_SMS objs,
         {
             try
             {
-                objs.DisplayIcon = "";
-                objs.DisplayOrder = 2;
-                objs.ShowInLogin = "0";
                 obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;              
-                var Documentattachement = objs.AttachedDocument;
-                obj.StartDate = obj.SDate;
-                obj.EndDate = obj.ExDate;
-                //obj.EndDate = ConvertToDateTime(obj.ExDate);
+                obj.CreatedBy = UserId;
+                obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+                    "</REQUESTCREDIT>";
+                obj.SMSFromText = "ADSTEK";
+                obj.Action = "credits";
+
+                obj.DisplayIcon = "";
+                obj.DisplayOrder = 2;
+
+                var Documentattachement = obj.AttachedDocument;
+
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 999999);
-
                 if (Documentattachement != null)
                 {
                     obj.NoticeDocument = Documentattachement.FileName;
@@ -716,13 +771,13 @@ namespace Connect4m_Web.Controllers
                     var fileNamedoc = Path.GetFileName(filenamedoc);
                     var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
                     string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
-
+                    obj.DocSize = randomNumber.ToString();
                     using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
                     {
                         Documentattachement.CopyTo(fileSrteam);
                     }
                 }
-                obj.DocSize = randomNumber.ToString();
+                
                 ViewBag.Subject = obj.Subject;
                 ViewBag.StartDate = obj.StartDate;
                 ViewBag.EndDate = obj.EndDate;
@@ -737,7 +792,14 @@ namespace Connect4m_Web.Controllers
                     items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
                 }
                 ViewBag.List = items;
-                return View();
+                if (items.ENoticeId != 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return Json(items.ENoticeId);
+                }               
             }
             catch (Exception)
             {
@@ -745,7 +807,7 @@ namespace Connect4m_Web.Controllers
                 return View();
             }
         }
-        //------Create Notice and SMS  Button click view to start action methods
+        
 
 
         #endregion
@@ -1578,20 +1640,10 @@ namespace Connect4m_Web.Controllers
         #endregion
 
 
-        ////-----------String date to convert datetime 
-        //private DateTime ConvertToDateTime(string dateString)
-        //{
-        //    DateTime resultDateTime;
 
-        //    if (DateTime.TryParse(dateString, out resultDateTime))
-        //    {
-        //        return resultDateTime;
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException("Invalid date format or value.");
-        //    }
-        //}
+
+
+       
        
     }
 }

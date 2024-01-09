@@ -53,7 +53,10 @@ namespace Connect4m_Web.Controllers
 
 
         public IActionResult SchoolWelcomePage()
-        { 
+        {
+            string roleName = Request.Cookies["RoleName"];
+            ViewBag.RoleName= roleName.ToUpper();
+
             List<ENoticeByNoticeType> item = new List<ENoticeByNoticeType>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_ENotice_SelectByNoticeType?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
             if (response.IsSuccessStatusCode)

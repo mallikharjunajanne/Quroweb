@@ -156,4 +156,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         //public string TotalAbsentsinDay { get; set; }
 
     }
+    
+   
+
 }

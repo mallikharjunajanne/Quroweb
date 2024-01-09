@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "SectionwiseAttendanceReporttbldata";
+    Layout = null;
+}
+
+<style>
+    #tblStaffLeavesearchresults td {
+        padding: 2px;
+        border: 3px solid black;
+        font-weight: 600;
+    }
+
+    #FirstTable td {
+        border: 1px solid black;
+    }
+</style>
+
+<div class="row mb-2">
+    <div class="col-md-12 col-lg-12 mb-3">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <span id="AddNewText_Span_CreatePage">
+                        ATTENDANCE DETAILS
+                    </span>
+                </h5>
+            </div>
+            <div class="card-body" id="Attendancereporttblmain">
+                <div>
+                    <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_AttendancereportExportExcel" />
+                    <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_attendancereportPrint" />
+                </div>
+                <div class="card-datatable text-nowrap">
+                    <div class="table-responsive">
+                        <div class="table-responsive text-nowrap" id="Printattendancereport">
+                            <div id="Selectedclassnamesdiv">
+
+                            </div>
+                            <table class="table-bordered" id="StudentwiseattendaceReport">
+                                <thead class="table-warning" id="tablehead">
+
+                                </thead>
+                                <tbody id="tableBody">
+                                </tbody>
+                                <tfoot id="tablefooter">
+
+                                </tfoot>
+                            </table>
+                            <div id="AttendanceSignaturesdiv">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/GeneralFunctions.js"></script>
+<script src="~/js/Monthwiseclassattendancereport.js"></script>

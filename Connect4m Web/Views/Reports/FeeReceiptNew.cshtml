@@ -1,8 +1,109 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.FeeReports
-
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feechallanareport
 @{
     ViewData["Title"] = "FeeReceiptNew";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    @*@model Connect4m_Web.Models.Attendenceproperites.FeeReports*@
 }
+<!DOCTYPE html>
+<html>
+<head>
 
 
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span> Fee Challan Report</h4>
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+                <div class="card mb-4" id="SearchPage">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH USERS
+                            </span>
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    </div>
+                    <div class="card-body" id="CreateNewSubjectsDiv">
+                        <form id="Feechallanreport_form" enctype="multipart/form-data">
+                            <div id="FmExamsCreate_Div">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row mb-6">
+                                            <label class="col-sm-4 col-form-label text-end required space" for="basic-default-name">Class</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">                                                
+                                                    <select class="select2 form-select select2-hidden-accessible" id="FddlDepartment" asp-for="SubClassificationId">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-sm-4 col-form-label text-end space" for="basic-default-name">First Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="Firstnametxtid" placeholder="First Name" asp-for="FirstName">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-sm-4 col-form-label text-end  space" for="basic-default-name">Last Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="Lastnametxtid" placeholder="Last Name" asp-for="LastName">
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12">
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" onclick="Tabledata_Callingfun();" id="Btnsearch">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>                        
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h5 class="card-header">
+                        YOUR SEARCH RESULTED <label id="tablecountlblid"></label> RECORDS.
+                    </h5>
+                    <div class="card-datatable text-nowrap">
+                        <div class="table-responsive">
+                            <table class="datatables-ajax table dataTable no-footer" id="Frtableid" aria-describedby="DataTables_Table_0_info" style="width: 1038px;">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Full name: activate to sort column descending" aria-sort="ascending" style="width: 0px;">
+                                            SNO
+                                        </th>
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Full name: activate to sort column descending" aria-sort="ascending" style="width: 137px;">
+                                            Select
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 163px;">
+                                            Name
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 199px;">
+                                            Department
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 96px;">
+                                            Class
+                                        </th>                                      
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Feechallanreport.js"></script>
