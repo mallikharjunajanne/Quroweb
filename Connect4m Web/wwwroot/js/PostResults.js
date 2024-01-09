@@ -2,6 +2,7 @@
 
 
 var ErrorAppend = $("#Main_Span_Error");
+//============Ready function
 $(document).ready(function () {
     $("#loadingOverlay").show();
     debugger;
@@ -110,7 +111,6 @@ function BackTOStep(event, button) {
 
 var ClickedBtnId = null;
 $(".submit-btn").click(function () {
-    // Set the value of a hidden input field to the name of the clicked button
     ClickedBtnId = $(this).attr("id");
 });
 
