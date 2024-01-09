@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-
+<span id="lblPostNoticeMsg" class="text-danger"></span>
 <div class="default-according style-1" id="accordionoc5">
     <div class="card">
         <div class="card-header bg-primary">
@@ -28,13 +28,13 @@
                         <div class="col-2 rowcol"></div>
                         <div class="col-10 rowcol">
                             @*<div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk1" />
-                                <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS</label>
-                            </div>
-                            <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk2" />
-                                <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS to Parents</label>
-                            </div>*@
+                                    <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk1" />
+                                    <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS</label>
+                                </div>
+                                <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
+                                    <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk2" />
+                                    <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS to Parents</label>
+                                </div>*@
                             <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
                                 <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk3" />
                                 <label class="form-check-label" style="font: 12px arial; color: blue;">Send EMail</label>
@@ -47,7 +47,9 @@
                         <div class="col-2 rowcol"></div>
                         <div class="col-10 rowcol">
                             <div class="form-check form-check-inline col-4">
-                                <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="CheckAllUsers()" />@*Selectalluserschkvalues*@
+                                <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="CheckAllUsers()" />
+
+                                <!--<input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="CheckAllUsers()" />-->@*Selectalluserschkvalues*@
                                 <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>
                             </div>
                         </div>
@@ -77,7 +79,7 @@
                                 Rolesno++;
                             }
                             <div class="form-check form-check-inline col-12" style=" margin-right: 0rem;">
-                                <input class="form-check-input checkbox-item" id="Selectallstaffrole" type="checkbox" onclick="handleSelectAllStaffRoleCheckbox();"/>
+                                <input class="form-check-input checkbox-item" id="Selectallstaffrole" type="checkbox" onclick="handleSelectAllStaffRoleCheckbox();" />
                                 <label style=" font: 12px arial; color: blue;">Select all Staff Role</label>
                             </div>
                         </div>
@@ -148,7 +150,7 @@
 
             </div>
             <div>
-                <a href="" onclick="PostNoticeaddusertoggle(); return false;">Search and add users to post this notice</a>
+                <a href="" onclick="PostNoticeaddusertogglediv(); return false;">Search and add users to post this notice</a>
             </div>
             <div id="SearchUser_AddUser_DivId_Postnotice" style="display: none;">
                 <div class="card">
@@ -247,7 +249,8 @@
                                             </select>
                                         </div>
                                         <div class="col-12" style="text-align:center;">
-                                            <input type="button" id="searchButton" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />
+                                            <button id="btnSearchUsers" class="btn btn-pill btn-outline-success btn-air-success">Search</button>@*searchButton*@
+                                            @*<input type="button" id="searchButton" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />*@
                                         </div>
                                     </div>
                                 </div>
@@ -274,3 +277,8 @@
     </div>
 </div>
 
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/Managenotice_1.js"></script>

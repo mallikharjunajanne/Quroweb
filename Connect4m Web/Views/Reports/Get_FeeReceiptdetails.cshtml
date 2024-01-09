@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Feechallanareport>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+</head>
+<body>
+    <div class="card-datatable text-nowrap">
+        <div class="table-responsive">
+            <table class="datatables-ajax table dataTable no-footer" id="Feedetailsbyusertbl" aria-describedby="DataTables_Table_0_info" style="width: 1038px;">
+                <thead>
+                    <tr>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Full name: activate to sort column descending" aria-sort="ascending" style="width: 137px;">
+                            Challan No
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 163px;">
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            <a href="#" class="delete-link" data-id="@item.UserReceiptGenerationID" onclick="openNewWindow('@item.UserReceiptGenerationID', '@item.UserId')">
+                                @item.UserReceiptGenerationID
+                            </a>
+                        </td>
+                        <td>
+                            <i class="fa fa-trash delete-icon" data-invoice="@item.InvoiceNo"></i>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
+
+@*@item.UserReceiptGenerationID*@
+@*<td>@item.UserId</td>*@
+@*@item.InvoiceNo*@
+
+
+<script src="~/js/Feechallanreport.js"></script>
