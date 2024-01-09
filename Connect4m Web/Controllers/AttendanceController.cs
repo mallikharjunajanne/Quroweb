@@ -95,6 +95,10 @@ namespace Connect4m_Web.Controllers
         //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginPage(LoginModel val)
         {
+            try
+            {
+
+         
             //installed packeges 
             //Microsoft.AspNetCore.Session
             //Microsoft.AspNetCore.Authentication.Cookies
@@ -217,6 +221,11 @@ namespace Connect4m_Web.Controllers
             //ViewBag.ErrorMessage = "Invalid User ID/Password.";
             //return View();
             return Json(0);
+            }
+            catch (Exception)
+            {
+                return Json(0);
+            }
         }
 
         //public async Task<IActionResult> Logout()
