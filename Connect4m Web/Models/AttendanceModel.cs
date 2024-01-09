@@ -46,12 +46,13 @@ namespace Connect4m_Web.Models
     {
         public string ButtonId { get; set; }//new
         public int Id { get; set; }
-        [Display(Name="Role")]
+        [Display(Name="User Role")]
+        [Required(ErrorMessage = "The Role is Required")]
         public int RoleId { get; set; }
         public int CreatedBy { get; set; }
         public int InstanceID { get; set; }
         public int UserId { get; set; }
-        [Required(ErrorMessage ="The Department is Rerquired")]
+        [Required(ErrorMessage ="The Department is Required")]
         [Display(Name = "Department ")]
         public int InstanceClassificationId { get; set; }
         [Required(ErrorMessage ="The Class is Required")]
@@ -62,10 +63,18 @@ namespace Connect4m_Web.Models
         public string Name { get; set; }
         public string ButtonName { get; set; }
         public string DisplayOrders { get; set; }
+        //[Required(ErrorMessage = "The Admission Number is Required")]
+        [Required]
         [Display(Name= "Admission Number")]
         public string AdmissionNumber { get; set; }
+        [Required]
+        [RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid First Name")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        //[Required(ErrorMessage = "The Admission Number is Requireddsfs")]
+        //[Display(Name = "First Name1")]
+        //public string FirstName1_ { get; set; }
+        [RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid Last Name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
@@ -791,7 +800,7 @@ namespace Connect4m_Web.Models
         public string MenuUrl { get; set; }
         public string DoubleLogin { get; set; }
         public int ThemeId { get; set; }
-        public string RoleName{ get; set; }
+        public string RoleName { get; set; }
 
     }
 

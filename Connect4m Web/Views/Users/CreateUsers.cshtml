@@ -8,14 +8,25 @@
 <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
 <link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />
 <input type="hidden" value="@ViewBag?.url"  id="UsersControllerAppend" />
+<input type="hidden" value="@ViewBag?.UserId"  id="HdnUserIdCreatePage" />
 <br />
+@*<span class="ErrorMessageSpan" id="Main_Span_Error"></span>*@
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" ><a class="nav-link active" style="cursor:pointer" data-bs-toggle="tab"  onclick="nextpage('GeneralInfoTab',null)" >General Info</a></li>
-    <li class="nav-item" ><a class="nav-link" style="cursor:pointer" data-bs-toggle="tab" onclick="nextpage('PreviousSchoolInformationTab',null)" >Previous School Information</a></li>
-    <li class="nav-item" ><a class="nav-link" style="cursor:pointer" data-bs-toggle="tab" onclick="nextpage('ParentDetailsTab',null)" >Parent Details</a></li>
-    <li class="nav-item" ><a class="nav-link" style="cursor:pointer" data-bs-toggle="tab" onclick="nextpage('EducationDetailsTab',null)" >Edu Details</a></li>
-</ul>
+<div class="card-header pb-0 tabsofME" id="myTab" style="position: absolute; DISPLAY: inline; margin-top: -4%;">
+    <button class="btn btn-pill btn-outline-primary btn-aprimary tabchanges" style=" margin-left: 0%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="GeneralInfoTab" onclick="MoveTonextpage('GeneralInfoTab',null)">
+        General Info
+    </button>
+    <button class="btn btn-pill btn-outline-primary btn-aprimary" style="display:none; margin-left: 0%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="ParentDetailsTab" onclick="MoveTonextpage('ParentDetailsTab',null)" disabled="disabled">
+        Parent Details
+    </button>
+</div>
+
+<!--<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" ><a class="nav-link active" id="GeneralInfoTab" style="cursor:pointer" data-bs-toggle="tab"  onclick="MoveTonextpage('GeneralInfoTab',null)" >General Info</a></li>-->
+    @*<li class="nav-item" ><a class="nav-link" style="cursor:pointer" data-bs-toggle="tab" onclick="MoveTonextpage('PreviousSchoolInformationTab',null)" >Previous School Information</a></li>*@
+    <!--<li class="nav-item"><a class="nav-link" id="ParentDetailsTab" style="cursor:pointer" data-bs-toggle="tab" onclick="MoveTonextpage('ParentDetailsTab',null)" >Parent Details</a></li>-->
+    @*<li class="nav-item" ><a class="nav-link" style="cursor:pointer" data-bs-toggle="tab" onclick="MoveTonextpage('EducationDetailsTab',null)" >Edu Details</a></li>*@
+<!--</ul>-->
 
 <div id="AppendAllUSersDetails">
     <div id="InnerUsersTabs">
@@ -24,8 +35,9 @@
 </div>
 
 @*<script src="~/js/PayRoll.js"></script>*@
-<script src="~/js/CommonScripts.js"></script>
-
+@*<script src="~/js/CommonScripts.js"></script>*@
+<script src="~/js/GeneralFunctions.js"></script>
+@*<script src="~/js/ManageUsers.js"></script>*@
 <script>
 
     $(document).ready(function () {
@@ -33,46 +45,40 @@
         debugger;
         if (urlofpayroll != undefined) {
             loaddingimg.css('display', 'block');
-            CommonAjaxFunction('GET', '/Users/' + urlofpayroll, null, function (response) {
+            var UserId = $("#HdnUserIdCreatePage").val();
+            if (UserId == 0) {
+                $("#myTab").find("#ParentDetailsTab").attr('disabled', true);
+            } else {
+                $("#myTab").find("#ParentDetailsTab").attr('disabled', false);
+            }
+          //  var data = { UserId: UserId};
+            performCrudOperationCommonFunction('GET', '/Users/' + urlofpayroll, { UserId: UserId }, function (response) {
                 debugger;
                 $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
                 loaddingimg.css('display', 'none');
-            }, function (status, error) {
+            }, function (error) {
                 loaddingimg.css('display', 'none');
+                $("#Main_Span_Error").text("Something Error");
             }, false);
         }
     })
-    function nextpage(url, data) {
-            debugger;
-            document.getElementById("loading").style.display = "block";
-            CommonAjaxFunction('GET', '/Users/' + url, data, function (response) {
-                $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
-                document.getElementById("loading").style.display = "none";
-            }, function (status, error) {
 
-                document.getElementById("loading").style.display = "none";
-                //  alert("reject");
-            }, false);
-    }
-    //function nextpage(url, data) {
-    //    return new Promise((resolve, reject) => {
-    //          debugger;
-    //        document.getElementById("loading").style.display = "block";
-    //        CommonAjaxFunction('GET', '/Users/' + url, data, function (response) {
-               
-    //            $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
-    //                document.getElementById("loading").style.display = "none";
-                
-    //            resolve();
-
-    //        }, function (status, error) {
-
-    //            document.getElementById("loading").style.display = "none";
-    //            //  alert("reject");
-    //            reject();
-    //        }, false);
-    //    })
+    //===================>>>>>>>>>>>>>>====In CreateUsers Page  Functions START
+    //function MoveTonextpage(url, data) {
+    //    debugger;
+    //    document.getElementById("loading").style.display = "block";
+    //    data = { UserId: $("#HdnUserIdCreatePage").val() };
+    //    CommonAjaxFunction('GET', '/Users/' + url, data, function (response) {
+    //        $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
+    //        document.getElementById("loading").style.display = "none";
+    //    }, function (status, error) {
+    //        document.getElementById("loading").style.display = "none";
+    //        //  alert("reject");
+    //    }, false);
     //}
+    //=====================<<<<<<<<<<<<<<<<<<==In CreateUsers Page  Functions END
+
+
 </script>
 
 

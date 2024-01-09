@@ -524,6 +524,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
           
         }
 
+        public class BirthdaysByInstance
+        {
+            public string DOB { get; set; }
+            //public string InstanceId { get; set; }
+            //public string ENoticeId { get; set; }
+            public string Dateofbirth { get; set; }
+            public string FirstName { get; set; }
+            public string Photo { get; set; }
+            public string UserId { get; set; }
+            public string Class { get; set; }
+            public string InstanceId { get; set; }
+            public string RoleName { get; set; }
+
+        }
+
 
     }
 }

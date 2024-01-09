@@ -1,0 +1,1092 @@
+﻿
+@model Connect4m_Web.Models.ManageUsersModel
+
+@{
+    ViewData["Title"] = "ManageUsersPreview";
+     Layout = null;
+    var UpdateIdentification = ViewBag.UpdateIdentification;
+}
+@*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
+
+<html >
+<head>
+
+    <title>User Details</title>
+    <link href="~/css/CommonStyle.css" rel="stylesheet" />
+    <style>
+    </style>
+
+    <link href="~/assets/css/color-1.css" rel="stylesheet" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="~/assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/x-icon">
+
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/feather-icon.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/date-picker.css">
+
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/responsive.css">
+
+</head>
+<body>
+    <div class="card">
+        <div class="card-body"><br />
+            <a id="BtnPrint" href="#" class="btn btn-pill btn-outline-primary btn-aprimary" style="margin-left:86%" onclick="CallPrintInline('HtmlDidToPrint')">PRINT</a>
+            <div class="col-sm-12 " id="HtmlDidToPrint">
+                <div class="card">
+                   
+                    <div class="card-body">
+                        <div class="default-according style-1" id="accordionoc">
+                            <div class="card">
+                                <h6><span>MANAGE USERS</span></h6>
+                                <input type="hidden" value="@UpdateIdentification" id="BtnUpdateIdentification" />
+                                <input type="hidden" value="@ViewBag.IsParentIdentification" id="HdnIsParentIdentification" />
+                                <input type="hidden" asp-for="UserId" id="HdnUserId" />
+                                <div id="DivGeneralInfoTab">
+                                    @*@if (ViewBag.IsParentIdentification == "Parent")*@
+                                    @*{*@
+                                        <form id="FmGeneralInfoTab">
+
+                                            <div class="form-group col-12 passwordfor"><span class="ErrorMessageSpan" id="Main_Span_Error"></span></div>
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                                            @*---Save Users Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button type="button" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="SpnCardHeaderName">USER DETAILS </span></button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+
+                                                        <div class="row">
+                                                            @*----------------------*@
+
+                                                            <div class="form-group col-2">
+
+                                                                <label asp-for="RoleId" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.RoleName</label>
+                                                                <input type="hidden" asp-for="RoleId" id="DdlRoleId" readonly />
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                            </div>
+                                                            @*----------------------*@
+
+                                                            <div class="form-group col-2 ClsDivTeachers">
+                                                                <label asp-for="DesignationId" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ClsDivTeachers">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Designation</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                @if (UpdateIdentification == "UpdateDetails")
+                                                                {
+                                                                    <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px; " />
+                                                                    @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                                    {
+                                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
+                                                                    }
+
+                                                                }
+
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
+                                                                {
+                                                                    <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
+                                                                }<br />
+                                                                @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
+                                                                {
+                                                                    <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ClsDivTeachers">
+                                                                <label asp-for="Qualification" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ClsDivTeachers">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Qualification</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                                <label asp-for="Batch" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Batch</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            @*<div class="form-group col-2 ">
+                                                            <label asp-for="Photo" class="control-label space"></label>
+                                                        </div>
+                                                        <div class="form-group col-4 ">
+                                                            &nbsp;
+                                                            @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                            {
+                                                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
+                                                            }
+
+                                                        </div>*@
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="control-label space ">Reg. No./Emp ID</label>
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.InstanceUserCode</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                            </div>
+                                                            @*----------------------*@
+                                                            @*<div class="form-group col-2">
+                                                            <label asp-for="FirstName" class="control-label space required"></label>
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <input asp-for="FirstName"  class="form-control" />
+                                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                                        </div>*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="FirstNameInGeneral" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label">@Model.DdlUsersDetails.FirstNameInGeneral</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="MiddleName" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.MiddleName</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="LastName" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.LastName</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="DateOfJoining" class="control-label space required"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+
+                                                                @*<label class="control-label ">@Convert.ToDateTime(Model.DdlUsersDetails.DateOfJoining).ToString("dd/MM/yyyy")</label>*@
+                                                                <label class="control-label">
+                                                                    @(Model.DdlUsersDetails.DateOfJoining != null
+        ? Convert.ToDateTime(Model.DdlUsersDetails.DateOfJoining).ToString("dd/MM/yyyy")
+        : string.Empty)
+                                                                </label>
+
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Nationality" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Nationality</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                                <label asp-for="AdmissionNumberNew" class="control-label space required"></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.AdmissionNumberNew</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                                <label asp-for="IsUserJoined" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                @if (Model.DdlUsersDetails.IsUserJoined == "True")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="BloodGroup" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.BloodGroupName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="PlaceOfBirth" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PlaceOfBirth</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="CollegeCode" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.CollegeCode</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Gender" class="control-label  space required"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.Gender == "1")
+                                                                {
+                                                                    <label class="control-label ">Male</label>
+                                                                }
+                                                                else if (Model.DdlUsersDetails.Gender == "0")
+                                                                {
+                                                                    <label class="control-label ">Female</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">Others</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+
+                                                            @*<div class="form-group col-2">
+                                                            <label asp-for="FeeConcedingTypeId" class="control-label  space"></label>
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <label class="control-label ">@Model.DdlUsersDetails.FeeConcedingTypeId</label>
+                                                        </div>*@
+                                                            @*----------------------*@
+                                                            @*<div class="form-group col-2">
+                                                            <label asp-for="ADMISSIONCATEGORY" class="control-label  space"></label>
+                                                        </div>
+                                                        <div class="form-group col-4">
+                                                            <label class="control-label ">@Model.DdlUsersDetails.ADMISSIONCATEGORY</label>
+                                                        </div>*@
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="ICNumber" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.ICNumber</label>
+                                                            </div>
+                                                            @*----------------------*@
+
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @*--- PERSONAL INFORMATION Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+
+                                                        <div class="row">
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="DOB"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+
+                                                                @*<label class="control-label ">@Convert.ToDateTime(Model.DdlUsersDetails.DOB).ToString("dd/MM/yyyy")</label>*@
+                                                                <label class="control-label">
+                                                                    @(Model.DdlUsersDetails.DOB != null
+        ? Convert.ToDateTime(Model.DdlUsersDetails.DOB).ToString("dd/MM/yyyy")
+        : string.Empty)
+                                                                </label>
+
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="ReligionId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.ReligionName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="CommunityId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.CommunityName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="MotherTongueId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.MothorTongueName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="MobilePhone"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.MobilePhone</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PortalEmail"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PortalEmail</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="AlternateEmail"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.AlternateEmail</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PermanentAddress1"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PermanentAddress1</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PermanentAddress2"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PermanentAddress2</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PCity"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PCity</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="PCountryId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PCountryName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="PStateId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PStateName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PZip"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PZip</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*--- OTHER INFORMATION Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse111"> OTHER INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space required" asp-for="InstanceClassificationId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.ClassificationName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div>
+                                                            <div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="InstanceSubClassificationId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.SubClassificationName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div>
+                                                            <div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="ClassTeacherId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.ClassTeacherName</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div>
+                                                            <div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="SendSMS" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.SendSMS == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div>
+                                                            <div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="TcTaken" id="LblTcTakenGeneralTab" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.TcTaken == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+
+                                                            @*----------------------*@
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*---GENERAL INFORMATION Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse112">GENERAL INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="StudentIdentificationMarks" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.StudentIdentificationMarks</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.SiblingsInSameCollege == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.SiblingsOtherCollege == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="PhysicallyChalenged" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.DisabilityName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="PhysicallyChallengedDetails" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.PhysicallyChallengedDetails</label>
+                                                            </div>
+                                                            @*----------------------*@
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            @*--- LOGIN INFORMATION Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon34" aria-expanded="true" aria-controls="collapse1134"> LOGIN INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon34" aria-labelledby="collapseicon34" data-bs-parent="#accordionoc34">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="IsActive" class="control-label space"></label>
+                                                            </div>
+
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlUsersDetails.IsActive == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="StudentStatus" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.LoginStatus</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="UserName" class="control-label  space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.UserName</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="SecurityQuestionId" class="control-label  space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Question</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Answer" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlUsersDetails.Answer</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2"><label class="control-label space ">Need to change password on login</label></div>
+                                                            <div class="form-group col-4">
+                                                                @if (Model.DdlUsersDetails.ChangePwOnLogin == true)
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+
+                                        @*}*@
+                                    @if (ViewBag.IsParentIdentification == "Parent")
+                                    {
+                                        <form id="FmParentDetailsTab">
+                                            <h6><span>PARENT DETAILS</span></h6>
+                                            <div class="form-group col-12 passwordfor"><span class="ErrorMessageSpan" id="Main_Span_Error"></span></div>
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            @*<input type="hidden" asp-for="UserId" id="HdnUserId" />*@
+                                            <input type="hidden" asp-for="DdlParentDetails.InstanceID" id="HdnInstanceID" />
+                                            <input type="hidden" asp-for="DdlParentDetails.ParentId" value="@ViewBag?.ParentId" id="HdnParentId" />
+                                            @*---Save Parents Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button type="button" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="SpnParentCardHeaderName"> PARENT DETAILS</span></button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                                                <div class="row padding-search">
+                                                    <div class="row">
+
+                                                        <div class="row">
+                                                            <input type="hidden" asp-for="DdlParentDetails.StudentId" value="@ViewBag?.UserId" readonly />
+                                                            <input type="hidden" asp-for="DdlParentDetails.IsParent" value="@ViewBag?.isParentTable" readonly />
+                                                            @*----------------------*@
+
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Relationship" class="control-label space required"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.Relationship</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                @if (UpdateIdentification == "UpdateDetails")
+                                                                {
+                                                                    <img src="@ViewBag.ParentPhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                                                                    @if (ViewBag.ParentPhotoName != "" && ViewBag.ParentPhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                                    {
+                                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.ParentPhotoName</span>}
+
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            @*<div class="form-group col-2 ">
+                                                            <label asp-for="Photo" class="control-label space"></label>
+                                                        </div>
+                                                        <div class="form-group col-4 ">
+                                                            &nbsp;
+                                                            @if (ViewBag.ParentPhotoName != "" && ViewBag.ParentPhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                            {
+                                                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.ParentPhotoName</span>}
+
+                                                        </div>*@
+                                                            @*----------------------*@
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="FirstNameInGeneral" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.FirstNameInGeneral</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="MiddleName" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.MiddleName</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="LastName" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.LastName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Occupation" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.Occupation</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Designation" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.Designation</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Qualification" class="control-label space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.Qualification</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            @*<div class="form-group col-2 ">
+                                                            <label asp-for="UniversitySpecialization" class="control-label space ">Specialization</label>
+                                                        </div>
+                                                        <div class="form-group col-4 ">
+                                                            <label class="control-label ">@Model.DdlParentDetails.UniversitySpecialization</label>
+                                                        </div>*@
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2 ">
+                                                                <label asp-for="CompanyName" class="control-label  space"></label>
+                                                            </div>
+                                                            <div class="form-group col-4 ">
+                                                                <label class="control-label ">@Model.DdlParentDetails.CompanyName</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space">Annual Income </label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.LacsType</label>
+                                                                @*<label class="control-label ">@Model.DdlParentDetails.Thousands</label>*@
+                                                                <label class="control-label ">@Model.DdlParentDetails.CurrencyType</label>
+
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="DOB"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+
+
+                                                                @*<label class="control-label ">@Convert.ToDateTime(Model.DdlParentDetails.DOB).ToString("dd/MM/yyyy")</label>*@
+                                                                <label class="control-label">
+                                                                    @(Model.DdlUsersDetails.DOB != null
+        ? Convert.ToDateTime(Model.DdlUsersDetails.DOB).ToString("dd/MM/yyyy")
+        : string.Empty)
+                                                                </label>
+                                                            </div>
+                                                            @*----------------------*@
+
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label  space" for="SendSMS">Do You Want to have SMS Option</label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlParentDetails.SendSMS == "1")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2" style="display:none">
+                                                                <label asp-for="Gender" class="control-label  space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:none">
+                                                                @if (Model.DdlParentDetails.Gender == "1")
+                                                                {
+                                                                    <label class="control-label ">Male</label>
+                                                                }
+                                                                else if (Model.DdlParentDetails.Gender == "0")
+                                                                {
+                                                                    <label class="control-label ">Female</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">Others</label>
+                                                                }
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            @*--- PERSONAL INFORMATION Card----*@
+                                            <div class="card-header bg-primary">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+
+                                                        <div class="row">
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="MobilePhone"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.MobilePhone</label>
+                                                            </div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PortalEmail"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PortalEmail</label>
+                                                            </div>
+
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PermanentAddress1"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PermanentAddress1</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PermanentAddress2"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PermanentAddress2</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PCity"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PCity</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="PCountryId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PCountryId</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space" asp-for="PStateId"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PStateId</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label class="control-label space " asp-for="PZip"></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.PZip</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            @*--- LOGIN INFORMATION Card----*@
+                                            <div class="card-header bg-primary ClsLoginInfoCard">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon34" aria-expanded="true" aria-controls="collapse1134"> LOGIN INFORMATION</button>
+                                                </h5>
+                                            </div>
+                                            <div class="collapse show ClsLoginInfoCard" id="collapseicon34" aria-labelledby="collapseicon34" data-bs-parent="#accordionoc34">
+
+                                                <div class="row padding-search">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+
+                                                            @*----------------------*@
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="UserName" class="control-label  space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.UserName</label>
+                                                            </div>
+
+
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="SecurityQuestionId" class="control-label  space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.SecurityQuestionId</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="Answer" class="control-label space "></label>
+                                                            </div>
+                                                            <div class="form-group col-4">
+                                                                <label class="control-label ">@Model.DdlParentDetails.Answer</label>
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2">
+                                                                <label asp-for="IsActive" class="control-label  space">Is Enabled</label>
+                                                            </div>
+                                                            <div class="form-group col-4" style="display:flex">
+                                                                @if (Model.DdlParentDetails.IsActive == "YES")
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+                                                            <div class="col-3"></div><div class="col-3"></div>
+                                                            <div class="form-group col-2"><label class="control-label space ">Need to change password on login</label></div>
+                                                            <div class="form-group col-4">
+                                                                @if (Model.DdlParentDetails.ChangePwOnLogin == true)
+                                                                {
+                                                                    <label class="control-label ">Yes</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="control-label ">No</label>
+                                                                }
+                                                            </div>
+                                                            @*----------------------*@
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+<script src="~/js/ManageUsers.js"></script>
+<script type="text/javascript">
+    //var js = jQuery.noConflict(true);
+    //=======Ready Function in General Info
+    $(document).ready(function () {
+        debugger;
+        // alert("1")
+        //-----clicked on update
+        if ($("#BtnUpdateIdentification").val() == "UpdateDetails") {
+            // $("#BtnSaveFormInGeneralInfo").val("Update");
+            // $(".DdlCascadDropdowns").prop("disabled", false);
+            // var Roleid = $("#DdlRoleId").val();
+           // alert("2")
+            $("#SpnCardHeaderName").val("UPDATE USER");
+            RoleOnChangeFunctionInGeneralTab($("#DdlRoleId").val(), true);
+        } else {
+            $("#TcTakenNo").prop("checked", true);
+            $(".ClsDivTcTakesnYes").css('display', 'none');
+            $(".ClsDivTransferDetails").css('display', 'none');
+        }
+   
+    });
+    function CallPrintInline(DivId) {
+        debugger;
+        var printContents = $('#' + DivId).html();
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    };
+</script>
