@@ -867,8 +867,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="bin\Debug\netcoreapp3.1\" />
-    <Folder Include="wwwroot\Images\NewFolder\" />
+    <Folder Include="wwwroot\Managenoticesdocs\" />
+    <Folder Include="wwwroot\Eventbestperformersdocs\" />
   </ItemGroup>
 
 </Project>

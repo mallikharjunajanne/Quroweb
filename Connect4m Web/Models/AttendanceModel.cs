@@ -800,6 +800,7 @@ namespace Connect4m_Web.Models
         public string MenuUrl { get; set; }
         public string DoubleLogin { get; set; }
         public int ThemeId { get; set; }
+        public string RoleName { get; set; }
 
     }
 

@@ -5,45 +5,54 @@
     Layout = null;
 }
 <link href="~/css/TableDesign.css" rel="stylesheet" />
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th>
-                S NO
-            </th>
+@if (Model.Count() != 0)
+{
 
-            <th>
-                @Html.DisplayNameFor(model => model.PdfName)
-            </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.GeneratedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{int i = 1; }
-        @foreach (var item in Model)
-        {
+    <table class="styled-table">
+        <thead>
             <tr>
-                <td>
-                    <span>@i</span>
-                </td>
+                <th>
+                    S NO
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.PdfName)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.PdfName)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.GeneratedDate)
-                </td>
-                <td>
-                    <button onclick="showGeneratedPDF('@item.PdfPath','@item.PdfName')" class="ButtomDesign">Show PDF</button>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.GeneratedDate)
+                </th>
+                <th></th>
             </tr>
-            i = i + 1;
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{int i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span>@i</span>
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PdfName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GeneratedDate)
+                    </td>
+                    <td>
+                        <button onclick="showGeneratedPDF('@item.PdfPath','@item.PdfName')" class="ButtomDesign">Show PDF</button>
+                    </td>
+                </tr>
+                i = i + 1;
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div style="color: red; color: red; font-size: 28px;  background-color: beige;"><span style="margin-left: 36%">No Data Found..!</span></div>
+}
 <script src="~/js/ViewLecturedocs.js"></script>

@@ -3,39 +3,41 @@
 *@
 
 <style>
-    .Scrolling {    
+    .Scrolling {
         white-space: initial;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        animation: scroll 10s linear infinite;
+        overflow: unset;
+        animation: scroll 8s linear infinite;
         transform-origin: bottom;
-        font-weight: 400;
-        color: black;
     }
+
+        .Scrolling li {
+            padding-bottom: 10px;
+            text-wrap: normal;
+            line-height: 24px;
+            padding: 0px;
+            list-style:decimal;
+        }
+
         .Scrolling:hover {
             animation-play-state: paused;
         }
 
-@@keyframes scroll {
-    0% {
-        transform: translateY(100%); /* Start from below the element */
-    }
-    100% {
-        transform: translateY(-100%); /* Scroll text to the top */
+    @@keyframes scroll {
+        0% {
+            transform: translateY(100%); /* Start from below the element */
+        }
+
+        100% {
+            transform: translateY(-100%); /* Scroll text to the top */
+        }
     }
 
-}
-.scrolling-container {
+    .scrolling-container {
         white-space: nowrap;
         overflow-x: auto;
-        width: 109%;
-        height: 200px;
-    }
-
-    .item {
-        display: inline-block;
-        margin-right: 20px; /* Adjust spacing between items as needed */
-        padding: 6px;
+        width: 100%;
+        min-height: 240px;
+        overflow-y: hidden;
     }
 </style>
 
@@ -43,9 +45,10 @@
     <ul class="Scrolling">
         @foreach (var item in Model)
         {
-            <li  class="item"  style=" color: #151316; font-size: 11px; font-weight: bold; font-style: normal;">
+            <li class="text-primary">
                 @item.Subject      <span> <br />@item.createddate             </span>
-            </li>           
+            </li>
+
         }
     </ul>
 </div>

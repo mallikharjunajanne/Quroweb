@@ -1,0 +1,119 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ManageSubClassification
+@{
+    ViewData["Title"] = "ManageSubClassification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">
+                <h6><span>MANAGE CLASS</span></h6>
+
+                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
+                    <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 79%; border-radius: 15px; height: 35px; margin-bottom: 3px;" id="addnewsubclass">
+                        Create Class
+                    </button>
+                </div>
+                <div id="ManageSubclassification_Containermaindiv">
+                    <div class="col-12" id="accordionoc1">
+                        <div class="card-header bg-primary">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">  SEARCH CLASS</button>
+                            </h5>
+                        </div>
+                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+                            <div class="padding-search row" id="ManageSubclassificationdivId!">@*ManageHolidaysMaindivId*@
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="form-group col-2">
+                                        <label class="form-grop control-label space">Department  </label>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <select asp-for="InstanceClassificationId" id="Classificationdd_Search" class="form-control">
+                                            @*<option value="">---Select---</option>*@
+                                        </select>
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="form-group col-2">
+                                        <label class="form-grop control-label space">Class Name  </label>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <input type="text" asp-for="SubClassificationName"  class="form-control"/>
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="form-group col-2">
+                                        <label class="form-grop control-label space">Description   </label>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <textarea class="form-control" id="description_txt" ></textarea>
+                                    </div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="form-group col-2"></div>
+                                    <div class="form-group col-4">
+                                        <input type="button" id="Mainview_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                                        <input type="button" id="Mainview_Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ManageSubclassification_Containermaindiv">@*Manageclassification_containerdivId*@
+                        <span id="Errmsg" class="text-danger" style="position: absolute; margin: -20px 10px 0px 5px; "></span>
+                        <div class="col-12" id="accordionoc2">
+                            <div class="card-header bg-primary">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">	YOUR SEARCH RESULTED <span id="Subclassification_Recordscount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORDS.</button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+                                <div class="rowheight">
+                                    <table class="table table-bordered" id="ManageSubclassificationtbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                        <thead>
+                                            @*ManageClassificationtbl*@
+                                            <tr style="border-color: black;">
+                                                <th style="width: 6%;" class="bg-primary;">SNO</th>
+                                                <th style="width: 45px;" class="bg-primary">Class</th>
+                                                <th style="width: 17%;" class="bg-primary">Department</th>
+                                                <th style="width: 17%;" class="bg-primary">Description</th>
+                                                <th style="width: 20%;" class="bg-primary">Class Teacher Name</th>
+                                                <th style="width: 10%;" class="bg-primary">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        @*<tbody>            </tbody>*@
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ManageSubclassification_Insertcontainerdiv2">
+
+                </div>
+                <div id="ManageSubclassification_Updatecontainerdiv3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/js/ManageSubclassification.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

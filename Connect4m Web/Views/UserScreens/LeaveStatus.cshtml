@@ -1,0 +1,85 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <span style=" border-bottom: 2px solid #66a8ec; text-transform: uppercase; height: 25px; margin: 50px 0px 0px 0px;"> WAITING FOR APPROVAL</span><br />
+    <table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+        <tbody>
+            <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+                <th>Staff Leave(s)</th>
+                <th>Student Leave(s)</th>
+            </tr>
+            @foreach (var items_1 in ViewBag.studentstaffleavescount)
+            {
+                <tr style="text-align: center;">
+                    <td style="border: 1px solid #dbdbdb; height: 24px;">@items_1.Staffleaves</td>
+                    <td style="border: 1px solid #dbdbdb; height: 24px;">
+                        @if (string.IsNullOrWhiteSpace(items_1.Studentleaves))
+                        {
+                            @:0
+                        }
+                        else
+                        {
+                            @items_1.Studentleaves
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <span style=" border-bottom: 3px solid #66a8ec; text-transform: uppercase; height: 25px;"> MY LEAVE(S) STATUS</span><br />
+    <table style="border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+        <tbody>
+            <tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; color: black;">
+                <th align="center">Leave Type</th>
+                <th align="center">From Date</th>
+                <th align="center">To date</th>
+                <th align="center">No. of Days</th>
+                <th align="center">Status</th>
+            </tr>
+
+            @foreach (var item_4 in ViewBag.leavestatus)
+            {
+        <tr>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveType</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.FromDate</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.ToDate</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveDays</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.Status</td>
+        </tr>
+            }
+
+        </tbody>
+    </table>
+    <div>
+        <br />
+    </div>
+    <table style="border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+        <tbody>
+            <tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; text-align: center; color: black;">
+                <th>Leave Type</th>
+                <th>Total</th>
+                <th>Used</th>
+                <th>Approved Not Used</th>
+                <th>Leaves Awaiting Approval</th>
+                <th>Available</th>
+            </tr>
+
+
+            @foreach (var item_2 in ViewBag.leavetypes)
+            {
+        <tr>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.LeaveType</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Total</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.DaysUsed</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Approved</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.InProcess</td>
+            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Available</td>
+        </tr>
+            }
+        </tbody>
+    </table>
+</div>

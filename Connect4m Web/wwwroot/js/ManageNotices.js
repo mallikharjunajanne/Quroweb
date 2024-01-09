@@ -1,10 +1,335 @@
-﻿
-//-----------------------------------------Search and add users to post this notice  this  href click code start
-//===================Add User Post Notice 
+﻿/* ------***** MANAGE NOTICE MAIN SCREEN  CODE START *****-------- */
+
+$(document).ready(function () {  
+    function CallToAjax(method, url, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            success: bindDatatable,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+
+    function CallToAjax_Withoutdata(method, url, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            success: successCallback,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+
+
+    function populateDropdown(Noticedropdown) {
+        debugger;
+        var classificationDropdown = $('#ENoticetypeid');
+        classificationDropdown.append($('<option>', {
+            value: '',
+            text: '------Select------'
+        }));
+        $.each(Noticedropdown, function (index, item) {        
+            classificationDropdown.append($('<option>', {
+                value: item.value,
+                text: item.text
+            }));
+        });
+    }
+
+    // Call to retrieve data for classification dropdown
+    CallToAjax_Withoutdata('GET', '/Admin/MNNoticetype_dd',
+        function (response) {
+            populateDropdown(response); // Assuming response is an array of items
+        },
+        function (status, error) {
+            // Handle errors here
+        }
+    );
+
+
+
+    // Call to retrieve data for holidays table
+    CallToAjax('GET', '/Admin/ManageNotices_TableData', null,
+        function (response) {
+            debugger;
+          
+        },
+        function (status, error) {
+            // Handle errors here
+        }
+    );
+});
+
+
+////-----Table data bind function
+function bindDatatable(response) {
+
+    var formattedDate = GetDateFormat();
+    debugger;
+    var table = $('#ManageNoticetbl').DataTable();
+    table.destroy();
+    $("#ManageNoticetblRecordscount").text(response.length);
+    debugger;
+    var newTable = $("#ManageNoticetbl").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                title: 'Manage Holidays Report',
+                message: "Report On: " + formattedDate,
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6]
+                },
+
+            }
+            ,
+            {
+                extend: 'excel',
+                title: 'Manage Holidays Report',
+                message: "Report On: " + formattedDate,
+
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6]
+                },
+            },
+
+
+            {
+                extend: 'print',
+                title: 'Manage Holidays Report',
+                message: "Report On: " + formattedDate,
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6]
+                },
+            }
+
+
+        ],
+
+        bProcessing: false,
+        bLengthChange: true,
+        /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+        bfilter: false,
+        bSort: true,
+        searching: false,
+        //scrollX: true,
+        //scrollY: '400px',
+        /* scrollCollapse: true,*/
+        paging: true,
+        bPaginate: true,
+        //  stateSave:true,
+        data: response,
+        columns: [
+
+            //{
+            //    data: "SNO",
+            //    //visible: false,
+
+            //    render: function (data, type, row, meta) {
+            //        //  length++;
+            //        return row.holidayId
+            //    }
+            //},
+            {
+                targets: 0, // Assuming this is the column index where you want to display numbering
+                render: function (data, type, row, meta) {
+                    var currentPage = table.page.info().page;
+                    var rowsPerPage = table.page.info().length;
+                    return (0 * rowsPerPage) + meta.row + 1;
+                }
+            },
+
+            {
+                data: "Subject",
+
+                render: function (data, type, row, meta) {
+                    //  length++;
+
+                    return row.subject
+
+                }
+            },
+            {
+                data: "ExpiryDate",
+
+                render: function (data, type, row, meta) {
+                    //  length++;
+
+                    return row.expiryDate +'<input type="text" value=' + row.eNoticeId + ' hidden/>'
+
+                }
+            },         
+            {
+                data: "IsPosted",
+
+                render: function (data, type, row, meta) {
+                    
+                    if (row.isPosted == 'False') {
+                        return 'Not Posted'
+                    } else {
+                        return 'Posted'
+                    }                   
+                }
+            }, {
+                data: "ENoticeId",
+
+                render: function (data, type, row, meta) {
+                    // return row.holidayId
+                    return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
+                    // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'
+                    //if (row.expenditureType == 0) {
+                    //    return '<span>Credit</span>';
+
+                    //}
+                    //else {
+                    //    return '<span>Debit</span>';
+
+                    //}
+
+                }
+            }
+        ]
+    });
+
+    table.on('draw', function () {
+        $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit');
+    });
+    $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit');
+}
+
+
+//------Notice Search button 
+$('#Noticesearchbtn').click(function () {
+    $('#ErrorMessage').text("");
+    debugger;
+    var searchData = {   
+        Subject: $("#SubjectTXT").val(),
+        StartDate: $("#StartDateTXT").val(),
+        ExpiryDate: $("#EndDateTXT").val(),
+        ENoticeTypeId: $("#ENoticetypeid").val(),
+        IsSMSTemplate: $("#checkbox-primary").prop("checked") ? 1 : 0
+    };
+    $.ajax({
+        url: "/Admin/ManageNotices_TableData",
+        data: searchData,
+        type: "GET",
+        success: function (response) {
+            bindDatatable(response);
+        }
+    }); 
+});
+
+
+
+
+
+
+
+
+
+//--------->>>***** CREATE NOTICE BUTTON CLICK *****<<<-------
+$('#Addnotice').click(function () {
+    $('#btnppostthisnotice').hide();
+    $.ajax({
+        url: "/Admin/ManageNotices_Create",
+        type: 'GET',
+        success: function (data) {
+            debugger;
+            $("#Addnotice_div1").html(data);
+            $('#ManageNotices_CreateSMS_ViewDivid').empty();
+            $('#ManagenoticeMaindiv').hide();            
+            $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });
+});
+
+
+//--------->>>***** CREATE SMS BUTTON CLICK *****<<<-------
+$('#AddnewSMS').click(function () {    
+    $.ajax({
+        url: "/Admin/ManageNotices_CreateSMS",
+        type: 'GET',
+        success: function (data) {
+            debugger;
+            $('#ManageNotices_CreateSMS_ViewDivid').html(data);
+            $('#ManagenoticeMaindiv').hide();
+            $("#Addnotice_div1").empty();
+            $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });
+});
+
+
+
+//--------->>>***** CREATE SMS AND NOTICE BUTTON CLICK *****<<<-------
+$('#AddnewSMSNNotices').click(function () {
+    $.ajax({
+        url: "/Admin/CreateSmsNNotice",
+        type: 'GET',
+        success: function (data) {
+            debugger;
+            $('#ManagenoticeMaindiv').hide();
+            $("#Addnotice_div1").empty();
+            $("#ManageNotices_CreateSMS_ViewDivid").empty();
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });   
+});
+
+
+
+
+
+
+
+$('#addnewmanagequotes').click(function () {
+    debugger;
+    CallToAjax_Withoutdata('GET', '/Admin/Insert_Classification',
+        function (response) {
+            debugger;
+            $('#Manageclassificationmaindiv').hide(); /*ManageQuotemaindiv*/
+            $('#Manageclassification_Updatediv3').empty();/* Manageholidays_Updatediv3*/
+            $('#Manageclassification_Insertdiv2').html(response); /*Managequotes_Insertdiv2*/
+        },
+        function (status, error) {
+            // Handle error if needed
+        }
+    );
+});
+
+
+
+/* -- MANAGE NOTICE MAIN SCREEN  CODE END -- */
+
 
 //const { userdata } = require("modernizr");
 
 var Instanceid = $('#Instance_Txtid').val();
+
+
+
+
+
+
+
+
+
+
 
 
 function PostNoticeaddusertoggle() {
@@ -98,7 +423,7 @@ function getDatesBetween(startDate, endDate) {
 
 //------***SCHEDULE SMS BOX SCREEN CODE START***---------
 
-$(document).ready(function () {
+/*$(document).ready(function () {*/
     $('#OnceNdailydd_id').change(function () {
         var selectedValue = $(this).val();
 
@@ -108,17 +433,17 @@ $(document).ready(function () {
             $('#Daily_div1, #Daily_div2, #Daily_div3, #Daily_div4').show();
         }
     });
-});
+/*});*/
 
-$(document).ready(function () {
+/*$(document).ready(function () {*/
     $('#SchedulerClearbtn').click(function () {
         $('#OnceNdailydd_id').val('');
         $('select.form-control.form-select').val('');
     });
-});
+/*});*/
 
 
-$(document).ready(function () {
+/*$(document).ready(function () {*/
     $('#SchedulerSubmitbtn').click(function () {
         $('#Scheduleerrormessage').text();
         debugger;
@@ -175,7 +500,7 @@ $(document).ready(function () {
             return;
         }
     });
-});
+/*});*/
 
 //------***SCHEDULE SMS BOX SCREEN CODE END***---------
 
@@ -183,12 +508,12 @@ $(document).ready(function () {
 
 //=====SEARCH BUTTON CLICK TABLE DATA SHOWING  FUNCTION CODE START
 
-$(document).ready(function () {
+/*$(document).ready(function () {*/
    
 
    $('#searchButton').click(handle_searchuserstopostnotice_btnclick_tabledata);  
     
-});
+/*});*/
 
 function handle_searchuserstopostnotice_btnclick_tabledata() {
 
@@ -487,14 +812,22 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
 }
 
 
-
-
-$('#createsmsbacktomanagenoticescr_btn').on('click', function () {
-    //location.reload();
-    $('#Search_NoticeView').show();
+///----- Rewriting common method
+$('#createsmsbacktomanagenoticescr_btn').click(function () {
+    location.reload();
+    $('#ManagenoticeMaindiv').show();
     //$('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').hide();
     $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').empty();
+
 });
+
+//----Old method
+//$('#createsmsbacktomanagenoticescr_btn').on('click', function () {
+//    location.reload();
+//    $('#ManagenoticeMaindiv').show();
+//    //$('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').hide();
+//    $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').empty();
+//});
 
 
 function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, ClscheckboxSelector, SclcheckboxSelector) {
@@ -526,7 +859,11 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
     });    
     return checkboxValues;
 }
-$('#Postsmsbtn').on('click', function () {
+
+$('#Postsmsbtn').click(function () {
+/*});*/
+
+/*$('#Postsmsbtn').on('click', function () {*/
     $('#lblPostNoticeMsg').text('');
 
     var S_SmsreturnedValue;

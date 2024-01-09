@@ -195,6 +195,8 @@ let timeout = 0;
 
 playerHover.addEventListener('mousemove', () => {
     //debugger;
+    try {
+
     if (mouseoveronprogressbar ==0) {
        
         //debugger;
@@ -223,6 +225,9 @@ playerHover.addEventListener('mousemove', () => {
         }
         
        
+        }
+    } catch {
+
     }
 });
 
@@ -247,10 +252,18 @@ function isMouseOverElement(element, event) {
 /**
 // video functionality
 */
+try {
+
+
 videoo.addEventListener('loadedmetadata', () => {
   videoo.volume = 0.5;
   volumeProgressBar.style.width = '50%';
 });
+} catch {
+
+}
+
+try {
 
 videoo.addEventListener('timeupdate', () => {
   // video current time & video duration time
@@ -266,6 +279,11 @@ videoo.addEventListener('timeupdate', () => {
   }
 });
 
+} catch {
+
+}
+try {
+
 videoo.addEventListener('volumechange', () => {
   if (videoo.volume > 0) {
     showVolumeIcon();
@@ -273,6 +291,9 @@ videoo.addEventListener('volumechange', () => {
     showSilenceIcon();
   }
 });
+} catch {
+
+}
 /**
 //
 */
@@ -468,6 +489,8 @@ var file_T = "";
 progress.addEventListener('mousemove', function (event) {
   //  debugger;
    // console.log(thumbnailvideoid_T);
+    try {
+
     mouseoveronprogressbar = 1;
     var newthumbnailid = $('#VLD_SubjectVideoId').val();
 
@@ -524,6 +547,9 @@ progress.addEventListener('mousemove', function (event) {
 
         thumbnailappend.innerHTML = '';
         thumbnailappend.append(videoPlayer);
+        }
+    } catch {
+
     }
 
 

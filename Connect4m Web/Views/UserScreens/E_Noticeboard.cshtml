@@ -1,0 +1,18 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+    
+        <ul style="margin: -19px 1px 42px;">
+            @foreach (var item in ViewBag.Enotice)
+            {
+            <li>
+                <span style="color: #151316; font-size: 12px; font-weight: bold; font-style: normal;" id="@item.ENoticeId" value="@item.DisplayOrder">@item.Subject</span> <br />
+                <span>@item.createddate</span>&nbsp;&nbsp;&nbsp;<br />
+            </li>
+            }
+        </ul>
+
+

@@ -175,10 +175,12 @@ namespace Connect4m_Web.Controllers
 
                         Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
                         Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
+                        Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
 
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+                        Response.Cookies.Append("UserNameHeader_", val.Username);
 
 
                         var claims = new List<Claim>

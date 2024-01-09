@@ -171,6 +171,23 @@
                                                                     percent = 0;
                                                                 }
                                                             }
+                                                            else
+                                                            {
+                                                                try
+                                                                {
+
+                                                                    viewpoint = item3.Viewspoints;
+                                                                    totalpois = item3.TotalPoins;
+                                                                    percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+
+                                                                    //  percent = (viewpoint / totalpois) * 100;
+                                                                    viewvalue++;
+                                                                }
+                                                                catch
+                                                                {
+                                                                    percent = 0;
+                                                                }
+                                                            }
                                                         }
                                                     }
 

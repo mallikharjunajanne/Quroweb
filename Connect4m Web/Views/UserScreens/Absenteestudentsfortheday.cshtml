@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+    <tbody>
+        <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+            <td>Class - Section</td>
+            <td>Count</td>
+        </tr>
+   
+        @{
+            var countedNames = new Dictionary<string, int>(); // Dictionary to store counts of SubclassificationName
+
+            if (ViewBag.StudentleaveName != null)
+            {
+                foreach (var item_0 in ViewBag.StudentleaveName)
+                {
+                    var name = item_0.SubclassificationName;
+
+                    if (!countedNames.ContainsKey(name))
+                    {
+                        countedNames[name] = 1; // If name not encountered before, set count as 1
+                    }
+                    else
+                    {
+                        countedNames[name]++; // Increment count for the encountered name
+                    }
+                }
+            }
+        }
+
+        @foreach (var pair in countedNames)
+        {
+            <tr style="color: Black; font-size: 14px; height: 25px; text-align: center;">
+                <td style="width: 30%; border: 1px solid #dbdbdb; height: 24px;">@pair.Key</td>
+                <td style="width: 70%; border: 1px solid #dbdbdb; height: 24px;">@pair.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

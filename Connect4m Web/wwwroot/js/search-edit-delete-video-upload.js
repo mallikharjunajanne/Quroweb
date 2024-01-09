@@ -322,6 +322,15 @@ $("#formsearchvideouploading").submit(function (event) {
 
 //--------------------------------------------------------------------Delete Upload Lecture Docs
 $(document).on('click', '#tbluploadlecturedocs .fa-trash-o', function () {
+   // debugger;
+    var mp4 = $(this).closest('tr').find('td img').attr('src');
+    var isvideo = 0;
+
+    if (mp4 && mp4.startsWith('/Images/mp4.png')) {
+        isvideo = 1;
+    }
+
+
     Swal.fire({
         title: "Are you sure you want to delete this Video?",
         text: "  ",
@@ -334,7 +343,7 @@ $(document).on('click', '#tbluploadlecturedocs .fa-trash-o', function () {
         // If user confirms deletion
         if (result.isConfirmed) {
             $.ajax({
-                url: '/Videos/DeleteUploadlecturedocs?VideoId=' + $(this).find('input[type="text"]').val(),
+                url: '/Videos/DeleteUploadlecturedocs?VideoId=' + $(this).find('input[type="text"]').val() + "&isvideo=" + isvideo,
                 type: "GET",
                 success: function () {
 

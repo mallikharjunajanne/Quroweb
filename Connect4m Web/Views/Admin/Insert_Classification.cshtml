@@ -1,0 +1,83 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ManageClassification
+@{
+    Layout = null;
+}
+
+<span id="Errormessages" class="text-danger" style=" margin: -20px 10px 0px 5px; "></span>
+
+<div class="col-12" id="accordionoc1">
+    <div class="card-header bg-primary">
+        <h5 class="mb-0">
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">
+                SAVE DEPARTMENT
+            </button>
+        </h5>
+    </div>
+    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+        <form id="Insertclassificationid" enctype="multipart/form-data">        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="padding-search row">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label required  space">Department Name  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="text" asp-for="ClassificationName" id="Title" class="form-control" />
+                        <span asp-validation-for="ClassificationName" class="text-danger"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label space">Description  </label>
+                    </div>
+                    <div class="form-group col-4">
+                      <textarea class="form-control" asp-for="ClassificationDescription"></textarea>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label required  space">Attendance Effective Date  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="date" asp-for="StartDate " id="StartDate_txtid" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger" id="Error_Sp"></span>
+                        <span class="text-danger" id="Error_Sp"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-2">
+                        <label class="form-grop control-label required  space">Attendance End Date  </label>
+                    </div>
+                    <div class="form-group col-4">
+                        <input type="date" asp-for="EndDate" id="EndDate_txtid" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger" id="Error_Sp"></span>
+                        <span class="text-danger" id="Error_Sp"></span>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="form-group col-1"></div>
+                    <div class="form-group col-6">
+                        <input type="button" id="Insert_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                        <input type="button" id="Insert_BackToSearchbtn" name="BackToSearch" value="BackToSearch" class="btn btn-pill btn-outline-primary btn-aprimary">
+                        <input type="submit" id="Insert_Savebtn" name="save" value="Save" class="btn btn-pill btn-outline-success btn-air-success">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+
+
+<script src="~/js/Manageclassification.js"></script>

@@ -9,21 +9,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        .custom-file-upload {
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-            margin: 10px 0px 0px 0px;
-        }
 
-        .spantext_ {
-            font-weight: 700;
-        }
-    </style>
-    <link href="~/css/ManageNotices.css" rel="stylesheet" />
 </head>
 <body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+
+
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span> Manage Notices</h4>
+
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <input type="hidden" value="@ViewBag.Instanceid" id="Instance_Txtid" />
+                <input type="hidden" value="@ViewBag.LoginUserId" id="Loginuser_Txtid" />
+                <a href="@Url.Action("ManageNotices_Create", new { InstanceId = ViewBag.Instanceid, Userid=ViewBag.LoginUserId})" id="ManageNotice_CreateNotice" class="btn btn-outline-primary btn-xs">Create Notice</a>
+                |
+                <a href="javascript:void(0);" id="ManageNotice_AddNewSMS" class="btn btn-outline-primary btn-xs">Create SMS</a>
+                |
+                <a href="javascript:void(0);" id="ManageNotice_AddNewSMSNNotices" class="btn btn-outline-primary btn-xs">Create Notice and SMS</a>
+                <div class="card mb-4" id="Search_NoticeView">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH NOTICES
+                            </span>
+                        </h5> <small class="text-muted float-end">Default label</small>
+                    </div>
+                    <div class="card-body" id="CreateNewSubjectsDiv">
+                        <form id="FmSubjectSearch">
+                            <div id="FmExamsCreate_Div">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Notice Type</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="InstanceIdTXT" />
+                                                    <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" />
+                                                    @Html.DropDownListFor(Model => Model.CategoryName, (List<SelectListItem>)ViewBag.NoticeTypedd, "---Select----", new { @class = "NoticeTypedd form-select", @id = "ENoticeTypeIdTXT" })
+
+
+                                                </div>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Notice Subject</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" id="SubjectTXT" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Start Date</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" id="StartDateTXT" class="form-control" />
+
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">End Date</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" id="EndDateTXT" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-2">
+                                                <div class="form-check">
+                                                    <input type="checkbox" id="checkbox-primary" name="IsSMSTemplate" class="form-check-input" />
+                                                    <label class="form-check-label" for="showallsubjects">SMS Template</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row justify-content-end">
+                                            <div class="col-sm-12">
+                                                <button type="button" id="Clearcoollink_Btn" class="btn btn-primary waves-effect waves-light">Clear</button>
+                                                <button type="submit" id="SearchNotice_Btn" class="btn btn-success waves-effect waves-light">Search</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div id="SearchNoticetableview">
+            <div style="color:red;font-size:13px;"><span id="ErrorMessage"></span></div>
+            <div id="Noticetabledata_div">
+
+
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="card">
         <div class="spinner-container" id="loadingSpinnerContainer">
             <div class="overlay">
@@ -36,80 +122,6 @@
             </div>
         </div>
 
-
-
-        <div class="card-header pb-0">
-            <h6><span>MANAGE NOTICES</span></h6>
-        </div>
-
-        <div style="margin-left: auto; margin-right: 15px;">
-            <input type="hidden" value="@ViewBag.Instanceid" id="Instance_Txtid" />
-            <input type="hidden" value="@ViewBag.LoginUserId" id="Loginuser_Txtid" />
-            <a href="@Url.Action("ManageNotices_Create", new { InstanceId = ViewBag.Instanceid, Userid=ViewBag.LoginUserId})" id="ManageNotice_CreateNotice" class="btn btn-outline-primary btn-xs">Create Notice</a>
-            |
-            <a href="javascript:void(0);" id="ManageNotice_AddNewSMS" class="btn btn-outline-primary btn-xs">Create SMS</a>
-            |
-            <a href="javascript:void(0);" id="ManageNotice_AddNewSMSNNotices" class="btn btn-outline-primary btn-xs">Create Notice and SMS</a>
-        </div>
-        <div id="Search_NoticeView">
-            <div class="default-according style-1" id="accordionoc1">
-                <div class="card" style="margin-bottom: 10px;">
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="collapsed  btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                                <span class="Header_text_<span></span>">
-                                    SEARCH NOTICES
-                                </span>
-                            </button>
-                        </h5>
-                    </div>
-                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"><label class="form-grop control-label space">Notice Type </label></div>
-                                    <div class="form-group col-4">
-                                        <input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="InstanceIdTXT" />
-                                        <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" />
-                                        @Html.DropDownListFor(Model => Model.CategoryName, (List<SelectListItem>)ViewBag.NoticeTypedd, "---Select----", new { @class = "NoticeTypedd form-select", @id = "ENoticeTypeIdTXT" })
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"><label class="form-grop control-label space"> Notice Subject </label></div>
-                                    <div class="form-group col-4">  <input type="text" id="SubjectTXT" class="form-control" /></div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"><label class="form-grop control-label space">Start Date  </label></div>
-                                    <div class="form-group col-4">  <input type="date" id="StartDateTXT" class="form-control" /></div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"><label class="form-grop control-label space">End Date  </label></div>
-                                    <div class="form-group col-4">  <input type="date" id="EndDateTXT" class="form-control" /></div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label for="checkbox-primary" class="form-grop control-label space">SMS Template  </label></div>
-                                    <div class="form-group col-4 checkbox checkbox-success">  <input type="checkbox" id="checkbox-primary" name="IsSMSTemplate" style=" margin-top: 6px;" /><label for="checkbox-primary"></label></div>
-                                    <div class="col-12" style="text-align: center;">
-                                        <input type="button" id="Clearcoollink_Btn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
-                                        <input type="submit" id="SearchNotice_Btn" class="btn btn-pill btn-outline-success btn-air-success" value="Search" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="SearchNoticetableview">
-                <div style="color:red;font-size:13px;"><span id="ErrorMessage"></span></div>
-                <div id="Noticetabledata_div">
-
-
-                </div>
-            </div>
-        </div>
 
 
         <div id="Create_NoticeView">
@@ -220,21 +232,22 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="ManageNotices_CreateSMS_ViewDivid">
-
-    </div>
-    <div id="ManageNotices_CreateSMSNNotice_ViewDivid">
-
-    </div>
-    <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id">
-
-    </div>
 
 
+        <div id="ManageNotices_CreateSMS_ViewDivid">
 
+        </div>
+        <div id="ManageNotices_CreateSMSNNotice_ViewDivid">
 
+        </div>
+        <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id">
+
+        </div>
+
+        <div id="Postnoticemailsmsdiv">
+
+        </div>
+    </div>   
 </body>
 </html>
 
@@ -244,12 +257,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
 <script src="~/js/ManageNotices.js"></script>
 
+@*<script src="~/js/Managenotice_1.js"></script>*@
+
 <script>
 
     $(document).ready(function () {
 
         managenotice_tabledata();
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#Edit_NoticeView').hide();
         var Instanceid = $('#Instance_Txtid').val();
         var Loginuser = $('#Loginuser_Txtid').val();
@@ -275,7 +290,7 @@
         });*@
 
 
-        $('#ManageNotice_AddNewSMS').on("click", function () {
+        @*$('#ManageNotice_AddNewSMS').on("click", function () {
            //var Instanceid = $('#Instance_Txtid').val();
            //var Loginuser = $('#Loginuser_Txtid').val();
             $.ajax({
@@ -283,7 +298,7 @@
                 type: "GET",
                 data: { InstanceId: Instanceid, Userid: Loginuser },
                 success: function (data) {
-                    $("#Create_NoticeView").empty();
+                    $("#Addnotice_div1").empty();
                     $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
                     $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
                     $("#ManageNotices_CreateSMS_ViewDivid").html(data);
@@ -292,9 +307,9 @@
                     console.log("Error: " + error);
                 }
             });
-        });
+        });*@
 
-        $('#ManageNotice_AddNewSMSNNotices').on("click", function () {
+        @*$('#ManageNotice_AddNewSMSNNotices').on("click", function () {
             //var Instanceid = $('#Instance_Txtid').val();
             //var Loginuser = $('#Loginuser_Txtid').val();
             $.ajax({
@@ -302,7 +317,7 @@
                 type: "GET",
                 data: { InstanceId: Instanceid, Userid: Loginuser },
                 success: function (data) {
-                    $("#Create_NoticeView").empty();
+                    $("#Addnotice_div1").empty();
                     $("#ManageNotices_CreateSMS_ViewDivid").empty();
                     $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
                     $("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
@@ -312,11 +327,11 @@
                 }
             });
 
-        });
+        });*@
     });
 
 
-    $('#SearchNotice_Btn').click(function () {
+    $('#SearchNotice_Btn_').click(function () {
 
         $('#ErrorMessage').text("");
 
@@ -339,10 +354,10 @@
 
         var InstanceId = $('#InstanceIdTXT').val();
 
-        $("#loadingSpinnerContainer").show();
+
 
         $.ajax({
-            url: "/Admin/ManageNotices_TableData",
+            url: "/Admin/ManageNotices_TableData_",
             data: {
                 InstanceId: InstanceId,
                 Subject: Subject,
@@ -355,7 +370,7 @@
             success: function (response) {
 
 
-                $("#loadingSpinnerContainer").hide();
+
 
                 $('#Noticetabledata_div').html(response);
             }
@@ -367,16 +382,16 @@
 
     $("a.btn-outline-primary").on("click", function (e) {
         e.preventDefault();
-        $("#loadingSpinnerContainer").show();
-        $('#Search_NoticeView').hide();
+
+        $('#ManagenoticeMaindiv').hide();
         $('#Edit_NoticeView').hide();
         $('#ErrorMessage').text("");
 
         $('#Managenotice_CreateSMS_Divid').remove();
 
-        $("#Create_NoticeView").load($(this).attr("href"));
+        $("#Addnotice_div1").load($(this).attr("href"));
 
-        $("#loadingSpinnerContainer").hide();
+
     });
 
 
@@ -419,11 +434,11 @@
         $('#Updatevalidation').text('');
 
         NoticeDropdown_UpdateNotice_In_View();
-        $('#Search_NoticeView').hide();
+        $('#ManagenoticeMaindiv').hide();
         $('#Edit_NoticeView').show();
         $('#ErrorMessage').text("");
 
-        $("#loadingSpinnerContainer").show();
+
 
         $.ajax({
             url: "/Admin/Edit_ENotices_ById",
@@ -431,7 +446,7 @@
             type: "GET",
             success: function (response) {
 
-                $("#loadingSpinnerContainer").hide();
+
                 debugger;
 
                 $("#InstanceId_UTXT").val(response[0].instanceId);
@@ -532,7 +547,7 @@
         $('#UpdatevalidationMessage').text('');
         $('#Updatevalidation').text('');
 
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#ErrorMessage').text("");
 
         managenotice_tabledata();
@@ -643,7 +658,7 @@
 
     $('#DeleteNotice_UpBtn').click(function () {
 
-        $('#Search_NoticeView').show();
+        $('#ManagenoticeMaindiv').show();
         $('#Edit_NoticeView').hide();
 
         var ENoticeId = $('#ENoticeId_UTXT').val();
