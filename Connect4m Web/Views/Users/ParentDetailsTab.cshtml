@@ -19,7 +19,7 @@
     @*--- PAY ROLE INFORMATION Card----*@
     <div class="card-header bg-primary ">
         <h5 class="mb-0">
-            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon123" aria-expanded="true" aria-controls="collapse11123"> <span id="SpnCardHeaderName">SAVE PARENTS</span><span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon123" aria-expanded="true" aria-controls="collapse11123"> <span id="SpnCardHeaderName"> PARENT DETAILS</span></button>
         </h5>
     </div>
     <div class="collapse show " id="collapseicon123" aria-labelledby="collapseicon123" data-bs-parent="#accordionoc123">
@@ -29,24 +29,31 @@
                 <div class="row">
                     @*----------------------*@
                     <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="Name"></label>
+                        <label class="control-label space " asp-for="Name"></label>
                     </div>
                     <div class="form-group col-4 ">
                         <label>@ViewBag.Name</label>
                     </div>
                     @*----------------------*@
                     <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="ClassificationName"></label>
+                        <label class="control-label space " asp-for="ClassificationName"></label>
                     </div>
                     <div class="form-group col-4 ">
                         <label>@ViewBag.Department </label>
                     </div>
                     @*----------------------*@
                     <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="SubClassificationName"></label>
+                        <label class="control-label space " asp-for="SubClassificationName"></label>
                     </div>
                     <div class="form-group col-4 ">
                         <label>@ViewBag.Class </label>
+                    </div>  
+    @*----------------------*@
+                    <div class="form-group col-2 ">
+                        <label class="control-label space " asp-for="InstanceUserCode">Student Id</label>
+                    </div>
+                    <div class="form-group col-4 ">
+                        <label>@ViewBag.InstanceUserCode </label>
                     </div>
 
 
@@ -110,41 +117,41 @@
         TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Users/TblParentsSearch?UserId=' + UserId, 'TblParentsSearchresults', 'TblParentCounts', '', 'DivTblParentsSearchresults', '', [], true);
     });
 
-    function MakePrimaryContact_CallingFunction(ParentId,IsParent) {
-        debugger;
-        loaddingimg.css('display', 'block');
-      //  var StudentId = $("#HdnUserId").val();
-        performCrudOperationCommonFunction('POST', "/Users/MakePrimaryContact_CallingFunction?StudentId=" + $("#HdnUserId").val()+"&ParentId=" + ParentId + "&IsParent=" + IsParent, null, function (response) {
-            debugger;
-        }, function (error) {
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }, true);
-        loaddingimg.css('display', 'block');
-    }
+    //function MakePrimaryContact_CallingFunction(ParentId,IsParent) {
+    //    debugger;
+    //    loaddingimg.css('display', 'block');
+    //  //  var StudentId = $("#HdnUserId").val();
+    //    performCrudOperationCommonFunction('POST', "/Users/MakePrimaryContact_CallingFunction?StudentId=" + $("#HdnUserId").val()+"&ParentId=" + ParentId + "&IsParent=" + IsParent, null, function (response) {
+    //        debugger;
+    //    }, function (error) {
+    //        loaddingimg.css('display', 'none');
+    //        $("#Main_Span_Error").text("Something Error");
+    //    }, true);
+    //    loaddingimg.css('display', 'none');
+    //}
 
 
     //===================>>>>>>>>>>>>>>====In ParentDetailsTab Page  Functions START
 
 
     //==================== to get details for Edit
-    function GettingParentDetails_EditFunction(ParentId, isParentTable) {
-        debugger; try {
-            loaddingimg.css('display', 'block');
+    //function GettingParentDetails_EditFunction(ParentId, isParentTable) {
+    //    debugger; try {
+    //        loaddingimg.css('display', 'block');
 
-            MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable, null);
-            //if (isParentTable == 1) {
-            //    $(".ClsLoginInfoCard").css('display', 'block');
-            //} else {
-            //    $(".ClsLoginInfoCard").css('display', 'none');
-            //}
-            loaddingimg.css('display', 'none');
+    //        MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable, null);
+    //        //if (isParentTable == 1) {
+    //        //    $(".ClsLoginInfoCard").css('display', 'block');
+    //        //} else {
+    //        //    $(".ClsLoginInfoCard").css('display', 'none');
+    //        //}
+    //        loaddingimg.css('display', 'none');
 
-        } catch (e) {
-            $("#Main_Span_Error").text("Something Error");
-            loaddingimg.css('display', 'none');
-        }
-    }
+    //    } catch (e) {
+    //        $("#Main_Span_Error").text("Something Error");
+    //        loaddingimg.css('display', 'none');
+    //    }
+    //}
 
 //=====================<<<<<<<<<<<<<<<<<<==In ParentDetailsTab Page  Functions END
 

@@ -463,12 +463,26 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
 ////===================>>>>>>>>>>>>>>====In ParentDetailsTab Page  Functions START
 
 
+function MakePrimaryContact_CallingFunction(ParentId, IsParent) {
+    debugger;
+    loaddingimg.css('display', 'block');
+    //  var StudentId = $("#HdnUserId").val();
+    performCrudOperationCommonFunction('POST', "/Users/MakePrimaryContact_CallingFunction?StudentId=" + $("#HdnUserId").val() + "&ParentId=" + ParentId + "&IsParent=" + IsParent, null, function (response) {
+        debugger;
+    }, function (error) {
+        loaddingimg.css('display', 'none');
+        $("#Main_Span_Error").text("Something Error");
+    }, true);
+    loaddingimg.css('display', 'none');
+}
+
+
 //==================== to get details for Edit
 function GettingParentDetails_EditFunction(ParentId, isParentTable) {
     debugger; try {
         loaddingimg.css('display', 'block');
 
-        nextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable , null);
+        MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable , null);
         //if (isParentTable == 1) {
         //    $(".ClsLoginInfoCard").css('display', 'block');
         //} else {

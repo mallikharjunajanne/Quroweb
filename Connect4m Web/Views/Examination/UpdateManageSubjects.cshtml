@@ -218,7 +218,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 
-
 <script>
 
     //==============this for add same value in Textboxes by selecting checkbox
@@ -240,48 +239,6 @@
             });
         }
     }
-
-
-    //var isReadyFunction = false;
-    //$(document).ready(function () {
-    //    // Iterate through all checkboxes with the id "Departments"
-    //    $('.Department_list #Departments').each(function () {
-    //        debugger;
-    //        isReadyFunction = true;
-    //        var checkbox = $(this);
-    //        checkbox.on('click', function () {
-    //            debugger;
-    //            // Check if the checkbox has the "checked" attribute
-    //            if (checkbox.prop('checked')) {
-    //                // Your logic for checked checkboxes here
-    //                var InstanceClassificationId = $(this).val();
-    //                var closest = $(this).closest('#classficationnames_MS');
-    //                var subclassificationappend = $(closest).find('#subclassificationappend');
-    //                var SubjectName = $("#Subjectname").val();
-
-
-    //                if (isReadyFunction) {
-    //                    var Buttonname = "Update";
-    //                } else {
-    //                    var Buttonname = "Create";
-    //                }
-    //                // Execute your AJAX call or any other logic here
-    //                $.ajax({
-    //                    url: "/Examination/Subclassfications_MS?InstanceClassificationId=" + InstanceClassificationId + "&SubjectName=" + SubjectName + "&Buttonname=" + Buttonname,
-    //                    type: "GET",
-    //                    success: function (response) {
-    //                        if (response == 0) {
-    //                            subclassificationappend.html("");
-    //                        }
-    //                        else {
-    //                            subclassificationappend.html(response);
-    //                        }
-    //                    }
-    //                });
-    //            }
-    //        });
-    //    });
-    //});
 
 //---------------------------------------this is for ready function to load alll checked classes
     $(document).ready(function () {
@@ -349,13 +306,6 @@
         }
     })
 
-
-    //var clickedButtonValue = null; // Variable to store the clicked button value
-
-    ////This for getting clicked button Name
-    //$('.submit-btn').click(function () {
-    //    clickedButtonValue = $(this).val(); // Store the clicked button value
-    //});
 
   //=---------------------This is For Submit
     $(document).on("click", '#Saveclassfication_MS,#BtnUpdateSubjectName', function (event) {

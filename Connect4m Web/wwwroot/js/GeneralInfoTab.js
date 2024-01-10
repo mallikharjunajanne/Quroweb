@@ -28,6 +28,11 @@ $(document).ready(function () {
     $('#FmGeneralInfoTab #ConPassword').attr("type", "password");
 });
 
+
+
+function TAPhysicallyChallengedDetails_Calling() {
+    $("#TAPhysicallyChallengedDetails").text('');
+}
 //=======================To see the preview and Take Print
 //  $("#BtnPreview").click(function () {
 
@@ -304,7 +309,7 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                     //  else
                     // $("#Main_Span_Error").text(response.message);
                     $("#" + formId + " #Main_Span_Error").text(response.message);
-                    window.scrollTo(0, 0);
+                //    window.scrollTo(0, 0);
                    
                 }, function (error) {
                     loaddingimg.css('display', 'none');

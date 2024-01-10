@@ -520,6 +520,7 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
         </div>
 
 
+        @*@if (ViewBag.isParentTable == 1 || ViewBag.TblParentsDetailsList <= 0)*@
         @if (ViewBag.isParentTable == 1)
         {
         @*--- LOGIN INFORMATION Card----*@
@@ -589,7 +590,7 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
                             <label asp-for="IsActive" class="control-label  space" for="IsActive">Is Enabled</label>
                         </div>
                         <div class="form-group col-4" style="display:flex">
-                            <input type="radio" asp-for="IsActive" name="IsActive" value="1" style="flex: 0.2;" ><span>Yes</span>
+                            <input type="radio" asp-for="IsActive" checked="checked" name="IsActive" value="1" style="flex: 0.2;" ><span>Yes</span>
                             <input type="radio" asp-for="IsActive" name="IsActive" value="0" style="flex: 0.2;" ><span>No</span>
                         </div>
                         @*----------------------*@
@@ -654,11 +655,12 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
             $("#BtnSaveFormInGeneralInfo").val("Update");
             $(".DdlCascadDropdowns").prop("disabled", false);
             $("#SpnParentCardHeaderName").val("UPDATE PARENT");
-            $(".ClsLoginInfoCard").css('display', 'block');
+          //  $(".ClsLoginInfoCard").css('display', 'block');
             $("#DdlRelationship").prop('disabled', true);
-        } else {
-            $(".ClsLoginInfoCard").css('display', 'none');
         }
+        //else {
+        //    $(".ClsLoginInfoCard").css('display', 'none');
+        //}
         $('#FmParentDetailsTab #Password').attr("type", "password");
         $('#FmParentDetailsTab #ConPassword').attr("type", "password");
     });

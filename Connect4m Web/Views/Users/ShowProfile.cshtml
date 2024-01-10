@@ -40,746 +40,9 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="UserId" id="HdnUserId" />
                                 @*<input type="hidden" asp-for="InstanceID" id="HdnInstanceID" />*@
-                                @if (ViewBag.IsStudentIdentification != "Student")
-                                {
+                                @*//Student code*@
 
-                                    @*---Save Users Card----*@
-                                    <div class="card-header bg-primary">
-                                        <h5 class="mb-0">
-                                            <button type="button" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="SpnCardHeaderName">UPDATE PROFILE</span></button>
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
-
-                                        <div class="row padding-search">
-                                            <div class="row">
-
-                                                <div class="row">
-                                                    @*----------------------*@
-
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="RoleId" class="control-label space "></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <div id="Drop_Format_SEM_3">
-                                                            @Html.DropDownListFor(x => x.RoleId,
-                            new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
-                            new { @class = "form-select ", @id = "DdlRoleId", @style = "color:black;", @onchange = "RoleOnChangeFunctionInGeneralTab(this.value)" })
-                                                            <span asp-validation-for="RoleId" class="text-danger"></span>
-                                                        </div>
-                                                        @*<input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9858072, 'NoofLeaves')">*@
-
-                                                    </div>
-
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.RoleName</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ">
-                                                    </div>
-                                                    <div class="form-group col-4 ">
-                                                    </div>
-                                                    @*----------------------*@
-
-                                                    <div class="form-group col-2 ClsDivTeachers ">
-                                                        <label asp-for="DesignationId" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 ClsDivTeachers HideFileds">
-                                                        @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select  ClsClear", @*@id = "ClsClear",*@@style = "color:black;" })
-
-                                                    </div>
-
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.Designation</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ">
-                                                    </div>
-                                                    <div class="form-group col-4 ">
-                                                        @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                        @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                                        @if (UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px;" />
-                                                        }
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ">
-                                                    </div>
-                                                    <div class="form-group col-4 ">
-                                                        @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
-                                                         }<br />
-                                                        @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                             <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
-                                                        }
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ClsDivTeachers">
-                                                        <label asp-for="Qualification" class="control-label space "></label>
-                                                    </div>
-                                                    <div class="form-group col-4 ClsDivTeachers HideFileds">
-                                                        <span asp-validation-for="Qualification" class="text-danger"></span>
-                                                    </div>
-
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.Qualification</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ClsSessionStudent">
-                                                        <label asp-for="Batch" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 ClsSessionStudent HideFileds">
-                                                        @Html.DropDownListFor(x => x.Batch, new SelectList(ViewBag.DdlSessionList, "Value", "Text"), "-------select-------", new { @class = "form-select  ClsClear", @*@id = "ClsClear",*@@style = "color:black;" })
-
-                                                    </div>
-
-                                                    <div class="form-group col-4 ClsSessionStudent">
-
-                                                        <label class="control-label ">@Model.Batch</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ">
-                                                        <label asp-for="Photo" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 ">
-                                                        &nbsp;
-                                                        @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">&nbsp;&nbsp;Delete</a>
-                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
-                                                        }
-                                                        else if (UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer;display:none" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
-                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
-                                                        }
-                                                        <input type="hidden" asp-for="PhotoSize" readonly />
-                                                        <input type="hidden" asp-for="PhotoName" readonly />
-                                                        @*<img src="~/Images/doc.png" alt="~/IconImages/No_Image.gif" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-
-                                                    </div>
-
-
-                                                    @*----------------------*@
-                                                    @*<div class="form-group col-2 ">
-                                    </div>*@
-                                                    <div class="form-group col-2 ">
-                                                        <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="control-label space ">Reg. No./Emp ID</label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="InstanceUserCode" class="form-control ClsClear" />
-                                                        <span asp-validation-for="InstanceUserCode" class="text-danger"></span>
-                                                    </div>
-
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.InstanceUserCode</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ">
-                                                    </div>
-                                                    <div class="form-group col-4 ">
-                                                    </div>
-                                                    @*----------------------*@
-
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="FirstNameInGeneral" class="control-label space required"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="FirstNameInGeneral" class="form-control" />
-                                                        <span asp-validation-for="FirstNameInGeneral" class="text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.FirstNameInGeneral</label>
-
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="MiddleName" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-
-                                                        <label class="control-label ">@Model.MiddleName</label>
-
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="MiddleName" class="form-control" />
-                                                        <span asp-validation-for="MiddleName" class="text-danger"></span>
-
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="LastName" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="LastName" class="form-control" />
-                                                        <span asp-validation-for="LastName" class="text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.LastName</label>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="DateOfJoining" class="control-label space "></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input type="date" id="DtDateOfJoining" asp-for="DateOfJoining" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Joining')" class="form-control" />
-                                                        <span asp-validation-for="DateOfJoining" class="text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy")</label>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="Nationality" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="Nationality" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.Nationality</label>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    @*<div class="form-group col-2 ClsSessionStudent">
-                                        <label asp-for="AdmissionNumberNew" class="control-label space "></label>
-                                    </div>
-                                    <div class="form-group col-4 ClsSessionStudent">
-                                        <label class="control-label ">@Model.AdmissionNumberNew</label>
-                                    </div>*@
-
-                                                    @*----------------------*@
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 ClsSessionStudent HideFileds">
-                                                        <label asp-for="IsUserJoined" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 ClsSessionStudent HideFileds">
-                                                        <input type="checkbox" asp-for="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" disabled />
-                                                    </div>
-                                                    @*----------------------*@
-                                                    @*<div class="form-group col-2 ClsSessionStudent">
-                                        <label asp-for="IsUserJoined" class="control-label  space"></label>
-                                    </div>
-                                    <div class="form-group col-4 ClsSessionStudent">
-                                     @if (Model.IsUserJoined == "True")
-                                            {
-                                                <label class="control-label ">Yes</label>
-                                            }
-                                            else
-                                            {
-                                                <label class="control-label ">No</label>
-                                            } </div>*@
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="BloodGroup" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select id='DdlPickUpRoute' asp-for="BloodGroup" class="form-select " asp-items="@(new SelectList(ViewBag.DdlBloodGroupList, "Value", "Text"))">
-                                                            <option value=''>---------Select---------</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="PlaceOfBirth" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="PlaceOfBirth" class="form-control" />
-                                                        <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
-                                                        @*<span class="compare"></span>*@
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="CollegeCode" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="CollegeCode" class="form-control" />
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="Gender" class="control-label  space "></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds" style="display:flex">
-                                                        <input asp-for="Gender" type="radio" name="Gender" value="1" style="flex: 0.2;" /><span>Male</span>
-                                                        <input asp-for="Gender" type="radio" name="Gender" value="0" style="flex: 0.2;" /><span>Female</span>
-                                                        @*<input asp-for="Gender" type="radio" name="Gender" value="0.5" style="flex: 0.2;" /><span>Others</span>*@
-                                                        <input asp-for="Gender" type="radio" name="Gender" value="" style="flex: 0.2;" /><span>Others</span>
-                                                    </div>
-                                                    <div class="form-group col-4" style="display:flex">
-                                                        @if (Model.Gender == "1")
-                                                        {
-                                                            <label class="control-label ">Male</label>
-                                                        }
-                                                        else if (Model.Gender == "0")
-                                                        {
-                                                            <label class="control-label ">Female</label>
-                                                        }
-                                                        else
-                                                        {
-                                                            <label class="control-label ">Others</label>
-                                                        }
-                                                    </div>
-
-                                                    @*----------------------*@
-
-                                                    @*<div class="form-group col-2">
-                                        <label asp-for="FeeConcedingTypeId" class="control-label  space"></label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <select id='DdlPickUpStop' asp-for="FeeConcedingTypeId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlFeeConcedingTypesList, "Value", "Text"))">
-                                            <option value=''>---------Select---------</option>
-                                        </select>
-                                    </div>*@
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="ADMISSIONCATEGORY" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select asp-for="ADMISSIONCATEGORY" multiple="multiple" style=" height: 1%;" class="form-select " asp-items="@(new SelectList(""))">
-                                                            <option value="1" title="General">General</option>
-                                                            <option value="2" title="EWS">EWS</option>
-                                                            <option value="3" title="Sibling">Sibling</option>
-                                                            <option value="4" title="Transfer">Transfer</option>
-                                                            <option value="5" title="Staff">Staff</option>
-                                                            <option value="6" title="Management">Management</option>
-                                                            <option value="7" title="Under Privileged">Under Privileged</option>
-                                                            <option value="8" title="Special Education Needs">Special Education Needs</option>
-                                                            <option value="9" title="Disadvantage Group">Disadvantage Group</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="ICNumber" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="ICNumber" class="form-control" />
-                                                        <span asp-validation-for="ICNumber" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    @*--- PERSONAL INFORMATION Card----*@
-                                    <div class="card-header bg-primary">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
-
-                                        <div class="row padding-search">
-                                            <div class="row">
-
-                                                <div class="row">
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="DOB"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input type="date" Id="DOB" asp-for="DOB" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" class="form-control" />
-                                                        <span asp-validation-for="DOB" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="ReligionId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <select id='DdlClass' asp-for="ReligionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlReligionList, "Value", "Text"))">
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.ReligionName</label>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="CommunityId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select asp-for="CommunityId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCommunityList, "Value", "Text"))">
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="MotherTongueId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select asp-for="MotherTongueId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlMotherTongueList, "Value", "Text"))">
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="MobilePhone"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="MobilePhone" class="form-control" />
-                                                        <span asp-validation-for="MobilePhone" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="PortalEmail"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input asp-for="PortalEmail" class="form-control" />
-                                                        <span asp-validation-for="PortalEmail" class="text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.PortalEmail</label>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="AlternateEmail"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="AlternateEmail" class="form-control" />
-                                                        <span asp-validation-for="AlternateEmail" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="PermanentAddress1"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <textarea asp-for="PermanentAddress1" class="form-control" rows="2" cols="20"></textarea>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="PermanentAddress2"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <textarea asp-for="PermanentAddress2" class="form-control" rows="2" cols="20"></textarea>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="PCity"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="PCity" class="form-control" />
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="PCountryId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select id='DdlCountry' asp-for="PCountryId" onchange="CommonDropdownFunction('GET', '/Users/DdlStateByCountry_Calingfunction?CountryId=' + this.value, 'DdlState', 'Please select a State', true)" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCountryList, "Value", "Text"))">
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="PStateId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        @*<select id='DdlClass' asp-for="PStateId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlStateList, "Value", "Text"))">*@
-                                                        <select id='DdlState' asp-for="PStateId" class="form-select DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlStateList, "Value", "Text"))" disabled>
-                                                            <option value=''>Please select a State</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="PZip"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="PZip" class="form-control" />
-                                                        <span asp-validation-for="PZip" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @*--- OTHER INFORMATION Card----*@
-                                    <div class="card-header bg-primary">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse111"> OTHER INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-
-                                        <div class="row padding-search">
-                                            <div class="row">
-
-                                                <div class="row">
-                                                    <div class="col-3"></div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space " asp-for="InstanceClassificationId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <select id='DdlDepartmentGeneralTab' asp-for="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassGeneralTab', 'Please select a Class', true)" class="form-select " asp-items="@(new SelectList(ViewBag.DdlInstanceClassificationList,"Value","Text"))">
-                                                            <option value=''>Select a Department</option>
-                                                        </select>
-                                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.ClassificationName</label>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div>
-                                                    <div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="InstanceSubClassificationId"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <select id='DdlClassGeneralTab' asp-for="InstanceSubClassificationId" onchange="CommonDropdownFunction('POST', '/Users/DdlClassTeacher_Calingfunction?Id=' + this.value, 'DdlClassTeacherId', 'Please select ClassTeacher', true,'FmShowProfile')" class="form-select  DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlInstanceSubClassificationIdList,"Value","Text"))" disabled>
-                                                            <option value=''>Please select a Class</option>
-                                                        </select>
-                                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.SubClassificationName</label>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div>
-                                                    <div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label class="control-label space" asp-for="ClassTeacherId"></label>
-                                                    </div>
-
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <select id="DdlClassTeacherId" asp-for="ClassTeacherId" class="form-select  DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlClassTeacherIdList,"Value","Text"))" disabled>
-                                                            <option value=''>Please select ClassTeacher</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.ClassTeacherName</label>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    @*----------------------*@
-                                                    @*<div class="col-3"></div>
-                                    <div class="col-3"></div>*@
-                                                    <div class="form-group col-2 HideFileds">
-                                                        <label asp-for="SendSMS " class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds" style="display:flex">
-                                                        <input asp-for="SendSMS" type="radio" checked="checked" name="SendSMS" value="1" style="flex: 0.2;" /><span>Yes</span>
-                                                        @*<input asp-for="SendSMS" type="radio"  name="SendSMS" value="1" style="flex: 0.2;" /><span>Yes</span>*@
-                                                        <input asp-for="SendSMS" type="radio" name="SendSMS" value="0" style="flex: 0.2;" /><span>No</span>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    @*<div class="col-3"></div>
-                                    <div class="col-3"></div>*@
-                                                    <div class="form-group col-2 HideFileds">
-                                                        <label asp-for="TcTaken" id="LblTcTakenGeneralTab" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds" style="display:flex">
-                                                        <input asp-for="TcTaken" type="radio" id="TcTakenYes" name="TcTaken" value="1" style="flex: 0.2;" onclick="TcTakenChecking(this.value)" /><span>Yes</span>
-                                                        <input asp-for="TcTaken" type="radio" id="TcTakenNo" name="TcTaken" value="0" style="flex: 0.2;" onclick="TcTakenChecking(this.value)" /><span>No</span>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @*---GENERAL INFORMATION Card----*@
-                                    <div class="card-header bg-primary">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse112">GENERAL INFORMATION</button>
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-
-                                        <div class="row padding-search">
-                                            <div class="row">
-                                                <div class="row">
-                                                    <div class="col-3"></div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="StudentIdentificationMarks" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <textarea asp-for="StudentIdentificationMarks" rows="2" cols="20" class="form-control"></textarea>
-                                                        <span asp-validation-for="StudentIdentificationMarks" class="text-danger"></span>
-
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4" style="display:flex">
-                                                        <input asp-for="SiblingsInSameCollege" type="radio" name="SiblingsInSameCollege" value="1" style="flex: 0.2;" /><span>Yes</span>
-                                                        <input asp-for="SiblingsInSameCollege" type="radio" name="SiblingsInSameCollege" value="0" style="flex: 0.2;" /><span>No</span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
-                                                    <div class="form-group col-2 HideFileds">
-                                                        <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds" style="display:flex">
-                                                        <input asp-for="SiblingsOtherCollege" type="radio" name="SiblingsOtherCollege" value="1" style="flex: 0.2;" /><span>Yes</span>
-                                                        <input asp-for="SiblingsOtherCollege" type="radio" name="SiblingsOtherCollege" value="0" style="flex: 0.2;" /><span>No</span>
-                                                    </div>
-
-
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="PhysicallyChalenged" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4" style="display:flex">
-                                                        <select id='DdlPickUpStop' asp-for="PhysicallyChalenged" class="form-select " asp-items="@(new SelectList(ViewBag.DdlDisabilityList, "Value", "Text"))">
-                                                            <option value=''>---------Select---------</option>
-                                                        </select>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="PhysicallyChallengedDetails" class="control-label space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <textarea asp-for="PhysicallyChallengedDetails" rows="2" cols="20" class="form-control"></textarea>
-                                                    </div>
-                                                    @*----------------------*@
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    @*--- LOGIN INFORMATION Card----*@
-                                    <div class="card-header bg-primary">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon34" aria-expanded="true" aria-controls="collapse1134"> LOGIN INFORMATION<span style=" margin-left: 70%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon34" aria-labelledby="collapseicon34" data-bs-parent="#accordionoc34">
-
-                                        <div class="row padding-search">
-                                            <div class="row">
-                                                <div class="row">
-                                                    <div class="col-3"></div>
-                                                    @*----------------------*@
-                                                    <div class="form-group col-2 HideFileds">
-                                                        <label asp-for="IsActive" class="control-label space"></label>
-                                                    </div>
-
-                                                    <div class="form-group col-4 HideFileds" style="display:flex">
-                                                        <input asp-for="IsActive" type="radio" id="IsActiveYes" checked="checked" name="IsActive" value="1" onclick="CommonDropdownFunction('GET', '/Users/DdlStudentStatus_Calingfunction?Id=' + this.value, 'DdlStudentStatus', '', false)" style="flex: 0.2;" /><span>Yes</span>
-                                                        <input asp-for="IsActive" type="radio" id="IsActiveNo" name="IsActive" value="0" onclick="CommonDropdownFunction('GET', '/Users/DdlStudentStatus_Calingfunction?Id=' + this.value, 'DdlStudentStatus', '', false)" style="flex: 0.2;" /><span>No</span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
-                                                    <div class="form-group col-2 HideFileds">
-                                                        <label asp-for="StudentStatus" class="control-label  space"></label>
-                                                    </div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <select id='DdlStudentStatus' asp-for="StudentStatus" class="form-select " asp-items="@(new SelectList(""))">
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="UserName" class="control-label  space "></label>
-                                                    </div>
-                                                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identityUserName" id="IdentityUserName" readonly /></div>
-
-                                                    <div class="form-group col-4">
-                                                        <label class="control-label ">@Model.UserName</label>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="Password" class="control-label  space required"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="Password" class="form-control" id="Password" />
-                                                        <span asp-validation-for="Password" class="text-danger"></span>
-                                                    </div>
-
-                                                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
-
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="ConfirmPassword" class="control-label  space required">Confirm Password</label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="ConfirmPassword" class="form-control" id="ConPassword" />
-                                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                                    </div>
-
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="SecurityQuestionId" class="control-label  space required"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <select asp-for="SecurityQuestionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))">
-                                                            <option value=''>---------Select---------</option>
-                                                        </select>
-                                                        <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3"></div><div class="col-3"></div>
-                                                    <div class="form-group col-2">
-                                                        <label asp-for="Answer" class="control-label space required"></label>
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <input asp-for="Answer" class="form-control" />
-                                                        <span asp-validation-for="Answer" class="text-danger"></span>
-                                                    </div>
-                                                    @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
-                                                    <div class="form-group col-2 HideFileds"></div>
-                                                    <div class="form-group col-4 HideFileds">
-                                                        <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" /><label>Need to change password on login</label>
-                                                    </div>
-                                                    @*----------------------*@
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @*----------Buttons-------------   *@
-                                    <div style=" display: flex; gap: 17px;">
-                                        <div class="col-2"></div>
-                                        <div class="col-2"></div>
-                                        <input type="submit" value="Update" id="BtnSaveFormInGeneralInfo" class="btn btn-pill btn-outline-success btn-auccess" />
-
-                                    </div>
-                                }
-                                else if (ViewBag.IsStudentIdentification == "Student")
+                                @if (ViewBag.IsStudentIdentification == "STUDENT")// Student code
                                 {
 
                                     @*---Save Users Card----*@
@@ -894,12 +157,12 @@
                                                     </div>
                                                     @*----------------------*@
                                                     @*<div class="form-group col-2">
-                                        <label asp-for="FirstName" class="control-label space required"></label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <input asp-for="FirstName"  class="form-control" />
-                                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                                    </div>*@
+                                <label asp-for="FirstName" class="control-label space required"></label>
+                            </div>
+                            <div class="form-group col-4">
+                                <input asp-for="FirstName"  class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="FirstNameInGeneral" class="control-label space "></label>
                                                     </div>
@@ -929,9 +192,9 @@
                                                     </div>
                                                     <div class="form-group col-4">
                                                         @*@{
-                                            DateTime yourDateTime = Convert.ToDateTime(Model.DateOfJoining);
-                                            string formattedDate = yourDateTime.ToString("dd/MM/yyyy");
-                                        }*@
+                                    DateTime yourDateTime = Convert.ToDateTime(Model.DateOfJoining);
+                                    string formattedDate = yourDateTime.ToString("dd/MM/yyyy");
+                                }*@
 
                                                         <label class="control-label ">@Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy")</label>
                                                         @*<label class="control-label ">@Model.DateOfJoining</label>*@
@@ -1008,18 +271,18 @@
                                                     @*----------------------*@
 
                                                     @*<div class="form-group col-2">
-                                        <label asp-for="FeeConcedingTypeId" class="control-label  space"></label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <label class="control-label ">@Model.FeeConcedingTypeId</label>
-                                    </div>*@
+                                <label asp-for="FeeConcedingTypeId" class="control-label  space"></label>
+                            </div>
+                            <div class="form-group col-4">
+                                <label class="control-label ">@Model.FeeConcedingTypeId</label>
+                            </div>*@
                                                     @*----------------------*@
                                                     @*<div class="form-group col-2">
-                                        <label asp-for="ADMISSIONCATEGORY" class="control-label  space"></label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <label class="control-label ">@Model.ADMISSIONCATEGORY</label>
-                                    </div>*@
+                                <label asp-for="ADMISSIONCATEGORY" class="control-label  space"></label>
+                            </div>
+                            <div class="form-group col-4">
+                                <label class="control-label ">@Model.ADMISSIONCATEGORY</label>
+                            </div>*@
                                                     @*----------------------*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="ICNumber" class="control-label  space"></label>
@@ -1290,28 +553,28 @@
                                                     </div>
 
                                                     @*----------------------*@
-                                                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
+                                                    <!--<div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>-->
 
                                                     @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <!--<div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
                                                     <div class="form-group col-2 HideFileds">
                                                         <label asp-for="Password" class="control-label  space required"></label>
                                                     </div>
                                                     <div class="form-group col-4 HideFileds">
                                                         <input asp-for="Password" class="form-control" id="Password" />
                                                         <span asp-validation-for="Password" class="text-danger"></span>
-                                                    </div>
+                                                    </div>-->
                                                     @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <!--<div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
                                                     <div class="form-group col-2 HideFileds">
                                                         <label asp-for="ConfirmPassword" class="control-label  space required">Confirm Password</label>
                                                     </div>
                                                     <div class="form-group col-4 HideFileds">
                                                         <input asp-for="ConfirmPassword" class="form-control" id="ConPassword" />
                                                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                                    </div>
+                                                    </div>-->
                                                     @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <!--<div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
                                                     <div class="form-group col-2 HideFileds">
                                                         <label asp-for="SecurityQuestionId" class="control-label  space required"></label>
                                                     </div>
@@ -1320,16 +583,16 @@
                                                             <option value=''>---------Select---------</option>
                                                         </select>
                                                         <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
-                                                    </div>
+                                                    </div>-->
                                                     @*----------------------*@
-                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <!--<div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
                                                     <div class="form-group col-2 HideFileds">
                                                         <label asp-for="Answer" class="control-label space required"></label>
                                                     </div>
                                                     <div class="form-group col-4 HideFileds">
                                                         <input asp-for="Answer" class="form-control" />
                                                         <span asp-validation-for="Answer" class="text-danger"></span>
-                                                    </div>
+                                                    </div>-->
                                                     @*----------------------*@
 
                                                 </div>
@@ -1344,7 +607,745 @@
                                         <input type="submit" value="Update" id="BtnSaveFormInGeneralInfo" class="btn btn-pill btn-outline-success btn-auccess" />
                                     </div>
                                 }
+                                else if (ViewBag.IsStudentIdentification != "STUDENT")//Parent code
+                                {
 
+                                    @*---Save Users Card----*@
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button type="button" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="SpnCardHeaderName">UPDATE PROFILE</span></button>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+
+                                        <div class="row padding-search">
+                                            <div class="row">
+
+                                                <div class="row">
+                                                    @*----------------------*@
+
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="RoleId" class="control-label space "></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <div id="Drop_Format_SEM_3">
+                                                            @Html.DropDownListFor(x => x.RoleId,
+                            new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
+                            new { @class = "form-select ", @id = "DdlRoleId", @style = "color:black;", @onchange = "RoleOnChangeFunctionInGeneralTab(this.value)" })
+                                                            <span asp-validation-for="RoleId" class="text-danger"></span>
+                                                        </div>
+                                                        @*<input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveAllocation', 9858072, 'NoofLeaves')">*@
+
+                                                    </div>
+
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.RoleName</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ">
+                                                    </div>
+                                                    <div class="form-group col-4 ">
+                                                    </div>
+                                                    @*----------------------*@
+
+                                                    <div class="form-group col-2 ClsDivTeachers ">
+                                                        <label asp-for="DesignationId" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 ClsDivTeachers HideFileds">
+                                                        @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select  ClsClear", @*@id = "ClsClear",*@@style = "color:black;" })
+
+                                                    </div>
+
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.Designation</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ">
+                                                    </div>
+                                                    <div class="form-group col-4 ">
+                                                        @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                        @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                                        @if (UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px;" />
+                                                        }
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ">
+                                                    </div>
+                                                    <div class="form-group col-4 ">
+                                                        @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
+                                                        }<br />
+                                                        @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
+                                                        }
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ClsDivTeachers">
+                                                        <label asp-for="Qualification" class="control-label space "></label>
+                                                    </div>
+                                                    <div class="form-group col-4 ClsDivTeachers HideFileds">
+                                                        <span asp-validation-for="Qualification" class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.Qualification</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ClsSessionStudent">
+                                                        <label asp-for="Batch" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 ClsSessionStudent HideFileds">
+                                                        @Html.DropDownListFor(x => x.Batch, new SelectList(ViewBag.DdlSessionList, "Value", "Text"), "-------select-------", new { @class = "form-select  ClsClear", @*@id = "ClsClear",*@@style = "color:black;" })
+
+                                                    </div>
+
+                                                    <div class="form-group col-4 ClsSessionStudent">
+
+                                                        <label class="control-label ">@Model.Batch</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ">
+                                                        <label asp-for="Photo" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 ">
+                                                        &nbsp;
+                                                        @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">&nbsp;&nbsp;Delete</a>
+                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
+                                                        }
+                                                        else if (UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer;display:none" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
+                                                        }
+                                                        <input type="hidden" asp-for="PhotoSize" readonly />
+                                                        <input type="hidden" asp-for="PhotoName" readonly />
+                                                        @*<img src="~/Images/doc.png" alt="~/IconImages/No_Image.gif" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+
+                                                    </div>
+
+
+                                                    @*----------------------*@
+                                                    @*<div class="form-group col-2 ">
+                            </div>*@
+                                                    <div class="form-group col-2 ">
+                                                        <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="control-label space ">Reg. No./Emp ID</label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="InstanceUserCode" class="form-control ClsClear" />
+                                                        <span asp-validation-for="InstanceUserCode" class="text-danger"></span>
+                                                    </div>
+
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.InstanceUserCode</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ">
+                                                    </div>
+                                                    <div class="form-group col-4 ">
+                                                    </div>
+                                                    @*----------------------*@
+
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="FirstNameInGeneral" class="control-label space required"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="FirstNameInGeneral" class="form-control" />
+                                                        <span asp-validation-for="FirstNameInGeneral" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.FirstNameInGeneral</label>
+
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="MiddleName" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+
+                                                        <label class="control-label ">@Model.MiddleName</label>
+
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="MiddleName" class="form-control" />
+                                                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="LastName" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="LastName" class="form-control" />
+                                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.LastName</label>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="DateOfJoining" class="control-label space "></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input type="date" id="DtDateOfJoining" asp-for="DateOfJoining" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Joining')" class="form-control" />
+                                                        <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy")</label>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="Nationality" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="Nationality" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.Nationality</label>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    @*<div class="form-group col-2 ClsSessionStudent">
+                                <label asp-for="AdmissionNumberNew" class="control-label space "></label>
+                            </div>
+                            <div class="form-group col-4 ClsSessionStudent">
+                                <label class="control-label ">@Model.AdmissionNumberNew</label>
+                            </div>*@
+
+                                                    @*----------------------*@
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 ClsSessionStudent HideFileds">
+                                                        <label asp-for="IsUserJoined" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 ClsSessionStudent HideFileds">
+                                                        <input type="checkbox" asp-for="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" disabled />
+                                                    </div>
+                                                    @*----------------------*@
+                                                    @*<div class="form-group col-2 ClsSessionStudent">
+                                <label asp-for="IsUserJoined" class="control-label  space"></label>
+                            </div>
+                            <div class="form-group col-4 ClsSessionStudent">
+                             @if (Model.IsUserJoined == "True")
+                                    {
+                                        <label class="control-label ">Yes</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="control-label ">No</label>
+                                    } </div>*@
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="BloodGroup" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select id='DdlPickUpRoute' asp-for="BloodGroup" class="form-select " asp-items="@(new SelectList(ViewBag.DdlBloodGroupList, "Value", "Text"))">
+                                                            <option value=''>---------Select---------</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="PlaceOfBirth" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="PlaceOfBirth" class="form-control" />
+                                                        <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
+                                                        @*<span class="compare"></span>*@
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="CollegeCode" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="CollegeCode" class="form-control" />
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="Gender" class="control-label  space "></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds" style="display:flex">
+                                                        <input asp-for="Gender" type="radio" name="Gender" value="1" style="flex: 0.2;" /><span>Male</span>
+                                                        <input asp-for="Gender" type="radio" name="Gender" value="0" style="flex: 0.2;" /><span>Female</span>
+                                                        @*<input asp-for="Gender" type="radio" name="Gender" value="0.5" style="flex: 0.2;" /><span>Others</span>*@
+                                                        <input asp-for="Gender" type="radio" name="Gender" value="" style="flex: 0.2;" /><span>Others</span>
+                                                    </div>
+                                                    <div class="form-group col-4" style="display:flex">
+                                                        @if (Model.Gender == "1")
+                                                        {
+                                                            <label class="control-label ">Male</label>
+                                                        }
+                                                        else if (Model.Gender == "0")
+                                                        {
+                                                            <label class="control-label ">Female</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <label class="control-label ">Others</label>
+                                                        }
+                                                    </div>
+
+                                                    @*----------------------*@
+
+                                                    @*<div class="form-group col-2">
+                                <label asp-for="FeeConcedingTypeId" class="control-label  space"></label>
+                            </div>
+                            <div class="form-group col-4">
+                                <select id='DdlPickUpStop' asp-for="FeeConcedingTypeId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlFeeConcedingTypesList, "Value", "Text"))">
+                                    <option value=''>---------Select---------</option>
+                                </select>
+                            </div>*@
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="ADMISSIONCATEGORY" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select asp-for="ADMISSIONCATEGORY" multiple="multiple" style=" height: 1%;" class="form-select " asp-items="@(new SelectList(""))">
+                                                            <option value="1" title="General">General</option>
+                                                            <option value="2" title="EWS">EWS</option>
+                                                            <option value="3" title="Sibling">Sibling</option>
+                                                            <option value="4" title="Transfer">Transfer</option>
+                                                            <option value="5" title="Staff">Staff</option>
+                                                            <option value="6" title="Management">Management</option>
+                                                            <option value="7" title="Under Privileged">Under Privileged</option>
+                                                            <option value="8" title="Special Education Needs">Special Education Needs</option>
+                                                            <option value="9" title="Disadvantage Group">Disadvantage Group</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="ICNumber" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="ICNumber" class="form-control" />
+                                                        <span asp-validation-for="ICNumber" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    @*--- PERSONAL INFORMATION Card----*@
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
+
+                                        <div class="row padding-search">
+                                            <div class="row">
+
+                                                <div class="row">
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="DOB"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input type="date" Id="DOB" asp-for="DOB" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" class="form-control" />
+                                                        <span asp-validation-for="DOB" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="ReligionId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <select id='DdlClass' asp-for="ReligionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlReligionList, "Value", "Text"))">
+                                                            <option value=''>------Select------</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.ReligionName</label>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="CommunityId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select asp-for="CommunityId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCommunityList, "Value", "Text"))">
+                                                            <option value=''>------Select------</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="MotherTongueId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select asp-for="MotherTongueId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlMotherTongueList, "Value", "Text"))">
+                                                            <option value=''>------Select------</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="MobilePhone"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="MobilePhone" class="form-control" />
+                                                        <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="PortalEmail"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input asp-for="PortalEmail" class="form-control" />
+                                                        <span asp-validation-for="PortalEmail" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.PortalEmail</label>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="AlternateEmail"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="AlternateEmail" class="form-control" />
+                                                        <span asp-validation-for="AlternateEmail" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="PermanentAddress1"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <textarea asp-for="PermanentAddress1" class="form-control" rows="2" cols="20"></textarea>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="PermanentAddress2"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <textarea asp-for="PermanentAddress2" class="form-control" rows="2" cols="20"></textarea>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="PCity"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="PCity" class="form-control" />
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="PCountryId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select id='DdlCountry' asp-for="PCountryId" onchange="CommonDropdownFunction('GET', '/Users/DdlStateByCountry_Calingfunction?CountryId=' + this.value, 'DdlState', 'Please select a State', true)" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCountryList, "Value", "Text"))">
+                                                            <option value=''>------Select------</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="PStateId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        @*<select id='DdlClass' asp-for="PStateId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlStateList, "Value", "Text"))">*@
+                                                        <select id='DdlState' asp-for="PStateId" class="form-select DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlStateList, "Value", "Text"))" disabled>
+                                                            <option value=''>Please select a State</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="PZip"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="PZip" class="form-control" />
+                                                        <span asp-validation-for="PZip" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*--- OTHER INFORMATION Card----*@
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse111"> OTHER INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+
+                                        <div class="row padding-search">
+                                            <div class="row">
+
+                                                <div class="row">
+                                                    <div class="col-3"></div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space " asp-for="InstanceClassificationId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <select id='DdlDepartmentGeneralTab' asp-for="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassGeneralTab', 'Please select a Class', true)" class="form-select " asp-items="@(new SelectList(ViewBag.DdlInstanceClassificationList,"Value","Text"))">
+                                                            <option value=''>Select a Department</option>
+                                                        </select>
+                                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.ClassificationName</label>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div>
+                                                    <div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="InstanceSubClassificationId"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <select id='DdlClassGeneralTab' asp-for="InstanceSubClassificationId" onchange="CommonDropdownFunction('POST', '/Users/DdlClassTeacher_Calingfunction?Id=' + this.value, 'DdlClassTeacherId', 'Please select ClassTeacher', true,'FmShowProfile')" class="form-select  DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlInstanceSubClassificationIdList,"Value","Text"))" disabled>
+                                                            <option value=''>Please select a Class</option>
+                                                        </select>
+                                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.SubClassificationName</label>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div>
+                                                    <div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label class="control-label space" asp-for="ClassTeacherId"></label>
+                                                    </div>
+
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <select id="DdlClassTeacherId" asp-for="ClassTeacherId" class="form-select  DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlClassTeacherIdList,"Value","Text"))" disabled>
+                                                            <option value=''>Please select ClassTeacher</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.ClassTeacherName</label>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    @*----------------------*@
+                                                    @*<div class="col-3"></div>
+                            <div class="col-3"></div>*@
+                                                    <div class="form-group col-2 HideFileds">
+                                                        <label asp-for="SendSMS " class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds" style="display:flex">
+                                                        <input asp-for="SendSMS" type="radio" checked="checked" name="SendSMS" value="1" style="flex: 0.2;" /><span>Yes</span>
+                                                        @*<input asp-for="SendSMS" type="radio"  name="SendSMS" value="1" style="flex: 0.2;" /><span>Yes</span>*@
+                                                        <input asp-for="SendSMS" type="radio" name="SendSMS" value="0" style="flex: 0.2;" /><span>No</span>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    @*<div class="col-3"></div>
+                            <div class="col-3"></div>*@
+                                                    <div class="form-group col-2 HideFileds">
+                                                        <label asp-for="TcTaken" id="LblTcTakenGeneralTab" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds" style="display:flex">
+                                                        <input asp-for="TcTaken" type="radio" id="TcTakenYes" name="TcTaken" value="1" style="flex: 0.2;" onclick="TcTakenChecking(this.value)" /><span>Yes</span>
+                                                        <input asp-for="TcTaken" type="radio" id="TcTakenNo" name="TcTaken" value="0" style="flex: 0.2;" onclick="TcTakenChecking(this.value)" /><span>No</span>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*---GENERAL INFORMATION Card----*@
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse112">GENERAL INFORMATION</button>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+
+                                        <div class="row padding-search">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-3"></div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="StudentIdentificationMarks" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <textarea asp-for="StudentIdentificationMarks" rows="2" cols="20" class="form-control"></textarea>
+                                                        <span asp-validation-for="StudentIdentificationMarks" class="text-danger"></span>
+
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4" style="display:flex">
+                                                        <input asp-for="SiblingsInSameCollege" type="radio" name="SiblingsInSameCollege" value="1" style="flex: 0.2;" /><span>Yes</span>
+                                                        <input asp-for="SiblingsInSameCollege" type="radio" name="SiblingsInSameCollege" value="0" style="flex: 0.2;" /><span>No</span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <div class="form-group col-2 HideFileds">
+                                                        <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds" style="display:flex">
+                                                        <input asp-for="SiblingsOtherCollege" type="radio" name="SiblingsOtherCollege" value="1" style="flex: 0.2;" /><span>Yes</span>
+                                                        <input asp-for="SiblingsOtherCollege" type="radio" name="SiblingsOtherCollege" value="0" style="flex: 0.2;" /><span>No</span>
+                                                    </div>
+
+
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="PhysicallyChalenged" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4" style="display:flex">
+                                                        <select id='DdlPickUpStop' asp-for="PhysicallyChalenged" class="form-select " asp-items="@(new SelectList(ViewBag.DdlDisabilityList, "Value", "Text"))">
+                                                            <option value=''>---------Select---------</option>
+                                                        </select>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="PhysicallyChallengedDetails" class="control-label space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <textarea asp-for="PhysicallyChallengedDetails" rows="2" cols="20" class="form-control"></textarea>
+                                                    </div>
+                                                    @*----------------------*@
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @*--- LOGIN INFORMATION Card----*@
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon34" aria-expanded="true" aria-controls="collapse1134"> LOGIN INFORMATION<span style=" margin-left: 70%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse show" id="collapseicon34" aria-labelledby="collapseicon34" data-bs-parent="#accordionoc34">
+
+                                        <div class="row padding-search">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-3"></div>
+                                                    @*----------------------*@
+                                                    <div class="form-group col-2 HideFileds">
+                                                        <label asp-for="IsActive" class="control-label space"></label>
+                                                    </div>
+
+                                                    <div class="form-group col-4 HideFileds" style="display:flex">
+                                                        <input asp-for="IsActive" type="radio" id="IsActiveYes" checked="checked" name="IsActive" value="1" onclick="CommonDropdownFunction('GET', '/Users/DdlStudentStatus_Calingfunction?Id=' + this.value, 'DdlStudentStatus', '', false)" style="flex: 0.2;" /><span>Yes</span>
+                                                        <input asp-for="IsActive" type="radio" id="IsActiveNo" name="IsActive" value="0" onclick="CommonDropdownFunction('GET', '/Users/DdlStudentStatus_Calingfunction?Id=' + this.value, 'DdlStudentStatus', '', false)" style="flex: 0.2;" /><span>No</span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <div class="form-group col-2 HideFileds">
+                                                        <label asp-for="StudentStatus" class="control-label  space"></label>
+                                                    </div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <select id='DdlStudentStatus' asp-for="StudentStatus" class="form-select " asp-items="@(new SelectList(""))">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="UserName" class="control-label  space "></label>
+                                                    </div>
+                                                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identityUserName" id="IdentityUserName" readonly /></div>
+
+                                                    <div class="form-group col-4">
+                                                        <label class="control-label ">@Model.UserName</label>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="Password" class="control-label  space required"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="Password" class="form-control" id="Password" />
+                                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                                    </div>
+
+                                                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
+
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="ConfirmPassword" class="control-label  space required">Confirm Password</label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="ConfirmPassword" class="form-control" id="ConPassword" />
+                                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                                    </div>
+
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="SecurityQuestionId" class="control-label  space required"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <select asp-for="SecurityQuestionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))">
+                                                            <option value=''>---------Select---------</option>
+                                                        </select>
+                                                        <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3"></div><div class="col-3"></div>
+                                                    <div class="form-group col-2">
+                                                        <label asp-for="Answer" class="control-label space required"></label>
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <input asp-for="Answer" class="form-control" />
+                                                        <span asp-validation-for="Answer" class="text-danger"></span>
+                                                    </div>
+                                                    @*----------------------*@
+                                                    <div class="col-3 HideFileds"></div><div class="col-3 HideFileds"></div>
+                                                    <div class="form-group col-2 HideFileds"></div>
+                                                    <div class="form-group col-4 HideFileds">
+                                                        <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" /><label>Need to change password on login</label>
+                                                    </div>
+                                                    @*----------------------*@
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*----------Buttons-------------   *@
+                                    <div style=" display: flex; gap: 17px;">
+                                        <div class="col-2"></div>
+                                        <div class="col-2"></div>
+                                        <input type="submit" value="Update" id="BtnSaveFormInGeneralInfo" class="btn btn-pill btn-outline-success btn-auccess" />
+
+                                    </div>
+                                }
                             </form>
                         </div>
                     </div></div></div></div></div>

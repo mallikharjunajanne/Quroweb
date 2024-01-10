@@ -250,7 +250,12 @@
             </div>
         </div>
     </div>
-    <div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+<div>
         @*<div class="card">
             <div class="card-header pb-0">
                 <div style=" font-size: 50px; text-align: center;">
@@ -493,177 +498,177 @@
 
 
 <script>
-   $(document).ready(function () {  
+   //$(document).ready(function () {  
 
-       function CallToAjax(method, url, successCallback, errorCallback) {
-                $.ajax({
-                    url: url,
-                    type: method,
-                    success: successCallback,
-                    error: function (xhr, status, error) {
-                        errorCallback(xhr.status, error);
-                    }
-                });
-            }
+   //    function CallToAjax(method, url, successCallback, errorCallback) {
+   //             $.ajax({
+   //                 url: url,
+   //                 type: method,
+   //                 success: successCallback,
+   //                 error: function (xhr, status, error) {
+   //                     errorCallback(xhr.status, error);
+   //                 }
+   //             });
+   //         }
 
-       CallToAjax('GET', '/UserScreens/Coollinks',
-           function (response) {
-               $('#Coollinks_PartailConatiner').html(response);
-               pagination();
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       CallToAjax('GET', '/UserScreens/LeaveStatus',
-           function (response) {
-               $('#Leavestatus_PartailConatiner').html(response);
+   //    CallToAjax('GET', '/UserScreens/Coollinks',
+   //        function (response) {
+   //            $('#Coollinks_PartailConatiner').html(response);
+   //            pagination();
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    CallToAjax('GET', '/UserScreens/LeaveStatus',
+   //        function (response) {
+   //            $('#Leavestatus_PartailConatiner').html(response);
 
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',
-           function (response) {
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',
+   //        function (response) {
                
-               $('#Absenteestudents_PartailConatiner').html(response);
+   //            $('#Absenteestudents_PartailConatiner').html(response);
                
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
  
 
-       CallToAjax('GET', '/UserScreens/PostedQuestions',
-           function (response) {
+   //    CallToAjax('GET', '/UserScreens/PostedQuestions',
+   //        function (response) {
 
-               $('#PostedQuestion_Containerdiv').html(response);
+   //            $('#PostedQuestion_Containerdiv').html(response);
 
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
 
 
-       CallToAjax('GET', '/UserScreens/CalendarEvents',
-           function (response) {
+   //    CallToAjax('GET', '/UserScreens/CalendarEvents',
+   //        function (response) {
 
-               $('#EventsCalenderdiv').html(response);
+   //            $('#EventsCalenderdiv').html(response);
 
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       var FlassNews = $('#FlassNewsbtn').val();
-       var FlassNewsIsGlobalNotice = $('#FlassNewsbtn').attr('title');     
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    var FlassNews = $('#FlassNewsbtn').val();
+   //    var FlassNewsIsGlobalNotice = $('#FlassNewsbtn').attr('title');     
 
-       var dataToSend = {
-           ENoticeType: FlassNews,
-           IsGlobalNotice: FlassNewsIsGlobalNotice
-       };
-       datawithAjax('GET', '/UserScreens/FlashNews', dataToSend,
-           function (response) {
-               $('#Flassnews_PartailConatiner').html(response);
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //    var dataToSend = {
+   //        ENoticeType: FlassNews,
+   //        IsGlobalNotice: FlassNewsIsGlobalNotice
+   //    };
+   //    datawithAjax('GET', '/UserScreens/FlashNews', dataToSend,
+   //        function (response) {
+   //            $('#Flassnews_PartailConatiner').html(response);
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
-       function datawithAjax(method, url, data, successCallback, errorCallback) {
-           $.ajax({
-               url: url,
-               type: method,
-               data: data,
-               success: successCallback,
-               error: function (xhr, status, error) {
-                   errorCallback(xhr.status, error);
-               }
-           });   
-       }
+   //    function datawithAjax(method, url, data, successCallback, errorCallback) {
+   //        $.ajax({
+   //            url: url,
+   //            type: method,
+   //            data: data,
+   //            success: successCallback,
+   //            error: function (xhr, status, error) {
+   //                errorCallback(xhr.status, error);
+   //            }
+   //        });   
+   //    }
 
        
-       var ENoticeType = $('#ENoticebtn').val();
-       var IsGlobalNotice = $('#ENoticebtn').attr('title');
+   //    var ENoticeType = $('#ENoticebtn').val();
+   //    var IsGlobalNotice = $('#ENoticebtn').attr('title');
        
-       var dataToSend = {
-           ENoticeType: ENoticeType,
-           IsGlobalNotice: IsGlobalNotice
-       };
-       datawithAjax('GET', '/UserScreens/E_Noticeboard', dataToSend,
-           function (response) {
-               $('#EnoticeConatiner').html(response);
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-   });
+   //    var dataToSend = {
+   //        ENoticeType: ENoticeType,
+   //        IsGlobalNotice: IsGlobalNotice
+   //    };
+   //    datawithAjax('GET', '/UserScreens/E_Noticeboard', dataToSend,
+   //        function (response) {
+   //            $('#EnoticeConatiner').html(response);
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //});
 
-    function pagination() {
-        debugger;
-        var listId = 'Coollinkslist_Ul';
-        var paginationDiv = document.getElementById('Pagination_div');
-        var itemsPerPage = 10;
-        var currentPage = 1;
-        var list = document.getElementById(listId);
-        var items = Array.from(list.getElementsByTagName('li'));
-        var numItems = items.length;
-        var totalPages = Math.ceil(numItems / itemsPerPage);
+   // function pagination() {
+   //     debugger;
+   //     var listId = 'Coollinkslist_Ul';
+   //     var paginationDiv = document.getElementById('Pagination_div');
+   //     var itemsPerPage = 10;
+   //     var currentPage = 1;
+   //     var list = document.getElementById(listId);
+   //     var items = Array.from(list.getElementsByTagName('li'));
+   //     var numItems = items.length;
+   //     var totalPages = Math.ceil(numItems / itemsPerPage);
 
-        debugger;
+   //     debugger;
 
-        if (numItems >= itemsPerPage) {
-            function showPage(page) {
-                currentPage = page;
-                var startIndex = (page - 1) * itemsPerPage;
-                var endIndex = Math.min(startIndex + itemsPerPage, numItems);
+   //     if (numItems >= itemsPerPage) {
+   //         function showPage(page) {
+   //             currentPage = page;
+   //             var startIndex = (page - 1) * itemsPerPage;
+   //             var endIndex = Math.min(startIndex + itemsPerPage, numItems);
 
-                items.forEach(function (item) {
-                    item.style.display = 'none';
-                });
+   //             items.forEach(function (item) {
+   //                 item.style.display = 'none';
+   //             });
 
-                for (var i = startIndex; i < endIndex; i++) {
-                    items[i].style.display = 'list-item';
-                }
-            }
+   //             for (var i = startIndex; i < endIndex; i++) {
+   //                 items[i].style.display = 'list-item';
+   //             }
+   //         }
 
-            function updatePagination() {
-                paginationDiv.innerHTML = '';
+   //         function updatePagination() {
+   //             paginationDiv.innerHTML = '';
 
-                for (var i = 1; i <= totalPages; i++) {
-                    var link = document.createElement('a');
-                    link.href = '#';
-                    link.textContent = i;
-                    link.classList.add('pagination-link');
-                    link.dataset.page = i;
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        var page = parseInt(this.dataset.page);
-                        showPage(page);
-                        updatePagination();
-                    });
+   //             for (var i = 1; i <= totalPages; i++) {
+   //                 var link = document.createElement('a');
+   //                 link.href = '#';
+   //                 link.textContent = i;
+   //                 link.classList.add('pagination-link');
+   //                 link.dataset.page = i;
+   //                 link.addEventListener('click', function (e) {
+   //                     e.preventDefault();
+   //                     var page = parseInt(this.dataset.page);
+   //                     showPage(page);
+   //                     updatePagination();
+   //                 });
 
-                    if (i === currentPage) {
-                        link.classList.add('current-page');
-                        link.style.cursor = 'unset';
-                        link.style.fontWeight = 'bold';
-                        link.style.color = '#ff0000';
-                        link.style.margin = '0px 5px';
-                    }
-                    paginationDiv.appendChild(link);
-                }
-            }
+   //                 if (i === currentPage) {
+   //                     link.classList.add('current-page');
+   //                     link.style.cursor = 'unset';
+   //                     link.style.fontWeight = 'bold';
+   //                     link.style.color = '#ff0000';
+   //                     link.style.margin = '0px 5px';
+   //                 }
+   //                 paginationDiv.appendChild(link);
+   //             }
+   //         }
 
-            showPage(currentPage);
-            updatePagination();
-        }
-    }
+   //         showPage(currentPage);
+   //         updatePagination();
+   //     }
+   // }
 
 </script>

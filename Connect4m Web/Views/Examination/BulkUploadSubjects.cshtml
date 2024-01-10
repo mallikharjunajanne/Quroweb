@@ -160,24 +160,65 @@
 
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/GeneralFunctions.js"></script>
+
 <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 <script>
+    //=====================================Delete Subject
+    function DeleteExamsById(InstanceSubjectId) {
+        debugger;
+        // var UserId = $("#HdnUserId").val();
+        var Deletemsg = "Subject";
+        CommonDeleteFunctionNew(Deletemsg,"POST", "/Examination/DeleteSubject_CallingFunction?ButtonName=Delete&InstanceSubjectId=" + InstanceSubjectId, function (response) {
+            $("#Main_Span_Error").text(response.message);
 
+            TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblBulkUploadSubjectsList', 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
+         
+
+        });
+
+
+        //CommonDeleteFunction('Category', 'GET', '/PayRoll/DeleteManageCategory', data, function (response) {
+        //    $('.alert-success p').text("Category deleted successfully.");
+        //    $(".alert-success").show().delay(5000).fadeOut()
+        //    searchManageCategory();
+        //});
+        //CommonDeleteFunction(Deletemsg,"POST", "/Examination/DeleteSubject_CallingFunction?ButtonName=Delete&InstanceSubjectId=" + InstanceSubjectId, function (response) {
+        //    if (response.message == "Record deleted successfully.") {
+
+        //        TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblBulkUploadSubjectsList', 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
+
+        //        $('.alert-success p').text("Record deleted successfully.");
+        //        $(".alert-success").show().delay(5000).fadeOut()
+        //    } else {
+        //        $('.alert-danger p').text("you can not delete subject because results has been posted.");
+        //        $(".alert-danger").show().delay(5000).fadeOut()
+        //        }
+        //    //else {
+        //    //    Swal.fire({
+        //    //        icon: "error",
+        //    //        title: "Failed!",
+        //    //        text: (responce.response),
+        //    //    });
+        //    //}
+        //   // $("#Main_Span_Error").text(response.message);
+        // });
+    }
 
     $(document).ready(function () {
         $("#loadingOverlay").show();
         TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
-       CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+        CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
         $("#loadingOverlay").hide();
     });
     var js = jQuery.noConflict(true);
 
 
     //===============================View Subjects details
-   // function _ViewSubjects(event,InstanceClassificationId, InstanceSubClassificationId) {
-    function _ViewSubjects(event,Id) {
+    // function _ViewSubjects(event,InstanceClassificationId, InstanceSubClassificationId) {
+    function _ViewSubjects(event, Id) {
         try {
             event.preventDefault();
             debugger;
@@ -186,7 +227,7 @@
                 //  $("#ViewSubjectsSymbol").css("display","block")
                 $("#ViewSubjectsSymbol").show();
                 return;
-            } 
+            }
             var InstanceClassificationId = $("#DdlDepartmentForSingle").val();
             var InstanceSubClassificationId = $("#DdlClassForSingle").val();
             if (InstanceClassificationId == "" || InstanceSubClassificationId == '') {
@@ -194,8 +235,8 @@
                 return;
             }
             var Url = "/Examination/TblViewSubjectsList?InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId;
-           // Common_ViewChangeActivities(event, Url)
-            _ViewChangeActivities(event,'','','', Url)
+            // Common_ViewChangeActivities(event, Url)
+            _ViewChangeActivities(event, '', '', '', Url)
         }
         catch (e) {
             $("#Main_Span_Error").text("Something Error");
@@ -206,16 +247,16 @@
     function EditValuesGettingFunction(subjectId) {
         debugger;
         $(".ErrorMessageSpan").empty();
-        var data = { InstanceSubjectId: subjectId, Buttonname:"Update"};
+        var data = { InstanceSubjectId: subjectId, Buttonname: "Update" };
         $("#loadingOverlay").show();
         performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
             debugger;
-          //  $("#UpdateManageSubjects").html(response);
+            //  $("#UpdateManageSubjects").html(response);
             $("#accordionoc9").hide();
             $("#UpdateManageSubjects").html(response);
-           // $("#Saveclassfication_MS").val("Update");
+            // $("#Saveclassfication_MS").val("Update");
             $("#loadingOverlay").hide();
-        }, function (error) {  
+        }, function (error) {
             $("#loadingOverlay").hide();
             $("#Main_Span_Error").text("Something Error");
             //console.error(error);
@@ -228,7 +269,7 @@
         debugger;
         $(".ErrorMessageSpan").empty();
         var BtnName = $(this).attr("id");
-        var data = {Buttonname: BtnName };
+        var data = { Buttonname: BtnName };
         $("#loadingOverlay").show();
 
         performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
@@ -252,13 +293,13 @@
 
     function CreateNewSubjects() {
         try {
-        //$("#loadingOverlay").show();
-        //debugger;   
-        //    $("#accordionoc9").hide();
-        //    $("#UpdateManageSubjects").empty();
-        //    $("#CreateNewSubjects").show();
-        
-        //    $("#loadingOverlay").hide();
+            //$("#loadingOverlay").show();
+            //debugger;
+            //    $("#accordionoc9").hide();
+            //    $("#UpdateManageSubjects").empty();
+            //    $("#CreateNewSubjects").show();
+
+            //    $("#loadingOverlay").hide();
 
             $(".ErrorMessageSpan").empty();
             debugger;
@@ -309,7 +350,7 @@
     //    $(".ErrorMessageSpan").empty();
     //    var formData = new FormData();
     //    $("#loadingOverlay").show();
-      
+
     //    performCrudOperationCommonFunction('POST', "/Examination/ManageSubjects?ButtonName=" + ButtonName, formData, function (response) {
     //        debugger;
     //        if (response.message == "Record inserted successfully." || response.message == "Record updated successfully.") {
@@ -319,7 +360,7 @@
     //        }
     //        $("#Main_Span_Error").text(response.message);
     //        $("#loadingOverlay").hide();
-    //        window.scrollTo(0, 0);   
+    //        window.scrollTo(0, 0);
     //    }, function (error) {
     //        // errorCallback function code here
     //    }, true);
@@ -327,7 +368,7 @@
     //        $("#Main_Span_Error").text("Something Error");
     //        $("#loadingOverlay").hide();
     //    }
-      
+
     //});
 </script>
 

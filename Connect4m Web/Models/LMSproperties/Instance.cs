@@ -22,6 +22,12 @@ namespace Connect4m_Web.Models.LMSproperties
         int InstanceSubClassificationId { get; }
         int Roleid { get; }
         int StudentUserid { get; }
+        string ThemeName { get; }
+        string Quote { get; }
+        string RoleName { get; }
+        string UserNameHeader_ { get; }
+        string DelegationClasses { get; }
+
    
     }
     public class UserService : IUserService
@@ -32,7 +38,11 @@ namespace Connect4m_Web.Models.LMSproperties
         public int InstanceSubClassificationId { get; private set; }
         public int Roleid { get; private set; }
         public int StudentUserid { get; private set; }
-       // public int ThemeName { get; private set; }
+        public string ThemeName { get; private set; }
+        public string RoleName { get; private set; }
+        public string Quote { get; private set; }
+        public string UserNameHeader_ { get; private set; }
+        public string DelegationClasses { get; private set; }
 
         public UserService(IHttpContextAccessor httpContextAccessor)
         {
@@ -43,22 +53,13 @@ namespace Connect4m_Web.Models.LMSproperties
             InstanceSubClassificationId = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["InstanceSubClassificationId"]);
             Roleid = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["Roleid"]);
             StudentUserid = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["StudentUserid"]);
-          //  ThemeName = Convert.ToInt32(httpContextAccessor.HttpContext.Request.Cookies["ThemeName"]);
-
-            //Response.Cookies.Append("Instanceid", Value2[0].UserDetailsList[0].InstanceID.ToString());
-            //Response.Cookies.Append("LoginUserId", Value2[0].UserDetailsList[0].UserId.ToString());
-            //Response.Cookies.Append("InstanceClassificationId", Value2[0].UserDetailsList[0].InstanceClassificationId.ToString());
-            //Response.Cookies.Append("InstanceSubClassificationId", Value2[0].UserDetailsList[0].InstanceSubClassificationId.ToString());
-            //Response.Cookies.Append("Roleid", Value2[0].UserDetailsList[0].RoleId.ToString());
-            //Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
 
 
-            //Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
-            //Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
-
-            //int DelegationClasses = 1;// This for Arjun
-
-            //Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+           ThemeName = Convert.ToString(httpContextAccessor.HttpContext.Request.Cookies["ThemeName"]);
+           Quote = Convert.ToString(httpContextAccessor.HttpContext.Request.Cookies["Quote"]);
+           RoleName = Convert.ToString(httpContextAccessor.HttpContext.Request.Cookies["RoleName"]);
+           DelegationClasses = Convert.ToString(httpContextAccessor.HttpContext.Request.Cookies["DelegationClasses"]);
+           UserNameHeader_ = Convert.ToString(httpContextAccessor.HttpContext.Request.Cookies["UserNameHeader_"]);
 
 
         }

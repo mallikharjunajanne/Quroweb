@@ -1286,11 +1286,12 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
 
         if (Url == '' || Url == undefined) {
             Url = "/Attendance/_ViewChangeActivities?SourceId=" + SourceId + "&AuditKey=" + AuditKey + "&TableName=" + TableName;
-        } else {
-            $("#Main_Span_Error").text("Something Error");
-            $("#loadingOverlay").hide();
-            return;
         }
+            //else {
+        //    $("#Main_Span_Error").text("Something Error");
+        //    $("#loadingOverlay").hide();
+        //    return;
+        //}
         $.ajax({
             url: Url,
             type: "GET",
@@ -1349,7 +1350,7 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
     $("#ErrorMessageSpan").empty();
     Swal.fire({
         title: "Are you sure?",
-        text: ("You want to delete the " + Deletemsg + " !"),
+        text: ("You want to delete this " + Deletemsg + " !"),
         //type: "warning", -  doesn't exist
         showCancelButton: true,
         showCloseButton: true, // optional
@@ -1367,27 +1368,27 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
                     //  type: "Post",
                     url: URL,
                     type: type,
-                    success: function (responce) {
-                        if (responce.message == "Record deleted successfully." || responce.message == "Photo Deleted Sucessfully." ) {
+                    success: function (response) {
+                        if (response.message == "Record deleted successfully." || response.message == "Photo Deleted Sucessfully." ) {
                             //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
                             //Swal.fire({
                             //    icon: "success",
                             //    title: "Deleted!",
-                            //    text: (responce.message),
+                            //    text: (response.message),
                             //});
 
-                            successCallback(responce);
-                            //$("#Main_Span_Error").text(responce.message);
+                            successCallback(response);
+                            //$("#Main_Span_Error").text(response.message);
                             $("#loadingOverlay").hide();
                         }
                         else {
                             Swal.fire({
                                 icon: "error",
                                 title: "Failed!",
-                                text: (responce.message),
+                                text: (response.message),
                             });
                             $("#loadingOverlay").hide();
-                            // $("#Main_Span_Error").text(responce.message);
+                            // $("#Main_Span_Error").text(response.message);
                         }
                        // $("#loadingOverlay").hide();
                     },
@@ -1404,10 +1405,74 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
   
 }
 
+
+function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
+
+    debugger;
+    $("#ErrorMessageSpan").empty();
+    Swal.fire({
+        title: "Are you sure?",
+        text: ("You want to delete this " + Deletemsg + " !"),
+        //type: "warning", -  doesn't exist
+        showCancelButton: true,
+        showCloseButton: true, // optional
+        showConfirmButton: true, // optional
+        confirmButtonColor: '#d33',
+        confirmButtonText: "Yes",
+        icon: "warning",
+        //closeOnConfirm: false -  doesn't exist
+    })
+        .then(function (isConfirm) {
+            if (isConfirm.isConfirmed) {
+                $("#loadingOverlay").show();
+                $.ajax({
+                    //  url: "/Attendance/ManageCompansatoryLeaves?ButtonName=Delete&CompOffLeaveID=" + CompOffLeaveID,
+                    //  type: "Post",
+                    url: URL,
+                    type: type,
+                    success: function (response) {
+                        if (response.message == "Record deleted successfully." || response.message == "Photo Deleted Sucessfully.") {
+                            //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
+                            //Swal.fire({
+                            //    icon: "success",
+                            //    title: "Deleted!",
+                            //    text: (response.message),
+                            //});
+                            $('.alert-success p').text("Record deleted successfully.");
+                            $(".alert-success").show().delay(5000).fadeOut()
+                            successCallback(response);
+                            //$("#Main_Span_Error").text(response.message);
+                            $("#loadingOverlay").hide();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Failed!",
+                                text: (response.message),
+                            });
+                            $("#loadingOverlay").hide();
+                            // $("#Main_Span_Error").text(response.message);
+                        }
+                        // $("#loadingOverlay").hide();
+                    },
+                    error: function (xhr, status, error) {
+                        $("#loadingOverlay").hide();
+                        $("#Main_Span_Error").text("Something Error");
+                    }
+                });
+            }
+            else {
+                return; //close popup
+            }
+        });
+
+}
+
+
+
 //CommonMethod to ALL
 function performCrudOperationCommonFunction(type, Url, Data, successCallback, errorCallback, hasFileUpload) {
    // try {
-        debugger;
         $(".ErrorMessageSpan").empty();
         //var formdata = new FormData($("#" + FormId)[0]);
 
@@ -1485,7 +1550,7 @@ function CommonDropdownFunction(Method, Url, EffectingDropdownid, FirstSelectTex
         }
      
        // var Data = { InstanceClassificationId: InstanceClassificationId, InstanceSubClassificationId: InstanceSubClassificationId}
-        debugger;
+        
         $.ajax({
             url: Url,
             type: Method,
@@ -1538,7 +1603,7 @@ function UpdateAllTextboxvaluesByChecked(checkbox, FirstTextBoxId, EffectiveTxtC
 
 
 //-sr---------------------------------------------------------------------------------   Common Ajax Function To all
-function CommonAjaxFunction(method, url, data, successCallback, errorCallback, hasFileUpload) {
+function CommonAjaxFunction1(method, url, data, successCallback, errorCallback, hasFileUpload) {
     // debugger;
     var ajaxOptions = {
         url: url,
