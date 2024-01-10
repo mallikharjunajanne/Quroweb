@@ -6,22 +6,21 @@
    // Layout = null;
 }
 @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
+
 <!DOCTYPY html>
     <html lang="en">
     <head>
-
+        <link href="~/css/CommonStyle.css" rel="stylesheet" />
     </head>
     <body>
-
-
-        <div class="col-sm-12 " di>
+        <div class="col-sm-12 ">
             <div class="card">
                 <div class="card-body">
                     <div class="default-according style-1" id="accordionoc">
                         <div class="card">
                             <h6><span>MANAGE USERS</span></h6>
-                            <div class="card-header pb-0">
+                            
+                            <div class="card-header pb-0 " style=" DISPLAY: inline; margin-top: 0%;">
                                 <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 0%; border-radius: 15px; height: 35px;  margin-bottom: 3px;display:none" id="BtnBackToSearch">
                                     Back to Search
                                 </button>
@@ -42,25 +41,24 @@
                                         <div class="row">
                                             <form id="FmUsersSearch">
                                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                            
+
                                                 <div class="row">
                                                     <div class="form-group col-12 passwordfor"><span class="compare"></span></div>
-                                                    @*----------------------*@
 
+                                                    @*----------------------*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="UserName" class="control-label  space"></label>
                                                     </div>
                                                     <div class="form-group col-4">
                                                         <input asp-for="UserName" class="form-control" id="AdmissionNumber_ME" />
-                                                        <span asp-validation-for="UserName" class="text-danger"></span>
                                                     </div>
                                                     @*----------------------*@
 
                                                     <div class="form-group col-2">
-                                                        <label asp-for="InstanceUserCode" class="control-label space"></label>
+                                                        <label asp-for="InstanceUserCode" class="control-label space">Reg. No./Emp ID</label>
                                                     </div>
                                                     <div class="form-group col-4">
-                                                        <input asp-for="InstanceUserCode" class="form-control" id="SalaryAttributeName" />
+                                                        <input asp-for="InstanceUserCode" class="form-control" />
                                                     </div>
 
                                                     @*----------------------*@
@@ -69,11 +67,11 @@
                                                     </div>
                                                     <div class="form-group col-4">
                                                         <div id="Drop_Format_SEM_3">
-                                                            @Html.DropDownListFor(x => x.RoleId,
-                 new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
-                 new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;", @onchange = "RoleOnChangeFunction(this.value)" })
+                                                            @Html.DropDownListFor(x => x.RoleId, new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
+                                                    new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;", @onchange = "RoleOnChangeFunction(this.value)" })
                                                         </div>
                                                     </div>
+
                                                     @*----------------------*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="AdmissionNumber" class="control-label space"></label>
@@ -81,6 +79,7 @@
                                                     <div class="form-group col-4">
                                                         <input asp-for="AdmissionNumber" class="form-control" id="SalaryAttributeName" />
                                                     </div>
+
                                                     @*----------------------*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="FirstName" class="control-label space"></label>
@@ -118,6 +117,7 @@
                                                             <option value=''>Please select a Class</option>
                                                         </select>
                                                     </div>
+
                                                     @*----------------------*@
                                                     <div class="form-group col-2">
                                                         <label asp-for="RouteId" class="control-label space"></label>
@@ -131,7 +131,6 @@
 
                                                         </div>
                                                     </div>
-
 
                                                     @*----------------------*@
 
@@ -150,7 +149,7 @@
                                                     <div class="form-group col-4">
                                                         <input asp-for="CollegeCode" class="form-control" id="EndDate" />
                                                         @*<span asp-validation-for="CollegeCode" class="text-danger"></span>
-                                                            <span class="compare"></span>*@
+                                    <span class="compare"></span>*@
                                                     </div>
                                                     @*----------------------*@
                                                     <div class="form-group col-2">
@@ -160,8 +159,8 @@
                                                         <select asp-for="Gender" id="DdlGender" class="form-select readonly">
                                                             <option value="" title="---------Select---------">---------Select---------</option>
                                                             <option value="1" title="Male">Male</option>
-                                                            <option value="2" title="Female">Female</option>
-                                                            <option value="3" title="Others">Others</option>
+                                                            <option value="0" title="Female">Female</option>
+                                                            <option value="2" title="Others">Others</option>
                                                         </select>
                                                     </div>
                                                     @*----------------------*@
@@ -192,7 +191,6 @@
                                                     <div class="form-group col-4" style="display:flex">
                                                         <input asp-for="IsActive" type="radio" checked="checked" name="IsActive" value="1" style="flex: 0.2;" /><span>Yes</span>
                                                         <input asp-for="IsActive" type="radio" name="IsActive" value="0" style="flex: 0.2;" /><span>No</span>
-
                                                     </div>
                                                     @*----------------------*@
                                                     @*<div id="DivDesignationId">*@
@@ -201,7 +199,6 @@
                                                     </div>
                                                     <div class="form-group col-4 ClsDesignationId">
                                                         @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "DdlDesignationId", @style = "color:black;" })
-
                                                     </div>
                                                     @*</div>*@
                                                     @*----------------------*@
@@ -224,6 +221,7 @@
                                                     <div class="form-group col-4 ClsTcTaken" style="display:none">
                                                         <select asp-for="TcTaken" id="DdlTcTaken" class="form-select readonly">
                                                             <option value="">---------Select---------</option>
+                                                            @*<option selected="selected" value="1">Yes</option>*@
                                                             <option value="1">Yes</option>
                                                             <option value="0">No</option>
                                                         </select>
@@ -243,10 +241,10 @@
                                                     </div>
                                                     @*----------------------*@
                                                     <div class="form-group col-2 ClsParentNameForStudent">
-                                                        <label asp-for="FatherFirstName" class="control-label space"></label>
+                                                        <label asp-for="FatherLastName" class="control-label space"></label>
                                                     </div>
                                                     <div class="form-group col-4 ClsParentNameForStudent">
-                                                        <input asp-for="FatherFirstName" class="form-control ClsTxtParent" id="EndDate" />
+                                                        <input asp-for="FatherLastName" class="form-control ClsTxtParent" id="EndDate" />
                                                     </div>
                                                     @*----------------------*@
                                                     <div class="form-group col-2 ClsParentNameForStudent">
@@ -269,7 +267,7 @@
                                                     <div class="form-group col-4">
                                                         <input asp-for="SearchDateType" type="radio" name="SearchDateType" onchange="dateWisesearching()" value="1" style="flex: 0.2;" /><span>Withdrawal date</span>
                                                         <input asp-for="SearchDateType" type="radio" name="SearchDateType" onchange="dateWisesearching()" value="2" style="flex: 0.2;" /><span>Admission date</span>
-                                                        <input asp-for="SearchDateType" type="radio" name="SearchDateType" onchange="dateWisesearching()" value="3" style="flex: 0.2;" /><span>Jooining date</span>
+                                                        <input asp-for="SearchDateType" type="radio" name="SearchDateType" onchange="dateWisesearching()" value="3" style="flex: 0.2;" /><span>Joining date</span>
 
                                                     </div>
                                                     @*----------------------*@
@@ -302,7 +300,7 @@
                                                         <div class="col-2"></div>
                                                         @*<input type="button" value="Previous Page" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
 
-                                                            <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />*@
+                                    <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />*@
 
                                                         <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="clearform" />
                                                         <input type="submit" value="Search" id="BtnSearch" class="btn btn-pill btn-outline-primary btn-sm" />
@@ -374,82 +372,26 @@
 </html>
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>*@
 
-@*<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>*@
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
-@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 
 @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
 @*<script src="~/js/CommonScripts.js"></script>*@
 @*<script src="~/js/PayRoll_1.js"></script>*@
 <script src="~/js/GeneralFunctions.js"></script>
+<script src="~/js/ManageUsers.js"></script>
 <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="~/Datatable/datatable.min.js"></script>
 <script type="text/javascript">
 
-
-
-    //-================================ BackToSearch
-    $("#BtnBackToSearch").click(function () {
-        try {
-            debugger;
-          //  $(".ErrorMessageSpan").empty();
-            loaddingimg.css('display', 'block');
-            $('#BtnBackToSearch').css('display', 'none');
-            TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
-
-            $("#DivUsersSearchPage").css('display', 'block');
-            $("#DivappendCreateNewUsers").empty();
-            loaddingimg.css('display', 'none');
-        } catch (x) {
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    })
-
-
-
-    //=========To Get Create Users PAge
-    $("#BtnCreateUsers").click(function () {
-        debugger;
-        loaddingimg.css('display', 'block');
-        CommonAjaxFunction('GET', '/Users/CreateUsers', null, function (response) {
-            debugger;
-            $('#DivappendCreateNewUsers').html(response);
-            $('#DivUsersSearchPage').css('display', 'none');
-            $('#BtnBackToSearch').css('display', 'block');
-            loaddingimg.css('display', 'none');
-        }, function (status, error) {
-            loaddingimg.css('display', 'none');
-        }, false);
-
-    })
-
-
-    //not using
-    function setOutTimeAndCheckValidation(callback) {
-        var validationmelength = document.getElementById('FmUsersSearch').getElementsByClassName('field-validation-error').length;
-        debugger;
-        if (validationmelength === 0) {
-            setTimeout(function () {
-                //handleValidationZero();
-                callback(true); // Call the callback with true indicating success
-            }, 50);
-        } else {
-            $('.alert-danger p').text("Please Enter All Required Fields");
-            $(".alert-danger").show().delay(5000).fadeOut();
-            callback(false); // Call the callback with false indicating failure
-        }
-    }
-
-
     var js = jQuery.noConflict(true);
-    //=======Ready Function
+    //=======Ready Function in Search Tab
     $(document).ready(function () {
         debugger;
         $(".ClsParentNameForStudent").css("display", "none");
@@ -463,112 +405,156 @@
     });
 
 
-    //  ============ Searched Users Details in Table
-    $("#FmUsersSearch").submit(function (event) {
-        debugger;
-        try {
-            event.preventDefault();
-            $(".ErrorMessageSpan").empty();
-            var formElement = document.getElementById('FmUsersSearch');
 
-            setTimeout(function () {
-                var validationMessages = formElement.getElementsByClassName('field-validation-error');
-                // var validationMessages2 = formElement.getElementsByClassName('error2');
-                var validationmelength = validationMessages.length;
-                if (validationmelength == 0) {
-                    loaddingimg.css('display', 'block');
-                    TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
-                    loaddingimg.css('display', 'none');
-                    $("#loadingOverlay").hide();
-                    //  loaddingimg.css('display', 'none');
-                    //  $("#loadingOverlay").hide();
-                } else {
-                    $('.alert-danger p').text("Pleae Enter All Required Fields");
-                    $(".alert-danger").show().delay(5000).fadeOut()
-                }
-            }, 50);
+    //===================>>>>>>>>>>>>>>>>>>>>====In manage Users Page  Functions START
 
 
-            //setOutTimeAndCheckValidation(function (validationResult) {
-            //    debugger;
-            //    if (validationResult) {
-            //        loaddingimg.css('display', 'block');
-            //        // Your TblDataTableWithColumns_CallingFunction_new call goes inside the if condition
-            //        TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
-            //        loaddingimg.css('display', 'none');
-            //        $("#loadingOverlay").hide();
-            //    } else {
-            //        // Handle the case when validation fails, if needed
-            //    }
-            //});
-            //    });
-        } catch (e) {
-            // $("#loadingOverlay").hide();
-            //   loaddingimg.css('display', 'none');
-            $("#loadingOverlay").hide();
-            $("#Main_Span_Error").text("Something Error");
-        }
-    })
+    ////==================== to get details for edit
+    //function GettingUserDetails_EditFunction(UserId) {
+    //    debugger; try {
+    //        loaddingimg.css('display', 'block');
+    //        var data = { UserId: UserId };
+    //        CommonAjaxFunction('GET', '/Users/CreateUsers', data, function (response) {
+    //            $('#DivappendCreateNewUsers').html(response);
+    //            $('#DivUsersSearchPage').css('display', 'none');
+    //            $('#BtnBackToSearch').css('display', 'block');
+    //            //  $("#BtnSaveFormInGeneralInfo").val("Update");
+    //            //$(".DdlCascadDropdowns").prop("disabled", false);
+    //            window.scrollTo(0, 0);
+    //            loaddingimg.css('display', 'none');
 
-    //=====================Showing Feilds based on Role
-    function RoleOnChangeFunction(Roleid) {
-        debugger;
-        $("#DdlTcTaken").val("");
-        $("#DdlDesignationId").val("");
-        $(".ClsTxtParent").val("");
-        if (Roleid == 775) {
-            $(".ClsParentNameForStudent").css("display", "block");
-            $(".ClsTcTaken").css("display", "block");
-            $(".ClsEmptyDiv").css("display", "none");
-            $(".ClsDesignationId").css("display", "none");
-            $("#LblTcTaken").text("Tc Taken");
-        } else {
-            $(".ClsParentNameForStudent").css("display", "none");
-            $(".ClsEmptyDiv").css("display", "block");
-            $(".ClsTcTaken").css("display", "block");
-            $(".ClsDesignationId").css("display", "block");
-            $("#LblTcTaken").text("Hide in the portal");
-        }
-    }
+    //        }, function (status, error) {
+    //            loaddingimg.css('display', 'none');
+    //        }, false);
+    //    } catch (e) {
+    //        $("#Main_Span_Error").text("Something Error");
+    //        loaddingimg.css('display', 'none');
+    //    }
+    //}
 
-    //===================Shows date  fields
-    function dateWisesearching() {
-        $(".ClsDates").css("display", "block");
-
-        //  $("#SpnSearchStartDate").attr('asp-validation-for', 'SearchStartDate');
-        // $("#SpnSearchEndDate").attr('asp-validation-for', 'SearchEndDate');
-        //if (condition) {
-        //    $('[name="SearchStartDate"]').prop('required', true);
-        //    $('[name="SearchEndDate"]').prop('required', true);
-        //    $('[name="SearchStartDate"]').prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
-        //    $('[name="SearchEndDate"]').prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
-        ////}
-    }
+    ////====================To Get Create Users Page
+    //$("#BtnCreateUsers").click(function (event) {
+    //    event.preventDefault();
+    //    debugger;
+    //    loaddingimg.css('display', 'block');
+    //    CommonAjaxFunction('GET', '/Users/CreateUsers', null, function (response) {
+    //        debugger;
+    //        $('#DivappendCreateNewUsers').html(response);
+    //        $('#DivUsersSearchPage').css('display', 'none');
+    //        $('#BtnBackToSearch').css('display', 'block');
+    //        loaddingimg.css('display', 'none');
+    //    }, function (status, error) {
+    //        loaddingimg.css('display', 'none');
+    //    }, false);
+    //})
 
 
 
+    ////-================================ BackToSearch
+    //$("#BtnBackToSearch,#BtnBackToSearchInGeneralInfo").click(function () {
+    //    try {
+    //        debugger;
+    //        //  $(".ErrorMessageSpan").empty();
+    //        loaddingimg.css('display', 'block');
+    //        $('#BtnBackToSearch').css('display', 'none');
+    //        TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
+
+    //        $("#DivUsersSearchPage").css('display', 'block');
+    //        $("#DivappendCreateNewUsers").empty();
+    //        loaddingimg.css('display', 'none');
+    //    } catch (x) {
+    //        loaddingimg.css('display', 'none');
+    //        $("#Main_Span_Error").text("Something Error");
+    //    }
+    //})
+
+
+    ////  ============ Searched Users Details in Table
+    //$("#FmUsersSearch").submit(function (event) {
+    //    debugger;
+    //    try {
+    //        event.preventDefault();
+    //        //  $(".ErrorMessageSpan").empty();
+    //        var formElement = document.getElementById('FmUsersSearch');
+
+    //        setTimeout(function () {
+    //            var validationMessages = formElement.getElementsByClassName('field-validation-error');
+    //            // var validationMessages2 = formElement.getElementsByClassName('error2');
+    //            var validationmelength = validationMessages.length;
+    //            if (validationmelength == 0) {
+    //                loaddingimg.css('display', 'block');
+    //                TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
+    //                loaddingimg.css('display', 'none');
+    //                $("#loadingOverlay").hide();
+    //                //  loaddingimg.css('display', 'none');
+    //                //  $("#loadingOverlay").hide();
+    //            } else {
+    //                $('.alert-danger p').text("Pleae Enter All Required Fields");
+    //                $(".alert-danger").show().delay(5000).fadeOut()
+    //            }
+    //        }, 50);
+
+
+    //        //setOutTimeAndCheckValidation(function (validationResult) {
+    //        //    debugger;
+    //        //    if (validationResult) {
+    //        //        loaddingimg.css('display', 'block');
+    //        //        // Your TblDataTableWithColumns_CallingFunction_new call goes inside the if condition
+    //        //        TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
+    //        //        loaddingimg.css('display', 'none');
+    //        //        $("#loadingOverlay").hide();
+    //        //    } else {
+    //        //        // Handle the case when validation fails, if needed
+    //        //    }
+    //        //});
+    //        //    });
+    //    } catch (e) {
+    //        // $("#loadingOverlay").hide();
+    //        //   loaddingimg.css('display', 'none');
+    //        $("#loadingOverlay").hide();
+    //        $("#Main_Span_Error").text("Something Error");
+    //    }
+    //})
+
+    ////=====================Showing Feilds based on Role
+    //function RoleOnChangeFunction(Roleid) {
+    //    debugger;
+    //    $("#DdlTcTaken").val("");
+    //    $("#DdlDesignationId").val("");
+    //    $(".ClsTxtParent").val("");
+    //    if (Roleid == 775) {
+    //        $(".ClsParentNameForStudent").css("display", "block");
+    //        $(".ClsTcTaken").css("display", "block");
+    //        $(".ClsEmptyDiv").css("display", "none");
+    //        $(".ClsDesignationId").css("display", "none");
+    //        $("#LblTcTaken").text("Tc Taken");
+    //    } else {
+    //        $(".ClsParentNameForStudent").css("display", "none");
+    //        $(".ClsEmptyDiv").css("display", "block");
+    //        $(".ClsTcTaken").css("display", "block");
+    //        $(".ClsDesignationId").css("display", "block");
+    //        $("#LblTcTaken").text("Hide in the portal");
+    //    }
+    //}
+
+    ////===================Shows date  fields
+    //function dateWisesearching() {
+    //    $(".ClsDates").css("display", "block");
+
+    //    //  $("#SpnSearchStartDate").attr('asp-validation-for', 'SearchStartDate');
+    //    // $("#SpnSearchEndDate").attr('asp-validation-for', 'SearchEndDate');
+    //    //if (condition) {
+    //    //    $('[name="SearchStartDate"]').prop('required', true);
+    //    //    $('[name="SearchEndDate"]').prop('required', true);
+    //    //    $('[name="SearchStartDate"]').prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
+    //    //    $('[name="SearchEndDate"]').prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
+    //    ////}
+    //}
+//=================<<<<<<<<<<<<<<<<<<<<======In manage Users Page  Functions END
 
 
 
-    //this is not using ,if you want use
 
-    // Your condition to determine whether the fields should be required or not
-    var conditionMet = true; // Change this to your actual condition
 
-    // Function to set or remove the "required" attribute based on the condition
-    function setRequiredAttribute(condition, inputSelector) {
-        var $input = $(inputSelector);
-        if (condition) {
-            $input.prop('required', true);
-            $input.prev('label').addClass('required'); // Optional: Add a class to the label to indicate it's required
-        } else {
-            $input.removeAttr('required');
-            $input.prev('label').removeClass('required'); // Optional: Remove the class from the label
-        }
-    }
-
-    // Call the function for each input field with the corresponding condition
-    //setRequiredAttribute(conditionMet, '[name="SearchStartDate"]');
-   // setRequiredAttribute(conditionMet, '[name="SearchEndDate"]');
 
 </script>

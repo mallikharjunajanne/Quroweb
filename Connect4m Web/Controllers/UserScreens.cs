@@ -53,7 +53,10 @@ namespace Connect4m_Web.Controllers
 
 
         public IActionResult SchoolWelcomePage()
-        { 
+        {
+            string RoleName = Request.Cookies["RoleName"];
+            ViewBag.LoginRoleName = RoleName;
+
             List<ENoticeByNoticeType> item = new List<ENoticeByNoticeType>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_ENotice_SelectByNoticeType?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
             if (response.IsSuccessStatusCode)
@@ -150,6 +153,21 @@ namespace Connect4m_Web.Controllers
                 item = JsonConvert.DeserializeObject<List<NoticeTypes>>(data);
             }        
             return PartialView("_FlashNews", item);
+
+        }
+        [HttpGet]
+        public IActionResult BirthdaysByInstance()//int InstanceId, int UserId
+        {
+            List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();        
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BirthdaysByInstance?InstanceId=" + InstanceId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<BirthdaysByInstance>>(data);
+            }        
+            return PartialView("_BirthdaysByInstance", item);
 
         }
 

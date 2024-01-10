@@ -17,8 +17,6 @@
             <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateMasterPK" asp-for="DisplayIcon" id="DisplayIcon_txt" />
             <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateDescription" asp-for="Subject" id="Subject_txt" />
         </p>
-
-
         <div>
 
 
@@ -78,7 +76,7 @@
 
             }
         </div>
-        <form enctype="multipart/form-data">
+        @*<form enctype="multipart/form-data">*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row" style=" margin: 25px;">
                 <div class="row">
@@ -111,7 +109,7 @@
                     <div class="col-3"></div>
                 </div>
             </div>
-        </form>
+        @*</form>*@
     </div>
 </div>
 
@@ -124,6 +122,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script src="~/js/Managenotice_2.js"></script>
+
 <script>
 
     //$(document).ready(function () {

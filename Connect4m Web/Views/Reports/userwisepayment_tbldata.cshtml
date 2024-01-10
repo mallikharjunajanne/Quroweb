@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Userwisepayment>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+</head>
+<body>
+    <div class="card">
+        <h5 class="card-header">
+            YOUR SEARCH RESULTED @Model.Count() RECORDS.
+        </h5>
+        <div class="card-datatable text-nowrap">
+            <div class="table-responsive">
+                <div class="table-responsive text-nowrap">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Fee Amount(DR)</th>
+                                <th>Discount</th>
+                                <th>Fee Collected(CR)</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.hallticket</td>
+                                    <td>
+                                        <a href="javascript:void(0);" data-id="@item.Name" onclick="Feestatementbyuserid('@item.UserId','@item.Name')">
+                                            @item.Name
+                                        </a>
+                                    </td>
+                                    <td>@item.subclassificationlist[0].SubClassificationName</td>
+                                    <td>@item.StudentAmountSet</td>
+                                    <td>@item.StudentDiscountAmount</td>
+                                    <td>@item.StudentCollectedAmount</td>
+                                    <td>@item.StudentBalance</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Userwisepayment.js"></script>
+

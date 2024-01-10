@@ -1,4 +1,6 @@
-﻿/* ------***** MANAGE NOTICE MAIN SCREEN  CODE START *****-------- */
+﻿           /*=====***** MANAGE NOTICE MAIN SCREEN CODE *****=====*/
+
+/* ------***** MANAGE NOTICE MAIN SCREEN  CODE START *****-------- */
 
 $(document).ready(function () {  
     function CallToAjax(method, url, successCallback, errorCallback) {
@@ -243,6 +245,7 @@ $('#Addnotice').click(function () {
             $('#ManagenoticeMaindiv').hide();            
             $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
             $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $("#Postnoticemailsmsdiv").empty();
         },
         error: function (error) {
             console.log('Error:', error);
@@ -263,6 +266,7 @@ $('#AddnewSMS').click(function () {
             $("#Addnotice_div1").empty();
             $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
             $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $("#Postnoticemailsmsdiv").empty();
         },
         error: function (error) {
             console.log('Error:', error);
@@ -283,6 +287,7 @@ $('#AddnewSMSNNotices').click(function () {
             $("#Addnotice_div1").empty();
             $("#ManageNotices_CreateSMS_ViewDivid").empty();
             $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $("#Postnoticemailsmsdiv").empty();
             $("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
         },
         error: function (error) {
@@ -315,10 +320,6 @@ $('#addnewmanagequotes').click(function () {
 
 
 /* -- MANAGE NOTICE MAIN SCREEN  CODE END -- */
-
-
-//const { userdata } = require("modernizr");
-
 var Instanceid = $('#Instance_Txtid').val();
 
 
@@ -363,13 +364,17 @@ function adduserstopostthisnotice$InstanceClassificationSearch() {
         }
     });
 }
+
 var Classificationdropdown = document.getElementById('Classificationid');
+
 Classificationdropdown.addEventListener('change', function () {
     
     var selectedClassificationId = Classificationdropdown.value;
   
     adduserstopostthisnotice$Subclassification_on_Classification(selectedClassificationId, Instanceid);
 });
+
+
 
 function adduserstopostthisnotice$Subclassification_on_Classification(selectedClassificationId, Instanceid) {
     $.ajax({
@@ -419,6 +424,8 @@ function getDatesBetween(startDate, endDate) {
     return dates;
 }
 //---------*** DATE FOMRATE CHANGE FUNCTION END***------------
+
+
 
 
 //------***SCHEDULE SMS BOX SCREEN CODE START***---------

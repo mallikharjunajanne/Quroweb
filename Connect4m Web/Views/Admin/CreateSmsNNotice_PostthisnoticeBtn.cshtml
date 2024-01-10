@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />  
+    <meta name="viewport" content="width=device-width" />
 </head>
 <body>
     <div class="row">
@@ -235,22 +235,8 @@
                             </div>
                             <div class="col-2 rowcol"></div>
                             <div class="col-10 rowcol" style="margin-left: 10px;">
-                                @*@{
-                                    bool isChecked0 = false;
-
-                                    foreach (var Noticeitem in ViewBag.List.ENoticeTargetTbl[0])
-                                    {
-                                        string Comparingvalue = Noticeitem.ForAll_;
-
-                                        if (Comparingvalue == "True")
-                                        {
-                                            isChecked0 = true;
-                                            break;
-                                        }
-                                    }
-                                }*@
                                 <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
-                                    <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk1" checked/>
+                                    <input class="form-check-input" type="checkbox" value="" id="Sendsms_chk1" checked />
                                     <label class="form-check-label" style="font: 12px arial; color: blue;">Send SMS</label>
                                 </div>
                                 <div class="form-check form-check-inline col-3" style=" margin-right: -3rem;">
@@ -308,15 +294,15 @@
                                         }
                                     }
 
-                                <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                    <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" @(isChecked ? "checked" : "") />
-                                    <label style=" font: 11px arial; color: #333333; " class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
-                                </div>
-                                @if (item.InstanceRoleId == 3)
-                                {
-                                    break;
-                                }
-                                Rolesno++;
+                                    <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                        <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" @(isChecked ? "checked" : "") />
+                                        <label style=" font: 11px arial; color: #333333; " class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
+                                    </div>
+                                    @if (item.InstanceRoleId == 3)
+                                    {
+                                        break;
+                                    }
+                                    Rolesno++;
                                 }
                                 <div class="form-check form-check-inline col-12" style=" margin-right: 0rem;">
                                     <input class="form-check-input checkbox-item" id="Selectallstaffrolecbk" type="checkbox" />
@@ -352,7 +338,7 @@
                                         }
                                     }
                                     <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                        <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox" type="checkbox" name="Grpcheckbox" value="@item.GroupId" @(isChecked ? "checked" : "")/>
+                                        <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox" type="checkbox" name="Grpcheckbox" value="@item.GroupId" @(isChecked ? "checked" : "") />
                                         <label style=" font: 11px arial; color: #333333; ">@item.GroupName</label>
                                     </div>
                                     @if (item.GroupId == 3)
@@ -391,7 +377,7 @@
                                         }
                                     }
                                     <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                        <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId"  @(isChecked ? "checked" : "")/>
+                                        <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" @(isChecked ? "checked" : "") />
                                         <label style=" font: 11px arial; color: #333333; ">@item.ClassificationName</label>
                                     </div>
                                     @if (item.InstanceClassificationId == 3)
@@ -431,7 +417,7 @@
                                     }
 
                                     <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                        <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" @(isChecked ? "checked":"") />
+                                        <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" @(isChecked ? "checked" : "") />
                                         <label style=" font: 11px arial; color: #333333; ">@item.SubClassificationName</label>
                                     </div>
                                     @if (item.InstanceSubClassificationId == 3)
@@ -448,7 +434,7 @@
 
                 </div>
                 <div>
-                    <a href="" onclick="Adduserstosms_notice(); return false;">Search and add users to post this notice</a>
+                    <a href="" onclick="Adduserstosms_notice(); return false;" class="">Search and add users to post this notice</a>
                 </div>
                 <div id="SearchUsers_Postnotice_DivId" style="display: none;">
                     <div class="card">
@@ -465,16 +451,15 @@
                                     <div class="row">
                                         <div class="row">
                                             <div class="form-group col-2">
-                                                <label class="form-grop control-label space">User Name</label>
-                                                @*<input type="hidden" value="@ViewBag.instanceid" asp-for="InstanceId" />*@
+                                                <label class="form-grop control-label space">User Name</label>                                         
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <input type="text" id="Ps_UserNametxt" asp-for="UserName" class="form-control" />
                                             </div>
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Role</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <select asp-for="InstanceRoleId" id="Instancerole_id" class="form-select" style="width:90%;">
                                                     <option value="">------Select------</option>
                                                     @foreach (var Roleitem in ViewBag.List.roleList_byInstanceId)
@@ -487,40 +472,40 @@
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Reg. No</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <input type="text" id="Ps_InstanceUsercode_txt" class="form-control" asp-for="InstanceUserCodes" />
                                             </div>
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Email ID</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <input type="text" id="Ps_Emailtxt" class="form-control" asp-for="PortalEmail" />
                                             </div>
 
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">First Name </label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <input type="text" id="Ps_Firstnametxt" class="form-control" asp-for="FirstName" />
                                             </div>
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Last Name</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <input type="text" id="Ps_lastnametxt" class="form-control" asp-for="LastName" />
                                             </div>
 
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Department</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <select id="Classificationddid" class="form-select" style="width:90%;" asp-for="InstanceClassificationId">
                                                 </select>
                                             </div>
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Class </label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <select id="Subclassificationddid" class="form-select" style="width:90%;" asp-for="InstanceSubClassificationId">
                                                 </select>
                                             </div>
@@ -528,7 +513,7 @@
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Route Name</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <select class="form-select" style="width:90%;" asp-for="RouteId" id="Route_id">
                                                     <option value="">------Select------</option>
                                                     @foreach (var Roleitem in ViewBag.List.RouteList)
@@ -540,7 +525,7 @@
                                             <div class="form-group col-2">
                                                 <label class="form-grop control-label space">Staying in Hostel  </label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="form-group col-4">
                                                 <select class="form-select" style="width:90%;" asp-for="CollegeHostel" id="CollegeHostel_id">
                                                     <option value="">------Select------</option>
                                                     <option value="0">Yes</option>
@@ -548,25 +533,27 @@
                                                 </select>
                                             </div>
                                             <div class="col-12" style="text-align:center;">
-                                                <input type="button" id="Searchbtn" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />
+                                                <button type="submit" id="Searchbtn" class="btn btn-pill btn-outline-success btn-air-success">Search</button>
+                                                @*<input type="button" id="Searchbtn" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />*@
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
                             <div class="card">
                                 <div id="PostnoticeSearch_tabledata_Divid">
-                              
+
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div style="text-align:center;">
-                    <input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success" />
-                    <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success" />
+                    <button id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success">Back</button>
+                    <button id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success">Post</button>
+
+                    @*<input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success" />
+                    <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success" />*@
                 </div>
             </div>
         </div>
@@ -574,4 +561,6 @@
 </body>
 </html>
 
-<script src="~/js/Notice_sms.js"></script>
+@*<script src="~/js/Notice_sms.js"></script>*@
+
+<script src="~/js/Managenotice_3.js"></script>

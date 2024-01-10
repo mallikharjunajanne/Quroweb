@@ -947,7 +947,6 @@ function GetShort_Description_for_Leave_Reason_CallingMethod(Descriptionid_Value
         debugger;
         $("#Descriptionid1").append('<option value="">' + "-------select-------" + '<option>')
         $.each(response, function (i, value1) {
-
             $("#Descriptionid1").append('<option value="' + value1.value + '">' + value1.text + '</option>');
         });
         debugger;

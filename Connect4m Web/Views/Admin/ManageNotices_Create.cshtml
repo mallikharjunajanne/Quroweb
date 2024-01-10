@@ -124,7 +124,8 @@
                                 </div>*@
                         <div style=" text-align: center;" class="form-grop col-12">
                             <div class="col-3"></div>
-                            <button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button> @*btnClear*@
+                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning"/>
+                            <!--<button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>--> @*btnClear*@
                             <button id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>@*BacktosearchNotice_SaBtn*@
                             <button id="btnppostthisnotice" class="btn btn-pill btn-outline-primary btn-aprimary">Post this Notice</button>@*btnppostthisnotice*@
                             <button id="btnsubmit" class="btn btn-pill btn-outline-success btn-air-success">Save</button>   @*SaveNotice_SaBtn*@
@@ -156,34 +157,12 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 <script src="~/js/Managenotice_1.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <script>
-    $('#btnBackToSearch').click(function () {
-
-        $('#Addnotice_div1').empty();
-        $('#ManagenoticeMaindiv').show();
-    });
-
-
-    //$('#btnClear').click(function () {
-
-    //    $('#SavevalidationMessage').text('');
-    //    $('#Savevalidation').text('');
-    //    $('#ENoticeTypeId_STXT').val('');
-    //    $('#Subject_STXT').val('');
-    //    $('#NoticeTypedd').val('');
-    //    $('#ENoticeDescription_STXT').val('');
-    //    $('#StartDate_STXT').val('');
-    //    $('#EndDate_STXT').val('');
-    //    $('#NoticeDocument_STxtFile').val('');
-
-    //});
-
+   
     @*$(document).ready(function () {
 
         const PostNoticeButton = document.getElementById("PostthisNotice_SaBtn");

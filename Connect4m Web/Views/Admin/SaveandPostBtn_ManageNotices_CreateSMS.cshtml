@@ -246,7 +246,7 @@
                         <div class="col-2 rowcol"></div>
                         <div class="col-10 rowcol">
                             <div class="form-check form-check-inline col-4">
-                                <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="Selectalluserschkvalues()" />
+                                <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="funCheckAllUsers()" />
                                 <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>
                             </div>
                         </div>
@@ -276,7 +276,7 @@
                                 Rolesno++;
                             }
                             <div class="form-check form-check-inline col-12" style=" margin-right: 0rem;">
-                                <input class="form-check-input checkbox-item" id="Selectallstaffrole" type="checkbox" />
+                                <input class="form-check-input checkbox-item" id="Selectallstaffrole" type="checkbox" onclick="Handleselectallstaffrolecheckbox();" />
                                 <label style=" font: 12px arial; color: blue;">Select all Staff Role</label>
                             </div>
                         </div>
@@ -347,7 +347,7 @@
 
             </div>
             <div>
-                <a href="" onclick="PostNoticeaddusertoggle(); return false;">Search and add users to post this notice</a>
+                <a href="" onclick="Postnoticeaddusertogglediv(); return false;">Search and add users to post this notice</a>
             </div>
             <div id="SearchUser_AddUser_DivId_Postnotice" style="display: none;">
                 <div class="card">
@@ -446,7 +446,8 @@
                                             </select>
                                         </div>
                                         <div class="col-12" style="text-align:center;">
-                                            <input type="button" id="searchButton" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />
+                                            <button id="btnSearchUsers" class="btn btn-pill btn-outline-success btn-air-success">Search</button>
+                                            @*<input type="button" id="searchButton" value="Search" class="btn btn-pill btn-outline-success btn-air-success" />*@
                                         </div>
                                     </div>
                                 </div>
@@ -463,8 +464,12 @@
                 </div>
             </div>
             <div style="text-align:center;">
-                <input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success" />
-                <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success" />
+                <button id="Noticescreenbacktoscrbtn" class="btn btn-pill btn-outline-light txt-dark btn-air-success">Back</button>
+                <button id="Postnoticebtn" class="btn btn-pill btn-outline-primary btn-air-success">Post</button>
+
+
+                @*<input type="button" value="Back" id="createsmsbacktomanagenoticescr_btn" class="btn btn-pill btn-outline-light txt-dark btn-air-success" />
+                    <input type="submit" value="Post" id="Postsmsbtn" class="btn btn-pill btn-outline-primary btn-air-success" />*@
             </div>
         </div>
     </div>
@@ -472,40 +477,40 @@
 
 <script src="/lib/jquery/dist/jquery.js"></script>
 <script src="/lib/jquery/dist/jquery.min.js"></script>
-@*<script src="~/js/ManageNotices.js"></script>*@
+<script src="~/js/Managenotice_2.js"></script>
 
 <script>
 
-    var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
-    var AllUserscheckboxes = document.querySelectorAll('.checkbox-item');
+    //var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
+    //var AllUserscheckboxes = document.querySelectorAll('.checkbox-item');
 
-    selectAllCheckbox.addEventListener('click', function () {
-        var checkboxValues = [];
-        AllUserscheckboxes.forEach(function (checkbox) {
-            checkbox.checked = false;
-            checkboxValues.push(checkbox.value);
-            checkbox.disabled = selectAllCheckbox.checked;
-        });
-    });
+    //selectAllCheckbox.addEventListener('click', function () {
+    //    var checkboxValues = [];
+    //    AllUserscheckboxes.forEach(function (checkbox) {
+    //        checkbox.checked = false;
+    //        checkboxValues.push(checkbox.value);
+    //        checkbox.disabled = selectAllCheckbox.checked;
+    //    });
+    //});
 
 </script>
 <script>
 
-    var selectAllStaffRoleCheckbox = document.getElementById('Selectallstaffrole');
-    var checkboxes = document.querySelectorAll('.checkbox-Name');
-    var StaffcheckboxValues = [];
-    selectAllStaffRoleCheckbox.addEventListener('change', function () {
-        checkboxes.forEach(function (staffcheckbox) {
-            var labelElement = staffcheckbox.nextElementSibling;
-            var labelValue = labelElement.textContent.toLowerCase();
+    //var selectAllStaffRoleCheckbox = document.getElementById('Selectallstaffrole');
+    //var checkboxes = document.querySelectorAll('.checkbox-Name');
+    //var StaffcheckboxValues = [];
+    //selectAllStaffRoleCheckbox.addEventListener('change', function () {
+    //    checkboxes.forEach(function (staffcheckbox) {
+    //        var labelElement = staffcheckbox.nextElementSibling;
+    //        var labelValue = labelElement.textContent.toLowerCase();
 
-            if (labelValue.includes('student')) {
-                staffcheckbox.checked = false;
-            } else {
-                staffcheckbox.checked = selectAllStaffRoleCheckbox.checked;
-                StaffcheckboxValues.push(staffcheckbox.value);
-            }
-        });
-    });
+    //        if (labelValue.includes('student')) {
+    //            staffcheckbox.checked = false;
+    //        } else {
+    //            staffcheckbox.checked = selectAllStaffRoleCheckbox.checked;
+    //            StaffcheckboxValues.push(staffcheckbox.value);
+    //        }
+    //    });
+    //});
 
 </script>

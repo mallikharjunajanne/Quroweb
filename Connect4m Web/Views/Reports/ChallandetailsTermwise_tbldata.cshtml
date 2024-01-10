@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Termwisechallandetails>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+</head>
+<body>
+    <div class="card">
+        <h5 class="card-header">
+            YOUR SEARCH RESULTED @Model.Count() RECORDS.
+        </h5>
+        <div class="card-datatable text-nowrap">
+            <div class="table-responsive">
+                <div class="table-responsive text-nowrap">
+                    <table class="table" id="firstTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Fee Amount(DR)</th>
+                                <th>Discount</th>
+                                <th>Fee Collected(CR)</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @{
+                                decimal totalFeeAmount = 0;
+                                decimal totaldiscountamount = 0;
+                                decimal CollectedAmount = 0;
+                                decimal BalanceAmounts = 0;
+                            }
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.hallticket</td>
+                                    <td>
+                                        <span onclick="GetFeeinstallmentsfeedetailsbyuserid(@item.UserId,this)" style="color:blue; font-weight:bold; cursor:pointer;">
+                                            @item.Name
+                                        </span>    
+                                    </td>
+                                    <td>@item.subclassificationlist[0].SubClassificationName</td>
+                                    <td>
+                                        @if (item.StudentAmountSet == 0)
+                                        {
+                                            @:0.00
+                                        }
+                                        else
+                                        {
+                                            @item.StudentAmountSet.ToString("0.00")
+                                        }
+
+                                        @{
+                                            totalFeeAmount += item.StudentAmountSet;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.StudentDiscountAmount == 0)
+                                        {
+                                            @:0.00
+                                        }
+                                        else
+                                        {
+                                            @item.StudentDiscountAmount.ToString("0.00")
+                                        }
+                                        @{
+                                            totaldiscountamount += item.StudentDiscountAmount;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.StudentCollectedAmount == 0)
+                                        {
+                                            @:0.00
+                                        }
+                                        else
+                                        {
+                                            @item.StudentCollectedAmount.ToString("0.00")
+                                        }
+                                        @{
+                                            CollectedAmount += item.StudentDiscountAmount;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.StudentBalance == 0)
+                                        {
+                                            @:0.00
+                                        }
+                                        else
+                                        {
+                                            @item.StudentBalance.ToString("0.00")
+                                        }
+                                        @{
+                                            BalanceAmounts += item.StudentDiscountAmount;
+                                        }
+                                    </td>
+                                </tr>
+
+                            }
+
+                            <tr>
+                                <td colspan="7"> <span style="color:green;">Fee Amount: @totalFeeAmount Discount :@totaldiscountamount Fee Collected:@CollectedAmount Balance:@BalanceAmounts</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Challandetailstermwise.js"></script>

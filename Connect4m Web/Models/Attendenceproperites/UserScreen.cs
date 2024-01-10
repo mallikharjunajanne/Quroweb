@@ -309,7 +309,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
     
             public string ExpiryDate { get; set; }
           
-            public string StartDate { get; set; }
+            public DateTime StartDate { get; set; }
             public string IsPosted { get; set; }
             public string DisplayIcon { get; set; }
 
@@ -333,8 +333,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required]
             public DateTime ExDate { get; set; }
             [Required]
-            public DateTime SDate { get; set; }
-
+            public DateTime SDate { get; set; }            
         }
 
         public class TemplateDetails : NoticeTypes
@@ -345,13 +344,18 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string AttributeName { get; set; }
             public string AttributeType { get; set; }
             public string length { get; set; }
-
+         
 
             public TemplateDetails_SMS SmsDetails{get; set;}
         }
 
         public class TemplateDetails_SMS:Insatnceids
         {
+            [Required]
+            public DateTime ExDate { get; set; }
+            [Required]
+            public DateTime SDate { get; set; }
+
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
             public string Subject { get; set; }
@@ -360,10 +364,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DocSize { get; set; }
             public int DisplayOrder { get; set; }
             public string DisplayIcon { get; set; }
-            public int ShowInLogin { get; set; }
+            public string ShowInLogin { get; set; }
             public int IsGlobalNotice { get; set; }
-            public int ENoticeTypeId { get; set; }
-       
+            public int ENoticeTypeId { get; set; }       
             public int ENoticeId { get; set; }       
             public string createddate { get; set; }
             public string CategoryName { get; set; }
@@ -371,26 +374,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ExpiryDate { get; set; }     
             public string IsPosted { get; set; }  
             public bool IsSMSTemplate { get; set; }  
-            public int GetAll { get; set; }
-
-            [Required]
-            public DateTime ExDate { get; set; }
-            [Required]
-            public DateTime SDate { get; set; }
-
-
-            public List<RoleList> IRoleList { get; set; }
-            public List<RoleList> roleList_byInstanceId { get; set; }
-            public List<GroupList> GroupList { get; set; }
-            public List<ClassificationList> ClassificationList { get; set; }
-            public List<SubclassificationList> SubclassificationList { get; set; }
-            public List<RouteList> RouteList { get; set; }
-            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
-            public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
-
-
-
-
+            public int GetAll { get; set; }   
             public string UserName { get; set; }
             public int RoleId { get; set; }
             public string InstanceRoleId { get; set; }
@@ -403,13 +387,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string RouteId { get; set; }
             public int CollegeHostel { get; set; }
             public string MultiAdmissionNumber { get; set; }
-            public string ExcludeUserIds { get; set; }
-
-            public string[] RoleIds { get; set; }
-            public string[] GroupIds { get; set; }
-            public string[] ClassificationIds { get; set; }
-            public string[] SubClassificationIds { get; set; }
-            public string[] UserIds { get; set; }
+            public string ExcludeUserIds { get; set; }            
             public string DMLTYPE { get; set; }
             public int SendSMS { get; set; }
             public int SendEMail { get; set; }
@@ -420,12 +398,30 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string MobilePhone { get; set; }
             public DateTime? NotifcationDate { get; set; }
             public int IsParent { get; set; }
-
             //---Mail related Parameters
             public string SMSTextInXML { get; set; }
             public string SMSFromText { get; set; }
             public string Action { get; set; }
 
+            public string[] RoleIds { get; set; }
+            public string[] GroupIds { get; set; }
+            public string[] ClassificationIds { get; set; }
+            public string[] SubClassificationIds { get; set; }
+            public string[] UserIds { get; set; }
+
+            public List<RoleList> IRoleList { get; set; }
+            public List<RoleList> roleList_byInstanceId { get; set; }
+            public List<GroupList> GroupList { get; set; }
+            public List<ClassificationList> ClassificationList { get; set; }
+            public List<SubclassificationList> SubclassificationList { get; set; }
+            public List<RouteList> RouteList { get; set; }
+            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
+            public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
+
+     //====>> Api Properties and web properties  comparing           
+            //public string StartDate { get; set; }          
+            //public IFormFile AttachedDocument { get; set; }
+         
 
         }
 
@@ -526,6 +522,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string MultiAdmissionNumber { get; set; }
             public string ExcludeUserIds { get; set; }
           
+        }
+
+        public class BirthdaysByInstance
+        {
+            public string DOB { get; set; }
+            //public string InstanceId { get; set; }
+            //public string ENoticeId { get; set; }
+            public string Dateofbirth { get; set; }
+            public string FirstName { get; set; }
+            public string Photo { get; set; }
+            public string UserId { get; set; }
+            public string Class { get; set; }
+            public string InstanceId { get; set; }
+            public string RoleName { get; set; }
+
         }
 
 

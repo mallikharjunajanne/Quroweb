@@ -11,7 +11,8 @@ namespace Connect4m_Web.Models
     public class DropdownClass:CommonClass
     {
         //This Is for Drop Downs
-        public int Value { get; set; }
+       // public int Value { get; set; }
+        public string Value { get; set; }
         public string Text { get; set; }
     }
     public class MultiplelistValues
