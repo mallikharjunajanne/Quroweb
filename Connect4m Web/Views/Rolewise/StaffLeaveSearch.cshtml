@@ -8,110 +8,111 @@
 <style>
     #tblStaffLeavesearchresults td {
         padding: 2px;
-        border: 3px solid black;
-        font-weight:600;
+        border: 2px solid white;
+        font-weight: 600;
     }
-    #FirstTable td{
-        border:1px solid black;
+
+    #FirstTable td {
+        border: 1px solid black;
     }
+    .table > :not(caption) > * > * {
+        padding: 4px !important;
+            }
 </style>
 
-<div class="col-sm-12 ">
 
-    <div class="card" id="checksall">
+<div class="card" >
+    <div class="card-body" id="checksall">
+        <div class="demo-inline-spacing">
+            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="_staffLeaveExportExcel" title="Export Excel">Export Excel</button>
+            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="_staffLeavePrint" title="Print">PRINT</button>
+        </div>
 
-        <div class="card-body">
-            <div style="display: flex; gap: 76%;">
-                <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_staffLeaveExportExcel" style=" border: 1px solid black !important;" />
-                <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_staffLeavePrint" style=" border: 1px solid black !important;" />
-            </div>
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
+        <h6 class="card-title mb-0">
+            <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_StaffLeave" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+        </h6>
 
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_StaffLeave" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-                        </h5>
-                    </div>
-                    <div style=" margin-left: 38%;">
-                        <table border="1" id="FirstTable">
-                            <tbody>
-                                <tr><td align="Right"><b>Department :</b></td><td align="Left" id="firsttable_Department"> </td></tr>
-                                <tr><td align="Right"><b>Employee Name :</b></td><td align="Left" id="firsttable_Employeename">   </td></tr>
-                                <tr><td align="Right"><b>Employee Id :</b></td><td align="Left" id="firsttable_Employeeeid"></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="eg1" style="color: black; background-color: whitesmoke; overflow-x: scroll; overflow-y: scroll;">
-                        <table class="table table-bordered" id="tblStaffLeavesearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                            <thead>
-                                <tr style="border-color: black;">
-                                    <th style=" ">
-                                        S.No
-                                    </th>
-                                    <th style="">
-                                        Attendance Month
-                                    </th>
+        <div class="table-responsive text-nowrap">
+            <table id="FirstTable" class="table table-hover table-bordered ">
 
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                    <th>13</th>
-                                    <th>14</th>
-                                    <th>15</th>
-                                    <th>16</th>
-                                    <th>17</th>
-                                    <th>18</th>
-                                    <th>19</th>
-                                    <th>20</th>
-                                    <th>21</th>
-                                    <th>22</th>
-                                    <th>23</th>
-                                    <th>24</th>
-                                    <th>25</th>
-                                    <th>26</th>
-                                    <th>27</th>
-                                    <th>28</th>
-                                    <th>29</th>
-                                    <th>30</th>
-                                    <th>31</th>
+                <tbody>
+                    <tr><td align="Right"><b>Department :</b></td><td align="Left" id="firsttable_Department"> </td></tr>
+                    <tr><td align="Right"><b>Employee Name :</b></td><td align="Left" id="firsttable_Employeename">   </td></tr>
+                    <tr><td align="Right"><b>Employee Id :</b></td><td align="Left" id="firsttable_Employeeeid"></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive text-nowrap">
+           <table id="tblStaffLeavesearchresults" class="table table-hover table-bordered ">
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Attendance Month
+                        </th>
+
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>31</th>
 
 
 
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                       
-                    </div>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        @*=============================  TABLE END ================================*@
 
 
 
-                </div>
-            </div>
+        <div class="table-responsive text-nowrap">
+
+            <table id="StaffLeaveThirdtable" class="table table-hover table-bordered " style=" width: 38%; margin-left: 29%;">
+                <tbody>
+                    <tr><td align="Right"><b>Present :</b></td><td align="Left" style="background-color:Green;">&nbsp;&nbsp;&nbsp;</td></tr>
+                    <tr><td align="Right"><b>On Duty :</b></td><td align="Left" style="background-color:Gray;">&nbsp;</td></tr>
+                    <tr><td align="Right"><b>Short Leave :</b></td><td align="Left" style="background-color:yellow;">&nbsp;</td></tr>
+                    <tr><td align="Right"><b>Half Day :</b></td><td align="Left" style="background-color:orange;">&nbsp;</td></tr>
+                    <tr><td align="Right"><b>School Leave :</b></td><td align="Left" style="background-color:Blue;">&nbsp;</td></tr>
+                    <tr><td align="Right"><b>Full Day :<b></b></b></td><td align="Left" style="background-color:Red;"></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-
-
-<div style="margin-left:44%">
-
-    <table   id="StaffLeaveThirdtable"><tbody><tr><td align="Right"><b>Present :</b></td><td align="Left" style="background-color:Green;">&nbsp;&nbsp;&nbsp;</td></tr>
-        <tr><td align="Right"><b>On Duty :</b></td><td align="Left" style="background-color:Gray;">&nbsp;</td></tr>
-        <tr><td align="Right"><b>Short Leave :</b></td><td align="Left" style="background-color:yellow;">&nbsp;</td></tr>
-        <tr><td align="Right"><b>Half Day :</b></td><td align="Left" style="background-color:orange;">&nbsp;</td></tr>
-        <tr><td align="Right"><b>School Leave :</b></td><td align="Left" style="background-color:Blue;">&nbsp;</td></tr>
-        <tr><td align="Right"><b>Full Day :<b></b></b></td><td align="Left" style="background-color:Red;"></td></tr></tbody></table>
-</div>
+    </div>
 
 
 

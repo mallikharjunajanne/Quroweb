@@ -4,157 +4,163 @@
     Layout = null;
 }
 
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
-
-<div class="col-sm-12 ">
-
-    <div class="card">
-
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>EMPLOYEE ATTENDANCE POSTING</span></h6>
+@*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
 
+<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Employee Attendence Posting</h4>
 
-                    <div id="appendsearchsalaryattributeforroles">
+<div class="row mb-2">
+    <div class="col-md-12 col-lg-12 mb-3">
 
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">
-                                    <span id="updatesalaryattribute" style=" font-weight: 900;"></span>SEARCH ATTENDENCE <span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span>
+        <div class="card mb-4">
+            @*<div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <span id="AddNewText_Span_CreatePage">
+                        EMPLOYEE ATTENDANCE POSTING
+                    </span>
+                </h5>
+            </div>*@
 
-                                </button>
-                            </h5>
+            <div id="appendsearchsalaryattributeforroles">
+                <div class="demo-inline-spacing ">
 
-                        </div>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                    <span  id="updatesalaryattribute">  SEARCH ATTENDENCE</span>
+                </div>
+                <div class="card-body mb-2">
 
-                            <div class="row padding-search">
-                                <div class="row">
+                    @*=============================  Form Start ================================*@
+                    <form id="Serach_EAP" class="needs-validation was-validated" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                    <form id="Serach_EAP">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div>
+                            <div class="row">
+                                <div class="col">
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
 
-                                        <div class="row">
-                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.Month,
+                                            new SelectList(ViewBag.Months, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_Month_EAP", @style = "color:black;", @required = "required" })
 
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2">
-                                                <label asp-for="Month" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.Month,
-                                                new SelectList(ViewBag.Months, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_Month_EAP", @style = "color:black;" })
-
-                                                </div>
                                                 <span asp-validation-for="Month" class="text-danger"></span>
                                             </div>
-                                            <div class="col-3"></div>
-                                            <div class="col-3"></div>
+                                        </div>
+                                        <div class="col-sm-3"></div>
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
 
-                                            <div class="form-group col-2">
-                                                <label asp-for="year" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.year,
-                                                new SelectList(ViewBag.Years, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_year_EAP", @style = "color:black;" })
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="year"></label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.year,
+                                            new SelectList(ViewBag.Years, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_year_EAP", @style = "color:black;", @required = "required" })
 
-                                                </div>
                                                 <span asp-validation-for="year" class="text-danger"></span>
-
                                             </div>
-                                            <div class="col-3"></div>
-                                            <div class="col-3"></div>
+                                        </div>
+                                        <div class="col-sm-3"></div>
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
 
-                                            <div class="form-group col-2">
-                                                <label asp-for="RoleId" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.RoleId,
-                                                new SelectList(ViewBag.RoleId, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_RoleId_EAP", @style = "color:black;" })
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.RoleId,
+                                            new SelectList(ViewBag.RoleId, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_RoleId_EAP", @style = "color:black;", @required = "required" })
 
-                                                </div>
                                                 <span asp-validation-for="RoleId" class="text-danger"></span>
-
                                             </div>
-                                            <div class="col-3"></div>
-                                            <div class="col-3"></div>
+                                        </div>
+                                        <div class="col-sm-3"></div>
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
 
-                                            <div class="form-group col-2">
-                                                <label asp-for="InstanceClassificationId" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.InstanceClassificationId,
-                                                new SelectList(ViewBag.Department, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_InstanceClassificationId_EAP", @style = "color:black;" })
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.InstanceClassificationId,
+                                            new SelectList(ViewBag.Department, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceClassificationId_EAP", @style = "color:black;", @required = "required" })
 
-                                                </div>
                                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-
                                             </div>
-                                            <div class="col-3"></div>
+                                        </div>
+                                        <div class="col-sm-3"></div>
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
 
-                                            <div class="col-3"></div>
-
-                                            <div class="form-group col-2">
-                                                <label asp-for="InstanceSubClassificationId" class="control-label  space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.InstanceSubClassificationId,
-                                                new SelectList(ViewBag.SubDepartment, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_InstanceSubClassificationId_EAP", @style = "color:black;",@disabled=true })
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-3"></div>
-
-                                            <div style=" display: flex; gap: 17px;">
-                                                <div class="col-2"></div>
-                                                <input type="button" value="Previous Page" id="backtopage_SAR" onclick="nextpage('SearchManageEmployees',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
-                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
-                                                <input type="submit" value="Get Attendance Form" id="sub_tblEAP" class="btn btn-pill btn-outline-success btn-air-success" />
-                                                <input type="button" value="Next Page" id="Nextpage_SAR" class="btn btn-pill btn-outline-info btn-air-info" onclick="nextpage('SearchEmployeeDetails',null)" />
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"></label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.InstanceSubClassificationId,
+                                            new SelectList(ViewBag.SubDepartment, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceSubClassificationId_EAP", @style = "color:black;", @disabled = true })
 
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="col-sm-3"></div>
+                                    </div>
+
+
+                                    @*=====================         BUTTONS                =================*@
+
+                                    <div class="row justify-content">
+                                        <div class="col-sm-4">
+                                        </div>
+
+                                        <div class="col-sm-8">
+                                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_ME" onclick="nextpage('SearchManageEmployees',null)">Previous Page</button>
+
+
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblEAP">Get Attendance Form</button>
+
+                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_ME" onclick="nextpage('SearchEmployeeDetails',null)">Next Page</button>
+
+                                        </div>
+                                    </div>
                                 </div>
-
-
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                    @*=============================  Form End ================================*@
 
+                </div>
             </div>
         </div>
+
     </div>
-</div>
-
-<div id="GetEmployeeAttendenceAppend">
-
-</div>
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </div>
 
 
-<script src="~/js/PayRoll_6.js"></script>
+    <div id="GetEmployeeAttendenceAppend">
+
+    </div>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+    <script src="~/js/PayRoll_6.js"></script>

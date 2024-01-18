@@ -4,257 +4,282 @@
     Layout = null;
 }
 
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
-
-<div class="col-sm-12 ">
-
-    <div class="card">
-
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>MANAGE SALARY ATTRIBUTES FOR ROLES</span></h6>
-                    <div style="text-align: center; margin-top: 12px; padding: 8px;">Selected Role : <span style="background-color: antiquewhite; padding: 2px;">@ViewBag?.RoleName</span></div>
+@*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
 
+<div class="card-header d-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        <span id="AddNewText_Span_CreatePage">
+            MANAGE SALARY ATTRIBUTES FOR ROLES
+        </span>
+    </h5>
+</div>
 
+<div class="row mb-3">
+    <div class="col-sm-3">
+    </div>
+    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Selected Role :</label>
+    <label class="col-sm-4 col-form-label" for="basic-default-name">@ViewBag?.RoleName</label>
 
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH ROLE</button>
-                        </h5>
-                    </div>
-                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
-
-                        <div class="row padding-search">
-                            <div class="row">
-
-                                <form id="Insert_SAR">
-                                    <div class="row">
-
-                                        <input class="form-control" value="0" id="Datalengthforbasic" hidden style="display:none" />
-
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <input asp-for="UserId" class="form-control" hidden />
-                                            <label asp-for="InstanceSalaryAttributeId" class="control-label required space"></label>
-                                            @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
-
-                                        </div>
-                                        <div class="form-group col-4">
-
-                                            <div id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.InstanceSalaryAttributeId,
-                                            new SelectList(ViewBag.InstanceSalaryAttributeId, "Value", "Text"),
-                                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_InstanceSalaryAttributeId_SAR", @style = "color:black;" })
-
-                                            </div>
-                                            <span asp-validation-for="InstanceSalaryAttributeId" class="text-danger"></span>
-
-                                        </div>
-                                        <div class="col-3"></div>
-                                        <div id="ispercentoramount" style="display:contents">
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2">
-                                                <label asp-for="IsSalaryPercentage" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4" style="display:flex; gap:4px;">
-                                                <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="P" style="flex: 0.1;" /><span>Percentage</span>
-                                                <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="A" style="flex: 0.1;" /><span>Amount</span>
-                                                <span asp-validation-for="IsSalaryPercentage" class="text-danger"></span>
-                                            </div>
-                                            @if (Model?.DISPLAYICON_ISSALARYPERCENTAGE == "1")
-                                            {
-                                                <div class="col-1">
-                                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'IsSalaryPercentage','SalaryAttributes');" />
-
-                                                </div>
-                                                <div class="col-2"></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-3"></div>
-                                            }
-                                        </div>
-
-                                        <div id="salary_SAR" class=" form-group col-12" style="display: @(Model?.IsSalaryPercentage == "A" ? "contents" : "none");">
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2">
-                                                <label asp-for="Salary" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <input asp-for="Salary" class="form-control" type="number" />
-                                                <span asp-validation-for="Salary" class="text-danger"></span>
-                                            </div>
-                                            @if (Model?.DISPLAYICON_AMOUNT == "1")
-                                            {
-                                                <div class="col-1">
-                                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'Amount','SalaryAttributes');"/>
-
-                                                </div>
-                                                <div class="col-2"></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-3"></div>
-                                            }
-                                        </div>
-                                        <div id="Percentage_SAR" class=" form-group col-12" style="display: @(Model?.IsSalaryPercentage == "P" ? "contents" : "none");">
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2">
-                                                <label asp-for="Percentage" class="control-label required space"></label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <input asp-for="Percentage" class="form-control" type="number" />
-                                                <span asp-validation-for="Percentage" class="text-danger"></span>
-                                            </div>
-                                            @if (Model?.DISPLAYICON_PERCENTAGE == "1")
-                                            {
-                                                <div class="col-1">
-                                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.Percentage,'Percentage','SalaryAttributes');" />
-
-                                                </div>
-                                                <div class="col-2"></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-3"></div>
-                                            }
-                                        </div>
-
-                                        <div class="col-3"></div>
-
-                                        <div class="form-group col-2">
-                                            <label asp-for="StartDate" class="control-label required space"></label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input asp-for="StartDate" class="form-control" id="StartDate" />
-                                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                                        </div>
-                                        @if (Model?.DISPLAYICON_STARTDATE == "1")
-                                        {
-                                            <div class="col-1">
-                                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;"  onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'StartDate','SalaryAttributes');"/>
-
-                                            </div>
-                                            <div class="col-2"></div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-3"></div>
-                                        }
-
-                                        <div class="col-3"></div>
-
-                                        <div class="form-group col-2">
-                                            <label asp-for="EndDate" class="control-label required space"></label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input asp-for="EndDate" class="form-control" id="EndDate" />
-                                            <span asp-validation-for="EndDate" class="text-danger"></span>
-                                            <span class="compare"></span>
-                                        </div>
-                                        @if (Model?.DISPLAYICON_ENDDATE == "1")
-                                        {
-                                            <div class="col-1">
-                                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'EndDate','SalaryAttributes');"/>
-
-                                            </div>
-                                            <div class="col-2"></div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-3"></div>
-                                        }
-                                        <div class="col-3"></div>
-
-                                        <div class="form-group col-2">
-                                            <label asp-for="IsActive" class="control-label space"></label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input asp-for="IsActive" type="checkbox" class="form-check-input" />
-
-                                        </div>
-                                        @if (Model?.DISPLAYICON_ISACTIVE == "1")
-                                        {
-                                            <div class="col-1">
-                                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'IsActive','SalaryAttributes');" />
-
-                                            </div>
-                                            <div class="col-2"></div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-3"></div>
-                                        }
-
-                                        <div style=" display: flex; gap: 17px;">
-                                            <div class="col-2"></div>
-                                            <input type="button" value="Previous Page" id="backtopage_SAR" onclick="nextpage('SearchSalaryAttributes',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
-                                            <input type="button" value="Back To Search" id="backtosearch_SAR" class="btn btn-pill btn-outline-secondary btn-sm" />
-                                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
-                                            <input type="submit" value="Save" id="Save_SAR" class="btn btn-pill btn-outline-success btn-air-success" />
-                                            <input type="button" value="Next Page" id="Nextpage_SAR" class="btn btn-pill btn-outline-info btn-air-info"  onclick="nextpage('SearchManageCatogory',null)" />
-
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> TOTAL NO. OF RECORDS <span id="totalrecords_Tranctions_SAR_insert" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span></button>
-                            </h5>
-                        </div>
-
-                        <div id="eg1" style="color: black; background-color: whitesmoke">
-                            <table class=" table table-bordered" id="tblSARinsertresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                <thead>
-                                    <tr style="border-color: black;">
-                                        <th style=" border-color: blue" class="bg-primary">
-                                            S.No
-                                        </th>
-                                        <th style=" border-color: blue; width: 103px;" class="bg-primary">
-                                            S.No
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            Attribute Name
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            Start Date
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            End Date
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            Percentage
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            Amount
-                                        </th>
-                                        <th style="border-color: blue" class="bg-primary">
-                                            Is Active
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-
-
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="col-sm-3">
     </div>
 </div>
+<h5><label>SEARCH ROLE</label></h5>
+
+<div class="card-body mb-2">
+
+    @*=============================  Form Start ================================*@
+    <form id="Insert_SAR" class="needs-validation was-validated" novalidate>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input class="form-control" value="0" id="Datalengthforbasic" hidden style="display:none" />
+        <input asp-for="UserId" class="form-control" hidden />
+        <div>
+            <div class="row">
+                <div class="col">
+
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSalaryAttributeId"></label>
+                        <div class="col-sm-4">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                @Html.DropDownListFor(
+                           x => x.InstanceSalaryAttributeId,
+                            new SelectList(ViewBag.InstanceSalaryAttributeId, "Value", "Text"),
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_InstanceSalaryAttributeId_SAR", @style = "color:black;", @required = "required" })
+                                <span asp-validation-for="InstanceSalaryAttributeId" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        </div>
+                    </div>
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3" id="ispercentoramount">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IsSalaryPercentage"></label>
+                        <div class="form-check form-check-primary col-sm-2">
+                            <input asp-for="IsSalaryPercentage" class="form-check-input" type="radio" name="IsSalaryPercentage" value="P" required>
+                            <label class="form-check-label">
+                                Percentage
+                            </label>
+                        </div>
+                        <div class="form-check form-check-primary col-sm-2">
+                            <input asp-for="IsSalaryPercentage" class="form-check-input" type="radio" name="IsSalaryPercentage" value="A" required>
+                            <label class="form-check-label">
+                                Amount
+                            </label>
+                            <span asp-validation-for="IsSalaryPercentage" class="text-danger"></span>
+                        </div>
+                        @if (Model?.DISPLAYICON_ISSALARYPERCENTAGE == "1")
+                        {
+                            <div class="col-sm-1">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'IsSalaryPercentage','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-3"></div>
+                        }
+
+                    </div>
+
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3" id="salary_SAR" style="display: @(Model?.IsSalaryPercentage == "A" ? "flex" : "none");">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Salary"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" asp-for="Salary" required >
+                            <span asp-validation-for="Salary" class="text-danger"></span>
+                        </div>
+                        @if (Model?.DISPLAYICON_AMOUNT == "1")
+                        {
+                            <div class="col-sm-2">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'Amount','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2"></div>
+                        }
+                    </div>
+
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3" id="Percentage_SAR" style="display: @(Model?.IsSalaryPercentage == "P" ? "flex" : "none");">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Percentage"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" asp-for="Percentage" required>
+                            <span asp-validation-for="Percentage" class="text-danger"></span>
+                        </div>
+                        @if (Model?.DISPLAYICON_PERCENTAGE == "1")
+                        {
+                            <div class="col-sm-2">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.Percentage,'Percentage','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2"></div>
+                        }
+                    </div>
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="StartDate"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="StartDate" asp-for="StartDate" required>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                        @if (Model?.DISPLAYICON_STARTDATE == "1")
+                        {
+
+                            <div class="col-sm-2">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'StartDate','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2"></div>
+                        }
+                    </div>
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndDate"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" id="EndDate" asp-for="EndDate" required>
+                            <span asp-validation-for="EndDate" class="text-danger"></span>  <span class="compare"></span>
+                        </div>
+                        @if (Model?.DISPLAYICON_ENDDATE == "1")
+                        {
+
+                            <div class="col-sm-2">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'EndDate','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2"></div>
+                        }
+                    </div>
+                    @*=====================        TEXT BOX                 =================*@
+
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IsActive"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                        </div>
+                        @if (Model?.DISPLAYICON_ISACTIVE == "1")
+                        {
+
+                            <div class="col-sm-2">
+                                <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag.SalaryAttributeId,'IsActive','SalaryAttributes');" />
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2"></div>
+                        }
+                    </div>
+
+                    @*=====================         BUTTONS                =================*@
+
+                    <div class="row justify-content">
+                        <div class="col-sm-3">
+                        </div>
+
+                        <div class="col-sm-9">
+                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_SAR" onclick="nextpage('SearchSalaryAttributes',null)">Previous Page</button>
+
+                            <button type="button" class="btn btn-dark waves-effect waves-light" id="backtosearch_SAR">Back To Search</button>
+
+                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Save_SAR">Save</button>
+
+                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_SAR" onclick="nextpage('SearchManageCatogory',null)">Next Page</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    @*=============================  Form End ================================*@
+
+</div>
+@*=============================  TABLE START ================================*@
+
+<div class="card">
+    
+    <h6 class="card-title mb-0">
+        <span>TOTAL NO. OF RECORDS <span id="totalrecords_Tranctions_SAR_insert" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+    </h6>
+    <div class="table-responsive text-nowrap">
+        <table id="tblSARinsertresults" class="link table table-hover table-bordered ">
+            <thead class="table-dark">
+
+                <tr>
+                    <th>
+                        S.No
+                    </th>
+                    <th>
+                        S.No
+                    </th>
+                    <th>
+                        Attribute Name
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        End Date
+                    </th>
+                    <th>
+                        Percentage
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Is Active
+                    </th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@*=============================  TABLE END ================================*@
+         
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 @section Scripts {

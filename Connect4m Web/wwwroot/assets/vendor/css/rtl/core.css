@@ -26111,3 +26111,20 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 .footer.bg-lighter hr {
   border-color: rgba(93, 89, 108, 0.0760954902);
 }
+
+.link tbody td:nth-child(2):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: lightblue;
+}
+
+.link tbody td:nth-child(2) {
+    color: black;
+    font-weight: 900 !important;
+}
+.compare, .ErrorMessageSpan {
+    color: red;
+    font-size: small;
+}
