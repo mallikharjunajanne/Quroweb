@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.Userwisepayment>
+
+@{
+    Layout = null;
+}
+
+
+<span class="text-danger" id="Errormessagespid"></span><br />
+<button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="PaymentdetailsBacktosearchbtn">Back To Search</button>
+
+
+<h6>Selected Student :@ViewBag.username</h6>
+
+<div class="card">
+    <h5 class="card-header">PAYMENT DETAILS</h5>
+    <div class="card-datatable text-nowrap">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered" id="Installmentfeedetailstblid">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Particulars</th>
+                        <th></th>
+                        <th></th>
+                        <th>Balance</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Createdate</td>
+                            <td>
+                                <a href="javascript:void(0)" data-id="@item.modename" onclick="FeestatementDetailsbyuserid('@item.UserReceiptGenerationID','@item.Amount','@item.Createdate')">
+                                    @item.modename
+                                </a>
+                            </td>
+                            <td>@item.typename</td>
+                            <td>@item.Amount</td>
+                            <td>
+                                @item.balance
+                                <span value="@item.UserId" title="@item.Createdate" name="@ViewBag.username"></span>
+                            </td>
+                            <td align="center">  <i class="fa fa-trash delete-icon" data-invoice="@item.InvoiceNo"></i></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div class="card-body" id="Paymentoptionchangediv">
+        <form id="Feechallanreport_form" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label text-end  space" for="basic-default-name">Challan Number</label>
+                        <div class="col-sm-4">
+                            <span id="ChallanaIdsptxtid"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label text-end required space" for="basic-default-name">Amount</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="Amounttxt">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Payment Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="Paymentdatetxt">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Particulars </label>
+                        <div class="col-sm-4">
+                            <div class="position-relative">
+                                <select class="select2 form-select select2-hidden-accessible" id="PaymentModedd">
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Cheque/DD No</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Fine  </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Transaction Id </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear">Clear</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light" id="Btnsearch">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/js/Userwisepayment.js"></script>
+
+

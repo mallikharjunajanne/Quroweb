@@ -782,7 +782,6 @@ namespace Connect4m_Web.Controllers
             }
             if (obj.update != null)
             {
-               
                 obj.UserId = Convert.ToInt32(Request.Cookies["UerIdMES"]);
             }
 
@@ -791,8 +790,6 @@ namespace Connect4m_Web.Controllers
             string jsonData = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             HttpResponseMessage response;
-
-
             if (obj.UserId != 0)
             {
                 response = client.PostAsync(client.BaseAddress + "/UpdateManageEmployees", content).Result;

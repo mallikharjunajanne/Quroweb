@@ -249,42 +249,7 @@ $(document).ready(function () {
                 // Append the table footer element to the table
                 $('#myTable').append(tblfooter);
 
-               //Mk Last try End
-
-
-
-                //debugger;
-
-                //debugger;
-                ////Empty row Append
-                //var firstCell = $('<td>').attr('colspan', '46').html('&nbsp;');;
-                //var tableFooterEmptyRow = $('<tr>').append(firstCell);
-
-
-                ////'No-Of Teaching Days Table data
-                ///* debugger;*/
-                //var Stu_wise = response.stu_wise;
-                ////var currentMonth = Stu_wise.currentmonth;
-
-                //var currentMonth = Stu_wise && Stu_wise.currentmonth ? Stu_wise.currentmonth : '';
-
-                //$('#Teaching_Days').text(currentMonth);
-                //var mTotal = Stu_wise.m_total;
-
-
-
-                //var firstCell = $('<td colspan="9" style="font-size: 11px;">').text('Total Enrollment');
-                //var tableFooterRow = $('<tr>').append(firstCell);
-
-                //for (var i = 0; i < 30; i++) {
-                //    var mTotalObject = mTotal;
-
-                //    var attendanceValue = mTotalObject === 0.0 ? '-' : mTotalObject;
-
-                //    var tableCell = $('<td style="font-size: 11px;">').text(attendanceValue);
-
-                //    tableFooterRow.append(tableCell);
-                //}
+               
 
               
 
@@ -308,96 +273,6 @@ $(document).ready(function () {
 
 
                 
-                ///*debugger;*/
-                //var Stu_Atd_tbl2 = response.stu_Atd_tbl2;
-                //var Student_Attendance = Stu_Atd_tbl2;
-                //var S_tblbody = $('#Student_Absentes');
-
-                //// Create the first table cell with colspan 9 and the specified style
-                //var S_firstCell = $('<td colspan="9" style="font-size: 11px;">').text('Student Attendance');
-                //var S_tableFooterRow = $('<tr>').append(S_firstCell);
-                //var totalSum = 0;
-
-                //var secoundCell = $('<td colspan="9" style="font-size: 11px;">').text('Absent Students');
-                //var tableSFooterRow = $('<tr>').append(secoundCell);
-                //var totalPSum = 0;
-
-                //// Iterate over the values of Student_Attendance and create table cells
-                //for (var i = 0; i < Student_Attendance.length; i++) {
-                //    var attendanceObject = Student_Attendance[i];
-                //    var attendanceValue = attendanceObject.totalAbsentsinDay;
-                //    var attendancePs_Value = attendanceObject.totalPresentsinDay;
-
-
-                //    if (attendanceValue === '0.0') {
-                //        attendanceValue = "-";
-                //    } else {
-                //        // Parse the attendanceValue as a float and add it to the totalSum
-                //        totalSum += parseFloat(attendanceValue);
-                //    }
-
-
-                //    var tableAsCell = $('<td  style="font-size: 11px;">').text(attendanceValue);
-                   
-                //    tableFooterRow.append(tableAsCell);
-
-
-
-                //    if (attendancePs_Value === '0.0') {
-                //        attendancePs_Value = "-";
-                //    } else {
-                //        // Parse the attendanceValue as a float and add it to the totalSum
-                //        totalPSum += parseFloat(attendancePs_Value);
-                //    }
-                //    var tablepsCell = $('<td  style="font-size: 11px;">').text(attendancePs_Value);
-                    
-                //    tableSFooterRow.append(tablepsCell);
-
-                //}
-                //var totalSumCell = $('<td colspan="8">').css('font-size', '11px').text(totalSum);
-                //S_tableFooterRow.append(totalSumCell);
-
-                //var totalPSumCell = $('<td colspan="8">').css('font-size', '11px').text(totalPSum);
-                //tableSFooterRow.append(totalPSumCell);
-
-
-
-
-                ////  Total Enrollment Muslims data tr code start
-
-                //var TE_M_tr = response.tE_Muslims_cl;
-
-                //var M_Trcell = $('<td colspan="9" style="font-size: 11px;">').text('Total Enrollment Muslims');
-                //var M_tableFooterRow = $('<tr>').append(M_Trcell);
-
-                //for (var k = 0; k < 30; k++) {
-                //    var m_Object = TE_M_tr.m_total;
-
-                //    var M_Value = m_Object === 0.0 ? '-' : m_Object;
-
-                //    var M_tableCell = $('<td style="font-size: 11px;">').attr('align', 'center').text(M_Value);
-
-                //    M_tableFooterRow.append(M_tableCell);
-                //}
-               
-                
-
-
-                //// Append the table row to the table footer
-                //var tblfooter = $('#tablefooter');
-                //tblfooter.append(tableFooterEmptyRow);
-                //tblfooter.append(tableFooterRow);
-
-
-
-                //// Append the table row to the table footer
-                ///*var tblfooter = $('#tablefooter');*/
-
-                //tblfooter.append(S_tableFooterRow);
-
-                //tblfooter.append(tableSFooterRow);
-                
-                //tblfooter.append(M_tableFooterRow);
                
 
 

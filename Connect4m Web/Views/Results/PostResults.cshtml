@@ -244,7 +244,7 @@
                         <span id="DepartmentNameStep3" style="margin-left:25%;">
                             @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
                         </span>
-                    
+
                         <div class="card-header " style="background-color:black ;">
                             <h5 class="mb-0">
                                 <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001A1" aria-controls="collapse11">
@@ -260,25 +260,25 @@
                                 <div class="card-body">
                                     @*<form id="FmChooseOption">*@
 
-                                       
-                                        <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
-                                            <div class="row">
-                                                <div class="form-group col-2">
-                                                    <label class="control-label space">Upload File</label>
+
+                                    <div style="margin-left: 20%; font-size: 12px;" id="UpdateSubjects_Div">
+                                        <div class="row">
+                                            <div class="form-group col-2">
+                                                <label class="control-label space">Upload File</label>
+                                            </div>
+                                            <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
+                                                    <label class="mb-0" for="RdbYes">Yes</label>
                                                 </div>
-                                                <div class="form-group col-4 m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
-                                                    <div class="radio radio-primary">
-                                                        <input id="RdbYes" name="SortBy" style="padding-top: 0px;" checked="checked" class="check" type="radio" value="0">
-                                                        <label class="mb-0" for="RdbYes">Yes</label>
-                                                    </div>
-                                                    &nbsp;
-                                                    <div class="radio radio-primary">
-                                                        <input id="RdbNo" name="SortBy" class="check"  type="radio" value="1">
-                                                        <label class="mb-0" for="RdbNo">No</label>
-                                                    </div>
+                                                &nbsp;
+                                                <div class="radio radio-primary">
+                                                    <input id="RdbNo" name="SortBy" class="check" type="radio" value="1">
+                                                    <label class="mb-0" for="RdbNo">No</label>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                     @*</form>*@
                                 </div>
@@ -311,6 +311,24 @@
 <script src="~/js/ExcelDownloading.js"></script>
 
 <script src="~/js/PostResults.js"></script>
+<script>    
+    //var pageTitle = '@ViewData["Title"]';
+
+
+    $(document).ready(function () {
+    $("#loadingOverlay").show();
+    debugger;
+    //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
+    var pageTitle = '@ViewData["Title"]'
+    // pageTitle is assign in PostResultsByExcel page
+    if (pageTitle == "PostResultsByExcel") {
+        CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction?ExamtypeId=1', 'DdlExam', '------Select------', false)
+    }
+   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+    CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
+    $("#loadingOverlay").hide();
+});
+</script>
 
 
 

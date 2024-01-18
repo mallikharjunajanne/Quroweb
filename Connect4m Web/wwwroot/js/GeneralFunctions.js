@@ -241,8 +241,11 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
         if (val != "Stop") {
             event.preventDefault();
         }
-
-        var formdata = new FormData($("#" + FormId)[0]);
+        if (FormId != "") {
+            var formdata = new FormData($("#" + FormId)[0]);
+        } else {
+            var formdata = null;
+        }
         if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {
             var Fromdate = $("#TxtFromDate").val();
             var Todate = $("#TxtToDate").val();
@@ -267,7 +270,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
         }
 
         if (val != "Stop") {
-            $("#loadingOverlay").show();
+            loaddingimg.css('display', 'block');
+            //$("#loadingOverlay").show();
         }
         //if (paging != false || paging !=null) {
         if (paging != false ) {
@@ -847,8 +851,10 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                        {
                            data: "FirstName",
-                            render: function (data, type, row, meta) {
-                                return row.firstName
+                           render: function (data, type, row, meta) {
+
+                               return '<a id="TblUserId" class="Undeline" onclick="GettingUserDetails_EditFunction(' + row.userId + ')">' + row.firstName + '</a>';
+                               // return row.firstName
                             }
                         }, {
                            data: "RoleName",
@@ -875,6 +881,62 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "MobilePhone",
                             render: function (data, type, row, meta) {
                                 return row.mobilePhone
+                            }
+                        },
+                    ]
+                }
+                else if (tablename == "TblParentsSearchresults") {//Parent Details Tab ManageUsers Screen
+                    columns = [
+                        {
+                            target: 1,
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
+                            }
+                        },
+                        {
+                            data: "ParentName",
+                            render: function (data, type, row, meta) {
+                                if (row.isParentTable == 1) {
+                                    return "<a style='color:red;'>"+row.parentName+"</a>"
+                                } else {
+                                    return row.parentName
+                                }
+                            }
+                        }, {
+                            data: "Relationship",
+                            render: function (data, type, row, meta) {
+                                return row.relationship
+                            }
+                        },
+                        {
+                            data: "MobilePhone",
+                            render: function (data, type, row, meta) {
+                                return row.mobilePhone
+                            }
+                        }, {
+                            data: "SendSMS",
+                            render: function (data, type, row, meta) {
+                                return row.sendSMS
+                            }
+                        }, {
+                            data: "LoginStatus",
+                            render: function (data, type, row, meta) {
+                                return row.loginStatus
+                            }
+                        }, {
+                            data: "ParentId",
+                            render: function (data, type, row, meta) {
+                                return '<a id="TblUserId" class="Undeline" onclick="GettingParentDetails_EditFunction(' + row.parentId + ',' + row.isParentTable+')">Edit</a>';
+
+                            }
+                        }, {
+                            data: "IsParentTable",
+                            render: function (data, type, row, meta) {
+                                if (row.isParentTable == 1) {
+                                    return "<input type='radio' name='IsParentTable' checked='checked' onclick='MakePrimaryContact_CallingFunction(" + row.parentId + "," + row.isParentTable +")'/>"
+                                } else {
+                                    return "<input type='radio' name='IsParentTable' onclick='MakePrimaryContact_CallingFunction(" + row.parentId + "," + row.isParentTable +")'/>"
+                                }
                             }
                         },
                     ]
@@ -1092,10 +1154,12 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 }
                 $("#" + DivId_Toshow).show();
               //  $("#TblLeavesSearchedResultPage_Div").show();
-                $("#loadingOverlay").hide();
+                //$("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
             },
             error: function () {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
+              //  $("#loadingOverlay").hide();
                 $("#Main_Span_Error").text("Something Error");
             }
         });
@@ -1107,7 +1171,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
         //});
     } catch (error) {
         $("#Main_Span_Error").text("Something Error");
-        $("#loadingOverlay").hide();
+       // $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     }
 }
 //------------------------------------this is for formatted date from string to date
@@ -1134,6 +1199,49 @@ function compareDatesNotGreaterThanToday(conductedDate) {
         return true;
     }
 }
+
+
+//-----compare date not greater than today
+function compareDatesNotGreaterThanTodayById(Id, Text) {
+    debugger;
+    var today = new Date(); // Get today's date
+    // var selectedDate = new Date(conductedDate); // Convert conductedDate to Date object
+    var selectedDate = new Date(document.getElementById(Id).value);
+    var error = $("#"+Id).closest('.form-group');
+    $(error).find('.compare').removeClass('error2');
+    if (selectedDate > today) {
+        $(error).find('.compare').addClass('error2');
+        $(error).find('.compare').text(Text + " should not be greater than todays date.");
+    } else {
+        $(error).find('.compare').addClass('');
+        $(error).find('.compare').text("");
+    }
+}
+
+
+//====Dates Comparision
+//-----------------------------------  Date Change
+//$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare(event, 'DtDateOfJoining', 'DtTCdate', "Date Of Join", "Tc Date") });
+
+//function datescompare(event, start, end) {
+function datescompare(event, startId, endId, startName, endName) {
+    event.stopImmediatePropagation();
+    debugger;
+    var startDate = new Date(document.getElementById(startId).value);
+    var endDate = new Date(document.getElementById(endId).value);
+    var error = $("#"+endId).closest('.form-group');
+    $(error).find('.compare').removeClass('error2');
+    if (endDate <= startDate) {
+        $(error).find('.compare').addClass('error2');
+        $(error).find('.compare').text(endName + " must be greater than " + startName + ".");
+    } else {
+        $(error).find('.compare').addClass('');
+        $(error).find('.compare').text("");
+    }
+}
+
+
+
 
 //------------Printing
 function CallPrint(tableid) {
@@ -1179,7 +1287,11 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
         if (Url == '' || Url == undefined) {
             Url = "/Attendance/_ViewChangeActivities?SourceId=" + SourceId + "&AuditKey=" + AuditKey + "&TableName=" + TableName;
         }
-        debugger;
+            //else {
+        //    $("#Main_Span_Error").text("Something Error");
+        //    $("#loadingOverlay").hide();
+        //    return;
+        //}
         $.ajax({
             url: Url,
             type: "GET",
@@ -1230,7 +1342,6 @@ function CommonClearFunction(Formid) {
     document.getElementById(Formid).reset(); // Reset the form   
 }
 
-
 //<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 
 function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used this in manage Exams Screen
@@ -1239,7 +1350,7 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
     $("#ErrorMessageSpan").empty();
     Swal.fire({
         title: "Are you sure?",
-        text: ("You want to delete the " + Deletemsg + " !"),
+        text: ("You want to delete this " + Deletemsg + " !"),
         //type: "warning", -  doesn't exist
         showCancelButton: true,
         showCloseButton: true, // optional
@@ -1257,25 +1368,27 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
                     //  type: "Post",
                     url: URL,
                     type: type,
-                    success: function (responce) {
-                        if (responce.message == "Record deleted successfully.") {
+                    success: function (response) {
+                        if (response.message == "Record deleted successfully." || response.message == "Photo Deleted Sucessfully." ) {
                             //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
                             //Swal.fire({
                             //    icon: "success",
                             //    title: "Deleted!",
-                            //    text: (responce.message),
+                            //    text: (response.message),
                             //});
 
-                            successCallback(responce);
-                            //$("#Main_Span_Error").text(responce.message);
+                            successCallback(response);
+                            //$("#Main_Span_Error").text(response.message);
+                            $("#loadingOverlay").hide();
                         }
                         else {
                             Swal.fire({
                                 icon: "error",
                                 title: "Failed!",
-                                text: (responce.message),
+                                text: (response.message),
                             });
-                            // $("#Main_Span_Error").text(responce.message);
+                            $("#loadingOverlay").hide();
+                            // $("#Main_Span_Error").text(response.message);
                         }
                        // $("#loadingOverlay").hide();
                     },
@@ -1292,10 +1405,74 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
   
 }
 
+
+function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
+
+    debugger;
+    $("#ErrorMessageSpan").empty();
+    Swal.fire({
+        title: "Are you sure?",
+        text: ("You want to delete this " + Deletemsg + " !"),
+        //type: "warning", -  doesn't exist
+        showCancelButton: true,
+        showCloseButton: true, // optional
+        showConfirmButton: true, // optional
+        confirmButtonColor: '#d33',
+        confirmButtonText: "Yes",
+        icon: "warning",
+        //closeOnConfirm: false -  doesn't exist
+    })
+        .then(function (isConfirm) {
+            if (isConfirm.isConfirmed) {
+                $("#loadingOverlay").show();
+                $.ajax({
+                    //  url: "/Attendance/ManageCompansatoryLeaves?ButtonName=Delete&CompOffLeaveID=" + CompOffLeaveID,
+                    //  type: "Post",
+                    url: URL,
+                    type: type,
+                    success: function (response) {
+                        if (response.message == "Record deleted successfully." || response.message == "Photo Deleted Sucessfully.") {
+                            //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
+                            //Swal.fire({
+                            //    icon: "success",
+                            //    title: "Deleted!",
+                            //    text: (response.message),
+                            //});
+                            $('.alert-success p').text("Record deleted successfully.");
+                            $(".alert-success").show().delay(5000).fadeOut()
+                            successCallback(response);
+                            //$("#Main_Span_Error").text(response.message);
+                            $("#loadingOverlay").hide();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Failed!",
+                                text: (response.message),
+                            });
+                            $("#loadingOverlay").hide();
+                            // $("#Main_Span_Error").text(response.message);
+                        }
+                        // $("#loadingOverlay").hide();
+                    },
+                    error: function (xhr, status, error) {
+                        $("#loadingOverlay").hide();
+                        $("#Main_Span_Error").text("Something Error");
+                    }
+                });
+            }
+            else {
+                return; //close popup
+            }
+        });
+
+}
+
+
+
 //CommonMethod to ALL
 function performCrudOperationCommonFunction(type, Url, Data, successCallback, errorCallback, hasFileUpload) {
    // try {
-        debugger;
         $(".ErrorMessageSpan").empty();
         //var formdata = new FormData($("#" + FormId)[0]);
 
@@ -1373,7 +1550,7 @@ function CommonDropdownFunction(Method, Url, EffectingDropdownid, FirstSelectTex
         }
      
        // var Data = { InstanceClassificationId: InstanceClassificationId, InstanceSubClassificationId: InstanceSubClassificationId}
-        debugger;
+        
         $.ajax({
             url: Url,
             type: Method,
@@ -1382,8 +1559,11 @@ function CommonDropdownFunction(Method, Url, EffectingDropdownid, FirstSelectTex
             processData:false,           
             success: function (responce) {
                 // $("#AppliedEmployeesNames_Id").empty();
+
                 $("#" + EffectingDropdownid).empty();
+                if (FirstSelectText != '') {
                 $("#" + EffectingDropdownid).append('<option value="" >' + FirstSelectText + '</option>');
+            }
                 $.each(responce, function (i, Value2) {
                     $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
                 });
@@ -1423,7 +1603,7 @@ function UpdateAllTextboxvaluesByChecked(checkbox, FirstTextBoxId, EffectiveTxtC
 
 
 //-sr---------------------------------------------------------------------------------   Common Ajax Function To all
-function CommonAjaxFunction(method, url, data, successCallback, errorCallback, hasFileUpload) {
+function CommonAjaxFunction1(method, url, data, successCallback, errorCallback, hasFileUpload) {
     // debugger;
     var ajaxOptions = {
         url: url,

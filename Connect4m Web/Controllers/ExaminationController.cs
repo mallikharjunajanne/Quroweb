@@ -16,8 +16,7 @@ using Connect4m_Web.Models.LMSproperties;
 using Microsoft.AspNetCore.Authorization;
 using OfficeOpenXml;
 using System.Text.RegularExpressions;
-
-
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -34,42 +33,63 @@ namespace Connect4m_Web.Controllers
         //    client = new HttpClient();
         //    client.BaseAddress = baseaddress;
         //}
-        private string Controllername;
+        //private string Controllername;
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public ExaminationController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+
+        private readonly IUserService _userService;
+        private readonly int LoginUserId;
+        private readonly int InstanceClassificationId;
+        private readonly int InstanceSubClassificationId;
+        private readonly int InstanceId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+        private readonly string RoleName;
+        private readonly string UserNameHeader_;
+
+        private string returnvalue;
+        private List<SubjectModel> Editlist = new List<SubjectModel>();
+        public ExaminationController(HttpClientFactory httpClientFactory, IConfiguration configuration,IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
-            Controllername = "Examination";
-            client.BaseAddress = new Uri(apiBaseAddress + "/" + Controllername + "");
-        }
-        private int LoginUserId;
-        private int InstanceClassificationId;
-        private int InstanceSubClassificationId;
-        private int InstanceId;
-        private int Roleid;
-        private int StudentUserid;
-        private string returnvalue;
-        private List<SubjectModel> Editlist = new List<SubjectModel>();
+            //Controllername = "Examination";
+            client.BaseAddress = new Uri(apiBaseAddress + "/Examination");
 
+            //===================Values Getting====================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            LoginUserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            InstanceSubClassificationId = _userService.InstanceSubClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+
+            RoleName = _userService.RoleName;
+            UserNameHeader_ = _userService.UserNameHeader_;
+        }
+
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         //private int InitializeInstanceId()
         //{
         //    return Convert.ToInt32(Request.Cookies["Instanceid"]);
         //}
 
-        private void InitializeCookieValues()
-        {
-            InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
-            InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
-            Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
-            StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
-        }
+        //private void InitializeCookieValues()
+        //{
+        //    InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
+        //    LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+        //    InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
+        //    InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
+        //    Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
+        //    StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
+        //}
 
         public List<T> CommonListMethod<T>(T obj, string WebApiMethodname)
         {
@@ -107,10 +127,12 @@ namespace Connect4m_Web.Controllers
         //--------------------------------------============================= Manage Exams Screen ===================------------------------------
         public IActionResult TblExamListData(ExaminationModel obj, int Id)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Id = Id;
-            List<ExaminationModel> list = CommonListMethod(obj, "/TblExamListData");
+            List<ExaminationModel> list = CommonMethodobj.CommonListMethod<ExaminationModel, ExaminationModel>(obj, "/TblExamListData", client);
+
+            //List<ExaminationModel> list = CommonListMethod(obj, "/TblExamListData");
             return Json(list);
         }
         public IActionResult Create_Update_Pview_ManageExams()
@@ -126,7 +148,7 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult ManageExams(ExaminationModel obj, int DeleteID, string ButtonName)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;
             obj.Id = DeleteID;
@@ -151,7 +173,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 ViewBag.Buttonname = Buttonname;
                 List<Models.SubClassifications> list = CommonListMethod(obj, "/MS_SubClassifications?InstanceId=" + InstanceId);
                 if (Buttonname != "Create")
@@ -177,7 +199,7 @@ namespace Connect4m_Web.Controllers
             try
             {
                 Models.Subclassfications_MS obj = new Models.Subclassfications_MS();
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 //--------------------------------------------------  Subclassfication DAta 
                 obj.InstanceID = InstanceId;
                 obj.InstanceClassificationId = InstanceClassificationId;
@@ -224,7 +246,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblSubjectListData(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/TblSubjectListData");
             return Json(list);
@@ -240,7 +262,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 // obj.Id = DeleteID;
@@ -274,7 +296,7 @@ namespace Connect4m_Web.Controllers
         // -------------------=====================   BULK UPLOAD SUBJECTS   ===============================
         public IActionResult UpdateSubjects_PartialView(int InstanceSubjectId, string Buttonname)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             ViewBag.Buttonname = Buttonname;
             SubjectEditValuesListModel obj = new SubjectEditValuesListModel();
             obj.InstanceID = InstanceId;
@@ -309,17 +331,30 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblBulkUploadSubjectsList(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/TblBulkUploadSubjectsList");
             list = list.OrderBy(x => x.SubjectName).ToList();
             return Json(list);
         }
 
+        //=================Delete User
+        public IActionResult DeleteSubject_CallingFunction(DropdownClass val, int InstanceSubjectId)
+        {
+            val.Id = InstanceSubjectId;
+           // val.InstanceID = InstanceId;
+            returnvalue = CommonMethodobj.CommonSaveMethod(val, "/DeleteSubject_CallingFunction", client);
+            if (returnvalue != "0")
+            {
+                return Json(new { success = true, message = returnvalue });
+            }
+            else
+                return Json(new { success = false, message = "Something Error" });
 
+        }
         public IActionResult TblViewSubjectsList(SubjectModel obj,int InstanceClassificationId,int InstanceSubClassificationId)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             if (InstanceClassificationId == 0 || InstanceSubClassificationId == 0)
             {
@@ -698,7 +733,7 @@ namespace Connect4m_Web.Controllers
 
 
 
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;
             obj.ButtonName = ButtonName;
@@ -724,7 +759,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult SubjectTypesDropdown_Calingfunction(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/SubjectTypesDropdown_Calingfunction");
             var itemsList = new List<SelectListItem>();
@@ -749,7 +784,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblUserDetailsList(SubjectEditValuesListModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Name = "STUDENT";//Gave Default
            
@@ -769,7 +804,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;               
                 returnvalue = CommonSaveMethod(obj, "/ManageSubjectAssociation");
@@ -802,7 +837,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.ScreenName = "ManageSubjectAssociationForMBA";

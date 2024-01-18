@@ -9,19 +9,145 @@
 
 </head>
 <body>
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="row">
-            <input type="hidden" value="@ViewBag.Instanceid" asp-for="InstanceId" />
-            <input type="hidden" value="@ViewBag.LoginUserId" asp-for="UserId" />
-            <!-- View sales -->
-            <div class="col-xl-6 mb-4 col-lg-6 col-12">
-                <div class="accordion mt-3" id="accordionExample">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
-                                @ViewBag.items
-                            </button>
-                        </h2>
+    <div class="row">
+        <div class="col-md mb-4 mb-md-2">         
+            <div class="accordion mt-3" id="accordionExample">
+                <div class="card accordion-item active">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
+                            Accordion Item 1
+                        </button>
+                    </h2>
+
+                    <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                            Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
+                            bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
+                            marshmallow pastry pie.
+                        </div>
+                    </div>
+                </div>
+                <div class="card accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+                            Accordion Item 2
+                        </button>
+                    </h2>
+                    <div id="accordionTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
+                            cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes
+                            carrot cake. Fruitcake chocolate chupa chups.
+                        </div>
+                    </div>
+                </div>
+                <div class="card accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionThree" aria-expanded="false" aria-controls="accordionThree">
+                            Accordion Item 3
+                        </button>
+                    </h2>
+                    <div id="accordionThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
+                            marshmallow sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream
+                            wafer danish cookie caramels muffin.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="accordion mt-3 accordion-bordered" id="accordionStyle1">
+                <div class="accordion-item card">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionStyle1-1" aria-expanded="false">
+                            Header Option 1
+                        </button>
+                    </h2>
+
+                    <div id="accordionStyle1-1" class="accordion-collapse collapse show" data-bs-parent="#accordionStyle1" style="">
+                        <div class="accordion-body">
+                            Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
+                            bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
+                            marshmallow pastry pie.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item card">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionStyle1-2" aria-expanded="false">
+                            Header Option 2
+                        </button>
+                    </h2>
+                    <div id="accordionStyle1-2" class="accordion-collapse collapse show" data-bs-parent="#accordionStyle1" style="">
+                        <div class="accordion-body">
+                            Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake dragée ice
+                            cream
+                            halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly beans candy canes carrot
+                            cake.
+                            Fruitcake chocolate chupa chups.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card accordion-item">
+                    <h2 class="accordion-header">
+                        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionStyle1-3" aria-expanded="false">
+                            Header Option 3
+                        </button>
+                    </h2>
+                    <div id="accordionStyle1-3" class="accordion-collapse collapse show" data-bs-parent="#accordionStyle1" style="">
+                        <div class="accordion-body">
+                            Oat cake toffee chocolate bar jujubes. Marshmallow brownie lemon drops cheesecake. Bonbon gingerbread
+                            marshmallow
+                            sweet jelly beans muffin. Sweet roll bear claw candy canes oat cake dragée caramels. Ice cream wafer danish
+                            cookie caramels muffin.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-body">
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <h6><span>Home</span></h6>
+                    <div class="row">
+                        <div class="row">
+                            @if (ViewBag.RoleName == "ADMINISTRATOR")
+                            {
+                                <div><span>ADMINISTRATOR</span></div>
+                            }
+                            else if (ViewBag.RoleName == "School Admin")
+                            {
+                                <div><span>SCHOOL ADMIN</span></div>
+                            }
+                            else if (ViewBag.RoleName == "Class Teacher")
+                            {
+                                <div><span>CLASS TEACHER</span></div>
+                            }
+                            else if (ViewBag.RoleName == "Parent")
+                            {
+                                <div><span>PARENT</span></div>
+                            }
+                            else if (ViewBag.RoleName == "STUDENT")
+                            {
+                                <div><span>STUDENT</span></div>
+                            }
+
+                            <div class="col-6" id="accordionoc1">
+                                <div class="card-header bg-primary">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="border-radius: 8px 45px 0px 40px;" value="@ViewBag.list[0].CategoryName" title="@ViewBag.list[0].AssetTypeId" id="FlassNewsbtn">@ViewBag.list[0].CategoryName</button> @*@ViewBag.items*@
+                                    </h5>
+                                </div>
+                                <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
 
                         <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample" style="">
 
@@ -121,107 +247,246 @@
                         </div>
                     </div>
 
-                </div>
             </div>
-            <!-- View sales -->
-            <!-- Statistics -->
-            <div class="col-xl-6 mb-4 col-lg-6 col-12">
-                <div class="accordion mt-3" id="accordionExample1">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
-                                BIRTHDAYS IN SCHOOL FOR THE DAY
-                            </button>
-                        </h2>
-
-                        <div id="accordionTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample1" style="">
-
-                            <div class="accordion-body" style="min-height:250px;">
-                                <span>Birthdays in School for the Day</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion mt-3" id="accordionExample3">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionFour" aria-expanded="true" aria-controls="accordionFour">
-                                ABSENTEE STUDENTS FOR THE DAY
-                            </button>
-                        </h2>
-
-                        <div id="accordionFour" class="accordion-collapse collapse show" data-bs-parent="#accordionExample3" style="">
-
-                            <div class="accordion-body" style="min-height:250px;">
-                                <span>
-                                    ABSENTEE STUDENTS FOR THE DAY
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion mt-3" id="accordionExample5">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingSix">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionSix" aria-expanded="true" aria-controls="accordionSix">
-                                LEAVE STATUS
-                            </button>
-                        </h2>
-
-                        <div id="accordionSix" class="accordion-collapse collapse show" data-bs-parent="#accordionExample5" style="">
-
-                            <div class="accordion-body" style="min-height:250px;">
-                                <span>
-                                    LEAVE STATUS
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion mt-3" id="accordionExample7">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingEight">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionEight" aria-expanded="true" aria-controls="accordionEight">
-                                NEW ADMISSION(S)
-                            </button>
-                        </h2>
-
-                        <div id="accordionEight" class="accordion-collapse collapse show" data-bs-parent="#accordionExample7" style="">
-
-                            <div class="accordion-body" style="min-height:250px;">
-                                <span>
-                                    NEW ADMISSION(S)
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion mt-3" id="accordionExample9">
-                    <div class="card accordion-item active">
-                        <h2 class="accordion-header" id="headingTen">
-                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTen" aria-expanded="true" aria-controls="accordionTen">
-                                QUESTIONS POSTED TO ME
-                            </button>
-                        </h2>
-
-                        <div id="accordionTen" class="accordion-collapse collapse show" data-bs-parent="#accordionExample9" style="">
-
-                            <div class="accordion-body" style="min-height:250px;">
-                                <span>
-                                    QUESTIONS POSTED TO ME
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <!--/ Statistics -->
         </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+<div>
+        @*<div class="card">
+            <div class="card-header pb-0">
+                <div style=" font-size: 50px; text-align: center;">
+                    <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: -13px; ">HOME</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row" style="margin: 0px 0px 0px 3px;">
+                    <div class="default-according style-1 col-6" id="accordionoc1">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                        @ViewBag.items
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <div id="Flassnews_PartailConatiner">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="default-according style-1 col-6" id="accordionoc2">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            BIRTHDAYS IN SCHOOL FOR THE DAY
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>Birthdays in School for the Day</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="default-according style-1 col-6" id="accordionoc3">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                           @ViewBag.itemss
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon3" data-bs-parent="#accordionoc3" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span> E - NOTICE BOARD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="default-according style-1 col-6" id="accordionoc4">
+                        <div class="card">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon4" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+
+                                            ABSENTEE STUDENTS FOR THE DAY
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon4" aria-labelledby="collapseicon4" data-bs-parent="#accordionoc4" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>
+                                        ABSENTEE STUDENTS FOR THE DAY
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="default-according style-1 col-6" id="accordionoc5">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon5" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            COOL LINKS
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon5" aria-labelledby="collapseicon5" data-bs-parent="#accordionoc5" style="">
+                                <div class="card-body responsive-height" style=" border-bottom-color: aquamarine; height: 235px;">
+                                    <div id="Coollinks_PartailConatiner">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="default-according style-1 col-6" id="accordionoc6">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon6" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            LEAVE STATUS
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon6" aria-labelledby="collapseicon6" data-bs-parent="#accordionoc6" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>
+                                        LEAVE STATUS
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="default-according style-1 col-6" id="accordionoc7">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon7" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            TIME TABLE
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon7" aria-labelledby="collapseicon7" data-bs-parent="#accordionoc7" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span> TIME TABLE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="default-according style-1 col-6" id="accordionoc8">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon8" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            NEW ADMISSION(S)
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon8" aria-labelledby="collapseicon8" data-bs-parent="#accordionoc8" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>
+
+                                        NEW ADMISSION(S)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="default-according style-1 col-6" id="accordionoc9">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon9" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            STUDENT(S) UNDER WITHDRAWAL PROCESS
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon9" aria-labelledby="collapseicon9" data-bs-parent="#accordionoc9" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>STUDENT(S) UNDER WITHDRAWAL PROCESS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="default-according style-1 col-6" id="accordionoc10">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon10" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            QUESTIONS POSTED TO ME
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon10" aria-labelledby="collapseicon10" data-bs-parent="#accordionoc10" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>
+                                        QUESTIONS POSTED TO ME
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="default-according style-1" id="accordionoc11">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon11" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
+                                        <span class="Header_text_span">
+                                            CALENDAR
+                                        </span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="collapse show" id="collapseicon11" aria-labelledby="collapseicon11" data-bs-parent="#accordionoc11" style="">
+                                <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
+                                    <span>
+                                        CALENDAR
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
     </div>
 </body>
 </html>
@@ -232,191 +497,178 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 
-@*<script>
-   $(document).ready(function () {
+<script>
+   //$(document).ready(function () {  
 
+   //    function CallToAjax(method, url, successCallback, errorCallback) {
+   //             $.ajax({
+   //                 url: url,
+   //                 type: method,
+   //                 success: successCallback,
+   //                 error: function (xhr, status, error) {
+   //                     errorCallback(xhr.status, error);
+   //                 }
+   //             });
+   //         }
 
-       //function Calendarevents() {
-       //    $.ajax({
-       //        url: url,
-       //        type: method,
-       //        data: data,
-       //        success: successCallback,
-       //        error: function (xhr, status, error) {
-       //            errorCallback(xhr.status, error);
-       //        }
-       //    });
-       //}
+   //    CallToAjax('GET', '/UserScreens/Coollinks',
+   //        function (response) {
+   //            $('#Coollinks_PartailConatiner').html(response);
+   //            pagination();
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    CallToAjax('GET', '/UserScreens/LeaveStatus',
+   //        function (response) {
+   //            $('#Leavestatus_PartailConatiner').html(response);
 
-       function CallToAjax(method, url, successCallback, errorCallback) {
-                $.ajax({
-                    url: url,
-                    type: method,
-                    success: successCallback,
-                    error: function (xhr, status, error) {
-                        errorCallback(xhr.status, error);
-                    }
-                });
-            }
-
-       CallToAjax('GET', '/UserScreens/Coollinks',
-           function (response) {
-               $('#Coollinks_PartailConatiner').html(response);
-               pagination();
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       CallToAjax('GET', '/UserScreens/LeaveStatus',
-           function (response) {
-               $('#Leavestatus_PartailConatiner').html(response);
-
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',
-           function (response) {
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',
+   //        function (response) {
                
-               $('#Absenteestudents_PartailConatiner').html(response);
+   //            $('#Absenteestudents_PartailConatiner').html(response);
                
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
  
 
-       CallToAjax('GET', '/UserScreens/PostedQuestions',
-           function (response) {
+   //    CallToAjax('GET', '/UserScreens/PostedQuestions',
+   //        function (response) {
 
-               $('#PostedQuestion_Containerdiv').html(response);
+   //            $('#PostedQuestion_Containerdiv').html(response);
 
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
 
 
-       CallToAjax('GET', '/UserScreens/CalendarEvents',
-           function (response) {
+   //    CallToAjax('GET', '/UserScreens/CalendarEvents',
+   //        function (response) {
 
-               $('#EventsCalenderdiv').html(response);
+   //            $('#EventsCalenderdiv').html(response);
 
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-       var FlassNews = $('#FlassNewsbtn').val();
-       var FlassNewsIsGlobalNotice = $('#FlassNewsbtn').attr('title');     
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //    var FlassNews = $('#FlassNewsbtn').val();
+   //    var FlassNewsIsGlobalNotice = $('#FlassNewsbtn').attr('title');     
 
-       var dataToSend = {
-           ENoticeType: FlassNews,
-           IsGlobalNotice: FlassNewsIsGlobalNotice
-       };
-       datawithAjax('GET', '/UserScreens/FlashNews', dataToSend,
-           function (response) {
-               $('#Flassnews_PartailConatiner').html(response);
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
+   //    var dataToSend = {
+   //        ENoticeType: FlassNews,
+   //        IsGlobalNotice: FlassNewsIsGlobalNotice
+   //    };
+   //    datawithAjax('GET', '/UserScreens/FlashNews', dataToSend,
+   //        function (response) {
+   //            $('#Flassnews_PartailConatiner').html(response);
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
 
-       function datawithAjax(method, url, data, successCallback, errorCallback) {
-           $.ajax({
-               url: url,
-               type: method,
-               data: data,
-               success: successCallback,
-               error: function (xhr, status, error) {
-                   errorCallback(xhr.status, error);
-               }
-           });   
-       }
+   //    function datawithAjax(method, url, data, successCallback, errorCallback) {
+   //        $.ajax({
+   //            url: url,
+   //            type: method,
+   //            data: data,
+   //            success: successCallback,
+   //            error: function (xhr, status, error) {
+   //                errorCallback(xhr.status, error);
+   //            }
+   //        });   
+   //    }
 
        
-       var ENoticeType = $('#ENoticebtn').val();
-       var IsGlobalNotice = $('#ENoticebtn').attr('title');
+   //    var ENoticeType = $('#ENoticebtn').val();
+   //    var IsGlobalNotice = $('#ENoticebtn').attr('title');
        
-       var dataToSend = {
-           ENoticeType: ENoticeType,
-           IsGlobalNotice: IsGlobalNotice
-       };
-       datawithAjax('GET', '/UserScreens/E_Noticeboard', dataToSend,
-           function (response) {
-               $('#EnoticeConatiner').html(response);
-           },
-           function (status, error) {
-               // Handle error if needed
-           }
-       );
-   });
+   //    var dataToSend = {
+   //        ENoticeType: ENoticeType,
+   //        IsGlobalNotice: IsGlobalNotice
+   //    };
+   //    datawithAjax('GET', '/UserScreens/E_Noticeboard', dataToSend,
+   //        function (response) {
+   //            $('#EnoticeConatiner').html(response);
+   //        },
+   //        function (status, error) {
+   //            // Handle error if needed
+   //        }
+   //    );
+   //});
 
-    function pagination() {
-        debugger;
-        var listId = 'Coollinkslist_Ul';
-        var paginationDiv = document.getElementById('Pagination_div');
-        var itemsPerPage = 10;
-        var currentPage = 1;
-        var list = document.getElementById(listId);
-        var items = Array.from(list.getElementsByTagName('li'));
-        var numItems = items.length;
-        var totalPages = Math.ceil(numItems / itemsPerPage);
+   // function pagination() {
+   //     debugger;
+   //     var listId = 'Coollinkslist_Ul';
+   //     var paginationDiv = document.getElementById('Pagination_div');
+   //     var itemsPerPage = 10;
+   //     var currentPage = 1;
+   //     var list = document.getElementById(listId);
+   //     var items = Array.from(list.getElementsByTagName('li'));
+   //     var numItems = items.length;
+   //     var totalPages = Math.ceil(numItems / itemsPerPage);
 
-        debugger;
+   //     debugger;
 
-        if (numItems >= itemsPerPage) {
-            function showPage(page) {
-                currentPage = page;
-                var startIndex = (page - 1) * itemsPerPage;
-                var endIndex = Math.min(startIndex + itemsPerPage, numItems);
+   //     if (numItems >= itemsPerPage) {
+   //         function showPage(page) {
+   //             currentPage = page;
+   //             var startIndex = (page - 1) * itemsPerPage;
+   //             var endIndex = Math.min(startIndex + itemsPerPage, numItems);
 
-                items.forEach(function (item) {
-                    item.style.display = 'none';
-                });
+   //             items.forEach(function (item) {
+   //                 item.style.display = 'none';
+   //             });
 
-                for (var i = startIndex; i < endIndex; i++) {
-                    items[i].style.display = 'list-item';
-                }
-            }
+   //             for (var i = startIndex; i < endIndex; i++) {
+   //                 items[i].style.display = 'list-item';
+   //             }
+   //         }
 
-            function updatePagination() {
-                paginationDiv.innerHTML = '';
+   //         function updatePagination() {
+   //             paginationDiv.innerHTML = '';
 
-                for (var i = 1; i <= totalPages; i++) {
-                    var link = document.createElement('a');
-                    link.href = '#';
-                    link.textContent = i;
-                    link.classList.add('pagination-link');
-                    link.dataset.page = i;
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        var page = parseInt(this.dataset.page);
-                        showPage(page);
-                        updatePagination();
-                    });
+   //             for (var i = 1; i <= totalPages; i++) {
+   //                 var link = document.createElement('a');
+   //                 link.href = '#';
+   //                 link.textContent = i;
+   //                 link.classList.add('pagination-link');
+   //                 link.dataset.page = i;
+   //                 link.addEventListener('click', function (e) {
+   //                     e.preventDefault();
+   //                     var page = parseInt(this.dataset.page);
+   //                     showPage(page);
+   //                     updatePagination();
+   //                 });
 
-                    if (i === currentPage) {
-                        link.classList.add('current-page');
-                        link.style.cursor = 'unset';
-                        link.style.fontWeight = 'bold';
-                        link.style.color = '#ff0000';
-                        link.style.margin = '0px 5px';
-                    }
-                    paginationDiv.appendChild(link);
-                }
-            }
+   //                 if (i === currentPage) {
+   //                     link.classList.add('current-page');
+   //                     link.style.cursor = 'unset';
+   //                     link.style.fontWeight = 'bold';
+   //                     link.style.color = '#ff0000';
+   //                     link.style.margin = '0px 5px';
+   //                 }
+   //                 paginationDiv.appendChild(link);
+   //             }
+   //         }
 
-            showPage(currentPage);
-            updatePagination();
-        }
-    }
+   //         showPage(currentPage);
+   //         updatePagination();
+   //     }
+   // }
 
 </script>*@

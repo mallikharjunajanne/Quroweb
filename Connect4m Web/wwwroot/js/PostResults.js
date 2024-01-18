@@ -2,19 +2,20 @@
 
 
 var ErrorAppend = $("#Main_Span_Error");
-$(document).ready(function () {
-    $("#loadingOverlay").show();
-    debugger;
-    //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
-   // var pageTitle = '@ViewData["Title"]'
-    // pageTitle is assign in PostResultsByExcel page
-    if (pageTitle == "PostResultsByExcel") {
-        CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction?ExamtypeId=1', 'DdlExam', '------Select------', false)
-    }
-   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
-    CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
-    $("#loadingOverlay").hide();
-});
+//============Ready function
+//$(document).ready(function () {
+//    $("#loadingOverlay").show();
+//    debugger;
+//    //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
+//   // var pageTitle = '@ViewData["Title"]'
+//    // pageTitle is assign in PostResultsByExcel page
+//    if (pageTitle == "PostResultsByExcel") {
+//        CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction?ExamtypeId=1', 'DdlExam', '------Select------', false)
+//    }
+//   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+//    CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
+//    $("#loadingOverlay").hide();
+//});
 var js = jQuery.noConflict(true);
 
 
@@ -23,7 +24,8 @@ var js = jQuery.noConflict(true);
 //=============================== upload file yes or No
 // function FileUploadingType(event,id) {
 
-$('#RdbNo, #RdbYes').click(function (event) {
+//$('#RdbNo, #RdbYes').click(function (event) {
+$('#RdbNo, #RdbYes').off('click').on('click', function (event) {
     try {
         // event.preventDefault();
         debugger;
@@ -62,9 +64,7 @@ $('#RdbNo, #RdbYes').click(function (event) {
             function (error) {
                 $("#loadingOverlay").hide();
                 $("#Main_Span_Error").text("Something Error");
-            },
-            true
-        );
+            },  true );
     } catch (error) {
         $("#loadingOverlay").hide();
         $("#Main_Span_Error").text("Something Error");
@@ -110,7 +110,6 @@ function BackTOStep(event, button) {
 
 var ClickedBtnId = null;
 $(".submit-btn").click(function () {
-    // Set the value of a hidden input field to the name of the clicked button
     ClickedBtnId = $(this).attr("id");
 });
 
@@ -393,136 +392,138 @@ js("#FmSubjectsSearch").submit(function (event) {
 //})
 
 //===============================  This is For save and go to step3
-js(document).on("click", '#BtnSave_Nextpage_Step3', function (event) {
-    try {
-        event.preventDefault();
-        //event.stopImmediatePropagation();
+//$(document).ready(function () {
+//js(document).on("click", '#BtnSave_Nextpage_Step3', function (event) {
+$("#BtnSave_Nextpage_Step3").click(function (event) {
+        try {
+            event.preventDefault();
+            //event.stopImmediatePropagation();
 
-        $("#loadingOverlay").show();
-        var ButtonName = $(this).val();
-        debugger;
-        $(".ErrorMessageSpan").empty();
-        var formData = new FormData($("#FmSubjectsSearch")[0]);
-
-        var selectedValues = $("#DdlSubjects option:selected").map(function () {
-            return $(this).text();
-        }).get();
-        //if (selectedValues) {
-        //    var selectedValuesString = selectedValues.join(", ");
-        //}
-        const selectedValuesString = selectedValues ? selectedValues.join(", ") : "";
-        formData.append("SubjectsName", selectedValuesString)
-
-        // var Subjectname = $("#Subjectname").val();
-        var shouldExit = false;
-        var TblExamSubject = $("#TblExamSubjects tbody tr");
-        TblExamSubject.find('input[type="text"],input[type="date"]').removeClass("errorboxshadow");
-        //this for check a record
-        TblExamSubject.each(function (index) {
-            TblExamSubjectTD = $(this).find("td");
-            //var ExamId = TblExamSubjectTD.find("#ExamSubjectId").val();
-
-            var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
-            var HdnActualDateConducted = TblExamSubjectTD.find("#ActualDateConducted").val();
-            var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
-            var SubjectName = TblExamSubjectTD.eq(1).text();
-            var TxtDate = TblExamSubjectTD.find("#TxtDate").val();
-            var TxtPassMarks = TblExamSubjectTD.find("#TxtPassMarks").val();
-            var TxtMaxMarks = TblExamSubjectTD.find("#TxtMaxMarks").val();
-            if (TxtDate === "") {
-                $(ErrorAppend).text("Conducted date can not be left blank for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            else if (TxtPassMarks === "") {
-                $(ErrorAppend).text("Pass Marks can not be left blank for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            else if (TxtMaxMarks === "") {
-                $(ErrorAppend).text("Max Marks can not be left blank for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtMaxMarks").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            else if (!compareDatesNotGreaterThanToday(TxtDate)) {
-                $(ErrorAppend).text("Conducted date can not be greater than today for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            else if (new Date(TxtDate) < new Date(HdnActualDateConducted)) {
-                $(ErrorAppend).text("ReTest Conducted date can not be less than Conducted Date for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            else if (parseFloat(TxtMaxMarks) < parseFloat(TxtPassMarks)) {
-                $(ErrorAppend).text("Pass Marks can not be greater than Max Marks for subject '" + SubjectName + "'");
-                TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
-                shouldExit = true; // Set the flag to true to exit the loops
-                return false; // Exit the inner loop
-            }
-            // formData.append("ExamIdList", parseInt(ExamId) || 0);
-            formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
-            formData.append("PassMarksList", parseFloat(TxtPassMarks));
-            formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
-            formData.append("DateConductedList", TxtDate);
-
-            formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
-        });
-        if (shouldExit) {
-            //  $("#Main_Span_Error").text("Subjects overlapping.");
-            window.scrollTo(0, 0);
-            $("#loadingOverlay").hide();
-            return;
-        }
-        performCrudOperationCommonFunction('POST', "/Results/PostResults?ButtonName=" + ButtonName, formData, function (response) {
+            $("#loadingOverlay").show();
+            var ButtonName = $(this).val();
             debugger;
-            var SubjectText = "";
-            //var jsonResponse = JSON.parse(response.name);
+            $(".ErrorMessageSpan").empty();
+            var formData = new FormData($("#FmSubjectsSearch")[0]);
 
-            if (response.message == "Record inserted successfully.") {
-                $("#DepartmentNameStep3").text('Step 2 Selection: ' +
-                    $("#DdlDepartment option:selected").text() + ' - ' +
-                    $("#DdlClass option:selected").text() + ',' +
-                    $("#DdlExam option:selected").text());
-                // var data = { MarksUploadtype: "UploadWithExcelFile",Nextstep:"Step3" };
-                var MarksUploadtype = "UploadWithExcelFile";
-                $("#loadingOverlay").show();
-                performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype + "&Nextstep=Step3", formData, function (response) {
-                    $("#Div_UploadingType").html(response);
-                    $("#Div_Step2").hide();
-                    $("#Div_Step3").show();
-                    $("#loadingOverlay").hide();
-                }, function (error) {
-                    $("#loadingOverlay").hide();
-                    $("#Main_Span_Error").text("Something Error");
-                }, true);
-
-            }
-            //if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
-            //   // SubjectText = $("#DdlSubject option:selected").text();
-            //    $("#Main_Span_Error").text(response.message + SubjectText);
+            var selectedValues = $("#DdlSubjects option:selected").map(function () {
+                return $(this).text();
+            }).get();
+            //if (selectedValues) {
+            //    var selectedValuesString = selectedValues.join(", ");
             //}
-            else
-                $("#Main_Span_Error").text(response.message + SubjectText);
+            const selectedValuesString = selectedValues ? selectedValues.join(", ") : "";
+            formData.append("SubjectsName", selectedValuesString)
+
+            // var Subjectname = $("#Subjectname").val();
+            var shouldExit = false;
+            var TblExamSubject = $("#TblExamSubjects tbody tr");
+            TblExamSubject.find('input[type="text"],input[type="date"]').removeClass("errorboxshadow");
+            //this for check a record
+            TblExamSubject.each(function (index) {
+                TblExamSubjectTD = $(this).find("td");
+                //var ExamId = TblExamSubjectTD.find("#ExamSubjectId").val();
+
+                var HdnExamSubjectId = TblExamSubjectTD.find("#ExamSubjectId").val();
+                var HdnActualDateConducted = TblExamSubjectTD.find("#ActualDateConducted").val();
+                var HdnSubjectId = TblExamSubjectTD.find("#SubjectId").val();
+                var SubjectName = TblExamSubjectTD.eq(1).text();
+                var TxtDate = TblExamSubjectTD.find("#TxtDate").val();
+                var TxtPassMarks = TblExamSubjectTD.find("#TxtPassMarks").val();
+                var TxtMaxMarks = TblExamSubjectTD.find("#TxtMaxMarks").val();
+                if (TxtDate === "") {
+                    $(ErrorAppend).text("Conducted date can not be left blank for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                else if (TxtPassMarks === "") {
+                    $(ErrorAppend).text("Pass Marks can not be left blank for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                else if (TxtMaxMarks === "") {
+                    $(ErrorAppend).text("Max Marks can not be left blank for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtMaxMarks").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                else if (!compareDatesNotGreaterThanToday(TxtDate)) {
+                    $(ErrorAppend).text("Conducted date can not be greater than today for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                else if (new Date(TxtDate) < new Date(HdnActualDateConducted)) {
+                    $(ErrorAppend).text("ReTest Conducted date can not be less than Conducted Date for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                else if (parseFloat(TxtMaxMarks) < parseFloat(TxtPassMarks)) {
+                    $(ErrorAppend).text("Pass Marks can not be greater than Max Marks for subject '" + SubjectName + "'");
+                    TblExamSubjectTD.find("#TxtPassMarks").addClass("errorboxshadow");
+                    shouldExit = true; // Set the flag to true to exit the loops
+                    return false; // Exit the inner loop
+                }
+                // formData.append("ExamIdList", parseInt(ExamId) || 0);
+                formData.append("SubjectIdList", parseInt(HdnSubjectId) || 0);
+                formData.append("PassMarksList", parseFloat(TxtPassMarks));
+                formData.append("MaxMarksList", parseFloat(TxtMaxMarks));
+                formData.append("DateConductedList", TxtDate);
+
+                formData.append("ExamSubjectIdList", parseInt(HdnExamSubjectId) || 0);
+            });
+            if (shouldExit) {
+                //  $("#Main_Span_Error").text("Subjects overlapping.");
+                window.scrollTo(0, 0);
+                $("#loadingOverlay").hide();
+                return;
+            }
+            performCrudOperationCommonFunction('POST', "/Results/PostResults?ButtonName=" + ButtonName, formData, function (response) {
+                debugger;
+                var SubjectText = "";
+                //var jsonResponse = JSON.parse(response.name);
+
+                if (response.message == "Record inserted successfully.") {
+                    $("#DepartmentNameStep3").text('Step 2 Selection: ' +
+                        $("#DdlDepartment option:selected").text() + ' - ' +
+                        $("#DdlClass option:selected").text() + ',' +
+                        $("#DdlExam option:selected").text());
+                    // var data = { MarksUploadtype: "UploadWithExcelFile",Nextstep:"Step3" };
+                    var MarksUploadtype = "UploadWithExcelFile";
+                    $("#loadingOverlay").show();
+                    performCrudOperationCommonFunction("POST", "/Results/PublishResults_Step3?MarksUploadtype=" + MarksUploadtype + "&Nextstep=Step3", formData, function (response) {
+                        $("#Div_UploadingType").html(response);
+                        $("#Div_Step2").hide();
+                        $("#Div_Step3").show();
+                        $("#loadingOverlay").hide();
+                    }, function (error) {
+                        $("#loadingOverlay").hide();
+                        $("#Main_Span_Error").text("Something Error");
+                    }, true);
+
+                }
+                //if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
+                //   // SubjectText = $("#DdlSubject option:selected").text();
+                //    $("#Main_Span_Error").text(response.message + SubjectText);
+                //}
+                else
+                    $("#Main_Span_Error").text(response.message + SubjectText);
 
 
-            $("#loadingOverlay").hide();
-            window.scrollTo(0, 0);
-        }, function (error) {
+                $("#loadingOverlay").hide();
+                window.scrollTo(0, 0);
+            }, function (error) {
+                $("#loadingOverlay").hide();
+                $("#Main_Span_Error").text("Something Error");
+            }, true);
+        } catch (e) {
             $("#loadingOverlay").hide();
             $("#Main_Span_Error").text("Something Error");
-        }, true);
-    } catch (e) {
-        $("#loadingOverlay").hide();
-        $("#Main_Span_Error").text("Something Error");
-    }
-});
-
+        }
+    });
+//});
 
 //===============================  This is For save as draft and Publish Marks
 js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {

@@ -1,0 +1,692 @@
+﻿
+@model Connect4m_Web.Models.ManageUsersModel
+
+@{
+    ViewData["Title"] = "CreateNewParents";
+    Layout = null;
+    var UpdateIdentification = ViewBag.UpdateIdentification;
+}
+@*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+<style>
+    /* .input-validation-error {
+        border-color: red;
+    }*/
+    /* .field-validation-error + input.input-validation-error {
+        border-color: red;
+    }*/
+</style>
+
+<input type="hidden" value="@UpdateIdentification" id="BtnUpdateIdentification" />
+
+
+<div id="DivGeneralInfoTab">
+    <form id="FmParentDetailsTab">
+
+        <div class="form-group col-12 passwordfor"><span class="ErrorMessageSpan" id="Main_Span_Error"></span></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<input type="hidden" asp-for="UserId" id="HdnUserId" />*@
+        <input type="hidden" asp-for="InstanceID" id="HdnInstanceID" />
+        <input type="hidden" asp-for="ParentId" value="@ViewBag?.ParentId" id="HdnParentId" />
+        @*---Save Parents Card----*@
+        <div class="card-header bg-primary">
+            <h5 class="mb-0">
+                <button type="button" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><span id="SpnParentCardHeaderName">SAVE PARENT</span><span style=" margin-left: 74%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+            <div class="row padding-search">
+                <div class="row">
+
+                    <div class="row">
+                        <input type="hidden" asp-for="StudentId" value="@ViewBag?.UserId" readonly />
+                        <input type="hidden" asp-for="IsParent" value="@ViewBag?.isParentTable" readonly />
+                        @*----------------------*@
+
+                        <div class="form-group col-2">
+                            <label asp-for="Relationship" class="control-label space required"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <div id="Drop_Format_SEM_3">
+                                @Html.DropDownListFor(x => x.Relationship,
+new SelectList(ViewBag.DdlRelationship, "Value", "Text"), "-------select-------",
+new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" })
+                            </div>
+                            <span asp-validation-for="Relationship" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2 ">
+                        </div>
+                        <div class="form-group col-4 ">
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2 ">
+                        </div>
+                        <div class="form-group col-4 ">
+                            @if (UpdateIdentification == "UpdateDetails")
+                            {
+                                <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                            }
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2 ">
+                        </div>
+                        <div class="form-group col-4 ">
+
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2 ">
+                            <label asp-for="Photo" class="control-label space"></label>
+                        </div>
+                        <div class="form-group col-4 ">
+                            &nbsp;
+                            @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
+                            {
+                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">&nbsp;&nbsp;Delete</a>
+
+                                <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
+                            }
+                            else if (UpdateIdentification == "UpdateDetails")
+                            {
+                                <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="font:bold;cursor:pointer;display:none" class="ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
+                            }
+                            else
+                            {
+                                <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
+                            }
+                            <input type="hidden" asp-for="PhotoSize" readonly />
+                            <input type="hidden" asp-for="PhotoName" readonly />
+                            @*<img src="~/Images/doc.png" alt="~/IconImages/No_Image.gif" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+
+                        </div>
+                        @*----------------------*@
+
+                        @*----------------------*@
+                        <div class="form-group col-2 ">
+                        </div>
+                        <div class="form-group col-4 ">
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="FirstNameInGeneral" class="control-label space required"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="FirstNameInGeneral" class="form-control" />
+                            <span asp-validation-for="FirstNameInGeneral" class="text-danger"></span>
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="MiddleName" class="control-label space"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="MiddleName" class="form-control" />
+                            <span asp-validation-for="MiddleName" class="text-danger"></span>
+
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="LastName" class="control-label space"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="Occupation" class="control-label space"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <select id='DdlOccupation' asp-for="Occupation" class="form-select " asp-items="@(new SelectList(ViewBag.DdlOccupation, "Value", "Text"))">
+                                <option value=''>---------Select---------</option>
+                            </select>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="Designation" class="control-label space "></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="Designation" class="form-control" />
+                            <span asp-validation-for="Designation" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="Qualification" class="control-label space"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="Qualification" class="form-control" />
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2 ClsSessionStudent">
+                            <label asp-for="UniversitySpecialization" class="control-label space ">Specialization</label>
+                        </div>
+                        <div class="form-group col-4 ClsSessionStudent">
+                            <input asp-for="UniversitySpecialization" class="form-control " />
+                            <span asp-validation-for="UniversitySpecialization" class="text-danger"></span>
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2 ClsSessionStudent">
+                            <label asp-for="CompanyName" class="control-label  space"></label>
+                        </div>
+                        <div class="form-group col-4 ClsSessionStudent">
+                            <input asp-for="CompanyName" class="form-control " />
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space">Annual Income </label>
+                        </div>
+                        <div class="form-group col-4">
+
+                            <select id="DdlLacs" asp-for="LacsType" class="form-select " style=" width: 18%;">
+                                <option selected="selected" value="-1" title="Lacs">Lacs</option>
+                                <option value="0" title="0">0</option>
+                                <option value="1" title="1">1</option>
+                                <option value="2" title="2">2</option>
+                                <option value="3" title="3">3</option>
+                                <option value="4" title="4">4</option>
+                                <option value="5" title="5">5</option>
+                                <option value="6" title="6">6</option>
+                                <option value="7" title="7">7</option>
+                                <option value="8" title="8">8</option>
+                                <option value="9" title="9">9</option>
+                                <option value="10" title="10">10</option>
+                                <option value="11" title="11">11</option>
+                                <option value="12" title="12">12</option>
+                                <option value="13" title="13">13</option>
+                                <option value="14" title="14">14</option>
+                                <option value="15" title="15">15</option>
+                                <option value="16" title="16">16</option>
+                                <option value="17" title="17">17</option>
+                                <option value="18" title="18">18</option>
+                                <option value="19" title="19">19</option>
+                                <option value="20" title="20">20</option>
+                                <option value="21" title="21">21</option>
+                                <option value="22" title="22">22</option>
+                                <option value="23" title="23">23</option>
+                                <option value="24" title="24">24</option>
+                                <option value="25" title="25">25</option>
+                                <option value="26" title="26">26</option>
+                                <option value="27" title="27">27</option>
+                                <option value="28" title="28">28</option>
+                                <option value="29" title="29">29</option>
+                                <option value="30" title="30">30</option>
+                                <option value="31" title="31">31</option>
+                                <option value="32" title="32">32</option>
+                                <option value="33" title="33">33</option>
+                                <option value="34" title="34">34</option>
+                                <option value="35" title="35">35</option>
+                                <option value="36" title="36">36</option>
+                                <option value="37" title="37">37</option>
+                                <option value="38" title="38">38</option>
+                                <option value="39" title="39">39</option>
+                                <option value="40" title="40">40</option>
+                                <option value="41" title="41">41</option>
+                                <option value="42" title="42">42</option>
+                                <option value="43" title="43">43</option>
+                                <option value="44" title="44">44</option>
+                                <option value="45" title="45">45</option>
+                                <option value="46" title="46">46</option>
+                                <option value="47" title="47">47</option>
+                                <option value="48" title="48">48</option>
+                                <option value="49" title="49">49</option>
+                                <option value="50" title="50">50</option>
+                                <option value="51" title="51">51</option>
+                                <option value="52" title="52">52</option>
+                                <option value="53" title="53">53</option>
+                                <option value="54" title="54">54</option>
+                                <option value="55" title="55">55</option>
+                                <option value="56" title="56">56</option>
+                                <option value="57" title="57">57</option>
+                                <option value="58" title="58">58</option>
+                                <option value="59" title="59">59</option>
+                                <option value="60" title="60">60</option>
+                                <option value="61" title="61">61</option>
+                                <option value="62" title="62">62</option>
+                                <option value="63" title="63">63</option>
+                                <option value="64" title="64">64</option>
+                                <option value="65" title="65">65</option>
+                                <option value="66" title="66">66</option>
+                                <option value="67" title="67">67</option>
+                                <option value="68" title="68">68</option>
+                                <option value="69" title="69">69</option>
+                                <option value="70" title="70">70</option>
+                                <option value="71" title="71">71</option>
+                                <option value="72" title="72">72</option>
+                                <option value="73" title="73">73</option>
+                                <option value="74" title="74">74</option>
+                                <option value="75" title="75">75</option>
+                                <option value="76" title="76">76</option>
+                                <option value="77" title="77">77</option>
+                                <option value="78" title="78">78</option>
+                                <option value="79" title="79">79</option>
+                                <option value="80" title="80">80</option>
+                                <option value="81" title="81">81</option>
+                                <option value="82" title="82">82</option>
+                                <option value="83" title="83">83</option>
+                                <option value="84" title="84">84</option>
+                                <option value="85" title="85">85</option>
+                                <option value="86" title="86">86</option>
+                                <option value="87" title="87">87</option>
+                                <option value="88" title="88">88</option>
+                                <option value="89" title="89">89</option>
+                                <option value="90" title="90">90</option>
+                                <option value="91" title="91">91</option>
+                                <option value="92" title="92">92</option>
+                                <option value="93" title="93">93</option>
+                                <option value="94" title="94">94</option>
+                                <option value="95" title="95">95</option>
+                                <option value="96" title="96">96</option>
+                                <option value="97" title="97">97</option>
+                                <option value="98" title="98">98</option>
+                                <option value="99" title="99">99</option>
+
+                            </select>
+
+                            <select id="Ddlthousands" asp-for="Thousands" class="form-select" style="width: 32%;">
+                                <option selected="selected" value="-1" title="Thousands">Thousands</option>
+                                <option value="0" title="0">0</option>
+                                <option value="1" title="1">1</option>
+                                <option value="2" title="2">2</option>
+                                <option value="3" title="3">3</option>
+                                <option value="4" title="4">4</option>
+                                <option value="5" title="5">5</option>
+                                <option value="6" title="6">6</option>
+                                <option value="7" title="7">7</option>
+                                <option value="8" title="8">8</option>
+                                <option value="9" title="9">9</option>
+                                <option value="10" title="10">10</option>
+                                <option value="11" title="11">11</option>
+                                <option value="12" title="12">12</option>
+                                <option value="13" title="13">13</option>
+                                <option value="14" title="14">14</option>
+                                <option value="15" title="15">15</option>
+                                <option value="16" title="16">16</option>
+                                <option value="17" title="17">17</option>
+                                <option value="18" title="18">18</option>
+                                <option value="19" title="19">19</option>
+                                <option value="20" title="20">20</option>
+                                <option value="21" title="21">21</option>
+                                <option value="22" title="22">22</option>
+                                <option value="23" title="23">23</option>
+                                <option value="24" title="24">24</option>
+                                <option value="25" title="25">25</option>
+                                <option value="26" title="26">26</option>
+                                <option value="27" title="27">27</option>
+                                <option value="28" title="28">28</option>
+                                <option value="29" title="29">29</option>
+                                <option value="30" title="30">30</option>
+                                <option value="31" title="31">31</option>
+                                <option value="32" title="32">32</option>
+                                <option value="33" title="33">33</option>
+                                <option value="34" title="34">34</option>
+                                <option value="35" title="35">35</option>
+                                <option value="36" title="36">36</option>
+                                <option value="37" title="37">37</option>
+                                <option value="38" title="38">38</option>
+                                <option value="39" title="39">39</option>
+                                <option value="40" title="40">40</option>
+                                <option value="41" title="41">41</option>
+                                <option value="42" title="42">42</option>
+                                <option value="43" title="43">43</option>
+                                <option value="44" title="44">44</option>
+                                <option value="45" title="45">45</option>
+                                <option value="46" title="46">46</option>
+                                <option value="47" title="47">47</option>
+                                <option value="48" title="48">48</option>
+                                <option value="49" title="49">49</option>
+                                <option value="50" title="50">50</option>
+                                <option value="51" title="51">51</option>
+                                <option value="52" title="52">52</option>
+                                <option value="53" title="53">53</option>
+                                <option value="54" title="54">54</option>
+                                <option value="55" title="55">55</option>
+                                <option value="56" title="56">56</option>
+                                <option value="57" title="57">57</option>
+                                <option value="58" title="58">58</option>
+                                <option value="59" title="59">59</option>
+                                <option value="60" title="60">60</option>
+                                <option value="61" title="61">61</option>
+                                <option value="62" title="62">62</option>
+                                <option value="63" title="63">63</option>
+                                <option value="64" title="64">64</option>
+                                <option value="65" title="65">65</option>
+                                <option value="66" title="66">66</option>
+                                <option value="67" title="67">67</option>
+                                <option value="68" title="68">68</option>
+                                <option value="69" title="69">69</option>
+                                <option value="70" title="70">70</option>
+                                <option value="71" title="71">71</option>
+                                <option value="72" title="72">72</option>
+                                <option value="73" title="73">73</option>
+                                <option value="74" title="74">74</option>
+                                <option value="75" title="75">75</option>
+                                <option value="76" title="76">76</option>
+                                <option value="77" title="77">77</option>
+                                <option value="78" title="78">78</option>
+                                <option value="79" title="79">79</option>
+                                <option value="80" title="80">80</option>
+                                <option value="81" title="81">81</option>
+                                <option value="82" title="82">82</option>
+                                <option value="83" title="83">83</option>
+                                <option value="84" title="84">84</option>
+                                <option value="85" title="85">85</option>
+                                <option value="86" title="86">86</option>
+                                <option value="87" title="87">87</option>
+                                <option value="88" title="88">88</option>
+                                <option value="89" title="89">89</option>
+                                <option value="90" title="90">90</option>
+                                <option value="91" title="91">91</option>
+                                <option value="92" title="92">92</option>
+                                <option value="93" title="93">93</option>
+                                <option value="94" title="94">94</option>
+                                <option value="95" title="95">95</option>
+                                <option value="96" title="96">96</option>
+                                <option value="97" title="97">97</option>
+                                <option value="98" title="98">98</option>
+                                <option value="99" title="99">99</option>
+                            </select>
+
+                            <select id='DdlCurrency' asp-for="CurrencyType" style="width: 32%;" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCurrency, "Value", "Text"))">
+                            </select>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="DOB"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input type="date" asp-for="DOB" id="DOB" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" class="form-control" />
+                            <span asp-validation-for="DOB" class="compare text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        @if (ViewBag.isParentTable == 1)
+                        {
+                            <div class="form-group col-2">
+                                <label class="control-label  space" for="SendSMS">Do You Want to have SMS Option</label>
+                            </div>
+                            <div class="form-group col-4" style="display:flex">
+                                <input type="radio" asp-for="SendSMS" name="SendSMS" value="1" style="flex: 0.2;"><span>Yes</span>
+                                <input type="radio" asp-for="SendSMS" name="SendSMS" value="0" style="flex: 0.2;"><span>No</span>
+                            </div>}
+                            @*----------------------*@
+                            @*----------------------*@
+                            <div class="form-group col-2" style="display:none">
+                                <label asp-for="Gender" class="control-label  space required"></label>
+                            </div>
+                            <div class="form-group col-4" style="display:none">
+                                <input asp-for="Gender" type="radio" name="Gender" value="1" style="flex: 0.2;" /><span>Male</span>
+                                <input asp-for="Gender" type="radio" name="Gender" value="0" style="flex: 0.2;" /><span>Female</span>
+                                @*<input asp-for="Gender" type="radio" name="Gender" value="0.5" style="flex: 0.2;" /><span>Others</span>*@
+                                <input asp-for="Gender" type="radio" name="Gender" value="" style="flex: 0.2;" /><span>Others</span>
+                            </div>
+                        </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        @*--- PERSONAL INFORMATION Card----*@
+        <div class="card-header bg-primary">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+            </h5>
+        </div>
+        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
+
+            <div class="row padding-search">
+                <div class="row">
+
+                    <div class="row">
+                        
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="MobilePhone"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="MobilePhone" class="form-control" />
+                            <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                        </div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="PortalEmail"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="PortalEmail" class="form-control" />
+                            <span asp-validation-for="PortalEmail" class="text-danger"></span>
+                        </div>
+
+                       
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="PermanentAddress1"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <textarea asp-for="PermanentAddress1" class="form-control" rows="2" cols="20"></textarea>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="PermanentAddress2"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <textarea asp-for="PermanentAddress2" class="form-control" rows="2" cols="20"></textarea>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="PCity"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="PCity" class="form-control" />
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space" asp-for="PCountryId"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <select id='DdlCountry' asp-for="PCountryId" onchange="CommonDropdownFunction('GET', '/Users/DdlStateByCountry_Calingfunction?CountryId=' + this.value, 'DdlState', 'Please select a State', true)" class="form-select " asp-items="@(new SelectList(ViewBag.DdlCountryList, "Value", "Text"))">
+                                <option value=''>------Select------</option>
+                            </select>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space" asp-for="PStateId"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            @*<select id='DdlClass' asp-for="PStateId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlStateList, "Value", "Text"))">*@
+                            <select id='DdlState' asp-for="PStateId" class="form-select DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlStateList,"Value","Text"))" disabled>
+                                <option value=''>Please select a State</option>
+                            </select>
+                        </div>
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label class="control-label space " asp-for="PZip"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="PZip" class="form-control" />
+                            <span asp-validation-for="PZip" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*@if (ViewBag.isParentTable == 1 || ViewBag.TblParentsDetailsList <= 0)*@
+        @if (ViewBag.isParentTable == 1)
+        {
+        @*--- LOGIN INFORMATION Card----*@
+        <div class="card-header bg-primary ClsLoginInfoCard">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon34" aria-expanded="true" aria-controls="collapse1134"> LOGIN INFORMATION<span style=" margin-left: 70%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+            </h5>
+        </div>
+        <div class="collapse show ClsLoginInfoCard" id="collapseicon34" aria-labelledby="collapseicon34" data-bs-parent="#accordionoc34">
+
+            <div class="row padding-search">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-3"></div>
+
+                        @*----------------------*@
+                        <div class="form-group col-2">
+                            <label asp-for="UserName" class="control-label  space "></label>
+                        </div>
+                        <div class="form-group col-4">
+                            @*<input asp-for="UserName" id="TxtUserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger SpnUserNameCls"></span>*@
+                            <span asp-for="UserName" >@ViewBag.identityUserName</span>
+                        </div>
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label asp-for="Password" class="control-label  space required"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="Password" class="form-control" id="Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label asp-for="ConfirmPassword" class="control-label  space required">Confirm Password</label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="ConfirmPassword" class="form-control" id="ConPassword" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label asp-for="SecurityQuestionId" class="control-label  space required"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <select  asp-for="SecurityQuestionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))">
+                                <option value=''>---------Select---------</option>
+                            </select>
+                            <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label asp-for="Answer" class="control-label space required"></label>
+                        </div>
+                        <div class="form-group col-4">
+                            <input asp-for="Answer" class="form-control" />
+                            <span asp-validation-for="Answer" class="text-danger"></span>
+                        </div>
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2">
+                            <label asp-for="IsActive" class="control-label  space" for="IsActive">Is Enabled</label>
+                        </div>
+                        <div class="form-group col-4" style="display:flex">
+                            <input type="radio" asp-for="IsActive" checked="checked" name="IsActive" value="1" style="flex: 0.2;" ><span>Yes</span>
+                            <input type="radio" asp-for="IsActive" name="IsActive" value="0" style="flex: 0.2;" ><span>No</span>
+                        </div>
+                        @*----------------------*@
+                        <div class="col-3"></div><div class="col-3"></div>
+                        <div class="form-group col-2"></div>
+                        <div class="form-group col-4">
+                            <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" /><label>Need to change password on login</label>
+                        </div>
+                        @*----------------------*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        @*----------Buttons-------------   *@
+        <div style=" display: flex; gap: 17px;">
+            <div class="col-2"></div>
+            <div class="col-2"></div>
+            @*<input type="button" value="Previous Page" id="backtopage_ME" onclick="MoveTonextpage('SearchManageSubCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
+
+            <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />*@
+            @*@if (UpdateIdentification == "UpdateDetails")
+            {
+                <input type="reset" value="Delete" class="btn btn-pill btn-outline-warning btn-awarning" id="BtnDeleteFormInGeneralInfo" />
+            }
+            else
+            {
+                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="BtnClearFormInGeneralInfo" />
+
+            }*@
+            <input type="button" value="Back To Search" id="BtnBackToSearchInParentDetails" onclick="MoveTonextpage('ParentDetailsTab',null)" class="btn btn-pill btn-outline-primary btn-sm" />
+            <input type="submit" value="Save" id="BtnSaveFormInGeneralInfo" class="btn btn-pill btn-outline-success btn-auccess" />
+
+            @*<input type="button" value="Next Page" id="MoveTonextpage_ME" onclick="MoveTonextpage('SearchEmployeeAttendence',null)" class="btn btn-pill btn-outline-info btn-air-info" />*@
+
+        </div>
+
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="~/js/GeneralFunctions.js"></script>
+<script src="~/js/ManageUsers.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+<script type="text/javascript">
+
+    //var js = jQuery.noConflict(true);
+    //=======Ready Function in General Info
+    $(document).ready(function () {
+        debugger;
+        //-----clicked on update
+        if ($("#BtnUpdateIdentification").val() == "UpdateDetails") {
+            $("#BtnSaveFormInGeneralInfo").val("Update");
+            $(".DdlCascadDropdowns").prop("disabled", false);
+            $("#SpnParentCardHeaderName").val("UPDATE PARENT");
+          //  $(".ClsLoginInfoCard").css('display', 'block');
+            $("#DdlRelationship").prop('disabled', true);
+        }
+        //else {
+        //    $(".ClsLoginInfoCard").css('display', 'none');
+        //}
+        $('#FmParentDetailsTab #Password').attr("type", "password");
+        $('#FmParentDetailsTab #ConPassword').attr("type", "password");
+    });
+
+
+
+  
+
+    //$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare(event,"Date Of Join", "Tc Date") });
+
+    //function datescompare(event, start, end) {
+    //    event.stopImmediatePropagation();
+    //    debugger;
+    //    var startDate = new Date(document.getElementById("DtDateOfJoining").value);
+    //    var endDate = new Date(document.getElementById("DtTCdate").value);
+    //    var error = $('#DtTCdate').closest('.form-group');
+    //    $(error).find('.compare').removeClass('error2');
+    //    if (endDate <= startDate) {
+    //        $(error).find('.compare').addClass('error2');
+    //        $(error).find('.compare').text(end + " must be greater than " + start + ".");
+    //    } else {
+    //        $(error).find('.compare').addClass('');
+    //        $(error).find('.compare').text("");
+    //    }
+    //}
+
+
+</script>
+

@@ -57,15 +57,14 @@ namespace Connect4m_Web.Views
             if (response.IsSuccessStatusCode)
             {
                 return returnval = response.Content.ReadAsStringAsync().Result;
-               
             }
             //This is to find error
-           // var errorContent = response.Content.ReadAsStringAsync().Result;
+            var errorContent = response.Content.ReadAsStringAsync().Result;
             return "0";
         }
 
 
-        public List<T> CommonDropDownMethod(string WebApiMethodname, HttpClient client,string controllerName)
+        public List<T> CommonDropDownMethod(HttpClient client, string controllerName, string WebApiMethodname)
         {
             //  string className = obj.GetType().Name;
             //  List<T> Values = new List<T>();

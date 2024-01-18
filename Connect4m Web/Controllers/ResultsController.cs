@@ -1,4 +1,4 @@
-﻿using Connect4m_Web.Models;
+﻿                                                                using Connect4m_Web.Models;
 using Connect4m_Web.Models.LMSproperties;
 using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Mvc;
@@ -529,13 +529,11 @@ namespace Connect4m_Web.Controllers
 
 
 
-        #region Population Management File Export start
+        #region Population Management File Export Excel start
         // Open XML [Document.open xml - 3.0.0]
         // Village Export
         //  public string ExportToExcelVillagePopulationExcelData_OpenExcelFormat(List<VillagePopulationDto> value, string fileName)
         //=============================================   Excel Dowload
-
-
 
         public IActionResult ExcelDownload(ResultsModel val)
         {
@@ -750,8 +748,6 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
-
         // Helper method to convert column index to Excel column name (A, B, ..., AA, AB, ...)
         private string GetExcelColumnName(int columnIndex)
         {
@@ -767,9 +763,6 @@ namespace Connect4m_Web.Controllers
 
             return columnName;
         }
-
-
-      
 
         //======================================================  For Documnt.Openxml
 
@@ -942,7 +935,6 @@ namespace Connect4m_Web.Controllers
                     periodicTable.Columns.Add(subjectNames[m]+"Test", typeof(string));
                 }
 
-
                // DataRow dr;
                 int i = 0;
                 int subjectlength = subjectNames.Length;
@@ -966,8 +958,6 @@ namespace Connect4m_Web.Controllers
                             dr[k + i] = item.OptionalSubject[k];
                     }
                     periodicTable.Rows.Add(dr);
-
-
 
                 }
             }

@@ -1,0 +1,88 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Termwisechallandetails
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>VIEW STUDENT ACCOUNT</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <div class="card mb-4" id="PayementdetailsSearchpagemaindiv">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH USERS
+                            </span>
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    </div>
+                    <div class="card-body" id="CreateNewSubjectsDiv">
+                        <form id="Feechallanreport_form" enctype="multipart/form-data">
+                            <div id="FmExamsCreate_Div">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-2 col-form-label text-end required space" for="basic-default-name">Class</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select class="select2 form-select select2-hidden-accessible" id="FddlDepartment" asp-for="SubClassificationId">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">First Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="Firstnametxtid" placeholder="First Name" asp-for="FirstName">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-2 col-form-label text-end space" for="basic-default-name">Last Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="Lastnametxtid" placeholder="Last Name" asp-for="FirstName">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end  space" for="basic-default-name">Student Id </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="Studentidtxtid" placeholder="Student id" asp-for="hallticket">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-2">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="Onlydues" />
+                                                    <label class="form-check-label" for="Onlydues">Only Dues</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12">
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" id="Btnsearch">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="Userwisepaymenttabldiv1">
+
+                </div>
+                <div id="Installmentfeedetailsbyuseriddiv2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Challandetailstermwise.js"></script>
