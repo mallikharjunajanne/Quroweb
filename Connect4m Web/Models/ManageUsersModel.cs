@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models
 {
-    public class YourViewModel
-    {
-        
-    }
-
     public class ManageUsersModel : CommonClass
     {
         public ManageUsersModel DdlParentDetails { get; set; }

@@ -123,7 +123,7 @@ namespace Connect4m_Web.Controllers
         //    }
         //}
 
-        public IActionResult StepsControl(string url)
+        public IActionResult TblUser(string url)
         {
             if (url != null)
             {

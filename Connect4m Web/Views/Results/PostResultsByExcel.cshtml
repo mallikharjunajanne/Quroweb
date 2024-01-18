@@ -103,7 +103,7 @@
                                             <label class="control-label space required">Subjects </label>
                                         </div>
                                         <div class="form-group col-4">
-                                            <select id='DdlSubjects' multiple="multiple" style="height: 10%;" asp-for="SubjectsIdString" name="SubjectsIdString" class="form-select readonly" asp-items="@(new SelectList(""))">
+                                            <select id='DdlSubjects' multiple="multiple"  asp-for="SubjectsIdString" name="SubjectsIdString" class="form-select readonly" asp-items="@(new SelectList(""))">
                                             </select>
                                             <span asp-validation-for="SubjectsIdString" class="ErrorMessageSpan"></span>
                                         </div>
@@ -171,7 +171,7 @@
         </div>
 
         <!--Associated Count Table-->
-        @*Step 2 Searched Results*@
+        @*===================Step 2 Searched Results===========================*@
         <div id="Div_TblAssociatedCount" style="display:none">
             <br />
             <div class="default-according style-1" id="accordionoc123456">
@@ -206,7 +206,7 @@
 
 
 
-        <!--This is Step 2-->
+        <!--=======================This is Step 2========================================-->
         <div id="Div_Step2">
             @*Step 2 Searched Results*@
             <div id="Div_TblExamSubjects" style="display:none">
@@ -254,7 +254,7 @@
             </div>
         </div>
 
-        <!--This is Step 3-->
+        <!--=======================This is Step 3==============================================-->
 
 
         <div id="Div_Step3" style="display:none">
@@ -330,12 +330,16 @@
 <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
 
+
 <script src="~/js/ExcelDownloading.js"></script>
-<script src="~/js/PostResults.js"></script>
+
 <script>
+    var pageTitle = '@ViewData["Title"]';
+    var js = jQuery.noConflict(true);
+</script>
+<script src="~/js/PostResults.js"></script>
 
-   // var pageTitle = '@ViewData["Title"]';
-
+<script >
 
     $(document).ready(function () {
     $("#loadingOverlay").show();

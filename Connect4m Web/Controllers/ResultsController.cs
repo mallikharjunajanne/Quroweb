@@ -313,7 +313,7 @@ namespace Connect4m_Web.Controllers
                             {
                                 SubjectHeaderName = worksheet.Cells[row1, col].Text;
                               
-                                if (SubjectHeaderName == null)
+                                if (SubjectHeaderName == null || SubjectHeaderName == "")
                                 {
                                     break;
                                 }
@@ -331,13 +331,17 @@ namespace Connect4m_Web.Controllers
                              //   return Json(new { success = false, message = new { SuccessMSG = "Mismatch of Subject" } });
                             }
                              var RowCount1 = 0;
-                            for (int row = 2; row <= length; row++)
+                            //for (int row = 2; row <= length; row++)
+                            var UserIdlength = obj.UseridList.Count + 1;
+                            for (int row = 2; row <= UserIdlength; row++)//changed
+
                             {
                                 //var cellValue = worksheet.Cells[row, col1].Text;
                                 var cellUserID = worksheet.Cells[row, 1].Text;
                                 if (cellUserID == "" || cellUserID == null)
                                 {
-                                    break;
+                                    //break;
+                                    return Json(new { success = false, message = $"UserId should not be empty in row {row}" });
                                 }
                                 if ( obj.UseridList[RowCount1] !=Convert.ToInt32(cellUserID))
                                 {
@@ -359,7 +363,6 @@ namespace Connect4m_Web.Controllers
                             List<int> SubjectIdList = new List<int>();
                             SubjectIdList = obj.SubjectIdList;
 
-
                             List<double> PassMarksList = new List<double>();
                             PassMarksList = obj.PassMarksList;
 
@@ -373,17 +376,17 @@ namespace Connect4m_Web.Controllers
                             obj.GradeList = new List<string>();
                             obj.PassMarksList = new List<double>();
                             obj.MaxMarksList = new List<double>();
-                            var Grade = "";
+                            var Grade = ""; string UserId;string StudentName;  string SubjectText;
                             for (int row = 2; row <= RowCount1+1; row++) // Assuming the header is in the first row
                             {
                                 c = 0;
-                                string UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
-                                string StudentName = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
+                                 UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
+                                 StudentName = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
 
                                 for (int col = 4; col <= columnCount; col++)
                                 {
-                                    var SecuredMarks = worksheet.Cells[row, col].Text;
-                                    string SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
+                                     var SecuredMarks = worksheet.Cells[row, col].Text;
+                                     SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
 
                                     if (SecuredMarks == "" && SecuredMarks != "O" && obj.ButtonId != "BtnSaveAsDraft")
                                     {
@@ -391,7 +394,6 @@ namespace Connect4m_Web.Controllers
                                        // return Json(new { success = false, message = new { SuccessMSG = text } });
                                         return Json(new { success = false, message = text });
                                     }
-                                   
                                     else if (!Regex.IsMatch(SecuredMarks, @"^[0-9.]+$") && SecuredMarks != "O" && SecuredMarks != "-")
                                     {
                                         text = $"Please enter valid data for Student '{StudentName}' for the subject '{SubjectText}'";
@@ -765,7 +767,7 @@ namespace Connect4m_Web.Controllers
         }
 
         //======================================================  For Documnt.Openxml
-
+        #region
         //public IActionResult ExcelDownload(ResultsModel val)
         //{
         //    // ResultsModel val = new ResultsModel();
@@ -915,6 +917,7 @@ namespace Connect4m_Web.Controllers
 
 
         //}
+        #endregion
         public DataTable GetDataTable_OpenExcelFormat(List<UsermarksModel> value,string names)
         {
             DataTable periodicTable = new DataTable();
@@ -967,7 +970,7 @@ namespace Connect4m_Web.Controllers
             }
             return periodicTable;
         }
-
+        #region
         //// Ward Export
         //public string ExportToExcelWardPopulationExcelData_OpenExcelFormat(List<WardPopulationDto> value, string fileName)
         //{
@@ -1109,7 +1112,7 @@ namespace Connect4m_Web.Controllers
         //        worksheetPart.Worksheet.GetFirstChild<Columns>().Append(column);
         //    }
         //}
-
+        #endregion
 
 
         #endregion Population Management File Export end

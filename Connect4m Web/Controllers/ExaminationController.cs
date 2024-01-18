@@ -151,8 +151,14 @@ namespace Connect4m_Web.Controllers
             //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;
-            obj.Id = DeleteID;
+          
             obj.ButtonName = ButtonName;
+
+            if (ButtonName == "Delete")
+            {
+                obj.Id = DeleteID;
+            }
+
             returnvalue = CommonSaveMethod(obj, "/CommonSaveMethod");
 
             if (returnvalue != "0")
@@ -392,6 +398,7 @@ namespace Connect4m_Web.Controllers
             //if (obj.ButtonName == "MultiSubjectsUpdate")
             if (obj.ButtonId == "BtnSave" || obj.ButtonId == "BtnUpload")
             {
+                #region
                 //string HeaderText="";
                 int errorCount = 0;
                 var text = "";
@@ -405,7 +412,7 @@ namespace Connect4m_Web.Controllers
                 {
                     return Json(new { success = false, message = "Invalid file extension.allowed extensions are .xls,.xlsx" });
                 }
-
+                #endregion
                 using (var stream = new MemoryStream())
                 {
                     SubjectExelFile.CopyTo(stream);
@@ -427,20 +434,8 @@ namespace Connect4m_Web.Controllers
                         var Totallength = worksheet.Dimension.End.Column; var columnCount = 0;
                         string UploadingFileHeaderText;
                         string SavedFileHeaderText;
-
-                        List<string> columnNames = new List<string>
-                          {
-                              "DepartmentId",
-                              "ClassId",
-                              "SubjectName",
-                              "SubjectType",
-                              "IncludeInTotal",
-                              "SubjectCode",
-                              "SubjectsDisplayOrder",
-                              "AttendanceRequired",
-                              "TotalPeriods",
-                              "MentorUserId"
-                          };
+                            //Sheet Header Name
+                        List<string> columnNames = new List<string>{"DepartmentId","ClassId","SubjectName","SubjectType","IncludeInTotal","SubjectCode","SubjectsDisplayOrder","AttendanceRequired","TotalPeriods","MentorUserId"};
                         if (obj.ButtonId == "BtnSave"){
                             columnNames.Remove("DepartmentId");
                             columnNames.Remove("ClassId");
@@ -484,36 +479,15 @@ namespace Connect4m_Web.Controllers
                                 return Json(new { success = false, message = "Sheet is empty,Please Enter the details." });
 
                             }
+                            else if (rowCount > 1000)
+                            {
+                                return Json(new { success = false, message = "Excel sheet should not exceed 1000 rows." });
+                            }
                             //  int rowCount = worksheet.Dimension.Rows;
 
 
-                            obj.InstanceClassificationIdList = new List<int>();
-                        obj.InstanceSubClassificationIdList = new List<int>();
-                        obj.SubjectNameList = new List<string>();
-                        obj.SubjectCodeList = new List<string>();
-                        obj.IncludeInTotalStringList = new List<string>();
-                        obj.SubjectTypeIdString = new List<string>();
-                        obj.AttendanceRequired = new List<string>();
-                        obj.DisplayOrder = new List<int>();
-                        obj.TotalPeriods = new List<string>();
-                        obj.MentorIds = new List<string>();
-
-
-                        string InstanceClassificationIdList;
-                        string InstanceSubClassificationIdList;
-                        string SubjectNameList;
-                        string SubjectTypeIdString;
-
-
-                        string IncludeInTotalStringList;
-                        string SubjectCodeList;
-                        string DisplayOrder;
-
-                        string AttendanceRequired;
-                        string TotalPeriods;
-                        string MentorIds;
-                        string SubjectTypeIdStringToLower;
-                        string IncludeInTotalStringListTolower;
+        obj.InstanceClassificationIdList = new List<int>();obj.InstanceSubClassificationIdList = new List<int>();obj.SubjectNameList = new List<string>();obj.SubjectCodeList = new List<string>();obj.IncludeInTotalStringList = new List<string>();obj.SubjectTypeIdString = new List<string>();obj.AttendanceRequired = new List<string>();obj.DisplayOrder = new List<int>();obj.TotalPeriods = new List<string>();obj.MentorIds = new List<string>();
+        string InstanceClassificationIdList; string InstanceSubClassificationIdList; string SubjectNameList;string SubjectTypeIdString; string IncludeInTotalStringList;string SubjectCodeList; string DisplayOrder;string AttendanceRequired;string TotalPeriods;string MentorIds;string SubjectTypeIdStringToLower;string IncludeInTotalStringListTolower;
                         int colNums=1;
                         //return Json(new { success = false, message = "Something Error" });
                         for (int row = 2; row <= rowCount; row++) // Assuming the header is in the first row
@@ -531,22 +505,25 @@ namespace Connect4m_Web.Controllers
                            TotalPeriods = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
                            MentorIds = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
 
-                            if (string.IsNullOrWhiteSpace(InstanceClassificationIdList) && string.IsNullOrWhiteSpace(InstanceSubClassificationIdList) && string.IsNullOrWhiteSpace(SubjectNameList) && string.IsNullOrWhiteSpace(SubjectTypeIdString) && string.IsNullOrWhiteSpace(IncludeInTotalStringList) && string.IsNullOrWhiteSpace(SubjectCodeList) && string.IsNullOrWhiteSpace(DisplayOrder) && string.IsNullOrWhiteSpace(AttendanceRequired) && string.IsNullOrWhiteSpace(TotalPeriods) && string.IsNullOrWhiteSpace(MentorIds))
+
+                                #region Validations
+                                if (string.IsNullOrWhiteSpace(InstanceClassificationIdList) && string.IsNullOrWhiteSpace(InstanceSubClassificationIdList) && string.IsNullOrWhiteSpace(SubjectNameList) && string.IsNullOrWhiteSpace(SubjectTypeIdString) && string.IsNullOrWhiteSpace(IncludeInTotalStringList) && string.IsNullOrWhiteSpace(SubjectCodeList) && string.IsNullOrWhiteSpace(DisplayOrder) && string.IsNullOrWhiteSpace(AttendanceRequired) && string.IsNullOrWhiteSpace(TotalPeriods) && string.IsNullOrWhiteSpace(MentorIds))
                             {
                                 continue;
                             }
+                                // HeaderText = worksheet.Cells[1, colNums].Value?.ToString();
 
-                            // HeaderText = worksheet.Cells[1, colNums].Value?.ToString();
-
-                            SubjectTypeIdStringToLower = SubjectTypeIdString.ToLower().Trim();
+                                SubjectTypeIdStringToLower = SubjectTypeIdString.ToLower().Trim();
                             IncludeInTotalStringListTolower = IncludeInTotalStringList.ToLower().Trim();
-                            if (InstanceClassificationIdList == null)
+
+                                if (InstanceClassificationIdList == null)
                             {
                                 text = $"Empty cells in DepartmentId Column, Please enter DepartmentId in row{row}.";
                                 errorCount++;
                                 
                                 // return Json(new { success = false, message = text });
                             }
+                               
                            else if (InstanceSubClassificationIdList == null)
                             {
                                 text = $"Empty cells in ClassId Column, Please enter ClassId in row{row}.";
@@ -645,49 +622,106 @@ namespace Connect4m_Web.Controllers
                                 text = $"Invalid Mentor UserId in row{row}.";
                                 errorCount++;
                             }
-
-
-
-                            if (errorCount > 0)
-                            {
-                                return Json(new { success = false, message = text });
-                            }
-
-                            obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
-                            obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
-                           
-                            
-                            if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32( InstanceSubClassificationIdList)))
-                            {
-                                obj.SubjectNameList.Add(SubjectNameList);
-                            }
-                            else
-                            {//Duplicate Subject Names Exist For Same Class.
-                                if (obj.ButtonId == "BtnSave")
+                                #endregion
+                                if (errorCount > 0)
                                 {
-                                    return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    return Json(new { success = false, message = text });
                                 }
-                                return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
-                            }
-                            if (!obj.SubjectCodeList.Contains(SubjectCodeList))
-                            {
-                                obj.SubjectCodeList.Add(SubjectCodeList);
-                            }
-                            else
-                            {
-                                return Json(new { success = false, message = "Duplicate Subjects Code in excel sheet." });
+
+                                obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
+                                obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
+
+                                if (SubjectNameList.Length <= 100){
+                                    //var length = val.SubjectNameList.Count;
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //    if (!obj.SubjectNameList.Contains(SubjectNameList))
+                                    //    {
+                                      // obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    //else
+                                    {
+                                        //for (int i = 0; i < rowCount-1; i++)
+                                        for (int i = 0; i < row-2; i++)
+                                        {
+                                            if (obj.SubjectNameList[i] == SubjectNameList && obj.InstanceSubClassificationIdList[i] == Convert.ToInt32(InstanceSubClassificationIdList))
+                                            {
+                                                    if (obj.ButtonId == "BtnSave")
+                                                    {
+                                                        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                                    }
+                                                    //return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                            }
+                                        }
+                                        obj.SubjectNameList.Add(SubjectNameList);
+
+                                    }
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList))
+                                    //{
+                                    //    obj.SubjectNameList.Add(SubjectNameList);
+                                    //} else if (!obj.InstanceSubClassificationIdList[i].Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //{
+                                    //obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    //else
+                                    //{//Duplicate Subject Names Exist For Same Class.
+                                    //    if (obj.ButtonId == "BtnSave")
+                                    //    {
+                                    //        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    //    }
+                                    //     return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                    //}
+
+                                    ////if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList)  )
+                                    //{
+                                    //    obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    ////else if (!obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    ////{
+                                    ////    obj.SubjectNameList.Add(SubjectNameList);
+                                    ////}
+                                    //else
+                                    //{//Duplicate Subject Names Exist For Same Class.
+                                    //    if (obj.ButtonId == "BtnSave")
+                                    //    {
+                                    //        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    //    }
+                                    //   // return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                    //}
                                 }
-                            //obj.IncludeInTotal.Add(IncludeInTotalStringList);
-                            obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
+                                else
+                                {
+                                    return Json(new { success = false, message = $"subject name should be less than 100 characters in row {row}" });
+                                }
+                                if (SubjectCodeList.Length <= 50)
+                                {
+                                    if (!obj.SubjectCodeList.Contains(SubjectCodeList))
+                                    {
+                                        obj.SubjectCodeList.Add(SubjectCodeList);
+                                    }
+                                    else
+                                    {
+                                        return Json(new { success = false, message = "Duplicate Subjects Code in excel sheet." });
+                                    }
+                                }
+                                else
+                                {
+                                    return Json(new { success = false, message = $"Subject Code should be less than 50 characters row{row}" });
+
+                                }
+                                //obj.IncludeInTotal.Add(IncludeInTotalStringList);
+                                obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
                             obj.SubjectTypeIdString.Add(SubjectTypeIdString);
-                            if (!obj.DisplayOrder.Contains(Convert.ToInt32(DisplayOrder)))
-                            {
-                                obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
-                            }
-                            else{
-                                return Json(new { success = false, message = "Duplicate Subjects Display Order in excel sheet." });
+                                if (!obj.DisplayOrder.Contains(Convert.ToInt32(DisplayOrder)))
+                                {
+                                    obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
                                 }
-                            obj.AttendanceRequired.Add(AttendanceRequired);
+                                else
+                                {
+                                    return Json(new { success = false, message = "Duplicate Subjects Display Order in excel sheet." });
+                                }
+                                obj.AttendanceRequired.Add(AttendanceRequired);
                             obj.TotalPeriods.Add(TotalPeriods);
                             obj.MentorIds.Add(MentorIds);
                         }
@@ -752,8 +786,6 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
-
-
 
         // -------------------=====================   MANAGE SUBJECTS ASSOCIATION   ===============================
 

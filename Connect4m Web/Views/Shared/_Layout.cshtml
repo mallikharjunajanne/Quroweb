@@ -61,8 +61,15 @@
     <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/css/texts.css" rel="stylesheet" />
     @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
+
+    <!----Loading Spinner own code of Rakesh-->
+    <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+
+    @*<link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />*@
 </head>
 <body>
+
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -106,39 +113,39 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
                     @*<li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div data-i18n="Dashboards">Dashboards</div>
-                            <div class="badge bg-primary rounded-pill ms-auto">5</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="index.html" class="menu-link">
-                                    <div data-i18n="Analytics">Analytics</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="dashboards-crm.html" class="menu-link">
-                                    <div data-i18n="CRM">CRM</div>
-                                </a>
-                            </li>
-                            <li class="menu-item active">
-                                <a href="app-ecommerce-dashboard.html" class="menu-link">
-                                    <div data-i18n="eCommerce">eCommerce</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="app-logistics-dashboard.html" class="menu-link">
-                                    <div data-i18n="Logistics">Logistics</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="app-academy-dashboard.html" class="menu-link">
-                                    <div data-i18n="Academy">Academy</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                <div data-i18n="Dashboards">Dashboards</div>
+                                <div class="badge bg-primary rounded-pill ms-auto">5</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item">
+                                    <a href="index.html" class="menu-link">
+                                        <div data-i18n="Analytics">Analytics</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="dashboards-crm.html" class="menu-link">
+                                        <div data-i18n="CRM">CRM</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item active">
+                                    <a href="app-ecommerce-dashboard.html" class="menu-link">
+                                        <div data-i18n="eCommerce">eCommerce</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="app-logistics-dashboard.html" class="menu-link">
+                                        <div data-i18n="Logistics">Logistics</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="app-academy-dashboard.html" class="menu-link">
+                                        <div data-i18n="Academy">Academy</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>*@
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -676,7 +683,7 @@
         <div class="drag-target"></div>
     </div>
     <!-- / Layout wrapper -->
-   
+
 
 
 
@@ -701,6 +708,12 @@
                             <button class="btn-close" type="button" aria-label="Close" style=" background-color: bisque;"></button>
                         </div>
 
+                        <!-- Loading Spinner own code Rakesh -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loader"></div>
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">Loading...</div>
+                        </div>
 
                         <div id="loading">
                             <div id="loading-text">
@@ -721,7 +734,7 @@
                 </div>
                 @RenderSection("Scripts", required: false)
             </div>
-           
+
         </div>
     </div>
 
@@ -759,7 +772,9 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     @*<script src="~/assets/js/theme-customizer/customizer.js"></script>*@
-    <script src="~/assets/js/script.js"></script>
+    @*<script src="~/assets/js/script.js"></script>*@
+    <script src="~/assets_Copy/js/script.js"></script>
+
     @*<script src="~/js/Get_ClassificationNames.js"></script>*@
     @*<script src="~/js/Disable_Inspect.js"></script>*@
     <!-- login js-->
@@ -788,7 +803,12 @@
     <script src="~/js/cookies.js"></script>
     <script src="~/js/CommonScripts.js"></script>
     <script src="~/js/PayRoll.js"></script>
-    <script src="~/assets/js/sidebar-menu.js"></script>
+
+
+
+    <script src="~/assets_Copy/js/sidebar-menu.js"></script>
+
+    @*<script src="~/assets/js/sidebar-menu.js"></script>*@
 
 </body>
 </html>

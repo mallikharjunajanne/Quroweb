@@ -225,7 +225,7 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
         //});
 } catch (error) {
         $("#Main_Span_Error").text("Something Error");
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
 }
 }
 
@@ -280,7 +280,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
 
         }
         //var paging = true;
-        if (tablename == "TblLeaveRequested_SearchRecords" || tablename == "TblUser") {
+       // if (tablename == "TblLeaveRequested_SearchRecords" || tablename == "TblUser") {
+        if (tablename == "TblLeaveRequested_SearchRecords") {
             paging = false;
         }
          if (FormId == "FmUsersSearchForMBA") { 
@@ -302,6 +303,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                     var currentPage = table.page.info().page;
                     table.destroy();
                     var columns = [];
+                    var Buttons = [];
                     debugger;
                 if (FormId == 'FmCOMPENSATORYLEAVESSEARCH') {
                     //tablename == "TblcompensatoryLeaves_SearchedRecords"
@@ -698,7 +700,32 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
 
                     ]
                 }
-                else if (tablename == "TblExamListData") {
+                else if (tablename == "TblExamListData") {//ManageExams Page
+
+                    Buttons = [
+                        {
+                            extend: 'excel',
+                            title: ExelTitlename,
+                            text: "Export to Excel",
+                            exportOptions: {
+                                columns: ExcelDownloadColumnsNo
+                            },
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                                //// Center-align the title in the worksheet
+                                //var titleCell = $(sheet).find('c[r^="A1"]');
+                                //titleCell.attr('s', '2'); // Apply a style to center-align
+                                $('c[r*="A1"]', sheet).attr('s', '2');
+
+                                // Apply a border to the entire table
+                                var rows = $(sheet).find('row');
+                                rows.each(function () {
+                                    $(this).find('c').attr('s', '25'); // Apply a style with a border (s=25) to each cell
+                                });
+                            },
+
+                        }]
                     columns = [
                         {
                             data: "ExamName",
@@ -729,7 +756,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "Id",
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
-                                var Value = '<a class="fa fa-trash" title="Delete" onclick="DeleteExamsById(' + row.id+')"  style="font-size: 15px!important; color: red; cursor: pointer; "></a>';
+                                var Value = '<a class="ti ti-trash" title="Delete" onclick="DeleteExamsById(' + row.id+')"  style="cursor: pointer; "></a>';
                                 return Value
                             }
                         }
@@ -795,7 +822,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "SubjectTypeName",
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
-                                var Value = '<a class="fa fa-trash" title="Delete" onclick="DeleteExamsById(' + row.instanceSubjectId + ')"  style="font-size: 15px!important; color: red; cursor: pointer; "></a>';
+                                var Value = '<a class="ti ti-trash" title="Delete" onclick="DeleteExamsById(' + row.instanceSubjectId + ')"  style="cursor: pointer; "></a>';
                                 return Value
                             }
                         }
@@ -819,7 +846,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                // var AssociatedCheck = row.name;
                                                                 debugger;
                               //  return '<input id="chkSMS" type="checkbox"    ' + (isChecked1 ? ' class="Associated'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
-                                return '<input id="chkSMS" type="checkbox" style="height:13px !important"   ' + (isAssociated ? ' class="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
+                               // return '<input id="chkSMS" type="checkbox"    ' + (isAssociated ? ' class="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
+                                return '<input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instanceSubjectId="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
                                 //return row.userId
                             }
                         }, {
@@ -1009,102 +1037,103 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                     var Newtable = js("#" + tablename).DataTable({
                       //  dom: 'Bfrtip',
                         dom: 'Bfrtip',
-                        buttons: [
-                            //{
-                            //    extend: 'pdfHtml5',
-                            //    exportOptions: {
-                            //        columns: [1, 2, 3]
-                            //    },
-                            //}
-                            //,
-                            {
-                                extend: 'excel',
-                                title: ExelTitlename,
-                                text:"Export to Excel",
-                                exportOptions: {
-                                    columns: ExcelDownloadColumnsNo
-                                },
-                                customize: function (xlsx) {
-                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        buttons: Buttons,
+                        //buttons: [
+                        //    //{
+                        //    //    extend: 'pdfHtml5',
+                        //    //    exportOptions: {
+                        //    //        columns: [1, 2, 3]
+                        //    //    },
+                        //    //}
+                        //    //,
+                        //    {
+                        //        extend: 'excel',
+                        //        title: ExelTitlename,
+                        //        text:"Export to Excel",
+                        //        exportOptions: {
+                        //            columns: ExcelDownloadColumnsNo
+                        //        },
+                        //        customize: function (xlsx) {
+                        //            var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                                    //// Center-align the title in the worksheet
-                                    //var titleCell = $(sheet).find('c[r^="A1"]');
-                                    //titleCell.attr('s', '2'); // Apply a style to center-align
-                                    $('c[r*="A1"]', sheet).attr('s', '2');
+                        //            //// Center-align the title in the worksheet
+                        //            //var titleCell = $(sheet).find('c[r^="A1"]');
+                        //            //titleCell.attr('s', '2'); // Apply a style to center-align
+                        //            $('c[r*="A1"]', sheet).attr('s', '2');
 
-                                    // Apply a border to the entire table
-                                    var rows = $(sheet).find('row');
-                                    rows.each(function () {
-                                        $(this).find('c').attr('s', '25'); // Apply a style with a border (s=25) to each cell
-                                    });
-                                },
-                            },
-                             {
-                                 extend: 'print',
-                                // title: ExelTitlename,
-                                 title: 'Leave Approval Report',
-                                 //customize: function (win) {
+                        //            // Apply a border to the entire table
+                        //            var rows = $(sheet).find('row');
+                        //            rows.each(function () {
+                        //                $(this).find('c').attr('s', '25'); // Apply a style with a border (s=25) to each cell
+                        //            });
+                        //        },
+                        //    },
+                        //     {
+                        //         extend: 'print',
+                        //        // title: ExelTitlename,
+                        //         title: 'Leave Approval Report',
+                        //         //customize: function (win) {
                                     
-                                 //    $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+                        //         //    $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
 
-                                 //    $(win.document.body)
-                                 //        .find('thead th')
-                                 //        .css('color', 'black'); // Set your desired text color
-                                 //    $(win.document.body)
-                                 //        .find('.top')
-                                 //        .css('font-size', '12px');
-                                 //},
-                               //  messageTop: 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).',
-
-
-
-                                 messageTop: function () {
-                                     // Generate the timestamp
-                                     var now = new Date();
-                                     var formattedTime = now.toLocaleDateString(); // You can format the time as needed
-
-                                     return 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).<div class="timestamp"> Printed on  ' + formattedTime + '</div>';
-                                 },
-                                 customize: function (win) {
-                                     // Apply custom styles for print
-                                     var timestampElement = $(win.document.body).find('.timestamp');
-                                     timestampElement.css({
-                                         'position': 'absolute',
-                                         'top': '0',
-                                         'right': '0',
-                                         'font-size': '12px' // Adjust the font size as needed
-                                     });
-
-                                     $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
-
-                                     $(win.document.body)
-                                         .find('thead th')
-                                         .css('color', 'black'); // Set your desired text color
-                                     $(win.document.body)
-                                         .find('.top')
-                                         .css('font-size', '12px');
+                        //         //    $(win.document.body)
+                        //         //        .find('thead th')
+                        //         //        .css('color', 'black'); // Set your desired text color
+                        //         //    $(win.document.body)
+                        //         //        .find('.top')
+                        //         //        .css('font-size', '12px');
+                        //         //},
+                        //       //  messageTop: 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).',
 
 
-                                     // Apply black borders to all table cells
-                                     $(win.document.body).find('table').css({
-                                         'border-collapse': 'collapse',
-                                         'border': '1px solid black' // Set the border color to black
-                                     });
 
-                                     // Apply black border to table header cells (th)
-                                     $(win.document.body).find('th').css({
-                                         'border': '1px solid black' // Set the border color to black
-                                     });
-                                     $(win.document.body).find('td').css({
-                                         'border': '1px solid black' // Set the border color to black
-                                     });
-                                 },
-                               // text: "Print",
-                                 exportOptions: {
-                                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                                },
-                            }
-                        ],
+                        //         messageTop: function () {
+                        //             // Generate the timestamp
+                        //             var now = new Date();
+                        //             var formattedTime = now.toLocaleDateString(); // You can format the time as needed
+
+                        //             return 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).<div class="timestamp"> Printed on  ' + formattedTime + '</div>';
+                        //         },
+                        //         customize: function (win) {
+                        //             // Apply custom styles for print
+                        //             var timestampElement = $(win.document.body).find('.timestamp');
+                        //             timestampElement.css({
+                        //                 'position': 'absolute',
+                        //                 'top': '0',
+                        //                 'right': '0',
+                        //                 'font-size': '12px' // Adjust the font size as needed
+                        //             });
+
+                        //             $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+
+                        //             $(win.document.body)
+                        //                 .find('thead th')
+                        //                 .css('color', 'black'); // Set your desired text color
+                        //             $(win.document.body)
+                        //                 .find('.top')
+                        //                 .css('font-size', '12px');
+
+
+                        //             // Apply black borders to all table cells
+                        //             $(win.document.body).find('table').css({
+                        //                 'border-collapse': 'collapse',
+                        //                 'border': '1px solid black' // Set the border color to black
+                        //             });
+
+                        //             // Apply black border to table header cells (th)
+                        //             $(win.document.body).find('th').css({
+                        //                 'border': '1px solid black' // Set the border color to black
+                        //             });
+                        //             $(win.document.body).find('td').css({
+                        //                 'border': '1px solid black' // Set the border color to black
+                        //             });
+                        //         },
+                        //       // text: "Print",
+                        //         exportOptions: {
+                        //             columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                        //        },
+                        //    }
+                        //],
                         //"columnDefs": [{
                         //    "targets": 'nosort',
                         //    "orderable": false
@@ -1159,7 +1188,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
             },
             error: function () {
                 loaddingimg.css('display', 'none');
-              //  $("#loadingOverlay").hide();
+              //  loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         });
@@ -1269,7 +1298,7 @@ function CallPrint(tableid) {
          printWindow.close();
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -1281,6 +1310,8 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
         debugger;
         event.preventDefault();
         $(".ErrorMessageSpan").empty();
+
+        loaddingimg.css('display', 'block');
         //OpenIFrameModel("../Admin/ViewUserCompOffLeavesLapsedDetails.aspx?InstanceId=" + InstanceId + "&UserID=" + UserID + "&AcademicYearID=" + AcademicYearID + "&Lapsed=" + Lapsed, 700, 250)
         //return false;
 
@@ -1304,15 +1335,17 @@ function _ViewChangeActivities(event,TableName, SourceId, AuditKey,Url) {
                // newWindow.document.open();
                 newWindow.document.write(response);
                // newWindow.document.close();
+                loaddingimg.css('display', 'none');
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
         });
     }
     catch (e) {
         $("#Main_Span_Error").text("Something Error");
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -1343,7 +1376,9 @@ function CommonClearFunction(Formid) {
 }
 
 //<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+//CommonDeleteFunction("POST", "/Examination/ManageExams?ButtonName=Delete&DeleteID=" + Examid, Deletemsg, function (response) {
 
+//});
 function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used this in manage Exams Screen
   
     debugger;
@@ -1362,7 +1397,7 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
     })
         .then(function (isConfirm) {
             if (isConfirm.isConfirmed) {
-                $("#loadingOverlay").show();
+                loaddingimg.css('display', 'block');
                 $.ajax({
                     //  url: "/Attendance/ManageCompansatoryLeaves?ButtonName=Delete&CompOffLeaveID=" + CompOffLeaveID,
                     //  type: "Post",
@@ -1379,7 +1414,7 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
 
                             successCallback(response);
                             //$("#Main_Span_Error").text(response.message);
-                            $("#loadingOverlay").hide();
+                            loaddingimg.css('display', 'none');
                         }
                         else {
                             Swal.fire({
@@ -1387,13 +1422,13 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
                                 title: "Failed!",
                                 text: (response.message),
                             });
-                            $("#loadingOverlay").hide();
+                            loaddingimg.css('display', 'none');
                             // $("#Main_Span_Error").text(response.message);
                         }
                        // $("#loadingOverlay").hide();
                     },
                     error: function (xhr, status, error) {
-                        $("#loadingOverlay").hide();
+                        loaddingimg.css('display', 'none');
                         $("#Main_Span_Error").text("Something Error");
                     }
                 });
@@ -1424,7 +1459,7 @@ function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I use
     })
         .then(function (isConfirm) {
             if (isConfirm.isConfirmed) {
-                $("#loadingOverlay").show();
+                loaddingimg.css('display', 'block');
                 $.ajax({
                     //  url: "/Attendance/ManageCompansatoryLeaves?ButtonName=Delete&CompOffLeaveID=" + CompOffLeaveID,
                     //  type: "Post",
@@ -1442,7 +1477,7 @@ function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I use
                             $(".alert-success").show().delay(5000).fadeOut()
                             successCallback(response);
                             //$("#Main_Span_Error").text(response.message);
-                            $("#loadingOverlay").hide();
+                            loaddingimg.css('display', 'none');
                         }
                         else {
                             Swal.fire({
@@ -1450,13 +1485,13 @@ function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I use
                                 title: "Failed!",
                                 text: (response.message),
                             });
-                            $("#loadingOverlay").hide();
+                            loaddingimg.css('display', 'none');
                             // $("#Main_Span_Error").text(response.message);
                         }
-                        // $("#loadingOverlay").hide();
+                        // loaddingimg.css('display', 'none');
                     },
                     error: function (xhr, status, error) {
-                        $("#loadingOverlay").hide();
+                        loaddingimg.css('display', 'none');
                         $("#Main_Span_Error").text("Something Error");
                     }
                 });

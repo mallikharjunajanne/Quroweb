@@ -84,12 +84,6 @@ namespace Connect4m_Web.Controllers
                 ViewBag.IsStudentIdentification = "STUDENT";
             }
             
-
-           // var RoleName = "Teacher";
-
-
-
-
            // ViewBag.IsStudentIdentification = RoleName;
             val.InstanceID = InstanceId;
             val.UserId = UserId;

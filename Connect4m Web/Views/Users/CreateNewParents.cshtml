@@ -436,7 +436,7 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
         @*--- PERSONAL INFORMATION Card----*@
         <div class="card-header bg-primary">
             <h5 class="mb-0">
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION<span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1112"> PERSONAL INFORMATION</button>
             </h5>
         </div>
         <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc12">
@@ -542,8 +542,8 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
                         </div>
                         <div class="form-group col-4">
                             @*<input asp-for="UserName" id="TxtUserName" class="form-control" />
-                            <span asp-validation-for="UserName" class="text-danger SpnUserNameCls"></span>*@
-                            <span asp-for="UserName" >@ViewBag.identityUserName</span>
+            <span asp-validation-for="UserName" class="text-danger SpnUserNameCls"></span>*@
+                            <span asp-for="UserName">@ViewBag.identityUserName</span>
                         </div>
                         @*----------------------*@
                         <div class="col-3"></div><div class="col-3"></div>
@@ -559,6 +559,9 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
                         <div class="form-group col-2">
                             <label asp-for="ConfirmPassword" class="control-label  space required">Confirm Password</label>
                         </div>
+
+                        <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
+
                         <div class="form-group col-4">
                             <input asp-for="ConfirmPassword" class="form-control" id="ConPassword" />
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
@@ -570,7 +573,7 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
                             <label asp-for="SecurityQuestionId" class="control-label  space required"></label>
                         </div>
                         <div class="form-group col-4">
-                            <select  asp-for="SecurityQuestionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))">
+                            <select asp-for="SecurityQuestionId" class="form-select " asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))">
                                 <option value=''>---------Select---------</option>
                             </select>
                             <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
@@ -590,8 +593,8 @@ new { @class = "form-select ", @id = "DdlRelationship", @style = "color:black;" 
                             <label asp-for="IsActive" class="control-label  space" for="IsActive">Is Enabled</label>
                         </div>
                         <div class="form-group col-4" style="display:flex">
-                            <input type="radio" asp-for="IsActive" checked="checked" name="IsActive" value="1" style="flex: 0.2;" ><span>Yes</span>
-                            <input type="radio" asp-for="IsActive" name="IsActive" value="0" style="flex: 0.2;" ><span>No</span>
+                            <input type="radio" asp-for="IsActive" checked="checked" name="IsActive" value="1" style="flex: 0.2;"><span>Yes</span>
+                            <input type="radio" asp-for="IsActive" name="IsActive" value="0" style="flex: 0.2;"><span>No</span>
                         </div>
                         @*----------------------*@
                         <div class="col-3"></div><div class="col-3"></div>

@@ -201,45 +201,49 @@ function MoveTonextpage(url, data) {
 //    }
 //});
 
-////=====================Showing Feilds based on Role in General info
-//function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
-//    try {
-//        //function RoleOnChangeFunction(Roleid) {
-//        debugger;
-//        //if (!IsEmpty) {
-//        if ($("#BtnUpdateIdentification").val() != "UpdateDetails") {
-//            $("#ChkIsUserJoined").prop("checked", false);
-//            //$(".ClsSessionStudent").val("");
-//            //$(".ClsClear").val("");
-//            $(".ClsClear").val("");
-//            //  $("#DdlDesignationId").val("");
-//        }
-//        if (Roleid == 775) {
-//            $(".ClsSessionStudent").css("display", "block");
-//            $(".ClsDivTeachers").css("display", "none");
-//            $("#LblSiblingsInSameCollege").text("Siblings in same School");
-//            $("#LblSiblingsOtherCollege").text("Siblings in Other School");
-//            $("#LblTcTakenGeneralTab").text("Tc Taken");
-//            $("#LblInstanceUserCodeGeneralTab").text("Roll No");
+//=====================Showing Feilds based on Role in General info
+function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
+    try {
+        //function RoleOnChangeFunction(Roleid) {
+        debugger;
+        //if (!IsEmpty) {
+        if ($("#BtnUpdateIdentification").val() != "UpdateDetails") {
+            $("#ChkIsUserJoined").prop("checked", false);
+            //$(".ClsSessionStudent").val("");
+            //$(".ClsClear").val("");
+            $(".ClsClear").val("");
+            //  $("#DdlDesignationId").val("");
+        }
+        if (Roleid == 775) {
+            $(".ClsSessionStudent").css("display", "block");
+            $(".ClsDivTeachers").css("display", "none");
+            $("#LblSiblingsInSameCollege").text("Siblings in same School");
+            $("#LblSiblingsOtherCollege").text("Siblings in Other School");
+            $("#LblTcTakenGeneralTab").text("Tc Taken");
+            $("#LblInstanceUserCodeGeneralTab").text("Roll No");
+            $("#ParentDetailsTab").css("display", "");
+            $("#BtnPreview").css('display', '');
+        } else {
+            $("#BtnPreview").css('display', 'none !important');
 
-//        } else {
-//            $(".ClsSessionStudent").css("display", "none");
-//            $(".ClsDivTeachers").css("display", "block");
-//            $("#LblSiblingsInSameCollege").text("Child studying in same School");
-//            $("#LblSiblingsOtherCollege").text("Child studying in Other School ");
-//            $("#LblTcTakenGeneralTab").text("Hide in the portal");
-//            $("#LblInstanceUserCodeGeneralTab").text("Employee ID");
-//        }
-//        if ($('#TcTakenYes').is(':checked')) {
-//            TcTakenChecking(1);
-//        } else {
-//            TcTakenChecking(0);
-//        }
-//    } catch (e) {
-//        $("#loadingOverlay").hide();
-//        $("#Main_Span_Error").text("Something Error");
-//    }
-//}
+            $("#ParentDetailsTab").css("display", "none");
+            $(".ClsSessionStudent").css("display", "none");
+            $(".ClsDivTeachers").css("display", "block");
+            $("#LblSiblingsInSameCollege").text("Child studying in same School");
+            $("#LblSiblingsOtherCollege").text("Child studying in Other School ");
+            $("#LblTcTakenGeneralTab").text("Hide in the portal");
+            $("#LblInstanceUserCodeGeneralTab").text("Employee ID");
+        }
+        if ($('#TcTakenYes').is(':checked')) {
+            TcTakenChecking(1);
+        } else {
+            TcTakenChecking(0);
+        }
+    } catch (e) {
+        $("#loadingOverlay").hide();
+        $("#Main_Span_Error").text("Something Error");
+    }
+}
 ////===================Shows date  fields
 //function TcTakenChecking(Tctaken) {
 //    debugger
