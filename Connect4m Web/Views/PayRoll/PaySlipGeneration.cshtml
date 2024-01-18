@@ -7,471 +7,27 @@
 
 }
 <link href="~/css/Payslipgeneration.css" rel="stylesheet" />
+<link href="~/css/CommonStyle.css" rel="stylesheet" />
+
+<div class="row mb-2" id="SearchEmployeesForGeneratePayslip">
+
+    <div class="col-md-12 col-lg-12 mb-3">
+
+        <div class="card mb-4">
+            @*=====================         BUTTONS                =================*@
+
+            <div class="row justify-content">
 
 
-<div class="card">
+                <div class="col-sm-12" id="printbuttons">
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="Backtosearchpayslip">Back To Search</button>
+                    <button type="button" class="btn btn-warning waves-effect waves-light">Send Email</button>
 
-    <div class="card-body">
-        <div style="display:flex;padding:4px" id="printbuttons">
-            <div id="Backtosearchpayslip"><span class="btn btn-pill btn-outline-primary btn-aprimary">Back To Search</span></div>
-            <div><span class="btn btn-pill btn-outline-info btn-air-info">Send Email</span></div>
-            @{
-                if (FourthPaySliplList.AlreadyExists != "0")
-                {
-                    <div onclick="printPaySlip('PaySlip')" style="margin-left: 37%;"><span class="btn btn-pill btn-outline-success btn-air-success">Print</span></div>
-
-                }
-            }
-
-        </div>
-
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <div class="card" id="Payslipgenerationinner">
-
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white" @*data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"*@>
-                                PAYSLIP
-
-                            </button>
-                        </h5>
-                    </div>
-                    <div class="mainpayslip">
-
-
-                        <div>
-                            <img src="~/Images_IMP/Payslip_Header (1).png" />
-                        </div>
-                        <div style="display: flex; font-weight: 800 !important; font: 14px arial; margin-bottom: 7px; "><div style=" width: 65%; text-align: end;">Payslip for the month of @ViewBag.monthname @ViewBag.yearname</div><div style=" text-align: end; width: 35%;">Date :@DateTime.Now</div></div>
-                        <div class="innerpayslip">
-                            @{ if (Model != null && Model.Any())
-                                {
-                                    var firstPaySliplList = Model.First();
-                                    var deductions = Model.ElementAt(1);
-                                    var earnings = Model.ElementAt(2);
-
-
-                                    if (firstPaySliplList.generatepayslip != null && firstPaySliplList.generatepayslip.Any())
-                                    {
-                                        var firstPaySlip = firstPaySliplList.generatepayslip.First();
-
-                                        <div class="row backimg" style="font:13px arial;border:1px solid black">
-                                            <div class="row">
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class="control-label">Associate Name</label>
-
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.FullName</label>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">No.of Working Days</label>
-
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.WorkingDays</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">Associate ID</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.AdmissionNumber</label>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">No.of Present Days</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.PresentDays</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 " style=" padding-top: 14px; ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label"> Department</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.ClassificationName</label>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="row" style="width: 100%;">
-                                                            <div class="col-5">
-                                                                <label class=" control-label">Designation</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@firstPaySlip.Designation</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <label class=" control-label">No.of Absent Days</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@firstPaySlip.AbsentDays (CL:@firstPaySlip.CL,OD:@firstPaySlip.OD)</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">  Branch</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.InstanceName</label>
-                                                        </div>
-                                                    </div>
-
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">  Total LOP Days</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.LossofPayDays (LA :@firstPaySlip.LA,LE:@firstPaySlip.LE & LOP:@firstPaySlip.LossofPayDays)</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">Date of Joining</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.DateofJoining</label>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label">Gross Salary</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.GrassSalary</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="row" style="width:100%">
-                                                            <div class="col-5">
-                                                                <label class=" control-label">Designation</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@firstPaySlip.Designation</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <label class=" control-label">Bank Name</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@firstPaySlip.BankName</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 " style="padding:4px">
-                                                        <div class="row" style="width:100%;">
-                                                            <div class="col-5">
-                                                                <label class=" control-label">LOP Amount (A)</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@ViewBag.Lossofpayamount</label>
-                                                            </div>
-                                                            <div class="col-5">
-                                                                <label class=" control-label">A/C.No</label>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <span class="space"></span>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <label class=" control-label">@firstPaySlip.AccountNo</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @*---------------------*@
-                                                <div class="borderline">
-
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label"> PAN No.</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.PanNo</label>
-                                                        </div>
-                                                    </div>
-                                                    @*---------------------*@
-                                                    <div class="col-6 ">
-                                                        <div class="col-5">
-                                                            <label class=" control-label"> PF No.</label>
-                                                        </div>
-                                                        <div class="col-1">
-                                                            <span class="space"></span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label class=" control-label">@firstPaySlip.PfNo</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                            </div>
-                                        </div>
-
-
-                                    }
-
-                                    <div class="row Earnings" style=" margin-top: 25px;">
-                                        <div class="col-6 borderonly textcenter">
-                                            <span class=" control-label boldcolor">Earnings</span>
-                                        </div>
-                                        <div class="col-6 borderonly textcenter">
-                                            <span class=" control-label boldcolor">Deductions</span>
-                                        </div>
-                                        <div class="row earnings_deductions" >
-                                            @*---------------------*@
-
-                                            <div class="col-6 ">
-                                                <div class="col-6 borderonly textcenter">
-                                                    <span class=" control-label boldcolor"> Description</span>
-                                                </div>
-
-                                                <div class="col-6 borderonly textcenter">
-                                                    <span class=" control-label boldcolor">Amount&nbsp;(RM)</span>
-                                                </div>
-                                            </div>
-                                            @*---------------------*@
-                                            <div class="col-6 ">
-                                                <div class="col-6 borderonly textcenter">
-                                                    <span class=" control-label boldcolor"> Description</span>
-                                                </div>
-
-                                                <div class="col-6 borderonly textcenter">
-                                                    <span class=" control-label boldcolor">Amount&nbsp;(RM)</span>
-                                                </div>
-                                            </div>
-                                            @*---------------------*@
-                                            @if ((deductions.generatepayslip != null && deductions.generatepayslip.Any()) || (earnings.generatepayslip != null && earnings.generatepayslip.Any()))
-                                            {
-                                                int k = deductions.generatepayslip.Count;
-                                                if (earnings.generatepayslip.Count > deductions.generatepayslip.Count)
-                                                {
-                                                    k = earnings.generatepayslip.Count;
-                                                }
-                                                for (int i = 0; i < k; i++)
-                                                {
-                                                    @*----------------Earnings--------------*@
-                                                    if (i < earnings.generatepayslip.Count)
-                                                    {
-                                                        <div class="col-6 earnings_deductionssub">
-                                                            <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
-                                                                <span class=" control-label">@earnings.generatepayslip[i].SalaryAttributeMasterName</span>
-                                                            </div>
-                                                            <input type="text" value="@earnings.generatepayslip[i].InstanceUserCode" style="display:none" readonly hidden  class="instanceuserid"/>
-                                                            <input type="text" value="@earnings.generatepayslip[i].Salary" style="display:none" readonly hidden class="salaryforpayin"/>
-                                                            <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
-                                                                <span class=" control-label ">@earnings.generatepayslip[i].Salary</span>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="col-6 ">
-                                                            <div class="col-6 borderonly" style="text-align: left; padding-left: 16px; display: block; ">
-                                                                <label class=" control-label"></label>
-                                                            </div>
-
-                                                            <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
-                                                                <label class=" control-label"></label>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                    @*----------------Deductions--------------*@
-                                                    if (i < deductions.generatepayslip.Count)
-                                                    {
-                                        <div class="col-6 earnings_deductionssub">
-                                            <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
-                                                <span class=" control-label">@deductions.generatepayslip[i].SalaryAttributeMasterName</span>
-                                            </div>
-                                            <input type="text" value="@deductions.generatepayslip[i].InstanceUserCode" style="display:none" readonly hidden class="instanceuserid" />
-                                            <input type="text" value="@deductions.generatepayslip[i].Salary" style="display:none" readonly hidden class="salaryforpayin" />
-                                            <div class="col-6 borderonly salary" style=" text-align: right; padding-right: 16px; display: block;">
-                                                <span class=" control-label">@deductions.generatepayslip[i].Salary</span>
-                                            </div>
-                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="col-6 ">
-                                                            <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
-                                                                <label class=" control-label"></label>
-                                                            </div>
-
-                                                            <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
-                                                                <label class=" control-label"></label>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-
-
-
-
-
-
-                                            }
-
-                                            @*---------------------*@
-                                            <div class="col-6 ">
-                                                <div class="col-6 borderonly textcenter " style="text-align: left; padding-left: 16px; display: block;">
-                                                    <span class=" control-label boldcolor"> Total Earnings</span>
-                                                </div>
-
-                                                <div class="col-6 borderonly textcenter " style=" text-align: right; padding-right: 16px; display: block;">
-                                                    <span class=" control-label boldcolor">@ViewBag.TotalEarnings.ToString("N2")</span>
-                                                </div>
-                                            </div>
-                                            @*---------------------*@
-                                            <div class="col-6 ">
-                                                <div class="col-6 borderonly textcenter " style="text-align: left; padding-left: 16px; display: block;">
-                                                    <span class=" control-label boldcolor"> Total Deductions</span>
-                                                </div>
-
-                                                <div class="col-6 borderonly textcenter " style=" text-align: right; padding-right: 16px; display: block;">
-                                                    <span class=" control-label boldcolor">@ViewBag.TotalDeductions.ToString("N2")</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-12" style=" padding: 10px; border-bottom: 1px solid black;">
-
-                                        </div>
-                                        <div class="col-12" style=" padding: 7px; border-bottom: 1px solid black; text-align:center">
-                                            <label class="control-label space" style="font-weight:700">Net Salary</label>   @ViewBag.Netsalary.ToString("N2") /-
-                                        </div>
-                                        <div class="col-12" style="text-align: center">
-                                            <label class="control-label space" style="font-weight:700 !important">Ringgit(s) </label> @ViewBag.NumtoWord
-
-
-                                        </div>
-
-
-                                    </div>
-
-                                }
-
-
-                            }
-                        </div>
-                        <div>
-                            <span class="control-label ">List of Holidays : Sundays - 5 , Republic Day - 1</span>
-                        </div>
-                        <div style="margin-top:8px">
-                            <label class="control-label  boldcolor" style="font-weight:700 !important">
-
-                                This is a computer generated report, Signature is not required.
-                            </label>
-                        </div>
-
-                        <div class="row" style=" margin-top: 45PX;">
-                            <div class="col-4 textcenter">
-                                <span>Sd/- </span><br />
-                                <label class="control-label" style=" font-weight: 800 !important;"> Principal</label>
-                            </div>
-                            <div class="col-4">
-
-                            </div>
-                            <div class="col-4 textcenter">
-                                <span>Sd/- </span><br />
-                                <label class="control-label" style=" font-weight: 800 !important;">  Manager</label>
-                            </div>
-                        </div>
-
-                    </div>
                     @{
-                        if (FourthPaySliplList.AlreadyExists == "0")
+                        if (FourthPaySliplList.AlreadyExists != "0")
                         {
-                            <div style="text-align: center; margin-bottom: 18px;" id="confirmbutton">
-                                <input type="button" value="Confirm" class="btn btn-pill btn-outline-success btn-air-success" style="background-color: lightblue; color: black;" id="PayslipConfirm" />
-                            </div>
+                            <button onclick="printPaySlip('PaySlip')" type="button" class="text-end btn btn-success waves-effect waves-light">Print</button>
+
                         }
                     }
 
@@ -479,317 +35,464 @@
                 </div>
             </div>
 
+            <div class="default-according style-1" id="accordionoc">
+                <div class="card">
+                    <div class="card" id="Payslipgenerationinner">
+
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                <span id="AddNewText_Span_CreatePage">
+                                    PAYSLIP
+                                </span>
+                            </h5>
+                        </div>
+
+                        <div class="mainpayslip">
+
+
+                            <div>
+                                <img src="~/Images_IMP/Payslip_Header (1).png" />
+                            </div>
+                            <div style="display: flex; font-weight: 800 !important; font: 14px arial; margin-bottom: 7px; "><div style=" width: 65%; text-align: end;">Payslip for the month of @ViewBag.monthname @ViewBag.yearname</div><div style=" text-align: end; width: 35%;">Date :@DateTime.Now</div></div>
+                            <div class="innerpayslip">
+                                @{ if (Model != null && Model.Any())
+                                    {
+                                        var firstPaySliplList = Model.First();
+                                        var deductions = Model.ElementAt(1);
+                                        var earnings = Model.ElementAt(2);
+
+
+                                        if (firstPaySliplList.generatepayslip != null && firstPaySliplList.generatepayslip.Any())
+                                        {
+                                            var firstPaySlip = firstPaySliplList.generatepayslip.First();
+
+                                            <div class="row backimg" style="font:13px arial;border:1px solid black">
+                                                <div class="row">
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class="control-label">Associate Name</label>
+
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.FullName</label>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">No.of Working Days</label>
+
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.WorkingDays</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">Associate ID</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.AdmissionNumber</label>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">No.of Present Days</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.PresentDays</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 " style=" padding-top: 14px; ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label"> Department</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.ClassificationName</label>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="row" style="width: 100%;">
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">Designation</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@firstPaySlip.Designation</label>
+                                                                </div>
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">No.of Absent Days</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@firstPaySlip.AbsentDays (CL:@firstPaySlip.CL,OD:@firstPaySlip.OD)</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">  Branch</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.InstanceName</label>
+                                                            </div>
+                                                        </div>
+
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">  Total LOP Days</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.LossofPayDays (LA :@firstPaySlip.LA,LE:@firstPaySlip.LE & LOP:@firstPaySlip.LossofPayDays)</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">Date of Joining</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.DateofJoining</label>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label">Gross Salary</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.GrassSalary</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="row" style="width:100%">
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">Designation</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@firstPaySlip.Designation</label>
+                                                                </div>
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">Bank Name</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@firstPaySlip.BankName</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 " style="padding:4px">
+                                                            <div class="row" style="width:100%;">
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">LOP Amount (A)</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@ViewBag.Lossofpayamount</label>
+                                                                </div>
+                                                                <div class="col-5">
+                                                                    <label class=" control-label">A/C.No</label>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <span class="space"></span>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class=" control-label">@firstPaySlip.AccountNo</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*---------------------*@
+                                                    <div class="borderline">
+
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label"> PAN No.</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.PanNo</label>
+                                                            </div>
+                                                        </div>
+                                                        @*---------------------*@
+                                                        <div class="col-6 ">
+                                                            <div class="col-5">
+                                                                <label class=" control-label"> PF No.</label>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <span class="space"></span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class=" control-label">@firstPaySlip.PfNo</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                        }
+
+                                        <div class="row Earnings" style=" margin-top: 25px;">
+                                            <div class="col-6 borderonly textcenter">
+                                                <span class=" control-label boldcolor">Earnings</span>
+                                            </div>
+                                            <div class="col-6 borderonly textcenter">
+                                                <span class=" control-label boldcolor">Deductions</span>
+                                            </div>
+                                            <div class="row earnings_deductions">
+                                                @*---------------------*@
+
+                                                <div class="col-6 ">
+                                                    <div class="col-6 borderonly textcenter">
+                                                        <span class=" control-label boldcolor"> Description</span>
+                                                    </div>
+
+                                                    <div class="col-6 borderonly textcenter">
+                                                        <span class=" control-label boldcolor">Amount&nbsp;(RM)</span>
+                                                    </div>
+                                                </div>
+                                                @*---------------------*@
+                                                <div class="col-6 ">
+                                                    <div class="col-6 borderonly textcenter">
+                                                        <span class=" control-label boldcolor"> Description</span>
+                                                    </div>
+
+                                                    <div class="col-6 borderonly textcenter">
+                                                        <span class=" control-label boldcolor">Amount&nbsp;(RM)</span>
+                                                    </div>
+                                                </div>
+                                                @*---------------------*@
+                                                @if ((deductions.generatepayslip != null && deductions.generatepayslip.Any()) || (earnings.generatepayslip != null && earnings.generatepayslip.Any()))
+                                                {
+                                                    int k = deductions.generatepayslip.Count;
+                                                    if (earnings.generatepayslip.Count > deductions.generatepayslip.Count)
+                                                    {
+                                                        k = earnings.generatepayslip.Count;
+                                                    }
+                                                    for (int i = 0; i < k; i++)
+                                                    {
+                                                        @*----------------Earnings--------------*@
+                                                        if (i < earnings.generatepayslip.Count)
+                                                        {
+                                                            <div class="col-6 earnings_deductionssub">
+                                                                <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
+                                                                    <span class=" control-label">@earnings.generatepayslip[i].SalaryAttributeMasterName</span>
+                                                                </div>
+                                                                <input type="text" value="@earnings.generatepayslip[i].InstanceUserCode" style="display:none" readonly hidden class="instanceuserid" />
+                                                                <input type="text" value="@earnings.generatepayslip[i].Salary" style="display:none" readonly hidden class="salaryforpayin" />
+                                                                <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
+                                                                    <span class=" control-label ">@earnings.generatepayslip[i].Salary</span>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-6 ">
+                                                                <div class="col-6 borderonly" style="text-align: left; padding-left: 16px; display: block; ">
+                                                                    <label class=" control-label"></label>
+                                                                </div>
+
+                                                                <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
+                                                                    <label class=" control-label"></label>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        @*----------------Deductions--------------*@
+                                                        if (i < deductions.generatepayslip.Count)
+                                                        {
+                                                            <div class="col-6 earnings_deductionssub">
+                                                                <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
+                                                                    <span class=" control-label">@deductions.generatepayslip[i].SalaryAttributeMasterName</span>
+                                                                </div>
+                                                                <input type="text" value="@deductions.generatepayslip[i].InstanceUserCode" style="display:none" readonly hidden class="instanceuserid" />
+                                                                <input type="text" value="@deductions.generatepayslip[i].Salary" style="display:none" readonly hidden class="salaryforpayin" />
+                                                                <div class="col-6 borderonly salary" style=" text-align: right; padding-right: 16px; display: block;">
+                                                                    <span class=" control-label">@deductions.generatepayslip[i].Salary</span>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-6 ">
+                                                                <div class="col-6 borderonly " style="text-align: left; padding-left: 16px; display: block;">
+                                                                    <label class=" control-label"></label>
+                                                                </div>
+
+                                                                <div class="col-6 borderonly " style=" text-align: right; padding-right: 16px; display: block;">
+                                                                    <label class=" control-label"></label>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+
+
+
+
+
+
+                                                }
+
+                                                @*---------------------*@
+                                                <div class="col-6 ">
+                                                    <div class="col-6 borderonly textcenter " style="text-align: left; padding-left: 16px; display: block;">
+                                                        <span class=" control-label boldcolor"> Total Earnings</span>
+                                                    </div>
+
+                                                    <div class="col-6 borderonly textcenter " style=" text-align: right; padding-right: 16px; display: block;">
+                                                        <span class=" control-label boldcolor">@ViewBag.TotalEarnings.ToString("N2")</span>
+                                                    </div>
+                                                </div>
+                                                @*---------------------*@
+                                                <div class="col-6 ">
+                                                    <div class="col-6 borderonly textcenter " style="text-align: left; padding-left: 16px; display: block;">
+                                                        <span class=" control-label boldcolor"> Total Deductions</span>
+                                                    </div>
+
+                                                    <div class="col-6 borderonly textcenter " style=" text-align: right; padding-right: 16px; display: block;">
+                                                        <span class=" control-label boldcolor">@ViewBag.TotalDeductions.ToString("N2")</span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-12" style=" padding: 10px; border-bottom: 1px solid black;">
+
+                                            </div>
+                                            <div class="col-12" style=" padding: 7px; border-bottom: 1px solid black; text-align:center">
+                                                <label class="control-label space" style="font-weight:700">Net Salary</label>   @ViewBag.Netsalary.ToString("N2") /-
+                                            </div>
+                                            <div class="col-12" style="text-align: center">
+                                                <label class="control-label space" style="font-weight:700 !important">Ringgit(s) </label> @ViewBag.NumtoWord
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    }
+
+
+                                }
+                            </div>
+                            <div>
+                                <span class="control-label ">List of Holidays : Sundays - 5 , Republic Day - 1</span>
+                            </div>
+                            <div style="margin-top:8px">
+                                <label class="control-label  boldcolor" style="font-weight:700 !important">
+
+                                    This is a computer generated report, Signature is not required.
+                                </label>
+                            </div>
+
+                            <div class="row" style=" margin-top: 45PX;">
+                                <div class="col-4 textcenter">
+                                    <span>Sd/- </span><br />
+                                    <label class="control-label" style=" font-weight: 800 !important;"> Principal</label>
+                                </div>
+                                <div class="col-4">
+
+                                </div>
+                                <div class="col-4 textcenter">
+                                    <span>Sd/- </span><br />
+                                    <label class="control-label" style=" font-weight: 800 !important;">  Manager</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        @{
+                            if (FourthPaySliplList.AlreadyExists == "0")
+                            {
+                                <div style="text-align: center; margin-bottom: 18px;" id="confirmbutton">
+                                    <input type="button" value="Confirm" class="btn btn-pill btn-outline-success btn-air-success" style="background-color: lightblue; color: black;" id="PayslipConfirm" />
+                                </div>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
 
 
 
-
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InstanceUserCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AdmissionNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateofJoining)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Bank)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AccountNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BaseSalary)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.GrassSalary)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AnnualSalary)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassificationName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WorkingDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PresentDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LossofPayDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AbsentDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LA)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LE)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InstanceName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SubDomineName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PanNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Designation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PfNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FatherName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedWorkingDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedPresentDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedLossPayDays)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedNumberofLeaves)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Gender)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PayRollCategoryName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CL)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OD)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedCL)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConfirmedOD)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SubClassficationName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaySlipDepartment)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BankName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PortailEmail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EmpId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.APGLINo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SalaryAttributeMasterName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SaleDependsOn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Salary)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InstanceId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RoleId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedBy)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstanceUserCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AdmissionNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateofJoining)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Bank)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AccountNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BaseSalary)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GrassSalary)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AnnualSalary)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassificationName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.WorkingDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PresentDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LossofPayDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AbsentDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LA)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LE)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstanceName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SubDomineName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PanNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Designation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PfNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FatherName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedWorkingDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedPresentDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedLossPayDays)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedNumberofLeaves)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PayRollCategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CL)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedCL)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmedOD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SubClassficationName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaySlipDepartment)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BankName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PortailEmail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmpId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.APGLINo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SalaryAttributeMasterName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SaleDependsOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Salary)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstanceId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RoleId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@

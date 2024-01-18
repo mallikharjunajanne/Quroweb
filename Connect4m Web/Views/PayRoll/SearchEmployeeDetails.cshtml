@@ -3,315 +3,278 @@
     ViewData["Title"] = "SearchEmployeeDetails";
     Layout = null;
 }
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
+@*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 <style>
-    #GeneratepaySlipAppend{display:none}
+    #GeneratepaySlipAppend {
+        display: none
+    }
 </style>
 
-<div class="col-sm-12 " id="SearchEmployeesForGeneratePayslip" >
 
-    <div class="card">
+<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Payslip Generate for Employee's</h4>
 
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>PAYSLIP GENERATE FOR EMPLOYEE'S</span></h6>
+<div class="row mb-2" id="SearchEmployeesForGeneratePayslip">
 
-                    <div id="appendsearchmanageemployees">
+    <div class="col-md-12 col-lg-12 mb-3">
 
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">EMPLOYEE DETAILS</button>
-                            </h5>
-                        </div>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+        <div class="card mb-4">
+            @*<div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <span id="AddNewText_Span_CreatePage">
+                        PAYSLIP GENERATE FOR EMPLOYEE'S
+                    </span>
+                </h5>
+            </div>*@
 
-                            <div class="row padding-search">
-                                <div class="row">
+            <div id="appendsearchmanageemployees">
+                <div class="demo-inline-spacing ">
 
+                    <span id="updatesalaryattribute"> EMPLOYEE DETAILS</span>
+                </div>
+                <div class="card-body mb-2">
 
-                                    <form id="Serach_PGE">
-                                        <div class="row">
-                                            <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforPGE" hidden />
+                    @*=============================  Form Start ================================*@
+                    <form id="Serach_PGE">
+                        <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforPGE" hidden />
 
-                                            <div class="form-group col-2">
-                                                <label class="control-label space"> UserName</label>
-                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
+                        <div>
+                            <div class="row">
+                                <div class="col">
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
 
-                                            </div>
-                                            <div class="form-group col-4">
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">User Name</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input class="form-control" id="UserNamesearch" />
 
-                                                <input class="form-control" id="UserNamesearch" />
-
-                                            </div>
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Role </label>
-                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
-
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.RoleId,
-                                                new SelectList(ViewBag.RoleId, "Value", "Text"),
-                                            "-------select-------", new { @class = "form-select readonly", @id = "dropdown_RoleId_PGEsearch", @style = "color:black;" })
-
-                                                </div>
-
-
-                                            </div>
-
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space"> First Name </label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <input class="form-control" id="FirstNamesearch" />
-
-                                            </div>
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Last Name</label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <input class="form-control" id="LastNamesearch" />
-
-                                            </div>
-
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Designation</label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <div id="Drop_Format_SEM_3">
-                                                    @Html.DropDownListFor(
-                                               x => x.DesignationId,
-                                                new SelectList(ViewBag.DesignationId, "Value", "Text"),
-                                              "-------select-------", new { @class = "form-select readonly", @id = "dropdown_DesignationId_PGEsearch", @style = "color:black;" })
-
-                                                </div>
-
-
-                                            </div>
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Employee.No</label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <input class="form-control" id="AdmissionNumbersearch" />
-
-                                            </div>
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Category</label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <div id="Drop_Format_SEM_2">
-                                                    @Html.DropDownListFor(
-                                               x => x.Category,
-                                                new SelectList(ViewBag.Category, "Value", "Text"),
-                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Category_PGEsearch", @style = "color:black;" })
-
-                                                </div>
-
-                                            </div>
-                                            <div class="form-group col-2">
-
-                                                <label class="control-label space">SubCategory</label>
-
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <div id="Drop_Format_SEM_2">
-                                                    @Html.DropDownListFor(
-                                               x => x.SubCategory,
-                                                new SelectList(ViewBag.SubCategory, "Value", "Text"),
-                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SubCategory_PGEsearch", @style = "color:black;opacity:0.5;", @disabled = true })
-
-                                                </div>
-
-                                            </div>
-                                            <div class="form-group col-2">
-                                                <label class="control-label space">Department</label>
-                                            </div>
-                                            <div class="form-group col-4">
-
-                                                <div id="Drop_Format_SEM_2">
-                                                    @Html.DropDownListFor(
-                                               x => x.Department,
-                                                new SelectList(ViewBag.Department, "Value", "Text"),
-                                                "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Department_PGEsearch", @style = "color:black;" })
-
-                                                </div>
-
-                                            </div>
-                                            <div style=" display: flex; gap: 17px;">
-                                                <div class="col-3"></div>
-
-                                                <input type="button" value="Previous Page" id="backtopage_PGE" onclick="nextpage('SearchEmployeeAttendence',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
-                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" />
-                                                <input type="button" value="Search" id="sub_tblPGE" class="btn btn-pill btn-outline-success btn-air-success" />
-                                                <input type="button" value="Next Page" id="Nextpage_PGE" class="btn btn-pill btn-outline-info btn-air-info" onclick="nextpage('SalaryReport',null)" />
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Role</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.RoleId,
+                                            new SelectList(ViewBag.RoleId, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_RoleId_PGEsearch", @style = "color:black;" })
 
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">First Name</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input class="form-control" id="FirstNamesearch" />
+
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Last Name</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input class="form-control" id="LastNamesearch" />
+
+                                        </div>
+
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Designation</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.DesignationId,
+                                            new SelectList(ViewBag.DesignationId, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_DesignationId_PGEsearch", @style = "color:black;" })
+
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Employee.No</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input class="form-control" id="AdmissionNumbersearch" />
+
+                                        </div>
+
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Category</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.Category,
+                                            new SelectList(ViewBag.Category, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Category_PGEsearch", @style = "color:black;" })
+
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">SubCategory</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.SubCategory,
+                                            new SelectList(ViewBag.SubCategory, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_SubCategory_PGEsearch", @style = "color:black;" })
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @*=====================        TEXT BOX                 =================*@
+                                    <div class="row mb-3">
+
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Category</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.Category,
+                                            new SelectList(ViewBag.Category, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Category_PGEsearch", @style = "color:black;" })
+
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                                @Html.DropDownListFor(
+                                           x => x.Department,
+                                            new SelectList(ViewBag.Department, "Value", "Text"),
+                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Department_PGEsearch", @style = "color:black;" })
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @*=====================         BUTTONS                =================*@
+
+                                    <div class="row justify-content">
+                                        <div class="col-sm-4">
+                                        </div>
+
+                                        <div class="col-sm-8">
+                                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_PGE" onclick="nextpage('SearchEmployeeAttendence',null)">Previous Page</button>
+
+
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light" id="sub_tblPGE">Search</button>
+
+                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_PGE" onclick="nextpage('SalaryReport',null)">Next Page</button>
+
+                                        </div>
+                                    </div>
                                 </div>
-
-
                             </div>
                         </div>
-                        <div class="form-group" id="errorfordate" style="color:red"> </div>
+                    </form>
+                    @*=============================  Form End ================================*@
 
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"></button>
-                                </h5>
-                            </div>
-                            <div>
-                                <div class="row" id="fromtodates">
-                                    <div style=" height: 17px;"></div>
-                                    <div class="form-group col-2">
-                                        <label class="control-label space required"> Month</label>
+                </div>
+            </div>
 
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <div id="Drop_Format_SEM_3">
-                                            @Html.DropDownListFor(
-                                       x => x.Months,
-                                        new SelectList(ViewBag.Months, "Value", "Text"),
-                                    "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Months_PGEsearch", @style = "color:black;" })
+            <div class="row mb-3">
 
-                                        </div>
+                <label class="col-sm-12 col-form-label" for="basic-default-name" id="errorfordate" style="color:red"></label>
+            </div>
 
-                                    </div>
-                                    <div class="form-group col-2">
+            <div id="fromtodates">
+                @*=====================        TEXT BOX                 =================*@
+                <div class="row mb-3">
 
-
-                                        <label class="control-label required space">Year </label>
-
-                                    </div>
-                                    <div class="form-group col-4">
-
-                                        <div id="Drop_Format_SEM_3">
-                                            @Html.DropDownListFor(
-                                       x => x.Years,
-                                        new SelectList(ViewBag.Years, "Value", "Text"),
-                                    "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Years_PGEsearch", @style = "color:black;" })
-
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="form-group col-2">
-
-
-                                        <label class="control-label space"> From Date </label>
-                                    </div>
-                                    <div class="form-group col-4">
-
-                                        <label id="startdate_PGE" style="font-weight:900 !important"></label>
-
-                                    </div>
-                                    <div class="form-group col-2">
-
-
-                                        <label class="control-label space">To Date </label>
-                                    </div>
-                                    <div class="form-group col-4">
-
-                                        <label id="enddate_PGE" style="font-weight:900 !important"></label>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_PGE" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-                                </h5>
-                            </div>
-
-                            <div id="eg1" style="color: black; background-color: whitesmoke">
-                                <table class=" table table-bordered" id="tblPGEsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                    <thead>
-                                        <tr style="border-color: black;">
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                S.No
-                                            </th>
-                                            <th style="border-color: blue; width: 76px !important; " class="bg-primary">
-                                                Name
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Emp.No
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Category
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Sub Category
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Department
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Gross Salary
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Date of Joining
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-
-
+                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Month</label>
+                    <div class="col-sm-4 form-group">
+                        <div class="position-relative" id="Drop_Format_SEM_3">
+                            @Html.DropDownListFor(
+                       x => x.Months,
+                        new SelectList(ViewBag.Months, "Value", "Text"),
+                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Months_PGEsearch", @style = "color:black;" })
 
                         </div>
                     </div>
 
+                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Year</label>
+                    <div class="col-sm-4 form-group">
+                        <div class="position-relative" id="Drop_Format_SEM_3">
+                            @Html.DropDownListFor(
+                       x => x.Years,
+                        new SelectList(ViewBag.Years, "Value", "Text"),
+                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Years_PGEsearch", @style = "color:black;" })
 
-
+                        </div>
                     </div>
+                </div>
+                @*=====================        TEXT BOX                 =================*@
+                <div class="row mb-3">
+
+                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">From Date</label>
+                    <label class="col-sm-4 col-form-label" for="basic-default-name" id="startdate_PGE" style="font-weight:900 !important"></label>
+
+                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">To Date</label>
+                    <label class="col-sm-4 col-form-label" for="basic-default-name" id="enddate_PGE" style="font-weight:900 !important"></label>
+
+                </div>
+            </div>
+
+
+            <div class="card">
+
+                <h6 class="card-title mb-0">
+                    <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_PGE" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+                </h6>
+                <div class="table-responsive text-nowrap">
+                    <table id="tblPGEsearchresults" class="link table table-hover table-bordered ">
+                        <thead class="table-dark">
+
+
+                            <tr>
+                                <th>
+                                    S.No
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Emp.No
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Sub Category
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Gross Salary
+                                </th>
+                                <th>
+                                    Date of Joining
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            @*=============================  TABLE END ================================*@
+        </div>
+        </div>
+
+
+
+    </div>
+
+
+            <div id="GeneratepaySlipAppend">
 
             </div>
-        </div>
-    </div>
-</div>
+            @section Scripts {
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }
 
-<div id="GeneratepaySlipAppend">
+            @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
+            @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 
-</div>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>*@
-@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-
-<script src="~/js/PayRoll_7.js"></script>
+            <script src="~/js/PayRoll_7.js"></script>
 
 
 

@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "SimpleExpenseSummary";
+    Layout = null;
+}
+
+
+
+<div class="card" id="datatable1">
+
+    @*<h5 class="card-header">Dark Table head</h5>*@
+
+    <div class="demo-inline-spacing">
+        <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="exportexcelsummary">Export Excel</button>
+        <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="printsummary">Print</button>
+    </div>
+    <h5 class="card-title mb-0">
+        <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span>
+    </h5>
+
+
+    <div class="table-responsive text-nowrap">
+    <table id="Tblsummary1" class="table table-hover">
+        <thead class="table-dark">
+
+        </thead>
+        <tbody  class="table-border-bottom-0">
+        </tbody>
+
+    </table>
+
+
+</div>
+</div>
+@{if (ViewBag.summaryid == 2)
+    {
+
+    <div class="card" id="datatable2">
+        <div class="demo-inline-spacing">
+            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="exportexceldetailesummary">Export Excel</button>
+            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="printdetailesummary">Print</button>
+        </div>
+        @*<h5 class="card-header">Dark Table head</h5>*@
+        <h5 class="card-title mb-0">
+            <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span>
+        </h5>
+
+
+        <div class="table-responsive text-nowrap">
+            <table id="Tblsummary2" class="table table-hover">
+                <thead class="table-dark">
+
+                </thead>
+                <tbody class="table-border-bottom-0">
+                </tbody>
+
+            </table>
+
+
+        </div>
+    </div>
+        }
+    }

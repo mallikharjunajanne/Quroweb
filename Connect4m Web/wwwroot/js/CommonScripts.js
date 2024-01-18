@@ -37,7 +37,7 @@ $('.alert button').click(function (event) {
 
 //----------------------------------------------------------------------------------   Common Ajax Function To all
 function CommonAjaxFunction(method, url, data, successCallback, errorCallback, hasFileUpload) {
-   debugger;
+  // debugger;
     var ajaxOptions = {
         url: url,
         method: method,
@@ -199,7 +199,35 @@ function datescomparepro(event, start, end) {
 
 
 
+//=============================================  Common function for select multipleselected list
 
+function Commoncheckallmultiplelist(event, formid, dropdownid,columnname) {
+    debugger;
+    if ($(event.target).prop("checked")) {
+        $("#" + formid + " #" + dropdownid + " option").prop("selected", true);
+    } else {
+        $("#" + formid + " #" + dropdownid + " option").prop("selected", false);
+    }
+}
+
+//=========================================================      Greaterthantoday
+
+function Greaterthantoday(id, errorid, parentid, columnname) {
+    debugger;
+    try {
+        var selectedDate = new Date(document.getElementById(id).value);
+        var today = new Date();
+
+        if (selectedDate > today) {
+            $(parentid).find(errorid).addClass('error2');
+            $(parentid).find(errorid).text(columnname + " cannot be greater than today's date.");
+        } else {
+            $(parentid).find(errorid).removeClass('error2').text("");
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
+}
 
 
 

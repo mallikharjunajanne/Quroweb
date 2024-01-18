@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="~/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="~/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="~/assets/css/demo.css" />
+    <link href="~/assets/vendor/css/rtl/theme-semi-dark.css" rel="stylesheet" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="~/assets/vendor/libs/node-waves/node-waves.css" />
@@ -45,7 +46,11 @@
     <link rel="stylesheet" href="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
 
+
+    @*<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />*@
+
     <!-- Page CSS -->
+
     <link rel="stylesheet" href="~/assets/vendor/css/pages/cards-advance.css" />
 
     <!-- Helpers -->
@@ -165,10 +170,18 @@
                         <!-- Search -->
                         <div class="navbar-nav align-items-center">
                             <div class="nav-item navbar-search-wrapper mb-0">
-                                <a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);">
-                                    <i class="ti ti-search ti-md me-2"></i>
-                                    <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
-                                </a>
+                                @*<a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);">
+        <i class="ti ti-search ti-md me-2"></i>
+            <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
+           </a>*@
+
+
+                                @if (@Context.Request.Cookies["UserNameHeader_"] != null)
+                                {
+                                <label class="col-sm-3 col-form-label text-end">@Context.Request.Cookies["UserNameHeader_"].ToUpper()</label>
+                                   
+                                }
+
                             </div>
                         </div>
                         <!-- /Search -->
@@ -696,6 +709,13 @@
                 <div class="container-fluid">
                     <div class="page-header dash-breadcrumb">
 
+
+
+                        @*<div id="toast-container" class="toast-top-right"><div class="toast toast-success" aria-live="polite" style="display: block;"><button type="button" class="toast-close-button" role="button">×</button><div class="toast-message">Be mindful. Be grateful. Be positive.</div></div><div class="toast toast-success" aria-live="polite" style="display: block;"><button type="button" class="toast-close-button" role="button">×</button><div class="toast-message">Accept yourself, love yourself!</div></div></div>*@
+
+
+
+
                         <div class="alert alert-success dark alert-dismissible fade show" role="alert" style="border: 1px solid black;">
 
                             <p style="overflow: visible !important; white-space: pre-wrap;max-width: 95% !important;text-align:initial "> </p>
@@ -743,7 +763,9 @@
 
     <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="~/assets/vendor/libs/popper/popper.js"></script>
-    <script src="~/assets/vendor/js/bootstrap.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>*@
+
     <script src="~/assets/vendor/libs/node-waves/node-waves.js"></script>
     <script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="~/assets/vendor/libs/hammer/hammer.js"></script>
@@ -756,11 +778,11 @@
     <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
     <script src="~/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
 
+
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-
-
-
+ 
 
 
 
@@ -794,6 +816,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="//cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
     <script src="//cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
 
 
     @*added by sreekanth for datatable*@
