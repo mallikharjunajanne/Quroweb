@@ -5,294 +5,279 @@
 }
 
 
-<div class="card-header pb-0 tabsofME" style="position: absolute; DISPLAY: inline; margin-top: -4%;" >
-    <button class="btn btn-pill btn-outline-primary btn-aprimary tabchanges" style=" margin-left: 0%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="EmpDatails_ME">
-        Emp Details
-    </button> 
-    <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 0%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="SalaryAttributes_ME">
-       Salary Attributes
-    </button>
 
+
+<div class="row justify-content">
+
+
+    <div class="col-sm-12 tabsofME">
+        <button type="button" class="btn btn-info waves-effect waves-light" id="EmpDatails_ME"> Emp Details</button>
+
+        <button type="button" class="btn btn-success waves-effect waves-light" id="SalaryAttributes_ME"> Salary Attributes</button>
+
+    </div>
 </div>
 <div class="EmpdetailsMe">
+    <h5 class="mb-3">
+        <span id="updatesalaryattribute">INSERT </span>EMPLOYEE DETAILS
 
-    <div class="card-header bg-primary">
-        <h5 class="mb-0">
-            <button class="btn btn-link text-white" @*data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"*@>
-                <span id="updatesalaryattribute" style=" font-weight: 900;">CREATE</span> EMPLOYEE DETAILS  <span style=" margin-left: 50%;" class="required"> INDICATES REQUIRED FIELDS</span>
-
-            </button>
-        </h5>
-    </div>
-
-    <div @*class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc"*@>
-
-        <div class="row padding-search">
-            <div class="row">
-
-                <form id="Insert_ME">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="text" asp-for="UserId" name="UserId"id="UserIdMe" hidden style="display:none" readonly />
-
-                    <div class="row">
-                        <div class="form-group col-12 passwordfor"><span class="compare"></span></div>
-                        @*----------------------*@
-
-                        <div class="form-group col-2">
-                            <label asp-for="AdmissionNumber" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="AdmissionNumber" class="form-control" id="AdmissionNumber_ME" />
-                            <span asp-validation-for="AdmissionNumber" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
+    </h5>
 
 
-                            <label asp-for="RoleId" class="control-label required space"></label>
+    <div class="card-body mb-2">
 
-                        </div>
-                        <div class="form-group col-4">
+        @*=============================  Form Start ================================*@
+        <form id="Insert_ME" class="needs-validation was-validated" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" asp-for="UserId" name="UserId" id="UserIdMe" hidden style="display:none" readonly />
 
-                            <div id="Drop_Format_SEM_3">
-                                @Html.DropDownListFor(
-                           x => x.RoleId,
-                            new SelectList(ViewBag.RoleId, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "insertdropdown_RoleId_ME", @style = "color:black;" })
+            <div>
+                <div class="row">
+                    <div class="col">
 
+                        @*=====================        TEXT BOX                 =================*@
+                        <div class="row mb-3">
+                            <div class="col-sm-12 passwordfor">
+                                <span class="compare"></span>
                             </div>
-                            <span asp-validation-for="RoleId" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Category" class="control-label required space"></label>
+                        @*=====================        TEXT BOX                 =================*@
+                        <div class="row mb-3">
 
-                        </div>
-                        <div class="form-group col-4">
-
-                            <div id="Drop_Format_SEM_3">
-                                @Html.DropDownListFor(
-                           x => x.Category,
-                            new SelectList(ViewBag.Category, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "Insert_MEdropdown_Category_ME", @style = "color:black;" })
-
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="AdmissionNumber"></label>
+                            <div class="col-sm-4 form-group">
+                                <input asp-for="AdmissionNumber" class="form-control" id="AdmissionNumber_ME" required />
+                                <span asp-validation-for="AdmissionNumber" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="Category" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
+                            <div class="col-sm-4 form-group">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+                                    @Html.DropDownListFor(
+                               x => x.RoleId,
+                                new SelectList(ViewBag.RoleId, "Value", "Text"),
+                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_RoleId_ME", @style = "color:black;", @required = "required" })
 
-                            <label asp-for="SubCategory" class="control-label required space"></label>
-
-                        </div>
-                        <div class="form-group col-4">
-
-                            <div id="Drop_Format_SEM_3">
-                                @Html.DropDownListFor(
-                           x => x.SubCategory,
-                            new SelectList(ViewBag.SubCategory, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "Insert_MEdropdown_SubCategory_ME", @style = "color:black;" })
-
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                                </div>
                             </div>
-                            <span asp-validation-for="SubCategory" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
+                        @*=====================        TEXT BOX                 =================*@
+                        <div class="row mb-3">
 
-                            <label asp-for="Department" class="control-label required space"></label>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Category"></label>
+                            
+                                <div class="col-sm-4 form-group">
+                                    <div class="position-relative" id="Drop_Format_SEM_3">
+                                        @Html.DropDownListFor(
+                                   x => x.Category,
+                                    new SelectList(ViewBag.Category, "Value", "Text"),
+                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "Insert_MEdropdown_Category_ME", @style = "color:black;", @required = "required" })
 
-                        </div>
-                        <div class="form-group col-4">
+                                        <span asp-validation-for="Category" class="text-danger"></span>
+                                    </div>
+                                </div>
+                           
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="SubCategory"></label>
+                            <div class="col-sm-4 form-group">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+                                    @Html.DropDownListFor(
+                               x => x.SubCategory,
+                                new SelectList(ViewBag.SubCategory, "Value", "Text"),
+                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "Insert_MEdropdown_SubCategory_ME", @style = "color:black;", @required = "required" })
 
-                            <div id="Drop_Format_SEM_3">
-                                @Html.DropDownListFor(
-                           x => x.Department,
-                            new SelectList(ViewBag.Department, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "Insertdropdown_Department_ME", @style = "color:black;" })
-
+                                    <span asp-validation-for="SubCategory" class="text-danger"></span>
+                                </div>
                             </div>
-                            <span asp-validation-for="Department" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
+                        @*=====================        TEXT BOX                 =================*@
+                        <div class="row mb-3">
 
-                            <label asp-for="DesignationId" class="control-label  space"></label>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Department"></label>
+                            <div class="col-sm-4 form-group">
+                                
+                                    <div class="position-relative" id="Drop_Format_SEM_3">
+                                        @Html.DropDownListFor(
+                                   x => x.Department,
+                                    new SelectList(ViewBag.Department, "Value", "Text"),
+                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "Insertdropdown_Department_ME", @style = "color:black;", @required = "required" })
 
-                        </div>
-                        <div class="form-group col-4">
-
-                            <div id="Drop_Format_SEM_3">
-                                @Html.DropDownListFor(
-                           x => x.DesignationId,
-                            new SelectList(ViewBag.DesignationId, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_DesignationId_ME", @style = "color:black;" })
-
+                                        <span asp-validation-for="Department" class="text-danger"></span>
+                                    </div>
+                               
                             </div>
-                            <span asp-validation-for="DesignationId" class="text-danger"></span>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DesignationId"></label>
+                            <div class="col-sm-4 form-group">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+                                    @Html.DropDownListFor(
+                               x => x.DesignationId,
+                                new SelectList(ViewBag.DesignationId, "Value", "Text"),
+                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_DesignationId_ME", @style = "color:black;" })
+
+                                    <span asp-validation-for="DesignationId" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="FirstName" class="control-label required space"></label>
+                        @*=====================        TEXT BOX                 =================*@
+
+                        <div class="row mb-3">
+
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="FirstName"></label>
+                            <div class="col-sm-4 form-group">
+                                <input class="form-control" asp-for="FirstName" required id="FirstName_ME">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="LastName"></label>
+                            <div class="col-sm-4 form-group">
+                                <input class="form-control" asp-for="LastName" required>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
                         </div>
-                        <div class="form-group col-4">
-                            <input asp-for="FirstName" class="form-control" id="FirstName_ME" />
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="FatherName"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="FatherName">
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="LastName" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="LastName" class="form-control" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="FatherName" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="FatherName" class="form-control" />
-                            <span asp-validation-for="FatherName" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="MotherName" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="MotherName" class="form-control" />
-                            <span asp-validation-for="MotherName" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="DateOfJoining" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="DateOfJoining" class="form-control" id="EndDate" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DateOfJoining"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="DateOfJoining" id="EndDate">
                             <span asp-validation-for="DateOfJoining" class="text-danger"></span>
                             <span class="compare"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="DOB" class="control-label  space"></label>
+
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MotherName"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="MotherName">
+                            <span asp-validation-for="MotherName" class="text-danger"></span>
                         </div>
-                        <div class="form-group col-4">
-                            <input asp-for="DOB" class="form-control" id="StartDate" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DOB"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="DOB" id="StartDate">
                             <span asp-validation-for="DOB" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="withdrawaldate" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="withdrawaldate" class="form-control" />
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="withdrawaldate"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="withdrawaldate">
                             <span asp-validation-for="withdrawaldate" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Incrementdate" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="Incrementdate" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Incrementdate"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="Incrementdate">
                             <span asp-validation-for="Incrementdate" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Gender" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4" style="display:flex">
-                            <input asp-for="Gender" type="radio" name="Gender" value="1" style="flex: 0.2;" /><span>Male</span>
-                            <input asp-for="Gender" type="radio" name="Gender" value="0" style="flex: 0.2;" /><span>FeMale</span>
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
 
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Gender"></label>
+
+                        <div class="form-check form-check-primary col-sm-2">
+                            <input asp-for="Gender" class="form-check-input" type="radio" value="1" required>
+                            <label class="form-check-label">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check form-check-primary col-sm-2">
+                            <input asp-for="Gender" class="form-check-input" type="radio" value="0" required>
+                            <label class="form-check-label">
+                                FeMale
+                            </label>
                             <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Nationality" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="Nationality" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Nationality"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="Nationality">
                             <span asp-validation-for="Nationality" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="ReligionId" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ReligionId"></label>
+
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.ReligionId,
                             new SelectList(ViewBag.ReligionId, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_ReligionId_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_ReligionId_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="ReligionId" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="ReligionId" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="CasteId" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="CasteId"></label>
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.CasteId,
                             new SelectList(ViewBag.CasteId, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_CasteId_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_CasteId_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="CasteId" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="CasteId" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="MaritalStatus" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MaritalStatus"></label>
+
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.MaritalStatus,
                             new SelectList(ViewBag.MaritalStatus, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_MaritalStatus_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_MaritalStatus_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="MaritalStatus" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="TeachingType" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="TeachingType"></label>
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.TeachingType,
                             new SelectList(ViewBag.TeachingType, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_TeachingType_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_TeachingType_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="TeachingType" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="TeachingType" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="EmployeeReplacewith" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EmployeeReplacewith"></label>
+
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.EmployeeReplacewith,
                             new SelectList(ViewBag.EmployeeReplacewith, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_EmployeeReplacewith_ME", @style = "color:black;opacity:0.5;", @disabled = true })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_EmployeeReplacewith_ME", @style = "color:black;opacity:0.5;", @disabled = true })
 
+                                <span asp-validation-for="EmployeeReplacewith" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="EmployeeReplacewith" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="EmployeeType" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3" style="display: flex; gap: 4px;">
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EmployeeType"></label>
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.EmployeeType,
                             new SelectList(ViewBag.EmployeeType, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_EmployeeType_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_EmployeeType_ME", @style = "color:black;" })
                                 @if (Model?.DISPLAYICONEMPLOYEETYPE == 1)
                                 {
                                     <div>
@@ -300,30 +285,28 @@
 
                                     </div>
                                 }
-
+                                <span asp-validation-for="EmployeeType" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="EmployeeType" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="CostCenter" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="CostCenter"></label>
+
+                        <div class="col-sm-4 ">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.CostCenter,
                             new SelectList(ViewBag.CostCenter, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_CostCenter_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_CostCenter_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="CostCenter" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="CostCenter" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="DoEffectivePos" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4" style="display:flex">
-                            <input asp-for="DoEffectivePos" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DoEffectivePos"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="DoEffectivePos">
                             @if (Model?.DISPLAYICONEFFECTIVEDATEOFPOSITION == 1)
                             {
                                 <div>
@@ -332,43 +315,43 @@
                                 </div>
                             }
                             <span asp-validation-for="DoEffectivePos" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="BloodGroup" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="BloodGroup"></label>
+
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.BloodGroup,
                             new SelectList(ViewBag.BloodGroup, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_BloodGroup_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_BloodGroup_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="BloodGroup" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="BloodGroup" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="HomePhone" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="HomePhone" type="number" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="HomePhone"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="HomePhone" type="number">
                             <span asp-validation-for="HomePhone" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="MobilePhone" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="MobilePhone" class="form-control" />
+                    </div>
+
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MobilePhone"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="MobilePhone" required>
                             <span asp-validation-for="MobilePhone" class="text-danger"></span>
-                        </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="GrossSalary" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4" style="display:flex">
-                            <input asp-for="GrossSalary" class="form-control" id="GrossSalary_ME" />
+                        </div> 
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="GrossSalary"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="GrossSalary" required>
                             @if (Model?.DISPLAYICON_GROSSSALARY == 1)
                             {
                                 <div>
@@ -377,163 +360,172 @@
                                 </div>
                             }
                             <span asp-validation-for="GrossSalary" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Bank" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Bank"></label>
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.Bank,
                             new SelectList(ViewBag.Bank, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_Bank_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Bank_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="Bank" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="Bank" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="AccountNo" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="AccountNo" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="AccountNo"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="AccountNo">
                             <span asp-validation-for="AccountNo" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="ShiftCode" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="ShiftCode" class="form-control" id="ShiftCodeinsertME" />
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ShiftCode"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="ShiftCode" id="ShiftCodeinsertME">
                             <span asp-validation-for="ShiftCode" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="IFSCode" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="IFSCode" class="form-control" id="IFSCodeinsertME" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IFSCode"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="IFSCode" id="IFSCodeinsertME">
                             <span asp-validation-for="IFSCode" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="PFNO" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="PFNO" class="form-control" />
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PFNO"></label>
+                        <div class="col-sm-4">
+                            <input class="form-control" asp-for="PFNO">
                             <span asp-validation-for="PFNO" class="text-danger"></span>
                         </div>
-                        <div style="display:none"> <input type="text" value="@ViewBag?.identitypassword"  id="IdentityPassword" hidden readonly/></div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="PANNO" class="control-label  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="PANNO" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PANNO"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="PANNO">
                             <span asp-validation-for="PANNO" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Password" class="control-label required space"></label>
-                        </div>
-                        <div class="form-group col-4 ">
-                            <input asp-for="Password" class="form-control" id="Password" />
+                    </div>
+
+
+
+                        <div style="display:none"> <input type="text" value="@ViewBag?.identitypassword" id="IdentityPassword" hidden readonly /></div>
+
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Password"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="Password" id="Password" required>
                             <span asp-validation-for="Password" class="text-danger"></span>
-                     
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="ConPassword" class="control-label required  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="ConPassword" class="form-control" id="ConPassword" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ConPassword"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="ConPassword" id="ConPassword" required>
                             <span asp-validation-for="ConPassword" class="text-danger"></span>
+
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="SecurityQuestionId" class="control-label required  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <div id="Drop_Format_SEM_3">
+                    </div>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="SecurityQuestionId"></label>
+                        <div class="col-sm-4 form-group">
+                            <div class="position-relative" id="Drop_Format_SEM_3">
                                 @Html.DropDownListFor(
                            x => x.SecurityQuestionId,
                             new SelectList(ViewBag.SecurityQuestionId, "Value", "Text"),
-                        "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SecurityQuestionId_ME", @style = "color:black;" })
+                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_SecurityQuestionId_ME", @style = "color:black;" })
 
+                                <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
                             </div>
-                            <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="Answer" class="control-label required  space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="Answer" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Answer"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="Answer">
                             <span asp-validation-for="Answer" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
-                    <div style="display: @(Model?.UserName != null ? "contents" : "none")" class="form-group col-6">
-                        <div class="form-group col-2">
-                            <label asp-for="UserName" class="control-label   space"></label>
-                        </div>
-                        <div class="form-group col-4">
-                            <input asp-for="UserName" class="form-control" disabled />
-                            <span asp-validation-for="UserName" class="text-danger"></span>
-                        </div>
                     </div>
-                        @*----------------------*@
-                        <div class="form-group col-2">
-                            <label asp-for="NoofChildrens" class="control-label   space"></label>
+                        @*=====================        TEXT BOX                 =================*@
+                    <div class="row mb-3">
+
+
+
+                        <div style="display: @(Model?.UserName != null ? "contents" : "none")">
+
+
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="UserName"></label>
+                            <div class="col-sm-4 form-group">
+                                <input class="form-control" asp-for="UserName" disabled>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+
+                            </div>
                         </div>
-                        <div class="form-group col-4">
-                            <input asp-for="NoofChildrens" class="form-control" />
+                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="NoofChildrens"></label>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control" asp-for="NoofChildrens">
                             <span asp-validation-for="NoofChildrens" class="text-danger"></span>
                         </div>
-                        @*----------------------*@
+                    </div>
 
-                        <div style=" display: flex; gap: 17px;">
-                            <div class="col-2"></div>
+                    
+
+                        @*=====================         BUTTONS                =================*@
+
+                        <div class="row justify-content">
+                            <div class="col-sm-3">
+                            </div>
+
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)">Previous Page</button>
+
+                                <button type="button" class="btn btn-dark waves-effect waves-light" id="backtosearch_ME">Back To Search</button>
+
+                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Save_ME">Save & Next</button>
+
+                                <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)">Next Page</button>
+
+                            </div>
+                        </div>
 
 
-                            @*<button style="padding: 6px;" class="btn btn-pill btn-outline-primary btn-aprimary" id="backtosearch_CSA">Back To Search</button>*@
-                            <input type="button" value="Previous Page" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)" class="btn btn-pill btn-outline-primary btn-aprimary" />
-
-                            <input type="button" value="Back To Search" id="backtosearch_ME" class="btn btn-pill btn-outline-secondary btn-sm" />
 
 
-                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-awarning" id="clearform" />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        @*=============================  Form End ================================*@
 
 
+    </div>
+
+</div>
 
 
-                            <input type="submit" value="Save & Next" id="Save_ME" class="btn btn-pill btn-outline-success btn-auccess" />
-
-                            <input type="button" value="Next Page" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)" class="btn btn-pill btn-outline-info btn-air-info" />
-
-                            @*<button style=" padding: 6px;" class="btn btn-pill btn-outline-info btn-air-info" id="Nextpage_CSA">Next Page</button>*@
-
+                              
+                        <div class="SalaryAttrbutesME">
 
                         </div>
-                    </div>
-                </form>
-            </div>
 
 
-        </div>
-    </div>
-</div>
-<div class="SalaryAttrbutesME">
 
-</div>
+                        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-                 
+                        @section Scripts {
+                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                        }
 
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-<script src="~/js/PayRoll_5.js"></script>
+                        <script src="~/js/PayRoll_5.js"></script>
 

@@ -44,7 +44,14 @@
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="~/assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/pages/page-auth.css" /> 
+    
+    
+    <!-- Loading Spinner-->
+    <link href="~/css/loading.css" rel="stylesheet" />
+
+
+
 
     <!-- Helpers -->
     <script src="~/assets/vendor/js/helpers.js"></script>
@@ -63,6 +70,16 @@
 
     <div class="authentication-wrapper authentication-cover authentication-bg">
         <div class="authentication-inner row">
+
+            <!--Loading Spinner-->
+            <div id="loading">
+                <div id="loading-text">
+
+                    <img src="~/Images/buffering_image.gif" />
+                </div>
+            </div>
+
+
             <!-- /Left Text -->
             <div class="d-none d-lg-flex col-lg-7 p-0">
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
@@ -87,7 +104,7 @@
                     <div class="app-brand mb-4">
                         <a href="#" class="app-brand-link gap-2">
                             <img src="../assets/img/QuroSchool_Logo.png" width="150" />
-                          
+
                         </a>
                     </div>
                     <!-- /Logo -->
@@ -208,7 +225,7 @@
     <script src="~/js/CommonScripts.js"></script>
     <script>
 
-        //Hide and Show password activity
+        //===============Hide and Show password activity
         function togglePasswordVisibility() {
             debugger;
             var passwordInput = document.getElementById("password");
@@ -227,7 +244,7 @@
         $("#LoginForm").submit(function (event) {
             // debugger;
             event.preventDefault();
-
+            loaddingimg.css('display', 'block');
             //$('#Insert_MSC input[type="radio"]').prop("disabled", false);
             //$('#Insert_MSC #dropdown_PayrollCategoryName_MSC').prop("disabled", false);
             var formdata_CSA = $(this).serialize();
@@ -238,7 +255,7 @@
                 // var validationMessages2 = formElement.getElementsByClassName('error2');
                 var validationmelength = validationMessages.length;
                 if (validationmelength == 0) {
-                    $("#loading").css('display', 'block');
+                   
                     $("#errorSpan").text('');
                     // debugger;
                     //  loaddingimg.css('display', 'none');
@@ -246,7 +263,8 @@
                         //  debugger;
                         $("#errorSpan").empty();
                         if (response == "correct") {
-                            $("#loading").css('display', 'none');
+                            loaddingimg.css('display', 'none');
+                           // $("#loading").css('display', 'none');
 
                             window.location.href = "/UserScreens/SchoolWelcomePage";
                         } else {
@@ -254,12 +272,16 @@
                             $(".alert-danger").show().delay(5000).fadeOut()
 
                             $("#errorSpan").text("Invalid User ID/Password.");
-                            $("#loading").css('display', 'none');
-
+                           // $("#loading").css('display', 'none');
+                            loaddingimg.css('display', 'none');
                         }
                     }, function (status, error) {
                         // loaddingimg.css('display', 'none');
+                        loaddingimg.css('display', 'none');
                     }, false);
+                } else {
+                    $('.alert-danger p').text("Please Enter a All Required Fields.");
+                    $(".alert-danger").show().delay(5000).fadeOut();
                 }
             }, 50);
         })

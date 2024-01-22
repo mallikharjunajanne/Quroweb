@@ -40,6 +40,7 @@
         border-radius: 8px;
         filter: drop-shadow(2px 4px 6px black);
     }
+
     .default-according .card .card-header.bg-primary .btn, .default-according .card .card-header.bg-secondary .btn {
         border-color: rgba(0,0,0,0);
         background-color: #121451;
@@ -50,6 +51,7 @@
         color: white;
         text-align: center;
     }
+
     .default-according .card .card-header .btn-link {
         font-size: 16px;
         /* padding: 15px 20px; */
@@ -62,6 +64,7 @@
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
+
     .default-according.style-1 button[aria-expanded="true"]:before {
         /*  content: '\002B';*/
         content: '';
@@ -74,11 +77,11 @@
         background-size: contain;
         background-repeat: no-repeat;
     }
+
     .default-according.style-1 button[aria-expanded="false"]:before {
         /*    content: "\2212";*/
         content: "";
         background-image: url('/Images_IMP/details_close.png');
-      
         font-family: IcoFont;
         position: absolute;
         width: 54px;
@@ -87,147 +90,207 @@
         background-size: contain;
         background-repeat: no-repeat;
     }
+
     .default-according.style-1 button:before {
         right: 20px;
         position: absolute;
         -webkit-transition: 0.4s;
         transition: 0.4s;
     }
+
     .collapse:not(.show) {
         display: none;
     }
+    .accordion-button:not(.collapsed) {
+        background-color: #24b364;
+    }
 </style>
 <link href="~/css/progressbar.css" rel="stylesheet" />
-@foreach (var item in Model)
-{
 
 
-    @foreach (var item2 in item.ViewLectureDocs3)
-    {
-
-        <div class="col-sm-12">
-            <div class="card">
-
-                <div class="card-header pb-0">
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/progressbar.css" rel="stylesheet" />
 
 
-                </div>
-                <div class="card-body">
-                    <div class="default-according style-1" id="accordionoc">
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button id="collapse" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">@item2.SubjectToolName.ToUpper()</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
 
-                                <div class="row padding-search">
-                                    <div class="row">
-                                        <div style="margin-top: 1%; margin-bottom: 1%;">
-                                            <table style=" width:100%;">
-                                                @foreach (var item1 in item.uploadlecturedocs)
-                                                {
+        @foreach (var item in Model)
+        {
 
-                                                    int viewvalue = 0;
-                                                    int viewpoint = 0;
-                                                    int totalpois = 0;
-                                                    double percent = 0;
-                                                    if (item1.Displayname != "undefined")
-                                                    {
+            <div class="card mb-4">
+                <div class="row">
+                    <div class="col">
 
-                                                        if (@item2.InstanceSubjectToolId == item1.SubjectToolIdSub)
-                                                        {
-
-                                                <tr>
-                                                    @{string img = item1.Ext1.Replace("..", "~");
-                                                    }
-                                                    @{
-                                                        string img2 = item1.Extdocs.Replace("..", "~");
-                                                    }
-                                                    <td width="7%"> <img src="@Url.Content(@img)" /></td>
-                                                    <td width="73%">  <label id="VLD_VideoView">@item1.Displayname<input type="text" value="@item1.SubjectVideoId" hidden /></label></td>
-                                                    <td width="8%"> <img src="@Url.Content(@img2)" /></td>
-                                                    @foreach (var item3 in ViewBag.GetallViewvideopoints)
-                                                    {
-                                                        if (item3.SubjectVideoId == item1.SubjectVideoId)
-                                                        {
-                                                            if (img2.EndsWith("Mp4-Icon.png"))
-                                                            {
+                        @*=====================         DROP DOWN               =================*@
+                        <div class="row mb-3">
 
 
-                                                                try
+
+                            @foreach (var item2 in item.ViewLectureDocs3)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="card-body">
+                                        <div class="accordion">
+
+
+
+
+
+                                            <div class="card accordion-item active">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item2.SubjectToolName" aria-expanded="true">
+                                                        @item2.SubjectToolName.ToUpper()
+                                                    </button>
+                                                </h2>
+
+                                                <div id="accordionWithIcon-@item2.SubjectToolName" class="accordion-collapse collapse show" style="">
+                                                    <div class="accordion-body">
+
+                                                        <div style="margin-top: 1%; margin-bottom: 1%;" class="table-responsive text-nowrap">
+                                                            <table style=" width:100%;" class="table">
+                                                                @foreach (var item1 in item.uploadlecturedocs)
                                                                 {
 
-                                                                    viewpoint = item3.Viewspoints;
-                                                                    totalpois = item3.TotalPoins;
-                                                                    percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+                                                                    int viewvalue = 0;
+                                                                    int viewpoint = 0;
+                                                                    int totalpois = 0;
+                                                                    double percent = 0;
 
-                                                                    //  percent = (viewpoint / totalpois) * 100;
-                                                                    viewvalue++;
-                                                                }
-                                                                catch
-                                                                {
-                                                                    percent = 0;
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                try
-                                                                {
-
-                                                                    viewpoint = item3.Viewspoints;
-                                                                    totalpois = item3.TotalPoins;
-                                                                    percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
-
-                                                                    //  percent = (viewpoint / totalpois) * 100;
-                                                                    viewvalue++;
-                                                                }
-                                                                catch
-                                                                {
-                                                                    percent = 0;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    <td class="progressbarvaluetd">
-                                                        <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(percent)%,#bfbed5 0);">
-                                                            @Convert.ToInt32(percent)%
-                                                        </div>
+                                                                    if (item1.Displayname != "undefined")
+                                                                    {
 
 
+                                                                        if (@item2.InstanceSubjectToolId == item1.SubjectToolIdSub)
+                                                                        {
+
+                                                                            <tr>
+                                                                                @{string img = item1.Ext1.Replace("..", "~");
+                                                                                }
+                                                                                @{
+                                                                                    string img2 = item1.Extdocs.Replace("..", "~");
+                                                                                }
+                                                                                <td hidden><div hidden>@item1.VideoPath</div></td>
+                                                                                <td> <img src="@Url.Content(@img)" /></td>
+                                                                                <td>  <label id="VLD_VideoView">@item1.Displayname<input type="text" value="@item1.SubjectVideoId" hidden /></label></td>
+                                                                                <td> <img src="@Url.Content(@img2)" /></td>
+
+
+                                                                                @foreach (var item3 in ViewBag.GetallViewvideopoints)
+                                                                                {
+                                                                                    if (item3.SubjectVideoId == item1.SubjectVideoId)
+                                                                                    {
+                                                                                        if (img2.EndsWith("Mp4-Icon.png"))
+                                                                                        {
+                                                                                            if (item3.ChapterId != 0)
+                                                                                            {
+
+                                                                                                try
+                                                                                                {
+
+                                                                                                    viewpoint = item3.Viewspoints;
+                                                                                                    totalpois = item3.TotalPoins;
+                                                                                                    percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+
+                                                                                                    //  percent = (viewpoint / totalpois) * 100;
+                                                                                                    viewvalue++;
+                                                                                                }
+                                                                                                catch
+                                                                                                {
+                                                                                                    percent = 0;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        else if (item3.ChapterId == 0)
+                                                                                        {
+                                                                                            try
+                                                                                            {
+
+                                                                                                viewpoint = item3.Viewspoints;
+                                                                                                totalpois = item3.TotalPoins;
+                                                                                                percent = totalpois > 0 ? ((double)viewpoint / totalpois) * 100 : 0;
+
+                                                                                                //  percent = (viewpoint / totalpois) * 100;
+                                                                                                viewvalue++;
+                                                                                            }
+                                                                                            catch
+                                                                                            {
+                                                                                                percent = 0;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+
+                                                                                @*//    @if (viewvalue != 0)
+                                                            //  {*@
+
+                                                                                <td class="progressbarvaluetd">
+                                                                                    <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(percent)%,#bfbed5 0);">
+                                                                                        @Convert.ToInt32(percent)%
+                                                                                    </div>
 
 
 
-                                                    </td>
 
-                                                </tr>
+
+                                                                                </td>
+                                                                                @*//   }
+                                                            //   else
+                                                             //  {
+                                                                  <td> @viewvalue</td>
+                                                             //  }*@
+
+                                                                            </tr>
 
                                                                         }
 
                                                                     }
                                                                 }
-                                            </table>
+                                                            </table>
+
+
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
 
 
                                         </div>
 
+
                                     </div>
-
-
                                 </div>
 
-                            </div>
-                        </div>
 
+                            }
+
+
+
+
+
+
+
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-}
 
+
+        }
+
+    </div>
+</body>
+</html>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 

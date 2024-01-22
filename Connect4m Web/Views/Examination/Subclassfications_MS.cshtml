@@ -6,223 +6,205 @@
     ViewData["Title"] = "Subclassfications_MS";
 }
 @*<link href="~/css/Managesubjecttools.css" rel="stylesheet" />*@
+@*<form class="needs-validation was-validated" novalidate>*@
+    <div class="card-datatable table-responsive pt-0">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+            <table class="datatables-basic table dataTable no-footer dtr-column" id="subclass_table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            Select
+                        </th>
+                        <th>
+                            Class
+                        </th>
+                        <th>
+                            Subject Code
+                        </th>
+                        <th>
+                            Subject order
+                        </th>
+                        <th>
+                            Attendance Required
+                        </th>
+                        <th>
+                            Subject Type
+                        </th>
+                        <th>
+                            Short Name
+                        </th>
+                        <th>
+                            Allocate Mentor
+                        </th>
+                        <th>
+                            Total Periods
+                        </th>
+                        <th>
+                            Include In Total
+                        </th>
 
-
-<table class="table" id="subclass_table">
-    <thead>
-        <tr>
-            <th>
-                Select
-            </th>
-            <th>
-                Class
-            </th>
-            <th>
-                Subject Code
-            </th>
-            <th>
-                Subject order
-            </th>
-            <th>
-                Attendance Required
-            </th>
-            <th>
-                Subject Type
-            </th>
-            <th>
-                Short Name
-            </th>
-            <th>
-                Allocate Mentor
-            </th>
-            <th>
-                Total Periods
-            </th>
-            <th>
-                Include In Total
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @{var p = 0; var checkcount = 0; var InstanceSubClassificationId = 0; var icount = 0; string SubjectAssociated = ""; var MentorName = 0; string checkedcount = null; string checkedcount1 = null; var useridstoring = "";}
-        @foreach (var sub in Model.subclassfication)
-        {
-            icount = 0;
-
-            List<string> MentorAssignedList = new List<string>();
-
-            @if (ViewBag.Buttonname != "Create")
-            {
-                @foreach (var item in Model.editlist)
-                {
-                    if (sub.InstanceSubClassificationId == item.InstanceSubClassificationId)
+                    </tr>
+                </thead>
+                <tbody>
+                    @{var p = 0; var checkcount = 0; var InstanceSubClassificationId = 0; var icount = 0; string SubjectAssociated = ""; var MentorName = 0; string checkedcount = null; string checkedcount1 = null; var useridstoring = "";}
+               
+                    @foreach (var sub in Model.subclassfication)
                     {
+                        icount = 0;
+                        List<string> MentorAssignedList = new List<string>();
 
-                        if (InstanceSubClassificationId == item.InstanceSubClassificationId)
+                        @if (ViewBag.Buttonname != "Create")
                         {
-                            icount++;
-                            continue;
-                        }
-
-                        @foreach (var item1 in Model.editlist)
-                        {
-                            if (sub.InstanceSubClassificationId == item1.InstanceSubClassificationId && item1.UserIdString != "" && useridstoring != item1.UserIdString)
+                            @foreach (var item in Model.editlist.Where(x => sub.InstanceSubClassificationId == x.InstanceSubClassificationId))
                             {
-                                useridstoring = item1.UserIdString;
-                                MentorAssignedList.Add(item1.UserIdString);
+                                if (InstanceSubClassificationId == item.InstanceSubClassificationId)
+                                {
+                                    icount++;
+                                    continue;
+                                }
+
+                                MentorAssignedList.AddRange(Model.editlist
+                                    .Where(x => sub.InstanceSubClassificationId == x.InstanceSubClassificationId && x.UserIdString != "" && useridstoring != x.UserIdString)
+                                    .Select(x => { useridstoring = x.UserIdString; return x.UserIdString; }));
+
+                                useridstoring = "";
+                                InstanceSubClassificationId = sub.InstanceSubClassificationId;
+                                checkcount++;
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="form-check-input" checked="checked" id="Classes" value="@sub.InstanceSubClassificationId" title="Select a Class" required />
+                            <input type="hidden" value="@item.InstanceSubjectId" id="InstanceSubjectId" />
+                        </td>
+                        <td>
+                            @sub.SubClassificationName
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="ShortCode" value="@item.SubjectCode" title="Subject Code" required />
+                        </td>
+                        <!-- ... other table cells ... -->
+                        <td>
+                            <input type="text" class="form-control SubjectorderCls" id="SubjectOrder" value="@item.DisplayOrder1" maxlength="2" oninput="restrictCharacters(this)" title="Subject Order"  required />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="AttendancePercentage" value="@item.AttendanceRequired1" maxlength="2" oninput="restrictCharacters(this)" title="Attendance Percentage" />
+                            <span style="color: red;">%</span>
+                        </td>
+                        <td>
+                            @{
+                                SubjectAssociated = item.SubjectAssociated == 1 ? "disabled" : null;
+                            }
+
+                            <select class="select2 form-select select2-hidden-accessible" id="Subjectfor_MS" asp-for="editlist[icount].SubjectTypeId1" disabled="@SubjectAssociated" asp-items="@ViewBag.Subjectlist_MS" title="Subject Type"  required>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.SubjectShortName1" class="form-control" title="Subject Short Name" />
+                        </td>
+                        <td style=" overflow-y: scroll;" >
+                            <div class="mentorlist-container" title="Allocate Mentor">
+                                <div class="mentorlist-columns">
+                                    @foreach (var mentorlist in Model.mentors)
+                                    {
+                                        <div class="mentorlist-item">
+                                            @if (MentorAssignedList.Contains(Convert.ToString(mentorlist.MentorUsertid)))
+                                            {
+                                                <input type="checkbox" class="form-check-input" checked="checked" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="form-check-input" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
+                                            }
+
+                                            <label class="form-check-label" for="mentor-@mentorlist.MentorName">@mentorlist.MentorName</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.TotalPeriods1" maxlength="3" oninput="restrictCharacters(this)" class="form-control TxtTotalPeriodsCls" title="Total Periods"/>
+                        </td>
+                        <td>
+                            @if (@item.IncludeInTotal1 == 1)
+                            {
+                                checkedcount1 = "checked ";
+                            }
+                            else
+                            {
+                                checkedcount = "checked ";
+                            }
+
+                            <div class="form-check form-check-inline" title="Include In Total Yes">
+                                <input class="form-check-input " id="Yes" type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="1" />
+                                <label class="form-check-label" for="Yes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline" title="Include In Total No">
+                                <input class="form-check-input " id="No" type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="0" />
+                                <label class="form-check-label" for="No"> No</label>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                                MentorAssignedList.Clear();
+                                checkedcount1 = null;
+                                checkedcount = null;
                             }
                         }
-                        useridstoring = "";
-                        InstanceSubClassificationId = sub.InstanceSubClassificationId;
-                        checkcount++;
-                        <tr>
-                            <td>
-                                <input type="checkbox" checked="checked" id="Classes" value="@sub.InstanceSubClassificationId" />
-                                <input type="hidden" value="@item.InstanceSubjectId" id="InstanceSubjectId" />
-                            </td>
-                            <td>
-                                @sub.SubClassificationName
-                            </td>
-                            <td style="width: 160px;">
-                                <input type="text" id="ShortCode" value="@item.SubjectCode" class="form-control" />
-                            </td>
-                            <td>
-                                <input type="text" id="SubjectOrder" value="@item.DisplayOrder1" maxlength="2" oninput="restrictCharacters(this)" class="form-control SubjectorderCls" />
-                            </td>
-                            <td>
-                                <span style="display:flex">
-                                    <input type="text" id="AttendancePercentage" value="@item.AttendanceRequired1" maxlength="2" oninput="restrictCharacters(this)" class="form-control" style="width: 63%;" /><span style="color: red; font-size: 14px;">%</span>
-                                </span>
-                            </td>
-                            <td>
 
-                                @{
-                                    SubjectAssociated = item.SubjectAssociated == 1 ? "disabled" : null;
-                                }
-
-                                <select id="Subjectfor_MS" asp-for="editlist[icount].SubjectTypeId1" disabled="@SubjectAssociated" asp-items="@ViewBag.Subjectlist_MS">
-                                </select>
-                            </td>
-                            <td style="width: 160px;">
-                                <input type="text" value="@item.SubjectShortName1" class="form-control" />
-                            </td>
-
-
-                            <td style=" overflow-y: scroll; width: 283px;">
-                                <div class="mentorlist-container">
-                                    <div class="mentorlist-columns">
-                                        @foreach (var mentorlist in Model.mentors)
-                                        {
-                                            <div class="mentorlist-item">
-
-                                                @foreach (var item2 in MentorAssignedList)
-                                                {
-                                                    if (mentorlist.MentorUsertid == Convert.ToInt32(item2))
-                                                    {
-                                                        <input type="checkbox" checked="checked" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
-                                                        MentorName++;
-
-                                                    }
-                                                }
-
-
-                                                @if (MentorName <= 0)
-                                                {
-                                                    <input type="checkbox" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
-                                                }
-                                                @*<input type="checkbox" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />*@
-
-
-                                                <label for="mentor-@mentorlist.MentorName">@mentorlist.MentorName</label>
-                                            </div>
-                                            MentorName = 0;
-                                        }
-
-
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>
-                                <input type="text" value="@item.TotalPeriods1"  maxlength="3" oninput="restrictCharacters(this)" class="form-control TxtTotalPeriodsCls" />
-                            </td>
-                            <td>
-                                @if (@item.IncludeInTotal1 == 1)
-                                {
-                                    checkedcount1 = "checked ";
-                                }
-                                else
-                                {
-                                    checkedcount = "checked ";
-                                }
-                                <input type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="1" @checkedcount1 />&nbsp;&nbsp;
-                                <input type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="0" @checkedcount />   Yes No
-                            </td>
-                        </tr>
-                        MentorAssignedList.Clear();
-                        checkedcount1 = null;
-                        checkedcount = null;
-                    }
-                    icount++;
-                }
-            }
-
-            if (checkcount <= 0)
-            {
-                <tr>
+                        if (checkcount <= 0)
+                        {
+                      <tr>
                     <td>
-                        <input type="checkbox" id="Classes" value="@sub.InstanceSubClassificationId" />
+                        <input type="checkbox" class="form-check-input" id="Classes" value="@sub.InstanceSubClassificationId" title="Select a Class" required />
                     </td>
                     <td>
                         @sub.SubClassificationName
                     </td>
+                    <!-- ... other table cells ... -->
+                    <td>
+                        <input type="text" id="ShortCode" class="form-control" title="Subject Code" required />
+                    </td>
+                    <td>
+                        <input type="text" maxlength="2" id="SubjectOrder" oninput="restrictCharacters(this)" class="form-control SubjectorderCls" title="Subject Order" required />
+                    </td>
+                    <td>
+                        <input type="text" id="AttendancePercentage" maxlength="2" oninput="restrictCharacters(this)" class="form-control" title="Attendance Percentage" /><span style="color: red; ">%</span>
 
-
-                    <td style="width: 160px;">
-                        <input type="text" id="ShortCode" class="form-control" />
                     </td>
                     <td>
-                        <input type="text" maxlength="2" id="SubjectOrder" SubjectorderCls oninput="restrictCharacters(this)" class="form-control SubjectorderCls" />
-                    </td>
-                    <td>
-                        <span style="display:flex">
-                            <input type="text" id="AttendancePercentage" maxlength="2" oninput="restrictCharacters(this)" class="form-control" style="width: 63%;" /><span style="color: red; font-size: 14px;">%</span>
-                        </span>
-                    </td>
-                    <td>
-                        <select id="Subjectfor_MS" asp-items="@ViewBag.Subjectlist_MS">
+                        <select class="select2 form-select select2-hidden-accessible" id="Subjectfor_MS" asp-items="@ViewBag.Subjectlist_MS" title="Subject Type"  required>
                         </select>
                     </td>
-                    <td style="width: 160px;">
-                        <input type="text" class="form-control" />
+                    <td>
+                        <input type="text" class="form-control" title="Subject Short Name"/>
                     </td>
-
-
-                    <td style=" overflow-y: scroll; width: 283px;">
-                        <div class="mentorlist-container">
+                    <!-- ... other table cells ... -->
+                    <td style=" overflow-y: scroll; ">
+                        <div class="mentorlist-container" title="Allocate Mentor">
                             <div class="mentorlist-columns">
                                 @foreach (var mentorlist in Model.mentors)
                                 {
                                     <div class="mentorlist-item">
                                         @*@foreach (var item1 in Model.editlist)
-                                        {
-                                            if (sub.InstanceSubClassificationId == item1.InstanceSubClassificationId)
-                                            {
-                                                if (Convert.ToInt32(item1.UserIdString) == mentorlist.MentorUsertid)
-                                                {
+                            {
+                                if (sub.InstanceSubClassificationId == item1.InstanceSubClassificationId)
+                                {
+                                    if (Convert.ToInt32(item1.UserIdString) == mentorlist.MentorUsertid)
+                                    {
 
 
-                                                    MentorName++;
-                                                    <input type="checkbox" checked="checked" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
-                                                }
-                                            }
-                                        }*@
+                                        MentorName++;
+                                        <input type="checkbox" checked="checked" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
+                                    }
+                                }
+                            }*@
                                         @if (MentorName <= 0)
                                         {
-                                            <input type="checkbox" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
+                                            <input type="checkbox" class="form-check-input" id="mentor-@mentorlist.MentorName" value="@mentorlist.MentorUsertid" name="selectedMentors" />
                                         }
-                                        <label for="mentor-@mentorlist.MentorName">@mentorlist.MentorName</label>
+                                        <label class="form-check-label" for="mentor-@mentorlist.MentorName">@mentorlist.MentorName</label>
                                     </div>
                                 }
                             </div>
@@ -231,17 +213,29 @@
 
 
                     <td>
-                        <input type="text" maxlength="3"  oninput="restrictCharacters(this)" class="form-control TxtTotalPeriodsCls" />
+                        <input type="text" maxlength="3" oninput="restrictCharacters(this)" class="form-control TxtTotalPeriodsCls" title="Total Periods"/>
                     </td>
                     <td>
-                        <input type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="1" />&nbsp;&nbsp;
-                        <input type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="0" />   Yes No
+                        <div class="form-check form-check-inline" title="Include In Total Yes">
+                            <input class="form-check-input " id="Yes" type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="1" />
+                            <label class="form-check-label" for="Yes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline" title="Include In Total No">
+                            <input class="form-check-input " id="No" type="radio" name="IncludeInTotal@(sub.InstanceSubClassificationId)@(p)" value="0" />
+                            <label class="form-check-label" for="No"> No</label>
+                        </div>
                     </td>
                 </tr>
-            }
+                        }
 
-            p++; checkcount = 0;
-        }
+                        p++;
+                        checkcount = 0;
+                    }
 
-    </tbody>
-</table>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+@*</form>*@

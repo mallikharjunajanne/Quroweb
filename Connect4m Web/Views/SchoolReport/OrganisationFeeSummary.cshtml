@@ -1,0 +1,204 @@
+﻿@model Connect4m_Web.Models.LMSproperties.FeeSummaryReport
+
+@{
+    ViewData["Title"] = "OrganisationFeeSummary";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #Searchfeesummary a {
+            color: #7367f0 !important;
+            cursor: pointer !important
+        }
+        #Reportsummary1 a {
+            color: #7367f0 !important;
+            cursor: pointer !important
+        }
+    </style>
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+
+
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span> Organisation Fee Summary</h4>
+
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3" >
+                @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                ORGANISATION FEE SUMMARY
+                            </span>
+                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    </div>
+
+
+                    <div class="card-body">
+                        <input type="text" value="@ViewBag.instanceid" style="display:none" hidden readonly id="instancesummary" />
+                        @*=============================  Form Start ================================*@
+                        <form id="Searchfeesummary" class="needs-validation was-validated" novalidate>
+                            <div>
+                                <div class="row">
+                                    <div class="col">
+                                        @*=====================    Radio Buttons ( Summary and Detail Summary)  =================*@
+
+                                        <div class="row mb-3" id="summaryradio">
+
+                                            <div class="col-sm-2">
+                                            </div>
+                                            <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="Location"></label>
+
+                                            <div class="col-sm-5">
+                                                @Html.DropDownListFor(
+                                           x => x.Location,
+                                            new SelectList(ViewBag.FeeselectLocation, "Value", "Text"),
+                                             new { @class = "form-select", @id = "dropdown_LOCATION", @multiple = "multiple", @required = "required" })
+                                                <input class="form-check-input" type="checkbox" value="" id="Select_All">
+                                                <label class="form-check-label" for="defaultCheck3">
+                                                    Select All Locations
+                                                </label>
+                                                <a onclick="Sublocation('dropdown_LOCATION','dropdown_sublocation','sublocationdisplay','FeeselectSubLocation','locationname','locationid','Location','errorbox1')">
+                                                    <span>Show Sublocations</span>
+                                                </a>
+                                                <span class="invalid-feedback" id="errorbox1" style="display:block !important"></span>
+                                                <span class="invalid-feedback" asp-validation-for="Location"></span>
+                                            </div>
+                                            <div class="col-sm-2">
+                                            </div>
+                                        </div>
+                                        @*==================== =================*@
+
+                                        <div class="row mb-3" id="sublocationdisplay" style="display:none">
+
+                                            <div class="col-sm-2">
+                                            </div>
+                                            <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="SubLocation"></label>
+
+                                            <div class="col-sm-5">
+                                                @Html.DropDownListFor(
+                                           x => x.SubLocation, new SelectList("", ""),
+
+
+                                             new { @class = "form-select", @id = "dropdown_sublocation", @multiple = "multiple", @required = "required" })
+                                                <input class="form-check-input" type="checkbox" value="" id="Select_Allsub">
+                                                <label class="form-check-label" for="defaultCheck3">
+                                                    Select All Sub Locations
+                                                </label>
+                                                <a onclick="Sublocation('dropdown_sublocation','dropdown_Instances','instancesdisplay','selectedInstance','Instancename','instanceid','Sublocation','errorbox2')">
+                                                    <span>Show Instances</span>
+                                                </a>
+                                                <span class="invalid-feedback" id="errorbox2" style="display:block !important"></span>
+
+                                                <span asp-validation-for="SubLocation" class="invalid-feedback"></span>
+
+
+                                            </div>
+                                            <div class="col-sm-2">
+                                            </div>
+                                        </div>
+                                        @*==================== =================*@
+                                        <div id="instancesdisplay" style="display:none">
+                                            <div class="row mb-3">
+
+                                                <div class="col-sm-2">
+                                                </div>
+                                                <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="Instances"></label>
+
+                                                <div class="col-sm-5">
+                                                    @Html.DropDownListFor(
+                                               x => x.Instances, new SelectList("", ""),
+
+
+                                                 new { @class = "form-select", @id = "dropdown_Instances", @multiple = "multiple", @required = "required" })
+                                                    <input class="form-check-input" type="checkbox" value="" id="Select_Allinstances">
+                                                    <label class="form-check-label" for="defaultCheck3">
+                                                        Select All Instances
+                                                    </label>
+
+                                                    <span asp-validation-for="Instances" class="invalid-feedback"></span>
+
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                </div>
+                                            </div>
+                                            @*==================== =================*@
+                                            <div class="row mb-3">
+
+                                                <div class="col-sm-2">
+                                                </div>
+                                                <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="StartDate"></label>
+
+                                                <div class="col-sm-5">
+                                                    <input type="date" class="form-control" asp-for="StartDate"  id="StartDate">
+                                                    <span asp-validation-for="StartDate" class="invalid-feedback"></span>
+
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                </div>
+                                            </div>
+                                            @*==================== =================*@<div class="row mb-3">
+
+                                                <div class="col-sm-2">
+                                                </div>
+                                                <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="EndDate"></label>
+
+                                                <div class="col-sm-5 form-group">
+                                                    <input type="date" class="form-control" asp-for="EndDate" id="EndDate" >
+                                                    <span asp-validation-for="EndDate" class="invalid-feedback"></span>
+                                                      <span class="compare"></span>
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                </div>
+                                            </div>
+                                            @*==================== =================*@
+
+
+
+
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-5">
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light">Get Report</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @*=============================  Form End ================================*@
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <!-- Examples -->
+
+        <div id="appendallfeesummary"></div>
+
+    </div>
+
+
+</body>
+</html>
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/js/SchoolReport.js"></script>

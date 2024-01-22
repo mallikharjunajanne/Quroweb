@@ -4569,8 +4569,8 @@ readers do not read off random characters that represent icons */
   content: "\f85e";
 }
 
-.fa-trash::before {
-  content: "\f1f8";
+.fa-trash-o::before {
+    content: "\f1f8";
 }
 
 .fa-gauge-simple::before {

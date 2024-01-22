@@ -4,134 +4,153 @@
     ViewData["Title"] = "SearchRolewise";
 }
 
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
-<link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />
-
-<div class="col-sm-12 ">
-
-    <div class="card">
-
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>MANAGE ROLE</span></h6>
+@*<link href="~/css/CommonStyle.css" rel="stylesheet" />
+<link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />*@
 
 
 
-                    <div class="card-header pb-0">
-                        <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 81%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="addnewRoleformanage">
-                            Create Role
+@*<div class="card accordion-item active">
+        <h2 class="accordion-header d-flex align-items-center">
+            <button type="button" class="accordion-button table-dark" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true" >
+                <i class="ti ti-star ti-xs me-2"></i>
+                Header Option 1
+            </button>
+        </h2>
 
-                        </button>
+        <div id="accordionWithIcon-1" class="accordion-collapse collapse show" style="">
+            <div class="accordion-body">
+                Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
+                bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
+                marshmallow pastry pie.
+            </div>
+        </div>
+    </div>*@
 
-                    </div>
-                    <div id="SearchRoleWise">
 
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">SEARCH ROLE</button>
-                            </h5>
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div id="SearchRoleWise">
+
+            <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span> MANAGE ROLE</h4>
+
+            <div class="row mb-2">
+                <div class="col-md-12 col-lg-12 mb-3">
+
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h6 class="mb-0">
+                                <span id="AddNewText_Span_CreatePage">
+                                    MANAGE ROLE
+                                </span>
+                            </h6>
                         </div>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                        <div class="demo-inline-spacing text-end" >
+                            <div class="col-sm-3">
+                            </div>
+                            <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewRoleformanage"> Create Role</button>
+                        </div>
+                        <div class="card-body mb-2">
 
-                            <div class="row padding-search">
-                                <div class="row">
+                            @*=============================  Form Start ================================*@
+                            <form id="Serach_MR">
+                                <div>
+                                    <div class="row">
+                                        <div class="col">
+                                            @*=====================        TEXT BOX                 =================*@
 
-                                    <form id="Serach_MR">
-                                        <div class="row">
-
-                                            @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
-
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Role Name</label>
-                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
-
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                </div>
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Role Name</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" id="RoleName" placeholder="Role Name">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                </div>
                                             </div>
-                                            <div class="form-group col-4">
+                                            @*=====================         TEXT BOX                =================*@
 
-                                                <input class="form-control" id="RoleName" />
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                </div>
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Role Description</label>
+                                                <div class="col-sm-4">
+                                                    <textarea class="form-control" id="RoleDescription" placeholder="Role Description"></textarea>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                </div>
                                             </div>
-                                            <div class="col-3"></div>
-                                            <div class="col-3"></div>
+                                            @*=====================         BUTTONS                =================*@
 
-                                            <div class="form-group col-2">
-
-
-                                                <label class="control-label space">Role Description</label>
-                                                @*<i class="fa fa-asterisk" style="font-size:11px;color:red"></i>*@
-
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-5">
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                                    <button type="button" class="btn btn-success waves-effect waves-light" id="sub_tblMR">Search</button>
+                                                </div>
                                             </div>
-                                            <div class="form-group col-4">
 
-                                                <textarea class="form-control" id="RoleDescription"></textarea>
 
-                                            </div>
-                                            <div class="col-3"></div>
-
-                                            <div style=" display: flex; gap: 17px;">
-                                                <div class="col-5"></div>
-                                                <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning" id="clearform" />
-                                                <input type="button" value="Search" id="sub_tblMR" class="btn btn-pill btn-outline-success btn-air-success" />
-
-                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MR" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-                                </h5>
-                            </div>
-
-                            <div id="eg1" style="color: black; background-color: whitesmoke">
-                                <table class=" table table-bordered" id="tblMRsearchresults" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                    <thead>
-                                        <tr style="border-color: black;">
-
-                                            <th style=" border-color: blue; width: 92px !important;" class="bg-primary">
-                                                S.No
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Role Name
-                                            </th>
-                                            <th style="border-color: blue" class="bg-primary">
-                                                Description
-                                            </th>
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                Folder Size(In MB)
-                                            </th>
-                                            <th style=" border-color: blue" class="bg-primary">
-                                                Delete
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-
-
+                            </form>
+                            @*=============================  Form End ================================*@
 
                         </div>
-
                     </div>
-
-                    <div id="CreateRoleScreenAll" style="display:none"></div>
-
-
                 </div>
             </div>
 
+            @*=============================  TABLE START ================================*@
+
+            <div class="card">
+
+                <h6 class="card-title mb-0">
+                    <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_MR" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+                </h6>
+                <div class="table-responsive text-nowrap">
+                    <table id="tblMRsearchresults" class="link table table-hover table-bordered ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>
+                                    S.No
+                                </th>
+                                <th>
+                                    Role Name
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Folder Size(In MB)
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            @*=============================  TABLE END ================================*@
         </div>
+        <div id="CreateRoleScreenAll" style="display:none"></div>
+
     </div>
-</div>
+
+
+</body>
+</html>
 
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>

@@ -4,7 +4,7 @@
 //--------------------------Search The Payslip Generate For Employees
 $(document).ready(function () {
     searchManageDetails();
-    setProgressBar(7, '.c-7');
+    //setProgressBar(7, '.c-7');
     // Get the current date
     var currentDate = new Date();
     var currentMonth = currentDate.getMonth() + 1;
@@ -322,8 +322,8 @@ function printPaySlip(divId) {
    
     var newWindow =  window.open("", "_blank");
     newWindow.document.open();
-    newWindow.document.write('<html><head><title>PaySlip</title><link rel="stylesheet" type="text/css" href="/css/Payslipgeneration.css"><link rel="stylesheet" type="text/css" href="/css/CommonStyle.css"><link rel="stylesheet" type="text/css" href="/assets/css/vendors/bootstrap.css"></head><body>');
- 
+    newWindow.document.write('<html><head><title>PaySlip</title><link rel="stylesheet" type="text/css" href="/css/Payslipgeneration.css"><link rel="stylesheet" type="text/css" href="/css/CommonStyle.css"><link rel="stylesheet" type="text/css" href="/assets/vendor/css/rtl/core.css"></head><body>');
+
         newWindow.document.write(content);
    
     newWindow.document.write('</body></html>');

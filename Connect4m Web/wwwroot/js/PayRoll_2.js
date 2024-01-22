@@ -4,7 +4,7 @@
 //--------------------------Search The CONFIGURE SALARY ATTRIBUTES for Roles
 $(document).ready(function () {
     searchSalaryRoleAttributes();
-    setProgressBar(2, '.c-2');
+   // setProgressBar(2, '.c-2');
    
 })
 
@@ -207,7 +207,7 @@ $("#Insert_SAR").submit(function (event) {
                     $('.alert-danger p').text("You have already used this attribute");
                     $(".alert-danger").show().delay(5000).fadeOut()
                 }
-              else  if (response == "-2") {
+                else if (response == "-2" || response =="Not insert") {
                     $('.alert-danger p').text("Selected Start Date and End Date must lie between Salary Attribute Start Date and End Date.");
                     $(".alert-danger").show().delay(5000).fadeOut()
                 } else  if (response == "313") {
@@ -267,9 +267,9 @@ $(document).on('change', '#dropdown_InstanceSalaryAttributeId_SAR', function (ev
       
         if (response) {
             //-------------Percentage ok
-            $("#Insert_SAR #Percentage_SAR").css('display', 'contents');
+            $("#Insert_SAR #Percentage_SAR").css('display', 'flex');
             $("#Insert_SAR #salary_SAR").css('display', 'none');
-            $("#Insert_SAR #ispercentoramount").css('display', 'contents');
+            $("#Insert_SAR #ispercentoramount").css('display', 'flex');
             $("#Insert_SAR #salary_SAR input[type='text']").val("");
             $("input[name='IsSalaryPercentage'][value='A']").prop('checked', false);
             $("input[name='IsSalaryPercentage'][value='P']").prop('checked', true);
@@ -277,7 +277,7 @@ $(document).on('change', '#dropdown_InstanceSalaryAttributeId_SAR', function (ev
 
         } else {
             $("#Insert_SAR #Percentage_SAR").css('display', 'none');
-            $("#Insert_SAR #salary_SAR").css('display', 'contents');
+            $("#Insert_SAR #salary_SAR").css('display', 'flex');
             $("#Insert_SAR #ispercentoramount").css('display', 'none');
             $("#Insert_SAR #Percentage_SAR").find('.field-validation-error').remove();
             $("#Insert_SAR #Percentage_SAR input[type='text']").val("");
@@ -483,9 +483,9 @@ $(document).on('change', '#ispercentoramount input[type="radio"]', function (eve
     var radiobuttonval = $(this).val();
     if (radiobuttonval == "P") {
         $('#salary_SAR').css('display', 'none');
-        $('#Percentage_SAR').css('display', 'contents');
+        $('#Percentage_SAR').css('display', 'flex');
     } else if (radiobuttonval == "A") {
-        $('#salary_SAR').css('display', 'contents');
+        $('#salary_SAR').css('display', 'flex');
         $('#Percentage_SAR').css('display', 'none');
     }
     $("#salary_SAR").find('input[type="number"]').val('');

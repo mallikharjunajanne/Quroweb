@@ -3,7 +3,7 @@
 //--------------------------Search The CONFIGURE SALARY ATTRIBUTES
 $(document).ready(function () {
     searchSalaryAttributes();
-    setProgressBar(1,'.c-1');
+   // setProgressBar(1,'.c-1');
 })
 
 $(document).on('click', '#Serach_CSA #sub_tblCSA', function (event) {
@@ -299,15 +299,15 @@ setTimeout(function () {
                 $('.alert-danger p').text("You have already used this attribute");
                 $(".alert-danger").show().delay(5000).fadeOut()
             }
-            if (response == "-2") {
+          else  if (response == "-2") {
                 $('.alert-danger p').text("You have already used this name");
                 $(".alert-danger").show().delay(5000).fadeOut()
             }
-            if (response == "-1") {
+          else  if (response == "-1") {
                 $('.alert-danger p').text("To Update a particular Salary Attribute, Start Date must be greater than previous End Date.");
                 $(".alert-danger").show().delay(6000).fadeOut()
             }
-            else {
+            else  {
                 if ($('#Insert_CSA #Save_CSA').val() == "Update") {
                     loaddingimg.css('display', 'block');
                     $('.alert-success p').text("Salary Attribute Updated successfully.");
@@ -403,5 +403,5 @@ $(document).on('change', '#Insert_CSA #dropdown_SalDependsOn_CSA', function (eve
 
 //------------------------------------------------------------------------  Date Compare
 
-$(".form-group #StartDate").on("change", function () { datescompare(event, "start Date", "End Date") });
-$(".form-group #EndDate").on("change", function () { datescompare(event, "start Date", "End Date") });
+$(".col-sm-4 #StartDate").on("change", function () { debugger; datescompare(event, "start Date", "End Date") });
+$(".col-sm-4 #EndDate").on("change", function () { debugger; datescompare(event, "start Date", "End Date") });

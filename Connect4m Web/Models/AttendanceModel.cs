@@ -55,7 +55,7 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage ="The Department is Required")]
         [Display(Name = "Department ")]
         public int InstanceClassificationId { get; set; }
-        [Required(ErrorMessage ="The Class is Required")]
+       // [Required(ErrorMessage ="The Class is Required")]
         [Display(Name = "Class")]
         public int InstanceSubClassificationId { get; set; }
         public string ScreenName { get; set; }
@@ -661,6 +661,7 @@ namespace Connect4m_Web.Models
 
         public string UserIdString { get; set; }
         public int SubjectAssociated { get; set; }
+        [Required(ErrorMessage = "The Subject is Required")]
         public int InstanceSubjectId { get; set; }
 
         public List<string> InstanceSubjectId_AvailableCheck { get; set; }
@@ -670,10 +671,13 @@ namespace Connect4m_Web.Models
 
         [Required(ErrorMessage = "The IncludeInTotal is Required")]
         public int IncludeInTotal1 { get; set; }
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Invalid Attendance Required")]
         public string AttendanceRequired1 { get; set; }
         public string MentorIds1 { get; set; }
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Invalid Total Periods")]
         public string TotalPeriods1 { get; set; }
         public int IsInternal1 { get; set; }
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Invalid Display Order")]
         public int DisplayOrder1 { get; set; }
         public string SubjectShortName1 { get; set; }
         public List<int> bFlag { get; set; }

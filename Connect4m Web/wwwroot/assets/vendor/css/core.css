@@ -127,6 +127,9 @@
   box-sizing: border-box;
 }
 
+
+
+
 :root {
   font-size: var(--bs-root-font-size);
 }
@@ -23438,3 +23441,5 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 .footer.bg-lighter hr {
   border-color: rgba(93, 89, 108, 0.0760954902);
 }
+
+

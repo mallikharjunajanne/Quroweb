@@ -1,4 +1,4 @@
-﻿using Connect4m_Web.Models;
+﻿                                                                using Connect4m_Web.Models;
 using Connect4m_Web.Models.LMSproperties;
 using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Mvc;
@@ -33,39 +33,56 @@ namespace Connect4m_Web.Controllers
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public ResultsController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+
+
+        private readonly IUserService _userService;
+        private readonly int LoginUserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int InstanceSubClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+        private readonly string RoleName;
+        private readonly string UserNameHeader_;
+        public ResultsController(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
-            Controllername = "Results";
-            client.BaseAddress = new Uri(apiBaseAddress + "/" + Controllername + "");
+            client.BaseAddress = new Uri(apiBaseAddress + "/Results");
+
+            //===================Values Getting====================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            LoginUserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            InstanceSubClassificationId = _userService.InstanceSubClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+            RoleName = _userService.RoleName;
+            UserNameHeader_ = _userService.UserNameHeader_;
         }
-        private int LoginUserId;
-        private int InstanceClassificationId;
-        private int InstanceSubClassificationId;
-        private int InstanceId;
-        private int Roleid;
-        private int StudentUserid;
         private string returnvalue;
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
 
-        private void InitializeCookieValues()
-        {
-            InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
-            InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
-            Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
-            StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
-        }
+        //private void //InitializeCookieValues()
+        //{
+        //    InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
+        //    LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+        //    InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
+        //    InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
+        //    Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
+        //    StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
+        //}
 
         // -------------------=====================   POST RESULTS  ===============================
         #region
         public IActionResult DdlSubjectTypes_Calingfunction(ResultsModel obj)
         {
-            InitializeCookieValues();
+            ////InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<DropdownClass> list = CommonMethodobj.CommonListMethod<ResultsModel, DropdownClass>(obj, "/DdlSubjectTypes_Calingfunction", client);
 
@@ -83,7 +100,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult DdlExams_Callingfunction(ResultsModel obj,int ExamtypeId)
         {
-            InitializeCookieValues();
+            ////InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.ExamtypeId = ExamtypeId;
             //obj.InstanceSubClassificationId = InstanceSubClassificationId;
@@ -93,7 +110,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult DdlExamMode_Callingfunction(ResultsModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Name = "EMODE";//@Code
             obj.InstanceSubClassificationId = InstanceSubClassificationId;
@@ -105,7 +122,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.ScreenName = ScreenName;
                 List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(obj, "/TblExamSubjects_Calingfunction", client);
@@ -134,7 +151,7 @@ namespace Connect4m_Web.Controllers
                     ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
                     ViewBag.MaxMarksList = val.MaxMarksList;
                     ViewBag.PassMarksList = val.PassMarksList;
-                    InitializeCookieValues();
+                    //InitializeCookieValues();
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
             
@@ -151,7 +168,7 @@ namespace Connect4m_Web.Controllers
                 //    ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
                 //    ViewBag.MaxMarksList = val.MaxMarksList;
                 //    ViewBag.PassMarksList = val.PassMarksList;
-                //    InitializeCookieValues();
+                //    //InitializeCookieValues();
                 //    val.InstanceID = InstanceId;
                 //    List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
                 //   // ViewBag.MarksUploadtype = MarksUploadtype;
@@ -184,7 +201,7 @@ namespace Connect4m_Web.Controllers
             try
             {
 
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;
@@ -313,7 +330,7 @@ namespace Connect4m_Web.Controllers
                             {
                                 SubjectHeaderName = worksheet.Cells[row1, col].Text;
                               
-                                if (SubjectHeaderName == null)
+                                if (SubjectHeaderName == null || SubjectHeaderName == "")
                                 {
                                     break;
                                 }
@@ -331,13 +348,17 @@ namespace Connect4m_Web.Controllers
                              //   return Json(new { success = false, message = new { SuccessMSG = "Mismatch of Subject" } });
                             }
                              var RowCount1 = 0;
-                            for (int row = 2; row <= length; row++)
+                            //for (int row = 2; row <= length; row++)
+                            var UserIdlength = obj.UseridList.Count + 1;
+                            for (int row = 2; row <= UserIdlength; row++)//changed
+
                             {
                                 //var cellValue = worksheet.Cells[row, col1].Text;
                                 var cellUserID = worksheet.Cells[row, 1].Text;
                                 if (cellUserID == "" || cellUserID == null)
                                 {
-                                    break;
+                                    //break;
+                                    return Json(new { success = false, message = $"UserId should not be empty in row {row}" });
                                 }
                                 if ( obj.UseridList[RowCount1] !=Convert.ToInt32(cellUserID))
                                 {
@@ -359,7 +380,6 @@ namespace Connect4m_Web.Controllers
                             List<int> SubjectIdList = new List<int>();
                             SubjectIdList = obj.SubjectIdList;
 
-
                             List<double> PassMarksList = new List<double>();
                             PassMarksList = obj.PassMarksList;
 
@@ -373,17 +393,17 @@ namespace Connect4m_Web.Controllers
                             obj.GradeList = new List<string>();
                             obj.PassMarksList = new List<double>();
                             obj.MaxMarksList = new List<double>();
-                            var Grade = "";
+                            var Grade = ""; string UserId;string StudentName;  string SubjectText;
                             for (int row = 2; row <= RowCount1+1; row++) // Assuming the header is in the first row
                             {
                                 c = 0;
-                                string UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
-                                string StudentName = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
+                                 UserId = worksheet.Cells[row, 1].Value?.ToString(); // Access each cell's value
+                                 StudentName = worksheet.Cells[row, 2].Value?.ToString(); // Access each cell's value
 
                                 for (int col = 4; col <= columnCount; col++)
                                 {
-                                    var SecuredMarks = worksheet.Cells[row, col].Text;
-                                    string SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
+                                     var SecuredMarks = worksheet.Cells[row, col].Text;
+                                     SubjectText = worksheet.Cells[1, col].Value?.ToString(); // Access each cell's value
 
                                     if (SecuredMarks == "" && SecuredMarks != "O" && obj.ButtonId != "BtnSaveAsDraft")
                                     {
@@ -391,7 +411,6 @@ namespace Connect4m_Web.Controllers
                                        // return Json(new { success = false, message = new { SuccessMSG = text } });
                                         return Json(new { success = false, message = text });
                                     }
-                                   
                                     else if (!Regex.IsMatch(SecuredMarks, @"^[0-9.]+$") && SecuredMarks != "O" && SecuredMarks != "-")
                                     {
                                         text = $"Please enter valid data for Student '{StudentName}' for the subject '{SubjectText}'";
@@ -476,7 +495,7 @@ namespace Connect4m_Web.Controllers
                     }
                     // }
                 }
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;
@@ -529,13 +548,11 @@ namespace Connect4m_Web.Controllers
 
 
 
-        #region Population Management File Export start
+        #region Population Management File Export Excel start
         // Open XML [Document.open xml - 3.0.0]
         // Village Export
         //  public string ExportToExcelVillagePopulationExcelData_OpenExcelFormat(List<VillagePopulationDto> value, string fileName)
         //=============================================   Excel Dowload
-
-
 
         public IActionResult ExcelDownload(ResultsModel val)
         {
@@ -544,7 +561,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
             ViewBag.MaxMarksList = val.MaxMarksList;
             ViewBag.PassMarksList = val.PassMarksList;
-            InitializeCookieValues();
+            //InitializeCookieValues();
             val.InstanceID = InstanceId;
 
             using (var package = new ExcelPackage())
@@ -750,8 +767,6 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
-
         // Helper method to convert column index to Excel column name (A, B, ..., AA, AB, ...)
         private string GetExcelColumnName(int columnIndex)
         {
@@ -768,11 +783,8 @@ namespace Connect4m_Web.Controllers
             return columnName;
         }
 
-
-      
-
         //======================================================  For Documnt.Openxml
-
+        #region
         //public IActionResult ExcelDownload(ResultsModel val)
         //{
         //    // ResultsModel val = new ResultsModel();
@@ -785,7 +797,7 @@ namespace Connect4m_Web.Controllers
         //        ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;//"HINDI CHECK, UPDATE SUBJECT NAME"; //
         //        ViewBag.MaxMarksList = val.MaxMarksList;
         //        ViewBag.PassMarksList = val.PassMarksList;
-        //        InitializeCookieValues();
+        //        //InitializeCookieValues();
         //        val.InstanceID = InstanceId;
 
         //        // Create a new Excel package (XLSX)
@@ -922,6 +934,7 @@ namespace Connect4m_Web.Controllers
 
 
         //}
+        #endregion
         public DataTable GetDataTable_OpenExcelFormat(List<UsermarksModel> value,string names)
         {
             DataTable periodicTable = new DataTable();
@@ -941,7 +954,6 @@ namespace Connect4m_Web.Controllers
                 {
                     periodicTable.Columns.Add(subjectNames[m]+"Test", typeof(string));
                 }
-
 
                // DataRow dr;
                 int i = 0;
@@ -967,8 +979,6 @@ namespace Connect4m_Web.Controllers
                     }
                     periodicTable.Rows.Add(dr);
 
-
-
                 }
             }
             catch (Exception ex)
@@ -977,7 +987,7 @@ namespace Connect4m_Web.Controllers
             }
             return periodicTable;
         }
-
+        #region
         //// Ward Export
         //public string ExportToExcelWardPopulationExcelData_OpenExcelFormat(List<WardPopulationDto> value, string fileName)
         //{
@@ -1119,7 +1129,7 @@ namespace Connect4m_Web.Controllers
         //        worksheetPart.Worksheet.GetFirstChild<Columns>().Append(column);
         //    }
         //}
-
+        #endregion
 
 
         #endregion Population Management File Export end
@@ -1138,7 +1148,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;

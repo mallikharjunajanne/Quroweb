@@ -457,19 +457,19 @@ document.addEventListener('keydown', (event) => {
 //    var canvas = document.getElementById("snapshot-canvas");
 //    canvas.style.display = "none";
 //});
-const numb = document.querySelector(".numb");
-const outer = document.querySelector(".outer");
-let counter = 0;
-const interval = setInterval(() => {
-    if (counter === 60) {
-        clearInterval(interval);
-       // outer.style.transform = "rotate(0deg)";
-    } else {
-        counter += 1;
-        numb.textContent = counter + "%";
-       // outer.style.transform = `rotate(${(counter / 60) * 360}deg)`;
-    }
-}, 80);
+//const numb = document.querySelector(".numb");
+//const outer = document.querySelector(".outer");
+//let counter = 0;
+//const interval = setInterval(() => {
+//    if (counter === 60) {
+//        clearInterval(interval);
+//       // outer.style.transform = "rotate(0deg)";
+//    } else {
+//        counter += 1;
+//        numb.textContent = counter + "%";
+//       // outer.style.transform = `rotate(${(counter / 60) * 360}deg)`;
+//    }
+//}, 80);
 
 
 //---------------*****************************       -----                    Take   Snapchat  when Mouse Over On progress Bar ******************************************   Video Thumbnails Generation

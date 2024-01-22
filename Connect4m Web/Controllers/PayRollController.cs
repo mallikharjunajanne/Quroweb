@@ -390,8 +390,8 @@ namespace Connect4m_Web.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                string list = JsonConvert.DeserializeObject<string>(data);
-                return Json (list);
+               // string list = JsonConvert.DeserializeObject<string>(data);
+                return Json (data);
             }
             return Json(0);
            

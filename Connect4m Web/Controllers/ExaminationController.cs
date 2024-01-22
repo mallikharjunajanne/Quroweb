@@ -16,8 +16,7 @@ using Connect4m_Web.Models.LMSproperties;
 using Microsoft.AspNetCore.Authorization;
 using OfficeOpenXml;
 using System.Text.RegularExpressions;
-
-
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -34,42 +33,63 @@ namespace Connect4m_Web.Controllers
         //    client = new HttpClient();
         //    client.BaseAddress = baseaddress;
         //}
-        private string Controllername;
+        //private string Controllername;
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public ExaminationController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+
+        private readonly IUserService _userService;
+        private readonly int LoginUserId;
+        private readonly int InstanceClassificationId;
+        private readonly int InstanceSubClassificationId;
+        private readonly int InstanceId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+        private readonly string RoleName;
+        private readonly string UserNameHeader_;
+
+        private string returnvalue;
+        private List<SubjectModel> Editlist = new List<SubjectModel>();
+        public ExaminationController(HttpClientFactory httpClientFactory, IConfiguration configuration,IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
-            Controllername = "Examination";
-            client.BaseAddress = new Uri(apiBaseAddress + "/" + Controllername + "");
-        }
-        private int LoginUserId;
-        private int InstanceClassificationId;
-        private int InstanceSubClassificationId;
-        private int InstanceId;
-        private int Roleid;
-        private int StudentUserid;
-        private string returnvalue;
-        private List<SubjectModel> Editlist = new List<SubjectModel>();
+            //Controllername = "Examination";
+            client.BaseAddress = new Uri(apiBaseAddress + "/Examination");
 
+            //===================Values Getting====================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            LoginUserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            InstanceSubClassificationId = _userService.InstanceSubClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+
+            RoleName = _userService.RoleName;
+            UserNameHeader_ = _userService.UserNameHeader_;
+        }
+
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         //private int InitializeInstanceId()
         //{
         //    return Convert.ToInt32(Request.Cookies["Instanceid"]);
         //}
 
-        private void InitializeCookieValues()
-        {
-            InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
-            InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
-            Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
-            StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
-        }
+        //private void InitializeCookieValues()
+        //{
+        //    InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
+        //    LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+        //    InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
+        //    InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
+        //    Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
+        //    StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
+        //}
 
         public List<T> CommonListMethod<T>(T obj, string WebApiMethodname)
         {
@@ -107,10 +127,12 @@ namespace Connect4m_Web.Controllers
         //--------------------------------------============================= Manage Exams Screen ===================------------------------------
         public IActionResult TblExamListData(ExaminationModel obj, int Id)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Id = Id;
-            List<ExaminationModel> list = CommonListMethod(obj, "/TblExamListData");
+            List<ExaminationModel> list = CommonMethodobj.CommonListMethod<ExaminationModel, ExaminationModel>(obj, "/TblExamListData", client);
+
+            //List<ExaminationModel> list = CommonListMethod(obj, "/TblExamListData");
             return Json(list);
         }
         public IActionResult Create_Update_Pview_ManageExams()
@@ -126,11 +148,17 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult ManageExams(ExaminationModel obj, int DeleteID, string ButtonName)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;
-            obj.Id = DeleteID;
+          
             obj.ButtonName = ButtonName;
+
+            if (ButtonName == "Delete")
+            {
+                obj.Id = DeleteID;
+            }
+
             returnvalue = CommonSaveMethod(obj, "/CommonSaveMethod");
 
             if (returnvalue != "0")
@@ -151,7 +179,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 ViewBag.Buttonname = Buttonname;
                 List<Models.SubClassifications> list = CommonListMethod(obj, "/MS_SubClassifications?InstanceId=" + InstanceId);
                 if (Buttonname != "Create")
@@ -177,7 +205,7 @@ namespace Connect4m_Web.Controllers
             try
             {
                 Models.Subclassfications_MS obj = new Models.Subclassfications_MS();
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 //--------------------------------------------------  Subclassfication DAta 
                 obj.InstanceID = InstanceId;
                 obj.InstanceClassificationId = InstanceClassificationId;
@@ -224,7 +252,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblSubjectListData(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/TblSubjectListData");
             return Json(list);
@@ -240,7 +268,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 // obj.Id = DeleteID;
@@ -274,7 +302,7 @@ namespace Connect4m_Web.Controllers
         // -------------------=====================   BULK UPLOAD SUBJECTS   ===============================
         public IActionResult UpdateSubjects_PartialView(int InstanceSubjectId, string Buttonname)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             ViewBag.Buttonname = Buttonname;
             SubjectEditValuesListModel obj = new SubjectEditValuesListModel();
             obj.InstanceID = InstanceId;
@@ -309,17 +337,33 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblBulkUploadSubjectsList(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/TblBulkUploadSubjectsList");
             list = list.OrderBy(x => x.SubjectName).ToList();
             return Json(list);
         }
 
+        //=================Delete User
+        public IActionResult DeleteSubject_CallingFunction(DropdownClass val, int InstanceSubjectId)
+        {
+            val.Id = InstanceSubjectId;
+           // val.InstanceID = InstanceId;
+            returnvalue = CommonMethodobj.CommonSaveMethod(val, "/DeleteSubject_CallingFunction", client);
+            if (returnvalue != "0")
+            {
+                return Json(new { success = true, message = returnvalue });
+            }
+            else
+                return Json(new { success = false, message = "Something Error" });
+
+        }
+
+
 
         public IActionResult TblViewSubjectsList(SubjectModel obj,int InstanceClassificationId,int InstanceSubClassificationId)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             if (InstanceClassificationId == 0 || InstanceSubClassificationId == 0)
             {
@@ -357,6 +401,7 @@ namespace Connect4m_Web.Controllers
             //if (obj.ButtonName == "MultiSubjectsUpdate")
             if (obj.ButtonId == "BtnSave" || obj.ButtonId == "BtnUpload")
             {
+                #region
                 //string HeaderText="";
                 int errorCount = 0;
                 var text = "";
@@ -370,7 +415,7 @@ namespace Connect4m_Web.Controllers
                 {
                     return Json(new { success = false, message = "Invalid file extension.allowed extensions are .xls,.xlsx" });
                 }
-
+                #endregion
                 using (var stream = new MemoryStream())
                 {
                     SubjectExelFile.CopyTo(stream);
@@ -392,20 +437,8 @@ namespace Connect4m_Web.Controllers
                         var Totallength = worksheet.Dimension.End.Column; var columnCount = 0;
                         string UploadingFileHeaderText;
                         string SavedFileHeaderText;
-
-                        List<string> columnNames = new List<string>
-                          {
-                              "DepartmentId",
-                              "ClassId",
-                              "SubjectName",
-                              "SubjectType",
-                              "IncludeInTotal",
-                              "SubjectCode",
-                              "SubjectsDisplayOrder",
-                              "AttendanceRequired",
-                              "TotalPeriods",
-                              "MentorUserId"
-                          };
+                            //Sheet Header Name
+                        List<string> columnNames = new List<string>{"DepartmentId","ClassId","SubjectName","SubjectType","IncludeInTotal","SubjectCode","SubjectsDisplayOrder","AttendanceRequired","TotalPeriods","MentorUserId"};
                         if (obj.ButtonId == "BtnSave"){
                             columnNames.Remove("DepartmentId");
                             columnNames.Remove("ClassId");
@@ -449,36 +482,15 @@ namespace Connect4m_Web.Controllers
                                 return Json(new { success = false, message = "Sheet is empty,Please Enter the details." });
 
                             }
+                            else if (rowCount > 1000)
+                            {
+                                return Json(new { success = false, message = "Excel sheet should not exceed 1000 rows." });
+                            }
                             //  int rowCount = worksheet.Dimension.Rows;
 
 
-                            obj.InstanceClassificationIdList = new List<int>();
-                        obj.InstanceSubClassificationIdList = new List<int>();
-                        obj.SubjectNameList = new List<string>();
-                        obj.SubjectCodeList = new List<string>();
-                        obj.IncludeInTotalStringList = new List<string>();
-                        obj.SubjectTypeIdString = new List<string>();
-                        obj.AttendanceRequired = new List<string>();
-                        obj.DisplayOrder = new List<int>();
-                        obj.TotalPeriods = new List<string>();
-                        obj.MentorIds = new List<string>();
-
-
-                        string InstanceClassificationIdList;
-                        string InstanceSubClassificationIdList;
-                        string SubjectNameList;
-                        string SubjectTypeIdString;
-
-
-                        string IncludeInTotalStringList;
-                        string SubjectCodeList;
-                        string DisplayOrder;
-
-                        string AttendanceRequired;
-                        string TotalPeriods;
-                        string MentorIds;
-                        string SubjectTypeIdStringToLower;
-                        string IncludeInTotalStringListTolower;
+        obj.InstanceClassificationIdList = new List<int>();obj.InstanceSubClassificationIdList = new List<int>();obj.SubjectNameList = new List<string>();obj.SubjectCodeList = new List<string>();obj.IncludeInTotalStringList = new List<string>();obj.SubjectTypeIdString = new List<string>();obj.AttendanceRequired = new List<string>();obj.DisplayOrder = new List<int>();obj.TotalPeriods = new List<string>();obj.MentorIds = new List<string>();
+        string InstanceClassificationIdList; string InstanceSubClassificationIdList; string SubjectNameList;string SubjectTypeIdString; string IncludeInTotalStringList;string SubjectCodeList; string DisplayOrder;string AttendanceRequired;string TotalPeriods;string MentorIds;string SubjectTypeIdStringToLower;string IncludeInTotalStringListTolower;
                         int colNums=1;
                         //return Json(new { success = false, message = "Something Error" });
                         for (int row = 2; row <= rowCount; row++) // Assuming the header is in the first row
@@ -496,22 +508,25 @@ namespace Connect4m_Web.Controllers
                            TotalPeriods = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
                            MentorIds = worksheet.Cells[row, colNums++].Value?.ToString(); // Access each cell's value
 
-                            if (string.IsNullOrWhiteSpace(InstanceClassificationIdList) && string.IsNullOrWhiteSpace(InstanceSubClassificationIdList) && string.IsNullOrWhiteSpace(SubjectNameList) && string.IsNullOrWhiteSpace(SubjectTypeIdString) && string.IsNullOrWhiteSpace(IncludeInTotalStringList) && string.IsNullOrWhiteSpace(SubjectCodeList) && string.IsNullOrWhiteSpace(DisplayOrder) && string.IsNullOrWhiteSpace(AttendanceRequired) && string.IsNullOrWhiteSpace(TotalPeriods) && string.IsNullOrWhiteSpace(MentorIds))
+
+                                #region Validations
+                                if (string.IsNullOrWhiteSpace(InstanceClassificationIdList) && string.IsNullOrWhiteSpace(InstanceSubClassificationIdList) && string.IsNullOrWhiteSpace(SubjectNameList) && string.IsNullOrWhiteSpace(SubjectTypeIdString) && string.IsNullOrWhiteSpace(IncludeInTotalStringList) && string.IsNullOrWhiteSpace(SubjectCodeList) && string.IsNullOrWhiteSpace(DisplayOrder) && string.IsNullOrWhiteSpace(AttendanceRequired) && string.IsNullOrWhiteSpace(TotalPeriods) && string.IsNullOrWhiteSpace(MentorIds))
                             {
                                 continue;
                             }
+                                // HeaderText = worksheet.Cells[1, colNums].Value?.ToString();
 
-                            // HeaderText = worksheet.Cells[1, colNums].Value?.ToString();
-
-                            SubjectTypeIdStringToLower = SubjectTypeIdString.ToLower().Trim();
+                                SubjectTypeIdStringToLower = SubjectTypeIdString.ToLower().Trim();
                             IncludeInTotalStringListTolower = IncludeInTotalStringList.ToLower().Trim();
-                            if (InstanceClassificationIdList == null)
+
+                                if (InstanceClassificationIdList == null)
                             {
                                 text = $"Empty cells in DepartmentId Column, Please enter DepartmentId in row{row}.";
                                 errorCount++;
                                 
                                 // return Json(new { success = false, message = text });
                             }
+                               
                            else if (InstanceSubClassificationIdList == null)
                             {
                                 text = $"Empty cells in ClassId Column, Please enter ClassId in row{row}.";
@@ -610,49 +625,106 @@ namespace Connect4m_Web.Controllers
                                 text = $"Invalid Mentor UserId in row{row}.";
                                 errorCount++;
                             }
-
-
-
-                            if (errorCount > 0)
-                            {
-                                return Json(new { success = false, message = text });
-                            }
-
-                            obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
-                            obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
-                           
-                            
-                            if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32( InstanceSubClassificationIdList)))
-                            {
-                                obj.SubjectNameList.Add(SubjectNameList);
-                            }
-                            else
-                            {//Duplicate Subject Names Exist For Same Class.
-                                if (obj.ButtonId == "BtnSave")
+                                #endregion
+                                if (errorCount > 0)
                                 {
-                                    return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    return Json(new { success = false, message = text });
                                 }
-                                return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
-                            }
-                            if (!obj.SubjectCodeList.Contains(SubjectCodeList))
-                            {
-                                obj.SubjectCodeList.Add(SubjectCodeList);
-                            }
-                            else
-                            {
-                                return Json(new { success = false, message = "Duplicate Subjects Code in excel sheet." });
+
+                                obj.InstanceClassificationIdList.Add(Convert.ToInt32(InstanceClassificationIdList));
+                                obj.InstanceSubClassificationIdList.Add(Convert.ToInt32(InstanceSubClassificationIdList));
+
+                                if (SubjectNameList.Length <= 100){
+                                    //var length = val.SubjectNameList.Count;
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //    if (!obj.SubjectNameList.Contains(SubjectNameList))
+                                    //    {
+                                      // obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    //else
+                                    {
+                                        //for (int i = 0; i < rowCount-1; i++)
+                                        for (int i = 0; i < row-2; i++)
+                                        {
+                                            if (obj.SubjectNameList[i] == SubjectNameList && obj.InstanceSubClassificationIdList[i] == Convert.ToInt32(InstanceSubClassificationIdList))
+                                            {
+                                                    if (obj.ButtonId == "BtnSave")
+                                                    {
+                                                        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                                    }
+                                                    //return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                            }
+                                        }
+                                        obj.SubjectNameList.Add(SubjectNameList);
+
+                                    }
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList))
+                                    //{
+                                    //    obj.SubjectNameList.Add(SubjectNameList);
+                                    //} else if (!obj.InstanceSubClassificationIdList[i].Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //{
+                                    //obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    //else
+                                    //{//Duplicate Subject Names Exist For Same Class.
+                                    //    if (obj.ButtonId == "BtnSave")
+                                    //    {
+                                    //        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    //    }
+                                    //     return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                    //}
+
+                                    ////if (!obj.SubjectNameList.Contains(SubjectNameList) && !obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    //if (!obj.SubjectNameList.Contains(SubjectNameList)  )
+                                    //{
+                                    //    obj.SubjectNameList.Add(SubjectNameList);
+                                    //}
+                                    ////else if (!obj.InstanceSubClassificationIdList.Contains(Convert.ToInt32(InstanceSubClassificationIdList)))
+                                    ////{
+                                    ////    obj.SubjectNameList.Add(SubjectNameList);
+                                    ////}
+                                    //else
+                                    //{//Duplicate Subject Names Exist For Same Class.
+                                    //    if (obj.ButtonId == "BtnSave")
+                                    //    {
+                                    //        return Json(new { success = false, message = "Duplicate Subjects Name in excel sheet." });
+                                    //    }
+                                    //   // return Json(new { success = false, message = "Duplicate Subject Names Exist For Same Class." });
+                                    //}
                                 }
-                            //obj.IncludeInTotal.Add(IncludeInTotalStringList);
-                            obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
+                                else
+                                {
+                                    return Json(new { success = false, message = $"subject name should be less than 100 characters in row {row}" });
+                                }
+                                if (SubjectCodeList.Length <= 50)
+                                {
+                                    if (!obj.SubjectCodeList.Contains(SubjectCodeList))
+                                    {
+                                        obj.SubjectCodeList.Add(SubjectCodeList);
+                                    }
+                                    else
+                                    {
+                                        return Json(new { success = false, message = "Duplicate Subjects Code in excel sheet." });
+                                    }
+                                }
+                                else
+                                {
+                                    return Json(new { success = false, message = $"Subject Code should be less than 50 characters row{row}" });
+
+                                }
+                                //obj.IncludeInTotal.Add(IncludeInTotalStringList);
+                                obj.IncludeInTotalStringList.Add(IncludeInTotalStringList);
                             obj.SubjectTypeIdString.Add(SubjectTypeIdString);
-                            if (!obj.DisplayOrder.Contains(Convert.ToInt32(DisplayOrder)))
-                            {
-                                obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
-                            }
-                            else{
-                                return Json(new { success = false, message = "Duplicate Subjects Display Order in excel sheet." });
+                                if (!obj.DisplayOrder.Contains(Convert.ToInt32(DisplayOrder)))
+                                {
+                                    obj.DisplayOrder.Add(Convert.ToInt32(DisplayOrder));
                                 }
-                            obj.AttendanceRequired.Add(AttendanceRequired);
+                                else
+                                {
+                                    return Json(new { success = false, message = "Duplicate Subjects Display Order in excel sheet." });
+                                }
+                                obj.AttendanceRequired.Add(AttendanceRequired);
                             obj.TotalPeriods.Add(TotalPeriods);
                             obj.MentorIds.Add(MentorIds);
                         }
@@ -668,6 +740,8 @@ namespace Connect4m_Web.Controllers
             }
            // return Json(new { success = false, message = "Something Error" });
             obj.SubjectExelFile = null;
+          
+            
             #region
             // List<List<string>> excelData = new List<List<string>>();
 
@@ -695,10 +769,7 @@ namespace Connect4m_Web.Controllers
             //}
 
             #endregion
-
-
-
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;
             obj.ButtonName = ButtonName;
@@ -718,13 +789,11 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
-
         // -------------------=====================   MANAGE SUBJECTS ASSOCIATION   ===============================
 
         public IActionResult SubjectTypesDropdown_Calingfunction(SubjectModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<SubjectModel> list = CommonListMethod(obj, "/SubjectTypesDropdown_Calingfunction");
             var itemsList = new List<SelectListItem>();
@@ -749,7 +818,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblUserDetailsList(SubjectEditValuesListModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Name = "STUDENT";//Gave Default
            
@@ -769,7 +838,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;               
                 returnvalue = CommonSaveMethod(obj, "/ManageSubjectAssociation");
@@ -802,7 +871,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.ScreenName = "ManageSubjectAssociationForMBA";
