@@ -186,7 +186,7 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", val.Username);
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +""+ Value2[0].UserDetailsList[0].LastName.ToString());
 
 
                         var claims = new List<Claim>
