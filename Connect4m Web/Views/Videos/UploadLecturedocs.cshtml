@@ -1,95 +1,98 @@
 ﻿@model Connect4m_Web.Models.LMSproperties.Uploaddocs
+@*<style>
+        select {
+            width: 23em;
+            height: 10em;
+            /*        filter: drop-shadow(2px 4px 6px black);
+        */ /*border: 1px solid green;*/
+            border: 1px solid #11a5f1;
+        }
+
+        label {
+            color: black;
+            font-weight: 900;
+        }
+
+        option {
+            color: black;
+            font-weight: 500;
+        }
+
+        .col-1 {
+            display: flex;
+        }
+
+        input[type="radio" i] {
+            width: 40px;
+            background-color: black;
+            font-weight: 900;
+        }
+
+        input[type="button" ] {
+            width: 82%;
+            color: black;
+            font-weight: 900;
+            height: 40px;
+            filter: drop-shadow(2px 4px 6px black);
+            border: 2px solid green;
+        }
+
+        /* i {
+                font-size: 34px;
+                color: blue;
+                top: 16px;
+                margin-top: 1px;
+                margin-left: 10px;
+            }*/
+        h3 {
+            font-size: 1.75rem;
+            text-align: center;
+            color: black;
+            /* filter: drop-shadow(2px 4px 6px black);*/
+            background-color: aliceblue;
+        }
+
+        .form-control {
+            width: 82%;
+        }
+
+        div:where(.swal2-container).swal2-center {
+            z-index: 9999;
+        }
+
+        .switch-state {
+            background-color: aquamarine;
+        }
+
+        #filesdisplaynames .form-control {
+            width: 50%;
+        }
+
+        #filesdisplaynames input[type="button" ] {
+            width: 28%;
+            margin-left: 12%;
+            color: black;
+            font-weight: 900;
+            height: 40px;
+            /* filter: drop-shadow(2px 4px 6px black); */
+            border: 2px solid green;
+        }
+        input[type="button" ] {
+            width: 82%;
+            color: black;
+            font-weight: 900;
+            height: 40px;
+            filter: drop-shadow(2px 4px 6px black);
+            border: 2px solid green !important;
+        }
+    </style>*@
+<link href="~/css/popup-videosuploading.css" rel="stylesheet" />
 
 <style>
-    select {
-        width: 23em;
-        height: 10em;
-        /*        filter: drop-shadow(2px 4px 6px black);
-    */ /*border: 1px solid green;*/
-        border: 1px solid #11a5f1;
-    }
-
-    label {
-        color: black;
-        font-weight: 900;
-    }
-
-    option {
-        color: black;
-        font-weight: 500;
-    }
-
-    .col-1 {
-        display: flex;
-    }
-
-    input[type="radio" i] {
-        width: 40px;
-        background-color: black;
-        font-weight: 900;
-    }
-
-    input[type="button" ] {
-        width: 82%;
-        color: black;
-        font-weight: 900;
-        height: 40px;
-        filter: drop-shadow(2px 4px 6px black);
-        border: 2px solid green;
-    }
-
-    /* i {
-            font-size: 34px;
-            color: blue;
-            top: 16px;
-            margin-top: 1px;
-            margin-left: 10px;
-        }*/
-    h3 {
-        font-size: 1.75rem;
-        text-align: center;
-        color: black;
-        /* filter: drop-shadow(2px 4px 6px black);*/
-        background-color: aliceblue;
-    }
-
-    .form-control {
-        width: 82%;
-    }
-
     div:where(.swal2-container).swal2-center {
         z-index: 9999;
     }
-
-    .switch-state {
-        background-color: aquamarine;
-    }
-
-    #filesdisplaynames .form-control {
-        width: 50%;
-    }
-
-    #filesdisplaynames input[type="button" ] {
-        width: 28%;
-        margin-left: 12%;
-        color: black;
-        font-weight: 900;
-        height: 40px;
-        /* filter: drop-shadow(2px 4px 6px black); */
-        border: 2px solid green;
-    }
-    input[type="button" ] {
-        width: 82%;
-        color: black;
-        font-weight: 900;
-        height: 40px;
-        filter: drop-shadow(2px 4px 6px black);
-        border: 2px solid green !important;
-    }
 </style>
-<link href="~/css/popup-videosuploading.css" rel="stylesheet" />
-
-<h3>UPLOAD LECTURES / DOCS</h3>
 
 @*   ------     Pop Up Design  ---------------------*@
 
@@ -121,7 +124,7 @@
                                 <source src="Videos/movi" id="videosrc" type="video/mp4" />
                             </video>
 
-                            <div class="filename" id="filename" style="display:flex">
+                            <div class="filename" id="filename" >
                                 <input type="file" id="video-upload" accept="video/*">
                                 @*<input type="file" id="file1" >
                                     <input type="file" id="file2" >*@
@@ -242,6 +245,10 @@
 
 
 
+
+
+
+
 @*-------------------Files Uploading     -----*@
 <div id="popupforfilesuploading" class="popupContainer">
     <div class="popupContent">
@@ -256,217 +263,218 @@
         </div>
     </div>
 </div>
-<a class="btn btn-primary" href="/Videos/SearchUploadlecturedocs" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
-    Search Upload Lecture Docs
-</a>
-<input type="text" value="@ViewBag.updateknown" id="videosupdateknown" hidden style="display:none" />
-
-<form enctype="multipart/form-data" id="uploadlecturedocsform">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <input type="text" asp-for="SubjectVideoId" name="SubjectVideoId" hidden style="display:none" readonly />
-    <div class="row" style=" font-size: 11px;">
-        <div class="row">
-            <div></div>
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-
-                <label asp-for="Department" class="control-label"></label>
-            </div>
-            <div class="form-group col-5">
 
 
-
-                <select name="Department" asp-for="Department" id="Department" multiple asp-items="@ViewBag.Departmentlist">
-                </select>
-                <span asp-validation-for="Department" class="text-danger"></span>
-
-            </div>
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-
-                <label asp-for="ClassificationIds" class="control-label"></label>
+<!DOCTYPE html>
+<html>
+<head>
 
 
-
-            </div>
-            <div class="form-group col-5">
-                <select asp-for="ClassificationIds" id="ClassificationIds" multiple>
-                </select>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
 
 
-                <span asp-validation-for="ClassificationIds" class="text-danger"></span>
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>Upload Lectures / Docs</h4>
+
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                @*<span class="ErrorMessageSpan"></span>*@
+                @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH FOR SUBJECT TOOLS
+                            </span>
+                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    </div>
 
 
-            </div>
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-                <label asp-for="InstanceSubClassificationId" class="control-label"></label>
+                    @*=====================         BUTTONS                =================*@
+
+                    <div class="row justify-content">
+                        <div class="col-sm-4">
+                        </div>
+
+                        <div class="col-sm-8 text-end">
+                            <a type="button" class="btn rounded-pill btn-info waves-effect waves-light" href="/Videos/SearchUploadlecturedocs">  Search Upload Lecture Docs</a>
+
+                        </div>
+                    </div>
+                    <input type="text" value="@ViewBag.updateknown" id="videosupdateknown" hidden style="display:none" />
+
+                    <div class="card-body">
+                        @*=============================  Form Start ================================*@
+                        <form enctype="multipart/form-data" id="uploadlecturedocsform" class="needs-validation was-validated" novalidate>
+                            <div>
+                                <input type="text" asp-for="SubjectVideoId" name="SubjectVideoId" hidden style="display:none" readonly />
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        @*=====================         DROP DOWN               =================*@
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Department"> </label>
+                                            <div class="col-sm-4">
+                                                <select class="select2 form-select select2-hidden-accessible" required name="Department" asp-for="Department" id="Department" multiple asp-items="@ViewBag.Departmentlist">
+                                                </select>
+
+                                                <span asp-validation-for="Department " class="text-danger"></span>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ClassificationIds"></label>
+                                            <div class="col-sm-4">
+                                                <select asp-for="ClassificationIds" id="ClassificationIds" required multiple class="select2 form-select select2-hidden-accessible">
+                                                </select>
+                                                <span asp-validation-for="ClassificationIds" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                        @*=====================         DROP DOWN               =================*@
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"> </label>
+                                            <div class="col-sm-4">
+                                                <select class="select2 form-select select2-hidden-accessible" required asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId" multiple>
+                                                </select>
+
+                                                <span asp-validation-for="InstanceSubClassificationId " class="text-danger"></span>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubjectsId"></label>
+                                            <div class="col-sm-4">
+                                                <select asp-for="InstanceSubjectsId" id="InstanceSubjectsId" required multiple class="select2 form-select select2-hidden-accessible">
+                                                </select>
+                                                <span asp-validation-for="InstanceSubjectsId" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                        @*=====================         DROP DOWN               =================*@
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="UploadDocs"> </label>
+                                            <div class="col-sm-4 form-group" id="validtioncheckforfiles">
+
+                                                <button type="button" id="openfilespopup" class="btn btn-success waves-effect waves-light">Choose Files</button>
+                                                <label class="switch switch-success" id="fileuploadoff">
+                                                    <input type="checkbox" class="switch-input" checked="">
+                                                    <span class="switch-toggle-slider">
+                                                        <span class="switch-on">
+                                                            <i class="ti ti-check"></i>
+                                                        </span>
+                                                        <span class="switch-off">
+                                                            <i class="ti ti-x"></i>
+                                                        </span>
+                                                    </span>
+                                                   
+                                                </label>
+                                                <span asp-validation-for="UploadDocs" class="text-danger"></span>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="VideoPath"></label>
+                                            <div class="col-sm-4 form-group" id="validtioncheckforvideos">
+                                                <button type="button" id="openPopup" class="btn btn-success waves-effect waves-light">Choose Videos</button>
+                                                <label class="switch switch-success" id="popoupoffon">
+                                                    <input type="checkbox" class="switch-input" checked="">
+                                                    <span class="switch-toggle-slider">
+                                                        <span class="switch-on">
+                                                            <i class="ti ti-check"></i>
+                                                        </span>
+                                                        <span class="switch-off">
+                                                            <i class="ti ti-x"></i>
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                                <span asp-validation-for="VideoPath" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        @*=====================         DROP DOWN               =================*@
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DisplayOrder"> </label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" asp-for="DisplayOrder" />
 
 
-            </div>
-            <div class="form-group col-5">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IsRestriction"></label>
+                                            <div class="col-sm-4">
+                                                <div class="form-check form-check-primary ">
+                                                    <input class="form-check-input" name="IsRestriction" type="radio" value="1">
+                                                    <label class="form-check-label">
+                                                        YES
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-primary ">
+                                                    <input class="form-check-input" name="IsRestriction" type="radio" value="0" checked="checked">
+                                                    <label class="form-check-label">
+                                                        NO
+                                                    </label>
+                                                </div>
+                                                <span asp-validation-for="IsRestriction" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
 
-                <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId" multiple>
-                </select>
-                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
-            </div>
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-                <label asp-for="InstanceSubjectsId" class="control-label"></label>
+                                        @*=====================         DROP DOWN               =================*@
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Points"> </label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" asp-for="Points" id="Points" required />
+                                                <span asp-validation-for="Points " class="text-danger"></span>
+                                            </div>
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-4">
+
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="submitButton">Save/Upload</button>
+
+                                            </div>
+                                        </div>
 
 
-            </div>
-            <div class="form-group col-5">
+                                    </div>
+                                </div>
+                       
+                             </div>   
+                                
+                                </form>
+                        @*=============================  Form End ================================*@
 
 
-                <select asp-for="InstanceSubjectsId" id="InstanceSubjectsId" multiple>
-                </select>
-                <span asp-validation-for="InstanceSubjectsId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-
-                @*<i class="fa fa-asterisk" style="font-size:8px;color:red"></i>*@
-                <label asp-for="UploadDocs" class="control-label"></label>
+                        <input type="text" value="@ViewBag.videpathviewbag" hidden id="filepathupdate" />
+                        <input type="text" value="@ViewBag.docsdisplayname" hidden id="docsdisplaynameupdate" />
 
 
-            </div>
-            <div class="form-group col-5" id="validtioncheckforfiles">
 
-                <input type="button" id="openfilespopup" value="Choose Files" class="form-control" />
-                <div class="media-body text-end icon-state" id="fileuploadoff">
-                    <label class="switch">
-                        <input type="checkbox" checked=""><span class="switch-state"></span>
-                    </label>
+                        @if (ViewBag.dropdownlist != null)
+                        {
+
+                            <input type="text" id="viewbagClassificationIds" value="@ViewBag.dropdownlist[0].ClassificationIds" hidden style="display:none" />
+                            <input type="text" id="viewbagInstanceSubClassificationId" value="@ViewBag.dropdownlist[0].InstanceSubClassificationId" hidden style="display:none" />
+                            <input type="text" id="viewbagSubjectToolId" value="@ViewBag.dropdownlist[0].SubjectToolId" hidden style="display:none" />
+                            <input type="text" id="viewbagInstanceSubjectsId" value="@ViewBag.dropdownlist[0].InstanceSubjectsId" hidden style="display:none" />
+                        }
+
+
+                    </div>
                 </div>
-                @*<div>
-                        <input type="radio" name="Upload" checked="checked" /><label>Lectures / Docs</label><input type="radio" name="Upload" /><label> Online Test</label>
-                    </div>*@
-
-                <span asp-validation-for="UploadDocs" class="text-danger"></span>
             </div>
-
-
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-                <label asp-for="VideoPath" class="control-label"></label>
-
-
-            </div>
-            <div class="form-group col-5" id="validtioncheckforvideos">
-                <input type="button" value="Choose Videos" id="openPopup" />
-                <div class="media-body text-end icon-state" id="popoupoffon">
-                    <label class="switch">
-                        <input type="checkbox" checked=""><span class="switch-state"></span>
-                    </label>
-                </div>
-                @*<input asp-for="VideoPath" multiple type="file" accept="video/mp4,video/x-m4v,video/*" class="form-control" />
-                    <i id="view_Videos" class="fa fa-eye" style=" font-size: 34px; color: blue; top: 16px; margin-top: 1px; margin-left: 10px;"></i>*@
-                <span asp-validation-for="VideoPath" class="text-danger"></span>
-            </div>
-
-
-            @*<div class="form-group col-1">
-                    <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-                    <label asp-for="DocsDisplayname" class="control-label"></label>
-
-
-                </div>
-                <div class="form-group col-5">
-
-                    <input asp-for="DocsDisplayname" class="form-control" id="DocsDisplayname" />
-
-
-                    <span asp-validation-for="DocsDisplayname" class="text-danger"></span>
-                </div>*@
-
-
-            <div class="form-group col-1">
-                <label asp-for="DisplayOrder" class="control-label"></label>
-
-
-            </div>
-            <div class="form-group col-5">
-
-
-                <input asp-for="DisplayOrder" class="form-control" />
-
-                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group col-1">
-
-                <label asp-for="IsRestriction" class="control-label"></label>
-
-
-            </div>
-            <div class="form-group col-5">
-                <div>
-                    <input type="radio" value="1" name="IsRestriction" /><label>YES</label><input type="radio" name="IsRestriction" value="0" checked="checked" /><label> NO</label>
-                </div>
-
-                <span asp-validation-for="IsRestriction" class="text-danger"></span>
-            </div>
-
-
-            @*<div class="form-group col-1">
-                    <label asp-for="Duration" class="control-label"></label>
-
-
-                </div>
-                <div class="form-group col-5">
-
-                    <input asp-for="Duration" class="form-control" />
-
-
-                    <span asp-validation-for="Duration" class="text-danger"></span>
-                </div>*@
-
-
-
-
-
-            <div class="form-group col-1">
-                <i class="fa fa-asterisk" style="font-size:8px;color:red"></i>
-
-                <label asp-for="Points" class="control-label"></label>
-
-
-            </div>
-            <div class="form-group col-5">
-
-                <input asp-for="Points" class="form-control" id="Points" />
-
-
-                <span asp-validation-for="Points" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6" @*style="margin-left:20%;"*@>
-                <input type="submit" id="submitButton" value=" Save/Upload" class="form-control" style="color: white; background-color: green; font-weight: 900; height: 37px;" />
-
-            </div>
-
-
-
         </div>
     </div>
-</form>
-<input type="text" value="@ViewBag.videpathviewbag" hidden id="filepathupdate" />
-<input type="text" value="@ViewBag.docsdisplayname" hidden id="docsdisplaynameupdate" />
 
 
 
-@if (ViewBag.dropdownlist != null)
-{
+</body>
+</html>
 
-    <input type="text" id="viewbagClassificationIds" value="@ViewBag.dropdownlist[0].ClassificationIds" hidden style="display:none" />
-    <input type="text" id="viewbagInstanceSubClassificationId" value="@ViewBag.dropdownlist[0].InstanceSubClassificationId" hidden style="display:none" />
-    <input type="text" id="viewbagSubjectToolId" value="@ViewBag.dropdownlist[0].SubjectToolId" hidden style="display:none" />
-    <input type="text" id="viewbagInstanceSubjectsId" value="@ViewBag.dropdownlist[0].InstanceSubjectsId" hidden style="display:none" />
-}
+
+
 
 @*<input type="file" id="fileInputt">
     <input type="file" id="fileOutputt">*@
@@ -750,7 +758,7 @@
                 var optionsDiv3 = document.createElement('div');
                 optionsDiv3.className = 'col-6 opt';
                 optionsDiv3.innerHTML = '<span>3)</span><input type="text" value="' + ViwbagOptions[b].option3 + '" class="col-6 3" />';
-  
+
                 var marksofq = document.createElement('div');
                 marksofq.className = 'col-4';
                 marksofq.style.marginLeft = 'auto';
@@ -856,8 +864,8 @@
 
 <!--<script>
 
-        if ('videosupdateknownValue' === '1215') {
-          //  try {-->
+if ('videosupdateknownValue' === '1215') {
+  //  try {-->
 @*var classificationValues = @Html.Raw(Json.Serialize(Model.ClassificationIds));
     var instanceSubClassificationValues = @Html.Raw(Json.Serialize(Model.InstanceSubClassificationId));
     var instanceSubjectsValues = @Html.Raw(Json.Serialize(Model.SubjectToolId));

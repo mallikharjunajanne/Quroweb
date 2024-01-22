@@ -26128,3 +26128,16 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
     color: red;
     font-size: small;
 }
+/* h6 label,h5 span {
+    background-color: #121451;
+    COLOR: white;
+    font-weight: 600;
+    filter: drop-shadow(2px 4px 6px black);
+    padding: 4px;
+    border-radius: 15px;
+}
+*/
+
+.errorboxshadow {
+    box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
+}

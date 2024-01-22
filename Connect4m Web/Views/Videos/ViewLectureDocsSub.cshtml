@@ -3,59 +3,113 @@
 @{
     ViewData["Title"] = "ViewLectureDocsSub";
 }
-<link href="~/css/Viewlecturedocs.css" rel="stylesheet" />
-<h5>VIEW LECTURES / DOCS</h5>
-<label id="VLD_Backtoprogram"> &lt;&lt; Back To Programs </label>
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-sm-4">
-            <div class="card">
 
-                <div class="card-header pb-0">
+<style>
+    .accordion-button:not(.collapsed) {
+        background-color: #24b364;
+    }
+</style>
 
-
-                </div>
-                <div class="card-body">
-                    <div class="default-according style-1" id="accordionoc">
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button id="collapse" class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11">@item.SubjectName</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
-
-                                <div class="row padding-search">
-                                    <div class="row">
-                                        <div style="margin-top: 12%; margin-bottom: 12%;">
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/Viewlecturedocs.css" rel="stylesheet" />
 
 
-                                            <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
-                                            <label style="margin-left: 19%;">   @item.ClassTeacherName</label>
-                                        </div>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
 
-                                    </div>
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>VIEW LECTURES / DOCS</h4>
 
 
-                                </div>
-                                <div id="VLD_ProgressDetails_sub">
-                                    <input type="text" value="@item.InstanceClassificationId" id="VLD_Instanceclassficationid_sub" hidden style="display:none" />
-                                    <input type="text" value="@item.InstanceSubClassificationId " id="VLD_InstanceSubClassificationId_sub" hidden style="display:none" />
-                                    <input type="text" value="@item.SubjectId" id="VLD_SubjectId_sub" hidden style="display:none" />
-                                    <label id="ProgramDetails_sub">Program Details >></label>
-                                </div>
-                            </div>
-                        </div>
+
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+
+                @*=====================         BUTTONS                =================*@
+
+                <div class="row justify-content">
+                    <div class="col-sm-3">
+                    </div>
+
+                    <div class="col-sm-9">
+                        <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="VLD_Backtoprogram">  &lt;&lt; Back To Programs</button>
 
                     </div>
                 </div>
-            </div>
-        </div>
-    }
+                <div class="card mb-4">
+                    <div class="row">
+                        <div class="col">
+
+                            @*=====================         DROP DOWN               =================*@
+                            <div class="row mb-3">
+                                @foreach (var item in Model)
+                                {
+                                   
+                                <div class="col-sm-4">
+                                    <div class="card-body">
+                                        <div class="accordion">
 
 
-</div>
+                                           
+
+
+                                            <div class="card accordion-item active">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.SubjectId" aria-expanded="true">
+                                                        @item.SubjectName
+                                                    </button>
+                                                </h2>
+
+                                                <div id="accordionWithIcon-@item.SubjectId" class="accordion-collapse collapse show" style="">
+                                                    <div class="accordion-body">
+
+                                                        <div style="margin-top: 12%; margin-bottom: 12%;">
+
+
+                                                            <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
+                                                            <label style="margin-left: 19%;">   @item.ClassTeacherName</label>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div id="VLD_ProgressDetails_sub">
+                                                    <input type="text" value="@item.InstanceClassificationId" id="VLD_Instanceclassficationid_sub" hidden style="display:none" />
+                                                    <input type="text" value="@item.InstanceSubClassificationId " id="VLD_InstanceSubClassificationId_sub" hidden style="display:none" />
+                                                    <input type="text" value="@item.SubjectId" id="VLD_SubjectId_sub" hidden style="display:none" />
+                                                    <label id="ProgramDetails_sub" class="btn">Program Details >></label>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+    </div>
+
+
+
+</body>
+</html>
+
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 <script src="~/js/ViewLecturedocs.js"></script>
