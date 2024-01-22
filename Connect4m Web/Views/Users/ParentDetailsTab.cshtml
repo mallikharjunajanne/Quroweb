@@ -4,9 +4,7 @@
     Layout = null;
 }
 
-<link href="~/css/CommonStyle.css" rel="stylesheet" />
-<style>
-</style>
+
 
 
 <div id="DivParentDetailsTab">
@@ -15,76 +13,97 @@
     <input type="hidden" asp-for="UserId" value="@ViewBag?.UserId" id="HdnUserId" />
     <input type="hidden" asp-for="ParentId" value="@ViewBag?.ParentId" id="HdnParentId" />
     <input type="hidden" asp-for="InstanceID" id="HdnInstanceID" />
-    @*---Save Users Card----*@
-    @*--- PAY ROLE INFORMATION Card----*@
-    <div class="card-header bg-primary ">
+   
+    @*================================================== Parent Details Card================================*@
+<div class="card mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
         <h5 class="mb-0">
-            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon123" aria-expanded="true" aria-controls="collapse11123"> <span id="SpnCardHeaderName">SAVE PARENTS</span><span style=" margin-left: 69%;" class="required"> INDICATES REQUIRED FIELDS</span></button>
+            <span>
+                PARENT DETAILS
+            </span>
         </h5>
     </div>
-    <div class="collapse show " id="collapseicon123" aria-labelledby="collapseicon123" data-bs-parent="#accordionoc123">
-
-        <div class="row padding-search ">
+   
+        <div class="card-body">
             <div class="row">
-                <div class="row">
+                <div class="col">
                     @*----------------------*@
-                    <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="Name"></label>
-                    </div>
-                    <div class="form-group col-4 ">
-                        <label>@ViewBag.Name</label>
-                    </div>
-                    @*----------------------*@
-                    <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="ClassificationName"></label>
-                    </div>
-                    <div class="form-group col-4 ">
-                        <label>@ViewBag.Department </label>
-                    </div>
-                    @*----------------------*@
-                    <div class="form-group col-2 ">
-                        <label class="control-label space required" asp-for="SubClassificationName"></label>
-                    </div>
-                    <div class="form-group col-4 ">
-                        <label>@ViewBag.Class </label>
+                    <div class="row mb-3 ">
+                        <label asp-for="Name" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                        <div class="col-sm-4 ">
+                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Name">
+                        </div>
                     </div>
 
-
-                    <div class="form-group col-4 ClsDivTeachers">
-                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                    @*----------------------*@
+                    <div class="row mb-3 ">
+                        <label asp-for="ClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                        <div class="col-sm-4 ">
+                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Department">
+                        </div>
                     </div>
+                    @*----------------------*@
+                    <div class="row mb-3 ">
+                        <label asp-for="SubClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                        <div class="col-sm-4 ">
+                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Class">
+                        </div>
+                    </div>
+                    @*----------------------*@
+                    <div class="row mb-3 ">
+                        <label asp-for="InstanceUserCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name">Student Id</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.InstanceUserCode">
+                        </div>
+                    </div>
+                    @*----------------------*@
+
+                    <div class="row mb-3 ">
+                        <label class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                        <div class="col-sm-4 ">
+                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" />
+                        </div>
+                    </div>
+                
                     @*----------------------*@
                 </div>
             </div>
         </div>
-    </div>
+   
+</div>
 
     @*--- Parent Details Table Card----*@
 <div class="card" id="DivTblParentsSearchresults">
-    <div class="card-header bg-primary">
-        <h5 class="mb-0">
-            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="TblParentCounts" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-        </h5>
-    </div>
-    @if (@ViewBag?.UserId != null && @ViewBag?.UserId != 0)
-    {
-        <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 85%; border-radius: 15px; height: 35px;  margin-bottom: 3px;" id="BtnAddNewParents" onclick="MoveTonextpage('CreateNewParents',null)">Add New</button>
-    }
-    <div id="eg1">
-        <table class=" table table-bordered" id="TblParentsSearchresults" style="display:none">
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>Parent Name</th>
-                    <th>Relationship</th>
-                    <th>Mobile Number</th>
-                    <th>SMS Status</th>
-                    <th>Login Status</th>
-                    <th>Edit</th>
-                    <th>Make Primary Contact</th>
-                </tr>
-            </thead>
-        </table>
+    <div class="card-datatable table-responsive pt-0">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+            <div class="card-header flex-column flex-md-row">
+                <div class="head-label text-center">
+                    <h5 class="card-title mb-0">
+                        <span>YOUR SEARCH RESULTED &nbsp;<span id="TblParentCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                    </h5>
+                </div>
+            </div>
+           
+            @if (@ViewBag?.UserId != null && @ViewBag?.UserId != 0)
+            {
+                <button class="btn rounded-pill btn-outline-info waves-effect float-end" id="BtnAddNewParents" onclick="MoveTonextpage('CreateNewParents',null)">Add New</button>
+            }
+                <table class="datatables-basic table dataTable no-footer dtr-column link" id="TblParentsSearchresults" style="display:none">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Parent Name</th>
+                            <th>Relationship</th>
+                            <th>Mobile Number</th>
+                            <th>SMS Status</th>
+                            <th>Login Status</th>
+                            @*<th>Edit</th>*@
+                            <th>Make Primary Contact</th>
+                        </tr>
+                    </thead>
+                </table>
+            
+        </div>
     </div>
 </div>
 
@@ -96,7 +115,7 @@
 
 <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="~/Datatable/datatable.min.js"></script>
-<script src="~/js/GeneralFunctions.js"></script>
+@*<script src="~/js/GeneralFunctions.js"></script>*@
 @*<script src="~/js/ManageUsers.js"></script>*@
 
 
@@ -110,41 +129,41 @@
         TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Users/TblParentsSearch?UserId=' + UserId, 'TblParentsSearchresults', 'TblParentCounts', '', 'DivTblParentsSearchresults', '', [], true);
     });
 
-    function MakePrimaryContact_CallingFunction(ParentId,IsParent) {
-        debugger;
-        loaddingimg.css('display', 'block');
-      //  var StudentId = $("#HdnUserId").val();
-        performCrudOperationCommonFunction('POST', "/Users/MakePrimaryContact_CallingFunction?StudentId=" + $("#HdnUserId").val()+"&ParentId=" + ParentId + "&IsParent=" + IsParent, null, function (response) {
-            debugger;
-        }, function (error) {
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }, true);
-        loaddingimg.css('display', 'block');
-    }
+    //function MakePrimaryContact_CallingFunction(ParentId,IsParent) {
+    //    debugger;
+    //    loaddingimg.css('display', 'block');
+    //  //  var StudentId = $("#HdnUserId").val();
+    //    performCrudOperationCommonFunction('POST', "/Users/MakePrimaryContact_CallingFunction?StudentId=" + $("#HdnUserId").val()+"&ParentId=" + ParentId + "&IsParent=" + IsParent, null, function (response) {
+    //        debugger;
+    //    }, function (error) {
+    //        loaddingimg.css('display', 'none');
+    //        $("#Main_Span_Error").text("Something Error");
+    //    }, true);
+    //    loaddingimg.css('display', 'none');
+    //}
 
 
     //===================>>>>>>>>>>>>>>====In ParentDetailsTab Page  Functions START
 
 
     //==================== to get details for Edit
-    function GettingParentDetails_EditFunction(ParentId, isParentTable) {
-        debugger; try {
-            loaddingimg.css('display', 'block');
+    //function GettingParentDetails_EditFunction(ParentId, isParentTable) {
+    //    debugger; try {
+    //        loaddingimg.css('display', 'block');
 
-            MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable, null);
-            //if (isParentTable == 1) {
-            //    $(".ClsLoginInfoCard").css('display', 'block');
-            //} else {
-            //    $(".ClsLoginInfoCard").css('display', 'none');
-            //}
-            loaddingimg.css('display', 'none');
+    //        MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable, null);
+    //        //if (isParentTable == 1) {
+    //        //    $(".ClsLoginInfoCard").css('display', 'block');
+    //        //} else {
+    //        //    $(".ClsLoginInfoCard").css('display', 'none');
+    //        //}
+    //        loaddingimg.css('display', 'none');
 
-        } catch (e) {
-            $("#Main_Span_Error").text("Something Error");
-            loaddingimg.css('display', 'none');
-        }
-    }
+    //    } catch (e) {
+    //        $("#Main_Span_Error").text("Something Error");
+    //        loaddingimg.css('display', 'none');
+    //    }
+    //}
 
 //=====================<<<<<<<<<<<<<<<<<<==In ParentDetailsTab Page  Functions END
 

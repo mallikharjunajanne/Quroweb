@@ -15,7 +15,7 @@
             text-wrap: normal;
             line-height: 24px;
             padding: 0px;
-            list-style:decimal;
+            list-style: decimal;
         }
 
         .Scrolling:hover {
@@ -41,14 +41,25 @@
     }
 </style>
 
+@{
+    var listcounts = Model.Count;
+}
 <div class="scrolling-container">
     <ul class="Scrolling">
-        @foreach (var item in Model)
+        @if (listcounts != 0)
         {
-            <li class="text-primary">
-                @item.Subject      <span> <br />@item.createddate             </span>
-            </li>
-
+            @foreach (var item in Model)
+            {
+                <li class="text-primary">
+                    @item.Subject<span> <br />@item.createddate</span>
+                </li>
+            }
+        }
+        else
+        {
+            <span class="text-primary" style="color:black;">
+                 No Data Found in Flash News 
+            </span>
         }
     </ul>
 </div>

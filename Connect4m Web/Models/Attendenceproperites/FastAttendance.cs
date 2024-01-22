@@ -9,18 +9,24 @@ namespace Connect4m_Web.Models.Attendenceproperites
 {
     public class FastAttendance
     {
-        public DateTime StartDate { get; set; }
-        public string Instanceid { get; set; }
-
-
-        [DisplayName("Department")]
-        [Required(ErrorMessage = "Please Select Department")]
+        [Required(ErrorMessage = "StartDate is required")]
+        public DateTime? StartDate { get; set; }
+        public string Instanceid { get; set; }    
         public string ClassificationName { get; set; }
+        [Required(ErrorMessage = "Department is required")]
         public string InstanceClassificationId { get; set; }
+        [Required(ErrorMessage = "Class is required")]
         public string InstanceSubClassificationId   { get; set; }
-        public string SubClassificationName      { get; set; }
+        public List<string> InstanceSubClassificationIds { get;set; }
+        public string SubClassificationName{ get; set; }
+        [Required(ErrorMessage = "SlotName is required")]
         public string SlotId { get; set; }
         public string SlotName { get; set; }
         public string MasterSlotId { get; set; }
+        public string Returnmessage { get; set; }
+
+        public List<Dictionary<string, string>> FormData { get; set; }
+        public List<string> Userids { get; set; }
+
     }
 }

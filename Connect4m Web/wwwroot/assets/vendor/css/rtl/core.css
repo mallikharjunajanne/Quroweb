@@ -7144,7 +7144,8 @@ a.invert-bg-dark:hover, a.invert-bg-dark:focus {
 
 .btn {
   cursor: pointer;
-  display: inline-flex !important;
+ /* display: inline-flex !important; Changed By Rakesh*/
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.135s ease-in-out;
@@ -26110,4 +26111,34 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 }
 .footer.bg-lighter hr {
   border-color: rgba(93, 89, 108, 0.0760954902);
+}
+
+.link tbody td:nth-child(2):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: lightblue;
+}
+
+.link tbody td:nth-child(2) {
+    color: black;
+    font-weight: 900 !important;
+}
+.compare, .ErrorMessageSpan {
+    color: red;
+    font-size: small;
+}
+/* h6 label,h5 span {
+    background-color: #121451;
+    COLOR: white;
+    font-weight: 600;
+    filter: drop-shadow(2px 4px 6px black);
+    padding: 4px;
+    border-radius: 15px;
+}
+*/
+
+.errorboxshadow {
+    box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
 }

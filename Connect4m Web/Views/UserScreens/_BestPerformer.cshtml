@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<style>
+    .Scrolling {
+        white-space: initial;
+        overflow: unset;
+        animation: scroll 8s linear infinite;
+        transform-origin: bottom;
+    }
+
+        .Scrolling li {
+            padding-bottom: 10px;
+            text-wrap: normal;
+            line-height: 24px;
+            padding: 0px;
+            list-style: decimal;
+        }
+
+        .Scrolling:hover {
+            animation-play-state: paused;
+        }
+
+    @@keyframes scroll {
+        0% {
+            transform: translateY(100%); /* Start from below the element */
+        }
+
+        100% {
+            transform: translateY(-100%); /* Scroll text to the top */
+        }
+    }
+
+    .scrolling-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        min-height: 240px;
+        overflow-y: hidden;
+    }
+</style>
+
+@{
+    var listcounts = Model.Count;
+}
+<div class="scrolling-container">
+    <ul class="Scrolling">
+
+        @{
+            try
+            {
+                @if (listcounts != 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li class="text-primary">
+                            @item.Eventphotos
+                            Name:  @item.FirstName
+                            Department: @item.ClassificationName
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="text-primary" style="color:black;">
+                        No Data Found in Flash News
+                    </li>
+                }
+            }
+            catch (Exception)
+            {
+                <li class="text-primary" style="color:black;">
+                    No Data Found in Flash News
+                </li>
+            }
+        }
+    </ul>
+</div>

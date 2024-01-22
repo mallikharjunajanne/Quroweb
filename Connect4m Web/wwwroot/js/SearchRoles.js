@@ -169,14 +169,14 @@ $(document).on('click', '#tblMRsearchresults .fa-trash-o', function (event) {
 $(document).on('click', '.Rolecheckbox input[type=checkbox]', function (event) {
     event.stopImmediatePropagation();
     //debugger;
-    if ($(this).closest('.col-12').find('.parentcheckboxes').length>0) {
-        if ($(this).closest('.col-12').find('.parentcheckboxes').css('display') === 'none') {
-            $(this).closest('.row').css('height', 'auto');
-            $(this).closest('.col-12').find('div:eq(1)').css('display', 'contents');
+    if ($(this).closest('.col-sm-12').find('.parentcheckboxes').length>0) {
+        if ($(this).closest('.col-sm-12').find('.parentcheckboxes').css('display') === 'none') {
+           /* $(this).closest('.row').css('height', 'auto');*/
+            $(this).closest('.col-sm-12').find('div:eq(1)').css('display', 'contents');
         } else {
-            $(this).closest('.row').css('height', '34px');
-            $(this).closest('.col-12').find('input[type=checkbox]').prop('checked', false);
-            $(this).closest('.col-12').find('div:eq(1)').css('display', 'none');
+          //  $(this).closest('.row').css('height', '34px');
+            $(this).closest('.col-sm-12').find('input[type=checkbox]').prop('checked', false);
+            $(this).closest('.col-sm-12').find('div:eq(1)').css('display', 'none');
 
         }
     }
@@ -202,7 +202,7 @@ $("#Create_Role").submit(function (event) {
         var validationmelength = validationMessages.length;
         
 
-        var checksall = $('#Create_Role').find('.col-10').find('[type="checkbox"]');
+        var checksall = $('#Create_Role').find('.col-sm-10').find('[type="checkbox"]');
         for (var i = 0; i < checksall.length; i++) {
             if ($(checksall[i]).prop('checked')) {
                 formdata_CSA += '&AuthMenuIds=' + $(checksall[i]).val();

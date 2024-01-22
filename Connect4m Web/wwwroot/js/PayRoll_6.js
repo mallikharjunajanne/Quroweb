@@ -10,7 +10,7 @@
 //--------------------------Search  EMPLOYEE ATTENDANCE POSTING
 $(document).ready(function () {
    // searchManageEmployeeAttendence();
-    setProgressBar(6, '.c-6');
+   // setProgressBar(6, '.c-6');
 })
 
 //---------------------------------------------------------------------------------------------   When Click ON Search Button 
@@ -77,11 +77,11 @@ function searchManageEmployeeAttendence(data) {
 
             if (response[0].attendanceMonthly == "0") {
                 $('#tblEAPsearchresults').find('th:nth-child(7), th:nth-child(8), th:nth-child(9), th:nth-child(10)').css('color', 'red');
-                $('#tblEAPsearchresults').find('th').css('background-color', 'white');
+                //$('#tblEAPsearchresults').find('th').css('background-color', 'white');
             }
             else {
                 $('#tblEAPsearchresults').find('th:nth-child(7), th:nth-child(8), th:nth-child(9), th:nth-child(10)').css('color', 'green');
-                $('#tblEAPsearchresults').find('th').css('background-color', '#dfd3d3');
+               // $('#tblEAPsearchresults').find('th').css('background-color', '#dfd3d3');
             }
 
             $("#totalrecords_Tranctions_EAP").text(response.length);
@@ -316,10 +316,10 @@ function searchManageEmployeeAttendence(data) {
                         render: function (data, type, row, meta) {
                            
                             if (row.display1 == 1) {
-                                return '<input type="text" value="' + row.workingDays + '" class="form-control" onkeypress="return(AllowFloat(event))"/>  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'workingDays\', \'AttendanceMonthly\');" />'
+                                return '<input type="text" value="' + row.workingDays + '"  onkeypress="return(AllowFloat(event))"/>  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'workingDays\', \'AttendanceMonthly\');" />'
 
                             } else {
-                                return '<input type="text" value="' + row.workingDays + '" class="form-control" onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.workingDays + '"  onkeypress="return(AllowFloat(event))" />'
 
                             }
                           
@@ -332,10 +332,10 @@ function searchManageEmployeeAttendence(data) {
                         render: function (data, type, row, meta) {
 
                             if (row.display2 == 1) {
-                                return '<input type="text" value="' + row.presentDays + '" class="form-control" onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'presentDays\', \'AttendanceMonthly\');" />'
+                                return '<input type="text" value="' + row.presentDays + '"  onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'presentDays\', \'AttendanceMonthly\');" />'
 
                             } else {
-                                return '<input type="text" value="' + row.presentDays + '" class="form-control" onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.presentDays + '"  onkeypress="return(AllowFloat(event))" />'
 
                             }
                           
@@ -345,10 +345,10 @@ function searchManageEmployeeAttendence(data) {
 
                         render: function (data, type, row, meta) {
                             if (row.display3 == 1) {
-                                return '<input type="text" value="' + row.numberofLeaves + '" class="form-control" onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'AbsentDays\', \'AttendanceMonthly\');" />'
+                                return '<input type="text" value="' + row.numberofLeaves + '"  onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'AbsentDays\', \'AttendanceMonthly\');" />'
 
                             } else {
-                                return '<input type="text" value="' + row.numberofLeaves + '" class="form-control"onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.numberofLeaves + '" onkeypress="return(AllowFloat(event))" />'
                             }
                            
 
@@ -358,10 +358,10 @@ function searchManageEmployeeAttendence(data) {
 
                         render: function (data, type, row, meta) {
                             if (row.display4 == 1) {
-                                return '<input type="text" value="' + row.lossPayDays + '" class="form-control" onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'LossOfPayDays\', \'AttendanceMonthly\');" />'
+                                return '<input type="text" value="' + row.lossPayDays + '" onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'LossOfPayDays\', \'AttendanceMonthly\');" />'
 
                             } else {
-                                return '<input type="text" value="' + row.lossPayDays + '" class="form-control" onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.lossPayDays + '"  onkeypress="return(AllowFloat(event))" />'
                             }
                         }
                     }, {
@@ -369,10 +369,10 @@ function searchManageEmployeeAttendence(data) {
 
                         render: function (data, type, row, meta) {
                             if (row.display7 == 1) {
-                                return '<input type="text" value="' + row.cl + '" class="form-control" onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'CL\', \'AttendanceMonthly\');" />'
+                                return '<input type="text" value="' + row.cl + '"  onkeypress="return(AllowFloat(event))" />  <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'CL\', \'AttendanceMonthly\');" />'
 
                             } else {
-                                return '<input type="text" value="' + row.cl + '" class="form-control" onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.cl + '"  onkeypress="return(AllowFloat(event))" />'
                             }
 
                         }
@@ -381,11 +381,11 @@ function searchManageEmployeeAttendence(data) {
 
                         render: function (data, type, row, meta) {
                             if (row.display8 == 1) {
-                                return '<input type="text" value="' + row.od + '" class="form-control" onkeypress="return(AllowFloat(event))" /> <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'OD\', \'AttendanceMonthly\');" />';
+                                return '<input type="text" value="' + row.od + '" onkeypress="return(AllowFloat(event))" /> <img src="/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(' + row.attendanceMonthly + ', \'OD\', \'AttendanceMonthly\');" />';
 
 
                             } else {
-                                return '<input type="text" value="' + row.od + '" class="form-control" onkeypress="return(AllowFloat(event))" />'
+                                return '<input type="text" value="' + row.od + '" onkeypress="return(AllowFloat(event))" />'
                             }
                         }
                     }

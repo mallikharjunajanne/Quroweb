@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Connect4m_Web.Models.LMSproperties.SchoolInstanceslist>
+
+@{
+    ViewData["Title"] = "SearchSchoolwiseAttendanceReport";
+    Layout = null;
+}
+
+
+<div class="table-responsive text-nowrap">
+    <div class="demo-inline-spacing">
+        <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="exportexcelschoolattendance">Export Excel</button>
+    </div>
+
+    <h5 class="card-title mb-0">
+        <span id="CountOfRecords_LeaveLevels">
+            YOUR SEARCH RESULTED
+            <span id="Counts" class="number-circle">@((Model != null ? Model.Count() - 1 : 0))</span>
+            RECORD(S).
+        </span>
+    </h5>
+
+    <table class=" table table-hover table-bordered" id="schoosattendancedetails">
+        <thead class="table-hover table-dark">
+            <tr>
+                <th>
+                    SI.No
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstanceName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalStrength)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PresentCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AbsentCount)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+            @{int count = 0; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{count++;}
+                        @{if (count == Model.Count())
+                            {
+
+                            }
+                            else
+                            {
+                                @count
+                            }
+                        }
+                    </td>
+                    <td>
+                        <span onclick="@(item.Instanceid == "0" ? "" : $"bindschoolattendancereportsub('{item.Instanceid}', this)")" style="@(item.Instanceid == "0" ? "" : "color: #7367f0; cursor: pointer;")">
+
+
+                            @Html.DisplayFor(modelItem => item.InstanceName)
+                        </span>
+                        @*@Html.HiddenFor(modelItem => item.Instanceid)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalStrength)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PresentCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AbsentCount)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -101,6 +101,16 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<Classteacher> ClassteacherList { get; set; }
             public List<CoClassteacher> CoClassteacherList { get; set; }   
         }
+
+        public class Categorytypes
+        {
+            public int CategoryId { get; set; }
+            public string CategoryName { get; set; }
+            public string CategoryDescription { get; set; }         
+            public int CategoryTypeId { get; set; }
+            public int AssetTypeId { get; set; }         
+        }
+
         public class BestPerformer : Insatnceids
         {
             public int PerformerId { get; set; }
@@ -256,8 +266,19 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         }
 
+        public class Worksheetsdata 
+        {
+            public string Subject{ get; set; }
+            public string ENoticeDescription{ get; set; }
+            public string CategoryName{ get; set; }
+            public string Createddate{ get; set; }
+            public string Noticedate{ get; set; }
+            public string Noticestartdate{ get; set; }
+            
+        }
 
-        //----->Last try
+
+
         public class manageenotice
         {
             public int ENoticeId { get; set; }

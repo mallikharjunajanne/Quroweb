@@ -35,7 +35,7 @@ namespace Connect4m_Web.Models
         public string IncludeClass { get; set; }
 
 
-
+        //public List<String> TotalMarksSendingList { get; set; }
         public List<int> UseridList { get; set; }
         public List<string> SecureMarksList { get; set; }
         public List<string> GradeList { get; set; }

@@ -7,7 +7,7 @@
 //--------------------------Search The CONFIGURE mANage Category
 $(document).ready(function () {
     searchManageSubCategory();
-    setProgressBar(4, '.c-4');
+   // setProgressBar(4, '.c-4');
 
 })
 //---------------------------------------------------------------------------Search

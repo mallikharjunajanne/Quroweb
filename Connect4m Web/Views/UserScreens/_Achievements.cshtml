@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@{
+    var listcounts = Model.Count;
+}
+@if (listcounts != 0)
+{
+
+    <table style="border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+        <tbody>
+            <tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; text-align: center; color: black;">
+                <th>Leave Type</th>
+                <th>Total</th>
+                <th>Used</th>
+                <th>Approved Not Used</th>
+                <th>Leaves Awaiting Approval</th>
+                <th>Available</th>
+            </tr>
+
+
+            @if (listcounts != 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Subject</td>
+                        <td>@item.ENoticeDescription</td>
+                        <td>@item.CategoryName</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr style="text-align: center;">
+                    <td colspan="5" style="border: 1px solid #dbdbdb; height: 24px;">No Data Found in Achievements</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else 
+{ 
+<span>No Data Found in Achievements</span>
+}

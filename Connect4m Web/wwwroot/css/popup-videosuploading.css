@@ -64,7 +64,7 @@ video {
     border: 2px solid red;
     text-align: center;
 }
-.row > div {
+#popupinner .row > div {
     position: relative;
     display: flex;
 }
@@ -151,7 +151,7 @@ hr {
 }
 #close-popup {
     position: fixed;
-    margin-left: 73%;
+    margin-left: 65%;
     padding: 6px;
     background-color: #fd2d63;
     color: white;

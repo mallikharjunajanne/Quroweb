@@ -41,227 +41,202 @@
    
 </head>
 <body>
-    <div class="card">
-
-        <div class="spinner-container" id="loadingSpinnerContainer">
-
-            <div class="overlay">
-                <div id="loadingSpinner">
-                    <div class="spinner"></div>
-                    <div class="spinner"></div>
-                    <div class="spinner"></div>
-                </div>
-                <div class="loading-text">Loading....</div>
-            </div>
-        </div>
-
-
-
-        <div class="card-header pb-0">
-            <div style=" font-size: 50px; text-align: center;">
-                <h1 style=" color: black; font-weight: 700; font-size: 19px; margin-top: -13px; ">SET FEE FOR USERS</h1>
-            </div>
-        </div>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>SET FEE FOR USERS </h4>
         <div id="validation2" style=" color: red; margin-left: 10px; font-family: none;"></div>
         <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
-        <div id="Search_Pay_For_UsersFileds_Divid" class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width:99%;"> <span class="Header_text_span">SEARCH USERS</span></button>
-                        </h5>
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH USERS
+                            </span>
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                        <div class="card-body">
-                            <div id="searchFormContainer">
-                                <form id="searchForm">
-                                    @*asp-action="Fee_Set_Users_GetFormBtn_click_TblData"*@
-                                    <div class="row">
-                                        @*<div class="row">*@
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label"> <font style="color: red; font-size: 13px;">*</font>Role: </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input type="hidden" asp-for="InstanceId" value="@ViewBag.InstanceId" />
-                                            <input type="hidden" id="updatedBy_Txtid" value="@ViewBag.Updatedby" />
-                                            <select id="InstanceRole_Id" asp-for="InstanceRoleId" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label"><font style="color: red; font-size: 13px;">*</font> Department: </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font> Class: </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px;"> Referral: </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="StudentQuotaId" id="StudentQuotaId_DD" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px;"> Gender  : </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="Gender" id="Gender" class="Dropdown_Css">
-                                                <option selected="selected" value="0142">Select Gender</option>
-                                                <option value="1">Male</option>
-                                                <option value="0">Female</option>
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px;"> <font style="color: red; font-size: 13px;">*</font>Academic Year : </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="AcademicYearId" id="AcademicYearId_DD" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font>Fee Term : </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <select asp-for="FeeTermId" id="FeeTermId_DD" class="Dropdown_Css">
-                                            </select>
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" style="height: 30px;"> Discount: </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input type="checkbox" id="Discount_Checkbox_ID" style="height: 25px;" onchange="toggleDropdownSelection()" />
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-5">
-                                            <label class="control-label" id="FeetypeLbl_ID"><font style="color: red; font-size: 13px;">*</font> Fee Type: </label>
-                                        </div>
-                                        <div class="form-group col-4">
+                    <div class="card-body" id="Search_Pay_For_UsersFileds_Divid">
+                        <div id="searchFormContainer">
+                            <form id="searchForm">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row mb-3">
+                                            @*asp-action="Fee_Set_Users_GetFormBtn_click_TblData"*@
 
-                                            <div class="custom-dropdown" id="checkboxListFeeType_Container">
-                                                <ul class="dropdown-options" id="FeeType_checkboxListFeeType">
-                                                    <li>
-                                                        <p id="noOptionsMessage" class="NoOptions_message" style="display: none;">No Fee Types available.</p>
-                                                    </li>
-                                                </ul>
-                                                <input type="checkbox" id="selectAllFeeTypes" /> Select All Fee Types
+                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Role</label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <input type="hidden" asp-for="InstanceId" value="@ViewBag.InstanceId" />
+                                                    <input type="hidden" id="updatedBy_Txtid" value="@ViewBag.Updatedby" />
+                                                    <select id="InstanceRole_Id" asp-for="InstanceRoleId" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space">Department: </label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space" style=" height: 30px;"> Class </label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space" style=" height: 30px;"> Referral: </label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="StudentQuotaId" id="StudentQuotaId_DD" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end space"> Gender  : </label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="Gender" id="Gender" class="select2 form-select select2-hidden-accessible">
+                                                        <option selected="selected" value="0142">Select Gender</option>
+                                                        <option value="1">Male</option>
+                                                        <option value="0">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Academic Year  </label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="AcademicYearId" id="AcademicYearId_DD" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space">Fee Term  </label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select asp-for="FeeTermId" id="FeeTermId_DD" class="select2 form-select select2-hidden-accessible">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3" @*class="form-group col-5"*@>
+                                            <label class="control-label col-sm-4 col-form-label text-end space" style="height: 30px;"> Discount: </label>
+
+                                            <div class="form-group col-sm-4">
+                                                <input type="checkbox" id="Discount_Checkbox_ID" style="height: 25px;" onchange="toggleDropdownSelection()" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end required space" id="FeetypeLbl_ID"> Fee Type </label>
+
+                                            <div class="form-group col-4">
+
+                                                <div class="custom-dropdown" id="checkboxListFeeType_Container">
+                                                    <ul class="dropdown-options" id="FeeType_checkboxListFeeType">
+                                                        <li>
+                                                            <p id="noOptionsMessage" class="NoOptions_message" style="display: none;">No Fee Types available.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <input type="checkbox" id="selectAllFeeTypes" /> Select All Fee Types
+                                                </div>
 
 
 
-                                            <select asp-for="FeeTypeid" id="FeeTypeid_DD" class="Dropdown_Css" style="display: none;">
-                                            </select>
+                                                <select asp-for="FeeTypeid" id="FeeTypeid_DD" class="select2 form-select select2-hidden-accessible" style="display: none;">
+                                                </select>
 
-
+                                            </div>
                                         </div>
 
                                         <div class="form-group col-5">
 
                                         </div>
-                                        <div class="form-group col-4">
 
-                                            <input type="checkbox" id="checkbox1" onclick="Hostlers('checkbox1','checkbox2','True');" />Hostlers
-                                            <input type="checkbox" id="checkbox2" onclick="NonHostlers('checkbox2','checkbox1','False');" />Non Hostlers
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end">  </label>
+                                            <div class="form-group col-sm-4">
+                                                <input type="checkbox" id="checkbox1" onclick="Hostlers('checkbox1','checkbox2','True');" />Hostlers
+                                                <input type="checkbox" id="checkbox2" onclick="NonHostlers('checkbox2','checkbox1','False');" />Non Hostlers
 
-                                        </div>
-                                        <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-5">
-                                            <label class="control-label" style=" height: 30px; margin-top: 38px;"><font style="color: red; font-size: 13px;">*</font> Users : </label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <div class="custom-dropdown" id="checkboxListUsers_Container">
-                                                <ul class="dropdown-options" id="Users_checkboxList">
-                                                    <li>
-                                                        <p id="noUsers_OptionsMessage" class="NoOptions_message" style="display: none;">Users Not available.</p>
-                                                    </li>
-                                                </ul>
                                             </div>
-                                            <input type="checkbox" id="selectAllUser_Checkboxs" />Select All STUDENT(s)
-
-
+                                        </div>
+                                        <div class="row mb-3" @*class="form-group col-5"*@>
+                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Users  </label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <div class="custom-dropdown" id="checkboxListUsers_Container">
+                                                        <ul class="dropdown-options" id="Users_checkboxList">
+                                                            <li>
+                                                                <p id="noUsers_OptionsMessage" class="NoOptions_message" style="display: none;">Users Not available.</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <input type="checkbox" id="selectAllUser_Checkboxs" />Select All STUDENT(s)
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div style=" text-align: center;margin-top:2%;">
 
-                                            <a href="/FeeSection/Manage_Bank_Accounts" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>
-
-                                            <input type="submit" value="Clear" class="btn btn-pill btn-outline-danger-2x" style=" border-radius: 8px;" />
-                                            <input type="submit" value="Get Form" class="btn btn-pill btn-outline-success-2x" style=" border-radius: 8px;" onclick="SetPay_Fee_Users_GetForm_Btn(event)" />
-                                            <a href="/FeeSection/PayFeeForUser" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>
-
-
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                <a href="/FeeSection/Manage_Bank_Accounts" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>
+                                                <input type="submit" value="Clear" class="btn btn-pill btn-outline-danger-2x" style=" border-radius: 8px;" />
+                                                <button class="btn btn-success waves-effect waves-light" onclick="SetPay_Fee_Users_GetForm_Btn(event)">Get Form</button>
+                                                @*<input type="submit" value="Get Form" class="btn btn-pill btn-outline-success-2x" style=" border-radius: 8px;" onclick="SetPay_Fee_Users_GetForm_Btn(event)" />*@
+                                                <a href="/FeeSection/PayFeeForUser" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div id="partialViewContainer"></div>
+
+    <div id="partialViewContainer"></div>
 
 
-        <div id="Set_Fee_Users_Divid" class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <!--<div style="display: flex; align-items: center;">
-                    <label><font style="color:red;font-size:20px;">*</font>DueDate</label>
-                    <input type="text" id="DueDate_ID" readonly>-->
-                    @* <input type="date" id="DueDate_ID" />*@
-                    <!--<div style="display: flex; align-items: center;">
-                    Order By :     <input type="button" class="sort-button" id="orderByByName"-->
-                    @*onclick="sortTable()"*@
-                    <!--value="Name" style="border: 0px solid; background-color: white; color: green; text-decoration: underline; font-weight: 900; font-family: auto; margin-right: 5px;" />
-                        <span style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid #555; margin-left: -7px; "></span>| <input type="button" value="Reg.No." class="sort-button" id="orderByByRegNo" style="border: 0px solid; background-color: white; color: green; text-decoration: underline; font-weight: 900; font-family: auto;" /> <span style="width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid #555; margin-left: -7px; "></span>
-                    </div>
-                </div>-->
-                    @*<div>
-                        <h5 class="mb-0">
-                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse1" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style=""> <span class="Header_text_span">YOUR SEARCH RESULTED : <span id="SetFeePayUsers_Count_SPID"></span> RECORDS.</span> </button>
-                        </h5>
-                    </div>*@
-                    <div class="collapse1 show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc" style="">
-                        <div class="card">
-                            <table class="Set_Fee_Users_Table" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id=" FeeSet_Users_TableData">
-                                <thead style="background-color:white;">
-                                    @*<tr style=" background-color: #DDDEEE;">
-                                        <td rowspan="2"><b>S.No</b></td>
-                                        <td rowspan="2"><b>Name</b></td>
-                                        <td rowspan="2"><b>Reg. No</b></td>
+    <div id="Set_Fee_Users_Divid" class="card-body">
+        <div class="default-according style-1" id="accordionoc">
+            <div class="card">               
+                <div class="collapse1 show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc" style="">
+                    <div class="card">
+                        <table class="Set_Fee_Users_Table" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id=" FeeSet_Users_TableData">
+                            <thead style="background-color:white;">
+                              
+                            </thead>
+                            <tbody id="FeeSet_Users_TableData_tbody">
 
-                                    </tr>
-                                    <tr style="background-color:#DDDEDF;" id="mainContainer">
-                                        <td id=""></td>
-                                        <td></td>
-                                    </tr>*@
-                                </thead>
-                                <tbody id="FeeSet_Users_TableData_tbody">
-                                </tbody>
+                            </tbody>
 
-                                @*<tr>
-                                    <td align="center" colspan="5">
-
-                                        <input type="submit" value="Submit" onclick="InsertFeeDetails()" style="width: 11%; letter-spacing: 3px;" />
-
-                                    </td>
-                                </tr>*@
-
-                            </table>
-
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>
@@ -280,8 +255,7 @@
 
     $(document).ready(function () {
        
-    $('#loadingSpinnerContainer').hide();
-
+        loaddingimg.css('display', 'none');
 
     });
 
@@ -341,6 +315,7 @@
 
 
     function toggleDropdownSelection() {
+        debugger;
         var checkboxListFeeType_Container = document.getElementById("checkboxListFeeType_Container");
         var FeeType_checkboxListFeeType = document.getElementById("FeeType_checkboxListFeeType");
        
@@ -1093,7 +1068,9 @@
 
     function SetPay_Fee_Users_GetForm_Btn(event) {
 
-        $('#loadingSpinnerContainer').show();
+        debugger;
+
+        loaddingimg.css('display', 'block');
 
         event.preventDefault();
 
@@ -1143,8 +1120,7 @@
                         $('#validation2').text('Following fields have invalid data ');
                         $('#validationMessage').text('Select Users');
                         $('#noUsers_OptionsMessage').text('Please Select Users').show();
-
-                        $('#loadingSpinnerContainer').hide();
+                        loaddingimg.css('display', 'none');
 
                         return false;
                     }
@@ -1199,7 +1175,7 @@
                             $('#partialViewContainer').empty();
                             $('#validation2').text('Following fields have invalid data:');
                             $('#validationMessage').text('Please Select FeeType');
-                            $('#loadingSpinnerContainer').hide();
+                            loaddingimg.css('display', 'none');
                             return false;
                         }
                     }
@@ -1228,7 +1204,7 @@
                              debugger;
                             console.log(response);
 
-                            $('#loadingSpinnerContainer').hide();
+                            loaddingimg.css('display', 'none');
                             $('#partialViewContainer').empty();
 
                             $('#partialViewContainer').append(response);
@@ -1236,19 +1212,19 @@
 
                         },
                         error: function (xhr, textStatus, error) {
-                            $('#loadingSpinnerContainer').show();
+                            loaddingimg.css('display', 'block');
                             // Handle the error in case of AJAX request failure
                             console.log(xhr.responseText);
                         }
                     })
 
                 } else {
-                    $('#loadingSpinnerContainer').hide();
+                    loaddingimg.css('display', 'none');
                 }
 
             } else {
 
-                $('#loadingSpinnerContainer').hide();
+                loaddingimg.css('display', 'none');
                 $('#partialViewContainer').empty();
                
                 $('#validationMessage').text('Please select exactly 10 Fee Types.');
@@ -1298,7 +1274,8 @@
                     var feeAmountInput = $td.find('input[type="text"]');
                     var feeAmountValues = parseFloat($td.find('input[type="text"]').val());
                     var textareas = $td.find('input[type="text"]').closest('td').find('textarea');
-                    var commentss = textareas.val();
+                    //var commentss = textareas.val();
+                    var commentss = textareas.val() ?? "";
                     var DueDate = row.find('td:nth-child(6)').text().trim();
                     var DueDates = $('#duedatedata').val();
 

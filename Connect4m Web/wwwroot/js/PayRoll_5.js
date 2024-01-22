@@ -7,7 +7,7 @@
 //--------------------------Search The CONFIGURE mANage Category
 $(document).ready(function () {
     searchManageEmployees();
-    setProgressBar(5, '.c-5');
+    //setProgressBar(5, '.c-5');
     try {
         $('#Insert_ME #Password').attr("type", "password");
         $('#Insert_ME #ConPassword').attr("type", "password");

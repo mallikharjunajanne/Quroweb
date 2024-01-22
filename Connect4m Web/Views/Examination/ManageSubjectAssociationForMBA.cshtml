@@ -7,160 +7,151 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        .Ddlstyle {
-            width: 230px;
-            color: black;
-            font-size: inherit;
-            height: 27px;
-        }
-
-        .errorboxshadow {
-            box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
-        }
-    </style>
-
 </head>
 <body>
-    <div class="card">
-        <div class="card-header pb-0" style="padding-top: 0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>MANAGE SUBJECTS ASSOCIATION</strong></h6>
-        </div>
-        <div class="default-according style-1" id="accordionoc9">
+    <div class="flex-grow-1 container-p-y container-fluid">
 
-            <div class="card-body" style=" padding-top: 0px;">
-                @*<a id="BtnCreateNewExams" class="BTNCreateNew Undeline" href="/Examination/UpdateManageSubjects" onclick="CreateNewExams()">Create Subject</a>*@
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE SUBJECTS ASSOCIATION</h4>
 
-                <div class="card" id="Searchpage">
-                    <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-                    <div class="card-header " style="background-color:black ;">
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                @*=============================Search Page============================*@
+                <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
+                <div class="card mb-4" id="Searchpage">
+
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon1200" aria-controls="collapse11">
-                                <span>
-                                    ASSOCIATE SUBJECTS TO STUDENTS
-                                </span>
-                            </button>
+                            <span>
+                                ASSOCIATE SUBJECTS TO STUDENTS
+                            </span>
                         </h5>
                     </div>
 
-                    <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
-                        <div class="card ">
-                            <div class="card-body">
-                                @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
-                                <form id="FmUsersSearchForMBA">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <form id="FmUsersSearchForMBA" class="needs-validation was-validated" novalidate>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                    <div style="margin-left:20%;font-size:12px">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Department :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))">
-                                                            <option value=''>Select a Department</option>
-                                                        </select>
-                                                        <span class="ErrorMessageSpan" id="DdlDepartment_ErrorSpan"></span>
-                                                        @*<span asp-validation-for="InstanceClassificationId" class="ErrorMessageSpan"></span>*@
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Class :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" onchange="ClassOnchange()" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Please select a Class</option>
-                                                        </select>
-                                                        <span class="ErrorMessageSpan" id="DdlClass_ErrorSpan"></span>
-                                                        @*<span asp-validation-for="InstanceSubClassificationId" class="ErrorMessageSpan" ></span>*@
+                            <div class="row">
+                                <div class="col">
 
-                                                    </div>
-                                                </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))" required>
+                                                    <option value=''>Select a Department</option>
+                                                </select>
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlDepartment_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Class</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" onchange="ClassOnchange()" asp-items="@(new SelectList(""))" disabled required>
+                                                    <option value=''>Please select a Class</option>
+                                                </select>
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlClass_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
 
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Subjects Type :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id='DdlSubjectType' asp-for="SubjectTypeId1" name="SubjectTypeId1" onchange="CommonDropdownFunction('POST', '/Examination/SubjectNamesDropdown_Calingfunction', 'DdlSubject', '------Select------', true,'FmUsersSearchForMBA')" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))">
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-
-                                                        <span class="ErrorMessageSpan" id="DdlSubjectType_ErrorSpan"></span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label " style="margin-top: -4px;"><i style="color:red">*</i> Subjects :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id='DdlSubject' asp-for="InstanceSubjectId" name="InstanceSubjectId" class="input-air-primary Ddlstyle" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>------Select------</option>
-                                                        </select>
-
-                                                        <span class="ErrorMessageSpan" id="DdlSubject_ErrorSpan"></span>
-                                                    </div>
-                                                </div>
-
-                                                <div style="margin-left:200px">
-                                                    <input type="reset" class="btn btn-pill btn-outline-danger btn-air-danger" onclick="ClearFunction()" id="BtnClear" style="padding:4px 20px;" value="Clear">&nbsp;&nbsp;&nbsp;
-                                                    <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" id="BtnSearch" style="padding:4px 19px;" value="Search">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <br />
-                @*searched result table*@
-                <div id="Div_TblUser" style="display:none">
-                    <span class="checkboxclass"><input id="chkSelectAll" type="checkbox" onclick="SelectAllCheckBoxes(this)"><label style="margin-bottom:-0.5rem">Check All</label></span>
-                    <div class="default-according style-1" id="accordionoc123456">
-                        <div class="card" id="SearchedTablePage">
-                            <div class="card-header " style="background-color:black ;">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                                <div class="card ">
-                                    <form id="Fm_TblUser" class="table-responsive">
-                                        @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
-                                        <table id="TblUser" class="display cell-border  tableid">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:2%">S.No</th>
-                                                    <th style="width:11%">Select User</th>
-                                                    <th>Registration Number</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            @*<tfoot>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="submit" class="btn btn-success" id="BtnSave" value="Save">
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>*@
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects Type</label>
 
-                                        </table>
-                                        <div style=" margin-left: 43%;">
-                                            <input type="submit" class="btn btn-success" id="BtnSave" value="Save">
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlSubjectType' asp-for="SubjectTypeId1" name="SubjectTypeId1" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('POST', '/Examination/SubjectNamesDropdown_Calingfunction', 'DdlSubject', '------Select------', true,'FmUsersSearchForMBA')" asp-items="@(new SelectList(""))" required>
+                                                    <option value=''>------Select------</option>
+                                                </select>
+
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlSubjectType_ErrorSpan"></span>*@
+                                                <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
+
+                                            </div>
                                         </div>
-                                    </form>
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlSubject' asp-for="InstanceSubjectId" name="InstanceSubjectId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled required>
+                                                    <option value=''>------Select------</option>
+                                                </select>
+
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlSubject_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceSubjectId" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-10">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="ClearFunction()" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearch">Search</button>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                @*===============================searched result table======================*@
+            <div id="Div_TblUser" style="display:none">
+                <div class="form-check">
+                    <input id="chkSelectAll" class="form-check-input" type="checkbox" onclick="SelectAllCheckBoxes(this)">
+
+                    <label class="form-check-label" for="chkSelectAll">Check All</label>
+                </div>
+                <div class="card" id="SearchedTablePage">
+                    <div class="card-datatable table-responsive pt-0">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="card-header flex-column flex-md-row">
+                                <div class="head-label text-center">
+                                    <h5 class="card-title mb-0">
+                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <form id="Fm_TblUser">
+                                <table id="TblUser" class="datatables-basic table dataTable no-footer dtr-column">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Select User</th>
+                                            <th>Registration Number</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-7">
+                                        <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSave" value="Save">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
+
+            </div>
+            </div>
         </div>
-    </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
@@ -171,11 +162,11 @@
 <script>
 
     $(document).ready(function () {
-        $("#loadingOverlay").show();
+        loaddingimg.css('display', 'block');
         //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
         CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
         CommonDropdownFunction("GET", "/Examination/SubjectTypesDropdown_Calingfunction", "DdlSubjectType", "------Select------", false)
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     });
     var js = jQuery.noConflict(true);
 
@@ -191,70 +182,45 @@
         $("#Div_TblUser").hide();
         $("#TblUser tbody").empty();
     }
-    //-----------Search Records
+
+    //================================Search Records=====================
     $("#FmUsersSearchForMBA").submit(function (event) {
-        debugger;
-        event.preventDefault();
-        $(".ErrorMessageSpan").empty();
-        //var formElement = document.getElementById('FmUsersSearchForMBA');
-        //setTimeout(function () {
-        //    var validationMessages = formElement.getElementsByClassName('field-validation-error');
-        //    // var validationMessages2 = formElement.getElementsByClassName('error2');
-        //    var validationmelength = validationMessages.length;
-        //    if (validationmelength == 0) {
-        //        TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblUserDetailsList', 'TblUser', 'Counts', 'FmUsersSearch', 'Div_TblUser', '', []);
-        //    }
-        //}, 50);
-        $("#DdlDepartment").removeClass("errorboxshadow");
-        $("#DdlClass").removeClass("errorboxshadow");
-        $("#DdlSubjectType").removeClass("errorboxshadow");
-        $("#DdlSubject").removeClass("errorboxshadow");
+        try {
+            //debugger;
+            event.preventDefault();
+            loaddingimg.css('display', 'block');
+            $(".ErrorMessageSpan").empty();
+            var formElement = document.getElementById('FmUsersSearchForMBA');
+            setTimeout(function () {
+                var validationMessages = formElement.getElementsByClassName('field-validation-error');
+                // var validationMessages2 = formElement.getElementsByClassName('error2');
+                var validationmelength = validationMessages.length;
+                if (validationmelength == 0) {
+                    TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblUserDetailsList', 'TblUser', 'Counts', 'FmUsersSearchForMBA', 'Div_TblUser', '', [], false);
+                    $("#BtnSave").prop("disabled", false);
+                    $("#chkSelectAll").prop('checked', false);
+                } else {
+                    loaddingimg.css('display', 'none');
+                    $('.alert-danger p').text("Pleae Enter All Required Fields");
+                    $(".alert-danger").show().delay(5000).fadeOut();
 
-
-        var SubjectId = $("#DdlSubject").val();
-        var DdlSubjectType = $("#DdlSubjectType").val();
-        var DdlClass = $("#DdlClass").val();
-        var DdlDepartment = $("#DdlDepartment").val();
-        var count = 0;
-
-        if (DdlDepartment === "") {
-            $("#DdlDepartment_ErrorSpan").text('Department is Required');
-            $("#DdlDepartment").addClass("errorboxshadow");
-            count++;
+                }
+            }, 50);
+        } catch (e) {
+            $("#Main_Span_Error").text("Something Error");
+            loaddingimg.css('display', 'none');
         }
-        if (DdlClass === "") {
-            $("#DdlClass_ErrorSpan").text('Class is Required');
-            $("#DdlClass").addClass("errorboxshadow");
-            count++;
-        }
-        if (DdlSubjectType === "") {
-            $("#DdlSubjectType_ErrorSpan").text("Subject type is Required");
-            $("#DdlSubjectType").addClass("errorboxshadow");
-            count++;
-        }
-        if (SubjectId === "" || SubjectId === null) {
-            $("#DdlSubject_ErrorSpan").text("Subject is Required");
-            $("#DdlSubject").addClass("errorboxshadow");
-            count++;
-        }
-        if (count > 0) {
-            return;
-        } else {
-            TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblUserDetailsList', 'TblUser', 'Counts', 'FmUsersSearchForMBA', 'Div_TblUser', '', []);
-            $("#chkSelectAll").prop('checked', false);
-            $("#BtnSave").prop('disabled', false);
-        }
+       
     })
 
 
 
-
-    //=---------------------This is For Submit
+      //================================= This is For Submit ===============
     $(document).on("click", '#BtnSave', function (event) {
         try {
             event.preventDefault();
             //event.stopImmediatePropagation();
-
+            loaddingimg.css('display', 'block');
 
             var SubjectId = $("#DdlSubject").val();
 
@@ -263,18 +229,19 @@
             $(".ErrorMessageSpan").empty();
             var formData = new FormData($("#FmUsersSearchForMBA")[0]);
 
-            $("#loadingOverlay").show();
             // var Subjectname = $("#Subjectname").val();
             var UsersTable = $("#TblUser tbody tr");
             var Usercheckbox;
             var UsersTableCheckBoxcount = 0;
             var shouldExit = false;
+            var Userid; var isAssociated;
             //this for check a record
-            UsersTable.each(function (index) {
+            UsersTable.each(function () {
                 Usercheckbox = $(this).find("td input[type='checkbox']#chkSMS");
                 if (Usercheckbox.is(":checked")) { //if check box is checked then it is TRUE
-                    var Userid = Usercheckbox.val();
-                    var isAssociated = Usercheckbox.attr('class');
+                    Userid = Usercheckbox.val();
+                    //var isAssociated = Usercheckbox.attr('class');
+                    isAssociated = Usercheckbox.data("instancesubjectid");
                     if (isAssociated != SubjectId && isAssociated != undefined) {
                         UsersTableCheckBoxcount = 0;
                         shouldExit = true;
@@ -287,13 +254,13 @@
             if (shouldExit) {
                 $("#Main_Span_Error").text("Subjects overlapping.");
                 window.scrollTo(0, 0);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 return;
             }
             else if (UsersTableCheckBoxcount < 1) {
                 $("#Main_Span_Error").text("Select At Least 1 user");
                 window.scrollTo(0, 0);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 return;
             }
             //177947,28728
@@ -308,20 +275,24 @@
                 var SubjectText = "";
                 if (response.message == "Record inserted successfully.") {
                     $("#BtnSave").prop('disabled', true);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(5000).fadeOut()
                 }
                 if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
                     SubjectText = $("#DdlSubject option:selected").text();
 
                 }
+                //$('.alert-danger p').text(response.message);
+                //$(".alert-danger").show().delay(6000).fadeOut()
                 $("#Main_Span_Error").text(response.message + SubjectText);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 window.scrollTo(0, 0);
             }, function (error) {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }, true);
         } catch (e) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });

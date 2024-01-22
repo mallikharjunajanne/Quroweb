@@ -54,29 +54,95 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult SchoolWelcomePage()
         {
-            string RoleName = Request.Cookies["RoleName"];
-            ViewBag.LoginRoleName = RoleName;
+            try
+            {
+                string roleName = Request.Cookies["RoleName"];
+                ViewBag.LoginRoleName = roleName;
+                
 
-            List<ENoticeByNoticeType> item = new List<ENoticeByNoticeType>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_ENotice_SelectByNoticeType?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+                if (roleName != null)
+                {
+                    roleName = roleName.ToUpper();
+                    if (roleName == "ADMINISTRATOR")
+                    {
+                        return View();
+                    }
+                    else if(roleName == "TEACHER")
+                    {
+                        return View();
+                    }
+                    else if(roleName == "PARENT")
+                    {
+                        
+                        return View();
+                    }
+                    else if (roleName == "STUDENT")
+                    {
+                        
+                        return View();
+                    }
+                    else if (roleName == "School Admin")
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }     
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+                throw;
+            }
+        }
+
+        public IActionResult ParentLogin()
+        {
+            return View();
+        }
+        public IActionResult StudentLogin()
+        {
+            return View();
+        }
+        public IActionResult InstanceCategory_search()
+        {
+            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_ENotice_SelectByNoticeType?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+            string roleName = Request.Cookies["RoleName"];
+            string role = roleName.ToUpper();
+            int CategoryTypeId = 5;
+            List<Categorytypes> item = new List<Categorytypes>();
+             
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Categorytypes?InstanceId=" + InstanceId + "&CategoryTypeId=" + CategoryTypeId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<ENoticeByNoticeType>>(data); 
+                item = JsonConvert.DeserializeObject<List<Categorytypes>>(data);
             }
-            ViewBag.LoginUserid = UserId;
-            ViewBag.list = item; //CategoryTypeId = 5
-            ViewBag.items = item[0].CategoryName;
-            ViewBag.itemss = item[1].CategoryName;
-            return View();
-        }
+            var result = new
+            {
+                RoleName = role,
+                ItemList = item
+            };
 
+            return Json(result);
+
+
+
+            //ViewBag.LoginUserid = UserId;
+            //ViewBag.list = item; //CategoryTypeId = 5
+            //ViewBag.items = item[0].CategoryName;
+            //ViewBag.itemss = item[1].CategoryName;
+            //return View();
+        }
 
 
         //----------------------------------------------------
 
 
-        
+
         //Created by rk
         public IActionResult RoleMenulist()
         {
@@ -123,7 +189,53 @@ namespace Connect4m_Web.Controllers
 
 
         #region SchoolWelcomePage
-      
+
+        // STUDENT
+        public IActionResult BestPerformer()
+        {
+            //exec stp_tblBestPerformer_Search @InstanceId=545,@Title=default,@IsWelcomePage=1
+
+            string Title = default;
+            int IsWelcomePage = 1;
+
+            List<BestPerformer> item = new List<BestPerformer>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ScbestPerformer?InstanceId=" + InstanceId+ "&Title="+ Title+ "&IsWelcomePage="+ IsWelcomePage).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<BestPerformer>>(data);
+            }            
+            return PartialView("_BestPerformer", item);
+        }
+
+        public IActionResult WorkSheet(string ENoticeType , int IsGlobalNotice)
+        {
+            List<Worksheetsdata> item = new List<Worksheetsdata>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ScWorksheet?InstanceId=" + InstanceId + "&ENoticeType=" + ENoticeType + "&UserId=" + UserId + "&IsGlobalNotice=" + IsGlobalNotice).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Worksheetsdata>>(data);
+            }
+            return PartialView("_WorkSheet", item);
+        }
+
+        public IActionResult Achievements(string ENoticeType, int IsGlobalNotice)
+        {
+            List<Worksheetsdata> item = new List<Worksheetsdata>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ScWorksheet?InstanceId=" + InstanceId + "&ENoticeType=" + ENoticeType + "&UserId=" + UserId + "&IsGlobalNotice=" + IsGlobalNotice).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Worksheetsdata>>(data);
+            }
+            return PartialView("_Achievements", item);
+        }
+
+
         [HttpGet]
         public IActionResult Coollinks()
         {
@@ -141,10 +253,9 @@ namespace Connect4m_Web.Controllers
           
         }
         [HttpGet]
-        public IActionResult FlashNews(string ENoticeType, int IsGlobalNotice)//int InstanceId, int UserId
+        public IActionResult FlashNews(string ENoticeType, int IsGlobalNotice)
         {
-            List<NoticeTypes> item = new List<NoticeTypes>();        
-
+            List<NoticeTypes> item = new List<NoticeTypes>();  
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_FlashNews?InstanceId=" + InstanceId + "&ENoticeType=" + ENoticeType + "&UserId=" + UserId+ "&IsGlobalNotice="+ IsGlobalNotice).Result;
 
             if (response.IsSuccessStatusCode)
@@ -155,10 +266,11 @@ namespace Connect4m_Web.Controllers
             return PartialView("_FlashNews", item);
 
         }
+
         [HttpGet]
-        public IActionResult BirthdaysByInstance()//int InstanceId, int UserId
+        public IActionResult BirthdaysByInstance()
         {
-            List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();        
+            List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();       
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BirthdaysByInstance?InstanceId=" + InstanceId).Result;
 
@@ -168,7 +280,6 @@ namespace Connect4m_Web.Controllers
                 item = JsonConvert.DeserializeObject<List<BirthdaysByInstance>>(data);
             }        
             return PartialView("_BirthdaysByInstance", item);
-
         }
 
         public IActionResult E_Noticeboard(string ENoticeType, int IsGlobalNotice)
@@ -189,19 +300,27 @@ namespace Connect4m_Web.Controllers
         public IActionResult LeaveStatus()
         {
             studentstaffleaves item = new studentstaffleaves();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/LeaveStatus?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<studentstaffleaves>(data);
-            }                      
-           
-            ViewBag.leavetypes = item.leavetypes;
-            ViewBag.studentstaffleavescount = item.studentstaffleavescount;
-            ViewBag.studentwithdrawal = item.studentwithdrawal;
-            ViewBag.leavestatus = item.leavestatus;
-            return View();
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/LeaveStatus?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    item = JsonConvert.DeserializeObject<studentstaffleaves>(data);
+                }
+
+                ViewBag.leavetypes = item.leavetypes;
+                ViewBag.studentstaffleavescount = item.studentstaffleavescount;
+                ViewBag.studentwithdrawal = item.studentwithdrawal;
+                ViewBag.leavestatus = item.leavestatus;
+                return View();
+            }
+            catch (Exception)
+            {
+                int items = 0;
+                return Json(items);                             
+            }
         }
 
         public IActionResult Absenteestudentsfortheday()
@@ -234,8 +353,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        //exec stp_tblCalendarEvents_SEARCH @InstanceId=545,@EventTitle='',@EventDate=default,@MonthId=12
-       // public IActionResult CalendarEvents(int MonthId, DateTime EventDate)
+      
         public IActionResult CalendarEvents(int MonthId)
         {            
             string EventTitle = "";
@@ -243,8 +361,7 @@ namespace Connect4m_Web.Controllers
             int day = today.Day;
             //int MonthId = today.Month;
             int year = today.Year;
-
-            //int MonthId = 4;
+           
             DateTime EventDate = new DateTime(1, 1, 1, 0, 0, 0);
             List<EventsClander> item = new List<EventsClander>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/CalendarEvents?InstanceId=" + InstanceId + "&EventTitle=" + EventTitle + "&EventDate=" + EventDate + "&MonthId=" + MonthId).Result;

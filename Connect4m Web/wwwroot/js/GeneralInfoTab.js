@@ -13,11 +13,15 @@ $(document).ready(function () {
     //-----clicked on update
     if ($("#BtnUpdateIdentification").val() == "UpdateDetails") {
         $("#BtnSaveFormInGeneralInfo").val("Update");
+        $("#BtnSaveFormInGeneralInfo").text("Update");
         $(".DdlCascadDropdowns").prop("disabled", false);
         // var Roleid = $("#DdlRoleId").val();
-        $("#SpnCardHeaderName").val("UPDATE USER");
+        //var RoleName = $("#DdlRoleId option:selected").text();
+        $("#SpnCardHeaderName").text("UPDATE USER");
 
-        RoleOnChangeFunctionInGeneralTab($("#DdlRoleId").val(), true);
+        //RoleOnChangeFunctionInGeneralTab($("#DdlRoleId option:selected").text().toUpperCase(), true);
+       // RoleOnChangeFunctionInGeneralTab("DdlRoleId", true);
+        RoleOnChangeFunctionInGeneralTab("DdlRoleIdInGeneralTab", true);
     } else {
         $("#TcTakenNo").prop("checked", true);
         $(".ClsDivTcTakesnYes").css('display', 'none');
@@ -28,6 +32,11 @@ $(document).ready(function () {
     $('#FmGeneralInfoTab #ConPassword').attr("type", "password");
 });
 
+
+
+function TAPhysicallyChallengedDetails_Calling() {
+    $("#TAPhysicallyChallengedDetails").text('');
+}
 //=======================To see the preview and Take Print
 //  $("#BtnPreview").click(function () {
 
@@ -40,16 +49,17 @@ function Preview_CalingFunction(UserId) {
         // var UserId = 184676;
         if (Url == '' || Url == undefined) {
             Url = "/Users/ManageUsersPreview?UserId=" + UserId;
+            //Url = "/Users/ManageUsersPreview?UserId=" + UserId + "&IsParentIdentification=true";
         } else {
             $("#Main_Span_Error").text("Something Error");
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             return;
         }
 
         window.open(Url, '_blank');
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     }
 };
 
@@ -85,53 +95,12 @@ $('#TxtUserName').on('input', function () {
             $('.SpnUserNameCls').removeClass('field-validation-error');
         }
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });
 
-//=====================Showing Feilds based on Role in General info
-function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
-    try {
-        //function RoleOnChangeFunction(Roleid) {
-        debugger;
-        //if (!IsEmpty) {
-        if ($("#BtnUpdateIdentification").val() != "UpdateDetails") {
-            $("#ChkIsUserJoined").prop("checked", false);
-            //$(".ClsSessionStudent").val("");
-            //$(".ClsClear").val("");
-            $(".ClsClear").val("");
-            //  $("#DdlDesignationId").val("");
-        }
-        if (Roleid == 775) {
-            $(".ClsSessionStudent").css("display", "block");
-            $(".ClsDivTeachers").css("display", "none");
-            $("#LblSiblingsInSameCollege").text("Siblings in same School");
-            $("#LblSiblingsOtherCollege").text("Siblings in Other School");
-            $("#LblTcTakenGeneralTab").text("Tc Taken");
-            $("#LblInstanceUserCodeGeneralTab").text("Roll No");
-            $("#ParentDetailsTab").css("display", "");
-            $("#BtnPreview").css('display', '');
-        } else {
-            $("#BtnPreview").css('display', "none");
-            $("#ParentDetailsTab").css("display", "none");
-            $(".ClsSessionStudent").css("display", "none");
-            $(".ClsDivTeachers").css("display", "block");
-            $("#LblSiblingsInSameCollege").text("Child studying in same School");
-            $("#LblSiblingsOtherCollege").text("Child studying in Other School ");
-            $("#LblTcTakenGeneralTab").text("Hide in the portal");
-            $("#LblInstanceUserCodeGeneralTab").text("Employee ID");
-        }
-        if ($('#TcTakenYes').is(':checked')) {
-            TcTakenChecking(1);
-        } else {
-            TcTakenChecking(0);
-        }
-    } catch (e) {
-        $("#loadingOverlay").hide();
-        $("#Main_Span_Error").text("Something Error");
-    }
-}
+
 //===================Shows date  fields
 function TcTakenChecking(Tctaken) {
     debugger
@@ -139,8 +108,9 @@ function TcTakenChecking(Tctaken) {
         $(".ClsTxtTcTakesnYes").val('');
     }
     if (Tctaken == 1) {
-        var Roleid = $("#DdlRoleId").val();
-        if (Roleid == 775) {
+       // var Roleid = $("#DdlRoleId").val();
+        //if (Roleid == 775) {
+        if ($("#DdlRoleIdInGeneralTab option:selected").text().toUpperCase() == "STUDENT") {
             $(".ClsDivTcTakesnYes").css("display", "block");
             $(".ClsDivTransferDetails").css("display", "block");
             $("#LblInstanceTransferDetailsGeneralTab").text("Transfer Details");
@@ -160,7 +130,7 @@ function TcTakenChecking(Tctaken) {
 
 
 //$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare(event, "Date Of Join", "Tc Date") });
-$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare(event, 'DtDateOfJoining', 'DtTCdate', "Date Of Join", "Tc Date") });
+$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare_Vs1(event, 'DtDateOfJoining', 'DtTCdate', "Date Of Join", "Tc Date") });
 
 
 
@@ -171,14 +141,21 @@ function DeletePhoto_CallingFunction() {
     var UserId = $("#HdnUserId").val();
     var Deletemsg = "Photo";
     CommonDeleteFunction("POST", "/Users/DeletePhoto_CallingFunction?ButtonName=Delete&UserId=" + UserId, Deletemsg, function (response) {
-        $("#Main_Span_Error").text(response.message);
-        // $("#ImgNophotoAvailable").css("display", "block");
-        // $("#ImgPhotoDisplay").css("display", "none");
-        $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
-        $("#FlPhoto").css("display", "block");
-        // $("#SpnPhotoName").css("display", "none");
-        $("#SpnPhotoName").text("");
-        $(".ClsFileName").css("display", "none");
+
+        if (response.message == "Photo Deleted Sucessfully.") {
+            $('.alert-success p').text(response.message);
+            $(".alert-success").show().delay(5000).fadeOut()
+
+
+
+            //  $("#Main_Span_Error").text(response.message);
+            $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
+            $("#FlPhoto").css("display", "block");
+            $("#SpnPhotoName").text("");
+            $(".ClsFileName").css("display", "none");
+        } else {
+            $("#Main_Span_Error").text(response.message);
+        }
         window.scrollTo(0, 0);
     });
 }
@@ -194,10 +171,12 @@ $("#BtnDeleteFormInGeneralInfo").click(function (event) {
         $("#DivappendCreateNewUsers").empty();
         $("#DivUsersSearchPage").css('display', 'block');
         $('#BtnBackToSearch').css('display', 'none');
+
     });
 });
 //  ============ Save and Update Users Details in General Tab
-$("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event) {
+//$("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event) {
+$("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
     // $("#BtnSaveFormInGeneralInfo").click(function (event) {
     try {
         event.preventDefault();
@@ -269,7 +248,6 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                     debugger;
                     if (response.message.includes("Record inserted successfully.") || response.message.includes("Record updated successfully.")) {
                         $("#BtnSaveFormInGeneralInfo").prop("disabled", true);
-                        $("#ParentDetailsTab").prop("disabled", false);
 
                         if (formId == "FmGeneralInfoTab") {
                             $("#HdnUserIdCreatePage").val(response.userid);//Append Id in create view hidden
@@ -281,30 +259,26 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                         $("#ImgPhotoDisplay").attr("src", response.photoUrl);
                         // $("#HdnUserId").val();
                         if (photo) {
-                            //if (formId == "FmParentDetailsTab") {
-                            //    $("#ImgPhotoDisplay").attr("src", "/ParentPhotos/" + $("#DdlRelationship").val() +"/" + $("#HdnInstanceID").val() + "/" + $("#HdnUserId").val() + "/" + photo.name + "");
-                            //} else {
-                            //    $("#ImgPhotoDisplay").attr("src", "/UserPhotos/" + $("#HdnInstanceID").val() + "/" + $("#HdnUserId").val() + "/" + photo.name + "");
-                            //}
-                            //  $("#ImgPhotoDisplay").attr("src", response.photoUrl);
                             $("#FlPhoto").css("display", "none");
                             $("#FlPhoto").val('');
                             $(".ClsFileName").css("display", "block");
                             $("#SpnPhotoName").text(photo.name);
-
                         }
-                        window.scrollTo(0, 0);
                         //  else {
                         //   // $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
                         //    $("#FlPhoto").css("display", "block");
                         //    $(".ClsFileName").css("display", "none");
                         //    $("#SpnPhotoName").text('');
                         //}
+                        $("#ParentDetailsTab").prop("disabled", false);
+                        $('.alert-success p').text(response.message);
+                        $(".alert-success").show().delay(5000).fadeOut()
+                    } else {
+                        $('.alert-danger p').text(response.message);
+                        $(".alert-danger").show().delay(5000).fadeOut()
                     }
-                    //  else
-                    // $("#Main_Span_Error").text(response.message);
-                    $("#" + formId + " #Main_Span_Error").text(response.message);
-                    window.scrollTo(0, 0);
+                   // $("#" + formId + " #Main_Span_Error").text(response.message);
+                //    window.scrollTo(0, 0);
                    
                 }, function (error) {
                     loaddingimg.css('display', 'none');
@@ -318,16 +292,18 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
             }
         }, 50);
     } catch (e) {
-        // $("#loadingOverlay").hide();
+        // loaddingimg.css('display', 'none');
         //   loaddingimg.css('display', 'none');
         loaddingimg.css('display', 'none');
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 })
 
 //-================================ BackToSearch
-$("#BtnBackToSearch,#BtnBackToSearchInGeneralInfo").click(function () {
+
+//$("#BtnBackToSearch,#BtnBackToSearchInGeneralInfo").click(function () {
+$("#BtnBackToSearchInGeneralInfo").click(function () {
     try {
         debugger;
         //  $(".ErrorMessageSpan").empty();

@@ -1,0 +1,158 @@
+﻿@model Connect4m_Web.Models.LMSproperties.SchoolReport
+@{
+    ViewData["Title"] = "SimpleExpenseReport";
+}
+
+@*<h1>SimpleExpenseReport</h1>*@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+
+
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span> Simple Expense Summary</h4>
+
+        <!-- Examples -->
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                @*<span class="ErrorMessageSpan"></span>*@
+                @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span id="AddNewText_Span_CreatePage">
+                                SIMPLE EXPENSE SUMMARY REPORT
+                            </span>
+                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    </div>
+                    <div class="card-body">
+                        @*=============================  Form Start ================================*@
+                        <form id="Searchexpensereport">
+                            <div>
+                                <div class="row">
+                                    <div class="col">
+                                        @*=====================    Radio Buttons ( Summary and Detail Summary)  =================*@
+
+                                        <div class="row mb-3" id="summaryradio">
+
+                                            <div class="col-sm-5">
+                                            </div>
+                                            <div class="form-check form-check-primary col-sm-2">
+                                                <input asp-for="Summary" class="form-check-input" type="radio" value="1" checked>
+                                                <label class="form-check-label">
+                                                    Summary
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-primary col-sm-2">
+                                                <input asp-for="Summary" class="form-check-input" type="radio" value="2">
+                                                <label class="form-check-label">
+                                                    Detail Summary
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                            </div>
+                                        </div>
+                                        @*==================== =================*@
+                                        <div class="row mb-3">
+                                            <div class="col-sm-5">
+                                            </div>
+                                            <div class="form-check form-check-primary col-sm-2">
+                                                <input asp-for="FundFlag" class="form-check-input" type="radio" value="1">
+                                                <label class="form-check-label">
+                                                    Credit(Income)
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-primary col-sm-2">
+                                                <input asp-for="FundFlag" class="form-check-input" type="radio" value="2">
+                                                <label class="form-check-label">
+                                                    Debit(Expenditure)
+                                                </label>
+                                            </div> <div class="form-check form-check-primary col-sm-2">
+                                                <input asp-for="FundFlag" class="form-check-input" type="radio" value="0" checked>
+                                                <label class="form-check-label">
+                                                    Both
+
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-1">
+                                            </div>
+                                        </div>
+                                        @*==================== =================*@
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="AcademicYearSessionId"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+
+                                                    @Html.DropDownListFor(
+                                               x => x.AcademicYearSessionId,
+                                                new SelectList(ViewBag.AcademicYearSessionId, "Value", "Text"),
+                                                 new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Finanicalyear", @style = "color:black;" })
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-3">
+                                            </div>
+                                        </div>
+                                        @*==================== =================*@
+
+
+
+
+                                        <div class="row justify-content-end">
+                                            <div class="col-sm-5">
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light">Clear</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light">Search</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @*=============================  Form End ================================*@
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <!-- Examples -->
+
+        <div id="SummaryAppend">
+
+        </div>
+        <div id="Detailsummary">
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/SchoolReport.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
