@@ -36,25 +36,38 @@
         color: gray; /* Change color for the dates of the previous and next months */
     }
 </style>
-<div style="text-align: center;">
-    <label>Select Month</label>
-    <select id="selectMonth">
-        <option value="1">January</option>
-        <option value="2">February</option>
-        <option value="3">March</option>
-        <option value="4">April</option>
-        <option value="5">May</option>
-        <option value="6">June</option>
-        <option value="7">July</option>
-        <option value="8">August</option>
-        <option value="9">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-    </select>
+<div class="row mb-3">
+    <label class="control-label col-sm-4 col-form-label text-end  space"> Select Month</label>
+    <div class="col-sm-4">
+        <div class="position-relative">
+            <select class="select2 form-select select2-hidden-accessible" id="selectMonth">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <div>
+    <div class="row mb-3">
+        <div class="col-sm-12">
+            <div class="position-relative text-center">
+
+                <span id="SelectedMonthyearspid"></span>
+
+            </div>
+        </div>
+    </div>
     <table id="calendarTable" style="width: 100%; height: 750px; text-align: center; font-size: 18pt; font-family: Verdana; color: Black; border-width: 1px; border-style: Solid; border-color: #efefef; background-color: White;">
         <tbody id="calendarBody"></tbody>
     </table>
@@ -71,7 +84,27 @@
         let year = date.getFullYear();
         return `${month}/${day}/${year}`;
     }
+
+    function getMonthName(month) {
+        var months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        // Check if the month number is valid
+        if (month >= 1 && month <= 12) {
+            return months[month - 1]; // Months are zero-indexed in the array
+        } else {
+            return "Invalid Month";
+        }
+    }
+
     function generateCalendar(month, year, eventCalendar) {
+
+
+        var Selectedmonthtext = getMonthName(month);
+        $('#SelectedMonthyearspid').text(Selectedmonthtext + '  ' + year);
+
         let table = $('#calendarBody');
         table.empty();
         $('#selectMonth').val(month);
@@ -93,7 +126,7 @@
         for (let i = 0; i < startingDay; i++) {
             table.append('<td class="OtherMonth"></td>');
         }
-        debugger;
+
         for (let i = 1; i <= daysInMonth; i++) {
             let cellClass = 'Weekdays';
             let eventtitle = '';
@@ -103,7 +136,7 @@
             let isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === today.getDate();
 
 
-            debugger;
+
             let eventExists = false;
             for (let j = 0; j < eventCalendar.length; j++) {
                 let eventDate = new Date(eventCalendar[j].eventdate);
@@ -115,6 +148,7 @@
                     break;
                 }
             }
+
             let cellStyle = 'width: 10%;';
             if (eventExists) {
                 cellClass += ' EventDateStyle';
@@ -140,13 +174,13 @@
             url: '/UserScreens/CalendarEvents?MonthId=' + selectedMonth,
             type: 'GET',
             success: function (response) {
-                debugger;
+
                // let eventCalendars = response.eventCalendar;
                   let eventCalendars = @Html.Raw(eventCalendarJson);
                 generateCalendar(selectedMonth, selectedYear, eventCalendars);
             },
             error: function (xhr, status, error) {
-                debugger;
+
                 // Handle error if AJAX call fails
                 console.error(error);
             }

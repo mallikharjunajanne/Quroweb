@@ -869,6 +869,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
             handleAjax('GET', urls, SerializeData,
                 function (response) {
                     debugger;
+
                     var Tabledatarepsonse = response.attendancemonthreports;
                     var attendancesummarydetails = response.attendancemonthpercantage;
 

@@ -300,6 +300,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string DisplayOrder { get; set; }
     }
 
+    public class ManageSlots
+    {
+        public int InstancesubjectId { get; set; }
+        public string SubjectName { get; set; }
+    }
+
     public class MonthlyAndWeeklyAttendanceReport : Instancess
     {
         public List<ManageClassification> classificationlist { get; set; }

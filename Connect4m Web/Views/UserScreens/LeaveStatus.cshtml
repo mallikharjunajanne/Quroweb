@@ -11,20 +11,32 @@
                 <th>Staff Leave(s)</th>
                 <th>Student Leave(s)</th>
             </tr>
-            @foreach (var items_1 in ViewBag.studentstaffleavescount)
+            @{
+                var Countone = ViewBag.studentstaffleavescount.Count;
+            }
+            @if (Countone != 0)
+            {
+                @foreach (var items_1 in ViewBag.studentstaffleavescount)
+                {
+                    <tr style="text-align: center;">
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@items_1.Staffleaves</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">
+                            @if (string.IsNullOrWhiteSpace(items_1.Studentleaves))
+                            {
+                                @:0
+                            }
+                            else
+                            {
+                                @items_1.Studentleaves
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr style="text-align: center;">
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">@items_1.Staffleaves</td>
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">
-                        @if (string.IsNullOrWhiteSpace(items_1.Studentleaves))
-                        {
-                            @:0
-                        }
-                        else
-                        {
-                            @items_1.Studentleaves
-                        }
-                    </td>
+                    <td colspan="2" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
                 </tr>
             }
         </tbody>
@@ -40,18 +52,28 @@
                 <th align="center">No. of Days</th>
                 <th align="center">Status</th>
             </tr>
-
-            @foreach (var item_4 in ViewBag.leavestatus)
-            {
-        <tr>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveType</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.FromDate</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.ToDate</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveDays</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.Status</td>
-        </tr>
+            @{
+                var Counttwo = ViewBag.leavestatus.Count;
             }
-
+            @if (Counttwo != 0)
+            {
+                @foreach (var item_4 in ViewBag.leavestatus)
+                {
+                    <tr>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveType</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.FromDate</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.ToDate</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveDays</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.Status</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr style="text-align: center;">
+                    <td colspan="5" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
+                </tr>
+            }
         </tbody>
     </table>
     <div>
@@ -68,17 +90,28 @@
                 <th>Available</th>
             </tr>
 
-
-            @foreach (var item_2 in ViewBag.leavetypes)
+            @{
+                var Countthree = ViewBag.leavetypes.Count;
+            }
+            @if (Countthree != 0)
             {
-        <tr>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.LeaveType</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Total</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.DaysUsed</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Approved</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.InProcess</td>
-            <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Available</td>
-        </tr>
+                @foreach (var item_2 in ViewBag.leavetypes)
+                {
+                    <tr>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.LeaveType</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Total</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.DaysUsed</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Approved</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.InProcess</td>
+                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Available</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr style="text-align: center;">
+                    <td colspan="5" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
+                </tr>
             }
         </tbody>
     </table>

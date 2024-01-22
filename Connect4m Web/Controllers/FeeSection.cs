@@ -29,22 +29,39 @@ namespace Connect4m_Web.Controllers
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public FeeSection(HttpClientFactory httpClientFactory, IConfiguration configuration)
+        
+        private readonly IUserService _userService;
+
+        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        private readonly int UserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+
+        public FeeSection(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/FeeSctionCtr");
+
+            //=======================================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            UserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
         }
 
         /*--------------------------------MANAGE FEE TYPES CODE START  GET AND POST AND DELETE AND EDIT AND UPDATE ----------------------------------------------*/
         public IActionResult ManageFeeTypes(string FeeTypeSearchname)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
 
             var ConcedingTypeName = " ";
-
-
 
             List<Cr_FT> Dis_Typesli = new List<Cr_FT>();
             HttpResponseMessage Dis_Types_Repsonse = client.GetAsync(client.BaseAddress + "/DiscountTypes_DD?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName).Result;
@@ -64,10 +81,6 @@ namespace Connect4m_Web.Controllers
                 discountItems.Add(new SelectListItem { Value = item.ConcedingTypeId.ToString(), Text = item.ConcedingTypeName.ToString() });
             }
             ViewBag.Discount_Types_DDValues = new SelectList(discountItems, "Value", "Text");
-
-
-
-
             return View();
         }
 
@@ -75,7 +88,7 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult ManageFeeTypes(Fee_Section Obj)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
             var CreatedBy = Request.Cookies["LoginUserId"];
 
             string data1 = JsonConvert.SerializeObject(Obj);
@@ -141,8 +154,7 @@ namespace Connect4m_Web.Controllers
         {
             var UpdatedBy = Request.Cookies["LoginUserId"];
 
-            //exec stp_tblInstanceFeeTypes_UPDATE @FeeTypeId = 4956,@InstanceId = 545,@FeeType = 'Test123456',@FeeTypeStatus = 0,@Description = 'abbababa',@Quantity = 1,@Amount = 5000.00,@UpdatedBy = 217606,@UpdatedDate = '2023-07-13 17:03:39.643',@ConcedingtypeIds = '543',@ReceiptCode = default,@ReceiptNoFrom = 0
-
+          
             decimal amount = Convert.ToDecimal(obj.Amount);
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");

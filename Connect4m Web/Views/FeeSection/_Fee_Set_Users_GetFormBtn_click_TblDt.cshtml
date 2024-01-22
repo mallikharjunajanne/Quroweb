@@ -141,7 +141,7 @@
 
                         </tr>
                         <tr style="background-color: #DDDEEE;" id="mainContainer">
-                            @{var TrCount = 8; }
+                            @{var TrCount = 10; }
                             @foreach (var FeeTypeNames in Model.FeeTypeCheckedTextNames)
                             {
 
@@ -189,7 +189,16 @@
                                 }
                                 </script>
                             </td>
-                            <td>@user.InstanceUserCode</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(user.InstanceUserCode))
+                                {
+                                    @user.InstanceUserCode
+                                }
+                                else
+                                {
+                                    @Html.Raw("--")
+                                }
+                            </td>
 
                             @if (!string.IsNullOrEmpty(user.RouteName))
                             {
@@ -213,7 +222,7 @@
                             @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
                             {
                                 var matchingUser = group.FirstOrDefault(u => u.FeeTypeid == feeType);
-
+                                var displayIcon = matchingUser?.DisplayIcon ?? "";
 
                                 var inputId = $"txtFA_{user.UserId}_{feeType}_{user.FirstName}";
                                 var textareaId = $"textarea_{user.UserId}_{feeType}_{user.FirstName}";
@@ -222,17 +231,19 @@
                                     <div style="display: flex;">
 
                                         <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext" style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;" oninput="validateNumberInput(this)" />
-                                        @if (matchingUser.DisplayIcon == "1")
+                                        @if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")
+                                        //@if (matchingUser.DisplayIcon == "1")
                                         {
                                             <span class="search-icon">🔍</span>
-
                                         }
+
                                         <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
 
                                         <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
 
-                                        <textarea id="@textareaId" style=" margin-left: @(matchingUser.DisplayIcon == "1" ? "81px" : "100px"); height: 37px; width: 46%; " oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
-                                       
+                                        @*<textarea id="@textareaId" style=" margin-left: @(matchingUser.DisplayIcon == "1" ? "81px" : "100px"); height: 37px; width: 46%; " oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>*@
+                                        <textarea id="@textareaId" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height: 37px; width: 46%; " oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
+
                                         <span id="charCount_@textareaId" style="font-size: 8px; margin-top: 28px; color: black; font-family: serif;"></span>
 
                                     </div>

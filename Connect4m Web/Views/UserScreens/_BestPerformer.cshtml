@@ -1,7 +1,6 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
 <style>
     .Scrolling {
         white-space: initial;
@@ -46,20 +45,34 @@
 }
 <div class="scrolling-container">
     <ul class="Scrolling">
-        @if (listcounts != 0)
-        {
-            @foreach (var item in Model)
+
+        @{
+            try
             {
-                <li class="text-primary">
-                    @item.Subject<span> <br />@item.createddate</span>
+                @if (listcounts != 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <li class="text-primary">
+                            @item.Eventphotos
+                            Name:  @item.FirstName
+                            Department: @item.ClassificationName
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="text-primary" style="color:black;">
+                        No Data Found in Flash News
+                    </li>
+                }
+            }
+            catch (Exception)
+            {
+                <li class="text-primary" style="color:black;">
+                    No Data Found in Flash News
                 </li>
             }
-        }
-        else
-        {
-            <span class="text-primary" style="color:black;">
-                 No Data Found in Flash News 
-            </span>
         }
     </ul>
 </div>

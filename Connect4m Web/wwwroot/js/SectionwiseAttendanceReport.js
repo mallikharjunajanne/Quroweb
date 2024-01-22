@@ -258,6 +258,11 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
             handleAjax('GET', urls, SerializeData,
                 function (response) {
                     debugger;
+                    var responsemessage = response.message;
+                    if (responsemessage != "2") {
+
+                   
+
                     var Tabledatarepsonse = response.attendancemonthreports;
                     var attendancesummarydetails = response.attendancemonthpercantage;
 
@@ -465,7 +470,11 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
 
 
-                    loaddingimg.css('display', 'none');
+                        loaddingimg.css('display', 'none');
+                    } else {
+                        $('#Appendsclasswiseandstudentwiseattendancereportdiv').empty();
+                        loaddingimg.css('display', 'none');
+                    }
                 },
                 function (status, error) {
                     console.error("Error fetching data:", error);
@@ -692,6 +701,196 @@ $(document).on('click', '#Attendancereporttblmain #_attendancereportPrint', func
 /*--== Attendance Report Export To Excel ==-*/
 $(document).on('click', '#_AttendancereportExportExcel', function () {
     var formattedDate = GetDateFormat();
+
+    var workbook = new ExcelJS.Workbook();
+    var worksheet = workbook.addWorksheet('Sheet1');
+
+    // Set titles
+    worksheet.addRows([
+        ["Student wise attendance Report"],
+        ["Quro Schools"],
+        ["Report On:  " + formattedDate],
+        [""]
+    ]).forEach(row => row.font = { bold: true });
+
+    // Set background color for titles and merge cells
+    ['A1', 'A2', 'A3', 'A4'].forEach(cell => {
+        worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
+        worksheet.mergeCells(cell + ':AG' + cell.substring(1));
+    });
+
+    // Process StudentwiseattendaceReport table
+    debugger;
+    var tableData2 = document.getElementById("StudentwiseattendaceReport");
+    for (var i = 0; i < tableData2.rows.length; i++) {
+        var row = tableData2.rows[i];
+        var colIdx = 0;
+        for (var j = 0; j < row.cells.length; j++) {
+            var cell = row.cells[j];
+            var colspan = cell.colSpan || 1;
+            var rowspan = cell.rowSpan || 1;
+
+            if (colspan > 1 || rowspan > 1) {
+                worksheet.mergeCells(
+                    i + 1,
+                    colIdx + 1,
+                    i + rowspan,
+                    colIdx + colspan
+                );
+
+                // Set empty values to the rest of the merged area to avoid duplication
+                for (var k = i + 1; k < i + rowspan; k++) {
+                    for (var l = colIdx + 1; l < colIdx + colspan; l++) {
+                        worksheet.getCell(k + 1, l + 1).value = '';
+                    }
+                }
+
+                colIdx += colspan;
+            } else {
+                var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+                addedCell.value = cell.innerText;
+                colIdx++;
+            }
+        }
+    }
+
+    // Set border and width for cells
+    for (var col = 3; col <= 34; col++) {
+        worksheet.getColumn(col).width = 10; // Set the width as needed
+    }
+    worksheet.getColumn(1).width = 12;
+    worksheet.getColumn(2).width = 20;
+
+    // Generate .xls file and initiate download
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "SectionwiseAttendanceReport.xls";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+$(document).on('click', '##_AttendancereportExportExcel_', function () {
+    var formattedDate = GetDateFormat();
+
+    var workbook = new ExcelJS.Workbook();
+    var worksheet = workbook.addWorksheet('Sheet1');
+
+    // Set titles
+    worksheet.addRows([
+        ["Student wise attendance Report"],
+        ["Quro Schools"],
+        ["Report On:  " + formattedDate],
+        [""]
+    ]).forEach(row => row.font = { bold: true });
+
+    // Set background color for titles and merge cells
+    ['A1', 'A2', 'A3', 'A4'].forEach(cell => {
+        worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
+        worksheet.mergeCells(cell + ':AG' + cell.substring(1));
+    });
+
+ 
+  
+
+    // Process StudentwiseattendaceReport table
+    var tableData2 = document.getElementById("StudentwiseattendaceReport");
+    debugger;
+   
+    for (var i = 0; i < tableData2.rows.length; i++) {
+        var row = tableData2.rows[i];
+        var colIdx = 0;
+        for (var j = 0; j < row.cells.length; j++) {
+            var cell = row.cells[j];
+            var cellHtml = cell.outerHTML;
+            var colspan = cell.colSpan || 1;
+            var rowspan = cell.rowSpan || 1;
+
+            if (colspan > 1 || rowspan > 1) {
+                worksheet.mergeCells(
+                    i + 1,
+                    colIdx + 1,
+                    i + rowspan,
+                    colIdx + colspan
+                );
+
+                // Set empty values to the rest of the merged area to avoid duplication
+                for (var k = i + 1; k < i + rowspan; k++) {
+                    for (var l = colIdx + 1; l < colIdx + colspan; l++) {
+                        worksheet.getCell(k + 1, l + 1).value = '';
+                    }
+                }
+
+                colIdx += colspan;
+            } else {
+                var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+                addedCell.value = cell.innerText;
+                colIdx++;
+            }
+            //if (colspan > 1 || rowspan > 1) {
+            //    worksheet.mergeCells(
+            //        i + 1,
+            //        colIdx + 1,
+            //        i + rowspan,
+            //        colIdx + colspan
+            //    );
+
+            //    // Set empty values to the rest of the merged area to avoid duplication
+            //    for (var k = i + 1; k < i + rowspan; k++) {
+            //        for (var l = colIdx + 1; l < colIdx + colspan; l++) {
+            //            worksheet.getCell(k + 1, l + 1).value = '';
+            //        }
+            //    }
+
+            //    colIdx += colspan;
+            //} else {
+            //    var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+            //    addedCell.value = cell.innerText;
+            //    colIdx++;
+            //}
+        }
+    }
+
+    // Set border and width for cells
+    for (var col = 3; col <= 34; col++) {
+        worksheet.getColumn(col).width = 5; // Set the width as needed
+    }
+    worksheet.getColumn(1).width = 12;
+    worksheet.getColumn(2).width = 20;
+
+    // Generate .xls file and initiate download
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "SectionwiseAttendanceReport.xls";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
+
+
+
+
+$(document).on('click', '#_AttendancereportExportExcel_', function () {
+    var formattedDate = GetDateFormat();
     debugger;
     // Create a new workbook
     var workbook = new ExcelJS.Workbook();
@@ -829,9 +1028,13 @@ $(document).on('click', '#_AttendancereportExportExcel', function () {
         debugger;
         var row = tableData2.rows[i];
         var rowData = [];
+        var colIdx = 0;
         for (var j = 0; j < row.cells.length; j++) {
 
-            var cellHtml = row.cells[j].outerHTML;
+            debugger;
+            var cell = row.cells[j];
+            var cellHtml = cell.outerHTML;
+           // var cellHtml = row.cells[j].outerHTML;
             var backgroundColor = extractBackgroundColor(cellHtml);
             var color = "000000";
             if (backgroundColor == "Red") {
@@ -854,6 +1057,22 @@ $(document).on('click', '#_AttendancereportExportExcel', function () {
                 fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: backgroundColor } },
                 font: { bold: true, color: { argb: color } } // Assuming white text color
             };
+
+            var colspan = parseInt(cell.colSpan);
+            var rowspan = parseInt(cell.rowSpan);
+
+            var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+
+            if (colspan > 1 || rowspan > 1) {
+                // Merge cells if colspan or rowspan is greater than 1
+                worksheet.mergeCells(i + 1, colIdx + 1, i + rowspan, colIdx + colspan);
+            }
+
+            addedCell.value = cellText;
+            addedCell.fill = cellStyles.fill;
+            addedCell.font = cellStyles.font;
+
+            colIdx += colspan || 1;
 
             rowData.push({ text: cellText, style: cellStyles });
         }
