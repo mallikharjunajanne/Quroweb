@@ -358,6 +358,9 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
 
         }
+
+
+
         public IActionResult TblViewSubjectsList(SubjectModel obj,int InstanceClassificationId,int InstanceSubClassificationId)
         {
             //InitializeCookieValues();
@@ -737,6 +740,8 @@ namespace Connect4m_Web.Controllers
             }
            // return Json(new { success = false, message = "Something Error" });
             obj.SubjectExelFile = null;
+          
+            
             #region
             // List<List<string>> excelData = new List<List<string>>();
 
@@ -764,9 +769,6 @@ namespace Connect4m_Web.Controllers
             //}
 
             #endregion
-
-
-
             //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.CreatedBy = LoginUserId;

@@ -89,6 +89,7 @@ namespace Connect4m_Web.Models
         public string Gender { get; set; }
         public string CollegeHostel { get; set; }
         public string Transport { get; set; }
+       // [Required]
         [Display(Name = "Allow Login")]
         public string IsActive { get; set; }
         public string RoleName { get; set; }

@@ -14,7 +14,7 @@ var ErrorAppend = $("#Main_Span_Error");
 //    }
 //   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
 //    CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
-//    $("#loadingOverlay").hide();
+//   loaddingimg.css('display', 'none');
 //});
 
 
@@ -59,14 +59,14 @@ $('#RdbNo, #RdbYes').off('click').on('click', function (event) {
         performCrudOperationCommonFunction("POST", `/Results/PublishResults_Step3?MarksUploadtype=${MarksUploadtype}`, formData,
             function (response) {
                 $("#Div_UploadingType").html(response);
-                $("#loadingOverlay").hide();
+               loaddingimg.css('display', 'none');
             },
             function (error) {
-                $("#loadingOverlay").hide();
+               loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             },  true );
     } catch (error) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });
@@ -106,9 +106,9 @@ function BackTOStep(event, button) {
         $("#Div_UploadingType").empty();
 
 
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
     } catch (x) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -164,7 +164,7 @@ js("#FmSubjectsSearch").submit(function (event) {
 
 
                 loaddingimg.css('display', 'none');
-                //  $("#loadingOverlay").hide();
+                // loaddingimg.css('display', 'none');
             } else {
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
                 $(".alert-danger").show().delay(5000).fadeOut();
@@ -264,18 +264,18 @@ function TblDataTableWithColumns_CallingFunction_new(event, val, Url, tablename,
                                 // var setteddate = date.split("T")[0];
                                 var dateObject = formatDate(row.dateConducted);
                                 //var dateObject = new Date(row.dateConducted);
-                                return '<input type="date" class="" id="TxtDate"  title="Conducted Date"  value="' + dateObject + '">';
+                                return '<input type="date" class="form-control" id="TxtDate"  title="Conducted Date"  value="' + dateObject + '">';
                             }
                         },
                         {
                             data: "PassMarks",
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks + '">';
+                                return '<input type="text" class="form-control" id="TxtPassMarks" maxlength="5" title="Pass Marks" oninput="restrictCharacters_AllowDots(this)" value="' + row.passMarks + '">';
                             }
                         }, {
                             data: "MaxMarks",
                             render: function (data, type, row, meta) {
-                                return '<input type="text" class="" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks + '">';
+                                return '<input type="text" class="form-control" id="TxtMaxMarks" maxlength="5" title="Max Marks" oninput="restrictCharacters_AllowDots(this,".")" value="' + row.maxMarks + '">';
                             }
                         },
                     ]
@@ -845,13 +845,13 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
                             $("#Main_Span_Error").text(jsonResponse.successMSG);
                         }
                     }
-                    $("#loadingOverlay").hide();
+                   loaddingimg.css('display', 'none');
                     window.scrollTo(0, 0);
                     // Move on to the next chunk
                     sendChunk(index + 1);
                 }, function (error) {
                     // Handle error if needed
-                    $("#loadingOverlay").hide();
+                   loaddingimg.css('display', 'none');
                     $("#Main_Span_Error").text("Something Error");
                     // Move on to the next chunk
                     sendChunk(index + 1);
@@ -862,7 +862,7 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
             sendChunk(0);
         }
     } catch (e) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -941,10 +941,10 @@ $("#FmFileUpload").submit(function (event) {
                 $("#BtnPublish").prop("disabled", false);
             }
             $("#ExcelFile").val("");
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
             window.scrollTo(0, 0);
         }, function (error) {
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }, true);
 
@@ -966,10 +966,10 @@ $("#FmFileUpload").submit(function (event) {
                             $("#BtnPublish").prop("disabled", false);
                         }
                         $("#ExcelFile").val("");
-                        $("#loadingOverlay").hide();
+                       loaddingimg.css('display', 'none');
                         window.scrollTo(0, 0);
                     }, function (error) {
-                        $("#loadingOverlay").hide();
+                       loaddingimg.css('display', 'none');
                         $("#Main_Span_Error").text("Something Error");
                     }, true);
                 }
@@ -977,7 +977,7 @@ $("#FmFileUpload").submit(function (event) {
         }
 
     } catch (e) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });

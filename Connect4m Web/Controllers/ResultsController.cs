@@ -33,39 +33,56 @@ namespace Connect4m_Web.Controllers
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-        public ResultsController(HttpClientFactory httpClientFactory, IConfiguration configuration)
+
+
+
+        private readonly IUserService _userService;
+        private readonly int LoginUserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int InstanceSubClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+        private readonly string RoleName;
+        private readonly string UserNameHeader_;
+        public ResultsController(HttpClientFactory httpClientFactory, IConfiguration configuration, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
-            Controllername = "Results";
-            client.BaseAddress = new Uri(apiBaseAddress + "/" + Controllername + "");
+            client.BaseAddress = new Uri(apiBaseAddress + "/Results");
+
+            //===================Values Getting====================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            LoginUserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            InstanceSubClassificationId = _userService.InstanceSubClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+            RoleName = _userService.RoleName;
+            UserNameHeader_ = _userService.UserNameHeader_;
         }
-        private int LoginUserId;
-        private int InstanceClassificationId;
-        private int InstanceSubClassificationId;
-        private int InstanceId;
-        private int Roleid;
-        private int StudentUserid;
         private string returnvalue;
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
 
-        private void InitializeCookieValues()
-        {
-            InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
-            InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
-            Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
-            StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
-        }
+        //private void //InitializeCookieValues()
+        //{
+        //    InstanceId = Convert.ToInt32(Request.Cookies["Instanceid"]);
+        //    LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+        //    InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
+        //    InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
+        //    Roleid = Convert.ToInt32(Request.Cookies["Roleid"]);
+        //    StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
+        //}
 
         // -------------------=====================   POST RESULTS  ===============================
         #region
         public IActionResult DdlSubjectTypes_Calingfunction(ResultsModel obj)
         {
-            InitializeCookieValues();
+            ////InitializeCookieValues();
             obj.InstanceID = InstanceId;
             List<DropdownClass> list = CommonMethodobj.CommonListMethod<ResultsModel, DropdownClass>(obj, "/DdlSubjectTypes_Calingfunction", client);
 
@@ -83,7 +100,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult DdlExams_Callingfunction(ResultsModel obj,int ExamtypeId)
         {
-            InitializeCookieValues();
+            ////InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.ExamtypeId = ExamtypeId;
             //obj.InstanceSubClassificationId = InstanceSubClassificationId;
@@ -93,7 +110,7 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult DdlExamMode_Callingfunction(ResultsModel obj)
         {
-            InitializeCookieValues();
+            //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Name = "EMODE";//@Code
             obj.InstanceSubClassificationId = InstanceSubClassificationId;
@@ -105,7 +122,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.ScreenName = ScreenName;
                 List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(obj, "/TblExamSubjects_Calingfunction", client);
@@ -134,7 +151,7 @@ namespace Connect4m_Web.Controllers
                     ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
                     ViewBag.MaxMarksList = val.MaxMarksList;
                     ViewBag.PassMarksList = val.PassMarksList;
-                    InitializeCookieValues();
+                    //InitializeCookieValues();
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
             
@@ -151,7 +168,7 @@ namespace Connect4m_Web.Controllers
                 //    ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
                 //    ViewBag.MaxMarksList = val.MaxMarksList;
                 //    ViewBag.PassMarksList = val.PassMarksList;
-                //    InitializeCookieValues();
+                //    //InitializeCookieValues();
                 //    val.InstanceID = InstanceId;
                 //    List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
                 //   // ViewBag.MarksUploadtype = MarksUploadtype;
@@ -184,7 +201,7 @@ namespace Connect4m_Web.Controllers
             try
             {
 
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;
@@ -478,7 +495,7 @@ namespace Connect4m_Web.Controllers
                     }
                     // }
                 }
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;
@@ -544,7 +561,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;
             ViewBag.MaxMarksList = val.MaxMarksList;
             ViewBag.PassMarksList = val.PassMarksList;
-            InitializeCookieValues();
+            //InitializeCookieValues();
             val.InstanceID = InstanceId;
 
             using (var package = new ExcelPackage())
@@ -780,7 +797,7 @@ namespace Connect4m_Web.Controllers
         //        ViewBag.ExamSubjectIdList = val.ExamSubjectIdList;//"HINDI CHECK, UPDATE SUBJECT NAME"; //
         //        ViewBag.MaxMarksList = val.MaxMarksList;
         //        ViewBag.PassMarksList = val.PassMarksList;
-        //        InitializeCookieValues();
+        //        //InitializeCookieValues();
         //        val.InstanceID = InstanceId;
 
         //        // Create a new Excel package (XLSX)
@@ -1131,7 +1148,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                InitializeCookieValues();
+                //InitializeCookieValues();
                 obj.InstanceID = InstanceId;
                 obj.CreatedBy = LoginUserId;
                 obj.UserId = LoginUserId;

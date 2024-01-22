@@ -9,7 +9,6 @@
 <html>
 <head>
 
-
 </head>
 <body>
 
@@ -92,7 +91,7 @@
                                                 </div>
 
                                                 <div class="row justify-content-end">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-10">
                                                         <button type="reset" class="btn btn-warning waves-effect waves-light"  onclick="ClearFunction()" id="BtnClear">Clear</button>
                                                         <button type="submit" class="btn btn-success waves-effect waves-light"  id="BtnSearch">Search</button>
 
@@ -120,7 +119,7 @@
                                 <div class="card-header flex-column flex-md-row">
                                     <div class="head-label text-center">
                                         <h5 class="card-title mb-0">
-                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="RecordsCount">0</span>  RECORD(S).</span>
+                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                                         </h5>
                                     </div>
                                 </div>
@@ -155,7 +154,7 @@
                     </div>
                 </div>
 
-         
+    @*<input id="chkSMS1" class="form-check-input" type="checkbox" data-instancesubjectid1="11235" value="80781" checked="checked" name="selectedUsers">*@
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
@@ -178,12 +177,13 @@
     var js = jQuery.noConflict(true);
 
 
-    //this for clear a subject dropdowns
+    //============================= This for clear a subject dropdowns
     function ClassOnchange() {
         $("#DdlSubject").empty();
         $('#DdlSubjectType option:first').prop("selected", true);
     }
 
+    //============================= Reset A form
     function ClearFunction() {
         $(".ErrorMessageSpan").empty();
         $("#Div_TblUser").hide();
@@ -260,10 +260,11 @@
 
 
 
-    //=---------------------This is For Submit
+    //================================= This is For Submit ===============
     $(document).on("click", '#BtnSave', function (event) {
         try {
             event.preventDefault();
+          //  var isAssociated11 = $("input[type='checkbox']#chkSM1S").data("instancesubjectid1");
             //event.stopImmediatePropagation();
             loaddingimg.css('display', 'block');
             debugger;
@@ -279,15 +280,15 @@
             var Usercheckbox;
             var UsersTableCheckBoxcount = 0;
             var shouldExit = false;
+            var Userid; var isAssociated;
             //this for check a record
             UsersTable.each(function () {
                 Usercheckbox = $(this).find("td input[type='checkbox']#chkSMS");
                 if (Usercheckbox.is(":checked")) { //if check box is checked then it is TRUE
-                    var Userid = Usercheckbox.val();
+                     Userid = Usercheckbox.val();
                     //var isAssociated = Usercheckbox.attr('class');
-                    //var isAssociated = $(Usercheckbox).data("instanceSubjectId");
-                    var isAssociated = $(this).find("td input[type='checkbox']#chkSMS").data("instanceSubjectId");
-                    if (isAssociated != SubjectId && isAssociated != undefined) {
+                    isAssociated = Usercheckbox.data("instancesubjectid");
+              if (isAssociated != SubjectId && isAssociated != undefined) {
                         UsersTableCheckBoxcount = 0;
                         shouldExit = true;
                         return false;
@@ -320,11 +321,15 @@
                 var SubjectText = "";
                 if (response.message == "Record inserted successfully.") {
                     $("#BtnSave").prop('disabled', true);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(5000).fadeOut()
                 }
                 if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
                     SubjectText = $("#DdlSubject option:selected").text();
 
                 }
+                //$('.alert-danger p').text(response.message);
+                //$(".alert-danger").show().delay(6000).fadeOut()
                 $("#Main_Span_Error").text(response.message + SubjectText);
                 loaddingimg.css('display', 'none');
                 window.scrollTo(0, 0);

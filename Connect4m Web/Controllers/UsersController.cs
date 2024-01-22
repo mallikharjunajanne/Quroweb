@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Connect4m_Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly HttpClientFactory _httpClientFactory;
@@ -72,10 +72,14 @@ namespace Connect4m_Web.Controllers
 
 
     //--------------->>>>>>>>>>>>>========Manage Users Screen ==============<<<<<<<<<<<<<<<<<<<<==
-    #region Show profile
+       
+        #region Show profile
     //==============Genetral Tab Page
     public IActionResult ShowProfile(DropdownClass val)
         {
+            try
+            {
+
             //ViewBag.url = "GeneralInfoTab";
             //var RoleName = "Student";
 
@@ -201,31 +205,42 @@ namespace Connect4m_Web.Controllers
             }
             // ViewBag.DdlPickUpRoute = DdlPickUpRoute;
             return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         #endregion
-
 
         #region Manage Users Code
         //===========================Searched Users details in table
 
         public IActionResult ManageUsersPreview(DropdownClass val, int UserId, string IsParentIdentification)
         {
-            //ViewBag.url = "GeneralInfoTab";
-            val.InstanceID = InstanceId;
-            ViewBag.UpdateIdentification = "UpdateDetails";
-           
+            try
+            {
+            if (UserId != 0 )
+            {
+
+
+                //ViewBag.url = "GeneralInfoTab";
+                val.InstanceID = InstanceId;
+                ViewBag.UpdateIdentification = "UpdateDetails";
+
                 //return View(DdlParentDetails);
                 //ViewBag.IsParentIdentification = IsParentIdentification;
                 //return PartialView("ManageUsersPreview", DdlParentDetails);
-           
+
                 //  Response.Cookies.Append("UserId", UserId.ToString());
                 val.Id = 1;// i gave default @SubjectMode
                 val.UserId = UserId;
                 ManageUsersModel DdlUsersDetails = new ManageUsersModel();
                 returnvalue = CommonMethodobj.CommonSaveMethod(val, "/GettingUserDetails_EditFunction", client);
                 DdlUsersDetails = JsonConvert.DeserializeObject<ManageUsersModel>(returnvalue);
-                //ViewBag.UpdateIdentification = "UpdateDetails";
                 ViewBag.UserId = val.UserId;
                 if (DdlUsersDetails.PhotoName != null && DdlUsersDetails.PhotoName != "")
                 {
@@ -238,59 +253,56 @@ namespace Connect4m_Web.Controllers
                 }
 
 
-                ManageUsersModel DdlParentDetails1 = new ManageUsersModel();
+                ManageUsersModel DdlParentNames = new ManageUsersModel();
                 returnvalue = CommonMethodobj.CommonSaveMethod(val, "/TblUserGetParentDetails", client);
-            DdlParentDetails1 = JsonConvert.DeserializeObject<ManageUsersModel>(returnvalue);
-                //DdlUsersDetails.ParentId = DdlParentDetails.ParentId;
-                //DdlUsersDetails.ParentStatusId = DdlParentDetails.ParentStatusId;
+                DdlParentNames = JsonConvert.DeserializeObject<ManageUsersModel>(returnvalue);
+
+                //ViewBag.ParentId = DdlParentNames.ParentId;
+                //ViewBag.MotherId = DdlParentNames.ParentStatusId;
+                ViewBag.FatherName = DdlParentNames.ParentName;
+                ViewBag.MotherFirstName = DdlParentNames.MotherFirstName;
 
 
-                ViewBag.ParentId = DdlParentDetails1.ParentId;
-                ViewBag.MotherId = DdlParentDetails1.ParentStatusId;
-
-                //ViewBag.FatherName = DdlUsersDetails.ParentName;
-                //ViewBag.MotherFirstName = DdlUsersDetails.MotherFirstName;
-                ViewBag.FatherName = DdlParentDetails1.ParentName;
-                ViewBag.MotherFirstName = DdlParentDetails1.MotherFirstName;
-
-            //  ViewBag.IsParentIdentification = "Student";
-            //  return View(DdlUsersDetails);
-            //return PartialView("ManageUsersPreview", DdlUsersDetails);
-
-
-            ManageUsersModel DdlParentDetails = new ManageUsersModel();
-
-            if (DdlUsersDetails.RoleId == 775)
-            {
-                val.UserId = UserId;
-                returnvalue = CommonMethodobj.CommonSaveMethod(val, "/GettingParentDetails_PreviewFunction", client);
-                DdlParentDetails = JsonConvert.DeserializeObject<ManageUsersModel>(returnvalue);
-                ViewBag.IsParentIdentification = "Parent";
-                // ViewBag.UpdateIdentification = "UpdateDetails";
-                ViewBag.UserId = val.UserId;
-                if (DdlParentDetails.PhotoName != null && DdlParentDetails.PhotoName != "")
+                ManageUsersModel DdlParentDetails = new ManageUsersModel();
+                // if (DdlUsersDetails.RoleId == 775)
+                if (DdlUsersDetails.RoleName.ToUpper().Contains("STUDENT"))
                 {
-                    ViewBag.ParentPhotoName = DdlParentDetails.PhotoName;
-                    ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                    returnvalue = CommonMethodobj.CommonSaveMethod(val, "/GettingParentDetails_PreviewFunction", client);
+                    DdlParentDetails = JsonConvert.DeserializeObject<ManageUsersModel>(returnvalue);
+                    ViewBag.IsParentIdentification = "Parent";
+                    if (DdlParentDetails.PhotoName != null && DdlParentDetails.PhotoName != "")
+                    {
+                        ViewBag.ParentPhotoName = DdlParentDetails.PhotoName;
+                        ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                    }
+                    else
+                    {
+                        ViewBag.ParentPhotoNameFullName = "/Images/No imageAvailable.gif";
+                    }
                 }
-                else
+                List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+                ViewBag.DdlInstanceRole = DdlInstanceRole;
+
+                ManageUsersModel viewModel = new ManageUsersModel
                 {
-                    ViewBag.ParentPhotoNameFullName = "/Images/No imageAvailable.gif";
-                }
+                    DdlParentDetails = DdlParentDetails,
+                    DdlUsersDetails = DdlUsersDetails
+                };
+
+                return View(viewModel);
             }
-
-
-
-
-            ManageUsersModel viewModel = new ManageUsersModel
+                ManageUsersModel viewModelEmpty = new ManageUsersModel
+                {
+                    DdlParentDetails = new ManageUsersModel(),
+                    DdlUsersDetails = new ManageUsersModel()
+                };
+                return View(viewModelEmpty);
+            }
+            catch (Exception)
             {
-                DdlParentDetails = DdlParentDetails,
-                DdlUsersDetails = DdlUsersDetails
-            };
 
-            return View(viewModel);
-
-            //return View();
+                throw;
+            }
         }
 
 
@@ -301,11 +313,20 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult TblUsersSearch(ManageUsersModel obj)
         {
+            try
+            {
             // InitializeCookieValues();
            // obj.TcTaken = 1;//i gave default
             obj.InstanceID = InstanceId;
             List<ManageUsersModel> list = CommonMethodobj.CommonListMethod<ManageUsersModel, ManageUsersModel>(obj, "/TblUsersSearch", client);
             return Json(list.OrderBy(x => x.FirstName).ToList());
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         //===========================Search Users details 
 
@@ -377,13 +398,17 @@ namespace Connect4m_Web.Controllers
         //==============Genetral Tab Page
         public IActionResult GeneralInfoTab(DropdownClass val,int UserId)
         {
+            try
+            {
+
             //ViewBag.url = "GeneralInfoTab";
             val.InstanceID = InstanceId;
-            List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
-            List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
-            List<MultipleDropDownList> MultipleDropDownList = CommonMethodobj.CommonListMethod<DropdownClass, MultipleDropDownList>(val, "/DdlBindingFunctions_CreateUsers_Calingfunction", client);
+             List<MultipleDropDownList> MultipleDropDownList = CommonMethodobj.CommonListMethod<DropdownClass, MultipleDropDownList>(val, "/DdlBindingFunctions_CreateUsers_Calingfunction", client);
             if (MultipleDropDownList.Count > 0)
             {
+                List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
+                List<DropdownClass> DdlDesignation = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlDesignation_Calingfunction", client);
+
                 ViewBag.DdlSessionList = MultipleDropDownList[0].DdlSessionList;
                 ViewBag.DdlBloodGroupList = MultipleDropDownList[0].DdlBloodGroupList;
                 ViewBag.DdlFeeConcedingTypesList = MultipleDropDownList[0].DdlFeeConcedingTypesList;
@@ -490,12 +515,19 @@ namespace Connect4m_Web.Controllers
             }
             // ViewBag.DdlPickUpRoute = DdlPickUpRoute;
             return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
 
         //==========Parent details Main Tab page
         public IActionResult ParentDetailsTab(DropdownClass val,int UserId)
         {
+            try { 
             ViewBag.UserId = UserId;
             val.Id = 1;// i gave default @SubjectMode
             val.UserId = UserId;
@@ -516,11 +548,19 @@ namespace Connect4m_Web.Controllers
                 ViewBag.PhotoNameFullName = "/Images/No imageAvailable.gif";
             }
             return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         
      //=================Delete Photo
         public IActionResult DeletePhoto_CallingFunction(DropdownClass val,int UserId)
         {
+            try { 
             val.UserId = UserId;
             returnvalue = CommonMethodobj.CommonSaveMethod(val, "/DeletePhoto_CallingFunction", client);
             if (returnvalue != "0"){
@@ -528,12 +568,20 @@ namespace Connect4m_Web.Controllers
             }
             else
                 return Json(new { success = false, message = "Something Error" });
-            
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
        // ============= Search Users Page
         public IActionResult ManageUsers(DropdownClass val)
         {
+            try { 
             //if (url != null)
             //{
                // ViewBag.url = "ManageUsers";
@@ -548,7 +596,14 @@ namespace Connect4m_Web.Controllers
             ViewBag.DdlInstanceRole = DdlInstanceRole;
             ViewBag.DdlDesignation = DdlDesignation;
             ViewBag.DdlPickUpRoute = DdlPickUpRoute;
-            return View(); 
+            return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
 

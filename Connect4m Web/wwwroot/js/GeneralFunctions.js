@@ -847,7 +847,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                                                 debugger;
                               //  return '<input id="chkSMS" type="checkbox"    ' + (isChecked1 ? ' class="Associated'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
                                // return '<input id="chkSMS" type="checkbox"    ' + (isAssociated ? ' class="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
-                                return '<input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instanceSubjectId="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
+                                return '<input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instancesubjectid="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
                                 //return row.userId
                             }
                         }, {
@@ -925,9 +925,12 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "ParentName",
                             render: function (data, type, row, meta) {
                                 if (row.isParentTable == 1) {
-                                    return "<a style='color:red;'>"+row.parentName+"</a>"
+                                  //  return "<a style='color:red;'>" + row.parentName + "</a>"
+                                    return '<a style="color: red;" onclick="GettingParentDetails_EditFunction(' + row.parentId + ',' + row.isParentTable +')">' + row.parentName + '</a>';
                                 } else {
-                                    return row.parentName
+                                    //return row.parentName
+                                    return '<a  onclick="GettingParentDetails_EditFunction(' + row.parentId + ',' + row.isParentTable + ')">' + row.parentName + '</a>';
+
                                 }
                             }
                         }, {
@@ -951,13 +954,15 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             render: function (data, type, row, meta) {
                                 return row.loginStatus
                             }
-                        }, {
-                            data: "ParentId",
-                            render: function (data, type, row, meta) {
-                                return '<a id="TblUserId" class="Undeline" onclick="GettingParentDetails_EditFunction(' + row.parentId + ',' + row.isParentTable+')">Edit</a>';
+                        }, 
+                          //  {
+                        //    data: "ParentId",
+                        //    render: function (data, type, row, meta) {
+                        //        return '<a id="TblUserId" class="Undeline" onclick="GettingParentDetails_EditFunction(' + row.parentId + ',' + row.isParentTable+')">Edit</a>';
 
-                            }
-                        }, {
+                        //    }
+                        //},
+                        {
                             data: "IsParentTable",
                             render: function (data, type, row, meta) {
                                 if (row.isParentTable == 1) {
@@ -1231,12 +1236,14 @@ function compareDatesNotGreaterThanToday(conductedDate) {
 
 
 //-----compare date not greater than today
+//oninput = "compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')"
 function compareDatesNotGreaterThanTodayById(Id, Text) {
     debugger;
     var today = new Date(); // Get today's date
     // var selectedDate = new Date(conductedDate); // Convert conductedDate to Date object
     var selectedDate = new Date(document.getElementById(Id).value);
-    var error = $("#"+Id).closest('.form-group');
+    //var error = $("#"+Id).closest('.form-group');
+    var error = $("#"+Id).closest('.row div');
     $(error).find('.compare').removeClass('error2');
     if (selectedDate > today) {
         $(error).find('.compare').addClass('error2');
@@ -1253,12 +1260,15 @@ function compareDatesNotGreaterThanTodayById(Id, Text) {
 //$("#FmGeneralInfoTab #DtTCdate").on("change", function () { datescompare(event, 'DtDateOfJoining', 'DtTCdate', "Date Of Join", "Tc Date") });
 
 //function datescompare(event, start, end) {
-function datescompare(event, startId, endId, startName, endName) {
-    event.stopImmediatePropagation();
+//function datescompare(event, startId, endId, startName, endName) {
+function datescompare_Vs1(event, startId, endId, startName, endName) {
     debugger;
+    //event.stopImmediatePropagation();
+  
     var startDate = new Date(document.getElementById(startId).value);
     var endDate = new Date(document.getElementById(endId).value);
-    var error = $("#"+endId).closest('.form-group');
+    //var error = $("#"+endId).closest('.form-group');
+    var error = $("#" + endId).closest('.row div');
     $(error).find('.compare').removeClass('error2');
     if (endDate <= startDate) {
         $(error).find('.compare').addClass('error2');
@@ -1441,7 +1451,8 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
 }
 
 
-function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
+//function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
+function CommonDeleteFunction_Vs1(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
 
     debugger;
     $("#ErrorMessageSpan").empty();

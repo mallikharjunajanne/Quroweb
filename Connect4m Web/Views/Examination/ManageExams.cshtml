@@ -127,13 +127,15 @@
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
-                <a id="BtnCreateNewExams" class="BTNCreateNew Undeline ClsCreateNewLink" style="display:block" onclick="CreateNewExams()">Create Exam</a>
+                 @*<a id="BtnCreateNewExams" class="BTNCreateNew Undeline ClsCreateNewLink" style="display:block" onclick="CreateNewExams()">Create Exam</a>*@
+                 <button id="BtnCreateNewExams" class="btn rounded-pill btn-outline-dark waves-effect" style="display:block" onclick="CreateNewExams()">Create Exam</button>
                 <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
                 <span class="ErrorMessageSpan text-danger" id="DdlAcademicYearCreatePage"></span>
                 <span class="ErrorMessageSpan text-danger" id="TxtExamNameCreatePage"></span>
                 <span class="ErrorMessageSpan text-danger" id="RdoExamFor"></span>
 
                 <div id="MainSearchPage">
+                    @*==========================search result Card====================*@
                     <div class="card mb-4">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
@@ -145,7 +147,7 @@
 
                         <div class="card-body">
 
-                            <form id="FmExamsSearch">
+                            <form id="FmExamsSearch" class="needs-validation was-validated" novalidate>
                                 <div class="row">
                                     <div class="col">
                                         <div class=" row mb-3">
@@ -171,15 +173,15 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Exam Name :&nbsp;</label>
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Exam Name </label>
                                             <div class="col-sm-4">
                                                 <input type="text" name="ExamName" id="TxtExamName" class="form-control" placeholder="Exam Name">
                                             </div>
                                         </div>
                                         <div class="row justify-content-end">
                                             <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmExamsSearch')" id="BtnClearSearchForm">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" onclick="TblDataTableWithColumns_CallingFunction(event, 'NOStop', '/Examination/TblExamListData', 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0,1,2,3]);" id="BtnSearchId">Search</button>
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearSearchForm" onclick="CommonClearFunction('FmExamsSearch')">Clear</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" onclick="TblDataTableWithColumns_CallingFunction(event, 'NOStop', '/Examination/TblExamListData', 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0,1,2,3]);">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -189,7 +191,7 @@
                         </div>
 
                     </div>
-                    @*searched result table*@
+                    @*========================== Searched result table Card====================*@
                     <div id="Div_TblExamListData" style="display:none">
                         @*<div  id="MainSearchPage6">*@
                         <div class="card" id="SearchedTablePage">
@@ -198,13 +200,13 @@
                                     <div class="card-header flex-column flex-md-row">
                                         <div class="head-label text-center">
                                             <h5 class="card-title mb-0">
-                                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="RecordsCount">0</span>  RECORD(S).</span>
+                                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                                             </h5>
                                         </div>
                                     </div>
                                     <form id="Fm_TblExamListData">
-                                         <table id="TblExamListData" class="datatables-basic table dataTable no-footer dtr-column">
-                                            <thead>
+                                        <table id="TblExamListData" class="datatables-basic table dataTable no-footer dtr-column link">
+                                            <thead class="table-dark">
                                                 <tr>
                                                     <th>Exam Name</th>
                                                     <th>
@@ -231,13 +233,11 @@
                     </div>
                 </div>
 
-                @*-----create page*@
+                @*================================ create page Card==============================*@
 
                 <div id="CreateNewExams">
 
                 </div>
-
-
 
             </div>
         </div>

@@ -7144,7 +7144,8 @@ a.invert-bg-dark:hover, a.invert-bg-dark:focus {
 
 .btn {
   cursor: pointer;
-  display: inline-flex !important;
+ /* display: inline-flex !important; Changed By Rakesh*/
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.135s ease-in-out;

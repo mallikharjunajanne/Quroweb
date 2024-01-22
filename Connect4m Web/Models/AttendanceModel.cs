@@ -55,7 +55,7 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage ="The Department is Required")]
         [Display(Name = "Department ")]
         public int InstanceClassificationId { get; set; }
-        [Required(ErrorMessage ="The Class is Required")]
+       // [Required(ErrorMessage ="The Class is Required")]
         [Display(Name = "Class")]
         public int InstanceSubClassificationId { get; set; }
         public string ScreenName { get; set; }
