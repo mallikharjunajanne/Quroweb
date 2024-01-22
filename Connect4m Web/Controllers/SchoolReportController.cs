@@ -1,4 +1,5 @@
 ﻿using Connect4m_Web.Models.LMSproperties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
     public class SchoolReportController : Controller
     {
         #region  Http Connection

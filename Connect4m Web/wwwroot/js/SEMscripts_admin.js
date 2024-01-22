@@ -306,7 +306,7 @@ $(document).on('click', '#tblSEMsearchresults td:nth-child(7) .SEMapprovalsafter
                 } else {
                     $('#newtextares').find('.form-group #approva').prop('checked', true);
                 }
-                $("#newtextares").find("#submitapprovals").val("Update");
+                $("#newtextares").find("#submitapprovals").text("Update");
             }
             loaddingimg.css('display', 'none');
         }, function (status, error) {
