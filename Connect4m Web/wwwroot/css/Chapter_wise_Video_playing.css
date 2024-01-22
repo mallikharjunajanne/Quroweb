@@ -69,12 +69,12 @@
     #show-panel-button:hover, #Hide-panel-button:hover {
         background-color: #500ef6;
     }
-    #goBackButton {
+    /*#goBackButton {
         background-color: black;
         color: white;
-        font-weight: 700;
+        font-weight: 700;*/
         /* border-radius: 12px;*/
-        text-decoration:none;
+        /*text-decoration:none;
         border: 1px solid white;
         padding: 8px;
         text-align: center;
@@ -83,7 +83,7 @@
         background-color: orangered;
         cursor: pointer;
         font-weight: 900;
-    }
+    }*/
 #Hide-panel-button {
     background-color: black;
     color: white;

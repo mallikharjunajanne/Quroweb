@@ -16,7 +16,7 @@
 
         <link href="~/css/Videodesign-m.css" rel="stylesheet" />
         <link href="~/css/Everyminutetest.css" rel="stylesheet" />
-        <link href="~/css/navlinks_belowthevideo.css" rel="stylesheet" />
+        @*<link href="~/css/navlinks_belowthevideo.css" rel="stylesheet" />*@
 
     @*<link href="~/css/TableDesign.css" rel="stylesheet" />*@
     <style>
@@ -76,7 +76,7 @@
 
 <body>
 
-    <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-fluid flex-grow-1 container-p-y">
 
 
         <h4 class="py-3 mb-4">
@@ -111,16 +111,17 @@
                                     <source src="~/LMSVideos/Instance545/@item.Listchapters[0].VideoPath" type="video/mp4">
                                 </video>
                                 <div class="player">
+
                                     <div class="player-overlay" data-fullscreen="false">
                                         @*<div class="video-header" style="height: 64px;">
 
 
 
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    <button id="show-panel-button" onclick="showPanel()">Show Panel</button>
-                    <button id="Hide-panel-button" onclick="HidePanel()">Hide Panel</button>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <button id="show-panel-button" onclick="showPanel()">Show Panel</button>
+                <button id="Hide-panel-button" onclick="HidePanel()">Hide Panel</button>
 
-                </div>*@
+            </div>*@
                                         <div id="pdfcontainer" style="display: none; ">
 
 
@@ -134,9 +135,9 @@
 
 
                                                 @*<p class="description">
-                            You have to dream before your dreams can come true
+                        You have to dream before your dreams can come true
 
-                        </p>*@
+                    </p>*@
                                             </div>
                                             <div class="player-container" id="playercontainer1">
                                                 <div class="video-progress">
@@ -210,14 +211,48 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="">
+                                        <button class="abc btn btn-default waves-effect waves-light"></button>
+                                        @*<button class="abc">Over View</button>*@
+                                        <button class="abc"></button>
+                                        <button class="abc"></button>
+                                        <button class="abc"></button>
+                                    </div>
+
+
+
+
+                                    <div class="nav-align-top nav-tabs-shadow mb-4 topnav">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-home" aria-controls="navs-top-home" aria-selected="true" id="Course-Contents">Course Content</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="false" tabindex="-1" id="create-notes-navlink">Notes</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-messages" aria-controls="navs-top-messages" aria-selected="false" tabindex="-1" id="ViewMarks">Marks</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-pdf" aria-controls="navs-top-pdf" aria-selected="false" tabindex="-1" id="GettingAllGeneratedPdfs">Generated PDF's</button>
+                                            </li>
+                                        </ul>
+                                        
+                                    </div>
+                                    <div id="below-video-content">
+
+
+                                    </div>
                                     <div id="thumbnailappend" style="cursor:pointer"></div>
 
 
                                     @*<div id="bufferingOverlay">
-                <img src="~/Images/Loading-Video.gif" alt="Buffering">
-            </div>*@
+            <img src="~/Images/Loading-Video.gif" alt="Buffering">
+        </div>*@
 
                                 </div>
+
                                 <main id="wrapper1" style="display:none;">
 
 
@@ -329,18 +364,7 @@
                             <input type="text" value="@ViewBag.SubjectId"id="VLD_SubjectId" hidden/>*@
                         @*<hr style="color:black" />*@
 
-                        <div class="topnav">
-                            <button class="abc btn btn-default waves-effect waves-light" id="Course-Contents">Course Content</button>
-                            @*<button class="abc">Over View</button>*@
-                            <button class="abc" id="create-notes-navlink">Notes</button>
-                            <button class="abc" id="ViewMarks">Marks</button>
-                            <button class="abc" id="GettingAllGeneratedPdfs">Generated PDF's</button>
-                        </div>
-
-                        <div id="below-video-content">
-
-
-                        </div>
+                       
 
                         <footer @*style=" filter: drop-shadow(2px 4px 6px black);"*@>
                             <div>
