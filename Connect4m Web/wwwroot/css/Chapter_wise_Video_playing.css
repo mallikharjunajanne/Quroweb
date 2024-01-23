@@ -16,20 +16,20 @@
 
 #chapters-panel {
     flex: 1;
-/*    height: 48vh;
-*/    height: 59vh;
+    /*    height: 48vh;
+*/ height: 59vh;
     overflow-y: scroll;
     background-color: #f0f0f0;
     /* display: none; */
     display: flex;
-    margin-left: 77%;
+  /*  margin-left: 77%;*/
     border-radius: 30px;
     position: absolute;
     top: 10px;
     margin-top: 4%;
     color: black;
     top: 8px;
-    width: 23%;
+  /*  width: 23%;*/
     z-index: 1;
     filter: drop-shadow(black -3px 12px 21px);
 }
@@ -66,24 +66,28 @@
     text-align: center;
     cursor: pointer;
 }
+
     #show-panel-button:hover, #Hide-panel-button:hover {
         background-color: #500ef6;
     }
-    /*#goBackButton {
-        background-color: black;
-        color: white;
-        font-weight: 700;*/
-        /* border-radius: 12px;*/
-        /*text-decoration:none;
-        border: 1px solid white;
-        padding: 8px;
-        text-align: center;
-    }
+
+#goBackButton {
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    /* border-radius: 12px;*/
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 8px;
+    text-align: center;
+}
+
     #goBackButton:hover {
         background-color: orangered;
         cursor: pointer;
         font-weight: 900;
-    }*/
+    }
+
 #Hide-panel-button {
     background-color: black;
     color: white;
@@ -91,7 +95,7 @@
     /* border-radius: 12px;*/
     border: 1px solid red;
     padding: 8px;
-    cursor:pointer;
+    cursor: pointer;
     text-align: center;
 }
 
@@ -145,11 +149,13 @@ video::-webkit-media-controls-timeline {
 video::-webkit-media-controls-fullscreen-button {
     display: none;
 }
+
 video::-webkit-media-controls {
     display: none;
 }
-.hide::-webkit-media{
-    display:none
+
+.hide::-webkit-media {
+    display: none
 }
 
 
@@ -170,20 +176,20 @@ video::-webkit-media-controls {
 }
 
 #progressBarr {
-   /* width: 100%;
+    /* width: 100%;
     height: 5px;
     background-color: white;
     position: relative;*/
 }
 
 #progressBarFill {
-   /* height: 100%;
+    /* height: 100%;
     background-color: red;*/
-  /*  Adjust color as desired width: 0;*/
+    /*  Adjust color as desired width: 0;*/
 }
 
 #marksContainer {
-   /* position: absolute;
+    /* position: absolute;
     top: -15px;
     left: 0;
     right: 0;
@@ -194,7 +200,7 @@ video::-webkit-media-controls {
 }
 
 .mark {
-   /* width: 11px;
+    /* width: 11px;
     height: 15px;
     background-color: blue;
     Adjust color as desired position: relative;

@@ -1,14 +1,15 @@
 ﻿.topnav {
     overflow: hidden;
-    margin-left: 9%;
+    /* margin-left: 9%;*/
     color: black;
     margin-top: 14px;
     border-bottom: 1px solid;
-    width: 71%;
+    /* width: 71%;*/
+    text-align: center !important;
 }
 
     .topnav button {
-        float: left;
+        /*float: left;*/
         color: black;
         text-align: center;
         padding: 14px 16px;
@@ -194,7 +195,7 @@ a:hover .tooltiptext {
 #notebook-save-cancel {
     margin-left: 61%;
     margin-top: 10px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #bookmark-save {
@@ -222,13 +223,16 @@ a:hover .tooltiptext {
 .video-write-notes {
     display: none;
 }
+
 #LMS_listofnotes {
     max-height: 441px;
     overflow-y: scroll;
 }
-#LMS_listofnotes i {
-    cursor: pointer;
-}
+
+    #LMS_listofnotes i {
+        cursor: pointer;
+    }
+
 .alert-success {
     color: #3c763d;
     background-color: #dff0d8;
@@ -240,6 +244,7 @@ a:hover .tooltiptext {
     text-align: center;
     display: none;
 }
+
 .alert-danger {
     color: #a94442;
     background-color: #f2dede;
@@ -248,9 +253,10 @@ a:hover .tooltiptext {
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
-    display:none;
-    text-align:center;
+    display: none;
+    text-align: center;
 }
+
 #genratepdfnotes {
     background-color: aqua;
     width: fit-content;

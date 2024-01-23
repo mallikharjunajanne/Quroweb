@@ -1,0 +1,82 @@
+﻿@media screen and (min-width: 250px) and (max-width: 600px) {
+    .backward, .expand, .forward, .pause, .play, .reduce, .silence, .volume {
+        width: 22px !important;
+        height: 19px !important;
+    }
+
+
+    #thumbnailappendchapters video {
+        height: 38px !important;
+    }
+    #chapters-panel {
+        height: 27vh !important;
+        margin-top: 16% !important;
+    }
+    .wrapper{
+        height:58vh !important;
+    }
+    .container {
+        height: 86% !important;
+    }
+    .player-container {
+        margin-left: 3px !important;
+    }
+    .circularmain {
+        margin-left: 0px !important;
+    }
+    .player-buttons{
+        gap:0px!important;
+    }
+    .form-popup {
+        height: 55% !important;
+        margin-top: 17% !important;
+    }
+        .form-popup #timerlabel {
+            position: absolute !important;
+            margin-left: 30%;
+            color: red;
+            padding: 0px;
+            background-color: black;
+            /* border-radius: 5px; */
+            animation: none;
+        }
+    .player-overlay {
+        height: 58% !important;
+    }
+    #create-bookmark-container {
+        margin-left: 25px !important;
+    }
+
+    #genratepdfnotes {
+        margin-left: 58% !important;
+    }
+    #span_notebook {
+        margin-left: 2px !important;
+        width: 0px !important;
+    }
+    #LMS_listofnotes {
+        max-height: 0px !important;
+        overflow-y: scroll !important;
+    }
+    #create-bookmark-container2 {
+        width: 100% !important;
+    }
+    #main_listofnotes {
+        margin-left: 0px !important;
+    }
+    .notestextares {
+        width: 100% !important
+    }
+    #notebook-save-cancel {
+        margin-left: 0px !important;
+    }
+    #thubnailimages {
+        height: 7% !important;
+        top: 37% !important;
+    }
+    .styled-table {
+        width: 100% !important;
+        margin-left: 0% !important;
+    }
+}
+
