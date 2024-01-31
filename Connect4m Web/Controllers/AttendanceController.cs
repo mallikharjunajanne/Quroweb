@@ -177,7 +177,7 @@ namespace Connect4m_Web.Controllers
                         Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
 
 
-                        Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
+                        Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString().ToUpper());
 
                         Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
                         Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
@@ -186,7 +186,7 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +""+ Value2[0].UserDetailsList[0].LastName.ToString());
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString());
 
 
                         var claims = new List<Claim>
@@ -224,7 +224,7 @@ namespace Connect4m_Web.Controllers
             //return View();
             return Json(0);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(0);
             }
@@ -252,6 +252,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
+        //====================================Apply Student Leave==================================================
 
         [Authorize]
         public IActionResult GetStudentNameDropdown(string InstanceId,string Value)// string InstanceClassificationId, string InstanceSubClassificationId)
@@ -504,25 +505,29 @@ namespace Connect4m_Web.Controllers
         [Authorize]
         private bool CheckIfFileNameExists(string fileName,int InstanceID,int Studentid)
         {
-            // Perform your server-side logic to check if the file name exists
-            // You can access the file system or database to check for existing file names
             // Return true if the file name exists, false otherwise
             var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc/"+InstanceID+"/"+ Studentid+ "");
-
-            //  var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc/"+ InstanceID + "/ " + Studentid + "");
-            // Example implementation:
-            // var uploadsPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-
-            //string filename1 = InstanceID + "/" +Studentid + "/" + fileName;
-
             var filePath = Path.Combine(uploadsPath, fileName);
             return System.IO.File.Exists(filePath);
         }
         [Authorize]
+        private bool DeleteDocumentFunction(string fileName, int InstanceID,int Studentid)
+        {
+            // Return true if the file name exists, false otherwise
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc/"+InstanceID+"/"+ Studentid+ "");
+         //   string fileNameToDelete = "rakesh image.jpg";
+            string filePathToDelete = Path.Combine(folderPath, fileName);
+
+            if (Directory.Exists(folderPath))
+            {
+                    System.IO.File.Delete(filePathToDelete);
+                return true;
+            }
+            return false;
+        }
+        [Authorize]
         public IActionResult ApplyStudentLeave(bool Issuccess=false)
         {
-
-
             if (Issuccess==true)
             {
                 //var message =JsonConvert.DeserializeObject( HttpContext.Session.GetString("Returnmessage"));//step-4
@@ -574,17 +579,19 @@ namespace Connect4m_Web.Controllers
             //ViewBag.StudentApplyLeave_SelectById = value9;
 
             //ViewBag.StudentApplyLeave_SelectByIdCOUNT = value9.Count;
-
-
-            List<SelectListItem> value = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetClassNameDropdown2?UserId="+ LoginUserId + "&InstanceId="+ InstanceId12).Result;
-            if (response.IsSuccessStatusCode)
+            ViewBag.Classnames= new List<SelectListItem>();
+            if (!Request.Cookies["RoleName"].Contains("STUDENT") && !Request.Cookies["RoleName"].Contains("PARENT"))
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                value = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+
+                List<SelectListItem> value = new List<SelectListItem>();
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetClassNameDropdown2?UserId=" + LoginUserId + "&InstanceId=" + InstanceId12).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    value = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+                }
+                ViewBag.Classnames = value;
             }
-            ViewBag.Classnames = value;
-          
 
 
 
@@ -598,12 +605,15 @@ namespace Connect4m_Web.Controllers
                 string data2 = response2.Content.ReadAsStringAsync().Result;
                 value2 = JsonConvert.DeserializeObject<List<SelectListItem>>(data2);
             }
-            if (Convert.ToInt32(Request.Cookies["Roleid"]) == 776) {
-                int lenth19 = value2.Count;
+            //if (Convert.ToInt32(Request.Cookies["Roleid"]) == 776) {
+                if (Request.Cookies["RoleName"].Contains("STUDENT") || Request.Cookies["RoleName"].Contains("PARENT")) { 
+
+                    int lenth19 = value2.Count;
 
                 for (int j = 0; j < lenth19;)
                 {
-                    if (value2[j].Value == "10" || value2[j].Value == "11")
+                    //if (value2[j].Value == "10" || value2[j].Value == "11")
+                    if (value2[j].Text.ToUpper() == "FIRST HALF PRESENT" || value2[j].Text.ToUpper() == "SECOND HALF PRESENT")
                     {
                         value2.RemoveAt(j);                      
                         j = 0;
@@ -615,8 +625,6 @@ namespace Connect4m_Web.Controllers
                     }
                 }
             }
-
-
             ViewBag.LeaveType = value2;
 
 
@@ -648,9 +656,12 @@ namespace Connect4m_Web.Controllers
         public IActionResult ApplyStudentLeave(AttendanceModel obj/*, IFormFile attachdocument*/, string fileName, string submitButton,int StudentLeaveDetailsID_TO_Delete)
         {
              string successMessage = "";
+            if (obj.Text != null && obj.Text != "")
+            {
+                DeleteDocumentFunction(obj.Text, obj.InstanceID, obj.Studentid);
+            }
             if (obj.file != null && obj.file.Length > 0)
             {
-
                 var fileName1 = Path.GetFileName(obj.file.FileName);
 
                 if (CheckIfFileNameExists(fileName1, obj.InstanceID, obj.Studentid))
@@ -667,7 +678,6 @@ namespace Connect4m_Web.Controllers
             }
 
             int LoginUserId =Convert.ToInt32( Request.Cookies["LoginUserId"]);
-
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
          //   obj.InstanceClassificationId = Convert.ToInt32(Request.Cookies["InstanceClassificationId"]);
 
@@ -690,7 +700,6 @@ namespace Connect4m_Web.Controllers
                 InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
             }
 
-
             obj.InstanceClassificationId = Convert.ToInt32(InstanceClassificationId);
             obj.InstanceSubClassificationId = Convert.ToInt32(InstanceSubClassificationId);
             //int LoginUserId = 217606;
@@ -700,10 +709,8 @@ namespace Connect4m_Web.Controllers
             obj.UserId = LoginUserId;
             obj.InstanceID = InstanceId12;
             obj.submitButton = submitButton;
-
             if (submitButton=="Delete")
             {
-
                 obj.StudentLeaveDetailsID = StudentLeaveDetailsID_TO_Delete;
             }
             //if (submitButton == "Delete")
@@ -714,7 +721,6 @@ namespace Connect4m_Web.Controllers
 
             if (obj.file!=null)
             {
-
                 obj.attachdocument = obj.file.FileName;
             }
 
@@ -732,12 +738,8 @@ namespace Connect4m_Web.Controllers
                  successMessage = data1;
                 if (data1== "Student Leave Saved Successfully" || data1 == "Student Leave Updated Successfully")
                 {
-
-                
-                if (obj.file != null && obj.file.Length > 0)
-                {
-
-                       
+                     if (obj.file != null && obj.file.Length > 0)
+                      {
                         //bool fileExists = System.IO.File.Exists(filePath);
 
                         string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc");
@@ -781,17 +783,12 @@ namespace Connect4m_Web.Controllers
                         // Redirect to a view that displays the uploaded file
                         //return RedirectToAction("UploadFile", new { fileNameWithPath1 });
                     }
-
                 }
-
-
-
                 return Json(new { success = true, message = successMessage,buttonName= submitButton });
 
                 //string message = data1;
                 //HttpContext.Session.SetString("Returnmessage",JsonConvert.SerializeObject( message));//step-3
             }
-
             return Json(new { success = false });
         }
 
@@ -2936,7 +2933,6 @@ namespace Connect4m_Web.Controllers
 
             //int InstanceClassificationId = Convert.ToInt32(Request.Cookies["Instanceid"]);
 
-            int InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
             List<AttendanceModel> Value2 = new List<AttendanceModel>();
             HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/DdlLmsSubCategory_Calingfunction?InstanceId=" + InstanceId12 + "&PayrollCategoryId=" + PayrollCategoryId).Result;
             if (response2.IsSuccessStatusCode)
@@ -3099,7 +3095,7 @@ namespace Connect4m_Web.Controllers
 
 
         //--------------------------Leave Delegation Screen------------------------------
-
+        #region
         [Authorize]
         public IActionResult _TblLeaveDelegationAuthorityList_LeaveDeligation(LeaveDelegationModel val)
         {
@@ -3236,15 +3232,13 @@ namespace Connect4m_Web.Controllers
             //return RedirectToAction("SuccessPage");
         }
 
-
+        #endregion
 
         //-----------------============Allocate Leaves By LMS Category Screen======----------------
 
         [Authorize]
         public IActionResult GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(AttendanceModel val, int PayrollCategoryId, int PayrollSubCategoryId)
         {
-
-
             // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
             val.InstanceID = InstanceId12;
@@ -3274,67 +3268,68 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         [Authorize]
 
-        public IActionResult AllocateLeavesLeaveCategoryWise(List<AttendanceModel> val)
+       // public async Task<IActionResult> AllocateLeavesLeaveCategoryWise(List<AttendanceModel> val)
+        public async Task<IActionResult> AllocateLeavesLeaveCategoryWise(AttendanceModel val, string ButtonName)
         {
             int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
 
             int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-
-            //return Json(new { success = true, message = "Something Error" });
-            //return View();
-            int count = 0;
-            foreach (var model in val)
-            {
-
-                // Process the dynamic parameters for each row
-                //var dynamicParams = new Dictionary<string, string>();
-                var ParamString = "";
-                var Dayvalue = "";
-                foreach (var item in model.LeavetypeDaysDynamicDictionary)
-                {
-                    Dayvalue = $"{item.Key}-{item.Value}";
-                    ParamString += Dayvalue + ",";
-                    //dynamicParams[key] = model.LevetypeDaysDynamicDictionary[key];
-                }
-                val[count].ParamString_LeaveNameandDayCount = ParamString.TrimEnd(',');
-                val[count].InstanceID = InstanceId12;
-                val[count].CreatedBy = LoginUserId;
-                count++;
-            }
-
-            //var length = val.Count;
-            //for (int i = 0; i < length; i++)
+            val.InstanceID = InstanceId12;
+            val.CreatedBy = LoginUserId;
+            //int count = 0;
+            //foreach (var model in val)
             //{
-            //    var model = val[i];
+
+            //    // Process the dynamic parameters for each row
+            //    //var dynamicParams = new Dictionary<string, string>();
             //    var ParamString = "";
             //    var Dayvalue = "";
-
-            //    var dict = model.LeavetypeDaysDynamicDictionary;
-            //    var Keys = new List<string>(dict.Keys);
-            //    var KeyLength = Keys.Count;
-            //        for (int j = 0; j < KeyLength; j++)
+            //    foreach (var item in model.LeavetypeDaysDynamicDictionary)
             //    {
-            //        var key = Keys[j];
-            //        Dayvalue = $"{key}-{dict[key]}";
+            //        Dayvalue = $"{item.Key}-{item.Value}";
             //        ParamString += Dayvalue + ",";
-
+            //        //dynamicParams[key] = model.LevetypeDaysDynamicDictionary[key];
             //    }
-
-            //    val[i].Leavetype = ParamString.TrimEnd(',');
+            //    val[count].ParamString_LeaveNameandDayCount = ParamString.TrimEnd(',');
+            //    val[count].InstanceID = InstanceId12;
+            //    val[count].CreatedBy = LoginUserId;
+            //    count++;
             //}
+
+            ////var length = val.Count;
+            ////for (int i = 0; i < length; i++)
+            ////{
+            ////    var model = val[i];
+            ////    var ParamString = "";
+            ////    var Dayvalue = "";
+
+            ////    var dict = model.LeavetypeDaysDynamicDictionary;
+            ////    var Keys = new List<string>(dict.Keys);
+            ////    var KeyLength = Keys.Count;
+            ////        for (int j = 0; j < KeyLength; j++)
+            ////    {
+            ////        var key = Keys[j];
+            ////        Dayvalue = $"{key}-{dict[key]}";
+            ////        ParamString += Dayvalue + ",";
+
+            ////    }
+
+            ////    val[i].Leavetype = ParamString.TrimEnd(',');
+            ////}
 
 
 
             string data = JsonConvert.SerializeObject(val);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/AllocateLeavesLeaveCategoryWise", content).Result;
-            if (response.IsSuccessStatusCode)
+            using (HttpResponseMessage response = await client.PostAsync(client.BaseAddress + "/AllocateLeavesLeaveCategoryWise", content))
             {
-                string data1 = response.Content.ReadAsStringAsync().Result;
-
-                return Json(new { success = true, message = data1 });
+                if (response.IsSuccessStatusCode)
+                {
+                    string data1 = await response.Content.ReadAsStringAsync();
+                    return Json(new { success = true, message = data1 });
+                }
+                return Json(new { success = false, message = "Something Error" });
             }
-            return Json(new { success = false, message = "Something Error" });
             // return RedirectToAction("SuccessPage");
             //return RedirectToAction("SuccessPage");
         }
@@ -3796,387 +3791,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-
-        //--------below all for checking
-
-        public IActionResult Leavecheck()
-        {
-
-
-            List<AttendanceModel> value = new List<AttendanceModel>();
-            //value.Add(lea)
-            AttendanceModel ar = new AttendanceModel();
-            ar.Studentid = 101;
-            ar.StudentName = "hygbddbbh";
-
-            value.Add(ar);
-            ViewBag.st = value;
-
-
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Leavecheck(AttendanceModel formData, List<AttendanceModel> formData1)
-        {
-
-            var form1Data = Request.Form;
-            var form2Data = Request.Form;
-            var resultsView = form1Data["resultsView" + 0];
-            //var fileq = Request.Files.Count;
-
-            var d = form1Data["ClassName"];
-            // var t=d[0].
-            var d1 = form1Data["StudentName"];
-
-            var d11 = form2Data["ClassName"];
-
-            var d12 = form2Data["StudentName"];
-            string name = formData.ClassName;
-            string email = formData.StudentName;
-            // bool subscribe = formData.Subscribe;
-            List<AttendanceModel> value = new List<AttendanceModel>();
-            //value.Add(lea)
-            AttendanceModel ar = new AttendanceModel();
-            ar.Studentid = 101;
-            ar.StudentName = "hygbddbbh";
-
-            value.Add(ar);
-            ViewBag.st = value;
-
-
-            return View();
-        }
-
-
-        public IActionResult SubmitFormData()
-        {
-            //string name = form["name"];
-            //string email = form["email"];
-            // ...
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult SubmitFormData(List<FormDataModel> rakesh1, List<IFormFile> Course_PDF)
-
-        //public IActionResult SubmitFormData(IFormCollection form, [FromForm] List<FormDataModel> formDataList, List<List<FormDataModel>> formDataArray)
-        {
-
-
-
-
-            //var formData = Request.Form;
-
-            //// Retrieve the values of the list items
-            //var listItems = formData["listIte[]"];
-
-            //// Process the list items as needed
-            //if (listItems.Count > 0)
-            //{
-            //    foreach (var listItem in listItems)
-            //    {
-            //        // Do something with each list item value
-            //        // For example, you can store them in a database or perform further processing
-            //    }
-            //}
-
-
-            //foreach (var formData in formDataList)
-            //{
-            //    string name = formData.Name;
-            //    string email = formData.Email;
-            //    //bool subscribe = formData.Subscribe;
-            //    //string city = formData.City;
-
-            //    // ... Perform operations with the form data
-            //}
-
-            //foreach (var formDataList1 in formDataArray)
-            //{
-            //    foreach (var formData in formDataList)
-            //    {
-            //        // Access the form data in the formData object and perform desired operations
-            //        string name = formData.Name;
-            //        string email = formData.Email;
-            //        //bool subscribe = formData.Subscribe;
-            //        //string city = formData.City;
-
-            //        // ...
-            //    }
-            //}
-
-
-
-            return View();
-        }
-
-
-        public IActionResult SubmitFormDataFILE()
-        {
-            //string name = form["name"];
-            //string email = form["email"];
-            // ...
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult SubmitFormDataFILE(/*List<IFormCollection> formDataList,*/ List<FormDataModel> rakesh1, IFormFile file)
-        {
-            // var file = Request.Form.Files[0]; // Retrieve the uploaded file
-
-            //foreach (var formData in formDataList)
-            //{
-            //    string name = formData.Name;
-            //    string email = formData.Email;
-            //    //bool subscribe = formData.Subscribe;
-            //    //string city = formData.City;
-
-            //    // ... Perform operations with the form data
-            //}
-
-
-            return View();
-        }
-
-
-
-        public IActionResult FileTransfer()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult FileTransfer(AttendanceModel obj)
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult SendEmail()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult SendEmail(AttendanceModel _objModelMail)
-        {
-
-
-
-            string to = "ponnarakesh76@gmail.com";
-            string subject = "About Request";
-            // string body = "request Accepted";
-
-            int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
-
-
-            List<AttendanceModel> value122 = new List<AttendanceModel>();
-            HttpResponseMessage response122 = client.GetAsync(client.BaseAddress + "/GetMySavedLeaves2?UserId=" + LoginUserId + "&InstanceId=" + InstanceId12).Result;
-            if (response122.IsSuccessStatusCode)
-            {
-                string data122 = response122.Content.ReadAsStringAsync().Result;
-                value122 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data122);
-            }
-            var tableRows = "";
-            foreach (var item in value122)
-            {
-                var newRow =
-                        "<tr style='background-color: white; height: 24px;'>" +
-
-                        "<td>" + item.LeaveReason + "</td>" +
-                        "<td>" + item.LeaveTodate + " </td>" +
-                        "<td>" + item.LeaveFromdate + " </td>" +
-
-                        "<td>" + item.LeaveNoOfDays + "</td>" +
-                        "<td>" + item.LeaveStatus + " </td>" +
-
-                        "<td>" + item.Batchid + "</td>" +
-
-
-                        "</tr>";
-                tableRows += newRow;
-            }
-
-
-
-
-            string body = @"
-<!DOCTYPE html PUBLIC ''-//W3C//DTD XHTML 1.0 Transitional//EN'' ''http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd''>
-<html xmlns=''http://www.w3.org/1999/xhtml''>
-<head>"+tableRows+@"
-    <title>Staff Leave Application Approval</title>
-    <style type=''text/css''>
-        body
-        {
-            margin-left: 20px;
-            margin-top: 20px;
-        }
-        .emailheadTxt
-        {
-            font-family: Verdana;
-            font-size: 12px;
-            font-weight: bold;
-            color: #2c2c2c;
-        }
-        .emailcontentTxt
-        {
-            font-family: Verdana;
-            font-size: 12px;
-            font-weight: normal;
-            color: #2c2c2c;
-        }
-    </style>
-</head>
-<body>
-    <table width=''100%'' cellspacing=''0'' cellpadding=''0''>
-        <tr>
-            <td class=''emailheadTxt''>
-                HI Admin,
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:15px;''>
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:20px;'' class=''emailcontentTxt''>
-                Staff Leave request is waiting for your approval.
-                <br/>
-                <br/>
-                <Table border=1 width=''100%''>
-                    <tr>
-                        <th width=''18%''> Name </th>
-                        <th width=''12%''> Department </th>
-                        <th width=''12%''> Class </th>
-                        <th width=''14%''> Leave Type</th>
-                        <th width=''19%''> Reason </th>
-                        <th width=''10%''> From Date</th>
-                        <th width =''10%''> To Date</th>
-                        <th width=''5%'' > Days </th>
-                    </tr>
-                    <tr align=''Center''>
-                        <td width=''18%''> Nayana </td>
-                        <td width=''12%''> SENIOR - PROGRAM </td>
-                        <td width=''12%''> VIII - A </td>
-                        <td width= ''14%''> Medical Leave(ML)</td>
-                        <td width =''19%''> Out of Station</td>
-                        <td width =''10%'' > 21 Dec 2023</td>
-                        <td width =''10%'' > 21 Dec 2023</td>
-                        <td width=''5%'' > 1.0 </td>
-                    </tr>
-                </Table>
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:15px;''>
-                <br/>
-                Do you want to approve this leave? : <a href= ""http://school.connect4m.com/Admin/EmailLeaveApprovalforStaff.aspx?action=1&InstanceId=545&UserId=32886&BatchId=83186"" id= ''lnkApprove'' title= ''Approve Leave'' >
-                    Yes </a> &nbsp; (OR )&nbsp; <a title=''Reject Leave'' href=""http://school.connect4m.com/Admin/EmailLeaveApprovalforStaff.aspx?action=2&InstanceId=545&UserId=32886&BatchId=83186"" id=''lnkReject''>
-                        No</a>
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:15px;'' >
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:15px;'' >
-                <font color=""red"">Note: </font>Click on Yes to approve the Staff Leave request,
-                No to reject the leave request.
-            </td>
-        </tr>
-        <tr>
-            <td style=''height:15px;'' >
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td style = ''height: 20px;'' class=''emailcontentTxt''>
-                <h3>Previous Leave Details:</h3>
-                <table border = ''1'' width=''100%''>
-                    <tr>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Leave Type</th>
-                        <th>Reason</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th>Days</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr>
-                        <td align = ''center''>  (On behalf of Nayana U)</td>
-                        <td align = ''center''>SENIOR-PROGRAM</td>
-                        <td align = ''center''> EL</td>
-                        <td align = ''center''>Study Related</td>
-                        <td align = ''center''>01 Sep 2023</td>
-                        <td align = ''center''>01 Sep 2023</td>
-                        <td align = ''center''>1.0</td>
-                        <td align = ''center''>Saved</td>
-                    </tr>
-                    <tr>
-                        <td align = ''center''>Nayana U</td>
-                        <td align = ''center''>SENIOR-PROGRAM</td>
-                        <td align = ''center''> ML</td>
-                        <td align = ''center''>Out of Station</td>
-                        <td align = ''center''>21 Dec 2023</td>
-                        <td align = ''center''>21 Dec 2023</td>
-                        <td align = ''center''>1.0</td>
-                        <td align = ''center''>Submitted</td>
-                    </tr>
-                    <!-- Add more rows if needed -->
-                </table>
-                <br />
-            </td>
-        </tr>
-        <!-- Add more content here if needed -->
-    </table>
-
-    <!-- Add the rest of the HTML content here -->
-
-    Thank you,
-    <br />
-    <font style = ''color: #01558A''><b>ADS School</b></font>
-
-</body>
-</html>";
-
-            string address ="mangasrikanth313@gmail.com";
-
-            //string pw = "tyiuriuqbbduqhvd";
-            string pw = "mtngkehgjyhinhwb";
-
-            int r = 1;
-            if (r == 1)
-            {
-
-                //var body = NotificationMessage;
-                var fromAddress = new MailAddress(address, address);
-                var message1 = new MailMessage();
-                message1.From = fromAddress;
-                message1.To.Add(new MailAddress(to));
-                message1.Subject = subject;
-                message1.Body = body;
-
-                using (var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
-                {
-                    smtpClient.EnableSsl = true;
-                    smtpClient.UseDefaultCredentials = false;
-                    smtpClient.Credentials = new NetworkCredential(address, pw);
-                    smtpClient.Send(message1);
-                }
-            }
-
-
-
-
-            return View();
-        }
-
+      
     }
 
 }

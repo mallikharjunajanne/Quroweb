@@ -2,24 +2,6 @@
 
 
 var ErrorAppend = $("#Main_Span_Error");
-//============Ready function
-//$(document).ready(function () {
-//    loaddingimg.css('display', 'block');
-//    debugger;
-//    //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
-//   // var pageTitle = '@ViewData["Title"]'
-//    // pageTitle is assign in PostResultsByExcel page
-//    if (pageTitle == "PostResultsByExcel") {
-//        CommonDropdownFunction('POST', '/Results/DdlExams_Callingfunction?ExamtypeId=1', 'DdlExam', '------Select------', false)
-//    }
-//   CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
-//    CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
-//   loaddingimg.css('display', 'none');
-//});
-
-
-//var js = jQuery.noConflict(true);
-
 
 //=============================== upload file yes or No
 // function FileUploadingType(event,id) {
@@ -75,7 +57,7 @@ $('#RdbNo, #RdbYes').off('click').on('click', function (event) {
 
 
 
-//-================================ back to step 1
+//-================================ back to step 1 and Step 2
 function BackTOStep(event, button) {
     try {
         debugger;
@@ -91,7 +73,6 @@ function BackTOStep(event, button) {
             $("#Div_Step2").css('display', 'block');
         } else {
             $("#Div_Step2").css('display', 'none');
-
             $("#TblExamSubjects tbody").empty();
             $("#Div_Step1").css('display', 'block');
         }
@@ -104,8 +85,6 @@ function BackTOStep(event, button) {
 
         $("#Div_Step3").css('display', 'none');
         $("#Div_UploadingType").empty();
-
-
        loaddingimg.css('display', 'none');
     } catch (x) {
        loaddingimg.css('display', 'none');
@@ -117,11 +96,11 @@ function BackTOStep(event, button) {
 //===============================  Search Records   /Go to step 2 to post result
 
 var ClickedBtnId = null;
-$(".submit-btn").click(function () {
+$("button").click(function () {// To get Button Id
     ClickedBtnId = $(this).attr("id");
 });
 
-js("#FmSubjectsSearch").submit(function (event) {
+$("#FmSubjectsSearch").submit(function (event) {
     debugger;
     try {
         event.preventDefault();
@@ -135,12 +114,18 @@ js("#FmSubjectsSearch").submit(function (event) {
             if (validationmelength == 0) {
                 var selectedCount = $('#DdlSubjects option:selected').length;
                 if (selectedCount > 1 && $("#DdlExammode").val() == 2) {
-                    $("#Main_Span_Error").text("You can not post results for more than 1 subject in ReTest mode.");
+                   // $("#Main_Span_Error").text("You can not post results for more than 1 subject in ReTest mode.");
                     window.scrollTo(0, 0);
+                    $('.alert-danger p').text("You can not post results for more than 1 subject in ReTest mode.");
+                    $(".alert-danger").show().delay(6000).fadeOut();
+                    loaddingimg.css('display', 'none');
                     return;
                 } else if (selectedCount > 15) {
-                    $("#Main_Span_Error").text("You can not post results for more than 15 subjects at a time.");
+                    //$("#Main_Span_Error").text("You can not post results for more than 15 subjects at a time.");
                     window.scrollTo(0, 0);
+                    $('.alert-danger p').text("You can not post results for more than 15 subjects at a time.");
+                    $(".alert-danger").show().delay(6000).fadeOut();
+                    loaddingimg.css('display', 'none');
                     return;
                 } //loaddingimg.css('display', 'block');
 
@@ -158,12 +143,8 @@ js("#FmSubjectsSearch").submit(function (event) {
 
                 // TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction', 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
 
-
-
-                TblDataTableWithColumns_CallingFunction_new(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction?ScreenName=' + ScreenName, 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);
-
-
-                loaddingimg.css('display', 'none');
+                TblDataTableWithColumns_CallingFunction_new(event, 'NoStop', '/Results/TblExamSubjects_Calingfunction?ScreenName=' + ScreenName, 'TblExamSubjects', 'Counts', 'FmSubjectsSearch', 'Div_TblExamSubjects', '', [], false);           
+             //   loaddingimg.css('display', 'none');
                 // loaddingimg.css('display', 'none');
             } else {
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
@@ -201,8 +182,8 @@ function TblDataTableWithColumns_CallingFunction_new(event, val, Url, tablename,
                 var columns = [];
                 // var PostResult_CheckCountList = responce[0]?.postResult_CheckCountList;
 
-
-                if (responce?.[0]?.postResult_CheckCountList?.length ?? 0 > 0) {
+                
+                if (responce?.[0]?.postResult_CheckCountList?.length ?? 0 > 0) {//when COUNT OF STUDENTS IN OPTIONAL SUBJECT data is available 
                     // if (PostResult_CheckCountList.length > 0) {
 
                     $("#Div_Step2").css('display', 'none');
@@ -237,6 +218,7 @@ function TblDataTableWithColumns_CallingFunction_new(event, val, Url, tablename,
                             }
                         },
                     ]
+                    window.scrollBy(0, 1000);
                 } else {
                     var response = responce[0]?.examSubjectsList ?? 0;
                     columns = [
@@ -464,7 +446,7 @@ $("#BtnSave_Nextpage_Step3").click(function (event) {
                     shouldExit = true; // Set the flag to true to exit the loops
                     return false; // Exit the inner loop
                 }
-                else if (new Date(TxtDate) < new Date(HdnActualDateConducted)) {
+                else if (new Date(TxtDate) < new Date(HdnActualDateConducted.split('/').reverse().join('-'))) {
                     $(ErrorAppend).text("ReTest Conducted date can not be less than Conducted Date for subject '" + SubjectName + "'");
                     TblExamSubjectTD.find("#TxtDate").addClass("errorboxshadow");
                     shouldExit = true; // Set the flag to true to exit the loops
@@ -535,105 +517,6 @@ $("#BtnSave_Nextpage_Step3").click(function (event) {
     });
 //});
 
-//===============================  This is For save as draft and Publish Marks
-//js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {
-
-
-$('#BtnSaveAsDraft, #BtnPublish').off('click').on('click', function (event) {
-   // $(document).off("click", '#BtnSaveAsDraft, #BtnPublish').on("click", '#BtnSaveAsDraft, #BtnPublish', function (event) {
-     
-    try {
-        event.preventDefault();
-
-        //event.stopImmediatePropagation();
-        var ButtonName = $(this).val();
-        var ButtonId = $(this).attr("id");
-        debugger;
-        $(".ErrorMessageSpan").empty();
-        var Alertconfirm = false;
-        var HdnSubjectNamesForAlertMsg = $("#HdnSubjectNamesForAlertMsg").val();
-        if (HdnSubjectNamesForAlertMsg != "" && ButtonId == "BtnSaveAsDraft") {
-            Swal.fire({
-                title: "Are you sure?",
-                text: ("For Subject(s) '" + HdnSubjectNamesForAlertMsg.slice(0, -1) + "' marks are already published. Do you want to save the published marks as draft? "),
-                //type: "warning", -  doesn't exist
-                showCancelButton: true,
-                showCloseButton: true, // optional
-                showConfirmButton: true, // optional
-                confirmButtonColor: '#d33',
-                confirmButtonText: "Yes",
-                icon: "warning",
-                //closeOnConfirm: false -  doesn't exist
-            })
-                .then(function (isConfirm) {
-                    if (isConfirm.isConfirmed) {
-                        Alertconfirm = true;
-                        SaveAsdraftCallingFunction(ButtonId, ButtonName);
-                    }
-                    else {
-                        return; //close popup
-                    }
-                });
-        }
-        if (Alertconfirm || HdnSubjectNamesForAlertMsg == "" || ButtonId == "BtnPublish") {
-            SaveAsdraftCallingFunction(ButtonId, ButtonName);
-        }
-    } catch (e) {
-        loaddingimg.css('display', 'none');
-        $("#Main_Span_Error").text("Something Error");
-    }
-});
-
-//===============================  This is For save as draft and Publish Marks calling function
-
-//===============================  This is For save as draft and Publish Marks
-//js(document).on("click", '#BtnSaveAsDraft,#BtnPublish', function (event) {
-
-
-$('#BtnSaveAsDraft, #BtnPublish').off('click').on('click', function (event) {
-    // $(document).off("click", '#BtnSaveAsDraft, #BtnPublish').on("click", '#BtnSaveAsDraft, #BtnPublish', function (event) {
-
-    try {
-        event.preventDefault();
-
-        //event.stopImmediatePropagation();
-        var ButtonName = $(this).val();
-        var ButtonId = $(this).attr("id");
-        debugger;
-        $(".ErrorMessageSpan").empty();
-        var Alertconfirm = false;
-        var HdnSubjectNamesForAlertMsg = $("#HdnSubjectNamesForAlertMsg").val();
-        if (HdnSubjectNamesForAlertMsg != "" && ButtonId == "BtnSaveAsDraft") {
-            Swal.fire({
-                title: "Are you sure?",
-                text: ("For Subject(s) '" + HdnSubjectNamesForAlertMsg.slice(0, -1) + "' marks are already published. Do you want to save the published marks as draft? "),
-                //type: "warning", -  doesn't exist
-                showCancelButton: true,
-                showCloseButton: true, // optional
-                showConfirmButton: true, // optional
-                confirmButtonColor: '#d33',
-                confirmButtonText: "Yes",
-                icon: "warning",
-                //closeOnConfirm: false -  doesn't exist
-            })
-                .then(function (isConfirm) {
-                    if (isConfirm.isConfirmed) {
-                        Alertconfirm = true;
-                        SaveAsdraftCallingFunction(ButtonId, ButtonName);
-                    }
-                    else {
-                        return; //close popup
-                    }
-                });
-        }
-        if (Alertconfirm || HdnSubjectNamesForAlertMsg == "" || ButtonId == "BtnPublish") {
-            SaveAsdraftCallingFunction(ButtonId, ButtonName);
-        }
-    } catch (e) {
-        loaddingimg.css('display', 'none');
-        $("#Main_Span_Error").text("Something Error");
-    }
-});
 
 //===============================  This is For save as draft and Publish Marks calling function
 
@@ -643,19 +526,18 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
         debugger;
         loaddingimg.css('display', 'block');
         var formData = new FormData($("#FmSubjectsSearch")[0]);
-
         formData.append("ButtonId", ButtonId);
         formData.append("EMAILtoParents", $("#chkEMAILPARENTS").is(':checked'));
         formData.append("EMAILtoStudents", $("#chkEMAILSTUDENTS").is(':checked'));
         formData.append("SMStoParent", $("#chkSMSParent").is(':checked'));
         formData.append("SMStoStudent", $("#chkSMSStudent").is(':checked'));
-
         var formExists = $('#FmFileUpload').length > 0;
         var FmFileUpload = "";
         if (formExists) {
             var selectedValues = $("#DdlSubjects option:selected").map(function () {
                 return $(this).text();
             }).get();
+
             if (selectedValues) {
                 var selectedValuesString = selectedValues.join(", ");
             }
@@ -683,14 +565,19 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
                 // Handle response if needed
                 debugger;
                 if (response.message == "Something Error") {
-                    $("#Main_Span_Error").text(response.message);
+                   // $("#Main_Span_Error").text(response.message);
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(5000).fadeOut()
                 }
                 else {
                     var jsonResponse = JSON.parse(response.message);
                     // var SuccessMSG = jsonResponse.successMSG;
 
                     if (jsonResponse.successMSG == "Results Posted successfully.") {
+
                         $("#Main_Span_Error").text(jsonResponse.successMSG);
+                        $('.alert-success p').text(jsonResponse.successMSG);
+                        $(".alert-success").show().delay(5000).fadeOut()
                         if ($("#chkEMAILSTUDENTS").is(':checked')) {
                             $("#StudentEmail_Error").text(jsonResponse.emailNotAvailableStudentNames + "  No EMail Id Exists for Students(s).");
                         }
@@ -706,7 +593,9 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
                         $("#BtnPublish").prop("disabled", true);
                         $("#BtnSaveAsDraft").prop("disabled", true);
                     } else {
-                        $("#Main_Span_Error").text(jsonResponse.successMSG);
+                        $('.alert-danger p').text(jsonResponse.successMSG);
+                        $(".alert-danger").show().delay(5000).fadeOut()
+                       // $("#Main_Span_Error").text(jsonResponse.successMSG);
                     }
                 }
                 loaddingimg.css('display', 'none');
@@ -819,14 +708,19 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
                     // Handle response if needed
                     debugger;
                     if (response.message == "Something Error") {
-                        $("#Main_Span_Error").text(response.message);
+                        // $("#Main_Span_Error").text(response.message);
+                        $('.alert-danger p').text(response.message);
+                        $(".alert-danger").show().delay(5000).fadeOut()
                     }
                     else {
                         var jsonResponse = JSON.parse(response.message);
                         // var SuccessMSG = jsonResponse.successMSG;
 
                         if (jsonResponse.successMSG == "Results Posted successfully.") {
+
                             $("#Main_Span_Error").text(jsonResponse.successMSG);
+                            $('.alert-success p').text(jsonResponse.successMSG);
+                            $(".alert-success").show().delay(5000).fadeOut()
                             if ($("#chkEMAILSTUDENTS").is(':checked')) {
                                 $("#StudentEmail_Error").text(jsonResponse.emailNotAvailableStudentNames + "  No EMail Id Exists for Students(s).");
                             }
@@ -842,7 +736,9 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
                             $("#BtnPublish").prop("disabled", true);
                             $("#BtnSaveAsDraft").prop("disabled", true);
                         } else {
-                            $("#Main_Span_Error").text(jsonResponse.successMSG);
+                            $('.alert-danger p').text(jsonResponse.successMSG);
+                            $(".alert-danger").show().delay(5000).fadeOut()
+                            // $("#Main_Span_Error").text(jsonResponse.successMSG);
                         }
                     }
                    loaddingimg.css('display', 'none');
@@ -881,103 +777,110 @@ function SaveAsdraftCallingFunction(ButtonId, ButtonName) {
 
 //=============================== validate excel file
 //js(document).on("click", "#BtnExcelValidate", function (event) {
-$("#FmFileUpload").submit(function (event) {
-    try {
-        debugger;
-        event.preventDefault();
-        var ButtonId = "BtnExcelValidate";
-        $(".ErrorMessageSpan").empty();
-        var formData = new FormData($("#FmSubjectsSearch")[0]);
-        var SpnExeclFile = $("#txtSheetName").val();
-
-        var fileInput = document.getElementById("ExcelFile");
-        var count = 0;
-        if (fileInput.files.length === 0) {
-            $("#SpnExeclFile").text("The file is Required");
-            count++;
-        } if (SpnExeclFile === "") {
-            $("#SpnSheetName").text("The Sheet Name is Required");
-            count++;
-        }
-        if (count > 0) {
-            return;
-        }
-
-
-        formData.append("File", fileInput.files[0])
-        // formData.append("SheetName", $("#txtSheetName").val());
-        formData.append("SheetName", SpnExeclFile);
-        formData.append("ButtonId", ButtonId);
-        var selectedValues = $("#DdlSubjects option:selected").map(function () {
-            return $(this).text();
-        }).get();
-        if (selectedValues) {
-            var selectedValuesString = selectedValues.join(", ");
-        }
-        formData.append("SubjectsName", selectedValuesString);
-
-        var userIdsString = $("#userIdsContainer").data("user-ids");
-        var userIdsArray = userIdsString.split(',').map(Number);
-        var l = userIdsArray.length;
-        for (var i = 0; i < l; i++) {
-            formData.append("UseridList", userIdsArray[i]);
-        }
-
-        $('#TblExamSubjects tbody tr').each(function () {
-            var ExamSubjectId = $(this).find('td #ExamSubjectId').val();
-            var PassMarks = $(this).find('td #TxtPassMarks').val();
-            var MaxMarks = $(this).find('td #TxtMaxMarks').val();
-            formData.append("SubjectIdList", parseInt(ExamSubjectId) || 0);
-            formData.append("PassMarksList", parseFloat(PassMarks));
-            formData.append("MaxMarksList", parseFloat(MaxMarks));
-        });
-        performCrudOperationCommonFunction('POST', "/Results/PublishResults", formData, function (response) {
+$(document).ready(function () {
+    $("#FmFileUpload").submit(function (event) {
+        try {
             debugger;
-            //  var jsonResponse = JSON.parse(response.message);
-            $("#Main_Span_Error").text(response.message);
-            if (response.message == "Valid file. Please click on Save As Draft or Publish.") {
-                $("#BtnExcelValidate").prop("disabled", true);
-                $("#BtnSaveAsDraft").prop("disabled", false);
-                $("#BtnPublish").prop("disabled", false);
+            event.preventDefault();
+            var ButtonId = "BtnExcelValidate";
+            $(".ErrorMessageSpan").empty();
+            var formData = new FormData($("#FmSubjectsSearch")[0]);
+            var SpnExeclFile = $("#txtSheetName").val();
+
+            var fileInput = document.getElementById("ExcelFile");
+            var count = 0;
+            if (fileInput.files.length === 0) {
+                $("#SpnExeclFile").text("The file is Required");
+                count++;
+            } if (SpnExeclFile === "") {
+                $("#SpnSheetName").text("The Sheet Name is Required");
+                count++;
             }
-            $("#ExcelFile").val("");
-           loaddingimg.css('display', 'none');
-            window.scrollTo(0, 0);
-        }, function (error) {
-           loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }, true);
+            if (count > 0) {
+                return;
+            }
 
-        if (false) {
-            var formElement = document.getElementById('FmFileUpload');
-            setTimeout(function () {
-                var validationMessages = formElement.getElementsByClassName('field-validation-error');
-                // var validationMessages2 = formElement.getElementsByClassName('error2');
-                var validationmelength = validationMessages.length;
-                if (validationmelength == 0) {
-                    debugger;
-                    performCrudOperationCommonFunction('POST', "/Results/PublishResults", formData, function (response) {
-                        debugger;
-                        //  var jsonResponse = JSON.parse(response.message);
-                        $("#Main_Span_Error").text(response.message);
-                        if (response.message == "Valid file. Please click on Save As Draft or Publish.") {
-                            $("#BtnExcelValidate").prop("disabled", true);
-                            $("#BtnSaveAsDraft").prop("disabled", false);
-                            $("#BtnPublish").prop("disabled", false);
-                        }
-                        $("#ExcelFile").val("");
-                       loaddingimg.css('display', 'none');
-                        window.scrollTo(0, 0);
-                    }, function (error) {
-                       loaddingimg.css('display', 'none');
-                        $("#Main_Span_Error").text("Something Error");
-                    }, true);
+
+            formData.append("File", fileInput.files[0])
+            // formData.append("SheetName", $("#txtSheetName").val());
+            formData.append("SheetName", SpnExeclFile);
+            formData.append("ButtonId", ButtonId);
+            var selectedValues = $("#DdlSubjects option:selected").map(function () {
+                return $(this).text();
+            }).get();
+            if (selectedValues) {
+                var selectedValuesString = selectedValues.join(", ");
+            }
+            formData.append("SubjectsName", selectedValuesString);
+
+            var userIdsString = $("#userIdsContainer").data("user-ids");
+            var userIdsArray = userIdsString.split(',').map(Number);
+            var l = userIdsArray.length;
+            for (var i = 0; i < l; i++) {
+                formData.append("UseridList", userIdsArray[i]);
+            }
+
+            $('#TblExamSubjects tbody tr').each(function () {
+                var ExamSubjectId = $(this).find('td #ExamSubjectId').val();
+                var PassMarks = $(this).find('td #TxtPassMarks').val();
+                var MaxMarks = $(this).find('td #TxtMaxMarks').val();
+                formData.append("SubjectIdList", parseInt(ExamSubjectId) || 0);
+                formData.append("PassMarksList", parseFloat(PassMarks));
+                formData.append("MaxMarksList", parseFloat(MaxMarks));
+            });
+            performCrudOperationCommonFunction('POST', "/Results/PublishResults", formData, function (response) {
+                debugger;
+                //  var jsonResponse = JSON.parse(response.message);
+                $("#Main_Span_Error").text(response.message);
+                if (response.message == "Valid file. Please click on Save As Draft or Publish.") {
+                    $("#BtnExcelValidate").prop("disabled", true);
+                    $("#BtnSaveAsDraft").prop("disabled", false);
+                    $("#BtnPublish").prop("disabled", false);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(5000).fadeOut()
+                } else {
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(5000).fadeOut()
                 }
-            }, 50);
-        }
+                $("#ExcelFile").val("");
+                loaddingimg.css('display', 'none');
+                window.scrollTo(0, 0);
+            }, function (error) {
+                loaddingimg.css('display', 'none');
+                $("#Main_Span_Error").text("Something Error");
+            }, true);
+            //if you want to use validation eith Model validation  , Use this
+            if (false) {
+                var formElement = document.getElementById('FmFileUpload');
+                setTimeout(function () {
+                    var validationMessages = formElement.getElementsByClassName('field-validation-error');
+                    // var validationMessages2 = formElement.getElementsByClassName('error2');
+                    var validationmelength = validationMessages.length;
+                    if (validationmelength == 0) {
+                        debugger;
+                        performCrudOperationCommonFunction('POST', "/Results/PublishResults", formData, function (response) {
+                            debugger;
+                            //  var jsonResponse = JSON.parse(response.message);
+                            $("#Main_Span_Error").text(response.message);
+                            if (response.message == "Valid file. Please click on Save As Draft or Publish.") {
+                                $("#BtnExcelValidate").prop("disabled", true);
+                                $("#BtnSaveAsDraft").prop("disabled", false);
+                                $("#BtnPublish").prop("disabled", false);
+                            }
+                            $("#ExcelFile").val("");
+                            loaddingimg.css('display', 'none');
+                            window.scrollTo(0, 0);
+                        }, function (error) {
+                            loaddingimg.css('display', 'none');
+                            $("#Main_Span_Error").text("Something Error");
+                        }, true);
+                    }
+                }, 50);
+            }
 
-    } catch (e) {
-       loaddingimg.css('display', 'none');
-        $("#Main_Span_Error").text("Something Error");
-    }
+        } catch (e) {
+            loaddingimg.css('display', 'none');
+            $("#Main_Span_Error").text("Something Error");
+        }
+    });
 });

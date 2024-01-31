@@ -15,227 +15,210 @@
 
 
 
-    <link href="~/Themes/assets/css/StyleSheets/LeaveLevels.css" rel="stylesheet" />
+    <!--<link href="~/Themes/assets/css/StyleSheets/LeaveLevels.css" rel="stylesheet" />-->
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
-    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+    <!--<link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />-->
 </head>
 <body>
 
-    <div class="card">
-        <div class="card-header pb-0" style="padding-top: 0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>LEAVE LEVELS</strong></h6>
-        </div>
-        <div class="card-body" style=" padding-top: 0px;">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>LEAVE LEVELS</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="demo-inline-spacing">
+                    <button id="BtnAddNewLevels" class="btn rounded-pill btn-label-primary waves-effect" onclick="AddNewLevels()">Add new level</button>
+                </div>
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="Levels_Id_CreatePage_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="Department_Id_CreatePage_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="Roles_Id_CreatePage_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="User_Id_CreatePage_Span_Error"></span>
 
-            <a id="BtnAddNewLevels" style=" text-align: right; cursor: pointer; margin-left: 825px; letter-spacing: 0px; color: blue; font-weight: 600;" onclick="AddNewLevels()">Add new level</a>
-
-            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="Levels_Id_CreatePage_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="Department_Id_CreatePage_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="Roles_Id_CreatePage_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="User_Id_CreatePage_Span_Error"></span>
-
-            <div class="default-according style-1" id="accordionoc12345">
-                <div class="card" id="SearchPage">
-                    <div class="card-header " style="background-color:black ;">
+                @*==========================search LEVEL Card====================*@
+                <div class="card mb-4" id="SearchPage">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                            <span>
                                 LEAVE LEVEL SEARCH
-                            </button>
+                            </span>
                         </h5>
                     </div>
+                    <div class="card-body">
+                        <form id="myForm">
+                            <div class="row">
+                                <div class="col">
 
-                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-                        <div class="card ">
-                            <div class="card-body">
-                                <form id="myForm">
-                                    <div style="margin-left:20%;font-size:12px" id="ViewStudentLeaves_Search_Form">
-                                        <div class="row">
-                                            <div class="col">
-
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 8px;"> Level :</label>
-
-                                                    <div class="col-sm-9">
-                                                        <select id='Levels_Id' class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                            <option value=''>---------Select--------</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label">Department  :</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="Department_Id" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'AppliedEmployeesNames_Id')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                            <option value="">---------Select--------</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 26px;">Applied Employee :</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="AppliedEmployeesNames_Id" size="4" multiple="multiple" class="form-control input-air-primary ListBox" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                        </select>
-                                                    </div>
-                                                </div>
-
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Level</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='Levels_Id' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                    <option value=''>---------Select--------</option>
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div style="margin-left:194px">
-                                            @*<button id="clearbutton1" class="btn btn-light " style="padding:4px 12px;border-radius:6px;">Clear</button>&nbsp;&nbsp;&nbsp;*@
-                                            <input type="button" class="btn btn-light " onclick="FN_ClearValues(this.id,'myForm','AppliedEmployeesNames_Id')" id="clearbutton1" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-
-                                            <input type="submit" onclick="LeaveLevels_In_Table_Caliingfunction(event)" class="btn btn-primary active" id="SearchBTN_LeaveLevels_In_Table" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Department</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='Department_Id' class="select2 form-select select2-hidden-accessible" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'AppliedEmployeesNames_Id')" asp-items="@(new SelectList(""))">
+                                                    <option value=''>---------Select--------</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Applied Employee</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='AppliedEmployeesNames_Id' class="select2 form-select select2-hidden-accessible" size="4" multiple="multiple" asp-items="@(new SelectList(""))">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-8">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton1" onclick="FN_ClearValues(this.id,'myForm','AppliedEmployeesNames_Id')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="SearchBTN_LeaveLevels_In_Table" onclick="LeaveLevels_In_Table_Caliingfunction(event)" value="Search">Search</button>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-
-
                 </div>
-                <br />
-                @*searched result table*@
+
+                @*========================== Searched result table Card====================*@
                 @*<a id="ExportExcelLink" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
-            <div id="LeaveLevels_SearchRecords_Table_Div" style="display:block">
-                <div class="default-according style-1" id="accordionoc123456">
+                <div id="LeaveLevels_SearchRecords_Table_Div" style="display:block">
                     <div class="card" id="SearchedTablePage">
-                        <div class="card-header " style="background-color:black ;">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
-                            </h5>
-                        </div>
-                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                            <div class="card ">
-                                <form id="LeaveLevels_SearchRecords_Form" class="table-responsive">
-                                    @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
-                                    <table id="LeaveLevels_SearchRecords_Table" class="display cell-border  tableid">
-                                        <thead>
-                                            <tr>
-                                                <th>Leave Level</th>
-                                                <th>Department</th>
-                                                <th>Role Name</th>
-                                                <th>Applied User Name</th>
-                                                <th>Approver User Name</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        @*<tfoot>
-                                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="LeaveLevels_SearchRecords_Table_pagination"></div></td></tr>
-
-                                </tfoot>*@
-                                    </table>
-
-                                </form>
+                        <div class="card-header flex-column flex-md-row">
+                            <div class="head-label text-center">
+                                <h5 class="card-title mb-0">
+                                    <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                </h5>
                             </div>
                         </div>
+
+                        <div class="table-responsive text-nowrap">
+                            <table id="LeaveLevels_SearchRecords_Table" class="table table-hover table-bordered no-footer dataTable link">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Leave Level</th>
+                                        <th>Department</th>
+                                        <th>Role Name</th>
+                                        <th>Applied User Name</th>
+                                        <th>Approver User Name</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
+
                 </div>
-            </div>
-            </div>
-            @*-----create page*@
-            <div class="default-according style-1" id="accordionoc9">
 
-                <div class="card" id="CreateNewPage">
-                    <div class="card-header " style="background-color:black ;">
+
+                @*================================ create page Card==============================*@
+
+                <div class="card mb-4" id="CreateNewPage">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon1200" aria-controls="collapse11">
-                                <span id="AddNewText_Span_CreatePage">  CREATE LEAVE LEVEL</span> <span style="margin-left: 561px;"> * INDICATES REQUIRED FIELDS</span>
-                            </button>
-
-                        </h5>
-
-
+                            <span id="AddNewText_Span_CreatePage">  CREATE LEAVE LEVEL</span>
+                        </h5><small class="required">  INDICATES REQUIRED FIELDS</small>
                     </div>
+                    <div class="card-body">
+                        <form id="Form_CreatePage">
+                            <div class="row">
+                                <div class="col">
 
-                    <div class="collapse show" id="collapseicon1200" aria-labelledby="collapseicon" data-bs-parent="#accordionoc9" style="">
-
-                        <div class="card ">
-                            <div class="card-body">
-                                <form id="Form_CreatePage">
-                                    <div style="margin-left:20%;font-size:12px">
-                                        <div class="row">
-                                            <div class="col">
-
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 8px;"> <b style="color:red">*</b>Level :</label>
-
-                                                    <div class="col-sm-9">
-                                                        <select id='Levels_Id_CreatePage' onchange="LeaveTypeChange()" name="LevelID" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                            <option value=''>---------Select--------</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label"><b style="color:red">*</b>Department  :</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="Department_Id_CreatePage" name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'AppliedEmployeesNames_Id_CreatePage')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                            <option value="">---------Select--------</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="mb-3 row" id="AppliedEmployeesNames_Id_CreatePage_Div">
-                                                    <label class="col-sm-3 col-form-label  form-label" style=" padding-top: 26px;"> Employee :</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="AppliedEmployeesNames_Id_CreatePage" name="AppliedUserId" size="4" multiple="multiple" class="form-control input-air-primary ListBox" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 8px;"><b style="color:red">*</b> Role :</label>
-
-                                                    <div class="col-sm-9">
-                                                        <select id='Roles_Id_CreatePage' name="InstanceDesignationId" onchange="GetUserName_BY_SelectRoleId()" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                            <option value=''>---------Select--------</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label  form-label"><b style="color:red">*</b>User :</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="User_Id_CreatePage" name="ApproverUserId" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                    <input type="hidden" name="LeaveLevelId" id="TBLeaveLevelId" />
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Level</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='Levels_Id_CreatePage' name="LevelID" class="select2 form-select select2-hidden-accessible" onchange="LeaveTypeChange()" asp-items="@(new SelectList(""))">
+                                                    <option value=''>---------Select--------</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="LeaveLevelId" id="TBLeaveLevelId" />
-                                        <div style="margin-left:165px">
-                                            @*<button id="clearbutton1" class="btn btn-light " style="padding:4px 12px;border-radius:6px;">Clear</button>&nbsp;&nbsp;&nbsp;*@
-                                            <input type="button" class="btn btn-primary " onclick="BackTOSearhLevels(event,12)" id="Backbutton1_CreatePage" style="padding:4px 12px;border-radius:6px;" value="Back" />&nbsp;&nbsp;&nbsp;
-
-
-                                            <input type="button" class="btn btn-light " onclick="FN_ClearValues(this.id,'Form_CreatePage','AppliedEmployeesNames_Id_CreatePage')" id="clearbutton1_CreatePage" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-
-                                            <input type="submit" onclick="FN_LeaveLevels_Save(event)" class="btn btn-success active" id="SaveLeaveLevels_CreatePage_BTN" style="padding:3px 8px;border-radius:6px;" value="Save" />
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='Department_Id_CreatePage' name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'AppliedEmployeesNames_Id_CreatePage')" asp-items="@(new SelectList(""))">
+                                                    <option value=''>---------Select--------</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+                                    @*--------------------------*@
+                                    @*--------------------------*@
+                                    <div class="row mb-3 " id="AppliedEmployeesNames_Id_CreatePage_Div">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> Employee</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='AppliedEmployeesNames_Id_CreatePage' name="AppliedUserId" class="select2 form-select select2-hidden-accessible" size="4" multiple="multiple" asp-items="@(new SelectList(""))">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Role</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='Roles_Id_CreatePage' name="InstanceDesignationId" class="select2 form-select select2-hidden-accessible" onchange="GetUserName_BY_SelectRoleId()" asp-items="@(new SelectList(""))">
+                                                    <option value=''>---------Select--------</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">User</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='User_Id_CreatePage' name="ApproverUserId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-8">
+                                            <button type="button" class="btn btn-info waves-effect waves-light" id="clearbutton1_CreatePage" onclick="BackTOSearhLevels(event,12)" value="Back">Back</button>
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton1_CreatePage" onclick="FN_ClearValues(this.id,'Form_CreatePage','AppliedEmployeesNames_Id_CreatePage')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="SaveLeaveLevels_CreatePage_BTN" onclick="FN_LeaveLevels_Save(event)" value="Save">Save</button>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
 
                 </div>
 
-
             </div>
-
         </div>
     </div>
 </body>
@@ -244,33 +227,37 @@
 
 @*<button id="exportExcelButton">Export Excel</button>*@
 
-<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>-->
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>*@
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/LeaveLevels.js"></script>
-<script src="~/js/PaginationToTables.js"></script>
-<script src="~/js/GeneralFunctions.js"></script>
 
-
-
-
+@*<script src="~/js/PaginationToTables.js"></script>*@
 
 @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>*@
+@*<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>*@
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
-
-
-@*<script src="~/Datatable/jquery.dataTables.min.js"></script>*@
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#CreateNewPage").hide();

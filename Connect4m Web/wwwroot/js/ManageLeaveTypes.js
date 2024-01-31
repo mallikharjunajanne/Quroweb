@@ -9,26 +9,30 @@
 
 
 
-////  To get Partial View of SearchLeaveTypePage
+//==================== To get Partial View of SearchLeaveTypePage Head
 function SearchLeaveTypePagePartialViewFunction() {
     try {
         debugger;
         // Make AJAX call to the controller action
+        loaddingimg.css('display', 'block');
         $.ajax({
             url: "/Attendance/LoadPartialView",
             type: "GET",
             success: function (data) {
                 // Append the received partial view content to the container
                 $("#SearchLeaveTypePagePartialView").html(data);
-                LeaveTypesCAllingTableView(event,"First");
+                LeaveTypesCAllingTableView(event, "First");
+                loaddingimg.css('display', 'none');
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
 
         });
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -37,110 +41,29 @@ function SearchLeaveTypePagePartialViewFunction() {
 
 //----------------------  Delete code start----------------------------
 
-
-function DeleteLeaveTypesCallingFunction() {
-    try {
-
-        $(".ErrorMessageSpan").empty();
-        $("#SuccessFulDiv").hide();
-        $("#OKButton").hide();
-        $("#confirmDeleteButton").show();
-        $("#cancelDeleteButton").show();
-        $("#ConformationDiv").show();
-        $("#ConfirmMessageid").text("Are you sure you want  to delete the Leave Type ?");
-        document.getElementById("deletePopup").classList.add("active");
-
-        var row = $(this).closest("tr").attr("id");
-
-        $("#confirmDeleteButton").attr("onclick", "confirmDeleteButtonCallingFun('" + row + "')");
-
-    } catch (x) {
-        $("#Main_Span_Error").text("Something Error");
-    }
-}
-
-//$("#confirmDeleteButton").on("click", function () {
-
-function confirmDeleteButtonCallingFun(Trid) {
-
+function DeleteLeaveTypesCallingFunction(Leavetypeid) {
     debugger;
-    try {
-
-        var row = $("#" + Trid).closest("tr");
-        var bt = "Delete";
-        var Leavetypeid = row.find('#TBLLeavetypeid').val();
-        $.ajax({
-            url: "/Attendance/ManageLeaveTypes?ButtonName=" + bt + "&Leavetypeid=" + Leavetypeid,
-            type: "POST",
-            success: function (response) {
-                debugger;
-                if (response.message == "Record deleted successfully.") {
-                    // LeaveTypesCAllingTableView(event);
-
-                    $("#SuccessMessageid").text(response.message);
-                    $("#ConformationDiv").hide();
-                    $("#SuccessFulDiv").show();
-                    $("#OKButton").show();
-                    row.remove();
-                    var count = parseInt($("#counts").text()) - 1;
-                    $("#counts").text("");
-                    $("#counts").text(count);
-                    if (count <= 0) {
-                        $("#TblLeavesTypes_SearchRecords").hide();
-                        $("#counts").text("0");
-                    }
-
-                    //$("#SuccessMessageid").text(response.message);
-                    //$("#cancelDeleteButton").remove();
-                    //$("#confirmDeleteButton").remove();
-                    //$("#OKButton").show();
-
-                    //$("#Main_Span_Error").text(response.message);
-                    // window.scrollTo(0, 0);
-                } else {
-                    $("#ConfirmMessageid").text(response.message);
-                    // $('#Main_Span_Error').text(response.message);
-
-                    $("#confirmDeleteButton").hide();
-                    $("#cancelDeleteButton").hide();
-                    $("#OKButton").show();
-                    // window.scrollTo(0, 0);
-                }
-            },
-            error: function (xhr, status, error) {
-                $("#Main_Span_Error").text("Something Error");
-            }
-        });
-    } catch (x) {
-        $("#Main_Span_Error").text("Something Error");
-    }
-
+    var Deletemsg = "Leave Type ";
+    CommonDeleteFunction_Vs1(Deletemsg, "POST", "/Attendance/ManageLeaveTypes?ButtonName=Delete&Leavetypeid=" + Leavetypeid, function (response) {
+            LeaveTypesCAllingTableView(event);    
+    });
 }
-//});
 
-
-$("#cancelDeleteButton").on("click", function () {
-    document.getElementById("deletePopup").classList.remove("active");
-});
-$("#OKButton").on("click", function () {
-    document.getElementById("deletePopup").classList.remove("active");
-});
-
-
-///---------------------------Delete code end------------------
+//---------------------------Delete code end------------------
 
 
 
 
 
-//This For Save and Update
+//========================This For Save and Update
 function FN_LeaveTypes_Save(event) {
     try {
         debugger;
         event.preventDefault();
-        window.scrollTo(0, 0);
+       
         $(".ErrorMessageSpan").empty();
         // ScrollToSelected_ID('Main_Span_Error');
+        loaddingimg.css('display', 'block');
         var Leavetype_CreatePage = $("#TxtLeavetype_Createpage").val();
         var LeaveShortName_CreatePage = $("#TxtLeaveShortName_Createpage").val();
         //var CarryForwardCheckbox = document.getElementById("TxtCarryForward_Createpage");
@@ -168,7 +91,10 @@ function FN_LeaveTypes_Save(event) {
                 //    'border':'1px solid red',
                 //})
             }
+            window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
             return;
+
         }
 
 
@@ -186,33 +112,37 @@ function FN_LeaveTypes_Save(event) {
         if (ButtonName == "Update") {
 
         }
-        $("#loadingOverlay").show();
+        
         $.ajax({
             url: "/Attendance/ManageLeaveTypes?ButtonName=" + ButtonName,
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
-            success: function (responce) {
+            success: function (response) {
                 debugger;
 
-                if (responce.message == "Record inserted successfully." || responce.message == "Record updated successfully." || responce.message == "Record Updated Successfully.") {
+                if (response.message == "Record inserted successfully." || response.message == "Record updated successfully." || response.message == "Record Updated Successfully.") {
                     $("#BtnSave").prop('disabled', true);
                     $("#BtnClear").prop('disabled', true);
-                    $("#Main_Span_Error").text(responce.message);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(6000).fadeOut()
+                   // $("#Main_Span_Error").text(response.message);
                 }
                 else {
-                    $("#Main_Span_Error").text(responce.message);
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(6000).fadeOut();
+                  //  $("#Main_Span_Error").text(response.message);
                 }
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
             },
             error: function (xhr, status, error) {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         });
     } catch (x) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -220,7 +150,7 @@ function FN_LeaveTypes_Save(event) {
 
 
 
-// This is for edit
+// =======================================This is for edit===============================
 
 //$("#TblLeavesTypes_SearchRecords tbody").on("click", "#TBLLeavetype", function () {
 function EditValuesGettingFunction() {
@@ -228,46 +158,42 @@ function EditValuesGettingFunction() {
         debugger;
         $(".ErrorMessageSpan").empty();
 
+        loaddingimg.css('display', 'block');
         var Tr = $(this).closest('tr');
 
         var TBLLeavetypeid = Tr.find("#TBLLeavetypeid").val();
 
-        $("#loadingOverlay").show();
         $.ajax({
             url: "/Attendance/CreateLeaveTypePageView?Leavetypeid=" + TBLLeavetypeid,
             type: "GET",
-            success: function fun2(responce) {
-                debugger;
-                $("#CreateLeaveTypePageView_id").html(responce);
+            success: function fun2(response) {
+            
+                $("#CreateLeaveTypePageView_id").html(response);
 
-                $("#SearchLeaveTypePagePartialView").hide();
-                debugger;
                 $.ajax({
                     url: "/Attendance/EditValuesGettingFunction?Leavetypeid=" + TBLLeavetypeid,
                     type: "GET",
-                    success: function (responce) {
+                    success: function (response) {
+                        $("#TxtLeavetype_Createpage").val(response[0].leavetype);
+                        $("#TxtLeaveShortName_Createpage").val(response[0].shortName);
+                        $("#TxtAreaDescription_Createpage").val(response[0].description);
+                        $("#HdnLeavetypeid").val(response[0].leavetypeid);
 
-                        debugger;
-                        $("#TxtLeavetype_Createpage").val(responce[0].leavetype);
-                        $("#TxtLeaveShortName_Createpage").val(responce[0].shortName);
-                        $("#TxtAreaDescription_Createpage").val(responce[0].description);
-                        $("#HdnLeavetypeid").val(responce[0].leavetypeid);
-
-                        if (responce[0].carryforward == 1) {
+                        if (response[0].carryforward == 1) {
                             $("#TxtCarryForward_Createpage").prop("checked", true);
                         }
                         else {
                             $("#TxtCarryForward_Createpage").prop("checked", false);
                         }
 
-                        if (responce[0].allowPastDates == 1) {
+                        if (response[0].allowPastDates == 1) {
                             $("#TxtAllowLeaveApplyforPastDays_Createpage").prop("checked", true);
                         }
                         else {
                             $("#TxtAllowLeaveApplyforPastDays_Createpage").prop("checked", false);
                         }
 
-                        if (responce[0].editEligibleReturnValue == "2") {
+                        if (response[0].editEligibleReturnValue == "2") {
                             $("#Main_Span_Error").text("NOTE : Leave Type allocated to users. Unable to Edit Leave Type.");
                             $("#TxtLeavetype_Createpage").prop("disabled", true);
                             $("#TxtLeaveShortName_Createpage").prop("disabled", true);
@@ -293,19 +219,23 @@ function EditValuesGettingFunction() {
                         else {
 
                         }
-
-
                         $("#BtnSave").val("Update");
                         $("#BtnClear").prop("disabled", true);
+
+                        loaddingimg.css('display', 'none');
                     },
                     error: function (xhr, status, error) {
-                        $("#loadingOverlay").hide();
                         $("#Main_Span_Error").text("Something Error");
+                        loaddingimg.css('display', 'none');
                     }
                 })
+
+                $("#SearchLeaveTypePagePartialView").hide();
+                loaddingimg.css('display', 'none');
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
         })
 
@@ -313,7 +243,7 @@ function EditValuesGettingFunction() {
 
      
 
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     } catch (x) {
         $("#Main_Span_Error").text("Something Error");
     }
@@ -324,7 +254,7 @@ function EditValuesGettingFunction() {
 
 
 
-///Leave type getting table data
+//===========================Leave type getting table Records
 
 function LeaveTypesCAllingTableView(event,val) {
     try {
@@ -345,23 +275,21 @@ function LeaveTypesCAllingTableView(event,val) {
             table.destroy();
         }
 
-        $("#loadingOverlay").show();
+        loaddingimg.css('display', 'block');
         debugger;
         $.ajax({
             url: "/Attendance/LeaveTypesCAllingTableView?LeaveType=" + LeaveType + "&Description=" + Description,
             type: "GET",
-            success: function(responce) {
+            success: function(response) {
                 debugger;
-                $("#LeaveTypesCAllingTableView_Id").html(responce);
-
-
+                $("#LeaveTypesCAllingTableView_Id").html(response);
                 debugger;
 
                 var ExcelDownloadColumnsNo = [];
 
                 var lenth = $("#TblLeavesTypes_SearchRecords tbody tr").length;
                 TblDataTableWith_OutColumns_CallingFunction("TblLeavesTypes_SearchRecords", 'noresponse', lenth, currentPage, 'Noname', ExcelDownloadColumnsNo);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 //if ($("#TblLeavesTypes_SearchRecords tbody tr").length <= 0) {
                 //    //$("#Main_Span_Error").text("No Records Found");
                 //    // $("#LeaveTypesCAllingTableView_Id").empty();
@@ -484,11 +412,13 @@ function LeaveTypesCAllingTableView(event,val) {
 
             },
             error: function () {
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         })
         
     } catch (x) {
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -499,8 +429,8 @@ function CreateNewLeaveTypes() {
     try {
         debugger;
         $(".ErrorMessageSpan").empty();
-        //  $("#accordionoc12345").hide();
-        //  $("#SearchPage").hide();
+
+        loaddingimg.css('display', 'block');
 
         $.ajax({
             url: "/Attendance/CreateLeaveTypePageView",
@@ -508,23 +438,25 @@ function CreateNewLeaveTypes() {
             success: fun2,
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
         })
-        function fun2(responce) {
-
+        function fun2(response) {
             $("#SearchLeaveTypePagePartialView").hide();
-            $("#CreateLeaveTypePageView_id").html(responce);
+            $("#CreateLeaveTypePageView_id").html(response);
             //$("#imgAuditIconAllowPastDays").hide();
+            loaddingimg.css('display', 'none');
         }
     } catch (x) {
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 
 function BackTOSearhLeaveTypes(event) {
     try {
 
-        $("#loadingOverlay").show();
+        loaddingimg.css('display', 'block');
         LeaveTypesCAllingTableView(event);
 
         $("#SearchLeaveTypePagePartialView").show();
@@ -535,11 +467,11 @@ function BackTOSearhLeaveTypes(event) {
 
         $(".ErrorMessageSpan").empty();
 
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     } catch (x) {
 
-        $("#loadingOverlay").hide();
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 

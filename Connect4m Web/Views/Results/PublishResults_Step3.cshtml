@@ -7,27 +7,39 @@
     int UsersCount = (ViewBag.UsersDetailsList as IEnumerable<object>).Count();
     List<int> userIds = new List<int>();
 }
-<!--Send sms check boxes-->
+<!--========================================Send sms check boxes=================================-->
 <div>
-    <span class="checkboxclass"><input id="chkSMSStudent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSStudent">SMS to Student</label></span>
+    <div class="form-check form-check-inline mt-3">
+        <input class="form-check-input" id="chkSMSStudent" onclick="ShowIncludeClass(this)" type="checkbox"><label class="form-check-label" for="chkSMSStudent">SMS to Student</label>
+    </div>
     &nbsp;
-    <span class="checkboxclass"><input id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label for="chkSMSParent">SMS to Parent</label></span>
+    <div class="form-check form-check-inline mt-3">
+        <input class="form-check-input" id="chkSMSParent" onclick="ShowIncludeClass(this)" type="checkbox"><label class="form-check-label" for="chkSMSParent">SMS to Parent</label>
+    </div>
     &nbsp;
-    <span class="checkboxclass"><input id="chkEMAILSTUDENTS" type="checkbox" /><label for="chkEMAILSTUDENTS">EMAIL to Students</label></span>
+    <div class="form-check form-check-inline mt-3">
+        <input class="form-check-input" id="chkEMAILSTUDENTS" type="checkbox" /><label class="form-check-label" for="chkEMAILSTUDENTS">EMAIL to Students</label>
+    </div>
     &nbsp;
-    <span class="checkboxclass"><input id="chkEMAILPARENTS" type="checkbox"><label for="chkEMAILPARENTS">EMAIL to Parents</label></span>
-    Total Credits :
-    <span id="lblTotal" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
-    &nbsp; Used Credits :
-    <span id="lblUsed" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
-    &nbsp; Remaining Credits :
-    <span id="lblRem" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;"></span>
+    <div class="form-check form-check-inline mt-3">
+        <input class="form-check-input" id="chkEMAILPARENTS" type="checkbox"><label class="form-check-label" for="chkEMAILPARENTS">EMAIL to Parents</label>
+    </div>
 
-    <span class="checkboxclass" id="SpnSendRating" style="display:none"><input id="chksendRating" type="checkbox"><label id="lblSendRating">Include Class</label></span>
-
+    <label class="col-form-label">Total Credits :</label>
+    <label class="col-form-label" id="lblTotal" style="color:Red;"></label>
+    &nbsp;
+    <label class="col-form-label">Used Credits :</label>
+    <label class="col-form-label" id="lblUsed" style="color:Red;"></label>
+    &nbsp;
+    <label class="col-form-label"> Remaining Credits : </label>
+    <label class="col-form-label" id="lblRem" style="color:Red;"></label>
+    &nbsp;
+    <div class="form-check form-check-inline mt-3" id="SpnSendRating" style="display:none">
+        <input class="form-check-input" id="lblSendRating" type="checkbox"><label class="form-check-label" id="lblSendRating" for="lblSendRating">Include Class</label>
+    </div>
 </div>
 <!--note-->
-<div><span id="lblStatus" style="color:Red;font-size:11px;font-weight:bold;font-style:normal;">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</span></div>
+<div><label id="lblStatus" style="color:Red;">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</label></div>
 @{int sno = 0; int Subjectcount = 0; var subjectNamesForAlertMsg = ""; var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = ""; var bluecolorCount = 0;}
 
 <span class="ErrorMessageSpan" id="StudentSMS_Error"></span>
@@ -39,215 +51,201 @@
     IsDisabled = "disabled";
     <!--card 2-->
 
-    <div style=" padding-top: 0px;" id="Div_Fileupload">
+    @*==========================Upload Subject By Excel Card====================*@
+    <div class="card mb-4" id="Div_Fileupload">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                <span>
+                    UPLOAD FILE
+                </span>
+            </h5>
+        </div>
 
-        <div class="card">
-            <div class="card-header " style="background-color:black ;">
-                <h5 class="mb-0">
-                    <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001Q" aria-controls="collapse11">
-                        <span>
-                            UPLOAD FILE
-                        </span>
-                    </button>
-                </h5>
-            </div>
-            <div class="collapse show" id="collapseicon12001Q" aria-labelledby="collapseicon" data-bs-parent="#accordionoc91" style="">
-                <div class="card ">
-                    <div class="card-body">
-                        <form id="FmFileUpload">
-
-
-                            <div style="margin-left:20%;font-size:12px" id="UpdateSubjects_Div">
-                                <div class="row">
-                                    <div class="form-group col-4">
-
-                                        @if (UsersCount > 0 || ViewBag.MarksUploadtype == "UploadWithExcelFile")
+        <div class="card-body">
+            <form id="FmFileUpload">
+                <div class="col">
+                    <div class="row">
+                        @*------------------------------------*@
+                        <div class="row mb-3 ">
+                            @*@if (UsersCount > 0 || ViewBag.MarksUploadtype == "UploadWithExcelFile")*@
+                            @if (UsersCount > 0 && ViewBag.MarksUploadtype == "UploadWithExcelFile")
+                            {
+                                <a id="_Getexceltoupload" class="btn rounded-pill btn-outline-primary waves-effect col-sm-3">Get Excel To Upload</a>
+                            }
+                            @if (UsersCount > 0)
+                            {
+                                <!--This is for store userids-->
+                                @for (int i = 0; i < UsersCount; i++)
+                                {
+                                    var item = ViewBag.UsersDetailsList[i];
+                                    userIds.Add(item.UserId);
+                                }
+                                <!--this is for Store Published subject Names-->
+                                @foreach (var item1 in ViewBag.SubjectNamesList)
+                                {
+                                    @for (int i = 0; i < UsersCount; i++)
+                                    {
+                                        var item = ViewBag.UsersDetailsList[i];
+                                        if (item.IsPublished[OptionalSubjectcount] == "1")
                                         {
-                                            <a id="_Getexceltoupload" class="btn btn-pill btn-outline-info btn-air-info">Get Excel To Upload</a>
+                                            subjectNamesForAlertMsg += item1 + " ,";
+                                            break;
                                         }
-                                        @if (UsersCount > 0)
-                                        {
-                                            <!--This is for store userids-->
-                                            @for (int i = 0; i < UsersCount; i++)
-                                            {
-                                                var item = ViewBag.UsersDetailsList[i];
-                                                userIds.Add(item.UserId);
-                                            }
-                                            <!--this is for Store Published subject Names-->
-                                            @foreach (var item1 in ViewBag.SubjectNamesList)
-                                            {
-                                                @for (int i = 0; i < UsersCount; i++)
-                                                {
-                                                    var item = ViewBag.UsersDetailsList[i];
-                                                    if (item.IsPublished[OptionalSubjectcount] == "1")
-                                                    {
-                                                        subjectNamesForAlertMsg += item1 + " ,";
-                                                        break;
-                                                    }
-                                                    //else if (item.IsPublished[OptionalSubjectcount] == "0")
-                                                    //{
-                                                    //    break;
-                                                    //}
-                                                }
-                                                OptionalSubjectcount++;
-                                            }
-                                        }
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-4"></div><br />
-                                    <div class="form-group col-2">
-                                        <label class="control-label space required">Upload File </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <input type="file" id="ExcelFile" asp-for="File" class="form-control" />
-                                        @*<span asp-validation-for="File" class="ErrorMessageSpan"></span>*@
-                                        <span id="SpnExeclFile" class="ErrorMessageSpan"></span>
-                                    </div>
-
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="control-label space required">Sheet Name</label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <input type="text" id="txtSheetName" asp-for="SheetName" class="form-control" />
-                                        @*<span asp-validation-for="SheetName" class="ErrorMessageSpan"></span>*@
-                                        <span id="SpnSheetName" class="ErrorMessageSpan"></span>
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div style=" display: flex; gap: 17px;">
-                                        <div class="col-4"></div>
-                                        @*<input type="reset" value="Clear" id="BtnRefresh" class="btn btn-pill btn-outline-warning btn-air-warning" />*@
-                                        <input type="submit" value="Validate Excel" id="BtnExcelValidate" class="btn btn-pill btn-outline-info btn-air-info" />
-                                    </div>
-                                    <div id="userIdsContainer" data-user-ids="@string.Join(",", @userIds)"></div>
-
-                                </div>
+                                        //else if (item.IsPublished[OptionalSubjectcount] == "0")
+                                        //{
+                                        //    break;
+                                        //}
+                                    }
+                                    OptionalSubjectcount++;
+                                }
+                            }
+                        </div>
+                        @*------------------------------------*@
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Upload File</label>
+                            <div class="col-sm-4 ">
+                                <input type="file" id="ExcelFile" asp-for="File" class="form-control" required />
+                                @*<span asp-validation-for="File" class="ErrorMessageSpan text-danger"></span>*@
+                                <span id="SpnExeclFile" class="ErrorMessageSpan text-danger"></span>
                             </div>
-                        </form>
+                        </div>
+                        @*------------------------------------*@
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Sheet Name</label>
+                            <div class="col-sm-4 ">
+                                <input type="text" id="txtSheetName" asp-for="SheetName" class="form-control" required placeholder="Sheet Name" />
+
+                                @*<span asp-validation-for="SheetName" class="ErrorMessageSpan text-danger"></span>*@
+                                <span id="SpnSheetName" class="ErrorMessageSpan text-danger"></span>
+                            </div>
+                        </div>
+                        @*------------------------------------*@
+                        <div class="row justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-info waves-effect waves-light" id="BtnExcelValidate" value="Validate Excel">Validate Excel</button>
+                            </div>
+                        </div>
+                        @*------------------------------------*@
+                        <div id="userIdsContainer" data-user-ids="@string.Join(",", @userIds)"></div>
+
                     </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    @*==========================STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL Card====================*@
+
+    <div class="card mb-4" id="Div_FileUploadSteps">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                <span>
+                    STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL
+                </span>
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 1:-(View screenshot)<img src="~/PostResults Images/GetExcel.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label"> Click on "Get Excel To Upload" link to get the excel sheet to enter Marks.</label>
+                        </div>
+                    </div>
+
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 2:-(View screenshot)<img src="~/PostResults Images/openImage.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label"> Click on "Open" button in the Downloads Files.</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 3:-(View screenshot)<img src="~/PostResults Images/SaveAs97-2003.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">Save as the opened excel sheet in "Excel Workbook" format.</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 4:-(View screenshot)<img src="~/PostResults Images/NoEmpty.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">Enter marks for all the subjects. Before uploading the file we have to make sure no cell is empty in the Excel sheet.</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 5:-(View screenshot)<img src="~/PostResults Images/AllSubjects.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">After entering all the marks Save the excel sheet.</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 6:-(View screenshot)<img src="~/PostResults Images/browse.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">Now in Post Results screen click on Choose File and select the same excel file.</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 7:-(View screenshot)<img src="~/PostResults Images/SameName.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">The Sheet name to be entered in the Results screen should be same as Sheet Name in Excel Sheet(Copy the Sheet Name in excel and paste in Results screen).</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
+                            <b>
+                                Step 8:-(View screenshot)<img src="~/PostResults Images/excel.jpg" />
+                            </b>
+                        </label>
+                        <div class="col-sm-9 ">
+                            <label class="col-sm-12 col-form-label">Then click on "Validate Excel" button. We can get the confirmation message saying "Valid file. Please click on Save As Draft or Publish."</label>
+                        </div>
+                    </div>
+                    @*----------------------------------*@
+
+                    <div style="border-top: 1px solid #cbcbcb; margin-top: 20px;"></div>
                 </div>
             </div>
         </div>
     </div>
-    <br />
 
-    <!--card 3   file uploading steps to follow-->
-    <div style=" padding-top: 0px;" id="Div_FileUploadSteps">
-        <div class="card">
-            <div class="card-header " style="background-color:black ;">
-                <h5 class="mb-0">
-                    <button class="btn btn-link text-white" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseicon12001y" aria-controls="collapse11">
-                        <span>
-                            STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL
-                        </span>
-                    </button>
-                </h5>
-            </div>
-            <div class="collapse show" id="collapseicon12001y" aria-labelledby="collapseicon" data-bs-parent="#accordionoc91" style="">
-                <div class="card">
-                    <div style="width: 100%;" id="Table10">
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 1:-</b>  <a style="cursor: pointer; color: black" class="thumbnailleft">
-                                    (<label>View screenshot</label>)<span>
-                                        <img src="~/PostResults Images/GetExcel.jpg" />
-                                    </span>
-                                </a>
-                            </div>
-                            <div>
-                                <label> Click on "Get Excel To Upload" link to get the excel sheet to enter Marks.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 2 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 2:-</b>   <a style="cursor: pointer; color: black" class="thumbnailleft">(<label>View screenshot</label>)<span><img src="~/PostResults Images/open.jpg" alt=""></span></a>
-                            </div>
-                            <div>
-                                <label>Click on "Open" button in the excel popup window.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 3 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 3:-</b>   <a style="cursor: pointer; color: black" class="thumbnailleft"> (<label>View screenshot</label>)<span> <img src="~/PostResults Images/SaveAs97-2003.jpg" alt="" /></span></a>
-                            </div>
-                            <div>
-                                <label>Save as the opened excel sheet in "Excel 97 - 2003 Workbook" format.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 4 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 4:-</b>  <a style="cursor: pointer; color: black" class="thumbnailleft">(<label>View screenshot</label>)<span><img src="~/PostResults Images/NoEmpty.jpg" alt="" /></span></a>
-                            </div>
-                            <div>
-                                <label>Enter marks for all the subjects. Before uploading the file we have to make sure no cell is empty in the Excel sheet.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 5 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 5:-</b> <a style="cursor: pointer; color: black" class="thumbnailleft">
-                                    (<label>View screenshot</label>)<span>
-                                        <img src="~/PostResults Images/AllSubjects.jpg" alt="" />
-                                    </span>
-                                </a>
-                            </div>
-                            <div>
-                                <label>After entering all the marks Save the excel sheet.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 6 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 6:-</b>  <a style="cursor: pointer; color: black" class="thumbnailleft">(<label>View screenshot</label>)<span><img src="~/PostResults Images/browse.jpg" alt="" /></span></a>
-                            </div>
-                            <div>
-                                <label>Now in Post Results screen click on Browse and select the same excel file.</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 7 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 7:-</b>  <a style="cursor: pointer; color: black" class="thumbnailleft">(<label>View screenshot</label>)<span> <img src="~/PostResults Images/SameName.jpg" alt="" /></span></a>
-                            </div>
-                            <div>
-                                <label>The Sheet name to be entered in the Results screen should be same as Sheet Name in Excel Sheet(Copy the Sheet Name in excel and paste in Results screen).</label>
-                            </div>
-                        </div>
-
-                        <!-- Repeat the structure for other steps -->
-                        <!-- Step 8 -->
-                        <div style="display: flex; margin-bottom: 20px;">
-                            <div style=" margin-right: 20px;">
-                                <b>Step 8:-</b> <a style="cursor: pointer; color: black" class="thumbnailleft">(<label>View screenshot</label>)<span><img src="~/PostResults Images/excel.jpg" alt="" /></span> </a>
-                            </div>
-                            <div>
-                                <label>Then click on "Validate Excel" button. We can get the confirmation message saying "Valid file. Please click on Save As Draft or Publish."</label>
-                            </div>
-                        </div>
-
-                        <div style="border-top: 1px solid #cbcbcb; margin-top: 20px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 }
 else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
@@ -256,133 +254,176 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
     <!--This is for Uploading marks with Excel file-->
     <!--card 4   Table of users-->
     @if (UsersCount > 0)
-    {
-        <a id="_lnkExporttoexcel" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</a>
+    {<button type="button" id="_lnkExporttoexcel" class="btn btn-outline-info waves-effect">Export To Excel</button>
     }
     else
     {
         IsDisabled = "disabled";
     }
     <div class="card" id="DivUsersSearchedTbl">
+        <div class="card-datatable table-responsive pt-0">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+                    <div class="head-label text-center">
+                        <h5 class="card-title mb-0">
+                            <span>YOUR SEARCH RESULTED<span class="badge badge-center rounded-pill bg-primary bg-glow">@UsersCount</span>  RECORD(S).</span>
+                        </h5>
+                    </div>
+                </div>@if (UsersCount > 0)
+                {
+                    <table id="TblUsersSearched" class="datatables-basic table dataTable no-footer dtr-column">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>Registration No.</th>
 
-        <div class="card-header " style="background-color:black ;">
-            <h5 class="mb-0">
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1"
-                        aria-expanded="true" aria-controls="collapse11">
-                    <span id="CountOfRecords_LeaveLevels">
-                        YOUR SEARCH RESULTED <span id="Counts"
-                                                   class="number-circle">@UsersCount</span> RECORD(S).
-                                            </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                                    <div class="card ">
-                                        <form id="Fm_TblUsersSearched" class="table-responsive">
-                                            <table id="TblUsersSearched" class="tableid">
-                                                <thead>
-                                                    <tr>
-                                                        <th>S.No</th>
-                                                        <th>Name</th>
-                                                        <th>Registration No.</th>
+                                @foreach (var item1 in ViewBag.SubjectNamesList)
+                                {
+                                    Subjectcount++;
+                                    ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
+                                    MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
+                                    PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
 
-                                                        @foreach (var item1 in ViewBag.SubjectNamesList)
-                                                        {
-                                                            Subjectcount++;
-                                                            ExamSubjectId = ViewBag.ExamSubjectIdList[Subjectcount - 1];
-                                                            MaxMarks = ViewBag.MaxMarksList[Subjectcount - 1];
-                                                            PassMarks = ViewBag.PassMarksList[Subjectcount - 1];
+                                    @for (int i = 0; i < UsersCount; i++)
+                                    {
+                                        var item = ViewBag.UsersDetailsList[i];
 
-                                                            @for (int i = 0; i < UsersCount; i++)
-                                                            {
-                                                                var item = ViewBag.UsersDetailsList[i];
+                                        if (item.IsPublished[OptionalSubjectcount] == "1")
+                                        {
+                                            color = "green";
 
-                                                                if (item.IsPublished[OptionalSubjectcount] == "1")
-                                                                {
-                                                                    color = "green";
+                                            subjectNamesForAlertMsg += item1 + " ,";
+                                            break;
+                                        }
+                                        else if (item.IsPublished[OptionalSubjectcount] == "0")
+                                        {
+                                            bluecolorCount++;
+                                            //   color = "blue";
+                                            //break;
+                                        }
 
-                                                                    subjectNamesForAlertMsg += item1 + " ,";
-                                                                    break;
-                                                                }
-                                                                else if (item.IsPublished[OptionalSubjectcount] == "0")
-                                                                {
-                                                                    bluecolorCount++;
-                                                                    //   color = "blue";
-                                                                    //break;
-                                                                }
+                                    }
+                                    if (bluecolorCount > 0)
+                                    {
+                                        color = "blue";
+                                    }
 
-                                                            }
-                                                            if (bluecolorCount > 0)
-                                                            {
-                                                                color = "blue";
-                                                            }
+                                    OptionalSubjectcount++;
+                                    <th style="color:@color">
+                                        @item1
+                                        <input type="hidden" id="TH_ExamSubjectId" value="@ExamSubjectId" disabled />
+                                        <input type="hidden" id="TH_MaxMarks" value="@MaxMarks" disabled />
+                                        <input type="hidden" id="TH_PassMarks" value="@PassMarks" disabled />
+                                    </th>
+                                    color = "red";
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                                            OptionalSubjectcount++;
-                                                            <th style="color:@color">
-                                                                @item1
-                                                                <input type="hidden" id="TH_ExamSubjectId" value="@ExamSubjectId" disabled />
-                                                                <input type="hidden" id="TH_MaxMarks" value="@MaxMarks" disabled />
-                                                                <input type="hidden" id="TH_PassMarks" value="@PassMarks" disabled />
-                                                            </th>
-                                                            color = "red";
-                                                        }
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                            @foreach (var item in ViewBag.UsersDetailsList)
+                            {
+                                Subjectcount = 0;
 
-                                                    @foreach (var item in ViewBag.UsersDetailsList)
-                                                    {
-                                                        Subjectcount = 0;
-
-                                                        sno++; OptionalSubjectcount = 0;
-                                                        <tr>
-                                                            <td>@sno</td>
-                                                            <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
-                                                            <td>@item.InstanceUserCode</td>
-                                                            @foreach (var columnValue in item.Columns)
-                                                            {
-                                                                Subjectcount++;
-                                                                subjectname = ViewBag.SubjectNamesList[Subjectcount - 1];
-                                                                if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
-                                                                {
-                                                                    <td><input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" disabled /></td>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td>
-                                                                        <input type="text" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
-                                                                        @if (item.DisplayIcon[OptionalSubjectcount] == "1")
-                                                                        {
-                                                                            <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblSubjectMarks', @item.SubjectMarks[OptionalSubjectcount], 'SecuredMarks')">
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                                OptionalSubjectcount++;
-                                                            }
-                                                            @*@for (int i = 1; i <= Subjectcount; i++)
-                                                                {
-                                                                    <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
-                                                                }*@
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                                sno++; OptionalSubjectcount = 0;
+                                <tr>
+                                    <td>@sno</td>
+                                    <td>@item.Name<input type="hidden" id="UserId" value="@item.UserId" disabled readonly /></td>
+                                    <td>@item.InstanceUserCode</td>
+                                    @foreach (var columnValue in item.Columns)
+                                    {
+                                        Subjectcount++;
+                                        subjectname = ViewBag.SubjectNamesList[Subjectcount - 1];
+                                        if (OptionalSubjectcount < item.OptionalSubject.Count && item.OptionalSubject[OptionalSubjectcount] == "0")
+                                        {
+                                            <td><input type="text" class="form-control" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" disabled /></td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="text" class="form-control" title="@subjectname" oninput="restrictCharacters_AllowDotsAndHyphen(this)" maxlength="5" value="@columnValue" />
+                                                @if (item.DisplayIcon[OptionalSubjectcount] == "1")
+                                                {
+                                                    <input type="image" class="imgAuditIcon" id="imgAuditIconAllowPastDays" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblSubjectMarks', @item.SubjectMarks[OptionalSubjectcount], 'SecuredMarks')">
+                                                }
+                                            </td>
+                                        }
+                                        OptionalSubjectcount++;
+                                    }
+                                    @*@for (int i = 1; i <= Subjectcount; i++)
+                            {
+                                <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
+                            }*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
                         }
 <input type="hidden" id="HdnSubjectNamesForAlertMsg" value="@subjectNamesForAlertMsg" readonly disabled />
-
-<div style=" display: flex; gap: 7px;">
-    <input type="button" style=" margin-left: 14%;" value="Go Back to Step 1" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" class="btn btn-pill btn-outline-primary btn-air-primary" />
-    <input type="button" value="Go Back to Step 2" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" class="btn btn-pill btn-outline-warning btn-air-warning" />
-    <input type="button" value="Save As Draft" @IsDisabled id="BtnSaveAsDraft" class="btn btn-pill btn-outline-info btn-air-warning" />
-    <input type="submit" value="Publish" @IsDisabled id="BtnPublish" class="btn btn-pill btn-outline-success btn-air-info" />
+<div class="row justify-content-end">
+    <div class="col-sm-10">
+        <button type="button" class="btn btn-secondary waves-effect waves-light" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" value="Go Back to Step 1">Go Back to Step 1</button>
+        <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" value="Go Back to Step 2">Go Back to Step 2</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light" id="BtnSaveAsDraft" value="Save As Draft" @IsDisabled>Save As Draft</button>
+        <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnPublish" value="Publish" @IsDisabled>Publish</button>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/GeneralFunctions.js"></script>
+@*<script src="~/js/GeneralFunctions.js"></script>*@
 
-<script src="~/js/PostResults.js"></script>
+@*<script src="~/js/PostResults.js"></script>*@
+<script>
+    //$(document).ready(function () {
+    $('#BtnSaveAsDraft, #BtnPublish').off('click').on('click', function (event) {
+        // $(document).off("click", '#BtnSaveAsDraft, #BtnPublish').on("click", '#BtnSaveAsDraft, #BtnPublish', function (event) {
+
+        try {
+            event.preventDefault();
+
+            //event.stopImmediatePropagation();
+            var ButtonName = $(this).val();
+            var ButtonId = $(this).attr("id");
+            debugger;
+            $(".ErrorMessageSpan").empty();
+            var Alertconfirm = false;
+            var HdnSubjectNamesForAlertMsg = $("#HdnSubjectNamesForAlertMsg").val();
+            if (HdnSubjectNamesForAlertMsg != "" && ButtonId == "BtnSaveAsDraft") {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: ("For Subject(s) '" + HdnSubjectNamesForAlertMsg.slice(0, -1) + "' marks are already published. Do you want to save the published marks as draft? "),
+                    //type: "warning", -  doesn't exist
+                    showCancelButton: true,
+                    showCloseButton: true, // optional
+                    showConfirmButton: true, // optional
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: "Yes",
+                    icon: "warning",
+                    //closeOnConfirm: false -  doesn't exist
+                })
+                    .then(function (isConfirm) {
+                        if (isConfirm.isConfirmed) {
+                            Alertconfirm = true;
+                            SaveAsdraftCallingFunction(ButtonId, ButtonName);
+                        }
+                        else {
+                            return; //close popup
+                        }
+                    });
+            }
+            if (Alertconfirm || HdnSubjectNamesForAlertMsg == "" || ButtonId == "BtnPublish") {
+                SaveAsdraftCallingFunction(ButtonId, ButtonName);
+            }
+        } catch (e) {
+            loaddingimg.css('display', 'none');
+            $("#Main_Span_Error").text("Something Error");
+        }
+    });
+//});
+</script>

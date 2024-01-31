@@ -25,10 +25,10 @@
 
 
 
-
+/*
         option:empty {
             display: none;
-        }
+        }*/
 
 
         .Commentpopup {
@@ -63,32 +63,33 @@
 
 
 
-    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+    <!--<link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
 
-    <link href="~/Themes/assets/css/StyleSheets/LeaveDelegation.css" rel="stylesheet" />
+    <link href="~/Themes/assets/css/StyleSheets/LeaveDelegation.css" rel="stylesheet" />-->
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 
 
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
     <script src="~/js/LeaveDelegation.js"></script>
     @*<script src="~/js/ApplyStaffLeave.js"></script>*@
     <script src="~/js/LeaveCancellation.js"></script>
-    <script src="~/js/GeneralFunctions.js"></script>
+    @*<script src="~/js/GeneralFunctions.js"></script>*@
 
 
-    <link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+    @*<link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />*@
     <script src="~/Datatable/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
 
-        var js = jQuery.noConflict(true);
         $(document).ready(function () {
             debugger;
             _LeavesSearchPage_PagePartialViewFunction();
            // TblDataTableWithColumns_CallingFunction(event, 'nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails', 'TblLeavesSearchedResultPage_Div');
 
         });
+
+        var js = jQuery.noConflict(true);
     </script>
 
     @*<script src="~/js/PaginationToTables.js"></script>*@
@@ -100,44 +101,36 @@
 </head>
 <body>
 
-    <!-- Loading Spinner -->
-    <!--<div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>-->
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>LEAVES CANCELLATION</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+
+                        <span class="ErrorMessageSpan" id="followingfieldsErrorSPAN"></span>
+                        <span class="ErrorMessageSpan" id="successMessage"></span>
+                        <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                        <span class="ErrorMessageSpan" id="LeavetypeERROR"></span>
+                        <span class="ErrorMessageSpan" id="DescriptionidERROR"></span>
+                        <span class="ErrorMessageSpan" id="FromdateERROR"></span>
+                        <span class="ErrorMessageSpan" id="TodateERROR"></span>
+                        <span class="ErrorMessageSpan" id="DaystypeERROR"></span>
+                        <span class="ErrorMessageSpan" id="Datechecking"></span>
+                        <span class="ErrorMessageSpan" id="DaysessionERROR"></span>
+                        @*<span class="ErrorMessageSpan" id="DaystypeERROR"></span>*@
 
 
+                        @*-----_EditLeavesPage_LeaveCancellation_Div Result page*@
+                        <div id="_EditLeavesPage_LeaveCancellation_Div">
+                        </div>
 
-    <div class="card">
-        <div class="card-header pb-0" style="padding-top: 0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>LEAVES CANCELLATION</strong></h6>
-        </div>
-        <div class="card-body" style=" padding-top: 0px;">
-            <span class="ErrorMessageSpan" id="followingfieldsErrorSPAN"></span>
-            <span class="ErrorMessageSpan" id="successMessage"></span>
-            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="LeavetypeERROR"></span>
-            <span class="ErrorMessageSpan" id="DescriptionidERROR"></span>
-            <span class="ErrorMessageSpan" id="FromdateERROR"></span>
-            <span class="ErrorMessageSpan" id="TodateERROR"></span>
-            <span class="ErrorMessageSpan" id="DaystypeERROR"></span>
-            <span class="ErrorMessageSpan" id="Datechecking"></span>
-            <span class="ErrorMessageSpan" id="DaysessionERROR"></span>
-            @*<span class="ErrorMessageSpan" id="DaystypeERROR"></span>*@
+                        @*-----LeavesSearchPage_Div Result page*@
+                        <div id="LeavesSearchPage_Div">
+                        </div>
 
 
-            @*-----_EditLeavesPage_LeaveCancellation_Div Result page*@
-            <div id="_EditLeavesPage_LeaveCancellation_Div">
-            </div>
-
-            @*-----LeavesSearchPage_Div Result page*@
-            <div id="LeavesSearchPage_Div">
-            </div>
-
-
-        </div>
-    </div>
+                    </div>
+                </div>
+                </div>
 
 </body>
 </html>

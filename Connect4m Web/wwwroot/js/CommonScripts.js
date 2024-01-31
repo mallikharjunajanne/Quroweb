@@ -61,7 +61,7 @@ function CommonAjaxFunction(method, url, data, successCallback, errorCallback, h
 //-------------------------------------------------- Common Delete Function 
 
 function CommonDeleteFunction(title, type, url, data, successcallback) {
-
+   
     Swal.fire({
         title: "Are you sure you want to delete this " + title + "?",
         text: "  ",

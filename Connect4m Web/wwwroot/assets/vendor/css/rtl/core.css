@@ -26128,6 +26128,7 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 .compare, .ErrorMessageSpan {
     color: red;
     font-size: small;
+    display: block;
 }
 /* h6 label,h5 span {
     background-color: #121451;

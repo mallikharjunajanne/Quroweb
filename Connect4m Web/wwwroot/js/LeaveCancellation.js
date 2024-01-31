@@ -2,7 +2,7 @@
 function FN_ClearValuesInLeavecancelllation(Formid) {
     try {
         debugger;
-        document.getElementById(Formid).reset(); // Reset the form
+       // document.getElementById(Formid).reset(); // Reset the form
 
         // $('#' + ListBoxId).text('');
         $("#DdlEmployee").empty();
@@ -21,7 +21,7 @@ function CommentopenPopup(CommentpopupId, Batchid, Userid) {
     debugger;
     $('.ErrorMessageSpan').empty();
     $("#TxtAreaCancelComment").val('');
-    $("#TextareacountSPANOf_POPup").text('500');
+    $("#TextareaCountsPANOf_POPup").text('500');
     var popup = document.getElementById(CommentpopupId);
     popup.style.display = "block";
     $("#OkBtn").attr("onclick", "CancelLeave_Calingfunction(" + Batchid + "," + Userid + ")");
@@ -29,7 +29,7 @@ function CommentopenPopup(CommentpopupId, Batchid, Userid) {
 
 
 
-//this is for View  and Cancel and Print details
+//=============this is for View  and Cancel and Print details
 
 function CancelLeave_Calingfunction(Batchid, Userid) {
     // $('#GetMyAppliedLeaves_Table').on('click', 'td span', function () {
@@ -41,7 +41,7 @@ function CancelLeave_Calingfunction(Batchid, Userid) {
             $("#CancelLeaveError").text("Please Enter Leave Cancel Comments .");
             return;
         }
-        $("#loadingOverlay").show();
+         loaddingimg.css('display', 'block');
         document.getElementById('DivCancelComment').style.display = "none";
         var BTNtext = "Cancel_LeaveCancellation";
         var Comments = $("#TxtAreaCancelComment").val(); //"check cancel";       
@@ -53,7 +53,7 @@ function CancelLeave_Calingfunction(Batchid, Userid) {
                 // $('#successMessage').text(response.message);
               
                 if (response.message == "Request Cancelled Successfully") {
-                    TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
+                    TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
                     //  _TblLeavesSearchedResultPage_PagePartialViewFunction(event);
                    // $("#followingfieldsErrorSPAN").text(response.message);
                 }             
@@ -64,14 +64,44 @@ function CancelLeave_Calingfunction(Batchid, Userid) {
                 $("#followingfieldsErrorSPAN").text("Something Error");
             }
         });
-      //  $("#loadingOverlay").hide();
+      //  loaddingimg.css('display', 'none');
     } catch (e) {
         $("#followingfieldsErrorSPAN").text("Something Error");
     }
 }
 
 
-//This Is For Update
+
+//  ============ Searched Users Details in Table
+$("#FmLeavesSearchPage_SearchDetails").submit(function (event) {
+    debugger;
+    try {
+        event.preventDefault();
+        //  $(".ErrorMessageSpan").empty();
+        loaddingimg.css('display', 'block');
+        var formElement = document.getElementById('FmLeavesSearchPage_SearchDetails');
+        //  $("#TblUserSearchresults tbody").empty();
+        setTimeout(function () {
+            var validationMessages = formElement.getElementsByClassName('field-validation-error');
+             var validationMessages2 = formElement.getElementsByClassName('error2');
+          //  var validationmelength = validationMessages.length;
+            if (validationMessages.length == 0 && validationMessages2.length == 0) {
+                TblDataTableWithColumns_CallingFunction(event, 'Nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails', 'TblLeavesSearchedResultPage_Div')
+                loaddingimg.css('display', 'none');
+                //  loaddingimg.css('display', 'none');
+            } else {
+                $('.alert-danger p').text("Pleae Enter All Required Fields");
+                $(".alert-danger").show().delay(5000).fadeOut();
+                loaddingimg.css('display', 'none');
+            }
+        }, 50);
+    } catch (e) {
+        loaddingimg.css('display', 'none');
+        $("#Main_Span_Error").text("Something Error");
+    }
+})
+
+//===============This Is For Update
 function FmUpdateLeaves_CalingFunction(event) {
     try {
         debugger;
@@ -213,7 +243,7 @@ function FmUpdateLeaves_CalingFunction(event) {
 
         var formData = new FormData($("#FmUpdateLeaves")[0]);// $(this).serialize(); // get the form data
 
-        $("#loadingOverlay").show();
+         loaddingimg.css('display', 'block');
         var Userid = $("#Userid").val();
         var bt = $("#savebutton").val();
         /* alert(bt)*/
@@ -234,25 +264,30 @@ function FmUpdateLeaves_CalingFunction(event) {
                 //}
 
                 if (response.message == "Record updated successfully.") {
-                    $("#followingfieldsErrorSPAN").text(response.message);
+                   // $("#followingfieldsErrorSPAN").text(response.message);
                     $("#savebutton").prop("disabled", true);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(6000).fadeOut()
                 }
                 else {
-                    $("#followingfieldsErrorSPAN").text(response.message);
+                  //  $("#followingfieldsErrorSPAN").text(response.message);
+
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(6000).fadeOut();
                 }
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 // handle the response from the server
             },
             error: function (xhr, status, error) {
                 // alert($("#submitButton").val());
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#followingfieldsErrorSPAN").text("Something Error");
                 // handle the error
             }
         });
         window.scrollTo(0, 0);
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#followingfieldsErrorSPAN").text("Something Error");
     }
 }
@@ -266,7 +301,7 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
         debugger;
         var dept = $(this).closest('tr').find('td:eq(1)').text();
 
-        $("#loadingOverlay").show();
+         loaddingimg.css('display', 'block');
         $.ajax({
             url: "/Attendance/_EditLeavesPage_LeaveCancellation?Userid=" + Userid + "&LeaveApplicationId=" + LeaveApplicationId,
             type: "POST",
@@ -276,7 +311,7 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                 $("#TblLeavesSearchedResultPage_Div").hide();
                 $("#_EditLeavesPage_LeaveCancellation_Div").html(data);
                 var Userid = $("#Userid").val();
-                debugger;
+                //debugger;
                 $.ajax({
                     url: "/Attendance/GetSubmittedLeaveRequestsDetailsByUseridLeaveIdforEdit?LeaveApplicationId=" + LeaveApplicationId + "&Userid=" + Userid,
                     type: "GET",
@@ -299,7 +334,7 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                         var LeavecommentsCT2 = response[0].leavecomments;
                         var Batchid12 = response[0].batchid;
                         var LeaveApplicationIdCT12 = response[0].leaveApplicationId;
-                        debugger
+                        //debugger
 
 
                         if (response[0].leaveDetails == "1") {
@@ -367,7 +402,6 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                         //    $("#MedicalLeaveDocument").hide();
                         //    $("#MedicalLeaveDocument").val('');
                         //}
-                        debugger;
 
 
                         //   GetLeaveDaysAvailable(LeavetypeidCT2);
@@ -444,18 +478,18 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                             $("#DaySession").show();
                             $("#fromdate").val('');
 
-                            $("#radioinline1").prop("checked", false);
-                            $("#radioinline2").prop("checked", true);
+                            $("#RdnFullday").prop("checked", false);
+                            $("#RdnHalfday").prop("checked", true);
 
                             if (DaysessionCT2 == "1" || DaysessionCT2 == "Morning") {
 
-                                $("#radioinline11").prop("checked", true);
-                                $("#radioinline21").prop("checked", false);
+                                $("#RdnMorning").prop("checked", true);
+                                $("#RdnAfternoon").prop("checked", false);
                             }
                             else /*if (DaysessionCT2 == "2")*/ {
 
-                                $("#radioinline11").prop("checked", false);
-                                $("#radioinline21").prop("checked", true);
+                                $("#RdnMorning").prop("checked", false);
+                                $("#RdnAfternoon").prop("checked", true);
                             }
 
                             $('#imgAuditIconTodate').remove();
@@ -468,12 +502,12 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                             $("#HAlfdayLB").hide();
                             $("#ErrorrmessageSPAN").show();
                             $("#DaySession").hide();
-                            $("#radioinline1").prop("checked", true);
-                            $("#radioinline2").prop("checked", false);
+                            $("#RdnFullday").prop("checked", true);
+                            $("#RdnHalfday").prop("checked", false);
 
 
-                            $("#radioinline11").prop("checked", false);
-                            $("#radioinline21").prop("checked", false);
+                            $("#RdnMorning").prop("checked", false);
+                            $("#RdnAfternoon").prop("checked", false);
 
                         }
 
@@ -483,16 +517,17 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
                         $("#Hdntodate").val(TodateCT2.split("T")[0]);
                         $("#BatchidTextbox").val(Batchid12);
                         $("#Dates_Div").show();
-                        $("#loadingOverlay").hide();
+                        loaddingimg.css('display', 'none');
                     },
                     error: function (xhr, status, error) {
                         $("#Main_Span_Error").text("Something Error");
+                        loaddingimg.css('display', 'none');
                     }
                 })
             }
         });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -502,6 +537,7 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
 //  To get Partial View of Add LeavesSearchPage
 function _LeavesSearchPage_PagePartialViewFunction() {
     try {
+        loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
         debugger;
         // Make AJAX call to the controller action
@@ -514,16 +550,18 @@ function _LeavesSearchPage_PagePartialViewFunction() {
 
                 $("#LeavesSearchPage_Div").html(data);
                 DepartmentsDropdown_Caliingfunction('DdlDepartment', '1', 'SelectName');
-                TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
+                TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
                 //  _TblLeavesSearchedResultPage_PagePartialViewFunction(event, 'stop');
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
 
         });
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -532,7 +570,7 @@ function BackTOSearhUserLeavestypes(event) {
     try {
         debugger;
 
-        $("#loadingOverlay").show();
+         loaddingimg.css('display', 'block');
         $("#LeavesSearchPage_Div").show();
         // _LeavesSearchPage_PagePartialViewFunction();
         $("#TblLeavesSearchedResultPage_Div").show();
@@ -540,12 +578,12 @@ function BackTOSearhUserLeavestypes(event) {
 
         $(".ErrorMessageSpan").empty();
         // _TblLeavesSearchedResultPage_PagePartialViewFunction(event, "12");
-        TblDataTableWithColumns_CallingFunction(event, 'Nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
+        TblDataTableWithColumns_CallingFunction(event, 'Nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
 
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     } catch (x) {
 
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }

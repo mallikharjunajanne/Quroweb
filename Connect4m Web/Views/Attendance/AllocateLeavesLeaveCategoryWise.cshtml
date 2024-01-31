@@ -8,88 +8,85 @@
 <html>
 <head>
     @*<link href="~/Themes/assets/css/StyleSheets/LeaveAllocation.css" rel="stylesheet" />*@
-<link href="~/Themes/assets/css/StyleSheets/AllocateLeavesLeaveCategoryWise.css" rel="stylesheet" />
+@*<link href="~/Themes/assets/css/StyleSheets/AllocateLeavesLeaveCategoryWise.css" rel="stylesheet" />*@
   
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
     @*<script src="~/js/LeaveAllocation.js"></script>*@
     <script src="~/js/AllocateLeavesLeaveCategoryWise.js"></script>
    
 </head>
 <body data-screen-name="LeaveAllocation">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>CATEGORY WISE ALLOCATE LEAVES</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
 
-    <!-- Loading Spinner -->
-    <!--<div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>-->
-
-    @*@Html.Partial("_SearchLeaveTypePagePartialView")*@
-    <div class="card">
-        <div class="card-header pb-0" style="padding-top: 0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>CATEGORY WISE ALLOCATE LEAVES</strong></h6>
-        </div>
-        <div class="card-body" style=" padding-top: 0px;">
-            <div class="default-according style-1">
-                <div class="card" id="SearchPage">
-                    <div class="card-header " style="background-color:black ;">
+                @*==========================search result Card====================*@
+                <div class="card mb-4" id="SearchPage">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
+                            <span>
                                 SEARCH CATEGORIES TO ALLOCATE LEAVES
-                            </button>
+                            </span>
                         </h5>
                     </div>
 
-                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-                        <div class="card ">
-                            <div class="card-body">
-                                <form id="FmAllocateLeavesSearch">
-                                    <div style="margin-left:20%;font-size:12px" id="ApplyShortLeavePage_Form">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">LMS Category  :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id='DdlLmsCategory' onchange="DdlLmsSubCategory_Calingfunction(this.id,'DdlLmsSubCategory')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
-                                                            @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-                                                            @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-                                                            <option value=''>Select LMS category</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2 row">
-                                                    <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">LMS Sub Category :&nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="DdlLmsSubCategory" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Select LMS Sub Category</option></select>
-                                                    </div>
-                                                </div>
-                                                <div style="margin-left: 204px">
-                                                    <input type="button" class="btn btn-light " onclick="FN_ClearValues('FmAllocateLeavesSearch')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
-                                                    <input type="submit" class="btn btn-primary active" onclick="GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event)" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">
-                                                </div>
+                    <div class="card-body">
+                        <form id="FmAllocateLeavesSearch">
+                            <div class="row">
+                                <div class="col">
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">LMS Category</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='DdlLmsCategory' class="select2 form-select select2-hidden-accessible" onchange="DdlLmsSubCategory_Calingfunction(this.id,'DdlLmsSubCategory')" asp-items="@(new SelectList(""))">
+                                                    <option value=''>Select LMS category</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                    @*--------------------------*@
+                                    <div class="row mb-3 ">
+                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">LMS Sub Category</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='DdlLmsSubCategory' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                    <option>Select LMS Sub Category</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-8">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValues('FmAllocateLeavesSearch')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" onclick="GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event)" value="Search">Search</button>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+
+                                </div>
                             </div>
-                        </div>
+
+                        </form>
                     </div>
                 </div>
+
+
+
+                @*========================== Searched result table Card====================*@
+
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <div id="TBLAllocateLeavesSearchedTypePageView_id_Div">
+
+                </div>
+
+
             </div>
-
-            <br />
-
-            @*-----Searched Result page*@
-
-            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-            <div id="TBLAllocateLeavesSearchedTypePageView_id_Div">
-
-            </div>
-
-
-        </div>
-    </div>
+                </div>
+                </div>
 
 </body>
 </html>

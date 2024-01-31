@@ -8,340 +8,211 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="~/Themes/assets/css/StyleSheets/ApplyStudentLeave.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/ApplyStudentLeave.css" rel="stylesheet" />*@
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
-   
+
 </head>
 <body>
-    @*<div id="loading">
-            <img id="loading-image" src="path/to/ajax-loader.gif" alt="Loading..." />
-        </div>*@
 
-    <!-- Loading Spinner -->
-    <!--<div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>-->
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Student Module /</span>STUDENT LEAVE DETAILS</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <ul class="nav nav-pills" id="myTab" role="tablist">
+                    <li class="nav-item" id="refreshButton"><a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Apply Leave</a></li>
+                    <li class="nav-item" id="ViewStudentLeaves_BTN"><a class="nav-link" style="display:none" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Student Leaves</a></li>
+                </ul>
 
-    <div class="card">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" id="refreshButton"><a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Apply Leave</a></li>
-            <li class="nav-item" id="ViewStudentLeaves_BTN"><a class="nav-link" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Student Leaves</a></li>
-        </ul>
+                <div class="tab-content" id="myTabContent">
+                    @*--------------Tab 1 --------------- start----------*@
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-        <div class="card-header pb-0" style="padding:0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>STUDENT LEAVE DETAILS</strong></h6>
-
-            @*<h6> <strong>STUDENT LEAVE DETAILS</strong></h6>*@
-        </div>
-
-        <div class="tab-content" id="myTabContent">
-            @*--------------Tab 1 --------------- start----------*@
-            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                <div class="card-body" style="padding-top: 0px;">
-                    <div class="default-according style-1" id="accordionoc">
-                        <div class="card">
-
-                            <div class="default-according style-1" id="accordionoc12345">
-
-                                <div class="card" id="StudentAttendanceDetails_Card">
-                                    <div class="card-header " style="background-color:black ;">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">  	ATTENDANCE DETAILS </button>
-                                            @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>  <span id="CountOfRecords_StudentLeaves">YOUR SEARCH RESULTED   RECORD(S).</span>	</button>*@
-                                        </h5>
-                                    </div>
-                                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-                                        @*<div class="card ">
-                                            <div class="card-header" style="background-color:black ;padding:1px">
-
-
-                                            </div>*@
-                                        <div>
-                                            @*<div class="card-body">*@
-                                            @*<form id="StudentAttendanceDetails_Form">*@
-
-                                            <table id="StudentAttendanceDetails_Table" class="table table-responsive tableid">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Total Present Days</th>
-                                                        <th>Total Absent Days</th>
-                                                        <th>	Present Percentage</th>
-                                                        <th>Absent Percentage</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-
-                                            @*</form>*@
-                                            @*</div>*@
-                                        </div>
-                                    </div>
+                        <div class="card mb-4" id="StudentAttendanceDetails_Card" style="display:none">
+                            <div class="card-header flex-column flex-md-row">
+                                <div class="head-label text-center">
+                                    <h5 class="card-title mb-0">
+                                        <span>ATTENDANCE DETAILS</span>
+                                        @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
+                                    </h5>
                                 </div>
-
-                                <br />
                             </div>
-                            @*---------------------form code------------------------*@
+                            <div class="table-responsive text-nowrap">
+                                <table id="StudentAttendanceDetails_Table" class="table table-hover table-bordered no-footer dataTable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Total Present Days</th>
+                                            <th>Total Absent Days</th>
+                                            <th>	Present Percentage</th>
+                                            <th>Absent Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
-                            <p id="your-p-id" style="margin-bottom: 0;">
-                                <span id="successMessage" ></span>
-                                <span id="followingfieldsErrorSPAN" ></span>
-                                <span id="Classid1" ></span>
-                                <span id="Studentid1" ></span>
-                                <span id="Leavetypeid1" ></span>
-                                <span id="Daystype1" ></span>
-                                <span id="mySpan" ></span>
-                                <span id="ErrorrmessageSPAN" ></span>
-                                <span id="Datechecking" ></span>
-                            </p>
-                            <div class="card-header " style="background-color:black ;">
+                            </div>
+                        </div>
+                        @*---------------------form code------------------------*@
+
+                        <p id="your-p-id">
+                            <span class="ErrorMessageSpan" id="followingfieldsErrorSPAN"></span>
+                            <span class="ErrorMessageSpan" id="Classid1"></span>
+                            <span class="ErrorMessageSpan" id="Studentid1"></span>
+                            <span class="ErrorMessageSpan" id="Leavetypeid1"></span>
+                            <span class="ErrorMessageSpan" id="Daystype1"></span>
+                            <span class="ErrorMessageSpan" id="mySpan"></span>
+                            <span class="ErrorMessageSpan" id="ErrorrmessageSPAN"></span>
+                            <span class="ErrorMessageSpan" id="Datechecking"></span>
+                        </p>
+                        <span class="ErrorMessageSpan" id="successMessage"></span>
+
+                        <div class="card mb-4">
+                            <div class="card-header d-flex align-items-center justify-content-between">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="fa fa-pencil-square"></i>Apply Student Leave</button>
-                                </h5>
+                                    <span>
+                                        Apply Student Leave
+                                    </span>
+                                </h5><small class="required">INDICATES REQUIRED FEILDS</small>
                             </div>
-                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
+                            <div class="card-body">
+                                <form id="myForm">
+                                    <div asp-validation-summary="ModelOnly" id="validationSummery" class="text-danger"></div>
+                                    <div class="row ">
+                                        <div class="col">
 
-                                <div class="card " @*style="background-color:wheat;*@>
-
-                                    <div class="card-header" style="background-color:black ;padding:1px">
-
-
-                                    </div>
-                                    <div class="card-body">
-                                        @*<div class="card-header pb-0">*@
-
-
-                                        <form id="myForm" class="form theme-form" style="margin-left:20%;font-size:12px">
-
-
-                                            @*<h6 style="margin-left:10%"><strong>STUDENT LEAVE DETAILS</strong></h6>*@
-
-
-                                            <!--<p id="myPP">
-                                            <span id="followingfieldsErrorSPAN" class="text-danger"></span>
-                                            <span id="roleerror" class="text-danger"></span>-->
-                                            @*<span asp-validation-summary="All" class="text-danger">Following fields have invalid data:</span>*@
-                                            <!--@Html.ValidationMessageFor(model => model.Classid, "", new { @class = "text-danger" })
-
-                                            @Html.ValidationMessageFor(model => model.Studentid, "", new { @class = "text-danger" })
-
-                                            @Html.ValidationMessageFor(model => model.Leavetypeid, "", new { @class = "text-danger" })-->
-                                            @*@Html.ValidationMessageFor(model => model.Daystype, "", new { @class = "text-danger" })*@
-
-                                            <!--<span asp-validation-for="Daystype" class="text-danger"></span>
-
-                                                <span asp-validation-for="Fromdate" id="mySpan" class="text-danger"></span>
-
-                                                <span asp-validation-for="Todate" id="ErrorrmessageSPAN" class="text-danger"></span>
-                                            </p>-->
-
-
-
-                                            <div asp-validation-summary="ModelOnly" id="validationSummery" class="text-danger"></div>
-                                            <div class="row ">
-                                                <div class="col">
-                                                    <div class="mb-3 row" id="ClassNAme_div">
-                                                        <label class="col-sm-3 col-form-label  form-label"><i style="color:red">*</i>Class :</label>
-                                                        <div class="col-sm-9">
-                                                            @*<select id="classid" class = "form-group input-air-primary  "  style = "width:300px"  asp-items="@( new SelectList(@ViewBag.Classnames, "Value", "Text")) ">
-                                                                    <option>--select--</option>
-                                                                </select>*@
-                                                            @*@Html.DropDownListFor(model => model.Classid, new SelectList(ViewBag.Classnames, "Value", "Text"), "     -------select------- ", new { @id = "classid", @class = "form-control input-air-primary form-select", @style = "font-size:inherit;width:230px;color:black;" })*@
-                                                            @Html.DropDownListFor(model => model.ClassidString, new SelectList(ViewBag.Classnames, "Value", "Text"), "     -------select------- ", new { @id = "classid", @class = "form-control input-air-primary form-select", @style = "font-size:inherit;width:230px;color:black;" })
-
-
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="mb-3 row" id="StudentName_div">
-                                                        <label class="col-sm-3 col-form-label  form-label"><i style="color:red">*</i>Student :</label>
-                                                        <div class="col-sm-9">
-                                                            @Html.DropDownListFor(model => model.Studentid, new SelectList(string.Empty, "Value", "Text"), "  ", new { @id = "studentid", @class = "form-control input-air-primary form-select", @style = "font-size:inherit;width:230px;color:black;" })
-                                                        </div>
-                                                    </div>
-
-
-
-
-                                                    <div class="mb-3 row " id="AdmissionNo_Div">
-                                                        <label class="col-sm-3 col-form-label  form-label"> &nbsp;&nbsp;Admission Number :</label>
-                                                        <div class="col-sm-9">
-                                                            <label id="AdmissionNum" style="width: 300px; padding-top: 6px; margin-left: 15px;"></label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3 row" id="Attendence_Div">
-                                                        <label class="col-sm-3 col-form-label  form-label"> &nbsp;&nbsp;Attendance Percentage :</label>
-                                                        <div class="col-sm-9">
-                                                            <label id="AttendancePercentage" style="width: 300px; padding-top: 6px; margin-left: 15px;"></label>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3 row light-secondary">
-                                                        <label class="col-sm-3 col-form-label  form-label"><i style="color:red">*</i>Leave Type :</label>
-                                                        <div class="col-sm-9">
-                                                            @Html.DropDownListFor(model => model.Leavetypeid, new SelectList(ViewBag.LeaveType, "Value", "Text"), "     -------select------- ", new { @id = "leavetype", @class = "form-control input-air-primary form-select", @style = "font-size: 11px;width:230px;color:black;" })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-3 row ">
-                                                        <label class="col-sm-3 col-form-label  form-label"><i style="color:red">*</i>Day Type :</label>
-                                                        <div class="col ">
-
-                                                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
-                                                                <div class="radio radio-primary">
-                                                                    <input asp-for="Daystype" style="padding-top: 0px" id="radioinline1" class="check" type="radio" value="0">
-                                                                    <label class="mb-0" for="radioinline1" style="font-size: 11px;">Full day</label>
-                                                                </div>
-                                                                &nbsp;&nbsp;&nbsp;
-                                                                <div class="radio radio-primary">
-                                                                    <input asp-for="Daystype" id="radioinline2" class="check" type="radio" value="1">
-                                                                    <label class="mb-0" for="radioinline2" style="font-size: 11px;">Half day</label>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-
-
-                                                        @*<div class="col ">*@
-                                                        @*<label>
-                                                                <input type="radio" asp-for="Daystype"  value="0" /> Option 1
-                                                            </label>
-
-                                                            <label>
-                                                                <input type="radio" asp-for="Daystype" value="1" /> Option 2
-                                                            </label>*@
-
-
-                                                        @*@Html.RadioButtonFor(m => m.Daystype, "Male")MALE
-                                                            @Html.RadioButtonFor(m => m.Daystype, "Female")FEMALE*@
-                                                        @*<input type="radio" asp-for="Daystype" class="check" value="0" />&nbsp;<label class="mb-0">&nbsp;Full day</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <input type="radio" asp-for="Daystype" class="check" value="1" />&nbsp; <label class="mb-0">&nbsp;Half day</label>*@
-
-                                                        @*@Html.RadioButtonFor(model => model.Daystype, "0")&nbsp;<label class="mb-0" for="radioinline1">&nbsp;Full day</label>
-                                                            @Html.RadioButtonFor(model => model.Daystype, "1")&nbsp; <label class="mb-0" for="radioinline1">&nbsp;Half day</label>*@
-                                                        @*</div>*@
-                                                    </div>
-
-
-
-
-
-                                                    <!--<div class="mb-3 row">
-                                                    <label class="col-sm-3 col-form-label">Days Type :</label>&nbsp;&nbsp;
-                                                    <div class="col">
-                                                        <div class="form-group m-t-15 m-checkbox-inline mb-0 custom-radio-ml">
-                                                            <div class="radio radio-primary">
-                                                                <input type="radio" asp-for="Daystype" name="radio1" value="0" />
-                                                                <label class="mb-0" for="radioinline1">&nbsp;Full day</label>-->
-                                                    @*@Html.RadioButtonFor(model => model.Daystype, "0")&nbsp;Full day*@
-                                                    <!--</div>
-                                                    <div class="radio radio-primary">
-
-                                                        <input type="radio" asp-for="Daystype" name="radio1" value="1" />
-                                                        <label class="mb-0" for="radioinline1">&nbsp;Half day</label>-->
-                                                    @*@Html.RadioButtonFor(model => model.Daystype, "1")&nbsp;Half day*@
-                                                    <!--</div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>-->
-
-                                                    <div id="Fullday">
-
-                                                        <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label  form-label" id="HAlfdayLB"><i style="color:red">*</i> Date :</label>
-                                                            <label class="col-sm-3 col-form-label  form-label" id="fromdateLB"><i style="color:red">*</i>From Date :</label>
-                                                            <div class="col-sm-9">
-                                                                <input asp-for="Fromdate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="fromdate" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label  form-label" id="todateLB"><i style="color:red">*</i>To Date :</label>
-                                                            <div class="col-sm-9">
-                                                                <input asp-for="Todate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="todate" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="mb-3 row ">
-
-                                                        <label class="col-sm-3 col-form-label  form-label" style="padding-top: 29px;">&nbsp; Leave Comments :<br />&nbsp; <i style="font-size:8px">(Max of 500 Characters)</i></label>
-                                                        <div class="col-sm-9">
-                                                            <textarea asp-for="Leavecomments" id="Textarea" style="width: 230px; resize: none;border-style:ridge;" maxlength="500" class="form-control input-air-primary" rows="3" cols="20"></textarea>
-                                                            <label> <i style="font-size: 10px; margin-left: 14px;"><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
-                                                            @*<span asp-validation-for="Leavecomments" class="text-danger"></span>*@
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-3 row">
-                                                        <label class="col-sm-3 col-form-label  form-label"> &nbsp;&nbsp;Attach Document :</label>
-                                                        <div class="col-sm-9">
-                                                            @*<input type="file" name="file" id="file">*@
-                                                            <input asp-for="file" type="file" name="file" id="Attachfile1" class="form-control input-air-primary" style="width: 230px;font-size:12px;" />
-
-                                                            <a class="image-link" style="margin-left: 16px; cursor: pointer; font-weight: 900; text-decoration: underline; color: blue" id="AttachDocumentTB_FileName_LABEL"></a> &nbsp;
-
-                                                            <a class="deleteFileClass" style="color: black; font-weight: 800; cursor: pointer " id="AttachDocumentTB_FileName_LABEL_DELETE"></a>
-
-
-                                                            <input type="text" asp-for="attachdocument" name="attachdocument" id="AttachDocumentTB_FileName_TEXTBOX" hidden />
-                                                        </div>
-                                                    </div>
-                                                    <div style="margin-left:195px">
-                                                        <input type="reset" class="btn btn-light " id="clearbutton" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-                                                        <input type="submit" class="btn btn-primary active" id="savebutton" style="padding:3px 8px;border-radius:6px;" value="Apply Leave" />
-
-                                                    </div>
-                                                    <input type="hidden" name="InstanceID" id="instanceid" value="@ViewBag.instanceid" />
-                                                    <div hidden>
-                                                        <div class="col-sm-9">
-                                                            <input type="hidden" asp-for="StudentLeaveDetailsID" id="submitBStudentLeaveDetailsIDutton" />
-                                                        </div>
-                                                    </div>
-                                                    <div hidden>
-                                                        <div class="col-sm-9">
-                                                            <input type="hidden" asp-for="Studentid" value="@ViewBag.StudentId_ByParent" id="Studentid" />
-                                                        </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row ClsStaffEnables" id="ClassNAme_div">
+                                                <label class="col-sm-4 col-form-label  text-end required" asp-for="ClassidString" for="basic-default-name">Class</label>
+                                                <div class="col-sm-4">
+                                                    <div class="position-relative">
+                                                        @Html.DropDownListFor(model => model.ClassidString, new SelectList(ViewBag.Classnames, "Value", "Text"), "     -------select------- ", new { @id = "classid", @class = "select2 form-select select2-hidden-accessible" })
+                                                        <span asp-validation-for="ClassidString" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row ClsStaffEnables" id="StudentName_div">
+                                                <label class="col-sm-4 col-form-label  text-end required" asp-for="Studentid" for="basic-default-name">Student</label>
+                                                <div class="col-sm-4">
+                                                    <div class="position-relative">
+                                                        @Html.DropDownListFor(model => model.Studentid, new SelectList(string.Empty, "Value", "Text"), "  ", new { @id = "studentid", @class = "select2 form-select select2-hidden-accessible" })
+                                                        <span asp-validation-for="Studentid" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row ClsStaffEnables" id="AdmissionNo_Div">
+                                                <label class="col-sm-4 col-form-label  text-end" for="basic-default-name">Admission Number</label>
+                                                <div class="col-sm-4">
+                                                    <label id="AdmissionNum" class="form-control-plaintext"></label>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row ClsStaffEnables" id="Attendence_Div">
+                                                <label class="col-sm-4 col-form-label  text-end" for="basic-default-name">Attendance Percentage </label>
+                                                <div class="col-sm-4">
+                                                    <label id="AttendancePercentage" class="form-control-plaintext"></label>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row ">
+                                                <label class="col-sm-4 col-form-label  text-end required" asp-for="Leavetypeid" for="basic-default-name">Leave Type</label>
+                                                <div class="col-sm-4">
+                                                    <div class="position-relative">
+                                                        @Html.DropDownListFor(model => model.Leavetypeid, new SelectList(ViewBag.LeaveType, "Value", "Text"), "-------select-------  ", new { @id = "leavetype", @class = "select2 form-select select2-hidden-accessible" })
+                                                        <span asp-validation-for="Leavetypeid" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-2 row ">
+                                                <label class="col-sm-4 col-form-label  text-end required" asp-for="Daystype" for="basic-default-name">Day Type</label>
+                                                <div class="col-sm-4">
+                                                    <div class="col mt-2">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input check" asp-for="Daystype" id="radioinline1" type="radio" name="Daystype" value="0" required />
+                                                            <label class="form-check-label" for="radioinline1">Full Day</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input check" asp-for="Daystype" id="radioinline2" type="radio" name="Daystype" value="1" required />
+                                                            <label class="form-check-label" for="radioinline2"> Half Day</label>
+                                                        </div>
+                                                        <span asp-validation-for="Daystype" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
 
+                                            @*<div id="Fullday">*@
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-4 col-form-label  text-end required" style="display:none" id="HAlfdayLB" for="basic-default-name">Date</label>
+                                                <label class="col-sm-4 col-form-label  text-end required" id="fromdateLB" for="basic-default-name">From Date</label>
+                                                <div class="col-sm-4">
+                                                    <input type="date" asp-for="Fromdate" class="form-control" id="fromdate" />
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-4 col-form-label  text-end required" id="todateLB" for="basic-default-name">To Date</label>
+                                                <div class="col-sm-4">
+                                                    <input type="date" asp-for="Todate" class="form-control" id="todate" />
+                                                </div>
+                                            </div>
+                                            @*</div>*@
+                                            @*----------------------*@
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Leave Comments<br />&nbsp; <i>(Max of 500 Characters)</i></label>
+                                                <div class="col-sm-4">
+                                                    <textarea asp-for="Leavecomments" id="Textarea" maxlength="500" class="form-control" rows="3"></textarea>
+                                                    <label class="form-control-plaintext"><span id="TextareacountSPAN">500</span> Character(s) remaining.</label>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-2 row">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Attach Document</label>
+                                                <div class="col-sm-4">
+                                                    <input asp-for="file" type="file" name="file" id="Attachfile1" class="form-control" />
+                                                    <a class="image-link" id="AttachDocumentTB_FileName_LABEL"></a> &nbsp;
+                                                    <a style="display:none" class="btn rounded-pill btn-label-danger waves-effect deleteFileClass" id="AttachDocumentTB_FileName_LABEL_DELETE"></a>
+                                                    <input type="hidden" asp-for="attachdocument" name="attachdocument" id="AttachDocumentTB_FileName_TEXTBOX" />
+                                                    <input type="hidden" asp-for="Text"  id="AttachDocumentTB_FileName_ForDelete" />
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
 
-                                        </form>
-
+                                            <input type="hidden" name="InstanceID" id="instanceid" value="@ViewBag.instanceid" />
+                                            <input type="hidden" asp-for="StudentLeaveDetailsID" id="submitBStudentLeaveDetailsIDutton" />
+                                            <input type="hidden" asp-for="Studentid" value="@ViewBag.StudentId_ByParent" id="Studentid" />
+                                            @*----------------------*@
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton" onclick="FN_ClearValues()" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="savebutton" value="Apply Leave">Apply Leave</button>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                        </div>
                                     </div>
-
-                                </div>
-
+                                </form>
 
                             </div>
                         </div>
-                    </div>
-                </div>
-                @*-----searched table---------------------------------------*@
-
-                <div class="default-according style-1" id="accordionoc123456">
-                    <div class="card">
-                        <div class="card-header " style="background-color:black ;">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_StudentLeaves"></span><i class="icofont icofont-briefcase-alt-2" style="color:black"></i>  	</button>
-                                @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>  <span id="CountOfRecords_StudentLeaves">YOUR SEARCH RESULTED   RECORD(S).</span>	</button>*@
-                            </h5>
-                        </div>
-                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                            <div class="card ">
+                        @*=========================== searched table---------------------------------------*@
+                        <div class="card mb-4">
+                            <div class="card-header flex-column flex-md-row">
+                                <div class="head-label text-center">
+                                    <h5 class="card-title mb-0">
+                                        @*<span id="CountOfRecords_StudentLeaves"></span>*@
+                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
                                 <form id="StudentDataGetting_ID_FORM">
-                                    <table id="StudentDataGetting_ID" class="table table-responsive tableid">
-                                        <thead>
+                                    <table id="StudentDataGetting_ID" class="table table-hover table-bordered no-footer dataTable " style="display:none">
+                                        <thead class="table-dark">
                                             <tr>
+                                                <th>S No</th>
                                                 <th>Name</th>
                                                 <th>Leave Applied Date</th>
                                                 <th>From Date</th>
@@ -356,173 +227,137 @@
                                         <tbody>
                                         </tbody>
                                         @*<tfoot>
-                                            <tr><td style="padding:0px" colspan="10"><p style="text-align: center; font-size: 11px; margin-top: 9px; margin-bottom: 9px;" id="StudentDataGetting_ID_Table_pagination"></p></td></tr>
-                                        </tfoot>*@
+                                                <tr><td style="padding:0px" colspan="10"><p style="text-align: center; font-size: 11px; margin-top: 9px; margin-bottom: 9px;" id="StudentDataGetting_ID_Table_pagination"></p></td></tr>
+                                            </tfoot>*@
                                     </table>
                                 </form>
                             </div>
                         </div>
                     </div>
+                    @*--------------Tab 1 --------------- end----------*@
 
+                    @*--------------Tab 2 --------------- start----------*@
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                </div>
-            </div>
-            @*--------------Tab 1 --------------- end----------*@
+                        <p id="ViewStudentDetails_P_Span">
+                            <span class="ErrorMessageSpan" id="followingfieldsErrorSPAN_OF_ViewstudentLeaves"></span>
+                            <span class="ErrorMessageSpan" id="Monthid_Span"></span>
+                            <span class="ErrorMessageSpan" id="AcadamicYearID_Span"></span>
+                        </p>
 
-            @*--------------Tab 2 --------------- start----------*@
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="card-body" style=" padding-top: 0px;">
-                    <div class="default-according style-1" id="accordionoc">
-                        <div class="card">
-                            <p id="ViewStudentDetails_P_Span">
-                                <span id="followingfieldsErrorSPAN_OF_ViewstudentLeaves" ></span>
-                                @*<span id="roleerror" class="text-danger"></span>*@
-                                <span id="Monthid_Span" ></span>
-                                <span id="AcadamicYearID_Span" ></span>
-                            </p>
+                        <div class="card mb-4">
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <h5 class="mb-0">
+                                    <span>
+                                        LEAVE LEVEL SEARCH
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
 
-                            <div class="default-according style-1" id="accordionoc12345">
-                                <div class="card">
-                                    <div class="card-header " style="background-color:black ;">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link text-white" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2" style="color:black"></i>  	@*ATTENDANCE DETAILS*@ </button>
-
-                                            @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"> </button>*@
-                                            @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>  <span id="CountOfRecords_StudentLeaves">YOUR SEARCH RESULTED   RECORD(S).</span>	</button>*@
-                                        </h5>
-                                    </div>
-
-                                    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-                                        <div class="card ">
-                                            <div class="card-body">
-                                                <form>
-                                                    @*<form class="form theme-form " style="margin-left:20%;font-size:12px" id="ViewStudentLeaves_Search_Form">*@
-                                                    <div style="margin-left:20%;font-size:12px" id="ViewStudentLeaves_Search_Form">
-                                                        <div class="row">
-                                                            <div class="col">
-
-                                                                <div class="mb-3 row">
-                                                                    <label class="col-sm-3 col-form-label  form-label" id="HAlfdayLB"><i style="color:red">*</i>Month :</label>
-
-                                                                    <div class="col-sm-9">
-                                                                        <select id='Monthid' class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;">
-                                                                            <option value=''>-----select-----</option>
-                                                                            <option value='1'>Janaury</option>
-                                                                            <option value='2'>February</option>
-                                                                            <option value='3'>March</option>
-                                                                            <option value='4'>April</option>
-                                                                            <option value='5'>May</option>
-                                                                            <option value='6'>June</option>
-                                                                            <option value='7'>July</option>
-                                                                            <option value='8'>August</option>
-                                                                            <option value='9'>September</option>
-                                                                            <option value='10'>October</option>
-                                                                            <option value='11'>November</option>
-                                                                            <option value='12'>December</option>
-                                                                        </select>
-
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 row">
-                                                                    <label class="col-sm-3 col-form-label  form-label" id="todateLB"><i style="color:red">*</i>Academic Year :</label>
-                                                                    <div class="col-sm-9">
-
-                                                                        @*<select id="AcadamicYearID" class="form-control input-air-primary form-select" style="width:230px;color:black;" asp-items="@(new SelectList(ViewBag.AcademicYearID_OF_Student, "Value", "Text"))">
-                                                                                <option value="">-----select-----</option>
-                                                                            </select>*@
-
-
-                                                                        <select id="AcadamicYearID" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">
-                                                                            <option value="">-----select-----</option>
-                                                                            @foreach (var item in ViewBag.AcademicYearID_OF_Student)
-                                                                            {
-                                                                                <option value="@item.Value">@item.Text</option>
-                                                                                @*if (item.Value == "1737")
-                                                                                {
-                                                                                    <option selected="selected" value="@item.Value">@item.Text</option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option value="@item.Value">@item.Text</option>
-                                                                                }*@
-                                                                            }
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="margin-left:194px">
-                                                            <input type="reset" class="btn btn-light " id="clearbutton1" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-                                                            @*<button onclick="Search_stp_ViewStudentLeaves()" class="btn btn-primary active" style="padding:3px 8px;border-radius:6px;">Search</button>*@
-
-                                                            <input type="submit" onclick="Search_stp_ViewStudentLeaves(event)" class="btn btn-primary active" id="SearchBTN_ViewStudentLeaves" style="padding:3px 8px;border-radius:6px;" value="Search" />
-                                                            @*<button type="submit" id="SearchBTN_ViewStudentLeaves" value="Search"></button>*@
-                                                        </div>
+                                            @*--------------------------*@
+                                            <div class="row mb-3 ">
+                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Month</label>
+                                                <div class="col-sm-4 ">
+                                                    <div class="position-relative">
+                                                        <select id='Monthid' class="select2 form-select select2-hidden-accessible">
+                                                            <option value=''>-----select-----</option>
+                                                            <option value='1'>Janaury</option>
+                                                            <option value='2'>February</option>
+                                                            <option value='3'>March</option>
+                                                            <option value='4'>April</option>
+                                                            <option value='5'>May</option>
+                                                            <option value='6'>June</option>
+                                                            <option value='7'>July</option>
+                                                            <option value='8'>August</option>
+                                                            <option value='9'>September</option>
+                                                            <option value='10'>October</option>
+                                                            <option value='11'>November</option>
+                                                            <option value='12'>December</option>
+                                                        </select>
                                                     </div>
-
-                                                </form>
+                                                </div>
                                             </div>
+                                            @*--------------------------*@
+                                            <div class="row mb-3 ">
+                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Academic Year</label>
+                                                <div class="col-sm-4 ">
+                                                    <div class="position-relative">
+                                                        <select id='AcadamicYearID' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                            <option value="">-----select-----</option>
+                                                            @foreach (var item in ViewBag.AcademicYearID_OF_Student)
+                                                            {
+                                                                <option value="@item.Value">@item.Text</option>
+                                                                @*if (item.Value == "1737")
+                                                                    {
+                                                                        <option selected="selected" value="@item.Value">@item.Text</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Value">@item.Text</option>
+                                                                    }*@
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton1" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="SearchBTN_ViewStudentLeaves" onclick="Search_stp_ViewStudentLeaves(event)" value="Search">Search</button>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+
                                         </div>
                                     </div>
-
-
-                                </div>
-                                <br />
-
-
-                                <div class="default-according style-1" id="accordionoc12345600">
-                                    <div class="card">
-                                        <div class="card-header " style="background-color:black ;">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon100" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_View_Student_Leaves"></span></button>
-                                                @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>  <span id="CountOfRecords_StudentLeaves">YOUR SEARCH RESULTED   RECORD(S).</span>	</button>*@
-                                            </h5>
-                                        </div>
-
-                                        <div class="collapse show" id="collapseicon100" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345600" style="">
-                                            <div class="card ">
-                                                @*<div class="card-body">*@
-                                                <form id="ViewStudentLeaves_Table_Form">
-                                                    <table id="ViewStudentLeaves_Table" class="table table-responsive tableid">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Leave Type</th>
-                                                                <th>	Total</th>
-                                                                <th>Pending</th>
-                                                                <th>Approved</th>
-                                                                <th>	Rejected</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </form>
-                                                @*</div>*@
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
+
+                        @*=======================searched table values=============*@
+                        <div class="card mb-4">
+                            <div class="card-header flex-column flex-md-row">
+                                <div class="head-label text-center">
+                                    <h5 class="card-title mb-0">
+                                        @*<span id="CountOfRecords_View_Student_Leaves"></span>*@
+                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_View_Student_Leaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table id="ViewStudentLeaves_Table" class="table table-hover table-bordered no-footer dataTable" style="display:none">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Leave Type</th>
+                                            <th>	Total</th>
+                                            <th>Pending</th>
+                                            <th>Approved</th>
+                                            <th>	Rejected</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+
+
                     </div>
+                    @*--------------Tab 2 --------------- end----------*@
                 </div>
             </div>
-            @*--------------Tab 2 --------------- end----------*@
         </div>
     </div>
-
 </body>
-
-
-
 </html>
-
-
 <input type="hidden" id="Roleid" value="@ViewBag.roleid" />
-
 <input type="hidden" id="StudentId_ByParent" value="@ViewBag.StudentId_ByParent" />
 
 @*<span id="TextareacountSPAN122"></span>*@
@@ -541,9 +376,17 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+
+<!-- jQuery Cookie Plugin -->
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>*@
 
 @*This is for getting student names dropdown*@
-
+@{var roleName = Context.Request.Cookies["RoleName"];}
+<script>
+</script>
 <script src="~/js/ApplyStudentLeave.js"></script>
 
 

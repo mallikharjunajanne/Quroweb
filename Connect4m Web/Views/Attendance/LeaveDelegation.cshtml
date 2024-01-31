@@ -6,73 +6,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="~/Themes/assets/css/StyleSheets/LeaveDelegation.css" rel="stylesheet" />
-    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
-    <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LeaveDelegation.css" rel="stylesheet" />
+        <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+        <link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
     <script src="~/js/LeaveDelegation.js"></script>
-    <script src="~/js/GeneralFunctions.js"></script>
+
     @*<script src="~/js/PaginationToTables.js"></script>*@
-</head>
-<body>
-    <!-- Loading Spinner -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>
-
-    @*-----------------------------------------Delete Popup-----------------------------*@
-    <div class="popup" id="deletePopup">
-        <div class="popup-content">
-            <div class="container" id="SuccessFulDiv">
-                <div class="circle">
-                    <div class="checkmark" style=" color: #2ecc71;"></div>
-                </div>
-                <h4 id="SuccessMessageid" style="color: #2ecc71;"></h4>
-            </div>
-            <div id="ConformationDiv">
-                <i class="fa fa-exclamation-circle" style="font-size:48px;color:red"></i>
-                <p id="ConfirmMessageid" style="color:black;font-size:17px;"></p>
-                <button id="confirmDeleteButton" onclick="confirmDeleteButtonCallingFun()" style="color: white; background-color: cadetblue;">Yes, Delete</button>
-                <button id="cancelDeleteButton" onclick="cancelDeleteButtonFunction()">Cancel</button>
-                <input type="hidden" id="PopupTrid" />
-            </div>
-            <button id="OKButton" onclick="cancelDeleteButtonFunction()" style="background-color: chocolate; color: white; padding: 5px 36px; ">Ok</button>
-        </div>
-    </div>
-
-    @*@Html.Partial("_SearchLeaveTypePagePartialView")*@
-    <div class="card">
-        <div class="card-header pb-0" style="padding-top: 0px;">
-            <h6 style="text-align: center; color: black; margin-top: 5px; "><strong>LEAVE DELEGATION</strong></h6>
-        </div>
-        <div class="card-body" style=" padding-top: 0px;">
-
-            <a id="BtnAAddLeaveDelegation" style=" cursor: pointer; margin-left: 812px; letter-spacing: 0px; color: blue; font-weight: 600;" onclick="AddLeaveDelegationPage_PagePartialViewFunction()">Add Delegation</a>
-
-            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="DdlDepartment_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="DdlRole_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="DdlUser_Span_Error"></span>
-            <span class="ErrorMessageSpan" id="TxtFromDate_Span_Error"></span>
-
-            <span class="ErrorMessageSpan" id="TxtToDate_Span_Error"></span>
 
 
-            @*-----TblLeaveDelegationList_SearchedRecords Result page*@
-            <div id="TblLeaveDelegationList_SearchedRecords_Div">
-            </div>
-
-            @*-----AddLeaveDelegationPage_Div Result page*@
-            <div id="AddLeaveDelegationPage_Div">
-            </div>
-
-
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
     <script>
         //Main Ready function
         $(document).ready(function () {
@@ -85,6 +30,40 @@
             }
         });
     </script>
+</head>
+<body>
+
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>LEAVE DELEGATION</h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="demo-inline-spacing">
+                    <button class="btn rounded-pill btn-outline-info waves-effect" id="BtnAAddLeaveDelegation" onclick="AddLeaveDelegationPage_PagePartialViewFunction()">
+                        Add Delegation
+                    </button>
+                </div>
+
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlDepartment_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlRole_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="DdlUser_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="TxtFromDate_Span_Error"></span>
+
+                <span class="ErrorMessageSpan" id="TxtToDate_Span_Error"></span>
+
+
+                @*-----TblLeaveDelegationList_SearchedRecords Result page*@
+                <div id="TblLeaveDelegationList_SearchedRecords_Div">
+                </div>
+
+                @*-----AddLeaveDelegationPage_Div Result page*@
+                <div id="AddLeaveDelegationPage_Div">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

@@ -5,61 +5,53 @@
 @model List<LeaveDelegationModel>
 
 
-<div class="default-according style-1" id="accordionoc123456">
     <div class="card">
-        <div class="card-header " style="background-color:black ;">
-            <h5 class="mb-0">
-
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">TOTAL NUMBER OF RECORDS :  <span id="counts" class="number-circle">@Model.Count</span></span></button>
-            </h5>
-        </div>
-
-        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-
-            <div class="card ">
-
-                <form id="Fm_TblLeaveDeligationList_SearchedRecords" class="table-responsive">
-
-                    <table id="TblLeaveDeligationList_SearchedRecords" class="table  tableid">
-                        <thead>
-                            <tr>
-                                <th style="text-align:center">Edit</th>
-                                <th>Delegation From User</th>
-                                <th>Delegation To User</th>
-                                <th>Department</th>
-                                <th>From Date</th>
-                                <th>To Date</th>
-                                <th style="text-align:center">Delete</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{ int i = 0;}
-                            @foreach (var item in Model)
-                            {
-                                i++;
-                                <tr  id="Row@(i)" >
-
-
-
-                                    <td style="text-align:center;"><div style="text-align:center;"><a class="fa fa-edit" title="Edit" onclick="EditValuesGettingFunction.call(this,@item.InstanceClassificationId,@item.RoleId,@item.DelegationFromUserId,@item.DelegationToUserId,@item.DelegationId)" style="font-size: 15px; color: red;cursor: pointer;"></a></div></td>
-                                    <td>@item.DelegationFromUserName</td>
-                                    <td>@item.DelegationToUserName</td>
-                                    <td>@item.DepartmentName</td>
-                                    <td>@item.Fromdate.ToString("dd-MM-yyyy")</td>
-                                    <td>@item.Todate.ToString("dd-MM-yyyy")</td>
-                                    <td style="text-align:center;"><p class="fa fa-trash-o" id="TblDeleteBtn" onclick="DeleteLeaveDelegationCallingFunction.call(this,@item.DelegationId)" title="Click to delete this record" style="font-size: 15px; color: red;cursor: pointer;"></p></td>
-                       </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </form>
+        <div class="card-header flex-column flex-md-row">
+            <div class="head-label text-center">
+                <h5 class="card-title mb-0">
+                    <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
+                </h5>
             </div>
         </div>
+        <div class="table-responsive text-nowrap">
+
+            <table id="TblLeaveDeligationList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="text-align:center">Edit</th>
+                        <th>Delegation From User</th>
+                        <th>Delegation To User</th>
+                        <th>Department</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th style="text-align:center">Delete</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;}
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr id="Row@(i)">
+
+
+
+                            <td style="text-align:center;"><a class="ti ti-edit" title="Edit" onclick="EditValuesGettingFunction.call(this,@item.InstanceClassificationId,@item.RoleId,@item.DelegationFromUserId,@item.DelegationToUserId,@item.DelegationId)"></a></td>
+                            <td>@item.DelegationFromUserName</td>
+                            <td>@item.DelegationToUserName</td>
+                            <td>@item.DepartmentName</td>
+                            <td>@item.Fromdate.ToString("dd-MM-yyyy")</td>
+                            <td>@item.Todate.ToString("dd-MM-yyyy")</td>
+                            <td style="text-align:center;"><a class="ti ti-trash" id="TblDeleteBtn" onclick="DeleteLeaveDelegationCallingFunction.call(this,@item.DelegationId)" title="Click to delete this record"></a></td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
-
-</div>
 

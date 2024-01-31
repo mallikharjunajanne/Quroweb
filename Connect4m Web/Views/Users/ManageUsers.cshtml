@@ -17,7 +17,7 @@
         <div class="flex-grow-1 container-p-y container-fluid">
 
             <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE USERS</h4>
-           
+
             <div class="row mb-2">
                 <div class="col-md-12 col-lg-12 mb-3">
 
@@ -25,10 +25,10 @@
                         <button class="btn rounded-pill btn-outline-info waves-effect" style="display:none !important;" id="BtnBackToSearch">
                             Back to Search
                         </button>
-                       
-                    @*</div>
-                    <div class="demo-inline-spacing">*@
-                       
+
+                        @*</div>
+                            <div class="demo-inline-spacing">*@
+
                         <button class="btn rounded-pill btn-outline-primary waves-effect float-end" id="BtnCreateUsers">
                             Create User
                         </button>
@@ -317,31 +317,28 @@
 
                         @*========================== Searched Users table Card====================*@
                         <div class="card" id="DivTblUserSearchresults" style="display:none">
-                            <div class="card-datatable table-responsive pt-0">
-                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                    <div class="card-header flex-column flex-md-row">
+                              <div class="card-header flex-column flex-md-row">
                                         <div class="head-label text-center">
                                             <h5 class="card-title mb-0">
                                                 <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                                             </h5>
                                         </div>
                                     </div>
-
-                                    <table id="TblUserSearchresults" class="datatables-basic table dataTable no-footer dtr-column link">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th>S.No </th>
-                                                <th> Name </th>
-                                                <th>   Role </th>
-                                                <th>  Class </th>
-                                                <th> Admission Number </th>
-                                                <th> Reg.No./Emp ID </th>
-                                                <th>   MobileNumber</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
+                                    <div class="table-responsive text-nowrap">
+                                        <table id="TblUserSearchresults" class="datatables-basic table dataTable no-footer dtr-column link">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>S.No </th>
+                                                    <th> Name </th>
+                                                    <th>   Role </th>
+                                                    <th>  Class </th>
+                                                    <th> Admission Number </th>
+                                                    <th> Reg.No./Emp ID </th>
+                                                    <th>   MobileNumber</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
 
                         </div>
                     </div>
@@ -386,7 +383,7 @@
         $(".ClsDates").css("display", "none");
         // $(".ClsDesignationId").css("display", "none");
         $(".ClsEmptyDiv").css("display", "none");
-       
+
         CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false);
         //TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
     });
@@ -565,3 +562,13 @@
 
 
 </script>
+
+
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<script src="~/Datatable/jquery.dataTables.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>*@

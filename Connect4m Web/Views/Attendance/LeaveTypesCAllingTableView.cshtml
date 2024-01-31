@@ -5,19 +5,21 @@
     Layout = null;
 }
 
-<div class="default-according style-1" id="accordionoc123456">
-    <div class="card" id="DivTBLSearchedLeavesType">
-        <div class="card-header " style="background-color:black ;">
-            <h5 class="mb-0">
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle">@Model.Count</span> RECORDS.</span></button>
-            </h5>
-        </div>
-        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-            <div class="card">
-                <form id="Fm_TblLeavesTypes_SearchRecords" class="table-responsive">
-                    <table id="TblLeavesTypes_SearchRecords" class="display  cell-border tableid" >
-                        <thead>
+        <div class="card" id="DivTBLSearchedLeavesType">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="card-header flex-column flex-md-row">
+                    <div class="head-label text-center">
+                        <h5 class="card-title mb-0">
+                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count</span>  RECORD(S).</span>
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="card-datatable table-responsive pt-0">
+                    <table id="TblLeavesTypes_SearchRecords" class="table table-hover table-bordered no-footer dataTable link">
+                        <thead class="table-dark">
                             <tr>
+                                <th>S No</th>
                                 <th>Leave Type</th>
                                 <th style="text-align: center;">Short Name</th>
                                 <th style="text-align: center;">Carry Forward</th>
@@ -27,13 +29,14 @@
                         </thead>
                         <tbody>
                             @{var i = 0; }
-                                @foreach (var item in Model)
-                                {
-                                    i++;
+                            @foreach (var item in Model)
+                            {
+                                i++;
                                 <tr id="Row@(i)">
+                                    <td>@i</td>
                                     <td>
-                                        <a id="TBLLeavetype" onclick="EditValuesGettingFunction.call(this)" style="cursor: pointer;font-weight: bold;">@item.Leavetype</a>
-                                        <input type="text" id="TBLLeavetypeid" value="@item.Leavetypeid" hidden>
+                                        <a id="TBLLeavetype" onclick="EditValuesGettingFunction.call(this)">@item.Leavetype</a>
+                                        <input type="hidden" id="TBLLeavetypeid" value="@item.Leavetypeid" hidden>
                                     </td>
                                     <td style="text-align:center;">
                                         @item.ShortName
@@ -45,7 +48,6 @@
                                         }
                                         else
                                         {@:No
-
                                         }
                                     </td>
                                     <td style="text-align:center;">
@@ -55,29 +57,28 @@
                                         }
                                         else
                                         {@:No
-
                                         }
                                     </td>
                                     <td style="text-align:center;">
                                         @if (@item.Leavetypeid != 122 && @item.Leavetypeid != 123)
                                         {
-                                        <p class='fa fa-trash -o' id="TblDeleteBtn" onclick="DeleteLeaveTypesCallingFunction.call(this)" title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer;text-align:center; '></p>
+                                            <a class='ti ti-trash' id="TblDeleteBtn" onclick="DeleteLeaveTypesCallingFunction(@item.Leavetypeid)" title='Click to delete this record'></a>
                                         }
                                     </td>
                                 </tr>
                             }
                         </tbody>
                         @*<tfoot>
-                            <tr>
-                                <td style="padding:2px" colspan="5"><div style="text-align:center" id="TblLeavesTypes_SearchRecords_pagination">
-                                     </div></td>
-                            </tr>
-                        </tfoot>*@
+                    <tr>
+                        <td style="padding:2px" colspan="5"><div style="text-align:center" id="TblLeavesTypes_SearchRecords_pagination">
+                             </div></td>
+                    </tr>
+                </tfoot>*@
                     </table>
-                </form>
+
+                </div>
             </div>
         </div>
-    </div>
-</div>
+
 
 

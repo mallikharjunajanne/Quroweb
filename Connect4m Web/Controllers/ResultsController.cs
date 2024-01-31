@@ -29,7 +29,7 @@ namespace Connect4m_Web.Controllers
     [Authorize]
     public class ResultsController : Controller
     {
-        private string Controllername;
+      //  private string Controllername;
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
@@ -155,9 +155,11 @@ namespace Connect4m_Web.Controllers
                     val.InstanceID = InstanceId;
                     List<MultiplelistValues> list = CommonMethodobj.CommonListMethod<ResultsModel, MultiplelistValues>(val, "/TblStudentsName_Calingfunction", client);
             
-                    ViewBag.colours = list?.FirstOrDefault()?.UsermarksList[0].IsPublished;
+                    ViewBag.colours = list?.FirstOrDefault()?.UsermarksList?.FirstOrDefault()?.IsPublished ?? new List<string>();
                     ViewBag.UsersDetailsList = list?.FirstOrDefault()?.UsermarksList ?? new List<UsermarksModel>();
-                    return View();
+                   // ViewBag.GetGradesForSelectedSubjects = list?.FirstOrDefault()?.ResultsModeList ?? new List<ResultsModel>();
+                   
+                return View();
                 
                 
               
@@ -211,9 +213,8 @@ namespace Connect4m_Web.Controllers
                     obj.ExamModeId = 1;
                 else
                     obj.ExamModeId = 0;
-                obj.SMSTextInXML = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?>
-<!DOCTYPE REQUESTCREDIT SYSTEM ""http://127.0.0.1/psms/dtd/requestcredit.dtd"">
-<REQUESTCREDIT USERNAME=""ADS"" PASSWORD=""Prasad2$$9""></REQUESTCREDIT>";
+
+                obj.SMSTextInXML = @"<?xml version=""1.0"" encoding=""ISO-8859-1""?><!DOCTYPE REQUESTCREDIT SYSTEM ""http://127.0.0.1/psms/dtd/requestcredit.dtd""><REQUESTCREDIT USERNAME=""ADS"" PASSWORD=""Prasad2$$9""></REQUESTCREDIT>";
                 obj.SMSFromText = "ADSTEK";
                 obj.Action = "credits";//send   i gave default
              
@@ -256,7 +257,7 @@ namespace Connect4m_Web.Controllers
                     {
                         string filePath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile", "ExcelFile");
 
-                        // Check if the file exists
+                        // Check if the not file exists
                         if (!System.IO.File.Exists(filePath))
                         {
                            // return Json(new { success = false, message = new { SuccessMSG = "File not Uploaded, Please Upload File" } });
@@ -266,7 +267,7 @@ namespace Connect4m_Web.Controllers
                         // Read the file content into a byte array
                         fileBytes = System.IO.File.ReadAllBytes(filePath);
                     }
-                    else if (ButtonId == "BtnExcelValidate")
+                    else if (ButtonId == "BtnExcelValidate")//this is for if excel file is already available in folder  , it will delete
                     {
                         if (obj.File == null || obj.File.Length <= 0)
                         {
@@ -283,14 +284,16 @@ namespace Connect4m_Web.Controllers
                         }
                         // string folderPath = "wwwroot/PostResults Images/PostResultsExcelFile";
                         string folderPath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile");
-
-                        // Get all files in the folder
-                        string[] files = Directory.GetFiles(folderPath);
-
-                        // Iterate through each file and delete it
-                        foreach (var file in files)
+                        if (Directory.Exists(folderPath))
                         {
-                            System.IO.File.Delete(file);
+                            // Get all files in the folder
+                            string[] files = Directory.GetFiles(folderPath);
+
+                            // Iterate through each file and delete it
+                            foreach (var file in files)
+                            {
+                                System.IO.File.Delete(file);
+                            }
                         }
                     }
                     //else
@@ -307,7 +310,6 @@ namespace Connect4m_Web.Controllers
                         }
                         else if (ButtonId == "BtnExcelValidate")
                         {
-
                             obj.File.CopyTo(stream);
                         }
                         using (var package = new ExcelPackage(stream))
@@ -481,7 +483,8 @@ namespace Connect4m_Web.Controllers
                                 string fileName = "ExcelFile";//I gave default name
 
                                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PostResults Images/PostResultsExcelFile");
-
+                                if (!Directory.Exists(path))
+                                    Directory.CreateDirectory(path);
                                 // Combine the directory path and file name
                                 string filePathToSave = Path.Combine(path, fileName);
 

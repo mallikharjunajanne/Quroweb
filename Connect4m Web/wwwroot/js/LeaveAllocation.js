@@ -36,54 +36,28 @@
 function SubmitLeaves(event) {
     try {
     debugger;
-    event.preventDefault();
+        event.preventDefault();
+        loaddingimg.css('display', 'block');
     $(".ErrorMessageSpan").empty();
     //var allTextboxValues = [];
-    var allTextboxValues = new FormData();
+        var allTextboxValues = new FormData();
 
-    // Get all rows in the table body
-    //var table = $('#TblUserLeaveAllocationList_SearchedRecords');
-    var tableBody = document.querySelector('tbody');
-    var rows = tableBody.querySelectorAll('tr');
+        document.querySelectorAll('tbody tr').forEach(function (row) {
+            var userIdInput = row.querySelector('input#UserId');
+            if (userIdInput) {
+                allTextboxValues.append('List_UserId', parseInt(userIdInput.value));
+            }
 
-    debugger;
-    // Loop through each row
-    rows.forEach(function (row, index) {
-        var rowData = {};
-        // Get the User ID for the current row
-        //var userIdInput = row.querySelector('input[name^="val["][name$="].UserId"]');
-        var userIdInput = row.querySelector('input#UserId');
-        if (userIdInput) {
+            var rowTextboxValues = Array.from(row.querySelectorAll('input[type="text"]')).map(function (textbox) {
+                return textbox.title + '-' + textbox.value;
+            });
 
-            allTextboxValues.append('List_UserId', parseInt(userIdInput.value));
-            //rowData.UserId = userIdInput.value;
-        }
-       // var Userid = rows.find('UserId').val();
-        // Create an array to store the textbox values for the current row
-        var rowTextboxValues = [];
-
-        var textboxes = row.querySelectorAll('input[type="text"]');
-
-        // Loop through checkboxes and textboxes
-        textboxes.forEach(function (textboxe, i) {
-            var textbox = textboxes[i];
-            var value = textbox.title + '-' + textbox.value;      
-                rowTextboxValues.push(value);         
+            allTextboxValues.append('List_LeaveNameandDayCount', rowTextboxValues.join(','));
         });
-
-        // Join the row's array elements into a comma-separated string
-        var rowParamString = rowTextboxValues.join(',');
-        //rowData["ParamString"] = rowParamString
-        // Add the row's string to the overall array
-
-        //allTextboxValues.push(rowData);
-
-        allTextboxValues.append('List_LeaveNameandDayCount', rowParamString);
-    });
 
     debugger;
     var ButtonName = $("#BtnSubmit").val();
-    $("#loadingOverlay").show();
+    
 
     $.ajax({
        // url: "/Attendance/LeaveAllocation?ButtonName=" + ButtonName,
@@ -92,24 +66,29 @@ function SubmitLeaves(event) {
         data:allTextboxValues ,
         contentType: false,
         processData: false,
-        success: function (responce) {
+        success: function (response) {
             debugger;
-            $("#Main_Span_Error").text(responce.message);
-            if (responce.message == "Records inserted successfully.") {
-                $("#BtnSubmit").prop('disabled', true);        
+            //$("#Main_Span_Error").text(response.message);
+            if (response.message == "Records inserted successfully.") {
+                $("#BtnSubmit").prop('disabled', true);
+                $('.alert-success p').text(response.message);
+                $(".alert-success").show().delay(6000).fadeOut()
+            } else {
+                $('.alert-danger p').text(response.message);
+                $(".alert-danger").show().delay(6000).fadeOut();
             }
             
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
         },
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
 
         window.scrollTo(0, 0);
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -129,31 +108,31 @@ function SubmitLeaves(event) {
 //        var formData = new FormData(this);
 //        var ButtonName = $("#BtnSubmit").val();
 
-//        $("#loadingOverlay").show();
+//        loaddingimg.css('display', 'block');
 //        $.ajax({
 //            url: "/Attendance/LeaveAllocation?ButtonName=" + ButtonName,
 //            type: "POST",
 //            data: formData,
 //            contentType: false,
 //            processData: false,
-//            success: function (responce) {
+//            success: function (response) {
 //                debugger;
-//                if (responce.message == "Records inserted successfully.") {
+//                if (response.message == "Records inserted successfully.") {
 //                    $("#BtnSubmit").prop('disabled', true);
-//                    $("#Main_Span_Error").text(responce.message);
+//                    $("#Main_Span_Error").text(response.message);
 //                }
 //                else {
-//                    $("#Main_Span_Error").text(responce.message);
+//                    $("#Main_Span_Error").text(response.message);
 //                }
-//                $("#loadingOverlay").hide();
+//                loaddingimg.css('display', 'none');
 //            },
 //            error: function (xhr, status, error) {
-//                $("#loadingOverlay").hide();
+//                loaddingimg.css('display', 'none');
 //                $("#Main_Span_Error").text("Something Error");
 //            }
 //        });
 //    } catch (x) {
-//        $("#loadingOverlay").hide();
+//        loaddingimg.css('display', 'none');
 //        $("#Main_Span_Error").text("Something Error");
 //    }
 //   //}
@@ -174,12 +153,12 @@ function SubmitLeaves(event) {
 //    }
 //}
 
-////  To get Partial View of SearchLeaveTypePage
+//// =========================== To get Partial View of SearchLeaveTypePage / Get table records
 function SearchLeaveAllocationPartialViewFunction(event) {
     try {
         debugger;
         event.preventDefault();
-
+        loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
         var GenderId = $("input[type='radio'].check:checked").val();
 
@@ -189,7 +168,7 @@ function SearchLeaveAllocationPartialViewFunction(event) {
 
         var PayrollCategoryId = $("#DdlLmsCategory").val();
         var PayrollSubCategoryId = $("#DdlLmsSubCategory").val();
-        $("#loadingOverlay").show();
+        
         // Make AJAX call to the controller action
         $.ajax({
             url: "/Attendance/LeaveAllocationTBLView?GenderId=" + GenderId + "&PayrollCategoryId=" + PayrollCategoryId + "&PayrollSubCategoryId=" + PayrollSubCategoryId,
@@ -200,17 +179,17 @@ function SearchLeaveAllocationPartialViewFunction(event) {
                 }
                 // Append the received partial view content to the container
                 $("#TBLAllocateLeavesSearchedTypePageView_id_Div").html(data);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 // LeaveTypesCAllingTableView(event);
             },
             error: function () {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
 
         });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -232,17 +211,17 @@ function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
         $.ajax({
             url: "/Attendance/DdlLmsSubCategory_Calingfunction?PayrollCategoryId=" + PayrollCategoryId,
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 // $("#AppliedEmployeesNames_Id").empty();
                 $("#" + EffectingDropdownid).empty();
                 $("#" + EffectingDropdownid).append('<option value="" >Select LMS Sub Category</option>');
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
 
                     $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
 
                 });
-                if (responce.length <= 0) {
+                if (response.length <= 0) {
                     $("#" + EffectingDropdownid).prop('disabled', true);
                 } else {
                     $("#" + EffectingDropdownid).prop('disabled', false);
@@ -269,10 +248,10 @@ function DdlLmsCategory_Calingfunction() {
         $.ajax({
             url: "/Attendance/DdlLmsCategory_Calingfunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 $("#DdlLmsCategory").empty();
                 $("#DdlLmsCategory").append('<option value="">Select LMS category</option>');
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#DdlLmsCategory").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
             } ,

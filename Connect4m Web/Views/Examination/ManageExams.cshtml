@@ -112,8 +112,11 @@
         function DeleteExamsById(Examid) {
             debugger;
             var Deletemsg = "Exam";
-            CommonDeleteFunctionNew(Deletemsg,"POST", "/Examination/ManageExams?ButtonName=Delete&DeleteID=" + Examid,  function (response) {
-                TblDataTableWithColumns_CallingFunction(event, 'NOStop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+            CommonDeleteFunction_Vs1(Deletemsg,"POST", "/Examination/ManageExams?ButtonName=Delete&DeleteID=" + Examid,  function (response) {
+
+                    TblDataTableWithColumns_CallingFunction(event, 'NOStop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
+              
+
             });
         }
     </script>
@@ -121,9 +124,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
-
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE EXAMS</h4>
-
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
@@ -207,7 +208,7 @@
                                     <form id="Fm_TblExamListData">
                                         <table id="TblExamListData" class="datatables-basic table dataTable no-footer dtr-column link">
                                             <thead class="table-dark">
-                                                <tr>
+                                                <tr><th>S NO</th>
                                                     <th>Exam Name</th>
                                                     <th>
                                                         Display Order
@@ -216,7 +217,7 @@
                                                         Academic Year
                                                     </th>
                                                     <th>External Exam</th>
-                                                    <th>Delete</th>
+                                                    <th style="text-align:center">Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
