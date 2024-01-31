@@ -408,7 +408,7 @@ $("#submitbtn").click(function () {
         var leng = $('#TableData tr').length;
 
         var dataList = []; // Create an empty array to store the data
-
+        debugger;
 
 
         for (var i = 2; i < leng; i++) {

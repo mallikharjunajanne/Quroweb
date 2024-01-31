@@ -26,6 +26,7 @@ const formpopup = document.querySelector('.form-popup');
 const belowvideocontent = document.getElementById('below-video-content');
 const thumbnailappend = document.getElementById("thumbnailappend");
 const pdfshow = document.getElementById("pdfshow");
+const navbelowcontent = document.getElementById("Navandbelowcontent");
 var mouseoveronprogressbar = 0;
 
 //videoo.onwaiting = function () {
@@ -91,6 +92,7 @@ function expandVideo() {
     document.body.webkitRequestFullscreen();
     expand.hidden = true;
       reduce.hidden = false;
+      navbelowcontent.hidden = true;
       videoo.style.height = '118%';
       videoo.style.marginTop = '0%';
       videoo.style.marginLeft  = '0px';
@@ -117,7 +119,8 @@ function expandVideo() {
       belowvideocontent.style.marginTop = '64px';
 
     expand.hidden = true;
-    reduce.hidden = false;
+      reduce.hidden = false;
+      navbelowcontent.hidden = true;
   }
 }
 
@@ -127,7 +130,7 @@ function reduceVideo() {
       document.webkitExitFullscreen();
       videoo.style.height = '88%';
       videoo.style.marginTop = '5%';
-      videoo.style.marginLeft = '-88px';
+    /*  videoo.style.marginLeft = '-88px';*/
       pdfshow.style.height = '76vh';
 
       playerHover.style.height = '86%';
@@ -142,13 +145,14 @@ function reduceVideo() {
     //  margin - top: -2px;
     expand.hidden = false;
       reduce.hidden = true;
+      navbelowcontent.hidden = false;
 
   } else {
     // firefox
       document.mozCancelFullScreen();
       videoo.style.height = '88%';
       videoo.style.marginTop = '5%';
-      videoo.style.marginLeft = '-88px';
+    /*  videoo.style.marginLeft = '-88px';*/
 
       playerHover.style.height = '86%';
       videoheader.style.display = "flex";
@@ -159,7 +163,8 @@ function reduceVideo() {
       belowvideocontent.style.marginTop = '0px';
 
     expand.hidden = false;
-    reduce.hidden = true;
+      reduce.hidden = true;
+      navbelowcontent.hidden = false;
   }
 }
 
@@ -572,10 +577,10 @@ speedButton.addEventListener("mouseenter", function () {
     speedDropdown.style.display = "block";
 });
 
-// Hide the dropdown when moving the cursor away
-//speedButton.addEventListener("mouseleave", function () {
-//    speedDropdown.style.display = "none";
-//});
+ //Hide the dropdown when moving the cursor away
+speedDropdown.addEventListener("mouseleave", function () {
+    speedDropdown.style.display = "none";
+});
 
 // Set the playback speed when an option is clicked
 speedDropdown.addEventListener("click", function (event) {
@@ -589,5 +594,6 @@ speedDropdown.addEventListener("click", function (event) {
 // Function to set the playback speed
 function setPlaybackSpeed(speed) {
     videoo.playbackRate = speed;
-    speedButton.innerHTML = speed+'X';
+    speedButton.innerHTML = speed + 'X';
+    speedDropdown.style.display = "none";
 }

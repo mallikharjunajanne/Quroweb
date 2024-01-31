@@ -1,52 +1,68 @@
 .button {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background-color: transparent;
-  background-repeat: none;
-  background-position: center;
-  cursor: pointer;
-  margin-right: 29px;
-  outline: none;
+    /* width: 32px;
+    height: 32px;*/
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+    /* margin-right: 29px;*/
+    outline: none;
 }
 
-.button:active {
-  transform: scale(0.9);
-}
+    .button:active {
+        transform: scale(0.9);
+    }
 
 .backward {
-  
     background-image: url('/Icons/backward.svg');
+    width: 50px;
+    height: 30px;
 }
 
 .expand {
     background-image: url('/Icons/expandd.svg');
     margin-right: 0;
+    width: 50px;
+    height: 30px;
 }
 
 
 .forward {
     background-image: url('/Icons/forward.svg');
-    margin-left: 25px;
+    /*   margin-left: 25px;*/ 
+    width: 50px;
+    height: 30px;
 }
 
 .pause {
     background-image: url('/Icons/pause.svg');
+    width: 25px;
+    height: 30px;
 }
 
 .play {
     background-image: url('/Icons/play.svg');
+    width: 25px;
+    height: 30px;
 }
 
 .reduce {
     background-image: url('/Icons/reduce.svg');
-    margin-right: 0;
+   /* margin-right: 0;*/
+    width: 50px;
+    height: 30px;
 }
 
 .silence {
     background-image: url('/Icons/silence.svg');
+    width: 50px;
+    height: 30px;
 }
 
 .volume {
     background-image: url('/Icons/volume.svg');
+    width: 30px;
+    height: 30px;
 }
