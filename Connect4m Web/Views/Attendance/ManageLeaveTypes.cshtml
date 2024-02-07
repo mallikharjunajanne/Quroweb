@@ -8,7 +8,6 @@
 <html>
 <head>
     <!--<link href="~/Themes/assets/css/StyleSheets/ManageLeaveTypes.css" rel="stylesheet" />-->
-
     @*this link for exclamatory icon with red color in delete popup*@
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 </head>
@@ -21,23 +20,23 @@
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="demo-inline-spacing">
                     <button id="BtnCreateNewLeaveTypes" class="btn rounded-pill btn-label-primary waves-effect" onclick="CreateNewLeaveTypes()"> Create Leave Type </button>
-                    </div>
-                    <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-                    <span class="ErrorMessageSpan" id="Leavetype_CreatePage_Span_Error"></span>
-                    <span class="ErrorMessageSpan" id="LeaveShortName_CreatePage_Span_Error"></span>
+                </div>
+                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="Leavetype_CreatePage_Span_Error"></span>
+                <span class="ErrorMessageSpan" id="LeaveShortName_CreatePage_Span_Error"></span>
 
-                    <div id="SearchLeaveTypePagePartialView">
-
-                    </div>
-
-                    @*-----create page*@
-                    <div id="CreateLeaveTypePageView_id">
-
-                    </div>
+                <div id="SearchLeaveTypePagePartialView">
 
                 </div>
+
+                @*-----create page*@
+                <div id="CreateLeaveTypePageView_id">
+
+                </div>
+
             </div>
-                </div>
+        </div>
+    </div>
 
 
 </body>
@@ -50,9 +49,21 @@
 @*<script src="~/js/PaginationToTables.js"></script>*@
 @*<script src="~/js/GeneralFunctions.js"></script>*@
 @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />*@
+
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>*@
+
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
 <script>
-   var js = jQuery.noConflict(true);
+    var js = jQuery.noConflict(true);
     //Main Ready function
     $(document).ready(function () {
         // Button click event

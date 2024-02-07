@@ -71,9 +71,6 @@
     var FirstName = $("#ctl00_ContentPlaceHolder1_txtfirstname").val();
     var LastName = $("#ctl00_ContentPlaceHolder1_txtlastname").val();
         var UserName = $("#ctl00_ContentPlaceHolder1_txtUserName").val();
-
-        
-
     debugger;
     $.ajax({
         url: "/Attendance/TblAppliedStaffLeaves_SearchRecords_Calingfunction?Departmentid=" + Departmentid + "&FirstName=" + FirstName + "&UserName=" + UserName + "&LastName=" + LastName + "&RoleID=" + RoleID + "&Fromdate=" + Fromdate + "&Todate=" + Todate,//+"&values="+ queryString,
@@ -529,7 +526,7 @@ function FN_ClearValues(valuefornotclear, Formid) {
     }
 }
 
-    //click to display  approve leave screen
+    //================================click to display  approve leave screen
     $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
         event.preventDefault();
@@ -581,36 +578,30 @@ function FN_ClearValues(valuefornotclear, Formid) {
                 $("#Main_Span_Error").text("No records.");
             }
             else {
-               
-
-
                 $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
                 // $("#TblApplied_SearchRecords tbody").empty();
                 var viewfiles = "";
+               // var LeaveTypeId = "";
                 $.each(response, function (i, Value2) {
+
+                    $("#LeaveTypeId_Popup").val(Value2.leaveTypeId);
                     if (Value2.attachedFileName != "") {
                         viewfiles = " <a class='badge rounded-pill bg-label-info' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank' style='cursor:pointer;'>View</a >";
                     }
                     else {
                         viewfiles = " ";
-                    }
-                    debugger;
+                    }               
                     $("#TblAppliedLeavesHistory_SearchRecords tbody").append(
                         //  $("#TblApplied_SearchRecords tbody").append(
 
                         "<tr>" +
 
                         "<td>" + Value2.leaveType + "</td>" +
-
                         "<td>" + Value2.fromdateString + "</td>" +
                         "<td>" + Value2.todateString + "</td>" +
-
                         "<td>" + Value2.reason + "</td>" +
                         "<td>" + Value2.noOfDays + " </td>" +
-
                         "<td>" + Value2.daysession + "</td>" +
-
-
                         "<td>" + viewfiles + " </td>" +
                         "<td>" + Value2.requestedDate + "</td>" +
                         // " + Value2.comments + "

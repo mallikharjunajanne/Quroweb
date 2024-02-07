@@ -175,7 +175,7 @@
                                                     <a class="image-link" id="AttachDocumentTB_FileName_LABEL"></a> &nbsp;
                                                     <a style="display:none" class="btn rounded-pill btn-label-danger waves-effect deleteFileClass" id="AttachDocumentTB_FileName_LABEL_DELETE"></a>
                                                     <input type="hidden" asp-for="attachdocument" name="attachdocument" id="AttachDocumentTB_FileName_TEXTBOX" />
-                                                    <input type="hidden" asp-for="Text"  id="AttachDocumentTB_FileName_ForDelete" />
+                                                    <input type="hidden" asp-for="Text" id="AttachDocumentTB_FileName_ForDelete" />
                                                 </div>
                                             </div>
                                             @*----------------------*@
@@ -355,10 +355,12 @@
             </div>
         </div>
     </div>
+
+    @*<input type="hidden" id="Roleid" value="@ViewBag.roleid" />*@
+    <input type="hidden" id="RoleName" value="@ViewBag.RoleName" />
+    <input type="hidden" id="StudentId_ByParent" value="@ViewBag.StudentId_ByParent" />
 </body>
 </html>
-<input type="hidden" id="Roleid" value="@ViewBag.roleid" />
-<input type="hidden" id="StudentId_ByParent" value="@ViewBag.StudentId_ByParent" />
 
 @*<span id="TextareacountSPAN122"></span>*@
 
@@ -384,12 +386,12 @@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>*@
 
 @*This is for getting student names dropdown*@
-@{var roleName = Context.Request.Cookies["RoleName"];}
-<script>
-</script>
+@*@{var roleName = Context.Request.Cookies["RoleName"];}*@
+
+<link href="~/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/Datatable/datatable.min.js"></script>
+<script>  var js = jQuery.noConflict(true);</script>
 <script src="~/js/ApplyStudentLeave.js"></script>
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

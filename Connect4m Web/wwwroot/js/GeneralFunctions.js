@@ -284,8 +284,6 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
         //if (paging != false || paging !=null) {
         if (paging != false ) {
             paging = true;
-        } else {
-
         }
         //var paging = true;
        // if (tablename == "TblLeaveRequested_SearchRecords" || tablename == "TblUser") {
@@ -503,11 +501,18 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 }
                 else if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {//Leave Cancellation Screen                      
                     columns = [
+
                         {
                             data: "LeaveApplicationId",
                             visible: false,
                             render: function (data, type, row, meta) {
                                 return row.leaveApplicationId
+                            }
+                        },
+                        {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
                             }
                         },
                         {
@@ -954,7 +959,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                         {
                             data: "UserId",
-                            className: "CenterAlign",
+                            //className: "CenterAlign",
                             render: function (data, type, row, meta) {
                                 var isChecked = row.subjectAssociationId !== "";
                                 var isAssociated = row.name !== null;
@@ -963,7 +968,9 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                                                 debugger;
                               //  return '<input id="chkSMS" type="checkbox"    ' + (isChecked1 ? ' class="Associated'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
                                // return '<input id="chkSMS" type="checkbox"    ' + (isAssociated ? ' class="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
-                                return '<input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instancesubjectid="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
+
+
+                                    return '<div class="form-check d-flex justify-content-center"><input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instancesubjectid="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '></div>';
                                 //return row.userId
                             }
                         }, {

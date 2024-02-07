@@ -85,8 +85,8 @@
                     <div class="card-header flex-column flex-md-row">
                         <div class="head-label text-center">
                             <h5 class="card-title mb-0">
-                                @*<span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span>*@
-                                <span>VIEW STATUS ( &nbsp;<span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S) FOUND).</span>
+                                <span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span>
+                                @*<span>VIEW STATUS ( &nbsp;<span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S) FOUND).</span>*@
                             </h5>
                         </div>
                     </div>
@@ -115,14 +115,13 @@
 
 
                         <form id="printDetails_Form">
-                            <div class="card">
+                            @*<div class="card">*@
                                 <table class="table table-bordered no-footer dataTable">
                                     <tr>
                                         <td>
                                             <link href="~/css/PrintLeavesDetailsTableStyle.css" rel="stylesheet" />
                                             @*<link href="~/Themes/assets/css/StyleSheets/ApplyShortLeaves.css" rel="stylesheet" />*@
                                             <table>
-                                            </table><table>
                                                 <tbody>
                                                     <tr>
                                                         <td valign="top">
@@ -177,9 +176,9 @@
                                                                                                                     </tr>
                                                                                                                     <tr>
                                                                                                                         <td>
-                                                                                                                            <table id="GetMyAppliedLeaves_Table_Print" class="table table-bordered no-footer dataTable">
+                                                                                                                            <table id="GetMyAppliedLeaves_Table_Print" class="table table-bordered no-footer dataTable" border="1" cellspacing="0">
                                                                                                                                 <thead>
-                                                                                                                                    <tr> <th>S.No </th><th>Submitted By </th><th> Department </th>  <th>Date of Joining </th><th> Submitted To </th> <th>Leave Type </th><th> Date</th><th>From Time (24hrs)</th>  <th>To Time (24hrs)</th> <th> Status</th></tr>
+                                                                                                                                    <tr style='border: 1px solid;' class="subLeavetitle" > <th>S.No </th><th>Submitted By </th><th> Department </th>  <th>Date of Joining </th><th> Submitted To </th> <th>Leave Type </th><th> Date</th><th>From Time (24hrs)</th>  <th>To Time (24hrs)</th> <th> Status</th></tr>
                                                                                                                                 </thead>
                                                                                                                                 <tbody>
                                                                                                                                 </tbody>
@@ -248,7 +247,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </div>
+                            @*</div>*@
                         </form>
                     </div>
 

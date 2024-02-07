@@ -147,12 +147,12 @@ function StudentLeaveApproval_Save(event, submitButtonName) {
                 //$("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
                 //$("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
                 //$("#AttendancePercentage").empty();
-                ClearAllValuesInPopUpFunction();
+                ClosePopup();
 
                 document.getElementById('popup').style.display = "none";
                 $('.alert-success p').text(response.message);
                 $(".alert-success").show().delay(6000).fadeOut()
-                window.scrollTo(0, 0);
+                //window.scrollTo(0, 0);
             } else {
                 $('.alert-danger p').text(response.message);
                 $(".alert-danger").show().delay(6000).fadeOut();
@@ -172,10 +172,11 @@ function StudentLeaveApproval_Save(event, submitButtonName) {
 }
 
 
-//to see Pop up
-
+//===============================to see Pop up
 $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
+
+        loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
     var popup = document.getElementById("popup");
     $("#SanctionedradioBtn").prop("checked", true);
@@ -214,7 +215,9 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     //});
 
     //adjustTableContainerHeight();
-    popup.style.display = "block";
+        popup.style.display = "block";
+
+        loaddingimg.css('display', 'none');
     function adjustTableContainerHeight() {
         debugger;
         var tableContainer = document.getElementById('FmAppliedLeavesHistory_SearchRecordsForScrollid');
@@ -250,10 +253,11 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     //    }
     //}
     } catch (e) {
-      
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 });
+
 
 
 function DdlDepartmentId_Calingfunction() {
@@ -278,9 +282,6 @@ function DdlDepartmentId_Calingfunction() {
         $("#Main_Span_Error").text("Something Error");
     }
 };
-
-
-
 
 function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
     try {
@@ -312,9 +313,6 @@ function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
         $("#Main_Span_Error").text("Something Error");
     }
 };
-
-
-
 
 function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, Status, Tab, RecordcountSpanId, ExportExcelLink, FromdateId, TodateId, SearchRecords_Div, Firstnameid, LastNameid, AdmissionNumberid, ExelsheetName) {
     try {
@@ -801,13 +799,18 @@ function FN_ClearValuesForAppliedleaves(Firstnameid, LastNameid, AdmissionNumber
     }
 }
 
-function ClearAllValuesInPopUpFunction() {
+//function ClearAllValuesInPopUpFunction() {
+//    $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+//    $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
+//    $("#AttendancePercentage").empty();
+//    document.getElementById('Fm_ApproveandReject_PopUp').reset();
+//}
+function ClosePopup() {
+    $("#popup").css('display', 'none');
     $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
     $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
-    $("#AttendancePercentage").empty();
     document.getElementById('Fm_ApproveandReject_PopUp').reset();
 }
-
 
 //this is for View student leaves 
 

@@ -24,7 +24,7 @@
 <html>
 <head>
     <title>@Title</title>
-    <link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/GeneralStyleSheet.css" rel="stylesheet" />*@
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -37,43 +37,90 @@
             $('#TblHistory').DataTable();
         });
 
-        //this is not using
-        //var js = jQuery.noConflict(true);
-        //$(document).ready(function () {
-        //    debugger;
-        //    var dataTable = js('#TblHistory').DataTable({
-        //        bFilter: false,
-        //        bSort: false,
-        //        bPaginate: true,
-        //        jQuery: false,
-        //        bInfo: false,
-        //        dom: 'Bfrtip',
+            //this is not using
+            //var js = jQuery.noConflict(true);
+            //$(document).ready(function () {
+            //    debugger;
+            //    var dataTable = js('#TblHistory').DataTable({
+            //        bFilter: false,
+            //        bSort: false,
+            //        bPaginate: true,
+            //        jQuery: false,
+            //        bInfo: false,
+            //        dom: 'Bfrtip',
 
-        //        //columnDefs: [
-        //        //    {
-        //        //        target: 3,
-        //        //        visible: false,
-        //        //        searchable: false
-        //        //    }
-        //        //]
-        //    });
-        //});
+            //        //columnDefs: [
+            //        //    {
+            //        //        target: 3,
+            //        //        visible: false,
+            //        //        searchable: false
+            //        //    }
+            //        //]
+            //    });
+            //});
 
 
     </script>
 
+
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Dashboard | Welcome to Quro Schools</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
+          rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="~/assets/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="~/assets/vendor/fonts/flag-icons.css" />
+
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="~/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="~/assets/css/demo.css" />
+    <link href="~/assets/vendor/css/rtl/theme-semi-dark.css" rel="stylesheet" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/swiper/swiper.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+
+
 </head>
-<body style="text-align: center;">
-    <br />
-    <span align="center" style="font-size: 16px;margin: 39%;">@MainHeading</span>
-    <div class="default-according style-1" id="accordionoc">
-        <div class="card">
-            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                <div class="card ">
+<body>
+
+    <div class="card mb-4" >
+        <div class="card-header flex-column flex-md-row">
+            <div class="head-label text-center">
+                <h5 class="card-title mb-0">
+                    <span>@MainHeading</span>
+                    @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
+                </h5>
+            </div>
+        </div> 
+        <div class="table-responsive text-nowrap">
                     @if (ViewBag.ActivityName == "ViewSubjects")
                     {
-                        <table id="TblHistory" style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
-                            <thead>
+                        @*<table id="TblHistory" style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">*@
+                        <table id="TblHistory" class="table table-hover table-bordered no-footer dataTable">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>S.No</th>
                                     <th>Subject Name</th>
@@ -113,8 +160,9 @@
                     }
                     else if (ViewBag.ActivityName == "ViewDepartments_Class")
                     {
-                        <table style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
-                            <thead>
+                        @*<table style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">*@
+                        <table class="table table-hover table-bordered no-footer dataTable">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>S.No</th>
                                     <th>	Department Id</th>
@@ -143,8 +191,8 @@
                     else
                     {
 
-                        <table style="width: 80%;" align="center" class=" table-responsive  nowap tableid ">
-                            <thead>
+                        <table class="table table-hover table-bordered no-footer dataTable">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>Sl. No.</th>
                                     <th>Key</th>
@@ -169,13 +217,13 @@
                                         <td>@item.CreatedDate</td>
 
                                         @*@if (item.LeaveNoOfDays1 == "1")
-                                            {
-                                                <td>Full Day</td>
-                                            }
-                                            else
-                                            {
-                                                <td>Off day</td>
-                                            }*@
+                                {
+                                    <td>Full Day</td>
+                                }
+                                else
+                                {
+                                    <td>Off day</td>
+                                }*@
 
                                     </tr>
                                     i++;
@@ -186,8 +234,8 @@
                     }
                 </div>
             </div>
-        </div>
-    </div>
+       
+
 
 
 </body>

@@ -26143,3 +26143,8 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 .errorboxshadow {
     box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
 }
+
+
+option:empty {
+    display: none;
+}

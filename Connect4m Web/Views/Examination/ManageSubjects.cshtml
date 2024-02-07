@@ -16,123 +16,123 @@
         <div class="demo-inline-spacing">
             <button class="btn rounded-pill btn-label-primary waves-effect" id="BtnCreateNewSubjects" onclick="CreateNewSubjects()"> Create Subject</button>
             @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
-            </div>
+        </div>
 
-            <div class="row mb-2">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
-                    <div id="DivSearchSubjectsPage">
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
+                <div id="DivSearchSubjectsPage">
 
-                        @*=========================Search Subjects Card==================================*@
-                        <div class="card mb-4" id="CreateNewPage">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span id="AddNewText_Span_CreatePage">
-                                        SEARCH SUBJECTS
-                                    </span>
-                                </h5> @*<small class="text-muted float-end">Default label</small>*@
-                            </div>
-                            <div class="card-body" id="CreateNewSubjectsDiv">
-                                <form id="FmSubjectSearch">
-                                    <div id="FmExamsCreate_Div">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Name</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" name="Name" class="form-control" id="TxtSubjectName" placeholder="Subject Name">
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Subject Code</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" name="SubjectCode" class="form-control" id="TxtSubjectCode" placeholder="Subject Code">
-                                                    </div>
+                    @*=========================Search Subjects Card==================================*@
+                    <div class="card mb-4" id="CreateNewPage">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                <span id="AddNewText_Span_CreatePage">
+                                    SEARCH SUBJECTS
+                                </span>
+                            </h5> @*<small class="text-muted float-end">Default label</small>*@
+                        </div>
+                        <div class="card-body" id="CreateNewSubjectsDiv">
+                            <form id="FmSubjectSearch">
+                                <div id="FmExamsCreate_Div">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Name</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="Name" class="form-control" id="TxtSubjectName" placeholder="Subject Name">
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select id='DdlDepartment' name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
-                                                                <option value=''>Select a Department</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Class</label>
-                                                    <div class="col-sm-4">
-                                                        <select id='DdlClass' name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Please select a Class</option>
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Subject Code</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" name="SubjectCode" class="form-control" id="TxtSubjectCode" placeholder="Subject Code">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
+                                                <div class="col-sm-4">
+                                                    <div class="position-relative">
+                                                        <select id='DdlDepartment' name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
+                                                            <option value=''>Select a Department</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3">
-                                                    <div class="col-2">
-                                                        <div class="form-check">
-                                                            <input type="checkbox" class="form-check-input" id="showallsubjects" />
-                                                            <label class="form-check-label" for="showallsubjects">Show all Subjects</label>
-                                                        </div>
-                                                    </div>
-
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Class</label>
+                                                <div class="col-sm-4">
+                                                    <select id='DdlClass' name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                        <option value=''>Please select a Class</option>
+                                                    </select>
                                                 </div>
+                                            </div>
 
-                                                <div class="row justify-content-end">
-                                                    <div class="col-sm-12">
-                                                        <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
-                                                        <button type="submit" class="btn btn-success waves-effect waves-light" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblSubjectListData', 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);" id="BtnSave">Search</button>
-
+                                            <div class="row mb-3">
+                                                <div class="col-2">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="showallsubjects" />
+                                                        <label class="form-check-label" for="showallsubjects">Show all Subjects</label>
                                                     </div>
                                                 </div>
 
                                             </div>
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-12">
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblSubjectListData', 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);" id="BtnSave">Search</button>
+
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                            </form>
 
-                            </div>
                         </div>
+                    </div>
 
-                        <!-- ======================Searched Records Table Card ============================-->
+                    <!-- ======================Searched Records Table Card ============================-->
 
-                        <div id="Div_TblSubjectListData" style="display:none">
-                            <div class="card" id="SearchedTablePage">
-                                <div class="card-datatable table-responsive pt-0">
-                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                        <div class="card-header flex-column flex-md-row">
-                                            <div class="head-label text-center">
-                                                <h5 class="card-title mb-0">
-                                                    <span>YOUR SEARCH RESULTED<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                                </h5>
-                                            </div>
+                    <div id="Div_TblSubjectListData" style="display:none">
+                        <div class="card" id="SearchedTablePage">
+                            <div class="card-datatable table-responsive pt-0">
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <div class="card-header flex-column flex-md-row">
+                                        <div class="head-label text-center">
+                                            <h5 class="card-title mb-0">
+                                                <span>YOUR SEARCH RESULTED<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                            </h5>
                                         </div>
-                                        <form id="Fm_TblSubjectListData">
-                                            @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
-                                            <table id="TblSubjectListData" class="datatables-basic table dataTable no-footer dtr-column">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Subjects</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-
-                                            </table>
-
-                                        </form>
-
                                     </div>
+                                    <form id="Fm_TblSubjectListData">
+                                        @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
+                                        <table id="TblSubjectListData" class="datatables-basic table dataTable no-footer dtr-column">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subjects</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div id="CreateNewSubjects">
                     </div>
 
+                </div>
+                <div id="CreateNewSubjects">
                 </div>
 
             </div>
 
         </div>
+
+    </div>
 
 
 </body>
@@ -150,7 +150,7 @@
 
 @*<script src="/js/GeneralFunctions.js"></script>*@
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
-
+<script src="~/js/Managesubjects.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -161,95 +161,7 @@
     });
     var js = jQuery.noConflict(true);
 
-    //======================================This is For Delete
-    $(document).ready(function () {
-        $(document).on("click", '#DeleteSubClassification', function (event) {
-            event.stopImmediatePropagation();
-            debugger;
 
-            var Subjectname = $("#Subjectname").val();
-            CommonDeleteFunction('POST', '/Examination/ManageSubjects?ButtonName=Delete&SubjectName=' + Subjectname, 'Subject', function (response) {
-                loaddingimg.css('display', 'block');
-                TblDataTableWithColumns_CallingFunction(event, 'NoStop', "/Examination/TblSubjectListData", 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);
-                $("#DivSearchSubjectsPage").show();
-                $("#CreateNewSubjects").empty();
-                $(".ErrorMessageSpan").empty();
-                loaddingimg.css('display', 'none');
-                $("Main_Span_Error").text(response.message);
-            });
-        });
-    });
-
-    function EditValuesGettingFunction(subjectText) {
-        debugger;
-        var data = { SubjectName: subjectText };
-        loaddingimg.css('display', 'block');
-
-        performCrudOperationCommonFunction("GET", "/Examination/UpdateManageSubjects", data, function (response) {
-            debugger;
-            //  $("#CreateNewSubjects").html(response);
-            $("#DivSearchSubjectsPage").hide();
-            $("#CreateNewSubjects").html(response);
-
-            $("#Saveclassfication_MS").val("Update");
-            $("#SpnCardHeaderName").text("UPDATE SUBJECT");
-            loaddingimg.css('display', 'none');
-        }, function (error) {
-            // alert(error)
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error1");
-            //console.error(error);
-        });
-
-        //  CreateNewSubjects();
-        //var url = "/Examination/TblExamListData?Id=" + examid;
-        //performCrudOperationCommonFunction("POST", url, null, function (responce) {
-        //    debugger;
-        //    $("#AddNewText_Span_CreatePage").text("UPDATE EXAM NAME");
-        //    $("#DdlAcademicYearCreatePage1").val(responce[0].academicYearId);
-        //    $("#TxtExamNameCreatePage1").val(responce[0].examName);
-        //    $("#TxtDisplayorderCreatePage").val(responce[0].displayorder);
-        //    $("#TxtExamidCreatePage").val(responce[0].id);
-
-        //    $('input[name="ExamForAcademics"][value="' + responce[0].exaternalExam + '"]').prop("checked", true);
-        //   $("#Saveclassfication_MS").val("Update");
-        //  $("#BtnClear").prop("disabled", true);
-        //});
-
-    }
-
-    function CreateNewSubjects() {
-        try {
-            loaddingimg.css('display', 'block');
-            debugger;
-            performCrudOperationCommonFunction("GET", "/Examination/UpdateManageSubjects?Buttonname=Create", "", function (response) {
-                debugger;
-                $("#DivSearchSubjectsPage").hide();
-                $("#CreateNewSubjects").html(response);
-            }, function (error) {
-                $("#Main_Span_Error").text("Something Error");
-                //console.error(error);
-            });
-            loaddingimg.css('display', 'none');
-        } catch (x) {
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }
-    }
-
-    function BackTOSearhExams(event) {
-        try {
-            loaddingimg.css('display', 'block');
-            TblDataTableWithColumns_CallingFunction(event, 'NoStop', "/Examination/TblSubjectListData", 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);
-            $("#DivSearchSubjectsPage").show();
-            $("#CreateNewSubjects").empty();
-            $(".ErrorMessageSpan").empty();
-            loaddingimg.css('display', 'none');
-        } catch (x) {
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }
-    }
 </script>
 
 

@@ -33,9 +33,11 @@ function fun32READYFUNCTION() {
     //}
     debugger;
     //var ReadyFunction_Count = $("#ReadyFunction_Count").val();
-     var roleid = $("#Roleid").val();
+     //var roleid = $("#Roleid").val();
+    var RoleName = $("#RoleName").val();
     var StudentId_ByParent = $("#StudentId_ByParent").val();
-    if (roleid == 776 || roleid == 775) {
+   // if (roleid == 776 || roleid == 775) {
+    if (RoleName == "PARENT" || RoleName == "STUDENT") {
     //if (Context.Request.Cookies["RoleName"] != null && (Context.Request.Cookies["RoleName"].Value.Contains("PARENT") || Context.Request.Cookies["RoleName"].Value.Contains("STUDENT"))) {
     //if (Context.Request.Cookies["RoleName"]?.Value?.Contains("PARENT") == true || Context.Request.Cookies["RoleName"]?.Value?.Contains("STUDENT") == true) {
 
@@ -105,14 +107,15 @@ resetButton.addEventListener('click', function () {
 
     //var StudentId_ByParent = $("#StudentId_ByParent").val();
 
-    var roleid = $("#Roleid").val();
+   // var roleid = $("#Roleid").val();
+    var RoleName = $("#RoleName").val();
 
     $("#ViewStudentLeaves_Table tbody").empty();
-    if (roleid == 776 || roleid == 775) {
+    if (RoleName == "PARENT" || RoleName == "STUDENT") {
        // if (Context.Request.Cookies["RoleName"].Value.Contains("PARENT")) {
         stp_tblStudentApplyLeave_SelectById_ByAdmin($("#StudentId_ByParent").val())
-    }
-    if (roleid == 776 || roleid == 775) {
+    //}
+    //if (roleid == 776 || roleid == 775) {
        // else if (!Context.Request.Cookies["RoleName"].Value.Contains("PARENT")) {
         $("#StudentDataGetting_ID").hide();
         $("#StudentDataGetting_ID tbody").empty();
@@ -153,9 +156,12 @@ ViewStudentLeaves_BTN.addEventListener('click', function () {
     });
 
     debugger;
-    var roleid = $("#Roleid").val();
+   // var roleid = $("#Roleid").val();
+    var RoleName = $("#RoleName").val();
+
     var StudentId_ByParent = $("#StudentId_ByParent").val();
-    if (roleid == 776 || roleid == 775) {
+  //  if (roleid == 776 || roleid == 775) {
+    if (RoleName == "PARENT" || RoleName == "STUDENT") {
        // if (Context.Request.Cookies["RoleName"].Value.Contains("PARENT")) {
       
         var Month = $("#Monthid").val();
@@ -355,7 +361,8 @@ $('#myForm').submit(function (event) {
                     return;
                 }
                 var StudentId_ByParent = $("#StudentId_ByParent").val();
-                var roleid = $("#Roleid").val();
+               // var roleid = $("#Roleid").val();
+                var RoleName = $("#RoleName").val();
                 if (response.buttonName == "Update") {
 
                     //window.scrollTo(0, 0);
@@ -365,11 +372,13 @@ $('#myForm').submit(function (event) {
                         var deletebtn = document.getElementById("AttachDocumentTB_FileName_LABEL_DELETE");
                         deletebtn.innerHTML = "";
 
+                        $("#AttachDocumentTB_FileName_LABEL_DELETE").css("display", 'none');
+
                         var anchorElement = document.getElementById("AttachDocumentTB_FileName_LABEL");
                         anchorElement.innerHTML = "";
                         $("myForm ,#AttachDocumentTB_FileName_TEXTBOX").val('');
-
-                        if (roleid == 773 || roleid == 776) {
+                       // if (roleid == 773 || roleid == 776) {
+                        if (RoleName == "PARENT" || RoleName == "STUDENT" || RoleName == "ADMINISTRATOR" ) {
                             stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent);
                         }
                         $("#savebutton").prop("disabled", true)
@@ -382,8 +391,8 @@ $('#myForm').submit(function (event) {
                 }
                 else if (response.message == "Student Leave Saved Successfully") { //(response == "Student Leave not Saved") {
                     //773 = ADMINISTRATOR
-                    if (roleid == 773 || roleid == 776) {
-
+                    // if (roleid == 773 || roleid == 776) { 
+                    if (RoleName == "PARENT" || RoleName == "STUDENT" || RoleName == "ADMINISTRATOR") {
                         stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent);
                     }
                     //stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid);
@@ -631,10 +640,8 @@ $('#myForm').on('click', '#AttachDocumentTB_FileName_LABEL_DELETE', function () 
     try {
 
         $(".ErrorMessageSpan").empty();
-
-
         Swal.fire({
-            title: "Are you sure you want to delete this Document ?",
+            title: "Are you sure you want to delete this Leave Document ?",
             text: "  ",
             icon: "warning",
             showCancelButton: true,
@@ -683,14 +690,14 @@ $('#myForm').on('click', '#AttachDocumentTB_FileName_LABEL_DELETE', function () 
 });
 
 //=====================================This is for down load image 
-$('.image-link').click(function () {
+//$('.image-link').click(function () {
+    $('#AttachDocumentTB_FileName_LABEL').click(function () {
     var imageName = $(this).text();
-    debugger;
+   // debugger;
     //download($('#barcode').attr('src'), "strcode.png", imageName);
 
     var Studentid = $("#Studentid").val();
     if (Studentid == "0") {
-
         Studentid = $("#studentid").val();
     }
     var Instanceid = $("#instanceid").val();
@@ -776,6 +783,10 @@ function stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves( Studentid, 
             Length = response.length;
             $("#ViewStudentLeaves_Table tbody").empty();
             $("#CountOfRecords_View_Student_Leaves").text(Length);
+
+            var table = js('#ViewStudentLeaves_Table').DataTable();
+           var currentPage = table.page.info().page;
+            table.destroy();
             if (Length <= 0) {
                 $("#ViewStudentLeaves_Table").hide();
                // $("#CountOfRecords_View_Student_Leaves").text("No Records Found");
@@ -793,7 +804,12 @@ function stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves( Studentid, 
                         "</tr>"
                     );
                 });
-                Pagination(Length, 'ViewStudentLeaves_Table')
+               // Pagination(Length, 'ViewStudentLeaves_Table')
+
+
+                var ExcelDownloadColumnsNo = [];
+                TblDataTableWith_OutColumns_CallingFunction("ViewStudentLeaves_Table", 'noresponse', lenth, currentPage, 'Noname', ExcelDownloadColumnsNo);
+                loaddingimg.css('display', 'none');
                 $("#ViewStudentLeaves_Table").show();
             }
             //var rowcount1 = $("#ViewStudentLeaves_Table tbody tr").length;
@@ -818,23 +834,22 @@ function stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves( Studentid, 
 
 //================================This is for calling function to 	ATTENDANCE DETAILS of Student leaves to parent
 function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
-
     try {
         debugger;
     $.ajax({
         url: "/Attendance/StudentApplyLeave_SelectById_ATTENDANCEDETAILS?Studentid=" + Studentid,
         type: "GET",
         success: function (response) {
-
+            var table = js('#StudentAttendanceDetails_Table').DataTable();
+            var currentPage = table.page.info().page;
+            table.destroy();
             Length = response.length;
             $("#StudentAttendanceDetails_Table tbody").empty();
             if (Length <= 0) {
                 $("#StudentAttendanceDetails_Table").hide();
             }
             else {
-              
             $.each(response, function (i, value122) {
-                debugger;
                 $("#StudentAttendanceDetails_Table tbody").append("<tr>" +
                     "<td>" + value122.totalpresents + "</td>" +
                     "<td >" + value122.totalAbsents + " </td>" +
@@ -844,7 +859,13 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
                 );
             });
 
-                Pagination(Length, 'StudentAttendanceDetails_Table');
+                //Pagination(Length, 'StudentAttendanceDetails_Table');
+               
+
+                var ExcelDownloadColumnsNo = [];
+              
+                TblDataTableWith_OutColumns_CallingFunction("StudentDataGetting_ID", 'noresponse', Length, currentPage, 'Noname', ExcelDownloadColumnsNo);
+              //  loaddingimg.css('display', 'none');
                 $("#StudentAttendanceDetails_Table").show();
             }
         }
@@ -852,6 +873,7 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
         error: function (xhr, status, error) {
         
             $("#followingfieldsErrorSPAN").text("Something Error");
+            loaddingimg.css('display', 'none');
             //console.log(xhr.responseText); // Log any error response
         }
     })
@@ -859,6 +881,7 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
     } catch (e) {
       
         $("#followingfieldsErrorSPAN").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -867,12 +890,15 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
 //This is for calling function to Student leaves to admin
 function stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid) {
     try {
-        debugger;
+        debugger; loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/stp_tblStudentApplyLeave_SelectById_Admin?Studentid=" + Studentid,
         type: "GET",
         success: function (response) {
             var lenth = response.length;
+            var table = js('#StudentDataGetting_ID').DataTable();
+            var currentPage = table.page.info().page;
+            table.destroy();
             $("#StudentDataGetting_ID tbody").empty();
             $("#CountOfRecords_StudentLeaves").text(lenth);
             if (lenth <= 0) {
@@ -1027,7 +1053,13 @@ function stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid) {
                 );
             });
            // var rowcount1 = $("#StudentDataGetting_ID tbody tr").length;
-                Pagination(lenth, 'StudentDataGetting_ID')
+                //Pagination(lenth, 'StudentDataGetting_ID')
+                
+                 
+                
+                var ExcelDownloadColumnsNo = [];              
+                TblDataTableWith_OutColumns_CallingFunction("StudentDataGetting_ID", 'noresponse', lenth, currentPage, 'Noname', ExcelDownloadColumnsNo);
+                loaddingimg.css('display', 'none');
                 $("#StudentDataGetting_ID_FORM").show();
                 $("#StudentDataGetting_ID").show();
             }
@@ -1126,11 +1158,13 @@ function stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid) {
         ,
         error: function (xhr, status, error) { 
             $("#followingfieldsErrorSPAN").text("Something Error");
+            loaddingimg.css('display', 'none');
             //console.log(xhr.responseText); // Log any error response
         }
     })
     } catch (e) {   
         $("#followingfieldsErrorSPAN").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 

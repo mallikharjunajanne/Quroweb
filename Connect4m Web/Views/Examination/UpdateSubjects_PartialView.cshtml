@@ -8,222 +8,222 @@
 @if (BtnName == "BtnCreateNew")
 {
     <div class="card mb-4">
-    <div class="card-body">
-      
-    <div class="col mt-2">
-        <div class="form-check form-check-inline">
-            <input name="IncludeInTotal1"  id="RdlSingleDept" class="form-check-input check" type="radio" value="1">
-            <label class="form-check-label" for="RdlSingleDept">Upload Subjects For Single Department</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input id="RdlMultipleDept" name="IncludeInTotal1" class="form-check-input check" type="radio" value="0">
-            <label class="form-check-label" for="RdlMultipleDept"> Upload Subjects For Multiple Department</label>
-        </div>
+        <div class="card-body">
 
-    </div>
-    </div>
+            <div class="col mt-2">
+                <div class="form-check form-check-inline">
+                    <input name="IncludeInTotal1" id="RdlSingleDept" class="form-check-input check" type="radio" value="1">
+                    <label class="form-check-label" for="RdlSingleDept">Upload Subjects For Single Department</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="RdlMultipleDept" name="IncludeInTotal1" class="form-check-input check" type="radio" value="0">
+                    <label class="form-check-label" for="RdlMultipleDept"> Upload Subjects For Multiple Department</label>
+                </div>
+
+            </div>
+        </div>
     </div>
 }
 else
 { @if (BtnName == "RdlSingleDept")
     {
 
-        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor SingleDepartment/Report.xls" class="Undeline" >Get Excel To Upload</a>
+        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor SingleDepartment/Report.xls" class="Undeline">Get Excel To Upload</a>
     }
     else if (BtnName == "RdlMultipleDept")
     {
-        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor MultipleDepartment/Report.xls" class="Undeline" >Get Excel To Upload</a>
-        <a onclick="_ViewChangeActivities(event,'','','', '/Examination/TblViewSubjectsList')" class="Undeline float-end">Get Department And Class Id's</a>
+        <a href="~/Bulk Upload Subject Excel Files/UploadSubjectfor MultipleDepartment/Report.xls" class="Undeline">Get Excel To Upload</a>
+        <a onclick="_ViewChangeActivities(event,'','','', '/Examination/TblViewSubjectsList')" class="Undeline float-end" style="cursor:pointer">Get Department And Class Id's</a>
     }
 
     @*<div class="card-body" style=" padding-top: 0px;" id="UpdateSubjectsDiv">*@
 
 <div id="UpdateSubjectsPage">
-<div class="card me-4" >
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">
-            @if (BtnName == "RdlMultipleDept")
-            {
-                <span id="UpdateSubjects_Span_CreatePage">
-                    UPLOAD SUBJECTS FOR MULTIPLE DEPARTMENT
-                </span>
-            }
-            else if (BtnName == "RdlSingleDept")
-            {
-                <span id="UpdateSubjects_Span_CreatePage">
-                    UPLOAD SUBJECTS
-                </span>
-            }
-            else
-            {<span id="UpdateSubjects_Span_CreatePage"> UPDATE SUBJECTS</span>
-            }
-        </h5>
-    </div>
-    <div class="card-body">
-        <form id="FmUpdateSubjects">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row">
-                <div class="col">
-                    @if (BtnName == "RdlSingleDept")
-                    {
-                        <div class="mb-2 row">
+    <div class="card me-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                @if (BtnName == "RdlMultipleDept")
+                {
+                    <span id="UpdateSubjects_Span_CreatePage">
+                        UPLOAD SUBJECTS FOR MULTIPLE DEPARTMENT
+                    </span>
+                }
+                else if (BtnName == "RdlSingleDept")
+                {
+                    <span id="UpdateSubjects_Span_CreatePage">
+                        UPLOAD SUBJECTS
+                    </span>
+                }
+                else
+                {<span id="UpdateSubjects_Span_CreatePage"> UPDATE SUBJECTS</span>
+                }
+            </h5>
+        </div>
+        <div class="card-body">
+            <form id="FmUpdateSubjects">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col">
+                        @if (BtnName == "RdlSingleDept")
+                        {
+                            <div class="mb-2 row">
 
-                            <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Department</label>
-                            <div class="col-sm-4">
-                                <div class="position-relative">
-                                    <select id='DdlDepartmentForSingle' asp-for="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassForSingle', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
-                                        <option value=''>Select a Department</option>
-                                    </select>
-                                    <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Department</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select id='DdlDepartmentForSingle' asp-for="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassForSingle', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
+                                            <option value=''>Select a Department</option>
+                                        </select>
+                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Clas</label>
-                            <div class="col-sm-4">
-                                <div class="position-relative">
-                                    <select id='DdlClassForSingle' asp-for="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" onchange="_ViewSubjects(event,'DdlClassForSingle')" asp-items="@(new SelectList(""))" disabled>
-                                        <option value=''>Please select a Class</option>
-                                    </select>
-                                    <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+                            <div class="mb-2 row">
+                                <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Clas</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select id='DdlClassForSingle' asp-for="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" onchange="_ViewSubjects(event,'DdlClassForSingle')" asp-items="@(new SelectList(""))" disabled>
+                                            <option value=''>Please select a Class</option>
+                                        </select>
+                                        <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
 
-                                    <span id="ViewSubjectsSymbol" style="display:none">
-                                        <input type="image" id="_lnkViewSubjects" title="Excel should be" src="/IconImages/searchbtn image.png" onclick="_ViewSubjects(event)" style="border-width:0px;">
-                                        View Subjects List
-                                    </span>
+                                        <span id="ViewSubjectsSymbol" style="display:none">
+                                            <input type="image" id="_lnkViewSubjects" title="Excel should be" src="/IconImages/searchbtn image.png" onclick="_ViewSubjects(event)" style="border-width:0px;">
+                                            View Subjects List
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Upload Subjects</label>
+                            <div class="mb-2 row">
+                                <label class="col-sm-4 col-form-label text-end required" for="basic-default-name">Upload Subjects</label>
 
-                            <div class="col-sm-4">
-                                <input type="file" asp-for="SubjectExelFile" id="SubjectFileForSingle" class="form-select" />
-                                <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
+                                <div class="col-sm-4">
+                                    <input type="file" asp-for="SubjectExelFile" id="SubjectFileForSingle" class="form-control" />
+                                    <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <label class="col-sm-4 col-form-label text-end " for="basic-default-name">Click Here to view sample Excel File to upload</label>
+                                <div class="col-sm-4">
+                                    <img typeof="image" src="~/UploadSingleSubjects_ExelSheet/magnify.png" title="Excel should be" />
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
+                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearNew" value="Clear">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSave" value="Save">Save</button>
+                                </div>
+                            </div>
+
+                        }
+                        else if (BtnName == "RdlMultipleDept")
+                        {
+
+                            <div class="mb-2 row">
+                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name"> Upload Subjects </label>
+                                <div class="col-sm-4">
+                                    <input type="file" asp-for="SubjectExelFile" class="form-control" id="SubjectFileForMultiple" />
+                                    <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnUpload" value="Upload">Upload</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Name </label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="TxtSubjectNameUpd" asp-for="SubjectName" class="form-control" placeholder="Subject Name">
+                                    <span asp-validation-for="SubjectName" class="text-danger"></span>
+                                </div>
+                                <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Type </label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select id="DdlSubjectTypeUpd" asp-for="SubjectTypeId1" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.SubjectNames, "Value", "Text"))">
+                                            <option value="">---------select---------</option>
+                                        </select>
+                                        <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Code </label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="SubjectCode" id="TxtSubjectCodeUpd" class="form-control" placeholder="Subject Code">
+                                    <span asp-validation-for="SubjectCode" class="text-danger"></span>
+                                </div>
+                                <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Include In Total</label>
+
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input id="Yes" asp-for="IncludeInTotal1" checked="@(Model?.IncludeInTotal1 == 1 ? null : "checked")" class="form-check-input check" type="radio" value="1">
+                                        <label class="form-check-label" for="Yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input id="No" asp-for="IncludeInTotal1" checked="@(Model?.IncludeInTotal1 == 0 ? "checked" :null )" class="form-check-input check" type="radio" value="0">
+
+                                        <label class="form-check-label" for="No"> No</label>
+                                    </div>
+
+                                    <span asp-validation-for="IncludeInTotal1" class="text-danger"></span>
+                                </div>
 
                             </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <label class="col-sm-4 col-form-label text-end " for="basic-default-name">Click Here to view sample Excel File to upload</label>
-                            <div class="col-sm-4">
-                                <img typeof="image" src="~/UploadSingleSubjects_ExelSheet/magnify.png" title="Excel should be" />
 
-                            </div>
-                        </div>
-                        <div class="row justify-content-end">
-                            <div class="col-sm-8">
-                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
-                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearNew" value="Clear">Clear</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSave" value="Save">Save</button>
-                            </div>
-                        </div>
 
-                    }
-                    else if (BtnName == "RdlMultipleDept")
-                    {
-
-                        <div class="mb-2 row">
-                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name"> Upload Subjects </label>
-                            <div class="col-sm-4">
-                                <input type="file" asp-for="SubjectExelFile" class="form-control" id="SubjectFileForMultiple" />
-                                <span asp-validation-for="SubjectExelFile" class="text-danger"></span>
-
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-end">
-                            <div class="col-sm-8">
-                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnUpload" value="Upload">Upload</button>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="mb-3 row">
-                            <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Name </label>
-                            <div class="col-sm-4">
-                                <input type="text" id="TxtSubjectNameUpd" asp-for="SubjectName" class="form-control" placeholder="Subject Name">
-                                <span asp-validation-for="SubjectName" class="text-danger"></span>
-                            </div>
-                            <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Type </label>
-                            <div class="col-sm-4">
-                                <div class="position-relative">
-                                    <select id="DdlSubjectTypeUpd" asp-for="SubjectTypeId1" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.SubjectNames, "Value", "Text"))">
-                                        <option value="">---------select---------</option>
-                                    </select>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Display Order</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="DisplayOrder1" id="TxtSubjectDisplayOrderUpd" class="form-control" placeholder="Subject Display Order">
+                                    <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
+                                </div>
+                                <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Attendance Required</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="AttendanceRequired1" id="TxtAttendanceRequiredUpd" class="form-control" placeholder="Attendance Required">
                                     <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Subject Code </label>
-                            <div class="col-sm-4">
-                                <input type="text" asp-for="SubjectCode" id="TxtSubjectCodeUpd" class="form-control" placeholder="Subject Code">
-                                <span asp-validation-for="SubjectCode" class="text-danger"></span>
-                            </div>
-                            <label class="col-sm-2 col-form-label  text-end required" for="basic-default-name"> Include In Total</label>
 
-                            <div class="col mt-2">
-                                <div class="form-check form-check-inline">
-                                    <input id="Yes" asp-for="IncludeInTotal1" checked="@(Model?.IncludeInTotal1 == 1 ? null : "checked")" class="form-check-input check" type="radio" value="1">
-                                    <label class="form-check-label" for="Yes">Yes</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Total Periods</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="TotalPeriods1" id="TxtTotalPeriodsUpd" class="form-control" placeholder="Total Periods">
+                                    <span asp-validation-for="TotalPeriods1" class="text-danger"></span>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input id="No" asp-for="IncludeInTotal1" checked="@(Model?.IncludeInTotal1 == 0 ? "checked" :null )" class="form-check-input check" type="radio" value="0">
-
-                                    <label class="form-check-label" for="No"> No</label>
-                                </div>
-
-                                <span asp-validation-for="IncludeInTotal1" class="text-danger"></span>
-                            </div>
-
-                        </div>
-
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Display Order</label>
-                            <div class="col-sm-4">
-                                <input type="text" asp-for="DisplayOrder1" id="TxtSubjectDisplayOrderUpd" class="form-control" placeholder="Subject Display Order">
-                                <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
-                            </div>
-                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Attendance Required</label>
-                            <div class="col-sm-4">
-                                <input type="text" asp-for="AttendanceRequired1" id="TxtAttendanceRequiredUpd" class="form-control" placeholder="Attendance Required">
-                                <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Total Periods</label>
-                            <div class="col-sm-4">
-                                <input type="text" asp-for="TotalPeriods1" id="TxtTotalPeriodsUpd" class="form-control" placeholder="Total Periods">
-                                <span asp-validation-for="TotalPeriods1" class="text-danger"></span>
-                            </div>
-                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Mentor Name</label>
-                            <div class="col-sm-4">
-                                <div class="position-relative">
-                                    <select id='DdlMentorNameUpd' asp-for="MentorIds1" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.MentorsNames, "Value", "Text"))">
-                                        <option value=''>-------select-------</option>
-                                    </select>
+                                <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Mentor Name</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select id='DdlMentorNameUpd' asp-for="MentorIds1" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.MentorsNames, "Value", "Text"))">
+                                            <option value=''>-------select-------</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <input type="hidden" asp-for="InstanceSubjectId" readonly />
+                            <input type="hidden" asp-for="InstanceSubjectId" readonly />
 
-                        <div class="row justify-content-end">
-                            <div class="col-sm-10">
-                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnUpdate" value="Update">Update</button>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhExams(event)" id="BtnBackToSearch" value="Back to Search">Back to Search</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnUpdate" value="Update">Update</button>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
-            </div>
 
-        </form>
+            </form>
 
-    </div>
+        </div>
     </div>
 
 </div>
@@ -236,93 +236,13 @@ else
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 
-@*<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>*@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
-<script>
-    var ClickedBtnId = null;
-    $("button").click(function () {
-   // $(".submit-btn").click(function () {
-        // Set the value of a hidden input field to the name of the clicked button
-        ClickedBtnId = $(this).attr("id");
-    });
+<script src="~/js/UpdateSubjects_PartialView_BulkUploadSubjects.js"></script>
 
-
-    //-----------------------------------This is for Upload Subject details
-    // $(document).on("click", "#BtnUpload,#BtnUpdate,#BtnSave", function (event) {
-    $("#FmUpdateSubjects").submit(function (event) {
-        debugger;
-        try {
-
-            event.preventDefault();
-            loaddingimg.css('display', 'block');
-            $(".ErrorMessageSpan").empty();
-            // var btnid = $(this).attr("id");
-            // var btnid = ClickedBtnId;
-            //  var file12 = $("#SubjectFileForMultiple").prop('files')[0];
-            //  var fileInput = document.getElementById("SubjectFileForMultiple");
-
-
-            //  var formData = new FormData(this);
-            var formData = new FormData($("#FmUpdateSubjects")[0]);
-            //var formdata_CSA = $(this).serialize();
-            formData.append("ButtonId", ClickedBtnId);
-            var formElement = document.getElementById('FmUpdateSubjects');
-            setTimeout(function () {
-                var validationMessages = formElement.getElementsByClassName('field-validation-error');
-                // var validationMessages2 = formElement.getElementsByClassName('error2');
-                var validationmelength = validationMessages.length;
-                if (validationmelength == 0) {
-                    debugger;
-                    // CommonAjaxFunction('POST', '/Examination/BulkUploadSubjects?ButtonName=MultiSubjectsUpdate', formData, function (response) {
-                    CommonAjaxFunction('POST', '/Examination/BulkUploadSubjects', formData, function (response) {
-                        debugger;
-
-                        if (response.message == "Record updated successfully." || response.message == "Subjects inserted successfully.") {
-                            $("#" + ClickedBtnId).prop('disabled', true);
-                            $('.alert-success p').text(response.message);
-                            $(".alert-success").show().delay(5000).fadeOut()
-                           // $("#BtnUpdate").prop('disabled', true);
-                        } else {
-
-                            $('.alert-danger p').text(response.message);
-                            $(".alert-danger").show().delay(5000).fadeOut()
-                        }
-                        //else if (response.message == "Subjects inserted successfully.") {
-                        //    $("#" + ClickedBtnId).prop('disabled', true);
-                        //}
-                        if (ClickedBtnId == "BtnSave" || ClickedBtnId == "BtnUpload") {
-                            $("#SubjectFileForSingle").val('');
-                            $("#SubjectFileForMultiple").val('');
-                        }
-
-                        // $("#Main_Span_Error").text(response.message);
-                        loaddingimg.css('display', 'none');
-                        window.scrollTo(0, 0);
-                    }, function (status, error) {
-                        loaddingimg.css('display', 'none');
-                    }, true);
-                } else {
-                    loaddingimg.css('display', 'none');
-                    $('.alert-danger p').text("Pleae Enter All Required Fields");
-                    $(".alert-danger").show().delay(5000).fadeOut();
-                }
-            }, 50);
-
-        } catch (e) {
-            $("#Main_Span_Error").text("Something Error");
-            // loaddingimg.css('display', 'none');
-            loaddingimg.css('display', 'none');
-        }
-    })
-
-
-
-
-</script>
 
 
 

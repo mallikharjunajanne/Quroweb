@@ -818,6 +818,8 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult TblUserDetailsList(SubjectEditValuesListModel obj)
         {
+            try
+            {
             //InitializeCookieValues();
             obj.InstanceID = InstanceId;
             obj.Name = "STUDENT";//Gave Default
@@ -827,6 +829,11 @@ namespace Connect4m_Web.Controllers
             //  list = list.OrderBy(x => x.SubjectName).ToList();
             ViewBag.SubjectAssociatedList = list[0].SubjectAssociatedList;
             return Json(list[0].UsersNamesList);
+            }
+            catch (Exception)
+            {
+               return Json(0);
+            }
         }
         public IActionResult ManageSubjectAssociation()
         {

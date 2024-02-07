@@ -321,8 +321,8 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
                 if (response.length <= 0) {
                     $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
                     
-                    //$("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
-                    $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text('0')
+                    $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
+                   // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text('0')
 
                     $("#GetMyAppliedLeaves_Table_VIEW").hide();
 
@@ -337,8 +337,8 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
                     $.each(response, function (i, value122) {
                         $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
                         debugger;
-                       // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
-                        $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text(response.length)
+                       $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
+                       // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text(response.length)
                         createdDate = value122.createdDate;
                         createdDate = createdDate.split("T")[0];
                         $("#GetMyAppliedLeaves_Table_VIEW tbody").append("<tr>" +

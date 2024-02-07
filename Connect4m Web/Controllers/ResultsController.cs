@@ -538,7 +538,8 @@ namespace Connect4m_Web.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Something Error" });
+                      return Json(new { success = false, message = "Something Error" });
+                   // return RedirectToAction();
                 }
             }
             catch (Exception ex)
@@ -547,10 +548,6 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message=  "Something Error"  });
             }
         }
-
-
-
-
         #region Population Management File Export Excel start
         // Open XML [Document.open xml - 3.0.0]
         // Village Export
@@ -1193,10 +1190,6 @@ namespace Connect4m_Web.Controllers
 
 
         #endregion
-
-
-
-
 
     }
 }

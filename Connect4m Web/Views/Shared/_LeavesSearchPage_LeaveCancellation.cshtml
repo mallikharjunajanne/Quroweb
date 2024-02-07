@@ -93,7 +93,7 @@
 
     <div class="table-responsive text-nowrap">
         @*-----------------------------------------Cancel Comment Popup-----------------------------*@
-        <div id="DivCancelComment" class="Commentpopup" style="display: none;">
+        @*<div id="DivCancelComment" class="Commentpopup" style="display: none;">
             <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
                 <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
                     <span style="font-size: 24px;cursor:pointer">×</span>
@@ -107,49 +107,45 @@
                     <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
                 </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#animationModal">
-            Launch modal
-        </button>
-        <div class="modal fade animate__animated fadeIn show" id="animationModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel5">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>*@
+
+
+    <div class="modal fade show" id="DivCancelComment" tabindex="-1" style="background-color: rgba(75, 70, 92, 0.4); display: none; padding-left: 0px;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+
+                <form class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
+                    <button type="reset" onclick="document.getElementById('DivCancelComment').style.display='none'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Cancel Comment</h3>
+                        @*<p class="text-muted">Add new card to complete payment</p>*@
+                        <label class="form-label ErrorMessageSpan" style=" background-color: khaki;" id="CancelLeaveError">dgbdgdgsgs</label>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameAnimation" class="form-label">Name</label>
-                                <input type="text" id="nameAnimation" class="form-control" placeholder="Enter Name">
-                            </div>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col mb-0">
-                                <label for="emailAnimation" class="form-label">Email</label>
-                                <input type="email" id="emailAnimation" class="form-control" placeholder="xxxx@xxx.xx">
-                            </div>
-                            <div class="col mb-0">
-                                <label for="dobAnimation" class="form-label">DOB</label>
-                                <input type="date" id="dobAnimation" class="form-control">
-                            </div>
+                    <div class="col-12">
+                        <label class="form-label w-100" for="modalAddCard">Comment</label>
+                        <div class="">
+                            <textarea class="form-control" rows="4" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment" placeholder="Enter a Leave Comment"></textarea>
+                            <label class="form-label"> <span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</label>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="OkBtn" >Submit</button>
+                        <button type="reset" class="btn btn-label-secondary btn-reset waves-effect" onclick="document.getElementById('DivCancelComment').style.display='none'" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
 
-        <form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords">
+        @*<form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords">*@
             <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
                 <thead class="table-dark">
                     <tr>
                         <th>LeaveApplicationId</th>
+                        <th>S No</th>
                         <th>Name</th>
                         <th>Department</th>
                         <th>Reason</th>
@@ -164,7 +160,7 @@
                     </tr>
                 </thead>
             </table>
-        </form>
+        @*</form>*@
 
     </div>
 </div>

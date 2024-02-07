@@ -487,6 +487,7 @@ namespace Connect4m_Web.Models
     {
 
         public int InstanceId { get; set; }
+        public int LeaveTypeId { get; set; }
         public int InstanceClassificationId { get; set; }
 
 

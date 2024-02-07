@@ -447,17 +447,16 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                     //  $("#" + formId + " #Main_Span_Error").text(response.message);
 
 
+                    loaddingimg.css('display', 'none');
                     // window.scrollTo(0, 0);
                 }, function (error) {
                     loaddingimg.css('display', 'none');
                     $("#Main_Span_Error").text("Something Error");
                 }, true);
-                loaddingimg.css('display', 'none');
             } else {
                 loaddingimg.css('display', 'none');
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
                 $(".alert-danger").show().delay(5000).fadeOut();
-
             }
         }, 50);
     } catch (e) {

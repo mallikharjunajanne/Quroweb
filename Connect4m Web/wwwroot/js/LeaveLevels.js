@@ -198,13 +198,12 @@
         if (val != 12) {
             event.preventDefault();
             $("#ErrorMessageSpan").empty();
+            loaddingimg.css('display', 'block');
         }     
         var InstanceClassificationId_DepartMent = $("#Department_Id").val();
         var LevelId = $("#Levels_Id").val();
         var Userid = $("#AppliedEmployeesNames_Id").val();
-        if (val != 12) {
-            loaddingimg.css('display', 'block');
-        }    
+        
         $.ajax({
             url: "/Attendance/LeaveLevels_In_Table_Caliingfunction?InstanceClassificationId_DepartMent=" + InstanceClassificationId_DepartMent + "&LevelId=" + LevelId + "&Userid=" + Userid,//+"&values="+ queryString,
             type: "GET",
@@ -259,7 +258,7 @@
                     //if (val == 12) {
                       
 
-                    var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4];
+                    var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4,5];
                     TblDataTableWith_OutColumns_CallingFunction("LeaveLevels_SearchRecords_Table", response, response.length, currentPage, 'LeaveLevels', ExcelDownloadColumnsNo, '','LeaveLevels_SearchRecords_Table_Div');
                   //  }
 

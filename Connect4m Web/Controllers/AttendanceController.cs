@@ -45,13 +45,35 @@ namespace Connect4m_Web.Controllers
         private readonly IMemoryCache _memoryCache;
         private int loginCount = 0;
 
-        public AttendanceController(HttpClientFactory httpClientFactory, IConfiguration configuration, IMemoryCache memoryCache)
+        private readonly IUserService _userService;
+        private readonly int UserId;
+        private readonly int InstanceId;
+        private readonly int InstanceClassificationId;
+        private readonly int InstanceSubClassificationId;
+        private readonly int Roleid;
+        private readonly int StudentUserid;
+        private readonly string RoleName;
+        private readonly string UserNameHeader_;
+
+        public AttendanceController(HttpClientFactory httpClientFactory, IConfiguration configuration, IMemoryCache memoryCache, IUserService userService)
         {
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
             client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/ApplyStudentAttendance");
             _memoryCache = memoryCache;//this for storing login counts
+
+            //===================Values Getting====================================
+            _userService = userService;
+
+            InstanceId = _userService.InstanceId;
+            UserId = _userService.LoginUserId;
+            InstanceClassificationId = _userService.InstanceClassificationId;
+            InstanceSubClassificationId = _userService.InstanceSubClassificationId;
+            Roleid = _userService.Roleid;
+            StudentUserid = _userService.StudentUserid;
+            RoleName = _userService.RoleName;
+            UserNameHeader_ = _userService.UserNameHeader_;
         }
 
         private int IncrementLoginCount(string username)
@@ -240,20 +262,20 @@ namespace Connect4m_Web.Controllers
             //  await HttpContext.SignOutAsync();
             // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-
             return RedirectToAction("LoginPage", "Attendance");
         }
-
-
         public IActionResult AccessDenied()
         {
             return View();
         }
 
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
         //====================================Apply Student Leave==================================================
-
+        #region
         [Authorize]
         public IActionResult GetStudentNameDropdown(string InstanceId,string Value)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
@@ -566,7 +588,9 @@ namespace Connect4m_Web.Controllers
             //Response.Cookies.Append("InstanceSubClassificationId", InstanceSubClassificationId.ToString());
 
             
-            ViewBag.roleid= Request.Cookies["Roleid"];
+            //ViewBag.roleid= Request.Cookies["Roleid"];
+            ViewBag.RoleName = Request.Cookies["RoleName"];
+
             //=========This is used for Get appleid details of student
 
             //List<AttendanceModel> value9 = new List<AttendanceModel>();
@@ -791,9 +815,9 @@ namespace Connect4m_Web.Controllers
             }
             return Json(new { success = false });
         }
-
+        #endregion
         //====================================Apply Staff Leave==================================================
-
+        #region
         [Authorize]
         public IActionResult STP_GetSubmittedLeaveRequestsByUserid_ToEDIT(int Batchid,int Userid)
         {
@@ -928,8 +952,11 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult GetMyLeaveDetails_CallingMethod(int Userid)// string InstanceClassificationId, string InstanceSubClassificationId)
         {
-           // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
+            try
+            {
+              //  return RedirectToAction("LoginPage");
+                // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+                int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
             List<AttendanceModel> LeaveType1 = new List<AttendanceModel>();
             HttpResponseMessage response91 = client.GetAsync(client.BaseAddress + "/GetMyLeaveDetails2?UserId=" + Userid + "&InstanceId=" + InstanceId12).Result;
             if (response91.IsSuccessStatusCode)
@@ -960,6 +987,13 @@ namespace Connect4m_Web.Controllers
             }
             ViewBag.GetMyLeaveDetails = LeaveType1;
             return new JsonResult(ViewBag.GetMyLeaveDetails);
+
+            }
+            catch (Exception)
+            {
+                return new JsonResult(0);
+             //   return RedirectToAction("LoginPage");
+            }
         }
 
         [Authorize]
@@ -1001,15 +1035,16 @@ namespace Connect4m_Web.Controllers
             int lenth19 = value.Count;
             if (value.Count != 0)
             {
-
+                var Short_DescriptionType = "";
                 for (int j = 0; j < lenth19;)
                 {
-                    if (value[j].Value == "16" || value[j].Value == "17" || value[j].Value == "18" || value[j].Value == "19")
+                    Short_DescriptionType = value[j].Text.ToUpper();
+                    //if (value[j].Value == "16" || value[j].Value == "17" || value[j].Value == "18" || value[j].Value == "19")
+                    if (Short_DescriptionType == "WORKSHOP" || Short_DescriptionType == "TRAINING" || Short_DescriptionType == "EVENT" || Short_DescriptionType == "TRIP SUPERVISION")
                     {
                         value.RemoveAt(j);
                         j = 0;
                         lenth19 = lenth19 - 1;
-
                     }
                     else
                     {
@@ -1044,7 +1079,8 @@ namespace Connect4m_Web.Controllers
                 {
                     if (LeaveType1[j].TotalLeaves == 0 && LeaveType1[j].DaysUsed == 0 && LeaveType1[j].ApprovedNotUsedLeaves == 0 && LeaveType1[j].LeavesAwaitingApprovalLeaves == 0 && LeaveType1[j].AvailableLeaves == 0)
                     {
-                        if (LeaveType1[j].Leavetypeid == 122)
+                       // if (LeaveType1[j].Leavetypeid == 122)
+                        if (LeaveType1[j].Leavetype1.ToUpper() == "LWP")
                         {
                             j++;
                             continue;
@@ -1481,7 +1517,7 @@ namespace Connect4m_Web.Controllers
                                     InputValue[i].file.CopyTo(stream);
                                 }
 
-                                string fileNameWithPath1 = "/LeavesDoc/" + InputValue[i].file.FileName;
+                              //  string fileNameWithPath1 = "/LeavesDoc/" + InputValue[i].file.FileName;
                             }
                         }
                     }                  
@@ -1508,11 +1544,7 @@ namespace Connect4m_Web.Controllers
             }        
             return Json(new { success = true, message = "Error" }); 
         }
-
-
-
-
-
+        #endregion
         //---------------------------------Leave Levels Module--------------------
         [Authorize]
         public IActionResult Delete_LeaveLevels(int LeaveLevelId, string submitButton)// string InstanceClassificationId, string InstanceSubClassificationId)
