@@ -38,7 +38,7 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
     try {
         event.preventDefault(); // prevent the form from submitting
         $(".ErrorMessageSpan").empty();
-        window.scrollTo(0, 0);
+ 
         debugger;
 
         //var TableLength = $("#TblSearchEmployeesShortLeaves tbody tr").length;
@@ -76,19 +76,22 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
         // var ErrorSpanText=$("#Main_Span_Error").text();
         if (CheckBoxcount < 1) {
             $("#Main_Span_Error").text("Please select at least one check box in the grid.");
+            window.scrollTo(0, 0);
             return;
         }
         else if (RadioBtncount > 0) {
             $("#Main_Span_Error").text("Please select to be converted Leave Type for employee " + name + ""); // change dynamic name here look below
             // $("#Main_Span_Error").text("Please select to be converted Leave Type for employee Admin"); // change dynamic name here
+            window.scrollTo(0, 0);
             return;
         }
         else if (DedectedleavesCount > 0) {
             $("#Main_Span_Error").text("Remaining Short Leaves to be deducted should not be greater than the remaining for employee " + DedectedleavesPersonName + "");
+            window.scrollTo(0, 0);
             return;
         }
 
-        $("#loadingOverlay").show();
+       loaddingimg.css('display', 'block');
         debugger;
         //var formData = new FormData(this);
         var formData = new FormData($("#Fm_InTbl_SearchEmployeesShortLeaves")[0]);
@@ -101,32 +104,32 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
             data: formData,
             contentType: false,
             processData: false,
-            success: function (responce) {
-                debugger;
-                if (responce.message == "Short Leaves Sucessfully converted to Leaves.") {
-                    debugger;
-                    $("#Main_Span_Error").text(responce.message);
+            success: function (response) {
+                if (response.message == "Short Leaves Sucessfully converted to Leaves.") {
+                   // $("#Main_Span_Error").text(response.message);
                     $("#BtnConvert").prop("disabled", true);
 
                     TblLeaveTypesForconvertion_Calingfunction(event, '6', 'TblSearchEmployeesShortLeaves');
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(6000).fadeOut()
                 }
                 else {
-                    debugger;
-                    $("#Main_Span_Error").text(responce.message);
+                   // $("#Main_Span_Error").text(response.message);
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(6000).fadeOut();
                 }
-
-                $("#loadingOverlay").hide();
-
+                window.scrollTo(0, 0);
+               loaddingimg.css('display', 'none');
             },
             error: function (xhr, stutus, error) {
-                $("#loadingOverlay").hide();
+               loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
 
         })
     }
     catch (e) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });
@@ -189,35 +192,36 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
         }
 
         if (val != 12) {
-            $("#loadingOverlay").show();
+           loaddingimg.css('display', 'block');
         }
 
         $.ajax({
             url: "/Attendance/TblLeaveTypesForconvertion_Calingfunction?InstanceRoleId=" + InstanceRoleId + "&Monthid=" + Monthid + "&Userid=" + Userid,//+"&values="+ queryString,
             type: "GET",
             //  data: {values: Userid },
-            success: function (responce) {
+            success: function (response) {
                 debugger;
                 if (val != "6") {
                     $("#BtnConvert").prop("disabled", false);
                 }
 
-                var leavtype = responce[0].leavetypes_List;
-                var AttendanceModel_Data = responce[0].attendanceModel_Data;
+                var leavtype = response[0].leavetypes_List;
+                var AttendanceModel_Data = response[0].attendanceModel_Data;
                 //var disabledname = "";
                 if (AttendanceModel_Data.length <= 0) {
                     $("#DivSearchedTablePage").hide();
                     $("#TblSearchEmployeesShortLeaves").hide();
-                    $("#CountOfRecords_SearchEmployeesShortLeaves").text("");
-                    $("#CountOfRecords_SearchEmployeesShortLeaves").text("NO RECORDS");
+                    //$("#CountOfRecords_SearchEmployeesShortLeaves").text("");
+                    //$("#CountOfRecords_SearchEmployeesShortLeaves").text("NO RECORDS");
+                    $("#Counts").text("0");
 
                     $("#Main_Span_Error").text("No Records Found");
                 }
                 else {
                     debugger;
-                    $("#CountOfRecords_SearchEmployeesShortLeaves").text("");
-                    $("#CountOfRecords_SearchEmployeesShortLeaves").html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
-
+                   // $("#CountOfRecords_SearchEmployeesShortLeaves").text("");
+                   // $("#CountOfRecords_SearchEmployeesShortLeaves").html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                    $("#Counts").text(response.length);
 
                     $("#TblSearchEmployeesShortLeaves tbody").empty();
                     var TobeConvertedTotalLeaves = 0;
@@ -244,16 +248,15 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
                         $("#TblSearchEmployeesShortLeaves tbody").append(
                             // "<tr name='InputVal[" + i + "].TrRowId'>" +
                             "<tr>" +
-                            "<td class='CenterAlign'><input id='CheckAssignid_" + i + "' name='InputVal[" + i + "].Checkbox_ByChecked' value=" + i + " type='checkbox'  disabled='disabled'><input type='hidden' id='TblInUserid' name='InputVal[" + i + "].Userid' value='" + AttendanceModel_Data[i].userId + "'><input type='hidden' id='TblInMonthid' name='InputVal[" + i + "].Monthid' value='" + Monthid + "'></td>" +
+                            "<td style='text-align:center;'><input class='form-check-input' id='CheckAssignid_" + i + "' name='InputVal[" + i + "].Checkbox_ByChecked' value=" + i + " type='checkbox'  disabled='disabled'><input type='hidden' id='TblInUserid' name='InputVal[" + i + "].Userid' value='" + AttendanceModel_Data[i].userId + "'><input type='hidden' id='TblInMonthid' name='InputVal[" + i + "].Monthid' value='" + Monthid + "'></td>" +
                             "<td>" + AttendanceModel_Data[i].firstName + "</td>" +
-                            "<td class='CenterAlign'>" + AttendanceModel_Data[i].total + "</td>" +
-                            "<td class='CenterAlign'>" + parseInt(TobeConvertedTotalLeaves) + "</td>" +
-                            "<td class='CenterAlign'>" + AttendanceModel_Data[i].convertedCount + " <input type='hidden' id='convertedCount' name='InputVal[" + i + "].ConvertedCount' value='" + AttendanceModel_Data[i].convertedCount + "'></td>" +
-                            "<td class='CenterAlign'><input name='InputVal[" + i + "].ConvertCount' type='text'  id='txtLeavesDeducted_" + i + "' value='" + parseInt(RemainingSLsDeducted) + "'  disabled='disabled'><input  type='hidden'  id='CheckingCondition_txtLeavesDeducted_" + i + "' value='" + parseInt(RemainingSLsDeducted) + "' disabled='disabled'></td>" +
+                            "<td style='text-align:center;'>" + AttendanceModel_Data[i].total + "</td>" +
+                            "<td style='text-align:center;'>" + parseInt(TobeConvertedTotalLeaves) + "</td>" +
+                            "<td  style='text-align:center;'>" + AttendanceModel_Data[i].convertedCount + " <input type='hidden' id='convertedCount' name='InputVal[" + i + "].ConvertedCount' value='" + AttendanceModel_Data[i].convertedCount + "'></td>" +
+                            "<td style='text-align:center;'><input type='text' class='form-control' name='InputVal[" + i + "].ConvertCount'   id='txtLeavesDeducted_" + i + "' value='" + parseInt(RemainingSLsDeducted) + "'  disabled='disabled'><input  type='hidden'  id='CheckingCondition_txtLeavesDeducted_" + i + "' value='" + parseInt(RemainingSLsDeducted) + "' disabled='disabled'></td>" +
                             "<td id='TdLeavetypes_" + i + "' style='text-align:start;'></td>" +
                             "</tr>"
                         );
-                        debugger;
 
 
 
@@ -287,12 +290,13 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
                                 id: 'RdblLeaveTypes_' + Checkboxidcount,
                                 name: 'InputVal[' + i + '].Leavetypeid',
                                 value: leavtype[j].leaveTypeId,
-                                class: 'LeaveTypeRadioBtnClass_' + i + '',
+                                class: 'LeaveTypeRadioBtnClass_' + i + ' form-check-input',
                                 disabled: 'disabled',
                                 onclick: 'CheckLeaveTypeEligibility_CalingFunction(\'RdblLeaveTypes_' + Checkboxidcount + '\')'
                             });
 
                             var label = $('<label>', {
+                                class:'form-check-label',
                                 for: 'RB_LblLeaveTypes_' + i,
                                 text: leavtype[j].leaveType,
                             });
@@ -329,16 +333,16 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
 
                 }
 
-                $("#loadingOverlay").hide();
+               loaddingimg.css('display', 'none');
             },
 
             error: function (xhr, status, error) {
-                $("#loadingOverlay").hide();
+               loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         });
     } catch (e) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 
@@ -356,13 +360,13 @@ function GetUserName_BY_SelectRoleId_CallingFunction() {
         $.ajax({
             url: "/Attendance/GetUserName_BY_SelectRoleId_CallingFunction?InstanceRoleId=" + InstanceRoleId,
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 $("#DdlUsers").empty();
-                if (responce.length > 0) {
+                if (response.length > 0) {
                     $("#DdlUsers").append('<option value="">' + "---------Select--------" + '</option>');
                 }
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#DdlUsers").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
 
@@ -383,12 +387,12 @@ function Roles_InstanceRole_SELByInstanceId_CallingFunction() {
         $.ajax({
             url: "/Attendance/Roles_InstanceRole_SELByInstanceId_CallingFunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 $("#DdlRoles").empty();
                 $("#DdlRoles").append('<option value="">' + "---------Select---------" + '</option>');
 
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#DdlRoles").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
 

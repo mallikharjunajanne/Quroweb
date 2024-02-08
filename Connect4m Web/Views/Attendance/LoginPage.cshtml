@@ -119,6 +119,7 @@
                             <label for="Username" class="form-label">Username</label>
                             <input type="text"
                                    class="form-control"
+                                   id="TxtUsername"
                                    asp-for="Username"
                                    placeholder="Enter your username"
                                    autofocus />
@@ -128,13 +129,13 @@
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
                                 <label class="form-label" for="password">Password</label>
-                                <a href="#">
+                                @*<a href="#">
                                     <small>Forgot Password?</small>
-                                </a>
+                                </a>*@
                             </div>
                             <div class="input-group input-group-merge">
                                 <input type="password"
-                                       class="form-control"
+                                       class="form-control" id="TxtPassword"
                                        asp-for="Password"
                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                        aria-describedby="password" />
@@ -144,7 +145,7 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
+                                <input class="form-check-input" type="checkbox" asp-for="RememberMe" id="ChkRememberMe"/>
                                 <label class="form-check-label" asp-for="RememberMe"> Remember Me </label>
                             </div>
                         </div>
@@ -152,12 +153,12 @@
                         <button class="btn btn-primary d-grid w-100" id="SubmitBtn" type="submit">Sign in</button>
                     </form>
 
-                    <p class="text-center">
+                    @*<p class="text-center">
                         <span>New on our platform?</span>
                         <a href="#">
                             <span>Create an account</span>
                         </a>
-                    </p>
+                    </p>*@
 
                     <div class="divider my-4">
                         <div class="divider-text">or</div>
@@ -240,6 +241,21 @@
             }
         }
 
+
+
+        // Check if the password should be remembered
+        document.addEventListener('DOMContentLoaded', function () {
+            const rememberMeCheckbox = document.getElementById('ChkRememberMe');
+            const passwordInput = document.getElementById('TxtPassword');
+            const UsernameInput = document.getElementById('TxtUsername');
+            if (localStorage.getItem('rememberPassword') === 'true') {
+                rememberMeCheckbox.checked = true;
+                passwordInput.value = localStorage.getItem('savedPassword');
+                UsernameInput.value = localStorage.getItem('savedUsername');
+            }
+        });
+
+
         //---------------------------------   When Click ON submit Button
         $("#LoginForm").submit(function (event) {
             // debugger;
@@ -266,12 +282,29 @@
                             loaddingimg.css('display', 'none');
                            // $("#loading").css('display', 'none');
 
+                            // this for remenber password
+                            const rememberMeCheckbox = document.getElementById('ChkRememberMe');
+                            const passwordInput = document.getElementById('TxtPassword');
+                            const UsernameInput = document.getElementById('TxtUsername');
+
+                            if (rememberMeCheckbox.checked) {
+                                // If "Remember Password" is checked, save the password to localStorage
+                                localStorage.setItem('rememberPassword', 'true');
+                                localStorage.setItem('savedPassword', passwordInput.value);
+                                localStorage.setItem('savedUsername', UsernameInput.value);
+                            } else {
+                                // If not checked, clear the saved password
+                                localStorage.removeItem('rememberPassword');
+                                localStorage.removeItem('savedPassword');
+                                localStorage.removeItem('savedUsername');
+                            }
+
                             window.location.href = "/UserScreens/SchoolWelcomePage";
                         } else {
                             $('.alert-danger p').text("Please Enter Correct Username/Password.");
                             $(".alert-danger").show().delay(5000).fadeOut()
 
-                            $("#errorSpan").text("Invalid User ID/Password.");
+                          //  $("#errorSpan").text("Invalid User ID/Password.");
                            // $("#loading").css('display', 'none');
                             loaddingimg.css('display', 'none');
                         }

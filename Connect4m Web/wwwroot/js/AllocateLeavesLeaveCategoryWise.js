@@ -6,10 +6,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
-
 //  "../Admin/ViewChangeActivity.aspx?Key=NoofLeaves&Id=9855918&Name=LeaveAllocation"
 
 
@@ -35,57 +31,74 @@ function OpenIFrameModel(strURL, Width, Height, ScrollBar) {
 
 
 
-//this is fpr restrict the Characters
-function restrictCharacters(element) {
-    element.value = element.value.replace(/[^0-9]/g, '');
+////this is fpr restrict the Characters
+//function restrictCharacters(element) {
+//    element.value = element.value.replace(/[^0-9]/g, '');
 
-}
+//}
 
 
 
-//This For Save and Update
+//===========================This For Save and Update
 //function FN_LeaveTypes_Save(event) {
 //$("#Fm_TblUserLeaveAllocationList_SearchedRecords").submit(function (event) {
 
 function SubmitLeaves(event) {
     try {
         debugger;
+        loaddingimg.css('display', 'block');
         event.preventDefault();
-        window.scrollTo(0, 0);
+        
         $(".ErrorMessageSpan").empty();
 
         // var formData = $('#Fm_TblUserLeaveAllocationList_SearchedRecords').serialize();
-        var formData = new FormData($("#Fm_TblUserLeaveAllocationList_SearchedRecords")[0]);
+       // var formData = new FormData($("#Fm_TblUserLeaveAllocationList_SearchedRecords")[0]);
+        var allTextboxValues = new FormData();
+        var PayrollCategoryId;
+        var PayrollSubCategoryId;
+        var rowTextboxValues;
+        document.querySelectorAll('tbody tr').forEach(function (row) {
+             PayrollCategoryId = row.querySelector('input#PayrollCategoryId');
+            allTextboxValues.append('List_PayrollCategoryId', parseInt(PayrollCategoryId.value));
+             PayrollSubCategoryId = row.querySelector('input#PayrollSubCategoryId');
+            allTextboxValues.append('List_PayrollSubCategoryId', parseInt(PayrollSubCategoryId.value));
+             rowTextboxValues = Array.from(row.querySelectorAll('input[type="text"]')).map(function (textbox) {
+                return textbox.title + '-' + textbox.value;
+            });
+
+            allTextboxValues.append('List_LeaveNameandDayCount', rowTextboxValues.join(','));
+        });
         //var formData = new FormData(this);
         var ButtonName = $("#BtnSubmit").val();
         // var formData = new FormData(this);
-        $("#loadingOverlay").show();
+       
         $.ajax({
             url: "/Attendance/AllocateLeavesLeaveCategoryWise?ButtonName=" + ButtonName,
             type: "POST",
-            data: formData,
+            data: allTextboxValues,
             contentType: false,
             processData: false,
-            success: function (responce) {
+            success: function (response) {
                 debugger;
-
-                if (responce.message == "Records inserted successfully.") {
+                if (response.message == "Records inserted successfully.") {
                     $("#BtnSubmit").prop('disabled', true);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(6000).fadeOut()
+                } else {
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(6000).fadeOut();
+                }
 
-                    $("#Main_Span_Error").text(responce.message);
-                }
-                else {
-                    $("#Main_Span_Error").text(responce.message);
-                }
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
             },
             error: function (xhr, status, error) {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         });
+        window.scrollTo(0, 0);
     } catch (x) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -113,13 +126,13 @@ function GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event) {
     try {
         debugger;
         event.preventDefault();
-
+        loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
 
 
         var PayrollCategoryId = $("#DdlLmsCategory").val();
         var PayrollSubCategoryId = $("#DdlLmsSubCategory").val();
-        $("#loadingOverlay").show();
+        
         // Make AJAX call to the controller action
         $.ajax({
             url: "/Attendance/GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction?PayrollCategoryId=" + PayrollCategoryId + "&PayrollSubCategoryId=" + PayrollSubCategoryId,
@@ -128,17 +141,17 @@ function GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event) {
                 
                 // Append the received partial view content to the container
                 $("#TBLAllocateLeavesSearchedTypePageView_id_Div").html(data);
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 // LeaveTypesCAllingTableView(event);
             },
             error: function () {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
 
         });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -161,17 +174,17 @@ function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
         $.ajax({
             url: "/Attendance/DdlLmsSubCategory_Calingfunction?PayrollCategoryId=" + PayrollCategoryId,
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 // $("#AppliedEmployeesNames_Id").empty();
                 $("#" + EffectingDropdownid).empty();
                 $("#" + EffectingDropdownid).append('<option value="" >Select LMS Sub Category</option>');
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
 
                     $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
 
                 });
-                if (responce.length <= 0) {
+                if (response.length <= 0) {
                     $("#" + EffectingDropdownid).prop('disabled', true);
                 } else {
                     $("#" + EffectingDropdownid).prop('disabled', false);
@@ -199,10 +212,10 @@ function DdlLmsCategory_Calingfunction() {
         $.ajax({
             url: "/Attendance/DdlLmsCategory_Calingfunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 $("#DdlLmsCategory").empty();
                 $("#DdlLmsCategory").append('<option value="">Select LMS category</option>');
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#DdlLmsCategory").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
 
@@ -220,7 +233,7 @@ function DdlLmsCategory_Calingfunction() {
 
 function FN_ClearValues(Formid) {
     try {
-        document.getElementById(Formid).reset(); // Reset the form
+        //document.getElementById(Formid).reset(); // Reset the form
 
         $("#TBLAllocateLeavesSearchedTypePageView_id_Div").empty();
         $(".ErrorMessageSpan").empty();

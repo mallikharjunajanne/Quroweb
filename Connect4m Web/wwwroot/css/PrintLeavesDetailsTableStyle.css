@@ -1,0 +1,52 @@
+﻿
+/*    Printing table design */
+
+
+
+.BCcolor {
+    border: 4px solid #000000;
+}
+
+.BCcolor2 {
+    border: 2px solid #000000;
+}
+
+.subLeavetitle {
+    /* font-family: Times New Roman;*/
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.Leavetitle {
+    /*font-family: Times New Roman;*/
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    letter-spacing: 1px;
+    height: 10px;
+    text-transform: uppercase;
+}
+
+.bonafidetxt {
+    font-family: Arial;
+    font-size: 12px;
+    font-style: normal;
+    color: #000000;
+    height: 50px;
+    width: 100px;
+}
+
+.dottedbonafidetxt {
+    font-family: Arial;
+    font-size: 11px;
+    font-style: normal;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #000000;
+    height: 15px;
+    border-bottom: 3px dotted #000000;
+}

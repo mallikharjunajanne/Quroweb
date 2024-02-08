@@ -613,17 +613,20 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                //return Json(new { success = false, message = "error", userid = 12345 });
-                // val.UserId=Convert.ToInt32(Request.Cookies["UserId"]);
-                if (val.RoleId == 775){
-                    val.Name = "Student";//Identification is stundent or Teachers
+
+                if (RoleName.ToUpper().Contains("STUDENT"))//Identification is stundent or Teachers
+                {
+                    val.RoleName = "STUDENT";
                 }
+                //if (val.RoleId == 775){
+                //    val.Name = "Student";//Identification is stundent or Teachers
+                //}
                 bool PhotoAvailable = false;
                 var ErrorMessage = "";int errorCount = 0;
                 //if (ModelState.IsValid){
                     if ((val.IsActive == "1" && val.TcTaken == "1") || (val.IsActive == "1" && val.TcTaken == "1"))
                     {
-                        if (val.RoleId == 775)
+                        if (val.RoleName == "STUDENT")
                         {
                             ErrorMessage = "Selected Criteria should be : Is Active as Yes and TC issued as No / Is Active as No and TC issued as as Yes." ;
                         }

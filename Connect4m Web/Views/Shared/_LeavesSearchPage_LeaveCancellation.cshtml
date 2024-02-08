@@ -3,178 +3,211 @@
 *@
 
 @*_LeavesSearchPage_LeaveCancellation*@
-
-
+@model Connect4m_Web.Models.AttendanceModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
-<div class="default-according style-1">
-    <div class="card">
-        <div class="card-header " style="background-color:black ;">
-            <h5 class="mb-0">
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">
-                    LEAVES SEARCH
-                </button>
-            </h5>
-        </div>
-        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-            <div class="card ">
-                <div class="card-body">
-                    <form id="FmLeavesSearchPage_SearchDetails">
-                        <div style="margin-left:20%;font-size:12px">
-                            <div class="row">
-                                <div class="col">
-
-                                    <div class="mb-2 row">
-                                        <label class="col-sm-3 col-form-label  form-label" style="margin-top: -4px;">Department  :&nbsp;</label>
-
-                                        <div class="col-sm-9">
-                                            <select id='DdlDepartment' name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
-                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-
-                                                @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-                                                <option value=''>Select a Department</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="mb-2 row">
-                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">Employee  :&nbsp;</label>
-                                        <div class="col-sm-9">
-                                            <select id="DdlEmployee" name="UserId" asp-items="@(new SelectList(""))" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" disabled><option value="">Please select Employee</option></select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="mb-2 row">
-                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">From Date :&nbsp;</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" id="TxtFromDate" name="Fromdate" />
-                                        </div>
-                                    </div>
-                                    <div class="mb-2 row">
-                                        <label class="col-sm-3 col-form-label  form-label" style=" margin-top:-4px;">To Date :&nbsp;</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" id="TxtToDate" name="Todate" />
-                                        </div>
-                                    </div>
-
-                                    @*<input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />*@
-
-                                <div style="margin-left:172px">
-
-                                    <input type="button" class="btn btn-light " onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" id="BtnClearSearchForm" style="padding:4px 12px;border-radius:6px;" value="Clear">&nbsp;&nbsp;&nbsp;
-
-                                    @*<input type="submit" class="btn btn-success active" onclick="_TblLeavesSearchedResultPage_PagePartialViewFunction(event)" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">*@
-                                    <input type="submit" class="btn btn-success active" onclick=" TblDataTableWithColumns_CallingFunction(event, 'Nostop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div')" id="BtnSearchId" style="padding:3px 8px;border-radius:6px;" value="Search">
-
-                                </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+@*==========================search LEAVES Card====================*@
+<div class="card mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">
+            <span>
+                LEAVES SEARCH
+            </span>
+        </h5>
     </div>
-</div>
+    <div class="card-body">
+        <form id="FmLeavesSearchPage_SearchDetails">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<br />
-
-@*-----GetSearchedRecords Result page*@
-<div id="TblLeavesSearchedResultPage_Div" style="display:none">
-    <div class="default-according style-1" id="accordionoc123456">
-        <div class="card">
-            <div class="card-header " style="background-color:black ;">
-                <h5 class="mb-0">
-                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle"></span> RECORDS </span></button>
-                </h5>
-            </div>
-            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-
-                @*-----------------------------------------Cancel Comment Popup-----------------------------*@
-                <div id="DivCancelComment" class="Commentpopup" style="display: none;">
-                    <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
-                        <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
-                            <span style="font-size: 24px;cursor:pointer">×</span>
-                        </a>
-                        <br>
-                        <span class="ErrorMessageSpan" style=" background-color: yellow;" id="CancelLeaveError"></span>
-                        <span style="margin-left: 34%;">Comments</span>
-                        <textarea style="height: 100px; width: 100%;" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment"></textarea><br />
-                        <label> <i style="font-size: 10px;"><span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</i></label>
-                        <div>
-                            <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
+            <div class="row">
+                <div class="col">
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Department</label>
+                        <div class="col-sm-4 ">
+                            <div class="position-relative">
+                                <select id='DdlDepartment' class="select2 form-select select2-hidden-accessible" asp-for="InstanceClassificationId" name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" asp-items="@(new SelectList(""))">
+                                    <option value=''>Select a Department</option>
+                                </select>
+                                <span asp-validation-for="InstanceClassificationId" class=" text-danger "></span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Employee</label>
+                        <div class="col-sm-4 ">
+                            <div class="position-relative">
+                                <select id='DdlEmployee' class="select2 form-select select2-hidden-accessible" asp-for="UserId" name="UserId" asp-items="@(new SelectList(""))" disabled>
+                                    <option value=''>Select a Employee</option>
+                                </select>
+                                <span asp-validation-for="UserId" class=" text-danger "></span>
 
-
-                <div class="card " style="position: inherit;">
-
-                    <form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords" class="table-responsive">
-                        <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="cell-border compact display tableid">
-                            <thead>
-                                <tr>
-                                    <th>LeaveApplicationId</th>
-                                    <th>Name</th>
-                                    <th>Department</th>
-                                    <th>Reason</th>
-                                    <th>Leave Type</th>
-                                    <th>From Date</th>
-                                    <th>To Date</th>
-                                    <th>No of Days</th>
-                                    <th>Status</th>
-                                    <th>Cancel Leave</th>
-                                    <th>Cancel Comments</th>
-                                    <th>Edit</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
+                            </div>
+                        </div>
+                    </div>
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">From Date</label>
+                        <div class="col-sm-4 ">
+                            <input type="date" class="form-control" id="TxtFromDate" name="Fromdate" oninput="Startdatescompare_Vs1(event,'TxtFromDate', 'TxtToDate',  'From Date', 'To Date', true)" />
+                            <span class="compare text-danger "></span>
+                        </div>
+                    </div>
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">To Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="TxtToDate" name="Todate" oninput="datescompare_Vs1(event, 'TxtFromDate', this.getAttribute('id'), 'From Date', 'To Date', true)" />
+                            <span class="compare text-danger "></span>
+                        </div>
+                    </div>
+                    @*--------------------------*@
+                    @*<input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />*@
+                    @*--------------------------*@
+                    <div class="row justify-content-end">
+                        <div class="col-sm-8">
+                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" value="Clear">Clear</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" value="Search">Search</button>
+                        </div>
+                    </div>
+                    @*--------------------------*@
                 </div>
             </div>
-
-        </div>
+        </form>
     </div>
 </div>
 
 
 
+@*-----GetSearchedRecords Result page*@
+<div class="card" id="TblLeavesSearchedResultPage_Div" style="display:none">
+    <div class="card-header flex-column flex-md-row">
+        <div class="head-label text-center">
+            <h5 class="card-title mb-0">
+                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+            </h5>
+        </div>
+    </div>
+
+    <div class="table-responsive text-nowrap">
+        @*-----------------------------------------Cancel Comment Popup-----------------------------*@
+        @*<div id="DivCancelComment" class="Commentpopup" style="display: none;">
+            <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
+                <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
+                    <span style="font-size: 24px;cursor:pointer">×</span>
+                </a>
+                <br>
+                <span class="ErrorMessageSpan" style=" background-color: yellow;" id="CancelLeaveError"></span>
+                <span style="margin-left: 34%;">Comments</span>
+                <textarea style="height: 100px; width: 100%;" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment"></textarea><br />
+                <label> <i style="font-size: 10px;"><span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</i></label>
+                <div>
+                    <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
+                </div>
+            </div>
+        </div>*@
+
+
+    <div class="modal fade show" id="DivCancelComment" tabindex="-1" style="background-color: rgba(75, 70, 92, 0.4); display: none; padding-left: 0px;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+
+                <form class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
+                    <button type="reset" onclick="document.getElementById('DivCancelComment').style.display='none'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Cancel Comment</h3>
+                        @*<p class="text-muted">Add new card to complete payment</p>*@
+                        <label class="form-label ErrorMessageSpan" style=" background-color: khaki;" id="CancelLeaveError">dgbdgdgsgs</label>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label w-100" for="modalAddCard">Comment</label>
+                        <div class="">
+                            <textarea class="form-control" rows="4" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment" placeholder="Enter a Leave Comment"></textarea>
+                            <label class="form-label"> <span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</label>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="OkBtn" >Submit</button>
+                        <button type="reset" class="btn btn-label-secondary btn-reset waves-effect" onclick="document.getElementById('DivCancelComment').style.display='none'" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        @*<form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords">*@
+            <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>LeaveApplicationId</th>
+                        <th>S No</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Reason</th>
+                        <th>Leave Type</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>No of Days</th>
+                        <th>Status</th>
+                        <th>Cancel Leave</th>
+                        <th>Cancel Comments</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+            </table>
+        @*</form>*@
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script src="~/js/LeaveCancellation.js"></script>
 
 
 @*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    //THIS for counting characters of textarea
-    $(document).ready(function () {
-        debugger;
-        //$("#TxtAreaCancelComment").on("input", function () {
-        //    debugger;
-        //    var textareavalue = $("#TxtAreaCancelComment").val();
-        //    var maxlength = 500;
-        //    var textareacount = maxlength - textareavalue.length;
-        //    $("#TextareacountSPAN").text(textareacount);
-        //});
+        //THIS for counting characters of textarea
+        $(document).ready(function () {
+            debugger;
+            //$("#TxtAreaCancelComment").on("input", function () {
+            //    debugger;
+            //    var textareavalue = $("#TxtAreaCancelComment").val();
+            //    var maxlength = 500;
+            //    var textareacount = maxlength - textareavalue.length;
+            //    $("#TextareacountSPAN").text(textareacount);
+            //});
 
 
-        //function CharactercountFunction(LabelId) {
-        //    debugger;
-        //    var textareavalue = $(this).val();
-        //    var maxlength = 500;
-        //    var textareacount = maxlength - textareavalue.length;
-        //    if (textareacount != 500) {
-        //        $("#LblTextareacount").show();
-        //    }
-        //    $("#" + LabelId).text(textareacount);
-        //}
-    });
-</script>*@
+            //function CharactercountFunction(LabelId) {
+            //    debugger;
+            //    var textareavalue = $(this).val();
+            //    var maxlength = 500;
+            //    var textareacount = maxlength - textareavalue.length;
+            //    if (textareacount != 500) {
+            //        $("#LblTextareacount").show();
+            //    }
+            //    $("#" + LabelId).text(textareacount);
+            //}
+        });
+    </script>*@

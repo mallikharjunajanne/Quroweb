@@ -81,6 +81,8 @@ namespace Connect4m_Web.Models
     public class AttendanceModel
     {
         public List<int> List_UserId { get; set; }
+        public List<int> List_PayrollCategoryId { get; set; }
+        public List<int> List_PayrollSubCategoryId { get; set; }
         public List<string> List_LeaveNameandDayCount { get; set; }
         public string ScreenName { get; set; }
         public int LapsedId { get; set; }
@@ -138,9 +140,9 @@ namespace Connect4m_Web.Models
         public int Batchid { get; set; }
         public int Userjoined { get; set; }
         public int InstanceID { get; set; }
-       
+        [Required]
         public int UserId { get; set; }
-        
+        [Required]
         public int InstanceClassificationId { get; set; }
       
 
@@ -485,6 +487,7 @@ namespace Connect4m_Web.Models
     {
 
         public int InstanceId { get; set; }
+        public int LeaveTypeId { get; set; }
         public int InstanceClassificationId { get; set; }
 
 

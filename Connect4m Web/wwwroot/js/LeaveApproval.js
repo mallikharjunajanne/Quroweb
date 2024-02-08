@@ -8,10 +8,10 @@
         $.ajax({
             url: "/Attendance/DdlDepartmentIdIOfStaff_Calingfunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 $("#DdlDepartmentId").empty();
                 $("#DdlDepartmentId").append('<option value="">---------Select---------</option>');
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#DdlDepartmentId").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
 
@@ -32,12 +32,12 @@
     $.ajax({
         url: "/Attendance/Roles_InstanceRole_SELByInstanceId_CallingFunction",
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             $("#DdlRoles").empty();
             $("#DdlRoles").append('<option value="">' + "---------Select--------" + '</option>');
 
 
-            $.each(responce, function (i, Value2) {
+            $.each(response, function (i, Value2) {
                 $("#DdlRoles").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
             });
 
@@ -61,6 +61,7 @@
     debugger;
     if (val != 12) {
         event.preventDefault();
+        loaddingimg.css('display', 'block');
     }
 
     var Departmentid = $("#DdlDepartmentId").val();
@@ -70,39 +71,34 @@
     var FirstName = $("#ctl00_ContentPlaceHolder1_txtfirstname").val();
     var LastName = $("#ctl00_ContentPlaceHolder1_txtlastname").val();
         var UserName = $("#ctl00_ContentPlaceHolder1_txtUserName").val();
-
-        if (val != 12) {
-            //setTimeout(function () {
-            $("#loadingOverlay").show();
-       // }, 100);
-        }
-
     debugger;
     $.ajax({
         url: "/Attendance/TblAppliedStaffLeaves_SearchRecords_Calingfunction?Departmentid=" + Departmentid + "&FirstName=" + FirstName + "&UserName=" + UserName + "&LastName=" + LastName + "&RoleID=" + RoleID + "&Fromdate=" + Fromdate + "&Todate=" + Todate,//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             debugger;
             $("#" + EffectiveTableid + " tbody").empty();
-            if (responce.length <= 0) {
+            $("#FmAppliedStaffLeaves_SearchRecords_Div").show();
+            if (response.length <= 0) {
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
                 //$("#" + SearchRecords_Div).hide();
 
                 $("#" + EffectiveTableid).hide();
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).text("NO RECORDS");
+               // $("#" + RecordcountSpanId).text("");
+               // $("#" + RecordcountSpanId).text("NO RECORDS");
+                $("#" + RecordcountSpanId).text("0");
                 $("#" + ExportExcelLink).hide();
 
                 // $("#Main_Span_Error").text("No records.");
             }
             else {
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
-               
+                //$("#" + RecordcountSpanId).text("");
+               // $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                $("#" + RecordcountSpanId).text(response.length);
                 // $("#TblApplied_SearchRecords tbody").empty();
                 var DeligationRecord = "";
                 var LeaveType = "";
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     //DeleteBTN = "<p class='fa fa-trash -o' title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer; '><input type='text' hidden  id='id_For_Delete' value=''></p>";
 
                     if (Value2.delegationRecord =="True") {
@@ -138,7 +134,7 @@
                         "<td>" + DeligationRecord + " </td>" +
 
                         // "<td>" + viewfiles + "</td>" +
-                        "<td style='text-align:center;' ><a id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'  style='cursor: pointer;color:Blue; font-weight:bold; text-decoration:underline;'>Approve/Reject</a><input  type='hidden' id='StaffId' value='" + Value2.staffId + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceId' value='" + Value2.instanceId + "' /><input  type='hidden' id='BatchId' value='" + Value2.batchId + "' /></td>" +
+                        "<td style='text-align:center;' ><a style='cursor: pointer;' class='badge rounded-pill bg-label-primary' id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'>Approve/Reject</a><input  type='hidden' id='StaffId' value='" + Value2.staffId + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceId' value='" + Value2.instanceId + "' /><input  type='hidden' id='BatchId' value='" + Value2.batchId + "' /></td>" +
                         "</tr>"
                     );
                 });
@@ -156,18 +152,18 @@
                
             }
             debugger;
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
 
     
     });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -185,9 +181,6 @@
     var DepartmentName = $("#DdlApproved_Rejected").val();
     var Fromdate = $("#" + FromdateId).val();
     var Todate = $("#" + TodateId).val();
-
-
-
         
         if (Fromdate === "") {                       
             if (Todate != "") {
@@ -205,45 +198,41 @@
             $("#Main_Span_Error").text("'From Date' cannot be greater than 'To Date'. ");
             return;
         }
-
-
-
-       // setTimeout(function () {
-            $("#loadingOverlay").show();
-       //}, 100);
-
-       
-    debugger;
+            loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/TblApprovedStaffLeaves_SearchRecords_Calingfunction?DepartmentName=" + DepartmentName + "&Fromdate=" + Fromdate + "&Todate=" + Todate + "&ApprovedRejectedProp=" + ApprovedRejectedProp,//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             debugger;
-
+            $("#ApprovedLeaves_SearchRecords_Div_For_Print").show();
             $("#" + EffectiveTableid + " tbody").empty();
-            if (responce.length <= 0) {
+            if (response.length <= 0) {
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
                 $("#" + SearchRecords_Div).hide();
-                var PrintBTN = document.getElementById("ApprovedLeaves_SearchRecordsPrintBTN");
-                PrintBTN.innerHTML = "";
+                //var PrintBTN = document.getElementById("ApprovedLeaves_SearchRecordsPrintBTN");
+                //PrintBTN.innerHTML = "";
+                $("#ApprovedLeaves_SearchRecordsPrintBTN").css('display', 'none');
                 $("#" + EffectiveTableid).hide();
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).text("NO RECORDS");
+                //$("#" + RecordcountSpanId).text("");
+                //$("#" + RecordcountSpanId).text("NO RECORDS");
+                $("#" + RecordcountSpanId).text("0");
                 // $("#" + ExportExcelLink).hide();
                 $("#Main_Span_Error").text("");
                 $("#Main_Span_Error").text("No Records found.");
             } else {
                 debugger;
-                var PrintBTN = document.getElementById("ApprovedLeaves_SearchRecordsPrintBTN");
-                PrintBTN.innerHTML = "";
-                PrintBTN.innerHTML = "PRINT";
+                //var PrintBTN = document.getElementById("ApprovedLeaves_SearchRecordsPrintBTN");
+                //PrintBTN.innerHTML = "";
+                //PrintBTN.innerHTML = "PRINT";
+                $("#ApprovedLeaves_SearchRecordsPrintBTN").css('display', 'block');
                 $("#Main_Span_Error").text("");
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
+               // $("#" + RecordcountSpanId).text("");
+               // $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                $("#" + RecordcountSpanId).text(response.length);
 
                 // $("#TblApplied_SearchRecords tbody").empty();
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     //DeleteBTN = "<p class='fa fa-trash -o' title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer; '><input type='text' hidden  id='id_For_Delete' value=''></p>";
 
 
@@ -276,16 +265,16 @@
                 // $("#" + ExportExcelLink).show();
                 $("#Main_Span_Error").empty();        
             }
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -332,19 +321,19 @@
         }
     }
        // setTimeout(function () {
-            $("#loadingOverlay").show();
+            loaddingimg.css('display', 'block');
        // }, 100);
 
         var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        TblDataTableWithColumns_CallingFunction(event, 'noStop', "/Attendance/TblLeaveRequested_SearchRecords_Calingfunction?LeaveselectedType=" + LeaveselectedType + "&RoleID=" + RoleID + "&Fromdate=" + Fromdate + "&Todate=" + Todate, 'TblLeaveRequested_SearchRecords', 'Counts', 'FmLeaveRequested_SearchRecords', 'LeaveRequested_SearchRecords_Div', 'LeavesRequested', ExcelDownloadColumnsNo);
+        TblDataTableWithColumns_CallingFunction(event, 'noStop', "/Attendance/TblLeaveRequested_SearchRecords_Calingfunction?LeaveselectedType=" + LeaveselectedType + "&RoleID=" + RoleID + "&Fromdate=" + Fromdate + "&Todate=" + Todate, 'TblLeaveRequested_SearchRecords', 'LeaveRequestedCounts', 'FmLeaveRequested_SearchRecords', 'LeaveRequested_SearchRecords_Div', 'LeavesRequested', ExcelDownloadColumnsNo, false);
       
     //$.ajax({
     //    url: "/Attendance/TblLeaveRequested_SearchRecords_Calingfunction?LeaveselectedType=" + LeaveselectedType + "&RoleID=" + RoleID + "&Fromdate=" + Fromdate + "&Todate=" + Todate,//+"&values="+ queryString,
     //    type: "GET",
-    //    success: function (responce) {
+    //    success: function (response) {
             
     //        $("#" + EffectiveTableid + " tbody").empty();
-    //        if (responce.length <= 0) {
+    //        if (response.length <= 0) {
     //            //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
     //            //$("#" + SearchRecords_Div).hide();
 
@@ -363,7 +352,7 @@
     //            PrintBTN.innerHTML = "PRINT";
     //            debugger;
     //            $("#" + RecordcountSpanId).text("");
-    //            $("#" + RecordcountSpanId).text("YOUR SEARCH RESULTED " + responce.length + " RECORD(S).");
+    //            $("#" + RecordcountSpanId).text("YOUR SEARCH RESULTED " + response.length + " RECORD(S).");
     //            //var table = js('#' + EffectiveTableid).DataTable();
     //            //var currentPage = table.page.info().page;
     //            //table.destroy();
@@ -377,7 +366,7 @@
     //            var Name = "";
     //            var id = 1;
     //            var id1 = 1;
-    //            $.each(responce, function (i, Value2) {
+    //            $.each(response, function (i, Value2) {
     //                if (count == 0) {
     //                    Name = Value2.name;
     //                }
@@ -459,7 +448,7 @@
 
     //            debugger;
     //            //var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4];
-    //            //TblDataTableWith_OutColumns_CallingFunction(EffectiveTableid, responce, responce.length, currentPage, 'LeavesRequested', ExcelDownloadColumnsNo, '', SearchRecords_Div);
+    //            //TblDataTableWith_OutColumns_CallingFunction(EffectiveTableid, response, response.length, currentPage, 'LeavesRequested', ExcelDownloadColumnsNo, '', SearchRecords_Div);
 
     //            ////these are for add id to ID_APPEND_For_Edit
     //            //var rows = $("#" + EffectiveTableid + " tbody tr");
@@ -474,16 +463,16 @@
     //            $("#Main_Span_Error").empty();               
     //        }
     //        debugger;
-    //        $("#loadingOverlay").hide();
+    //        loaddingimg.css('display', 'none');
     //    }
     //    ,
     //    error: function (xhr, status, error) {
-    //        $("#loadingOverlay").hide();
+    //        loaddingimg.css('display', 'none');
     //        $("#Main_Span_Error").text("Something Error");
     //    }
     //});
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 
@@ -493,31 +482,32 @@
     function BackTOSearhLevels(event) {
     try {
     // $("#FmAppliedStaffLeaves_SearchRecords_Div").hide();
-    TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedStaffLeaves_SearchRecords', 'ctl00_ContentPlaceHolder1_lblNumRecords', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
+        TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedStaffLeaves_SearchRecords', 'Counts', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
 
 
     $("#BatchId_Popup").val('');
     $("#StaffId_Popup").val('');
     $("#InstanceClassificationId_Popup").val('');
-    $("#InstanceId_Popup").val('');
+    $("#InstanceId_Popup").val('');FmAppliedStaffLeaves_SearchRecords_Div
     $("#TblApplied_SearchRecords_Tr_Id").val('');
     $("#TXTareaRemarks_Popup").val('');
 
     $(".ErrorMessageSpan").empty();
-    $("#accordionoc12345").show();
+    $("#TabApprove_Reject").show();
         $("#ApproveReject_Submitbuttonpage_Div").hide();
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
     }
 
 }
-    function FN_ClearValues(valuefornotclear, Formid) {
+
+function FN_ClearValues(valuefornotclear, Formid) {
     try {
     debugger;
     if (Formid == "Fm_ApproveandReject_PopUp") {
         $("#TXTareaRemarks_Popup").val('');
     } else {
-        document.getElementById(Formid).reset(); // Reset the form
+      //  document.getElementById(Formid).reset(); // Reset the form
         if (Formid == "LeaveRequested_Form") {
             $("#TblLeaveRequested_SearchRecords tbody").empty();
             $("#TblLeaveRequested_SearchRecords").hide();
@@ -536,10 +526,12 @@
     }
 }
 
-    //click to display  approve leave screen
+    //================================click to display  approve leave screen
     $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
-    event.preventDefault();
+        event.preventDefault();
+
+        loaddingimg.css('display', 'block');
     $("#ErrorMessageSpan").empty();
     $("#TblAppliedLeavesHistory_SearchRecords").show();
     var StaffUserName = $(this).closest('tr').find('td').find('u').text();
@@ -549,12 +541,11 @@
     var InstanceClassificationId = $(this).closest('tr').find('td').find("#InstanceClassificationId").val();
     //  var TblApplied_SearchRecords_Tr_Id = $(this).closest('tr').attr('id');
 
-        $("#loadingOverlay").show();
     $.ajax({
         url: "/Attendance/TblAppliedStaffLeavesRequestByBatchid_SearchRecords_Calingfunction?InstanceId=" + InstanceId + "&BatchId=" + BatchId,//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
-            $("#accordionoc12345").hide();
+        success: function (response) {
+            $("#TabApprove_Reject").hide();
             $("#ApproveReject_Submitbuttonpage_Div").show();
             $("#TXTareaRemarks_Popup").val('');
             $("#StaffUserName").text('');
@@ -575,7 +566,7 @@
             //  $("#TblApplied_SearchRecords_Tr_Id").val(TblApplied_SearchRecords_Tr_Id);
 
          
-            if (responce.length <= 0) {
+            if (response.length <= 0) {
 
                 debugger;
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
@@ -587,51 +578,45 @@
                 $("#Main_Span_Error").text("No records.");
             }
             else {
-               
-
-
                 $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
                 // $("#TblApplied_SearchRecords tbody").empty();
                 var viewfiles = "";
-                $.each(responce, function (i, Value2) {
+               // var LeaveTypeId = "";
+                $.each(response, function (i, Value2) {
+
+                    $("#LeaveTypeId_Popup").val(Value2.leaveTypeId);
                     if (Value2.attachedFileName != "") {
-                        viewfiles = " <a href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'><font color='blue'><u style='font-weight:700;'>View</u></font></a >";
+                        viewfiles = " <a class='badge rounded-pill bg-label-info' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank' style='cursor:pointer;'>View</a >";
                     }
                     else {
                         viewfiles = " ";
-                    }
-                    debugger;
+                    }               
                     $("#TblAppliedLeavesHistory_SearchRecords tbody").append(
                         //  $("#TblApplied_SearchRecords tbody").append(
 
                         "<tr>" +
 
                         "<td>" + Value2.leaveType + "</td>" +
-
                         "<td>" + Value2.fromdateString + "</td>" +
                         "<td>" + Value2.todateString + "</td>" +
-
                         "<td>" + Value2.reason + "</td>" +
                         "<td>" + Value2.noOfDays + " </td>" +
-
                         "<td>" + Value2.daysession + "</td>" +
-
-
                         "<td>" + viewfiles + " </td>" +
                         "<td>" + Value2.requestedDate + "</td>" +
                         // " + Value2.comments + "
-                        "<td>" +
-                        "<i onclick='CommentopenPopup(" + i + ")' style='text-decoration: underline; color: blue; cursor: pointer;'>View Comments</i> " +
-                        "<div id='" + i + "' class='Commentpopup'>" +
-                        "<div id='Commentpopup-content' class='Commentpopup-content' style='padding-top: 0; border-style: groove;'>" +
-                        "<a style='margin-left: 99%; width: -1%;' onclick=\"document.getElementById(" + i + ").style.display='none'\"><span style='font-size: 24px;cursor:pointer'>×</span></a><br/>" +
-                        "<span style='margin-left: 34%;'>Comments</span> " +
-                        "<textarea style='height: 100px; width: 100%;'>" + Value2.comments + "</textarea>" +
-                        "</div></div>" +
-                        "<input type='hidden' id='InstanceId' value='" + Value2.instanceId + "' />" +
-                        "<input type='hidden' id='BatchId' value='" + Value2.batchId + "' />" +
-                        "</td>" + // "<td>" + viewfiles + "</td>" +
-                        // "<td ><a id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'  style='cursor: pointer;color:Blue; font-weight:bold; text-decoration:underline;'>Approve/Reject</a><input  type='hidden' id='StaffId' value='" + Value2.staffId + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /></td>" +
+                        //"<td>" +
+                        //"<i onclick='CommentopenPopup(" + i + ")' style='text-decoration: underline; color: blue; cursor: pointer;'>View Comments</i> " +
+                        //"<div id='" + i + "' class='Commentpopup'>" +
+                        //"<div id='Commentpopup-content' class='Commentpopup-content' style='padding-top: 0; border-style: groove;'>" +
+                        //"<a style='margin-left: 99%; width: -1%;' onclick=\"document.getElementById(" + i + ").style.display='none'\"><span style='font-size: 24px;cursor:pointer'>×</span></a><br/>" +
+                        //"<span style='margin-left: 34%;'>Comments</span> " +
+                        //"<textarea style='height: 100px; width: 100%;'>" + Value2.comments + "</textarea>" +
+                        //"</div></div>" +
+                        //"<input type='hidden' id='InstanceId' value='" + Value2.instanceId + "' />" +
+                        //"<input type='hidden' id='BatchId' value='" + Value2.batchId + "' />" +
+                        //"</td>" +
+                        "<td>" + Value2.comments+"</td>"+
                         "</tr>"
                     );
 
@@ -648,16 +633,16 @@
                 //$("#" + ExportExcelLink).show();
                 $("#Main_Span_Error").empty();
             }
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });
@@ -671,44 +656,50 @@
     event.preventDefault();
     $(".ErrorMessageSpan").empty();
     // ScrollToSelected_ID('Main_Span_Error');
-
-    debugger;
+        if ($("#StaffId_Popup").val() == '') {
+            $('.alert-danger p').text("Something Error");
+            $(".alert-danger").show().delay(6000).fadeOut();
+            return;
+        }
         var formData = new FormData($("#Fm_ApproveandReject_PopUp")[0]);
        // setTimeout(function () {
-            $("#loadingOverlay").show();
+            loaddingimg.css('display', 'block');
        // }, 500);
-
-      
-      
     $.ajax({
         url: "/Attendance/LeaveApproval?submitButtonName=" + submitButtonName,
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
-        success: function (responce) {
+        success: function (response) {
             debugger;
             $(".ErrorMessageSpan").empty();
-            $("#Main_Span_Error").text(responce.message);
+           // $("#Main_Span_Error").text(response.message);
 
-            if (responce.message == "Leave Approved Successfully." || responce.message == "Leave Rejected Successfully.") {
-
+            if (response.message == "Leave Approved Successfully." || response.message == "Leave Rejected Successfully.") {
+                $("#BtnApprove").prop('disabled', true);
+                $("#BtnReject").prop('disabled', true);
+                $("#StaffId_Popup").val('');
                 $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
                 $("#TblAppliedLeavesHistory_SearchRecords").hide();
-
+                $('.alert-success p').text(response.message);
+                $(".alert-success").show().delay(6000).fadeOut()
+            } else {
+                $('.alert-danger p').text(response.message);
+                $(".alert-danger").show().delay(6000).fadeOut();
             }
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
 
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+            loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
 
     } catch (e) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 
@@ -720,7 +711,7 @@
 
     try {
 
-    $("#accordionoc12345").show();
+    $("#TabApprove_Reject").show();
     $("#ApproveReject_Submitbuttonpage_Div").hide();
     FN_ClearValues("no1", "ApproveReject_Form");
     TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedStaffLeaves_SearchRecords', 'ctl00_ContentPlaceHolder1_lblNumRecords', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
@@ -789,15 +780,16 @@
     // event.preventDefault;
     try {
     debugger;
-    var DepartmentName = $("#DdlApproved_Rejected").val();
-
+        var DepartmentName = $("#DdlApproved_Rejected").val();
+        $("#ApprovedLeaves_SearchRecords_Div_For_Print").css("display", 'block');
     if (DepartmentName == "Approved") {
         $("#TblRejectedLeaves_SearchRecords tbody").empty();
         $("#RejectedLeaves_SearchRecords_Div").hide();
         //$("#" + SearchRecords_Div).hide();
         $("#TblRejectedLeaves_SearchRecords").hide();
-        $("#SpanRejectedLeavesNumRecords").text("");
-        $("#SpanRejectedLeavesNumRecords").text("NO RECORDS");
+        //$("#SpanRejectedLeavesNumRecords").text("");
+        //$("#SpanRejectedLeavesNumRecords").text("NO RECORDS");
+        $("#SpanRejectedLeavesNumRecords").text("0");
 
         TblApprovedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblApprovedLeaves_SearchRecords', 'SpanApprovedLeavesNumRecords', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'ApprovedLeaves_SearchRecords_Div', 'Approved');
 
@@ -808,8 +800,9 @@
         $("#ApprovedLeaves_SearchRecords_Div").hide();
         //$("#" + SearchRecords_Div).hide();
         $("#TblApprovedLeaves_SearchRecords").hide();
-        $("#SpanApprovedLeavesNumRecords").text("");
-        $("#SpanApprovedLeavesNumRecords").text("NO RECORDS");
+        //$("#SpanApprovedLeavesNumRecords").text("");
+        //$("#SpanApprovedLeavesNumRecords").text("NO RECORDS");
+        $("#SpanApprovedLeavesNumRecords").text("0");
         TblApprovedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblRejectedLeaves_SearchRecords', 'SpanRejectedLeavesNumRecords', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'RejectedLeaves_SearchRecords_Div', 'Rejected');
 
     }

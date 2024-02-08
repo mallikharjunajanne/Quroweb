@@ -10,11 +10,11 @@ function GettingUserDetails_EditFunction(UserId) {
         CommonAjaxFunction('GET', '/Users/CreateUsers', data, function (response) {
             $('#DivappendCreateNewUsers').html(response);
 
-          //  $("#BtnSaveFormInGeneralInfo").text("Update");
+            //  $("#BtnSaveFormInGeneralInfo").text("Update");
             $('#DivUsersSearchPage').css('display', 'none');
             $('#BtnBackToSearch').css('display', 'block');
             $("#ParentDetailsTab").css("display", " ");
-           // $("#BtnSaveFormInGeneralInfo").val("Update");
+            // $("#BtnSaveFormInGeneralInfo").val("Update");
             //$(".DdlCascadDropdowns").prop("disabled", false);
             window.scrollTo(0, 0);
             loaddingimg.css('display', 'none');
@@ -57,7 +57,7 @@ $("#BtnBackToSearch").click(function (event) {
         event.preventDefault();
         //  $(".ErrorMessageSpan").empty();
         loaddingimg.css('display', 'block');
-       // $('#BtnBackToSearch').css('display', 'none !important');
+        // $('#BtnBackToSearch').css('display', 'none !important');
         $('#BtnBackToSearch').css('display', 'none');
 
         TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Users/TblUsersSearch', 'TblUserSearchresults', 'Counts', 'FmUsersSearch', 'DivTblUserSearchresults', '', [], true);
@@ -80,7 +80,7 @@ $("#FmUsersSearch").submit(function (event) {
         //  $(".ErrorMessageSpan").empty();
         loaddingimg.css('display', 'block');
         var formElement = document.getElementById('FmUsersSearch');
-      //  $("#TblUserSearchresults tbody").empty();
+        //  $("#TblUserSearchresults tbody").empty();
         setTimeout(function () {
             var validationMessages = formElement.getElementsByClassName('field-validation-error');
             // var validationMessages2 = formElement.getElementsByClassName('error2');
@@ -113,8 +113,6 @@ $("#FmUsersSearch").submit(function (event) {
         //});
         //    });
     } catch (e) {
-        // loaddingimg.css('display', 'none');
-           loaddingimg.css('display', 'none');
         loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
@@ -164,7 +162,7 @@ function MoveTonextpage(url, data, BtnId) {
     debugger;
     document.getElementById("loading").style.display = "block";
     $(".nav-link").removeClass('active');
-    $("#"+BtnId).addClass('active');
+    $("#" + BtnId).addClass('active');
     data = { UserId: $("#HdnUserIdCreatePage").val() };
     CommonAjaxFunction('GET', '/Users/' + url, data, function (response) {
         $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
@@ -215,7 +213,7 @@ function MoveTonextpage(url, data, BtnId) {
 
 //=====================Showing Feilds based on Role in General info
 function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
-//function RoleOnChangeFunctionInGeneralTab(RoleName, IsEmpty) {
+    //function RoleOnChangeFunctionInGeneralTab(RoleName, IsEmpty) {
     try {
         //function RoleOnChangeFunction(Roleid) {
         debugger;
@@ -228,8 +226,8 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
             //  $("#DdlDesignationId").val("");
         }
         //if (Roleid == 775) {
-       // if (RoleName == "STUDENT") {
-       // if ($("#" + Roleid +" option:selected").text().toUpperCase() == "STUDENT") {
+        // if (RoleName == "STUDENT") {
+        // if ($("#" + Roleid +" option:selected").text().toUpperCase() == "STUDENT") {
         if ($("#DdlRoleIdInGeneralTab option:selected").text().toUpperCase() == "STUDENT") {
             $(".ClsSessionStudent").css("display", "block");
             $(".ClsDivTeachers").css("display", "none");
@@ -293,23 +291,30 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
 
 
 ////=====================================Delete Photo 
-//function DeletePhoto_CallingFunction() {
-//    // <img src="~/UserPhotos/545/217720/Profile Photo.jpg" />
-//    debugger;
-//    var UserId = $("#HdnUserId").val();
-//    var Deletemsg = "Photo";
-//    CommonDeleteFunction("POST", "/Users/DeletePhoto_CallingFunction?ButtonName=Delete&UserId=" + UserId, Deletemsg, function (response) {
-//        $("#Main_Span_Error").text(response.message);
-//        // $("#ImgNophotoAvailable").css("display", "block");
-//        // $("#ImgPhotoDisplay").css("display", "none");
-//        $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
-//        $("#FlPhoto").css("display", "block");
-//        // $("#SpnPhotoName").css("display", "none");
-//        $("#SpnPhotoName").text("");
-//        $(".ClsFileName").css("display", "none");
-//        window.scrollTo(0, 0);
-//    });
-//}
+function DeletePhoto_CallingFunction() {
+    // <img src="~/UserPhotos/545/217720/Profile Photo.jpg" />
+    debugger;
+    var UserId = $("#HdnUserId").val();
+    var Deletemsg = "Photo";
+    CommonDeleteFunction_Vs1(Deletemsg, "POST", "/Users/DeletePhoto_CallingFunction?ButtonName=Delete&UserId=" + UserId, function (response) {
+
+        if (response.message == "Photo Deleted Sucessfully.") {
+            $('.alert-success p').text(response.message);
+            $(".alert-success").show().delay(6000).fadeOut()
+
+            //  $("#Main_Span_Error").text(response.message);
+            $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
+            $("#FlPhoto").css("display", "block");
+            $("#SpnPhotoName").text("");
+            $(".ClsFileName").css("display", "none");
+        } else {
+            $('.alert-danger p').text(response.message);
+            $(".alert-danger").show().delay(6000).fadeOut();
+           // $("#Main_Span_Error").text(response.message);
+        }
+        window.scrollTo(0, 0);
+    });
+}
 
 ////=====================================Delete Users 
 //$("#BtnDeleteFormInGeneralInfo").click(function (event) {
@@ -327,7 +332,7 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
 
 //  ===================================== Save Users Details in General Tab & Parent Tab =================
 $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event) {
-//$("#FmGeneralInfoTab,#FmParentDetailsTab").submit(function (event) {
+    //$("#FmGeneralInfoTab,#FmParentDetailsTab").submit(function (event) {
     // $("#BtnSaveFormInGeneralInfo").click(function (event) {
     try {
         event.preventDefault();
@@ -378,8 +383,8 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
             var validationMessages2 = formElement.getElementsByClassName('error2');
             if (validationMessages.length == 0 && validationMessages2.length == 0) {
                 loaddingimg.css('display', 'block');
-              //  var formData = new FormData($("#FmGeneralInfoTab")[0]);
-                var formData = new FormData($('#'+formId)[0]);
+                //  var formData = new FormData($("#FmGeneralInfoTab")[0]);
+                var formData = new FormData($('#' + formId)[0]);
                 //var ScreenName = '@ViewData["Title"]';
                 formData.append("IdentityPassword", $("#IdentityPassword").val());
                 formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
@@ -392,11 +397,11 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                 } else if (formId == "FmParentDetailsTab") {
                     ControllerName = "ManageParents";
                     formData.append("Relationship", $("#DdlRelationship").val());
-                //    formData.append("AnnualIncome", $("#DdlLacs").val() + "." + $("#Ddlthousands").val());
-                }else if (formId == "FmShowProfile") {
+                    //    formData.append("AnnualIncome", $("#DdlLacs").val() + "." + $("#Ddlthousands").val());
+                } else if (formId == "FmShowProfile") {
                     ControllerName = "ManageUsers";
                 }
-                  //  else {
+                //  else {
                 //    loaddingimg.css('display', 'none');
                 //    $("#Main_Span_Error").text("Something Error");
                 //    return;
@@ -404,15 +409,15 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
 
                 performCrudOperationCommonFunction('POST', "/Users/" + ControllerName, formData, function (response) {
                     debugger;
-                
-                    
+
+
                     if (response.message.includes("Record inserted successfully.") || response.message.includes("Record updated successfully.")) {
                         $("#BtnSaveFormInGeneralInfo").prop("disabled", true);
 
                         if (formId == "FmGeneralInfoTab") {
                             $("#HdnUserIdCreatePage").val(response.userid);//Append Id in create view hidden
                         }
-                        
+
                         // var Photoname = $("#FlPhoto")
                         // var imageName = $("#FlPhoto").attr("src").substring($("#FlPhoto").attr("src").lastIndexOf('/') + 1);
                         var photo = $('#FlPhoto').prop('files')[0];
@@ -421,10 +426,11 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                         if (photo) {
                             $("#FlPhoto").css("display", "none");
                             $("#FlPhoto").val('');
-                            $(".ClsFileName").css("display", "block");
+                           // $(".ClsFileName").css("display", "block");
+                            $(".ClsFileName").css("display", "");
                             $("#SpnPhotoName").text(photo.name);
-                        } 
-                          //  else {
+                        }
+                        //  else {
                         //   // $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
                         //    $("#FlPhoto").css("display", "block");
                         //    $(".ClsFileName").css("display", "none");
@@ -437,21 +443,20 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                         $('.alert-danger p').text(response.message);
                         $(".alert-danger").show().delay(5000).fadeOut()
                     }
-                 
-                  //  $("#" + formId + " #Main_Span_Error").text(response.message);
+
+                    //  $("#" + formId + " #Main_Span_Error").text(response.message);
 
 
-                   // window.scrollTo(0, 0);
+                    loaddingimg.css('display', 'none');
+                    // window.scrollTo(0, 0);
                 }, function (error) {
                     loaddingimg.css('display', 'none');
                     $("#Main_Span_Error").text("Something Error");
                 }, true);
-                loaddingimg.css('display', 'none');
             } else {
                 loaddingimg.css('display', 'none');
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
                 $(".alert-danger").show().delay(5000).fadeOut();
-              
             }
         }, 50);
     } catch (e) {
@@ -503,11 +508,11 @@ function GettingParentDetails_EditFunction(ParentId, isParentTable) {
         loaddingimg.css('display', 'block');
 
         MoveTonextpage('CreateNewParents?ParentId=' + ParentId + "&isParentTable=" + isParentTable, null)
-            //.then(() => {
-            //    loaddingimg.css('display', 'none');
-            //});
+        //.then(() => {
+        //    loaddingimg.css('display', 'none');
+        //});
 
-       // loaddingimg.css('display', 'none');
+        // loaddingimg.css('display', 'none');
 
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");

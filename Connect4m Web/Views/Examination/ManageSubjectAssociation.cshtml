@@ -30,79 +30,79 @@
                         </h5>
                     </div>
 
-                            <div class="card-body">
-                                <form id="FmUsersSearch">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <form id="FmUsersSearch">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                        <div class="row">
-                                            <div class="col">
+                            <div class="row">
+                                <div class="col">
 
 
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Department</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
-                                                                <option value=''>Select a Department</option>
-                                                            </select>
-                                                            @*<span class="ErrorMessageSpan text-danger" id="DdlDepartment_ErrorSpan"></span>*@
-                                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-                                                        </div>
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Class</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" onchange="ClassOnchange()" asp-items="@(new SelectList(""))" disabled>
-                                                                <option value=''>Please select a Class</option>
-                                                            </select>
-                                                            @*<span class="ErrorMessageSpan text-danger" id="DdlClass_ErrorSpan"></span>*@
-                                                            <span asp-validation-for="InstanceSubClassificationId" class="text-danger" ></span>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects Type</label>
-
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select id='DdlSubjectType' asp-for="SubjectTypeId1" name="SubjectTypeId1" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('POST', '/Examination/SubjectNamesDropdown_Calingfunction', 'DdlSubject', '------Select------', true,'FmUsersSearch')" asp-items="@(new SelectList(""))">
-                                                                <option value=''>------Select------</option>
-                                                            </select>
-
-                                                            @*<span class="ErrorMessageSpan text-danger" id="DdlSubjectType_ErrorSpan"></span>*@
-                                                            <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
-
-                                                        </div>
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select id='DdlSubject' asp-for="InstanceSubjectId" name="InstanceSubjectId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
-                                                                <option value=''>------Select------</option>
-                                                            </select>
-
-                                                            @*<span class="ErrorMessageSpan text-danger" id="DdlSubject_ErrorSpan"></span>*@
-                                                            <span asp-validation-for="InstanceSubjectId" class="text-danger"></span>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row justify-content-end">
-                                                    <div class="col-sm-10">
-                                                        <button type="reset" class="btn btn-warning waves-effect waves-light"  onclick="ClearFunction()" id="BtnClear">Clear</button>
-                                                        <button type="submit" class="btn btn-success waves-effect waves-light"  id="BtnSearch">Search</button>
-
-                                                    </div>
-                                                </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
+                                                    <option value=''>Select a Department</option>
+                                                </select>
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlDepartment_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                   
-                                </form>
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Class</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" onchange="ClassOnchange()" asp-items="@(new SelectList(""))" disabled>
+                                                    <option value=''>Please select a Class</option>
+                                                </select>
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlClass_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects Type</label>
+
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlSubjectType' asp-for="SubjectTypeId1" name="SubjectTypeId1" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('POST', '/Examination/SubjectNamesDropdown_Calingfunction', 'DdlSubject', '------Select------', true,'FmUsersSearch')" asp-items="@(new SelectList(""))">
+                                                    <option value=''>------Select------</option>
+                                                </select>
+
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlSubjectType_ErrorSpan"></span>*@
+                                                <span asp-validation-for="SubjectTypeId1" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end required" for="basic-default-name">Subjects</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlSubject' asp-for="InstanceSubjectId" name="InstanceSubjectId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                    <option value=''>------Select------</option>
+                                                </select>
+
+                                                @*<span class="ErrorMessageSpan text-danger" id="DdlSubject_ErrorSpan"></span>*@
+                                                <span asp-validation-for="InstanceSubjectId" class="text-danger"></span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-10">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="ClearFunction()" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearch">Search</button>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                       
+
+                        </form>
+                    </div>
+
                 </div>
 
                 @*===============================searched result table======================*@
@@ -110,7 +110,7 @@
                     @*<span class="checkboxclass"><input id="chkSelectAll" class="form-check-input" type="checkbox" onclick="SelectAllCheckBoxes(this)"><label style="margin-bottom:-0.5rem">Check All</label></span>*@
                     <div class="form-check">
                         <input id="chkSelectAll" class="form-check-input" type="checkbox" onclick="SelectAllCheckBoxes(this)">
-                     
+
                         <label class="form-check-label" for="chkSelectAll">Check All</label>
                     </div>
                     <div class="card" id="SearchedTablePage">
@@ -144,15 +144,15 @@
                                         </div>
                                     </div>
                                 </form>
-                                  
+
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-                    </div>
-                </div>
+        </div>
+    </div>
 
     @*<input id="chkSMS1" class="form-check-input" type="checkbox" data-instancesubjectid1="11235" value="80781" checked="checked" name="selectedUsers">*@
 </body>
@@ -162,9 +162,9 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script src="~/js/GeneralFunctions.js"></script>
 <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/js/ManageSubjectAssociation.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -177,171 +177,6 @@
     var js = jQuery.noConflict(true);
 
 
-    //============================= This for clear a subject dropdowns
-    function ClassOnchange() {
-        $("#DdlSubject").empty();
-        $('#DdlSubjectType option:first').prop("selected", true);
-    }
-
-    //============================= Reset A form
-    function ClearFunction() {
-        $(".ErrorMessageSpan").empty();
-        $("#Div_TblUser").hide();
-        $("#TblUser tbody").empty();
-    }
-    //================================Search Records=====================
-    $("#FmUsersSearch").submit(function (event) {
-        try {
-        //debugger;
-        event.preventDefault();
-        loaddingimg.css('display', 'block');
-        $(".ErrorMessageSpan").empty();
-        var formElement = document.getElementById('FmUsersSearch');
-        setTimeout(function () {
-            var validationMessages = formElement.getElementsByClassName('field-validation-error');
-            // var validationMessages2 = formElement.getElementsByClassName('error2');
-            var validationmelength = validationMessages.length;
-            if (validationmelength == 0) {
-                TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblUserDetailsList', 'TblUser', 'Counts', 'FmUsersSearch', 'Div_TblUser', '', [], false);
-                $("#BtnSave").prop("disabled", false);
-                $("#chkSelectAll").prop('checked', false);
-            } else {
-                loaddingimg.css('display', 'none');
-                $('.alert-danger p').text("Pleae Enter All Required Fields");
-                $(".alert-danger").show().delay(5000).fadeOut();
-            
-            }
-        }, 50);
-        } catch (e) {
-            $("#Main_Span_Error").text("Something Error");
-            loaddingimg.css('display', 'none');
-        }
-        //$("#DdlDepartment").removeClass("errorboxshadow");
-        //$("#DdlClass").removeClass("errorboxshadow");
-        //$("#DdlSubjectType").removeClass("errorboxshadow");
-        //$("#DdlSubject").removeClass("errorboxshadow");
-
-
-        //var SubjectId = $("#DdlSubject").val();
-        //var DdlSubjectType = $("#DdlSubjectType").val();
-        //var DdlClass = $("#DdlClass").val();
-        //var DdlDepartment = $("#DdlDepartment").val();
-        //var count = 0;
-
-        //if (DdlDepartment === "") {
-        //    $("#DdlDepartment_ErrorSpan").text('Department is Required');
-        //    $("#DdlDepartment").addClass("errorboxshadow");
-        //    count++;
-        //}
-        //if (DdlClass === "") {
-        //    $("#DdlClass_ErrorSpan").text('Class is Required');
-        //    $("#DdlClass").addClass("errorboxshadow");
-        //    count++;
-        //}
-        //if (DdlSubjectType === "") {
-        //    $("#DdlSubjectType_ErrorSpan").text("Subject type is Required");
-        //    $("#DdlSubjectType").addClass("errorboxshadow");
-        //    count++;
-        //}
-        //if (SubjectId === "" || SubjectId === null) {
-        //    $("#DdlSubject_ErrorSpan").text("Subject is Required");
-        //    $("#DdlSubject").addClass("errorboxshadow");
-        //    count++;
-        //}
-        //if (count > 0) {
-        //    return;
-        //} else {
-        //    TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblUserDetailsList', 'TblUser', 'Counts', 'FmUsersSearch', 'Div_TblUser', '', []);
-        //    $("#chkSelectAll").prop('checked', false);
-        //    $("#BtnSave").prop('disabled', false);
-        //}
-    })
-
-
-
-
-    //================================= This is For Submit ===============
-    $(document).on("click", '#BtnSave', function (event) {
-        try {
-            event.preventDefault();
-          //  var isAssociated11 = $("input[type='checkbox']#chkSM1S").data("instancesubjectid1");
-            //event.stopImmediatePropagation();
-            loaddingimg.css('display', 'block');
-            debugger;
-            var SubjectId = $("#DdlSubject").val();
-
-            var ButtonName = $(this).val();
-            debugger;
-            $(".ErrorMessageSpan").empty();
-            var formData = new FormData($("#FmUsersSearch")[0]);
-
-            // var Subjectname = $("#Subjectname").val();
-            var UsersTable = $("#TblUser tbody tr");
-            var Usercheckbox;
-            var UsersTableCheckBoxcount = 0;
-            var shouldExit = false;
-            var Userid; var isAssociated;
-            //this for check a record
-            UsersTable.each(function () {
-                Usercheckbox = $(this).find("td input[type='checkbox']#chkSMS");
-                if (Usercheckbox.is(":checked")) { //if check box is checked then it is TRUE
-                     Userid = Usercheckbox.val();
-                    //var isAssociated = Usercheckbox.attr('class');
-                    isAssociated = Usercheckbox.data("instancesubjectid");
-              if (isAssociated != SubjectId && isAssociated != undefined) {
-                        UsersTableCheckBoxcount = 0;
-                        shouldExit = true;
-                        return false;
-                    }
-                    formData.append("UserIdList", parseInt(Userid) || 0);
-                    UsersTableCheckBoxcount++;
-                }
-            });
-            if (shouldExit) {
-                $("#Main_Span_Error").text("Subjects overlapping.");
-                window.scrollTo(0, 0);
-                loaddingimg.css('display', 'none');
-                return;
-            }
-            else if (UsersTableCheckBoxcount < 1) {
-                $("#Main_Span_Error").text("Select At Least 1 user");
-                window.scrollTo(0, 0);
-                loaddingimg.css('display', 'none');
-                return;
-            }
-            //177947,28728
-            var UnselectedUserIDs_Checkboxes = $(UsersTable).find('td:nth-child(2) input[name="selectedUsers"]:not(:checked)');
-            var UserIds = UnselectedUserIDs_Checkboxes.map(function () {
-                return $(this).val();
-            }).get().join(',');
-            formData.append("UserIdString", UserIds);
-
-            performCrudOperationCommonFunction('POST', "/Examination/ManageSubjectAssociation?ButtonName=" + ButtonName, formData, function (response) {
-                debugger;
-                var SubjectText = "";
-                if (response.message == "Record inserted successfully.") {
-                    $("#BtnSave").prop('disabled', true);
-                    $('.alert-success p').text(response.message);
-                    $(".alert-success").show().delay(5000).fadeOut()
-                }
-                if (response.message == "Users Cannot be De-associated either Attendance / Result has been Posted for the subject") {
-                    SubjectText = $("#DdlSubject option:selected").text();
-
-                }
-                //$('.alert-danger p').text(response.message);
-                //$(".alert-danger").show().delay(6000).fadeOut()
-                $("#Main_Span_Error").text(response.message + SubjectText);
-                loaddingimg.css('display', 'none');
-                window.scrollTo(0, 0);
-            }, function (error) {
-                loaddingimg.css('display', 'none');
-                $("#Main_Span_Error").text("Something Error");
-            }, true);
-        } catch (e) {
-            loaddingimg.css('display', 'none');
-            $("#Main_Span_Error").text("Something Error");
-        }
-    });
 </script>
 
 

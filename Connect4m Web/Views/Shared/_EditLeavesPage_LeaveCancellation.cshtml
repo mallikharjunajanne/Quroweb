@@ -3,179 +3,170 @@
 *@
 
 @*_EditLeavesPage_LeaveCancellation*@
-@model Connect4m_Web.Models.AttendanceModel
+@model Connect4m_Web.Models.AttendanceModel 
 
-
-<div class="card-header" style="padding: 0px;">
-    <table id="ctl00_ContentPlaceHolder1_tblDriverInfo" width="40%" cellpadding="0" cellspacing="0" align="center" style="background-color: #e8e8e8; border: 1px solid #d4d4d4;">
-        <tbody>
-            <tr>
-                <td align="right" style="height: 24px;" width="41%">
-                    <b style="font-size: 11px;">Employee Name :</b>
-                </td>
-                <td align="left">
-                    &nbsp;
-                    <span id="SpanEmpName" style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;"></span>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    <b style="font-size: 11px;">Department :</b>
-                </td>
-                <td align="left">
-                    &nbsp;
-                    <span id="SpanEmpDept" style="color:#424242;font-size:11px;font-weight:normal;font-style:normal;"></span>
-                </td>
-            </tr>
-            <tr>
-                <td style="height: 5px;">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="card-body">
-    <form id="FmUpdateLeaves" style="margin-left:7%;font-size:12px">
-        <div class="row sreekanth">
-            <div class="col">
-                <div class="mb-2 row light-secondary">
-                    <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Leave Type :</label>
-                    <div class="col-sm-3" style="margin-left:1%">
-                        @*@Html.DropDownListFor(model => model.Leavetypeid, new SelectList(ViewBag.LeaveType1, "Value", "Text"), "     -------select------- ", new { @id = "leavetype", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
-                        @*@Html.DropDownListFor(model => model.Leavetypeid, new SelectList(""), "     -------select------- ", new { @id = "leavetype", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
-                        <select id="leavetype" name="InputValue[0].Leavetypeid" onchange="GetLeaveDaysAvailable_CallingFuction('LeaveCancellation')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList( ViewBag.LeaveType1,"Value","Text"))">
-                            <option value="">     -------select------- </option>
-                        </select>
-                      
-                        <input asp-for="Leavetype" name="InputValue[0].Leavetype" type="hidden" id="LeavetypeTB" />
-                    </div>
-                    <div class="col-sm-1" style="margin-left:4%;margin-top:1%">
-                        <input type="image" class="imgAuditIcon" id="imgAuditIconLeavetype" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'LeaveTypeId') " style="display:none">
-
-                    </div>
-                    </div>
-                    <div class="mb-2 row ">
-                        <label class="col-sm-4 col-form-label  form-label"> &nbsp;&nbsp;Leave Days Available :</label>
-                        <div class="col-sm-8">
-                            <span id="GetLeaveDaysAvailableid" style="width: 300px; padding-top: 0px; line-height: 2.5; margin-left: 18px; "></span>
-                            <input style="display:none" id="GetLeaveDaysAvailableidtTotal" />
-                            <input style="display:none" id="HdnLeavetypeidForGetcurrectLeavedays">
-                            <input style="display:none" id="HdnGetLeaveDaysAvailabletoLeavetype">
-                        </div>
-                    </div>
-
-                    <div class="mb-2 row">
-                        <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Short Description for Leave Reason :</label>
-                        <div class="col-sm-8">
-                            @*@Html.DropDownListFor(model => model.ShortDescriptionforLeave_Reason, new SelectList(ViewBag.GetShort_Description_for_Leave_Reason2, "Value", "Text"), " ---------select------ ", new { @id = "Descriptionid1", @class = "form-control input-air-primary form-select", @style = "width:230px;color:black;" })*@
-                            <select id="Descriptionid1" disabled class="form-control input-air-primary form-select" style="width:230px;color:black;font-size:inherit" asp-items="@(new SelectList(ViewBag.GetShort_Description_for_Leave_Reason2, "Value", "Text"))">
-                                <option value=""> ---------select------ </option>
-                            </select>
-                            <input name="InputValue[0].ShortDescriptionforLeave_Reason" type="hidden" id="DescriptionidTB1" />
-
-                            @*<span style="margin-left: 15px;" id="marriagechecking_Span"><input type="checkbox" name="InputValue[0].marriagechecking" asp-for="marriagechecking" id="marriagechecking" onchange="marriagecheckingCallingFunction('LeaveCancellation')" />Applying for Marriage(self)</span>
-                <label id="labelLB" style="margin-left: 15px; font-size: 9px;"></label>*@
-                        </div>
-
-                    </div>
-
-
-                    <div class="mb-2 row ">
-                        <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Day Type :</label>
-                        <div class="col ">
-                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
-                                <div class="radio radio-primary">
-                                    <input asp-for="Daystype" name="InputValue[0].Daystype" style="padding-top: 0px" id="radioinline1" class="check" type="radio" value="0">
-                                    <label class="mb-0" for="radioinline1">Full day</label>
-                                </div>
-                                &nbsp;&nbsp;&nbsp;
-                                <div class="radio radio-primary">
-                                    <input asp-for="Daystype" name="InputValue[0].Daystype" id="radioinline2" class="check" type="radio" value="1">
-                                    <label class="mb-0" for="radioinline2">Half day</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Dates_Div">
-                        <div class="mb-1 row">
-                            <label class="col-sm-4 col-form-label  form-label" id="HAlfdayLB"><i style="color:red">*</i> Date :</label>
-                            <label class="col-sm-4 col-form-label  form-label" id="fromdateLB"><i style="color:red">*</i>From Date :</label>
-                            <div class="col-sm-3" style="margin-left:1%">
-                                <input name="InputValue[0].Fromdate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="fromdate" />                              
-                                <input name="InputValue[0].LastAttendanceDate" type="hidden" id="Hdnfromdate" />
-                            </div>
-                            <div class="col-sm-1" style="margin-left:-73px;margin-top:1%">
-                                <input type="image" class="imgAuditIcon" id="imgAuditIconFrodate" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'FromDate')" style="display:none">
-                            </div>
-                        </div>
-                        <div class="mb-1 row">
-                            <label class="col-sm-4 col-form-label  form-label" id="todateLB"><i style="color:red">*</i>To Date :</label>
-                            <div class="col-sm-8">
-                                <input name="InputValue[0].Todate" type="date" class="form-control input-air-primary " style="border: 1px solid #ced4da; width: 120px; font-size: 12px; color: black;" id="todate" />                               
-                                <input name="InputValue[0].CreatedDate" type="hidden" id="Hdntodate" />
-                            </div>
-                            <div class="col-sm-1" style="margin-left:-49%;margin-top:1%">
-                                <input type="image" class="imgAuditIcon" id="imgAuditIconTodate" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'ToDate')" style="display:none">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="mb-2 row " id="DaySession">
-                        <label class="col-sm-4 col-form-label  form-label"><i style="color:red">*</i>Day Session :</label>
-                        <div class="col " style="margin-left: 20px;">
-                            <div class="form-group m-checkbox-inline mb-0   custom-radio-ml m-t-5">
-                                <div class="radio radio-primary">
-                                    <input asp-for="Daysession" name="InputValue[0].Daysession" style="padding-top: 0px" id="radioinline11" class="check1" type="radio" value="1">
-                                    <label class="mb-0" for="radioinline11"> Morning</label>
-                                </div>
-                                &nbsp;&nbsp;&nbsp;
-                                <div class="radio radio-primary">
-                                    <input asp-for="Daysession" name="InputValue[0].Daysession" id="radioinline21" class="check1" type="radio" value="2">
-                                    <label class="mb-0" for="radioinline21">Afternoon</label>
-                                </div>
-                                @*<input asp-for="Daysessionname" type="text" id="Daysessionname" />*@
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2 row ">
-                        <label class="col-sm-4 col-form-label  form-label" style="padding-top: 29px;">&nbsp; Leave Comments :<br />&nbsp; <i style="font-size:8px">(Max of 500 Characters)</i></label>
-                        <div class="col-sm-8">
-                            <textarea asp-for="Leavecomments" name="InputValue[0].Leavecomments" oninput="CharactercountFunction.call(this,'TextareacountSPAN')" id="Textarea" style="width: 230px; font-size: inherit; resize: none; border-style: ridge;" maxlength="500" class="form-control input-air-primary" rows="3" cols="20"></textarea>
-                            <label id="LblTextareacount" style="display:none"> <i style="font-size: 10px; margin-left: 15px;"><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
-                            @*<span asp-validation-for="Leavecomments" class="text-danger"></span>*@
-                        </div>
-                    </div>
-
-                    <!--<div class="mb-2 row" id="MedicalLeaveDocument">
-    <label class="col-sm-4 col-form-label  form-label"> &nbsp;&nbsp;Upload Medical Certfificate :</label>
-    <div class="col-sm-8">-->
-                    @*<input type="file" id="attachdocument1" />*@
-                    <!--<input type="file" name="file" class="form-control input-air-primary" id="attachdocument" style="width: 230px; font-size: inherit;" />
-            <a class="image-link" style="cursor:pointer;font-weight:900;text-decoration:underline;color:blue" id="AttachDocumentTB_FileName_LABEL"></a>&nbsp;
-            <a class="deleteFileClass" style="color: black; font-weight: 800; cursor: pointer" id="AttachDocumentTB_FileName_LABEL_DELETE"></a>
-            <span style="display: block; font-size: 10px;">(Note: Only .doc;.docx;.txt;.jpeg;.jpg;.pjpeg;.gif;.png;.pdf are supported. And upload file limit is 500KB.)</span>
+@*<div class="align-items-center d-flex justify-content-center">*@
+<div class="card mb-4">
+    <div class="row">
+        <div class="col">
+            @*--------------------------*@
+            <div class="row ">
+                <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Employee Name</label>
+                <div class="col-sm-4 ">
+                    <label class="form-control-plaintext"  id="SpanEmpName"></label>
+                </div>
+            </div>
+            @*--------------------------*@
+            <div class="row ">
+                <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Department </label>
+                <div class="col-sm-4 ">
+                    <label class="form-control-plaintext" id="SpanEmpDept"></label>
+                </div>
+            </div>
         </div>
-    </div>-->
+    </div>
+</div>
+ @*</div>*@
+
+@*==========================Edit Leaves Card====================*@
+<div class="card mb-4" id="SearchPage">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">
+            <span>
+                UPDATE LEAVE
+            </span>
+        </h5>
+    </div>
+    <div class="card-body">
+        <form id="FmUpdateLeaves">
+            <div class="row">
+                <div class="col">
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Type</label>
+                        <div class="col-sm-4 ">
+                            <div class="position-relative">
+                                <select id='leavetype' class="select2 form-select select2-hidden-accessible" name="InputValue[0].Leavetypeid" onchange="GetLeaveDaysAvailable_CallingFuction('LeaveCancellation')" asp-items="@(new SelectList(ViewBag.LeaveType1,"Value","Text"))">
+                                    <option value=''>---------Select--------</option>
+                                </select>
+                                <input asp-for="Leavetype" name="InputValue[0].Leavetype" type="hidden" id="LeavetypeTB" />
+                                <input type="image" class="imgAuditIcon" id="imgAuditIconLeavetype" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'LeaveTypeId') " style="display:none">
+
+                            </div>
+                        </div>
+                    </div>
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Leave Days Available</label>
+                        <div class="col-sm-4 ">
+                            <label class="form-control-plaintext" id="GetLeaveDaysAvailableid"></label>
+                            <input type="hidden" id="GetLeaveDaysAvailableidtTotal" />
+                            <input type="hidden" id="HdnLeavetypeidForGetcurrectLeavedays">
+                            <input type="hidden" id="HdnGetLeaveDaysAvailabletoLeavetype">
+                        </div>
+                    </div>
+
+                    @*--------------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Short Description for Leave Reason</label>
+                        <div class="col-sm-4 ">
+                            <div class="position-relative">
+                                <select id='Descriptionid1' class="select2 form-select select2-hidden-accessible" name="InputValue[0].Leavetypeid" asp-items="@(new SelectList(ViewBag.GetShort_Description_for_Leave_Reason2,"Value","Text"))" disabled>
+                                    <option value=''>---------Select--------</option>
+                                </select>
+                                <input type="hidden" name="InputValue[0].ShortDescriptionforLeave_Reason" id="DescriptionidTB1" />
+
+                            </div>
+                        </div>
+                    </div>
+                    @*----------------------*@
+
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Type</label>
+                        <div class="col-sm-4">
+                            <div class="col mt-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input check" asp-for="Daystype" id="RdnFullday" type="radio" name="InputValue[0].Daystype" value="0" />
+                                    <label class="form-check-label" for="RdnFullday">Full Day</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input check" asp-for="Daystype" id="RdnHalfday" type="radio" name="InputValue[0].Daystype" value="1" />
+                                    <label class="form-check-label" for="RdnHalfday"> Half Day</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*--------------------------*@
+                    <div id="Dates_Div">
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label  text-end required" id="HAlfdayLB" for="basic-default-name">Date</label>
+                            <label class="col-sm-4 col-form-label  text-end required" id="fromdateLB" for="basic-default-name">From Date</label>
+                            <div class="col-sm-4 ">
+                                <input type="date" name="InputValue[0].Fromdate" class="form-control" id="fromdate">
+                                <input name="InputValue[0].LastAttendanceDate" type="hidden" id="Hdnfromdate" />
+                                <input type="image" class="form-control" id="imgAuditIconFrodate" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'FromDate')" style="display:none">
+                            </div>
+                        </div>
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label  text-end required" id="todateLB" for="basic-default-name">To Date</label>
+                            <div class="col-sm-4 ">
+                                <input type="date" name="InputValue[0].Todate" class="form-control" id="todate">
+                                <input name="InputValue[0].CreatedDate" type="hidden" id="Hdntodate" />
+                                <input type="image" class="form-control" id="imgAuditIconFrodate" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'ToDate')" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                    @*----------------------*@
+
+                    <div class="row mb-3 " id="DaySession">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Session</label>
+                        <div class="col-sm-4">
+                            <div class="col mt-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input check1" asp-for="Daysession" id="RdnMorning" type="radio" name="InputValue[0].Daysession" value="1" />
+                                    <label class="form-check-label" for="RdnMorning">Morning</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input check1" asp-for="Daysession" id="RdnAfternoon" type="radio" name="InputValue[0].Daysession" value="2" />
+                                    <label class="form-check-label" for="RdnAfternoon">Afternoon</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*----------------------*@
+                    <div class="row mb-3 ">
+                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Comments<br /><i style="font-size:8px">(Max of 500 Characters)</i></label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" id="Textarea" rows="3" asp-for="Leavecomments" name="InputValue[0].Leavecomments" oninput="CharactercountFunction.call(this,'TextareacountSPAN')" maxlength="500"></textarea>
+                            <label class="form-control" id="LblTextareacount" style="display:none"> <i><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
+
+                        </div>
+                    </div>
+
+                    @*----------------------*@
 
                     <input type="hidden" name="InputValue[0].Batchid" id="BatchidTextbox" style="display:none" />
                     <input type="hidden" name="InputValue[0].LeaveApplicationId" id="LeaveApplicationId" style="display:none" />
-                   @*<input type="text" name="InputValue[0].attachdocument"  id="attachdocument_String" style="display:none" />*@
+                    @*<input type="text" name="InputValue[0].attachdocument"  id="attachdocument_String" style="display:none" />*@
                     <input type="hidden" name="InputValue[0].RequestStatus" id="RequestStatus" style="display:none" />
                     <input style="display:none" id="AppliedLeavedays">
-                </div>
-        </div>
-        <div style="margin-left:235px">
-            <input type="button" class="btn btn-light " onclick="BackTOSearhUserLeavestypes(event)" id="BtnBack" style="padding:4px 12px;border-radius:6px;" value="Back To Search">&nbsp;&nbsp;&nbsp;
-            <input type="submit" class="btn btn-primary active" onclick="FmUpdateLeaves_CalingFunction(event)" id="savebutton" style="padding:3px 8px;border-radius:6px;" value="Update Leave" />
-            @*@Html.ActionLink("Back", "GetRoleDropDown", new { back = @ViewBag.Sessionuser_roleid1 }, new { @class = "btn btn-primary", style = "font-size:18px;color:white" })*@
-        </div>
-    </form>
-</div>
-@*<input type="text" id="EditBTid" />
+                    @*----------------------*@
+                    <div class="row justify-content-end">
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBack" onclick="BackTOSearhUserLeavestypes(event)" value="Back To Search">Back To Search</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light" id="savebutton" onclick="FmUpdateLeaves_CalingFunction(event)" value="Update Leave">Update Leave</button>
+                        </div>
+                    </div>
+                    @*--------------------------*@
 
-    <input type="text" id="TotaldaysInTable" />*@
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <input type="text" value="@ViewBag.Userid" id="Userid" style="display:none" />
 <input type="text" value="@ViewBag.Instanceid" id="Instanceid" style="display:none" />
@@ -187,4 +178,4 @@
 @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
 <script src="~/js/ApplyStaffLeave.js"></script>
 
-<script src="~/js/GeneralFunctions.js"></script>
+@*<script src="~/js/GeneralFunctions.js"></script>*@

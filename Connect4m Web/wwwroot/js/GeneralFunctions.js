@@ -56,13 +56,19 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
         if (tablename == 'LeaveLevels_SearchRecords_Table') {
             columns = [
                 {
+                    target: 1,// Assuming this is the column index where you want to display numbering
+                    render: function (data, type, row, meta) {
+                        return (meta.row + 1)
+                    }
+                },
+                {
                     data: "LeaveLevelId",
                     render: function (data, type, row, meta) {
-                        var LeaveLevelId = "<input type='text' id='LeaveLevelId_TBL' value='" + row.leaveLevelId + "' hidden />";
-                        var LevelID = "<input type='text' id='LevelID_TBL' value='" + row.levelID + "' hidden />";
-                        var InstanceDesignationId = "<input type='text' id='InstanceDesignationId_TBL' value='" + row.instanceDesignationId + "' hidden />";
-                        var InstanceClassificationId = "<input type='text' id='instanceClassificationId_TBL' value='" + row.instanceClassificationId + "' hidden />";
-                        return "<a id='Leavelevelid' style='cursor: pointer;font-weight: bold;'>" + row.levelName + "</a>" + LeaveLevelId + LevelID + InstanceDesignationId + InstanceClassificationId;
+                        var LeaveLevelId = "<input type='hidden' id='LeaveLevelId_TBL' value='" + row.leaveLevelId + "'  />";
+                        var LevelID = "<input type='hidden' id='LevelID_TBL' value='" + row.levelID + "'  />";
+                        var InstanceDesignationId = "<input type='hidden' id='InstanceDesignationId_TBL' value='" + row.instanceDesignationId + "'  />";
+                        var InstanceClassificationId = "<input type='hidden' id='instanceClassificationId_TBL' value='" + row.instanceClassificationId + "'  />";
+                        return "<a id='Leavelevelid' >" + row.levelName + "</a>" + LeaveLevelId + LevelID + InstanceDesignationId + InstanceClassificationId;
                     }
                 },
                 {
@@ -101,7 +107,7 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
                     data: "LeaveTodate",
                     className: "CenterAlign",
                     render: function (data, type, row, meta) {
-                        var DeleteBTN = "<p class='fa fa-trash -o' title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer; '><input type='text' hidden  id='id_For_Delete' value=''></p>";
+                        var DeleteBTN = '<a class="ti ti-trash" title="Click to delete this record" onclick="DeleteLeaveLevelCallingFunction(' + row.leaveLevelId + ')" ></a>';
                         return DeleteBTN
                     }
                 },
@@ -240,50 +246,50 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
         $(".ErrorMessageSpan").empty();
         if (val != "Stop") {
             event.preventDefault();
+
+            loaddingimg.css('display', 'block');
         }
         if (FormId != "") {
             var formdata = new FormData($("#" + FormId)[0]);
         } else {
             var formdata = null;
         }
-        if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {
-            var Fromdate = $("#TxtFromDate").val();
-            var Todate = $("#TxtToDate").val();
-            if (Fromdate != "" || Todate != "") {
-                if (Fromdate === "") {
-                    if (Todate != "") {
-                        $("#Main_Span_Error").text('Please Select From Date also');
-                        return;
-                    }
-                }
-                if (Todate === "") {
-                    if (Fromdate != "") {
-                        $("#Main_Span_Error").text('Please Select To Date also');
-                        return;
-                    }
-                }
-                if (Date.parse(Todate) < Date.parse(Fromdate)) {
-                    $("#Main_Span_Error").text("'From Date' cannot be greater than 'To Date'. ");
-                    return;
-                }
-            }
-        }
+        //if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {
+        //    var Fromdate = $("#TxtFromDate").val();
+        //    var Todate = $("#TxtToDate").val();
+        //    if (Fromdate != "" || Todate != "") {
+        //        if (Fromdate === "") {
+        //            if (Todate != "") {
+        //                $("#Main_Span_Error").text('Please Select From Date also');
+        //                return;
+        //            }
+        //        }
+        //        if (Todate === "") {
+        //            if (Fromdate != "") {
+        //                $("#Main_Span_Error").text('Please Select To Date also');
+        //                return;
+        //            }
+        //        }
+        //        if (Date.parse(Todate) < Date.parse(Fromdate)) {
+        //            $("#Main_Span_Error").text("'From Date' cannot be greater than 'To Date'. ");
+        //            return;
+        //        }
+        //    }
+        //}
 
-        if (val != "Stop") {
-            loaddingimg.css('display', 'block');
-            //$("#loadingOverlay").show();
-        }
+        //if (val != "Stop") {
+        //    loaddingimg.css('display', 'block');
+        //    //$("#loadingOverlay").show();
+        //}
         //if (paging != false || paging !=null) {
         if (paging != false ) {
             paging = true;
-        } else {
-
         }
         //var paging = true;
        // if (tablename == "TblLeaveRequested_SearchRecords" || tablename == "TblUser") {
-        if (tablename == "TblLeaveRequested_SearchRecords") {
-            paging = false;
-        }
+        //if (tablename == "TblLeaveRequested_SearchRecords") {
+        //    paging = false;
+        //}
          if (FormId == "FmUsersSearchForMBA") { 
             formdata.append("ScreenName", "ManageSubjectAssociationForMBA");
         }
@@ -308,6 +314,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 if (FormId == 'FmCOMPENSATORYLEAVESSEARCH') {
                     //tablename == "TblcompensatoryLeaves_SearchedRecords"
                     columns = [
+                      
                         {
                             data: "Leavetypeid",
                             visible: false,
@@ -317,10 +324,16 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             }
                         },
                         {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
+                            }
+                        },
+                        {
                             data: "Username",
                             render: function (data, type, row, meta) {
                                 if (row.leaveDetails == "No") {
-                                    return '<a style="color:blue;cursor:pointer"  class="Undeline" id="UserName" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
+                                    return '<a id="UserName" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
                                 } else
                                     return row.username
                             }
@@ -378,10 +391,10 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                 var formattedDate =
                                     date.getDate().toString().padStart(2, '0') + '-' +
                                     (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                                    date.getFullYear() + ' ' +
-                                    date.getHours().toString().padStart(2, '0') + ':' +
-                                    date.getMinutes().toString().padStart(2, '0') + ':' +
-                                    date.getSeconds().toString().padStart(2, '0');
+                                    date.getFullYear();
+                                    //date.getHours().toString().padStart(2, '0') + ':' +
+                                    //date.getMinutes().toString().padStart(2, '0') + ':' +
+                                    //date.getSeconds().toString().padStart(2, '0');
                                 return formattedDate //Created On
                             }
                         },
@@ -391,7 +404,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             render: function (data, type, row, meta) {
                                 var Value = "";
                                 if (row.leaveDetails == "No")
-                                    Value = '<a class="fa fa-trash" style="font-size: 15px; color: red;    cursor: pointer;" id="delete" onclick="DeleteCompensatoryLeavesFunction(' + row.leavetypeid + ')"></a>';
+                                    Value = '<a class="ti ti-trash"  id="delete" onclick="DeleteCompensatoryLeavesFunction(' + row.leavetypeid + ')" title="Delete"></a>';
                                 else
                                     value = "";
 
@@ -488,11 +501,18 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 }
                 else if (tablename == "TblLeaveDeligationAuthorityList_SearchedRecords") {//Leave Cancellation Screen                      
                     columns = [
+
                         {
                             data: "LeaveApplicationId",
                             visible: false,
                             render: function (data, type, row, meta) {
                                 return row.leaveApplicationId
+                            }
+                        },
+                        {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
                             }
                         },
                         {
@@ -548,7 +568,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
                                 if (row.leaveCancelledFlag != "True") {
-                                    return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer; " class="badge badge-primary" title="Cancel Leave">Cancel</span>';
+                                    return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer; " class="badge bg-primary" title="Cancel Leave">Cancel</span>';
                                 }
                                 else {
                                     return ' Cancelled';
@@ -570,10 +590,10 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
 
                                 }
                                 else if (row.leavetype == " P" || row.leavetype == "P") {
-                                    Value = '<a class="fa fa-edit" style="font-size: 11px; color: red;"></a>';
+                                    Value = '<a class="ti ti-edit ti-sm me-2" ></a>';
                                 }
                                 else {
-                                    Value = '<a class="fa fa-edit" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="font - size: 16px !important; color: red; cursor: pointer; "></a>';
+                                    Value = '<a class="ti ti-edit ti-sm me-2" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="cursor: pointer; "></a>';
                                 }
                                 return Value
                             }
@@ -582,6 +602,12 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                 }
                 else if (tablename == "TblStaffList_SearchedRecords") {
                     columns = [
+                        {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
+                            }
+                        },
                         {
                             data: "FirstName",
                             render: function (data, type, row, meta) {
@@ -627,12 +653,101 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         {
                             data: "Userid",
                             render: function (data, type, row, meta) {
-                                return '<a onclick="ApplyStaffLeavePageDiv_CalingFunction.call(this,event,' + row.userid + ')" style="color:blue;cursor:pointer;font-weight:600" class="Undeline">Apply Leave</a>';
+                                return '<span class="badge rounded-pill bg-primary" onclick="ApplyStaffLeavePageDiv_CalingFunction.call(this,event,' + row.userid + ')" title="Apply Leave" style="cursor:pointer">Apply Leave</span>';
                             }
                         },
                     ]
                 }
-                else if (tablename == "TblLeaveRequested_SearchRecords") {
+                else if (tablename == "TblLeaveRequested_SearchRecords") {//Leave Approval Screen
+                    Buttons = [
+                        {
+                            extend: 'excel',
+                            title: ExelTitlename,
+                            text: "Export to Excel",
+                            exportOptions: {
+                                columns: ExcelDownloadColumnsNo
+                            },
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                                //// Center-align the title in the worksheet
+                                //var titleCell = $(sheet).find('c[r^="A1"]');
+                                //titleCell.attr('s', '2'); // Apply a style to center-align
+                                $('c[r*="A1"]', sheet).attr('s', '2');
+
+                                // Apply a border to the entire table
+                                var rows = $(sheet).find('row');
+                                rows.each(function () {
+                                    $(this).find('c').attr('s', '25'); // Apply a style with a border (s=25) to each cell
+                                });
+                            },
+
+                        },    {
+                                 extend: 'print',
+                                 title: ExelTitlename,
+                                 //title: 'Leave Approval Report',
+                                 //customize: function (win) {
+
+                                 //    $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+
+                                 //    $(win.document.body)
+                                 //        .find('thead th')
+                                 //        .css('color', 'black'); // Set your desired text color
+                                 //    $(win.document.body)
+                                 //        .find('.top')
+                                 //        .css('font-size', '12px');
+                                 //},
+                               //  messageTop: 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).',
+
+
+
+                                 messageTop: function () {
+                                     // Generate the timestamp
+                                     var now = new Date();
+                                     var formattedTime = now.toLocaleDateString(); // You can format the time as needed
+
+                                     return 'YOUR SEARCH RESULTED ' + tableLength + ' RECORD(S).<div class="timestamp"> Printed on  ' + formattedTime + '</div>';
+                                 },
+                                 customize: function (win) {
+                                     // Apply custom styles for print
+                                     var timestampElement = $(win.document.body).find('.timestamp');
+                                     timestampElement.css({
+                                         'position': 'absolute',
+                                         'top': '0',
+                                         'right': '0',
+                                         'font-size': '12px' // Adjust the font size as needed
+                                     });
+
+                                     $(win.document.body).find('h1').addClass('print-title-center'); // Add a CSS class to the title element
+
+                                     $(win.document.body)
+                                         .find('thead th')
+                                         .css('color', 'black'); // Set your desired text color
+                                     $(win.document.body)
+                                         .find('.top')
+                                         .css('font-size', '12px');
+
+
+                                     // Apply black borders to all table cells
+                                     $(win.document.body).find('table').css({
+                                         'border-collapse': 'collapse',
+                                         'border': '1px solid black' // Set the border color to black
+                                     });
+
+                                     // Apply black border to table header cells (th)
+                                     $(win.document.body).find('th').css({
+                                         'border': '1px solid black' // Set the border color to black
+                                     });
+                                     $(win.document.body).find('td').css({
+                                         'border': '1px solid black' // Set the border color to black
+                                     });
+                                 },
+                               // text: "Print",
+                                 exportOptions: {
+                                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                                },
+                            }
+                    ]
                     columns = [
                         {
                             data: "Name",
@@ -728,9 +843,15 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         }]
                     columns = [
                         {
+                            target: 1,// Assuming this is the column index where you want to display numbering
+                            render: function (data, type, row, meta) {
+                                return (meta.row + 1)
+                            }
+                        },
+                        {
                             data: "ExamName",
                             render: function (data, type, row, meta) {
-                                return '<a id="TBLExamid" class="Undeline" onclick="EditValuesGettingFunction(' + row.id + ')" style="cursor: pointer;font-weight: bold;color:black">' + row.examName+'</a>';
+                                return '<a id="TBLExamid"  onclick="EditValuesGettingFunction(' + row.id + ')" >' + row.examName+'</a>';
                             }
                         },  {
                             data: "Displayorder",
@@ -838,7 +959,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         },
                         {
                             data: "UserId",
-                            className: "CenterAlign",
+                            //className: "CenterAlign",
                             render: function (data, type, row, meta) {
                                 var isChecked = row.subjectAssociationId !== "";
                                 var isAssociated = row.name !== null;
@@ -847,7 +968,9 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                                                 debugger;
                               //  return '<input id="chkSMS" type="checkbox"    ' + (isChecked1 ? ' class="Associated'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
                                // return '<input id="chkSMS" type="checkbox"    ' + (isAssociated ? ' class="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
-                                return '<input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instancesubjectid="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '>';
+
+
+                                    return '<div class="form-check d-flex justify-content-center"><input id="chkSMS" class="form-check-input"  type="checkbox"    ' + (isAssociated ? ' data-instancesubjectid="'+ row.instanceSubjectId+'"' : '') + '  value="' + row.userId + '" ' + (isChecked ? ' checked="checked" name="selectedUsers"' : '') + '></div>';
                                 //return row.userId
                             }
                         }, {
@@ -1261,7 +1384,8 @@ function compareDatesNotGreaterThanTodayById(Id, Text) {
 
 //function datescompare(event, start, end) {
 //function datescompare(event, startId, endId, startName, endName) {
-function datescompare_Vs1(event, startId, endId, startName, endName) {
+//oninput = "datescompare_Vs1(event, 'TxtFromDate', this.getAttribute('id'), 'From Date', 'To Date', true)"
+function datescompare_Vs1(event, startId, endId, startName, endName,IscheckGreaterThanToday) {
     debugger;
     //event.stopImmediatePropagation();
   
@@ -1270,7 +1394,14 @@ function datescompare_Vs1(event, startId, endId, startName, endName) {
     //var error = $("#"+endId).closest('.form-group');
     var error = $("#" + endId).closest('.row div');
     $(error).find('.compare').removeClass('error2');
-    if (endDate <= startDate) {
+    var today = new Date();
+    //var selectedDate = new Date(document.getElementById(IscheckGreaterThanToday_ID).value);
+    //if (selectedDate > today && IscheckGreaterThanToday) {
+    if (endDate > today && IscheckGreaterThanToday) {
+        $(error).find('.compare').addClass('error2');
+        $(error).find('.compare').text(endName + " should not be greater than todays date.");
+    }
+    else if (endDate <= startDate) {
         $(error).find('.compare').addClass('error2');
         $(error).find('.compare').text(endName + " must be greater than " + startName + ".");
     } else {
@@ -1279,6 +1410,32 @@ function datescompare_Vs1(event, startId, endId, startName, endName) {
     }
 }
 
+//oninput="Startdatescompare_Vs1(event,'TxtFromDate', 'TxtToDate',  'From Date', 'To Date', true)"
+//==to check start date
+function Startdatescompare_Vs1(event, startId, endId, startName, endName, IscheckGreaterThanToday) {
+    debugger;
+    //event.stopImmediatePropagation();
+
+    var startDate = new Date(document.getElementById(startId).value);
+    var endDate = new Date(document.getElementById(endId).value);
+    //var error = $("#"+endId).closest('.form-group');
+    var error = $("#" + startId).closest('.row div');
+    $(error).find('.compare').removeClass('error2');
+    var today = new Date();
+   // var selectedDate = new Date(document.getElementById(IscheckGreaterThanToday).value);
+    //if (selectedDate > today && IscheckGreaterThanToday) {
+    if (startDate > today && IscheckGreaterThanToday) {
+        $(error).find('.compare').addClass('error2');
+        $(error).find('.compare').text(startName + " should not be greater than todays date.");
+    }
+    else if (endDate <= startDate) {
+        $(error).find('.compare').addClass('error2');
+        $(error).find('.compare').text(startName + " must be less than " + endName + ".");
+    } else {
+        $(error).find('.compare').addClass('');
+        $(error).find('.compare').text("");
+    }
+}
 
 
 
@@ -1451,6 +1608,7 @@ function CommonDeleteFunction(type, URL, Deletemsg, successCallback) {//I used t
 }
 
 
+//<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 //function CommonDeleteFunctionNew(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
 function CommonDeleteFunction_Vs1(Deletemsg,type, URL,  successCallback) {//I used this in manage Exams Screen
 
@@ -1477,7 +1635,7 @@ function CommonDeleteFunction_Vs1(Deletemsg,type, URL,  successCallback) {//I us
                     url: URL,
                     type: type,
                     success: function (response) {
-                        if (response.message == "Record deleted successfully." || response.message == "Photo Deleted Sucessfully.") {
+                        if (response.message.toUpperCase() === "RECORD DELETED SUCCESSFULLY." || response.message.toUpperCase() == "PHOTO DELETED SUCCESSFULLY.") {
                             //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
                             //Swal.fire({
                             //    icon: "success",
@@ -1643,70 +1801,3 @@ function UpdateAllTextboxvaluesByChecked(checkbox, FirstTextBoxId, EffectiveTxtC
     }
 }
 
-
-
-
-
-
-//-sr---------------------------------------------------------------------------------   Common Ajax Function To all
-function CommonAjaxFunction1(method, url, data, successCallback, errorCallback, hasFileUpload) {
-    // debugger;
-    var ajaxOptions = {
-        url: url,
-        method: method,
-        data: data,
-        success: successCallback,
-        error: function (xhr, status, error) {
-            errorCallback(xhr.status, error);
-        }
-    };
-
-    if (hasFileUpload) {
-        // Handling file uploads with FormData
-        //var formData = new FormData();
-        //for (var key in data) {
-        //    if (data.hasOwnProperty(key)) {
-        //        formData.append(key, data[key]);
-        //    }
-        //}
-
-        //  ajaxOptions.data = formData;
-        ajaxOptions.processData = false;
-        ajaxOptions.contentType = false;
-    } else {
-        // Regular data serialization for non-file-upload requests
-        //ajaxOptions.dataType = 'json';
-        //ajaxOptions.contentType = 'application/json';
-        // ajaxOptions.data = data;
-    }
-
-    $.ajax(ajaxOptions);
-
-}
-
-//--sr------------------------------------------------ Common Delete Function 
-
-function CommonDeleteFunction1(title, type, url, data, successcallback) {
-
-    Swal.fire({
-        title: "Are you sure you want to delete this " + title + "?",
-        text: "  ",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        // If user confirms deletion
-        if (result.isConfirmed) {
-            $.ajax({
-
-                url: url,
-                data: data,
-                type: type,
-                success: successcallback
-
-            })
-        }
-    })
-}

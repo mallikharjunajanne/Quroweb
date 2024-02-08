@@ -1,12 +1,12 @@
 ﻿
 $(document).ready(function () {
     try {
-    $("#ApplyShortLeavePage").hide();
-    var PrintBTN = document.getElementById("PrintBTN");
-    PrintBTN.innerHTML = "";
-    $("#accordionoc_VIEW").hide();
+   // $("#DivApplyShortLeavePage").hide();
+    //var PrintBTN = document.getElementById("PrintBTN");
+    //PrintBTN.innerHTML = "";
+    //$("#accordionoc_VIEW").hide();
     $("table tfoot").hide();
-    $("#MonthlyAppliedShortLeaves_SearchRecords_Div").hide();
+   // $("#MonthlyAppliedShortLeaves_SearchRecords_Div").hide();
     TblAppliedShortLeaves_SearchRecords_Calingfunction(event, '12', 'TblAppliedShortLeaves_SearchRecords', 'CountOfRecords_AppliedShortLeaves', 'AppliedShortLeaves_SearchRecords_Div')
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
@@ -29,11 +29,12 @@ $(document).ready(function () {
 })
 
 
-///this is for save leaves
+//====================================this is for save leaves
 
 $("#FmApplyShortLeave").submit(function (event) {
     try {
-    event.preventDefault(); // prevent the form from submitting
+        event.preventDefault(); // prevent the form from submitting
+        loaddingimg.css('display', 'block');
     $(".ErrorMessageSpan").empty();
    
     var Date = $("#TxtDate").val();
@@ -64,7 +65,7 @@ $("#FmApplyShortLeave").submit(function (event) {
         if (Comments === "") {
             $("#Comments_Span_Error").text('Reason');
         }
-
+        loaddingimg.css('display', 'none');
         return;
     }
 
@@ -74,11 +75,17 @@ $("#FmApplyShortLeave").submit(function (event) {
     debugger;
     // Check if the time difference is greater than 15 minutes
     if (timeDiff < 15) {
-        $("#Main_Span_Error").text('Please select proper timings.');
+       // $("#Main_Span_Error").text('Please select proper timings.');
+        $('.alert-danger p').text('Please select proper timings.');
+        $(".alert-danger").show().delay(6000).fadeOut();
+        loaddingimg.css('display', 'none');
         return;
     }
     else if (timeDiff > 60) {
-        $("#Main_Span_Error").text('You are not allowed to apply Short Leave for more than 1 hr(s).');
+       // $("#Main_Span_Error").text('You are not allowed to apply Short Leave for more than 1 hr(s).');
+        $('.alert-danger p').text('You are not allowed to apply Short Leave for more than 1 hr(s).');
+        $(".alert-danger").show().delay(6000).fadeOut();
+        loaddingimg.css('display', 'none');
         return;
     }
     debugger;
@@ -86,34 +93,39 @@ $("#FmApplyShortLeave").submit(function (event) {
    
     var formData = new FormData($("#FmApplyShortLeave")[0]);
         var bt = $("#savebuttonId").val();
-        $("#loadingOverlay").show();
+     
     $.ajax({
         url: "/Attendance/ApplyShortLeaves?submitButton=" + bt,
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
-        success: function (responce) {
-            if (responce.message == "Short Leave Submitted Successfully." || responce.message == "As you are a final level approver, but there is no Self-Approval defined to you." || responce.message == "Request has Self - Approved Successfully.") {
-                $("#Main_Span_Error").text(responce.message);
+        success: function (response) {
+            if (response.message == "Short Leave Submitted Successfully." || response.message == "As you are a final level approver, but there is no Self-Approval defined to you." || response.message == "Request has Self - Approved Successfully.") {
+               // $("#Main_Span_Error").text(response.message);
                 $("#savebuttonId").prop("disabled", true);
                 $("#clearbutton1").prop("disabled", true);
+                $('.alert-success p').text(response.message);
+                $(".alert-success").show().delay(6000).fadeOut()
             }
             else {
-                $("#Main_Span_Error").text(responce.message);
+               // $("#Main_Span_Error").text(response.message);
+                $('.alert-danger p').text(response.message);
+                $(".alert-danger").show().delay(6000).fadeOut();
             }
 
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
 
         },
         error: function (xhr, stutus, error) {
             $("#Main_Span_Error").text("Something Error");
+            loaddingimg.css('display', 'none');
         }
 
     })
 
     } catch (e) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 });
@@ -121,13 +133,14 @@ $("#FmApplyShortLeave").submit(function (event) {
 
 
 
-
+//===============================link for Apply short Leave
 function LnkApplyShortLeave() {
 
     $("#TextareacountSPAN").text("500");
     $(".ErrorMessageSpan").empty();
-    $("#accordionoc12345").hide();
-    $("#accordionoc123456").hide();
+    $("#EntireDivShortLeaveDetailsTable").hide();
+    $("#AppliedShortLeaves_SearchRecords_Div").hide();
+    $("#MonthlyAppliedShortLeaves_SearchRecords_EntireDiv").hide();
     $("#accordionoc_VIEW").hide();
     $("#MonthlyAppliedShortLeaves_SearchRecords_Div").hide();
 
@@ -136,7 +149,7 @@ function LnkApplyShortLeave() {
     $("#TblMonthlyAppliedShortLeaves_SearchRecords tbody").empty();
     $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
 
-    $("#ApplyShortLeavePage").show();
+    $("#DivApplyShortLeavePage").show();
     // $("#CreateNewPage").show();
     FN_ClearValues('clearbutton1_CreatePage', 'FmApplyShortLeave', 'TxtAreaReason');
     // $("#SaveLeaveLevels_CreatePage_BTN").val("Save");
@@ -144,19 +157,23 @@ function LnkApplyShortLeave() {
     $("#clearbutton1").prop("disabled", false);
 
 }
+
+//===============================Back to display
 function BackToDisplayShortLeaves() {
     TblAppliedShortLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedShortLeaves_SearchRecords', 'CountOfRecords_AppliedShortLeaves', 'AppliedShortLeaves_SearchRecords_Div')
 
-    $("#accordionoc12345").show();
-    $("#accordionoc123456").show();
-    $("#ApplyShortLeavePage").hide();
+    $("#AppliedShortLeaves_SearchRecords_Div").show();
+    $("#MonthlyAppliedShortLeaves_SearchRecords_EntireDiv").show();
+    $("#EntireDivShortLeaveDetailsTable").show();
+    $("#DivApplyShortLeavePage").hide();
     $(".ErrorMessageSpan").empty();
 }
+
 function FN_ClearValues(bUttonid, Formid, ListBoxId) {
     debugger;
     document.getElementById(Formid).reset(); // Reset the form
-
-    $('#' + ListBoxId).text('');
+    $("#TextareacountSPAN").text("500");
+   // $('#' + ListBoxId).text('');
     //  $("#User_Id_CreatePage").empty();
     $(".ErrorMessageSpan").empty();
 }
@@ -182,48 +199,50 @@ function TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, v
 
         $("#" + EffectiveTableid + " tbody").empty();
         $("#" + EffectiveTableid).hide();
-        $("#" + RecordcountSpanId).text("");
-        $("#" + RecordcountSpanId).text("NO RECORDS");
+        //$("#" + RecordcountSpanId).text("");
+        //$("#" + RecordcountSpanId).text("NO RECORDS");
+        $("#" + RecordcountSpanId).text("0");
         $("#lnkShowMyPermissions").text("Show My Short Leaves");
         return;
         // $("#Main_Span_Error").text("No records.");
         }
-        $("#loadingOverlay").show();
+       loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction",//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             $("#PrintBTN").text("");
             $("#lnkShowMyPermissions").text("Hide My Short Leaves");
             $("#accordionoc_VIEW").hide();
             $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
-            debugger;
+          
             $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("");
             $("#GetMyAppliedLeaves_Table_VIEW").hide();
             $("#GetMyAppliedLeaves_Table_Print tbody").empty();
             $("#GetMyAppliedLeaves_Table_Print").hide();
             $("#printDetails_Form").hide();
-            debugger;
+          
 
             $("#" + EffectiveTableid + " tbody").empty();
-            if (responce.length <= 0) {
+            if (response.length <= 0) {
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
                 $("#" + SearchRecords_Div).show();
 
                 $("#" + EffectiveTableid).hide();
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).text("NO RECORDS");
+                //$("#" + RecordcountSpanId).text("");
+                //$("#" + RecordcountSpanId).text("NO RECORDS");
+                $("#" + RecordcountSpanId).text("0");
                 // $("#Main_Span_Error").text("No records.");
             } else {
 
 
-                $("#" + RecordcountSpanId).text("");
-                //$("#" + RecordcountSpanId).text(" " + responce.length + " RECORD(S) FOUND. ");
-                $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
-              
+               // $("#" + RecordcountSpanId).text("");
+                ////$("#" + RecordcountSpanId).text(" " + response.length + " RECORD(S) FOUND. ");
+               // $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                $("#" + RecordcountSpanId).text(response.length);
                 // $("#TblApplied_SearchRecords tbody").empty();
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#" + EffectiveTableid + " tbody").append(
                         //  $("#TblApplied_SearchRecords tbody").append(
                         " <tr>" +
@@ -259,7 +278,7 @@ function TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, v
             // handle the error
         }
     });
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
     }
@@ -268,8 +287,10 @@ function TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, v
 
 
 //this is for View  and Cancel and Print details
-$('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
+//$('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
+$('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
     try {
+        loaddingimg.css('display', 'block');
     $("#MonthlyAppliedShortLeaves_SearchRecords_Div").hide();
     $("#lnkShowMyPermissions").text("Show My Short Leaves");
     $("#TblMonthlyAppliedShortLeaves_SearchRecords tbody").empty();
@@ -277,7 +298,7 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
     $("#CountOfRecords_MonthlyAppliedShortLeaves").text("");
     $("#CountOfRecords_MonthlyAppliedShortLeaves").text("NO RECORDS");
 
-    var TR = $(this).closest('tr');
+    //var TR = $(this).closest('tr');
     var Batchid = $(this).closest('tr').find('#Batchid').val();
     /*alert(Batchid)*/
 
@@ -293,14 +314,15 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
             url: "/Attendance/GetMyAppliedLeaves_ViewDetails_CAllingFUC?Batchid=" + Batchid,
             type: "GET",
             success: function (response) {
-                debugger;
 
-                var PrintBTN = document.getElementById("PrintBTN");
-                PrintBTN.innerHTML = "";
+                //var PrintBTN = document.getElementById("PrintBTN");
+                //PrintBTN.innerHTML = "";
+                $("#PrintBTN").css("display", 'none');
                 if (response.length <= 0) {
                     $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
-                    debugger;
+                    
                     $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
+                   // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text('0')
 
                     $("#GetMyAppliedLeaves_Table_VIEW").hide();
 
@@ -311,14 +333,12 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
 
                 }
                 else {
-
-
                     var createdDate;
                     $.each(response, function (i, value122) {
                         $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
                         debugger;
-                        $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
-
+                       $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
+                       // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text(response.length)
                         createdDate = value122.createdDate;
                         createdDate = createdDate.split("T")[0];
                         $("#GetMyAppliedLeaves_Table_VIEW tbody").append("<tr>" +
@@ -328,7 +348,6 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
                             "<td>" + value122.comments + " </td>" +
                             "<td>" + value122.approvalstatus + " </td>" +
                             "<td >" + value122.overallRequestStatus + " </td>" +
-
                             "<td>" + createdDate + " </td>" +
 
                             "</tr>"
@@ -349,22 +368,35 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
             ,
             error: function (xhr, status, erro) {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
 
         })
     }
 
     else if (BTNtext == "Cancel") {
-
-        var returnconform = confirm("Are you sure you want to Cancel the Leave.");
-        if (returnconform == true) {
-            debugger;
+        $("#accordionoc_VIEW").hide();
+        $("#GetMyAppliedLeaves_Table_Print tbody").empty();
+        $("#GetMyAppliedLeaves_Table_Print").hide();
+        $("#printDetails_Form").hide();      
+        Swal.fire({
+            title: "Are you sure you want to Cancel the Leave?",
+            text: "  ",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Cancel it!"
+        }).then((result) => {
+            // If user confirms deletion
+            if (result.isConfirmed) {
+               
             $.ajax({
                 url: "/Attendance/Cancel_ShortLeavesOfStaff_CallingFun?Batchid=" + Batchid + "&submitButton=" + BTNtext,
                 type: "GET",
                 success: function (response) {
                     debugger;
-                    $('#Main_Span_Error').text(response.message);
+                  //  $('#Main_Span_Error').text(response.message);
                     window.scrollTo(0, 0);
                     if (response.message == "Short Leave Cancelled Successfully") {
                         debugger;
@@ -373,11 +405,13 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
                         //  GetMyAppliedLeaves_CallingMethod();
                         var printid_ForView = 1;
                         MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, 'GetMyAppliedLeaves_Table_VIEW', 'Main_Span_Error', 'PrintBTN', 'GetMyAppliedLeaves_Table_Print', 'ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory', 'SchoolnameTable_instancename', 'SchoolnameTable_ADDRESS', 'TotalNoofDays_TABLE', 'printDetails_Form', 'accordionoc_VIEW');
-
+                        $('.alert-success p').text(response.message);
+                        $(".alert-success").show().delay(6000).fadeOut()
                     }
                     else {
-                        var PrintBTN = document.getElementById("PrintBTN");
-                        PrintBTN.innerHTML = "";
+                        //var PrintBTN = document.getElementById("PrintBTN");
+                        //PrintBTN.innerHTML = "";
+                        $("#PrintBTN").css("display", 'none');
                         // $("#accordionoc_VIEW").hide();
                         // $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
 
@@ -387,21 +421,27 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td span', function () {
                         $("#GetMyAppliedLeaves_Table_Print tbody").empty();
                         $("#GetMyAppliedLeaves_Table_Print").hide();
                         $("#printDetails_Form").hide();
+                        $('.alert-danger p').text(response.message);
+                        $(".alert-danger").show().delay(6000).fadeOut();
 
                     }
                 },
                 error: function (xhr, status, error) {
                     $("#Main_Span_Error").text("Something Error");
+                    loaddingimg.css('display', 'none');
                 }
 
             });
-        }
+                }
+            })
     }
     else {
         MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, '1', 'GetMyAppliedLeaves_Table_VIEW', 'Main_Span_Error', 'PrintBTN', 'GetMyAppliedLeaves_Table_Print', 'ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory', 'SchoolnameTable_instancename', 'SchoolnameTable_ADDRESS', 'TotalNoofDays_TABLE', 'printDetails_Form', 'accordionoc_VIEW');
-    }
+        }
+        loaddingimg.css('display', 'none');
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 });
 
@@ -425,14 +465,13 @@ function MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, Ge
                 $('#' + countspanid).empty();
             }
 
-
-
             //var printbtn = "<a id='A1' href='#' onclick='javascript: CallPrint('PrintBTN_TABLEID')'>PRINT</a>";
             //$("#PrintBTN").text(printbtn)
-            var PrintBTN = document.getElementById(PrintBTNid);
-            PrintBTN.innerHTML = "";
-            PrintBTN.innerHTML = "PRINT";
-            debugger;
+            //var PrintBTN = document.getElementById(PrintBTNid);
+            //PrintBTN.innerHTML = "";
+            //PrintBTN.innerHTML = "PRINT";
+            $("#PrintBTN").css("display", 'block');
+            
             var Totaldays = "";
             var sno = 1;
             $("#" + EffectiveTableid + " tbody").empty();
@@ -488,7 +527,6 @@ function MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, Ge
             $("#" + EffectiveTableid).show();
             $("#" + TotalDivId).show();
             $("#" + PrintDetailsFormid).show();
-
         }
         ,
         error: function (xhr, status, erro) {
@@ -512,27 +550,29 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
     $.ajax({
         url: "/Attendance/TblAppliedShortLeaves_SearchRecords_Calingfunction",//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             debugger;
             $("#" + EffectiveTableid + " tbody").empty();
-            if (responce.length <= 0) {
+            if (response.length <= 0) {
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
                 // $("#" + SearchRecords_Div).hide();
                
                 $("#" + EffectiveTableid).hide();
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).text("NO RECORDS");
+                //$("#" + RecordcountSpanId).text("");
+                //$("#" + RecordcountSpanId).text("NO RECORDS");
+                $("#" + RecordcountSpanId).text("0");
                 // $("#Main_Span_Error").text("No records.");
             } else {
-                $("#" + RecordcountSpanId).text("");
-                $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
-          
+                //$("#" + RecordcountSpanId).text("");
+                //$("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                $("#" + RecordcountSpanId).text(response.length);
+
                 // $("#TblApplied_SearchRecords tbody").empty();
                 var ViewBTN;
                 var CancelBTN;
                 var PrintBTN;
-                $.each(responce, function (i, Value2) {
-                    ViewBTN = "<div style='text-align:center;font-size:12px;' ><span id='ViewBtn' style='cursor:pointer;' class='badge badge-info' title='View Transaction History of Leave Status'>View</span>  <input type='text' id='Batchid' value='" + Value2.batchid + "' hidden/> </div >";
+                $.each(response, function (i, Value2) {
+                    ViewBTN = "<a class='badge rounded-pill bg-info' id='ViewBtn' style='cursor:pointer;' class='badge badge-info' title='View Transaction History of Leave Status'>View</a>  <input type='hidden' id='Batchid' value='" + Value2.batchid + "' />";
 
                     //DeleteBTN = "<p class='fa fa-trash -o' title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer; '><input type='text' hidden  id='id_For_Delete' value=''></p>";
                     if (Value2.leaveStatus == "Self-Approved" || Value2.leaveStatus == "Submitted" || Value2.leaveStatus == "Approved") {
@@ -540,13 +580,13 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                         if (Value2.leaveCancelledFlag) {
                             CancelBTN = "Cancelled";
                         } else {
-                            CancelBTN = "<div style='text-align:center;font-size:13px;' ><span id='CancelBtn' style='cursor:pointer;' class='badge badge-primary' title='You can cancel an applied leave which is having startdate as future date to current date'>Cancel</span>   </div >";
+                            CancelBTN = "<a class='badge rounded-pill bg-warning' id='CancelBtn' style='cursor:pointer;'  title='You can cancel an applied leave which is having startdate as future date to current date'>Cancel</a>";
                         }
                         /*C: \Users\rakeshp\source\repos\Connect4m_Web\Connect4m_Web\wwwroot\Themes\assets\images\tree\print.png*/
 
                         // PrintBTN = "<div ><span><input type='image' title='You can Print an applied leave ' src='/tree/print.png' style='border - width: 0px;'></span> </div >";
                         // PrintBTN = "<div ><span title='You can Print an applied leave ' class='fa fa-print' style='font-size: 20px;cursor:pointer; color: red' onclick=\"MyAppliedShortLeaves_PrintTable_CallingFun( '" + Value2.batchid + "', '1', 'GetMyAppliedLeaves_Table_VIEW', 'Main_Span_Error', 'PrintBTN', 'GetMyAppliedLeaves_Table_Print', 'ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory', 'SchoolnameTable_instancename', 'SchoolnameTable_ADDRESS', 'TotalNoofDays_TABLE', 'printDetails_Form', 'accordionoc_VIEW');\" ></span ></div > ";
-                        PrintBTN = "<div style='text-align:center;'><span id=PrintBtn'  title='You can Print an applied leave ' class='fa fa-print' style='font-size: 20px;cursor:pointer; color: red'  ></span ></div > ";
+                        PrintBTN = "<a class='fa fa-print' id=PrintBtn'  title='You can Print an applied leave '  style='cursor:pointer;'  ></a>";
                     }
                     else {
                         // ViewBTN = "";
@@ -570,7 +610,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                         "<td>" + Value2.leaveStatus + " </td>" +
 
                         "<td style='text-align:center;'> " + CancelBTN + "</td>" +
-                        "<td >" + PrintBTN + " </td>" +
+                        "<td style='text-align:center;'>" + PrintBTN + " </td>" +
                         "</tr>"
                     );
                 });
@@ -591,7 +631,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                 var tbody = table.find('tbody');
 
                 var rowsPerPage = 10; // Number of rows to display per page
-                var numPages = Math.ceil(responce.length / rowsPerPage);
+                var numPages = Math.ceil(response.length / rowsPerPage);
                 var currentPage = 1; // Default current page
 
                 var pagination = $('#TblAppliedShortLeaves_SearchRecords_pagination');
@@ -665,7 +705,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                     $('.TblAppliedShortLeaves_SearchRecords_pagination_Class').removeClass('active');
                     $('.TblAppliedShortLeaves_SearchRecords_pagination_Class').eq(page - newStartIndex + 1).addClass('active').css('cursor', 'unset');;
                     debugger;
-                    if (responce.length < 11) {
+                    if (response.length < 11) {
                         $("#" + EffectiveTableid + " tfoot").hide();
                     }
                     else {

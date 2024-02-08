@@ -66,9 +66,10 @@ function AddLeaveDelegationPage_PagePartialViewFunction() {
 }
 
 function _TblLeaveDelegationAuthorityList_LeaveDeligation(event) {
-    // try {
+     try {
     $(".ErrorMessageSpan").empty();
     event.preventDefault();
+    loaddingimg.css('display', 'block');
     var currentPage = "";
     //if ($('#TblLeaveDelegationAuthorityList_SearchedRecords_Div').is(':empty') == false) {
     //    var table = js('#TblLeaveDeligationAuthorityList_SearchedRecords').DataTable();
@@ -96,15 +97,20 @@ function _TblLeaveDelegationAuthorityList_LeaveDeligation(event) {
             //LeaveTypesCAllingTableView(event);
            // Pagination($("#counts").text(), 'TblLeaveDeligationAuthorityList_SearchedRecords');
             DataBind(currentPage);
+            loaddingimg.css('display', 'none');
         },
         error: function () {
             $("#Main_Span_Error").text("Something Error");
+
+            loaddingimg.css('display', 'none');
         }
 
     });
-    //} catch (e) {
-    //  $("#Main_Span_Error").text("Something Error");
-    // }
+    } catch (e) {
+         $("#Main_Span_Error").text("Something Error");
+
+         loaddingimg.css('display', 'none');
+     }
 }
 
 function AddUserByRadioBtn(event, HdnDelegationTo_UserId) {
@@ -133,7 +139,8 @@ function SaveLeavedelegation(event) {
     try {
         debugger;
         event.preventDefault();
-        window.scrollTo(0, 0);
+        loaddingimg.css('display', 'block');
+       
         $(".ErrorMessageSpan").empty();
 
         var DdlDepartment = $("#DdlDepartment").val();
@@ -178,11 +185,16 @@ function SaveLeavedelegation(event) {
                 //    'border':'2px solid red',
                 //})
             }
-
+            window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
             return;
         }
         else if (HdnDelegationTo_UserId === "") {
-            $("#Main_Span_Error").text('Please add User to Delegate.');
+           // $("#Main_Span_Error").text('Please add User to Delegate.');
+            $('.alert-danger p').text('Please add User to Delegate.');
+            $(".alert-danger").show().delay(6000).fadeOut();
+            window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
             return;
         }
         else if (true) {
@@ -194,11 +206,19 @@ function SaveLeavedelegation(event) {
             var TodayDate = Year + '-' + month + '-' + day;
 
             if (Date.parse(TodayDate) > Date.parse(TxtFromDate) || Date.parse(TodayDate) > Date.parse(TxtToDate)) {
-                $("#Main_Span_Error").text("Dates cannot be less than Today's Date.");
+               // $("#Main_Span_Error").text("Dates cannot be less than Today's Date.");
+                $('.alert-danger p').text("Dates cannot be less than Today's Date.");
+                $(".alert-danger").show().delay(6000).fadeOut();
+                window.scrollTo(0, 0);
+                loaddingimg.css('display', 'none');
                 return;
             }
             else if (Date.parse(TxtToDate) < Date.parse(TxtFromDate)) {
-                $("#Main_Span_Error").text("From Date cannot be greater than To Date.");
+               // $("#Main_Span_Error").text("From Date cannot be greater than To Date.");
+                $('.alert-danger p').text('From Date cannot be greater than To Date.');
+                $(".alert-danger").show().delay(6000).fadeOut();
+                window.scrollTo(0, 0);
+                loaddingimg.css('display', 'none');
                 return;
             }
         }
@@ -208,33 +228,37 @@ function SaveLeavedelegation(event) {
         //var formData = new FormData(this);
         var ButtonName = $("#BtnSaveId").val();
         // var formData = new FormData(this);
-        $("#loadingOverlay").show();
+       
         $.ajax({
             url: "/Attendance/LeaveDelegation?ButtonName=" + ButtonName,
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
-            success: function (responce) {
+            success: function (response) {
                 debugger;
 
-                if (responce.message == "Record inserted successfully." || responce.message == "Record updated successfully.") {
+                if (response.message == "Record inserted successfully." || response.message == "Record updated successfully.") {
                     $("#BtnSaveId").prop('disabled', true);
-
-                    $("#Main_Span_Error").text(responce.message);
+                   // $("#Main_Span_Error").text(response.message);
+                    $('.alert-success p').text(response.message);
+                    $(".alert-success").show().delay(6000).fadeOut()
                 }
                 else {
-                    $("#Main_Span_Error").text(responce.message);
+                    //$("#Main_Span_Error").text(response.message);
+                    $('.alert-danger p').text(response.message);
+                    $(".alert-danger").show().delay(6000).fadeOut();
                 }
-                $("#loadingOverlay").hide();
+                window.scrollTo(0, 0);
+                loaddingimg.css('display', 'none');
             },
             error: function (xhr, status, error) {
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
                 $("#Main_Span_Error").text("Something Error");
             }
         });
     } catch (x) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -249,7 +273,7 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
         var Tr = $(this).closest('tr');
 
         //  var TBLLeavetypeid = Tr.find("td:eq(2)").text();
-        $("#loadingOverlay").show();
+        loaddingimg.css('display', 'block');
 
         $.ajax({
             url: "/Attendance/_AddLeaveDelegationPage_LeaveDelegation",
@@ -259,7 +283,7 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
                 //$("#TblLeaveDelegationList_SearchedRecords_Div").empty();
                 // Append the received partial view content to the container
 
-                $("#AddLeaveDelegationPage_Div").hide();
+                $("#TblLeaveDelegationList_SearchedRecords_Div").empty();
                 $("#AddLeaveDelegationPage_Div").html(data);
                 DepartmentsDropdown_Caliingfunction('DdlDepartment', DdlDepartmentid, 'Edit');
                 Roles_InstanceRole_SELByInstanceId_CallingFunction('DdlRole', DdlRoleId, 'Edit');
@@ -285,20 +309,21 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
 
                 $("#TxtToDate").val(formattedTxtToDate);
                 $("#HdnLeaveDelegationId").val(DelegationId);
-                $("#BtnSaveId").val("Update");
+                $("#BtnSaveId").val("Update").text('Update');
                 $("#BtnClearSearchForm").prop("disabled", true);
 
-                $("#loadingOverlay").hide();
+                loaddingimg.css('display', 'none');
 
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");
+                loaddingimg.css('display', 'none');
             }
 
         });
 
     } catch (x) {
-        $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 
@@ -307,101 +332,18 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
 //This is for delete
 
 //----------------------  Delete popup code start----------------------------
-
-
 function DeleteLeaveDelegationCallingFunction(LeaveDelegationId) {
-    try {
-        debugger;
-        $(".ErrorMessageSpan").empty();
-        $("#SuccessFulDiv").hide();
-        $("#OKButton").hide();
-        $("#confirmDeleteButton").show();
-        $("#cancelDeleteButton").show();
-        $("#ConformationDiv").show();
-        $("#ConfirmMessageid").text("Are you sure you want  to Delete the Delegation Details?");
-        document.getElementById("deletePopup").classList.add("active");
-        debugger;
-        var row = $(this).closest("tr").attr("id");
-
-        $("#confirmDeleteButton").attr("onclick", "confirmDeleteButtonCallingFun('" + row + "','" + LeaveDelegationId + "')");
-
-    } catch (x) {
-        $("#Main_Span_Error").text("Something Error");
-    }
-}
-
-//$("#confirmDeleteButton").on("click", function () {
-
-function confirmDeleteButtonCallingFun(TrId, LeaveDelegationId) {
     debugger;
-    try {
+    CommonDeleteFunction_Vs1('Delegation Details', "POST", "/Attendance/LeaveDelegation?ButtonName=Delete&LeaveDelegationId=" + LeaveDelegationId, function (response) {
 
-        var row = $("#" + TrId).closest("tr");
-        var bt = "Delete";
-        var LeaveDelegationId = LeaveDelegationId;
-        // var LeaveDelegationId = row.find('#TBLLeavetypeid').val();
-        $.ajax({
-            url: "/Attendance/LeaveDelegation?ButtonName=" + bt + "&LeaveDelegationId=" + LeaveDelegationId,
-            type: "POST",
-            success: function (response) {
-                debugger;
-                if (response.message == "Record deleted successfully.") {
-                    // LeaveTypesCAllingTableView(event);
-
-                    $("#SuccessMessageid").text(response.message);
-                    $("#ConformationDiv").hide();
-                    $("#SuccessFulDiv").show();
-                    $("#OKButton").show();
-                    row.remove();
-                    var count = parseInt($("#counts").text()) - 1;
-                    $("#counts").text("");
-                    $("#counts").text(count);
-                    if (count <= 0) {
-                        $("#TblLeavesTypes_SearchRecords").hide();
-                        $("#counts").text("0");
-                    }
-
-                    //$("#SuccessMessageid").text(response.message);
-                    //$("#cancelDeleteButton").remove();
-                    //$("#confirmDeleteButton").remove();
-                    //$("#OKButton").show();
-
-                    //$("#Main_Span_Error").text(response.message);
-                    // window.scrollTo(0, 0);
-                } else {
-                    $("#ConfirmMessageid").text(response.message);
-                    // $('#Main_Span_Error').text(response.message);
-
-                    $("#confirmDeleteButton").hide();
-                    $("#cancelDeleteButton").hide();
-                    $("#OKButton").show();
-                    // window.scrollTo(0, 0);
-                }
-            },
-            error: function (xhr, status, error) {
-                $("#Main_Span_Error").text("Something Error");
-            }
-        });
-    } catch (x) {
-        $("#Main_Span_Error").text("Something Error");
-    }
-
+        TblLeaveDelegationList_SearchedRecords_PagePartialViewFunction();
+    });
 }
-//});
-
-
-
-function cancelDeleteButtonFunction() {
-    document.getElementById("deletePopup").classList.remove("active");
-};
-
-
-        ///---------------------------Delete popup code end------------------
 
 
 function FN_ClearValuesDeleigation(Formid) {
     try {
-        document.getElementById(Formid).reset(); // Reset the form
+       // document.getElementById(Formid).reset(); // Reset the form
         $("#DelegationToName").text('');
         
     } catch (x) {
@@ -444,7 +386,7 @@ function DepartmentsDropdown_Caliingfunction(Dropdownid,DepartmentId,Val,forEdit
         $.ajax({
             url: "/Attendance/DepartmentsDropdown_Caliingfunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 //  $("#DdlDepartment").empty();
                 $("#" + Dropdownid).empty();
                 debugger;
@@ -454,7 +396,7 @@ function DepartmentsDropdown_Caliingfunction(Dropdownid,DepartmentId,Val,forEdit
                     $("#" + Dropdownid).append('<option value="">' + "---------Select--------" + '</option>');
                 }
                 if (Val == "Edit") {
-                    $.each(responce, function (i, Value2) {
+                    $.each(response, function (i, Value2) {
 
                         if (Value2.value == DepartmentId ) {
                             debugger;
@@ -469,7 +411,7 @@ function DepartmentsDropdown_Caliingfunction(Dropdownid,DepartmentId,Val,forEdit
                         //$("#" + Dropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                     });
                 } else {
-                    $.each(responce, function (i, Value2) {                 
+                    $.each(response, function (i, Value2) {                 
                         $("#" + Dropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                     });
                 }
@@ -489,14 +431,14 @@ function Roles_InstanceRole_SELByInstanceId_CallingFunction(Dropdownid, Roleid,V
         $.ajax({
             url: "/Attendance/Roles_InstanceRole_SELByInstanceId_CallingFunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 // $("#DdlRole").empty();
                 $("#" + Dropdownid).empty();
                 $("#" + Dropdownid).append('<option value="">' + "---------Select--------" + '</option>');
 
 
                 if (Val == "Edit") {
-                    $.each(responce, function (i, Value2) {
+                    $.each(response, function (i, Value2) {
 
                         if (Value2.value == Roleid) {
                             debugger;
@@ -515,7 +457,7 @@ function Roles_InstanceRole_SELByInstanceId_CallingFunction(Dropdownid, Roleid,V
 
 
                 } else {
-                    $.each(responce, function (i, Value2) {
+                    $.each(response, function (i, Value2) {
                         $("#" + Dropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                     });
                 }
@@ -553,15 +495,15 @@ function GetApprovingAuthorityUserName_BY_SelectRoleId(Approveruserid, InstanceC
         $.ajax({
             url: "/Attendance/GetApprovingAuthorityUserName_BY_SelectRoleId?InstanceRoleId=" + InstanceRoleId + "&InstanceClassificationId=" + InstanceClassificationId,
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                
                 $("#DdlUser").empty();
-                if (responce.length > 0) {
+                if (response.length > 0) {
                     $("#DdlUser").append('<option value="">' + "---------Select--------" + '</option>');
                 }
 
                 if (val == "Edit") {
-                    $.each(responce, function (i, Value2) {
+                    $.each(response, function (i, Value2) {
                         debugger;
                         if (Value2.value == Approveruserid) {
                             debugger;
@@ -574,7 +516,7 @@ function GetApprovingAuthorityUserName_BY_SelectRoleId(Approveruserid, InstanceC
                     });
                 }
                 else {
-                    $.each(responce, function (i, Value2) {                     
+                    $.each(response, function (i, Value2) {                     
                             $("#DdlUser").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');                       
                     });
                 }
@@ -617,12 +559,12 @@ function DdlDesignation_AddUserPage_Calingfunction(Dropdownid) {
         $.ajax({
             url: "/Attendance/DdlDesignation_AddUserPage_Calingfunction",
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 //  $("#DdlDepartment").empty();
                 $("#" + Dropdownid).empty();
                 $("#" + Dropdownid).append('<option value="">' + "---------Select--------" + '</option>');
 
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     $("#" + Dropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
                 });
 
@@ -645,18 +587,18 @@ function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
         $.ajax({
             url: "/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=" + InstanceClassificationId,
             type: "GET",
-            success: function (responce) {
+            success: function (response) {
                 // $("#AppliedEmployeesNames_Id").empty();
                 $("#" + EffectingDropdownid).empty();
 
 
                 $("#" + EffectingDropdownid).append('<option value="" >Please select a section</option>');
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
 
                     $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
 
                 });
-                if (responce.length <= 0) {
+                if (response.length <= 0) {
                     $("#" + EffectingDropdownid).prop('disabled', true);
                 } else {
                     $("#" + EffectingDropdownid).prop('disabled', false);
@@ -706,7 +648,7 @@ function AppliedEmployeeNames_Caliingfunction(buttonId, EffectingDropdownid, App
             $.ajax({
                 url: "/Attendance/AppliedEmployeeNames_Caliingfunction?InstanceClassificationId=" + InstanceClassificationId,
                 type: "GET",
-                success: function (responce) {
+                success: function (response) {
                     // $("#AppliedEmployeesNames_Id").empty();
                     $("#" + EffectingDropdownid).empty();
 
@@ -715,7 +657,7 @@ function AppliedEmployeeNames_Caliingfunction(buttonId, EffectingDropdownid, App
                     // }
 
                     if (val == "Edit") {
-                        $.each(responce, function (i, Value2) {
+                        $.each(response, function (i, Value2) {
 
                             if (Value2.value == AppliedUserId) {
                                 debugger;
@@ -744,11 +686,11 @@ function AppliedEmployeeNames_Caliingfunction(buttonId, EffectingDropdownid, App
                         //    }
                     } else {
 
-                        $.each(responce, function (i, Value2) {
+                        $.each(response, function (i, Value2) {
                             $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
                         });
                     }
-                    if (responce.length > 0) {
+                    if (response.length > 0) {
                         $("#" + EffectingDropdownid).prop('disabled', false);
                     } else {
                         $("#" + EffectingDropdownid).prop('disabled', true);

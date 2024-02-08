@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="~/Themes/assets/css/StyleSheets/LeaveApproval.css" rel="stylesheet" />
+    @*<link href="~/Themes/assets/css/StyleSheets/LeaveApproval.css" rel="stylesheet" />*@
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
@@ -17,20 +17,19 @@
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
     @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-
-        <script src="~/Datatable/jquery.dataTables.min.js"></script>*@
+    *@
+    @*<script src="~/Datatable/jquery.dataTables.min.js"></script>*@
 
 
     @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -41,12 +40,12 @@
         $(document).ready(function () {
             debugger;
             try {
-                TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '12', 'TblAppliedStaffLeaves_SearchRecords', 'ctl00_ContentPlaceHolder1_lblNumRecords', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
+                TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '12', 'TblAppliedStaffLeaves_SearchRecords', 'Counts', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
 
                 DdlDepartmentId_Calingfunction();
                 Roles_InstanceRole_SELByInstanceId_CallingFunction();
-                $("#ApproveReject_Submitbuttonpage_Div").hide();
-                $("#accordionoc12345").show();
+                //  $("#ApproveReject_Submitbuttonpage_Div").hide();
+                //  $("#accordionoc12345").show();
             } catch (e) {
                 $("#Main_Span_Error").text("Something Error");
             }
@@ -58,586 +57,493 @@
 </head>
 <body>
 
-    <!-- Loading Spinner -->
-    <!--<div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading...</div>
-    </div>-->
+               
+
+                <div class="flex-grow-1 container-p-y container-fluid">
+
+                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Staff Module /</span>LEAVE APPROVAL</h4>
+
+                    <div class="row mb-2">
+                        <div class="col-md-12 col-lg-12 mb-3">
+                            <ul class="nav nav-pills" id="myTab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve /Reject</a></li>
+                                <li class="nav-item"><a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved & Rejected Leaves</a></li>
+                                <li class="nav-item"><a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Leave Requested</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                @*------------------------------Tab code end----*@
+
+                                @*--------------tab 1----------------div code start----*@
+
+                                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                                <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
+                                <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
+                                <span class="ErrorMessageSpan" id="Leaveselected_Span_Error"></span>
 
 
-    <div class="row">
-        <div class="col-sm-12 col-xl-6 xl-100">
-            <div class="card">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve /Reject</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved & Rejected Leaves</a></li>
-                    <li class="nav-item"><a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Leave Requested</a></li>
-                </ul>
-
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <h6 style="margin-left: -5%; text-align: center; color: black; margin-top: -18px;"><strong>LEAVE APPROVAL</strong></h6>
-                    </div>
-                    <div class="card-body" style=" padding-top: 0px;">                    
-                        <div class="tab-content" id="myTabContent">
-                            @*------------------------------Tab code end----*@
-
-
-                            @*------------------------------div code start----*@
-
-
-
-                            @*--------------tab 1----------------div code start----*@
-
-                            <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-                            <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
-                            <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
-                            <span class="ErrorMessageSpan" id="Leaveselected_Span_Error"></span>
-
-
-                            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
 
 
-                                <div class="default-according style-1" id="accordionoc12345">
-                                    <div class="card" id="ApproveReject_Search_Div">
-                                        <div class="card-header " style="background-color:black ;">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
-
-                                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
-                                                    SEARCH EMPLOYEE
-                                                </button>
-                                            </h5>
-                                        </div>
-
-                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-                                            <div class="card ">
-                                                <div class="card-body">
-                                                    <form id="ApproveReject_Form" class="form" style="font-size:11px">
-
-                                                        <div class="row">
-                                                            <div class="row">
-
-                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
-                                                                    <label class="control-label"> Department  :&nbsp; </label>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <select id='DdlDepartmentId' onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class=" input-air-primary " style="width: 230px; color: black; font-size: inherit;height:20px" asp-items="@(new SelectList(""))">
-                                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-
-                                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-                                                                        <option value=''>---------Select---------</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
-                                                                    <label class="control-label"> Role  :&nbsp; </label>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <select id="DdlRoles" class="input-air-primary" style="width: 230px; color: black; font-size: inherit; height:20px" asp-items="@(new SelectList(""))">
-                                                                        <option value="">---------Select---------</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
-                                                                    <label class="control-label" style=" height: 30px;"> First Name :&nbsp; </label>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <input id="ctl00_ContentPlaceHolder1_txtfirstname" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
-                                                                </div>
-                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
-                                                                    <label class="control-label" style=" height: 30px;"> Last Name :&nbsp; </label>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <input id="ctl00_ContentPlaceHolder1_txtlastname" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
-                                                                </div>
-                                                                <div style="padding: 0px; text-align: end; margin-top: 0px;" class="form-group col-2">
-                                                                    <label class="control-label" style=" height: 30px;"> User Name :&nbsp; </label>
-                                                                </div>
-                                                                <div class="form-group col-4">
-                                                                    <input id="ctl00_ContentPlaceHolder1_txtUserName" type="text" class="" style=" width: 230px; font-size: 12px; color: black; height: 20px;" />
-                                                                </div>
-                                                            </div>
-                                                            <div style="margin-left:40%">
-                                                                <input type="button" class="btn btn-light " onclick="FN_ClearValues('ok','ApproveReject_Form')" id="ctl00_ContentPlaceHolder1_btnClearSerach" style="padding:4px 12px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-                                                                @*<input type="submit"  class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />*@
-                                                                <input type="submit" onclick="TblAppliedStaffLeaves_SearchRecords_Calingfunction(event,'1','TblAppliedStaffLeaves_SearchRecords','ctl00_ContentPlaceHolder1_lblNumRecords','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmAppliedStaffLeaves_SearchRecords_Div')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <br />
-                                    @*searched result table*@
-                                    @*<a id="ExportExcelLink_ApproveReject" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
-
-                                    <div class="default-according style-1" id="accordionoc123456">
-                                        <div class="card" id="FmAppliedStaffLeaves_SearchRecords_Div" style="display:none">
-                                            <div class="card-header " style="background-color:black ;">
+                                    <div id="TabApprove_Reject">
+                                        <div class="card mb-4">
+                                            <div class="card-header d-flex align-items-center justify-content-between">
                                                 <h5 class="mb-0">
-                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">@*<i class="icofont icofont-briefcase-alt-2"></i>*@  <span id="ctl00_ContentPlaceHolder1_lblNumRecords">No Records</span></button>
+                                                    <span>
+                                                        SEARCH EMPLOYEE
+                                                    </span>
                                                 </h5>
                                             </div>
-                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                                                <div class="card ">
-                                                    <div class="card-body" style="padding:0px;">
-                                                        <form id="FmAppliedStaffLeaves_SearchRecords" class="table-responsive">
-                                                            <table id="TblAppliedStaffLeaves_SearchRecords" class="table  tableid   ">
-                                                                @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
-                                                                <thead>
-                                                                    <tr>
-                                                                        @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
-                                                                        <th style="width:100px;">Employee Name</th>
-                                                                        <th>Department</th>
-                                                                        <th>From Date</th>
-                                                                        <th>To Date</th>
-                                                                        <th>Leave Type</th>
-                                                                        <th>Reason</th>
-                                                                        <th>No. of Days/Total Time</th>
-                                                                        <th>Requested Date</th>
-                                                                        <th>Delegation Record</th>
-                                                                        <th>Approve/Reject</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                </tbody>
-
-                                                            </table>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-
-                                @*this hiding page*@
-                                <div id="ApproveReject_Submitbuttonpage_Div">
-                                    <div class="default-according style-1" id="accordionoc123456">
-                                        <div class="card">
-                                            <label style="  margin-left: 41%;  padding: -1px;  font-size: 10px;">Staff Name:<span id="StaffUserName"></span></label>
-                                            <div class="card-header " style="background-color:black ;">
-                                                <h5 class="mb-0">
-
-                                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="" aria-controls="collapse11"><span id="ctl00_ContentPlaceHolder1_grdLeavesToApprove_ctl02_lblLeaveHistoryNumRecords">LEAVE COMMENTS</span></button>
-                                                </h5>
-                                            </div>
-
-                                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-
-                                                <div class="card ">
-                                                    <div class="card-body" style="padding:0px;">
-                                                        <form id="FmAppliedLeavesHistory_SearchRecords">
-
-                                                            <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-responsive tableid">
-                                                                <thead>
-                                                                    <tr>
-                                                                        @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
-                                                                        <th>Leave Type</th>
-                                                                        <th>From Date</th>
-                                                                        <th>To Date</th>
-                                                                        <th>Reason</th>
-                                                                        <th>No. of Days</th>
-                                                                        <th>DaySession</th>
-                                                                        <th style="width:60px;">Medical Certificate</th>
-                                                                        <th>Requested Date</th>
-                                                                        <th>Comments</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                </tbody>
-
-                                                            </table>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <br />
-                                    @*--------Form-----list box*@
-                                    <form id="Fm_ApproveandReject_PopUp" class="form theme-form" style="margin-left:20%;font-size:12px">
-                                        <div class="row">
-                                            <div class="col">
-
-                                                <div class="mb-3 row ">
-
-                                                    <label class="col-sm-3 col-form-label  form-label" style="padding-top: 29px;">&nbsp; Comments   : &nbsp;</label>
-                                                    <div class="col-sm-9">
-                                                        @*<textarea id="TXTareaRemarks_Popup" name="Comments" style="width: 230px; resize: none;border-style:ridge;" maxlength="500" class="form-control input-air-primary" rows="3" cols="20"></textarea>*@
-                                                        <textarea id="TXTareaRemarks_Popup" name="Comments" style="height:81px; font-size:inherit; color: black; width: 230px; resize: none; border-color: black; font-style: inherit" maxlength="500" class="input-air-primary" rows="3" cols="20"></textarea><br />
-                                                        <label> <i style="font-size: 10px;"><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
-
-                                                    </div>
-                                                </div>
-                                                <input type="text" name="BatchId" id="BatchId_Popup" hidden />
-                                                <input type="text" name="Userid" id="StaffId_Popup" hidden />
-                                                <input type="text" name="InstanceClassificationId" id="InstanceClassificationId_Popup" hidden />
-                                                <input type="text" name="InstanceId" id="InstanceId_Popup" hidden />
-                                            </div>
-                                        </div>
-                                        <div style="margin-left:140px">
-                                            <input type="button" onclick="BackTOSearhLevels(event)" class="btn btn-primary " id="BtnCancel" style="padding:3px 8px;border-radius:6px;" value="Back" />&nbsp;&nbsp;&nbsp;
-                                            <input type="button" onclick="FN_ClearValues('ok','Fm_ApproveandReject_PopUp')" class="btn btn-light " id="BtnCancel" style="padding:3px 8px;border-radius:6px;" value="Clear" />&nbsp;&nbsp;&nbsp;
-                                            <input type="button" class="btn btn-success  " onclick="LeaveApproval_Save(event, this.value)" id="BtnApprove" style="padding:4px 12px;border-radius:6px;" value="Approve" />&nbsp;&nbsp;&nbsp;
-                                            <input type="button" class="btn btn-secondary" onclick="LeaveApproval_Save(event, this.value)" id="BtnReject" style="padding:4px 12px;border-radius:6px;" value="Reject" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            @*-------------tab 1-----------------div code end----*@
-
-
-
-                            @*-------------------tab 2-----------div code start----*@
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                                <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-
-                                    <div class="default-according style-1" id="accordionoc12345">
-                                        <div class="card">
-                                            <div class="card-header " style="background-color:black ;">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
-
-                                                        @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
-
-                                                        SEARCH FOR APPROVED & REJECTED LEAVES
-                                                    </button>
-
-                                                </h5>
-                                            </div>
-
-                                            <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-
-                                                <div class="card ">
-                                                    <div class="card-body">
-                                                        <form id="ApproveRejectCompleted_Form">
-                                                            <div style="margin-left:20%;font-size:12px">
-                                                                <div class="row">
-                                                                    <div class="col">
-
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label  form-label" style=" padding:0;"> From Date :&nbsp;</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" class="" style="  font-size: 12px; color: black; height: 20px;" />
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label  form-label" style=" padding:0"> To Date :&nbsp;</label>
-                                                                            <div class="col-sm-9">
-                                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" style=" font-size: 12px; color: black; height: 20px;" />
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                        <div class="mb-2 row">
-                                                                            <label class="col-sm-3 col-form-label  form-label" style="padding-top: 3px;">Approved/Rejected  :&nbsp;</label>
-
-                                                                            <div class="col-sm-9">
-                                                                                <select id='DdlApproved_Rejected' class=" input-air-primary " style="width: 110px; color: black; font-size: inherit; height:20px">
-                                                                                    <option value='All'>All</option>
-                                                                                    <option value='Approved'>Approved</option>
-                                                                                    <option value='Rejected'>Rejected</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-
+                                            <div class="card-body">
+                                                <form id="ApproveReject_Form">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            @*--------------------------*@
+                                                            <div class="row mb-3 ">
+                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Department</label>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="position-relative">
+                                                                        <select id='DdlDepartmentId' class="select2 form-select select2-hidden-accessible" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" asp-items="@(new SelectList(""))">
+                                                                            <option value=''>---------Select--------</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
-
-                                                                <div style="margin-left:194px">
-                                                                    <input type="submit" onclick="BtnSearchApproved_Rejected(event)" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />
+                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Role</label>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="position-relative">
+                                                                        <select id='DdlRoles' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                                            <option value=''>---------Select--------</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </form>
+
+                                                            @*--------------------------*@
+
+                                                            <div class="row mb-3 ">
+                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">First Name</label>
+                                                                <div class="col-sm-4 ">
+                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtfirstname" placeholder="First Name" />
+                                                                </div>
+                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Last Name</label>
+                                                                <div class="col-sm-4 ">
+                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtlastname" placeholder="Last Name" />
+                                                                </div>
+                                                            </div>
+
+                                                            @*--------------------------*@
+
+                                                            <div class="row mb-3 ">
+                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">User Name</label>
+                                                                <div class="col-sm-4 ">
+                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtUserName" placeholder="User Name" />
+                                                                </div>
+                                                            </div>
+                                                            @*--------------------------*@
+                                                            <div class="row justify-content-end">
+                                                                <div class="col-sm-8">
+                                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnClearSerach" onclick="FN_ClearValues('ok','ApproveReject_Form')" value="Clear">Clear</button>
+                                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblAppliedStaffLeaves_SearchRecords_Calingfunction(event,'1','TblAppliedStaffLeaves_SearchRecords','Counts','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmAppliedStaffLeaves_SearchRecords_Div')" value="Search">Search</button>
+                                                                </div>
+                                                            </div>
+                                                            @*--------------------------*@
+
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
 
+                                        </div>
 
+                                        @*searched result table*@
+                                        @*<a id="ExportExcelLink_ApproveReject" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
+
+                                        <div class="card" id="FmAppliedStaffLeaves_SearchRecords_Div" style="display:none">
+                                            <div class="card-header flex-column flex-md-row">
+                                                <div class="head-label text-center">
+                                                    <h5 class="card-title mb-0">
+                                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                                                        @*<span id="Counts">No Records</span> *@
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive text-nowrap">
+                                                <table id="TblAppliedStaffLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                                    @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
+                                                            <th>Employee Name</th>
+                                                            <th>Department</th>
+                                                            <th>From Date</th>
+                                                            <th>To Date</th>
+                                                            <th>Leave Type</th>
+                                                            <th>Reason</th>
+                                                            <th>No. of Days/Total Time</th>
+                                                            <th>Requested Date</th>
+                                                            <th>Delegation Record</th>
+                                                            <th>Approve/Reject</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    @*====================================this hiding page for Approve Leave==================*@
+                                    <div class="card" id="ApproveReject_Submitbuttonpage_Div" style="display:none">
+
+                                        <label class="form-label mx-auto">Staff Name: &nbsp;<span id="StaffUserName"></span></label>
+                                        <div class="card-header flex-column flex-md-row">
+                                            <div class="head-label text-center">
+                                                <h5 class="card-title mb-0">
+                                                    @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
+                                                    <span>LEAVE COMMENTS</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive text-nowrap mb-2">
+                                            <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
+                                                        <th>Leave Type</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th>Reason</th>
+                                                        <th>No. of Days</th>
+                                                        <th>DaySession</th>
+                                                        <th>Medical Certificate</th>
+                                                        <th>Requested Date</th>
+                                                        <th>Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+
+                                        @*--------Form-----list box*@
+                                        <div class="card-body">
+                                            <form id="Fm_ApproveandReject_PopUp">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Comments</label>
+                                                            <div class="col-sm-4 ">
+                                                                <textarea class="form-control" id="TXTareaRemarks_Popup" name="Comments" maxlength="500" rows="3"></textarea>
+                                                                <label class="form-label"> <span id="TextareacountSPAN">500</span> Character(s) remaining.</label>
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                        <input type="hidden" name="BatchId" id="BatchId_Popup" />
+                                                        <input type="hidden" name="Userid" id="StaffId_Popup" />
+                                                        <input type="hidden" name="InstanceClassificationId" id="InstanceClassificationId_Popup" />
+                                                        <input type="hidden" name="InstanceId" id="InstanceId_Popup" />
+                                                        <input type="hidden" name="LeaveTypeId" id="LeaveTypeId_Popup" />
+
+
+                                                        @*--------------------------*@
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-sm-8">
+                                                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhLevels(event)" value="Back">Back</button>
+                                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="FN_ClearValues('ok','Fm_ApproveandReject_PopUp')" value="Clear">Clear</button>
+                                                                <button type="button" class="btn btn-success waves-effect waves-light" id="BtnApprove" onclick="LeaveApproval_Save(event, this.value)" value="Approve">Approve</button>
+                                                                <button type="button" class="btn btn-danger waves-effect waves-light" id="BtnReject" onclick="LeaveApproval_Save(event, this.value)" value="Reject">Reject</button>
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*-------------tab 1-----------------div code end----*@
+
+
+
+                                @*-------------------tab 2-----------div code start----*@
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                    <div class="card mb-4">
+                                        <div class="card-header d-flex align-items-center justify-content-between">
+                                            <h5 class="mb-0">
+                                                <span>
+                                                    SEARCH FOR APPROVED & REJECTED LEAVES
+                                                </span>
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="ApproveRejectCompleted_Form">
+                                                <div class="row">
+                                                    <div class="col">
+
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> From Date</label>
+                                                            <div class="col-sm-4 ">
+                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> To Date</label>
+                                                            <div class="col-sm-4 ">
+                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Approved/Rejected </label>
+                                                            <div class="col-sm-4 ">
+                                                                <div class="position-relative">
+                                                                    <select id='DdlApproved_Rejected' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                                        <option value='All'>All</option>
+                                                                        <option value='Approved'>Approved</option>
+                                                                        <option value='Rejected'>Rejected</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        @*--------------------------*@
+
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-sm-8">
+                                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="BtnSearchApproved_Rejected(event)" value="Search">Search</button>
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                    </div>
+                                                </div>
+
+                                            </form>
                                         </div>
                                     </div>
 
                                     @*------------------searched Records---------------------------*@
-                                    <a id="ApprovedLeaves_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; margin-left: 900px;letter-spacing:0px; font-size: 13px; text-decoration: underline;" onclick="javascript:CallPrint('ApprovedLeaves_SearchRecords_Div_For_Print')"></a>
+                                    <div class="demo-inline-spacing">
+                                        <button class="btn rounded-pill btn-outline-info waves-effect" id="ApprovedLeaves_SearchRecordsPrintBTN" @*class="PrintBtnClass"*@ onclick="javascript:CallPrint('ApprovedLeaves_SearchRecords_Div_For_Print')">PRINT</button>
+                                    </div>
+                                    <div id="ApprovedLeaves_SearchRecords_Div_For_Print" style="display:none">
 
-                                    <div id="ApprovedLeaves_SearchRecords_Div_For_Print">
-
-                                        <div class="default-according style-1" id="accordionoc123456">
-                                            <div class="card" id="ApprovedLeaves_SearchRecords_Div" style="display:none">
-                                                <span style="margin-left:373px">APPROVED LEAVES</span>
-                                                <div class="card-header " style="background-color:black ;">
-                                                    <h5 class="mb-0">
-
-                                                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="SpanApprovedLeavesNumRecords"> No Data Found.</span></button>
-                                                    </h5>
-                                                </div>
-
-                                                <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-
-                                                    <div class="card ">
-                                                        <div class="card-body" style="padding:0px;">
-                                                            <form id="FmApprovedLeaves_SearchRecords" class="table-responsive">
-
-                                                                <table id="TblApprovedLeaves_SearchRecords" border="1" class="table  tableid" style="border-collapse:collapse">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Employee Name</th>
-                                                                            <th>Department</th>
-                                                                            <th>Reason</th>
-                                                                            <th>Leave Type</th>
-                                                                            <th>From Date</th>
-                                                                            <th>To Date</th>
-                                                                            <th>Total Days/Time</th>
-                                                                            <th>Requested Date</th>
-                                                                            <th>Approved / Forwarded Date</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    </tbody>
-
-                                                                </table>
-
-                                                            </form>
-                                                        </div>
+                                        <div id="ApprovedLeaves_SearchRecords_Div" style="display:none">
+                                            <label class="form-label mt-auto">APPROVED LEAVES</label>
+                                            <div class="card mb-4">
+                                                <div class="card-header flex-column flex-md-row">
+                                                    <div class="head-label text-center">
+                                                        <h5 class="card-title mb-0">
+                                                            @*<span id="SpanApprovedLeavesNumRecords"> No Data Found.</span>*@
+                                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="SpanApprovedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                                                        </h5>
                                                     </div>
                                                 </div>
+                                                <div class="table-responsive text-nowrap">
+                                                    @*<table id="TblApprovedLeaves_SearchRecords" border="1" class="table  tableid" style="border-collapse:collapse">*@
+                                                    <table id="TblApprovedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th>Employee Name</th>
+                                                                <th>Department</th>
+                                                                <th>Reason</th>
+                                                                <th>Leave Type</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>Total Days/Time</th>
+                                                                <th>Requested Date</th>
+                                                                <th>Approved / Forwarded Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
                                             </div>
-
-
                                         </div>
 
-                                        <br />
+
+
 
 
                                         @*-======================-----Rejected Leaves----==============================*@
 
-                                        <div class="default-according style-1" id="accordionoc123456">
-                                            <div class="card" id="RejectedLeaves_SearchRecords_Div" style="display:none">
-                                                <span style="margin-left:373px">REJECTED LEAVES</span>
-                                                <div class="card-header " style="background-color:black ;">
-                                                    <h5 class="mb-0">
+                                        <div id="RejectedLeaves_SearchRecords_Div" style="display:none">
+                                            <label class="form-label mt-auto">REJECTED LEAVES</label>
+                                            <div class="card">
 
-                                                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11">  <span id="SpanRejectedLeavesNumRecords">  No Data Found.</span></button>
-                                                    </h5>
-                                                </div>
-
-                                                <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-
-                                                    <div class="card ">
-                                                        <div class="card-body" style="padding:0px;">
-                                                            <form id="FmRejectedLeaves_SearchRecords">
-
-                                                                <table id="TblRejectedLeaves_SearchRecords" class="table table-responsive tableid" border="1" style="border-collapse:collapse">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Employee Name</th>
-                                                                            <th>Department</th>
-                                                                            <th>Reason</th>
-                                                                            <th>Leave Type</th>
-                                                                            <th>From Date</th>
-                                                                            <th>To Date</th>
-                                                                            <th>Total Days/Time</th>
-                                                                            <th>Requested Date</th>
-                                                                            <th>Rejected Date</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    </tbody>
-
-                                                                </table>
-
-                                                            </form>
-                                                        </div>
+                                                <div class="card-header flex-column flex-md-row">
+                                                    <div class="head-label text-center">
+                                                        <h5 class="card-title mb-0">
+                                                            @*<span id="SpanRejectedLeavesNumRecords"> No Data Found.</span>*@
+                                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="SpanRejectedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                                                        </h5>
                                                     </div>
                                                 </div>
+                                                <div class="table-responsive text-nowrap">
+                                                    @*<table id="TblRejectedLeaves_SearchRecords" class="table table-responsive tableid" border="1" style="border-collapse:collapse">*@
+                                                    <table id="TblRejectedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th>Employee Name</th>
+                                                                <th>Department</th>
+                                                                <th>Reason</th>
+                                                                <th>Leave Type</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>Total Days/Time</th>
+                                                                <th>Requested Date</th>
+                                                                <th>Rejected Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
                                             </div>
-
-
                                         </div>
-                                    </div>
 
+
+
+                                    </div>
                                 </div>
 
-                            </div>
-                            @*---------------------tab 2---------div code end----*@
+
+
+                                @*---------------------tab 2---------div code end----*@
 
 
 
-                            @*---------------------tab 3---------div code start----*@
-                            <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                @*---------------------tab 3---------div code start----*@
+                                <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-                                <div class="default-according style-1" id="accordionoc12345">
-                                    <div class="card">
-                                        <div class="card-header " style="background-color:black ;">
+                                    <div class="card mb-4">
+                                        <div class="card-header d-flex align-items-center justify-content-between">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link text-white" data-bs-toggle="" data-bs-target="#collapseicon12" aria-controls="collapse11">
-                                                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse11">*@
-                                                    LEAVES REQUESTED
-                                                </button>
+                                                <span>
+                                                    LEAVE REQUESTED
+                                                </span>
                                             </h5>
                                         </div>
-                                        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon" data-bs-parent="#accordionoc12345" style="">
-                                            <div class="card ">
-                                                <div class="card-body">
-                                                    <form id="LeaveRequested_Form">
-                                                        <div style="margin-left:20%;font-size:12px">
-                                                            <div class="row">
-                                                                <div class="col">
+                                        <div class="card-body">
+                                            <form id="LeaveRequested_Form">
+                                                <div class="row">
+                                                    <div class="col">
 
-                                                                    <div class="mb-2 row">
-                                                                        <label class="col-sm-3 col-form-label  form-label" style=" padding: 0; margin-top: 3px;"><i style="color:red">*</i> From Date :&nbsp;</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input id="LeaveRequested_txtSearchFromDate" type="date" class="" style="  font-size: 12px; color: black; height: 20px;" />
-                                                                        </div>
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">From Date</label>
+                                                            <div class="col-sm-4 ">
+                                                                <input type="date" class="form-control" id="LeaveRequested_txtSearchFromDate" />
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">To Date</label>
+                                                            <div class="col-sm-4 ">
+                                                                <input type="date" class="form-control" id="LeaveRequested_txtSearchToDate" />
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+                                                        <div class="row mb-3 ">
+                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Status</label>
+                                                            <div class="col-sm-4 ">
+                                                                <div class="col mt-2">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input check" id="LeaveStatus_All" type="radio" name="LeaveStatus" value="1" required />
+                                                                        <label class="form-check-label" for="LeaveStatus_All">All</label>
                                                                     </div>
-
-                                                                    <div class="mb-2 row">
-                                                                        <label class="col-sm-3 col-form-label  form-label" style="padding: 0px; margin-top: 3px; "><i style="color:red">*</i> To Date :&nbsp;</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input id="LeaveRequested_txtSearchToDate" type="date" style=" font-size: 12px; color: black; height: 20px;" />
-                                                                        </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input check" id="LeaveStatus_Approved" type="radio" name="LeaveStatus" value="2" required />
+                                                                        <label class="form-check-label" for="LeaveStatus_Approved"> Approved</label>
                                                                     </div>
-
-                                                                    <div class="mb-1 row">
-                                                                        <label class="col-sm-3 col-form-label  form-label" style="padding-top: 0px; margin-left: 0px; margin-top: 3px; "><i style="color:red">*</i> Leave Status :&nbsp;</label>
-                                                                        <div class="col-sm-9" style=" margin-left: -15px;    padding-top: 6px;    padding: 0px;margin-top: -6px;">
-                                                                            <div class="form-group  m-checkbox-inline mb-0 custom-radio-ml m-t-5" style="margin-left: 20px;">
-                                                                                <div class="radio radio-primary">
-                                                                                    <input name="LeaveStatus" style="padding-top: 0px" id="LeaveStatus_All" class="check" type="radio" y value="1">
-                                                                                    <label class="mb-0" for="LeaveStatus_All">All</label>
-                                                                                </div>
-                                                                                &nbsp;
-                                                                                <div class="radio radio-primary">
-                                                                                    <input name="LeaveStatus" id="LeaveStatus_Approved" class="check" type="radio" value="2">
-                                                                                    <label class="mb-0" for="LeaveStatus_Approved">Approved</label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div style="margin-left:173px">
-                                                                        <input type="button" onclick="FN_ClearValues(event,'LeaveRequested_Form')" class="btn btn-light " id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Clear" />
-
-                                                                        <input type="button" onclick="TblLeaveRequested_SearchRecords_Calingfunction(event,'1','TblLeaveRequested_SearchRecords','LeaveRequested_lblNumRecords','ExportExcelLink_LeaveRequested','LeaveRequested_txtSearchFromDate','LeaveRequested_txtSearchToDate','LeaveRequested_SearchRecords_Div')" class="btn btn-primary active" id="ctl00_ContentPlaceHolder1_btnSearchDetails" style="padding:3px 8px;border-radius:6px;" value="Search" />
-                                                                    </div>
-
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-                                                    </form>
+                                                        @*--------------------------*@
+                                                        <div class="row justify-content-end">
+                                                            <div class="col-sm-8">
+                                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="FN_ClearValues(event,'LeaveRequested_Form')" value="Clear">Clear</button>
+                                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblLeaveRequested_SearchRecords_Calingfunction(event,'1','TblLeaveRequested_SearchRecords','LeaveRequested_lblNumRecords','ExportExcelLink_LeaveRequested','LeaveRequested_txtSearchFromDate','LeaveRequested_txtSearchToDate','LeaveRequested_SearchRecords_Div')" value="Search">Search</button>
+                                                            </div>
+                                                        </div>
+                                                        @*--------------------------*@
+
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </div>
-                                @*Searched Records*@
 
-                                @*<a id="ExportExcelLink_LeaveRequested" class="ExportExcelLink" onclick="ExportExcelLink('TblLeaveRequested_SearchRecords','LeavesRequested')" style="font-weight: bold; color: blue;text-decoration:underline; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>
-                                <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
+                                    @*Searched Records*@
 
-                                <div class="default-according style-1" id="accordionoc123456">
+                                    @*<a id="ExportExcelLink_LeaveRequested" class="ExportExcelLink" onclick="ExportExcelLink('TblLeaveRequested_SearchRecords','LeavesRequested')" style="font-weight: bold; color: blue;text-decoration:underline; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>
+                <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
+
                                     <div class="card" id="LeaveRequested_SearchRecords_Div">
-                                        <div class="card-header " style="background-color:black ;">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11">  <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span></button>
-                                            </h5>
-                                        </div>
-
-                                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
-                                            <div class="card ">
-                                                <div class="card-body" style="padding:0px;">
-                                                    <form id="FmLeaveRequested_SearchRecords" class="table-responsive">
-                                                        <table id="TblLeaveRequested_SearchRecords" class="display cell-border compact   tableid" @*border="1" style="border-collapse:collapse"*@>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Name</th>
-                                                                    <th>Department</th>
-                                                                    <th>Class</th>
-                                                                    <th>Leave Type</th>
-                                                                    <th>Reason</th>
-                                                                    <th>From Date</th>
-                                                                    <th>To date</th>
-                                                                    <th>No. of Days</th>
-                                                                    <th>Requested Date</th>
-                                                                    <th style=" width: 20%;">Approved / Forwarded / Rejected Date</th>
-                                                                    <th>Status</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            </tbody>
-                                                            @*<tfoot>
-                                                                <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
-
-                                                            </tfoot>*@
-                                                        </table>
-                                                    </form>
-                                                </div>
+                                        <div class="card-header flex-column flex-md-row">
+                                            <div class="head-label text-center">
+                                                <h5 class="card-title mb-0">
+                                                    <span>YOUR SEARCH RESULTED &nbsp;<span id="LeaveRequestedCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                                </h5>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @*----------------------tab 3--------div code end----*@
 
-                            @*----------------------------Tab code start-----*@
+                                        <div class="table-responsive text-nowrap">
+                                            <table id="TblLeaveRequested_SearchRecords" class="table table-hover table-bordered no-footer dataTable" @*border="1" style="border-collapse:collapse"*@>
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Department</th>
+                                                        <th>Class</th>
+                                                        <th>Leave Type</th>
+                                                        <th>Reason</th>
+                                                        <th>From Date</th>
+                                                        <th>To date</th>
+                                                        <th>No. of Days</th>
+                                                        <th>Requested Date</th>
+                                                        <th style=" width: 20%;">Approved / Forwarded / Rejected Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                                @*<tfoot>
+                                <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
+
+                            </tfoot>*@
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*----------------------tab 3--------div code end----*@
+
+                                @*----------------------------Tab code start-----*@
+                            </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
 
-    @*</div>
-        </div>*@
-
-    @*<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-        <script src="~/datatable/jquery.dataTables.js"></script>
-        <script src="~/datatable/jquery.dataTables.min.js"></script>
-
-
-
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-
-        <script type="text/javascript">
-
-            var js = jQuery.noConflict(true);
-            js(document).ready(function () {
-                debugger;
-                js('#TblAppliedStaffLeaves_SearchRecords').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
-            });
-
-        </script>*@
 </body>
 </html>
 
@@ -647,7 +553,7 @@
 
 
 @*this for export to excel*@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 <script>
@@ -703,4 +609,4 @@
         }
         saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xlsx');
     }
-</script>
+</script>*@

@@ -23443,3 +23443,25 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
 }
 
 
+
+
+/*this are  for design input step 3 page in Post Results Screen---------start----*/
+.thumbnailleft {
+    position: relative;
+    display: inline-block;
+}
+
+    .thumbnailleft img {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border: 1px solid #cbcbcb;
+        z-index: 1;
+    }
+
+    .thumbnailleft:hover img {
+        display: block;
+    }
+
+/*this are  for design input step 3 page in Post Results Screen---------end----*/

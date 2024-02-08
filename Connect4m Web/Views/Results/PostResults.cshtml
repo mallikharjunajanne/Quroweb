@@ -7,18 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @*<style>
-            .Ddlstyle {
-                width: 230px;
-                color: black;
-                font-size: inherit;
-                height: 27px;
-            }
-
-            .errorboxshadow {
-                box-shadow: 0 0 0 0.25rem rgb(223 16 35 / 75%);
-            }
-
+    <style>
 
             /*this are  for design input step 3 page*/
             .thumbnailleft {
@@ -38,7 +27,7 @@
                 .thumbnailleft:hover img {
                     display: block;
                 }
-        </style>*@
+        </style>
 
 
 
@@ -181,7 +170,7 @@
 
                 <div id="Div_Step2">
                     <div class="card" id="Div_TblExamSubjects" style="display:none">
-                        <label id="DepartmentName">
+                        <label id="DepartmentName" class="form-label mx-auto">
                             @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term,NORMAL*@
                         </label>
                         <div class="card-datatable table-responsive pt-0">
@@ -236,7 +225,7 @@
                         <!--card 1 in step 3-->
 
                                 <div class="card mb-4">
-                                    <label id="DepartmentNameStep3" >
+                                    <label id="DepartmentNameStep3" class="mx-auto form-label">
                                         @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
                                     </label>
                                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -256,7 +245,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="col mt-2">
                                                             <div class="form-check form-check-inline">
-                                                                <input class="form-check-input " id="Male" type="radio" name="SortBy" value="0" checked="checked" />
+                                                                <input class="form-check-input " id="RdbYes" type="radio" name="SortBy" value="0" checked="checked" />
                                                                 <label class="form-check-label" for="RdbYes">Yes</label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
@@ -318,7 +307,7 @@
 
 
     $(document).ready(function () {
-    $("#loadingOverlay").show();
+        loaddingimg.css('display', 'block');
     debugger;
     //  TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
     var pageTitle = '@ViewData["Title"]'
@@ -328,7 +317,7 @@
     }
    CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
     CommonDropdownFunction("GET", "/Results/DdlExamMode_Callingfunction", "DdlExammode", "------Select------", false)
-    $("#loadingOverlay").hide();
+        loaddingimg.css('display', 'none');
     });
 
 

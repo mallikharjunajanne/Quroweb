@@ -6,79 +6,79 @@
 
 @model List<AttendanceModel>
 
-
-<div class="default-according style-1" id="accordionoc123456">
-    &nbsp;<input type="checkbox" onclick="CheckAllCheckBoxes.call(this)" id="CheckAll" />&nbsp;<span style="font-size:smaller; color:black;">Check All</span>
-    <div class="card">
-        <div class="card-header " style="background-color:black ;">
-            <h5 class="mb-0">
-
-                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><span id="CountOfRecords_LeavesTypes">YOUR SEARCH RESULTED <span id="counts" class="number-circle">@Model.Count</span> RECORDS </span></button>
+<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="CheckAll" onclick="CheckAllCheckBoxes.call(this)" />
+    <label class="form-check-label" for="CheckAll">Check All</label>
+</div>
+<div class="card">
+    <div class="card-header flex-column flex-md-row">
+        <div class="head-label text-center">
+            <h5 class="card-title mb-0">
+                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
             </h5>
         </div>
-        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon" data-bs-parent="#accordionoc123456" style="">
+    </div>
+    @if (Model.Count > 0)
+    {
+
+        <div class="table-responsive text-nowrap">
+            <form id="Fm_TblAssignLeavesToStaffList_SearchedRecords">
+
+                <table id="TblAssignLeavesToStaffList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="text-align:center">Select</th>
+                            <th>	Employee Name</th>
+                            <th>	Date of Joining</th>
+                            <th>Gender</th>
+                            <th>Department</th>
+                            <th>Class</th>
 
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var i = 0;}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <input type="checkbox" class="form-check-input" name="val[@(i)].UserId" @*class="CheckBoxSelect"*@ value="@item.UserId" />
+                                    <input type="hidden" name="val[@(i)].PayrollSubCategoryId" value="@item.PayrollSubCategoryId" />
+                                    <input type="hidden" name="val[@(i)].PayrollCategoryId" value="@item.PayrollCategoryId" />
+                                    <input type="hidden" name="val[@(i)].GenderId_Int" value="@item.GenderId_Int" />
+                                </td>
+                                <td>@item.FirstName</td>
+                                <td>@item.DateofJoin</td>
+                                <td>@item.GenderId</td>
+                                <td>@item.ClassificationName</td>
+                                <td>@item.SubClassificationName</td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
 
-            <div class="card ">
-               
-                @if (Model.Count > 0)
-                {
+                </table>
 
-                    <form id="Fm_TblAssignLeavesToStaffList_SearchedRecords" class="table-responsive">
-
-                        <table id="TblAssignLeavesToStaffList_SearchedRecords" class="  tableid">
-                            <thead>
-                                <tr>
-                                    <th style="text-align:center">Select</th>
-                                    <th>	Employee Name</th>
-                                    <th>	Date of Joining</th>
-                                    <th>Gender</th>
-                                    <th>Department</th>
-                                    <th>Class</th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{var i = 0;}
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td style="text-align:center">
-                                            <input type="checkbox" name="val[@(i)].UserId" class="CheckBoxSelect" value="@item.UserId" />
-                                            <input type="hidden" name="val[@(i)].PayrollSubCategoryId" value="@item.PayrollSubCategoryId" />
-                                            <input type="hidden" name="val[@(i)].PayrollCategoryId" value="@item.PayrollCategoryId" />
-                                            <input type="hidden" name="val[@(i)].GenderId_Int" value="@item.GenderId_Int" />
-                                        </td>
-                                        <td>@item.FirstName</td>
-                                        <td>@item.DateofJoin</td>
-                                        <td>@item.GenderId</td>
-                                        <td>@item.ClassificationName</td>
-                                        <td>@item.SubClassificationName</td>
-                                    </tr>
-                                    i++;
-                                }
-                            </tbody>
-
-                        </table>
-                        <div style=" margin-left: 45%;">
-                            <input type="submit" value="Submit" class="button button2" onclick="SubmitLeaves(event)" id="BtnSubmit" />
-                        </div>
-                    </form>
-
-                }
-                else
-                {
-                    <div class="card-body">
-                        <p style="text-align:center">No records found</p>
-                    </div>
-                    <br />
-                }
-            </div>
+            </form>
         </div>
 
-    </div>
+        @*--------------------------*@
+        <div class="row justify-content-end">
+            <div class="col-sm-7">
+                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" onclick="SubmitLeaves(event)" value="Submit">Submit</button>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <p style="text-align:center">No records found</p>
+        </div>
+
+    }
 
 
 </div>
+

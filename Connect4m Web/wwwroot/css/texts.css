@@ -14,12 +14,14 @@
     color: red;
     font-size: 12px;
 }
+
 .space::after {
     content: " : ";
     /* display: inline-block;*/
     font-weight: 900;
     padding-right: 4px;
 }
+
 .alert-success {
     color: #3c763d;
     background-color: rgba(71,207,96,0.8);
@@ -28,7 +30,7 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
-   /* text-align: center;*/
+    /* text-align: center;*/
     display: none;
     color: black;
     font-weight: 900;
@@ -62,8 +64,9 @@
     left: 73%;
     transform: translate(-50%, -50%);
     z-index: 9999;
-/*    animation: slowMotionX 5s linear infinite alternate;
-*/}
+    /*    animation: slowMotionX 5s linear infinite alternate;
+*/
+}
 
 @keyframes slowMotionX {
     0% {
@@ -74,27 +77,33 @@
         transform: translateX(-250%); /* Adjust the distance and direction as needed */
     }
 }
+
 #Print_SEM_table {
     position: absolute;
     left: 30%;
     font: 14px aria;
 }
+
     #Print_SEM_table td:nth-child(1) {
         text-align: end;
         padding: 5px;
         font-weight: 900;
     }
+
     #Print_SEM_table td:nth-child(2) {
         text-align: center;
         padding: 5px;
         font-weight: 500;
     }
-#appendprint_SEM td, #appendprint_SEM table{
-    border:1px solid;
+
+#appendprint_SEM td, #appendprint_SEM table {
+    border: 1px solid;
 }
-#appendprint_SEM table{
-    width:100%;
+
+#appendprint_SEM table {
+    width: 100%;
 }
+
 #appendprint_SEM #tblappendprntdiv_sem {
     font-weight: 900;
     background-color: lightcyan;
@@ -118,6 +127,7 @@
 .dataTables_info {
     display: none;
 }
+
 .dt-buttons {
     display: inline-flex;
     gap: 9px;

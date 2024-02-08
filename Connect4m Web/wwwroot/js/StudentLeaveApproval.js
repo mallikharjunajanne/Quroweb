@@ -5,7 +5,7 @@
 $(document).ready(function () {
     try {
 
-    $("#FmApplied_SearchRecords_Div").hide();
+  //  $("#FmApplied_SearchRecords_Div").hide();
     $("#TblApplied_SearchRecords").hide();
     $("#ExportExcelLink_ApproveReject").hide();
     // Get the current date
@@ -37,6 +37,7 @@ $(document).ready(function () {
 function lnkApproveReject_callingFun(Formid) {
     try {
         debugger;
+        $(".ErrorMessageSpan").empty();
         $("#HeadingNAme").text("");
         $("#HeadingNAme").text("LEAVE APPROVAL");
         FN_ClearValues("no");
@@ -64,6 +65,7 @@ function lnkApproveReject_callingFun(Formid) {
 function lnkApproved_callingFun(event) {
     try {
         debugger;
+        $(".ErrorMessageSpan").empty();
         $("#HeadingNAme").text("");
         $("#HeadingNAme").text("APPROVED LEAVES");
         FN_ClearValues("no");
@@ -88,6 +90,7 @@ function lnkApproved_callingFun(event) {
 function lnkRejected_callingFun(event) {
     try {
         debugger;
+        $(".ErrorMessageSpan").empty();
         $("#HeadingNAme").text("");
         $("#HeadingNAme").text("REJECTED LEAVES");
         FN_ClearValues("no");
@@ -106,7 +109,7 @@ function lnkRejected_callingFun(event) {
     }
 }
 
-
+//========================Leabe Approve And Reject function
 function StudentLeaveApproval_Save(event, submitButtonName) {
     try {
     debugger;
@@ -114,59 +117,67 @@ function StudentLeaveApproval_Save(event, submitButtonName) {
     $(".ErrorMessageSpan").empty();
     // ScrollToSelected_ID('Main_Span_Error');
 
-    debugger;
     var formData = new FormData($("#Fm_ApproveandReject_PopUp")[0]);
-        $("#loadingOverlay").show();
+       loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/StudentLeaveApproval?submitButtonName=" + submitButtonName,
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
-        success: function (responce) {
+        success: function (response) {
             debugger;
             $(".ErrorMessageSpan").empty();
-            $("#Main_Span_Error").text(responce.message);
+            //$("#Main_Span_Error").text(response.message);
 
-            if (responce.message == "Request Approved Successfully." || responce.message == "Request Rejected Successfully." || responce.message == "Record updated successfully.") {
+            if (response.message == "Request Approved Successfully." || response.message == "Request Rejected Successfully." || response.message == "Record updated successfully.") {
                 // TblApplied_SearchRecords_Calingfunction(event);
                 debugger;
 
-                var id = $("#TblApplied_SearchRecords_Tr_Id").val();
-                debugger;
-                $('#' + id).remove();
+                //var id = $("#TblApplied_SearchRecords_Tr_Id").val();
+                //debugger;
+                //$('#' + id).remove();
 
-                $("#ctl00_ContentPlaceHolder1_lblNumRecords").text("");
-                $("#ctl00_ContentPlaceHolder1_lblNumRecords").text("YOUR SEARCH RESULTED " + $("#TblApplied_SearchRecords tbody tr").length + " RECORD(S).");
+                //$("#ctl00_ContentPlaceHolder1_lblNumRecords").text("");
+                //$("#ctl00_ContentPlaceHolder1_lblNumRecords").text("YOUR SEARCH RESULTED " + $("#TblApplied_SearchRecords tbody tr").length + " RECORD(S).");
 
-                $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
-                $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
-                $("#AttendancePercentage").empty();
+                TblApplied_SearchRecords_Calingfunction(event, '1', 'TblApplied_SearchRecords', '32', '0', 'ctl00_ContentPlaceHolder1_lblNumRecords', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmApplied_SearchRecords_Div', 'ctl00_ContentPlaceHolder1_txtfirstname', 'ctl00_ContentPlaceHolder1_txtlastname', 'ctl00_ContentPlaceHolder1_txtAdmNo', 'StudentLeaveApproval');
 
+
+                //$("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
+                //$("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+                //$("#AttendancePercentage").empty();
+                ClosePopup();
 
                 document.getElementById('popup').style.display = "none";
-                window.scrollTo(0, 0);
+                $('.alert-success p').text(response.message);
+                $(".alert-success").show().delay(6000).fadeOut()
+                //window.scrollTo(0, 0);
+            } else {
+                $('.alert-danger p').text(response.message);
+                $(".alert-danger").show().delay(6000).fadeOut();
             }
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
     } catch (x) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
 
 
-//to see Pop up
-
+//===============================to see Pop up
 $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
-    $("#ErrorMessageSpan").empty();
+
+        loaddingimg.css('display', 'block');
+        $(".ErrorMessageSpan").empty();
     var popup = document.getElementById("popup");
     $("#SanctionedradioBtn").prop("checked", true);
     $("#NonSanctionedradioBtn").prop("checked", false);
@@ -175,7 +186,8 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     $("#TXTareaRemarks_Popup").val('');
     $("#InstanceClassificationId_Popup").val('');
     $("#InstanceSubClassificationId_Popup").val('');
-    $("#TblApplied_SearchRecords_Tr_Id").val('');
+        $("#TblApplied_SearchRecords_Tr_Id").val('');
+       // document.getElementById('Fm_ApproveandReject_PopUp').reset();
     var Studentid = $(this).closest('tr').find('td').find("#StudentId").val();
     var StudentLeaveDetailsID = $(this).closest('tr').find('td').find("#StudentLeaveDetailsID").val();
     var InstanceClassificationId = $(this).closest('tr').find('td').find("#InstanceClassificationId").val();
@@ -202,8 +214,10 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     //    adjustTableContainerHeight();
     //});
 
-    adjustTableContainerHeight();
-    popup.style.display = "block";
+    //adjustTableContainerHeight();
+        popup.style.display = "block";
+
+        loaddingimg.css('display', 'none');
     function adjustTableContainerHeight() {
         debugger;
         var tableContainer = document.getElementById('FmAppliedLeavesHistory_SearchRecordsForScrollid');
@@ -239,10 +253,11 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     //    }
     //}
     } catch (e) {
-      
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 });
+
 
 
 function DdlDepartmentId_Calingfunction() {
@@ -251,10 +266,10 @@ function DdlDepartmentId_Calingfunction() {
     $.ajax({
         url: "/Attendance/DdlDepartmentId_Calingfunction",
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             $("#DdlDepartmentId").empty();
             $("#DdlDepartmentId").append('<option value="">Select a Department</option>');
-            $.each(responce, function (i, Value2) {
+            $.each(response, function (i, Value2) {
                 $("#DdlDepartmentId").append('<option value="' + Value2.value + '" >' + Value2.text + '</option>');
             });
         },
@@ -268,9 +283,6 @@ function DdlDepartmentId_Calingfunction() {
     }
 };
 
-
-
-
 function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
     try {
         $("#ErrorMessageSpan").empty();
@@ -280,14 +292,14 @@ function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
     $.ajax({
         url: "/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=" + InstanceClassificationId,
         type: "GET",
-        success: function (responce) {
+        success: function (response) {
             // $("#AppliedEmployeesNames_Id").empty();
             $("#" + EffectingDropdownid).empty();
             $("#" + EffectingDropdownid).append('<option value="" >Please select a section</option>');
-            $.each(responce, function (i, Value2) {
+            $.each(response, function (i, Value2) {
                 $("#" + EffectingDropdownid).append('<option value="' + Value2.value + '" >' + Value2.text + '</option>')
             });
-            if (responce.length <= 0) {
+            if (response.length <= 0) {
                 $("#" + EffectingDropdownid).prop('disabled', true);
             } else {
                 $("#" + EffectingDropdownid).prop('disabled', false);
@@ -302,12 +314,8 @@ function DdlClassId_Calingfunction(buttonId, EffectingDropdownid) {
     }
 };
 
-
-
-
 function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, Status, Tab, RecordcountSpanId, ExportExcelLink, FromdateId, TodateId, SearchRecords_Div, Firstnameid, LastNameid, AdmissionNumberid, ExelsheetName) {
     try {
-       
     //val for loading page
     debugger;
     if (val != 12) {
@@ -356,15 +364,15 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
         }        
         }
         if (val != 12) {
-            $("#loadingOverlay").show();
+           loaddingimg.css('display', 'block');
         }
     // var formData = new FormData($("#ApproveReject_Form")[0]);
 
     $.ajax({
         url: "/Attendance/TblApplied_SearchRecords_Calingfunction?Departmentid=" + Departmentid + "&FirstName=" + FirstName + "&AdmissionNumber=" + AdmissionNumber + "&LastName=" + LastName + "&Classid=" + Classid + "&Fromdate=" + Fromdate + "&Todate=" + Todate + "&Tab=" + Tab + "&Status=" + Status,//+"&values="+ queryString,
         type: "GET",
-        success: function (responce) {
-            if (responce.length <= 0) {
+        success: function (response) {
+            if (response.length <= 0) {
                 $("#" + SearchRecords_Div).hide();
                 $("#" + EffectiveTableid).hide();
                 $("#" + RecordcountSpanId).text("");
@@ -373,10 +381,10 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                 $("#Main_Span_Error").text("No records.");
             }
             else {
-                $("#" + RecordcountSpanId).text("");
-               // $("#" + RecordcountSpanId).text("YOUR SEARCH RESULTED " + responce.length + " RECORD(S).");
-                $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + responce.length + "</span> RECORD(S).");
-
+               // $("#" + RecordcountSpanId).text("");
+               // $("#" + RecordcountSpanId).text("YOUR SEARCH RESULTED " + response.length + " RECORD(S).");
+               // $("#" + RecordcountSpanId).html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
+                $("#" + RecordcountSpanId).text(response.length);
 
                 var table = js('#' + EffectiveTableid).DataTable();
                 var currentPage = table.page.info().page;
@@ -409,7 +417,7 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
 
                 var viewfiles = "";
                 var DisplayApprovalLink = "";
-                $.each(responce, function (i, Value2) {
+                $.each(response, function (i, Value2) {
                     //DeleteBTN = "<p class='fa fa-trash -o' title='Click to delete this record' style='font-size:18px; color:red; cursor:pointer; '><input type='text' hidden  id='id_For_Delete' value=''></p>";
 
 
@@ -446,16 +454,17 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
 
 
                     if (Value2.attachedFileName != "") {
-                        viewfiles = " <a href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'><font color='blue'><u style='font-weight:700;'>View</u></font></a >";
+                        viewfiles = " <a class='badge rounded-pill bg-info bg-glow' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'>View</a >";
                     }
                     else {
-                        viewfiles = " <font color='blue'><u style='font-weight:700;'>View</u></font>";
+                        viewfiles = "<a class='badge rounded-pill bg-secondary bg-glow'>View</a>";
                     }
 
                     if (EffectiveTableid =="TblApproved_SearchRecords") {
                         $("#" + EffectiveTableid + " tbody").append(
                             //  $("#TblApplied_SearchRecords tbody").append(
                             "<tr>" +
+                            //"<td style='text-align:center;>" + ++i + "</td>" +
                             "<td >" + Value2.name + "</td>" +
                             "<td>" + Value2.admissionNumber + "</td>" +
                             "<td>" + Value2.classandSectionName + " </td>" +
@@ -477,8 +486,8 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                         $("#" + EffectiveTableid + " tbody").append(
                             //  $("#TblApplied_SearchRecords tbody").append(
                             "<tr>" +
-
-                            "<td style='text-align:center;'>" + Value2.name + "</td>" +
+                          //  "<td style='text-align:center;>" + ++i + "</td>" +
+                            "<td >" + Value2.name + "</td>" +
                             "<td>" + Value2.admissionNumber + "</td>" +
                             "<td>" + Value2.classandSectionName + " </td>" +
                             "<td>" + Value2.leaveType + "</td>" +
@@ -489,15 +498,13 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                             "<td>" + Value2.leaveAppliedBy + "</td>" +
                             "<td>" + Value2.rejectedDate + " </td>" +
                             "<td>" + Value2.rejectedBy + "</td>" +
-                            
-
                             "<td>" + viewfiles + "</td>" +
                             "</tr>"
                         );
                     } else {
                         debugger;
                         if (Value2.displayApprovalLink=="1") {
-                             DisplayApprovalLink = "<a id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'  style='cursor: pointer;color:Blue; font-weight:bold; text-decoration:underline;' >Approve/Reject</a><input  type='hidden' id='StudentId' value='" + Value2.studentId + "' /><input  type='hidden' id='StudentLeaveDetailsID' value='" + Value2.studentLeaveDetailsID + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceSubClassificationId' value='" + Value2.instanceSubClassificationId + "' />";
+                            DisplayApprovalLink = "<a class='badge bg-glow bg-success rounded-pill' style='cursor: pointer;' id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'  >Approve/Reject</button><input  type='hidden' id='StudentId' value='" + Value2.studentId + "' /><input  type='hidden' id='StudentLeaveDetailsID' value='" + Value2.studentLeaveDetailsID + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceSubClassificationId' value='" + Value2.instanceSubClassificationId + "' />";
                         }
                         else {
                             DisplayApprovalLink = "";
@@ -506,7 +513,7 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                         $("#" + EffectiveTableid + " tbody").append(
                             //  $("#TblApplied_SearchRecords tbody").append(
                             "<tr>" +
-
+                           "<td style='text-align:centre'>" + ++i + "</td>" +
                             "<td >" + Value2.name + "</td>" +
                             "<td>" + Value2.admissionNumber + "</td>" +
                             "<td>" + Value2.classandSectionName + " </td>" +
@@ -528,7 +535,7 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                     }
                 });
                 debugger;
-                //Pagination(responce.length, EffectiveTableid);
+                //Pagination(response.length, EffectiveTableid);
                 //these are for add id to ID_APPEND_For_Edit
                 var rows = $("#" + EffectiveTableid+ " tbody tr");
                 rows.each(function (index) {
@@ -538,19 +545,19 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
 
                 var ExcelDownloadColumnsNo = [];
                 if (EffectiveTableid == "TblApproved_SearchRecords" || EffectiveTableid == "TblRejected_SearchRecords") {
-                    ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                    ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11];
                 } else {
-                    ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13];
+                    ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11, 14];
 
                     var columnDefs = [
                         {
-                            target: 13,
+                            target: 14,
                             visible: false,
                             searchable: false
                         }
                     ]
                 }
-                TblDataTableWith_OutColumns_CallingFunction(EffectiveTableid, responce, responce.length, currentPage, ExelsheetName, ExcelDownloadColumnsNo, columnDefs);
+                TblDataTableWith_OutColumns_CallingFunction(EffectiveTableid, response, response.length, currentPage, ExelsheetName, ExcelDownloadColumnsNo, columnDefs);
 
                 $("#" + SearchRecords_Div).show();
                 $("#" + EffectiveTableid).show();
@@ -561,16 +568,16 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
                 //DataBind();
             }
 
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
         }
         ,
         error: function (xhr, status, error) {
-            $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
     } catch (x) {
-        $("#loadingOverlay").hide();
+       loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
 }
@@ -579,104 +586,100 @@ function TblApplied_SearchRecords_Calingfunction(event, val, EffectiveTableid, S
 function TblAppliedLeavesHistory_SearchRecords_Calingfunction(Studentid) {
     try {
     // var Studentid = 28566;
-       // $("#loadingOverlay").show();
+       //loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/TblAppliedLeavesHistory_SearchRecords_Calingfunction?Studentid=" + Studentid,
         type: "GET",
-
         success: function (response) {
             if (response.length <= 0) {
-                TextcountsofStudents = "No Data Found.";
-            } else {
-                TextcountsofStudents = "YOUR SEARCH RESULTED <span class='number-circle' style='font-size: 7px;'> " + response.length + "</span>  RECORD(S).";
-            }
-            $("#ctl00_ContentPlaceHolder1_grdLeavesToApprove_ctl02_lblLeaveHistoryNumRecords").html(TextcountsofStudents);
-            $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
-
-
-            var viewfiles = "";
-            var Sno = 1;
-           var fromdate1 = "";
-            var Todate1 = "";
-            var year1 = "";
-            var month1 = "";
-            var day1 = "";
-            var fromdateConvert12 = "";
-           var year2 = "";
-            var month2 = "";
-            var day2 = "";
-            var TodateConvert12 = "";
-            $.each(response, function (i, Value2) {
-                //var StudentLeaveDetailsID1 = Value2.studentLeaveDetailsID;
-
-
-                fromdate1 = Value2.fromdate.split("T")[0];
-                Todate1 = Value2.todate.split("T")[0];
-
-                const fromdateConvert1 = new Date(fromdate1);
-                year1 = fromdateConvert1.getFullYear();
-                month1 = ('0' + (fromdateConvert1.getMonth() + 1)).slice(-2);
-                day1 = ('0' + fromdateConvert1.getDate()).slice(-2);
-                /*var dateString = year + '-' + month + '-' + day;*/
-                fromdateConvert12 = day1 + '/' + month1 + '/' + year1;
-
-
-                const TodateConvert1 = new Date(Todate1);
-                year2 = TodateConvert1.getFullYear();
-                month2 = ('0' + (TodateConvert1.getMonth() + 1)).slice(-2);
-                day2 = ('0' + TodateConvert1.getDate()).slice(-2);
-                TodateConvert12 = day2 + '/' + month2 + '/' + year2;
-
-
-                if (Value2.attachedFileName != "") {
-                    viewfiles = " <a href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'><font color='blue'><u style='font-weight:700;'>View</u></font></a >";
-                }
-                else {
-                    viewfiles = " <font color='blue'><u style='font-weight:700;'>View</u></font>";
-                }
-
-
-                $("#TblAppliedLeavesHistory_SearchRecords tbody").append("<tr>" +
-
-                    "<td>" + Sno + "</td>" +
-                    "<td>" + fromdateConvert12 + " </td>" +
-                    "<td>" + TodateConvert12 + " </td>" +
-                    "<td>" + Value2.leaveType + " </td>" +
-                    "<td>" + Value2.remarks + "</td>" +
-                    "<td>" + Value2.leaveStatus + " </td>" +
-
-                    "<td style='text-align:center;'>" + viewfiles + "</td>" +
-
-                    "<td>" + Value2.approved_Regected_Date + " </td>" +
-
-                    "</tr>"
-                );
-                Sno++;
-
-            });
-
-            var rowcount1 = $("#TblAppliedLeavesHistory_SearchRecords tbody tr").length;
-
-            if (rowcount1 <= 0) {
                 $("#TblAppliedLeavesHistory_SearchRecords").hide();
+                //TextcountsofStudents = "No Data Found.";
+            } else {
+               // TextcountsofStudents = "YOUR SEARCH RESULTED <span class='number-circle' style='font-size: 7px;'> " + response.length + "</span>  RECORD(S).";
+                // $("#lblLeaveHistoryNumRecordsCounts").html(TextcountsofStudents);
+                $("#lblLeaveHistoryNumRecordsCounts").text(response.length);
+
+                $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+
+                var viewfiles = "";
+                var Sno = 1;
+                var fromdate1 = "";
+                var Todate1 = "";
+                var year1 = "";
+                var month1 = "";
+                var day1 = "";
+                var fromdateConvert12 = "";
+                var year2 = "";
+                var month2 = "";
+                var day2 = "";
+                var TodateConvert12 = "";
+                $.each(response, function (i, Value2) {
+                    //var StudentLeaveDetailsID1 = Value2.studentLeaveDetailsID;
+
+
+                    fromdate1 = Value2.fromdate.split("T")[0];
+                    Todate1 = Value2.todate.split("T")[0];
+
+                    const fromdateConvert1 = new Date(fromdate1);
+                    year1 = fromdateConvert1.getFullYear();
+                    month1 = ('0' + (fromdateConvert1.getMonth() + 1)).slice(-2);
+                    day1 = ('0' + fromdateConvert1.getDate()).slice(-2);
+                    /*var dateString = year + '-' + month + '-' + day;*/
+                    fromdateConvert12 = day1 + '/' + month1 + '/' + year1;
+
+
+                    const TodateConvert1 = new Date(Todate1);
+                    year2 = TodateConvert1.getFullYear();
+                    month2 = ('0' + (TodateConvert1.getMonth() + 1)).slice(-2);
+                    day2 = ('0' + TodateConvert1.getDate()).slice(-2);
+                    TodateConvert12 = day2 + '/' + month2 + '/' + year2;
+
+                    if (Value2.attachedFileName != "") {
+                        viewfiles = " <a class='badge rounded-pill bg-info bg-glow' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'>View</a >";
+                    }
+                    else {
+                        viewfiles = "<a class='badge rounded-pill bg-secondary bg-glow'>View</a>";
+                    }
+
+                    $("#TblAppliedLeavesHistory_SearchRecords tbody").append("<tr>" +
+
+                        "<td>" + Sno + "</td>" +
+                        "<td>" + fromdateConvert12 + " </td>" +
+                        "<td>" + TodateConvert12 + " </td>" +
+                        "<td>" + Value2.leaveType + " </td>" +
+                        "<td>" + Value2.remarks + "</td>" +
+                        "<td>" + Value2.leaveStatus + " </td>" +
+
+                        "<td style='text-align:center;'>" + viewfiles + "</td>" +
+
+                        "<td>" + Value2.approved_Regected_Date + " </td>" +
+
+                        "</tr>"
+                    );
+                    Sno++;
+
+                });
             }
-            else {
+            $("#TblAppliedLeavesHistory_SearchRecords").show();
+            //var rowcount1 = $("#TblAppliedLeavesHistory_SearchRecords tbody tr").length;
+            //if (rowcount1 <= 0) {
+            //    $("#TblAppliedLeavesHistory_SearchRecords").hide();
+            //}
+            //else {
 
-                $("#TblAppliedLeavesHistory_SearchRecords").show();
-            }
-
-
-
+            //    $("#TblAppliedLeavesHistory_SearchRecords").show();
+            //}
         }
         ,
         error: function (xhr, status, error) {
-           // $("#loadingOverlay").hide();
+           loaddingimg.css('display', 'none');
             $("#Main_Span_Error").text("Something Error");
         }
     });
     } catch (x) {
         //$("#loadingOverlay").hide();
         $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }
 
@@ -689,12 +692,16 @@ function TblAppliedLeavesSummery_SearchRecords_Calingfunction(Studentid) {
         type: "GET",
         success: function (response) {
             var TextcountsofStudents = 0.0;
+            $("#lblLeaveTypesSummaryNumRecordsCounts").text(response.length);
             if (response.length <= 0) {
                 TextcountsofStudents = "No Data Found.";
             } else {
                 TextcountsofStudents = "YOUR SEARCH RESULTED <span class='number-circle' style='font-size: 7px;'>   " + response.length + "</span>  RECORD(S).";
             }
-            $("#ctl00_ContentPlaceHolder1_grdLeavesToApprove_ctl02_lblLeaveTypesSummaryNumRecords").html(TextcountsofStudents);
+            // $("#lblLeaveTypesSummaryNumRecordsCounts").html(TextcountsofStudents);
+       
+
+
             $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
 
 
@@ -720,13 +727,8 @@ function TblAppliedLeavesSummery_SearchRecords_Calingfunction(Studentid) {
 
                 $("#TblAppliedLeavesSummery_SearchRecords").show();
             }
-
-
-
-        }
-        ,
+        } ,
         error: function (xhr, status, error) {
-            
             $("#Main_Span_Error").text("Something Error");
         }
     });
@@ -769,9 +771,11 @@ function GetAttendancePercentagebyUserID(Studentid) {
 function FN_ClearValues(valuefornotclear) {
     try {
         debugger;
+
+        document.getElementById('ApproveReject_Form').reset();
         document.getElementById('Rejected_Form').reset(); // Reset the form
         document.getElementById('Approved_Form').reset();
-        document.getElementById('ApproveReject_Form').reset();
+
         $("#DdlClassId").prop("disabled", true);
         //  $('#' + ListBoxId).text('');
         // $("#User_Id_CreatePage").val('');
@@ -795,7 +799,18 @@ function FN_ClearValuesForAppliedleaves(Firstnameid, LastNameid, AdmissionNumber
     }
 }
 
-
+//function ClearAllValuesInPopUpFunction() {
+//    $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+//    $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
+//    $("#AttendancePercentage").empty();
+//    document.getElementById('Fm_ApproveandReject_PopUp').reset();
+//}
+function ClosePopup() {
+    $("#popup").css('display', 'none');
+    $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+    $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
+    document.getElementById('Fm_ApproveandReject_PopUp').reset();
+}
 
 //this is for View student leaves 
 
