@@ -32,6 +32,19 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
     $.ajax(ajaxOptions);
 }
+function Ajaxmethod(method, url,data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        contentType: false,
+        processData: false,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
 
 
 
@@ -68,53 +81,53 @@ $(document).ready(function () {
         $('#Ddslotsid').attr('id', 'ddlInstanceSlotSearch');
 
 
-        $(document).on('change', '#ddlInstanceClassificationSearch', function () {
-            var selectedValues = $(this).val();
-            debugger;
-            fetchDataAndPopulateDropdown(                          //==== << ** Subclassification Dropdown ** >>
-                '/Attendance/Teacher_attendancesubclassification', // URL for data fetching
-                '#ddlInstanceSubclassificationSearch',             // Dropdown selector
-                'value',                                           // Field name for option text
-                'text',                                            // Field name for option values
-                'manageClassification'                             // Response value return class name
-            );
-        });
+        //$(document).on('change', '#ddlInstanceClassificationSearch', function () {
+        //    var selectedValues = $(this).val();
+        //    /*debugger;*/
+        //    fetchDataAndPopulateDropdown(                          //==== << ** Subclassification Dropdown ** >>
+        //        '/Attendance/Teacher_attendancesubclassification', // URL for data fetching
+        //        '#ddlInstanceSubclassificationSearch',             // Dropdown selector
+        //        'value',                                           // Field name for option text
+        //        'text',                                            // Field name for option values
+        //        'manageClassification'                             // Response value return class name
+        //    );
+        //});
 
-        $(document).on('change', '#ddlInstanceSubclassificationSearch', function () {
-            var ClassificationId = $('#ddlInstanceClassificationSearch').val();
-            var SubClassificationId = $(this).val();
-            var FilterTeachingSubjects = 1;
-            debugger;    
-                $.ajax({
-                    url: '/Attendance/Attendanceslot?ClassificationId=' + ClassificationId + "&SubClassificationId=" + SubClassificationId + "&FilterTeachingSubjects=" + FilterTeachingSubjects,
-                    type: 'GET',
-                    contentType: 'application/json',
-                    success: function (response) {
-                        debugger;
-                        var dropdownSelector = '#ddlInstanceSlotSearch';
-                        var dropdown = $(dropdownSelector);
-                        var valueField = 'instancesubjectId';
-                        var textField = 'subjectName';
-                        dropdown.empty();
-                        dropdown.append($('<option>', {
-                            value: '',
-                            text: '---Select---'
-                        }));
-                        $.each(response, function (index, item) {
-                            dropdown.append($('<option>', {
-                                value: item[valueField],
-                                text: item[textField]
-                            }));
-                        });
-                    },
-                    error: function (xhr, status, error) {
+        //$(document).on('change', '#ddlInstanceSubclassificationSearch', function () {
+        //    var ClassificationId = $('#ddlInstanceClassificationSearch').val();
+        //    var SubClassificationId = $(this).val();
+        //    var FilterTeachingSubjects = 1;
+        //    debugger;    
+        //        $.ajax({
+        //            url: '/Attendance/Attendanceslot?ClassificationId=' + ClassificationId + "&SubClassificationId=" + SubClassificationId + "&FilterTeachingSubjects=" + FilterTeachingSubjects,
+        //            type: 'GET',
+        //            contentType: 'application/json',
+        //            success: function (response) {
+        //                debugger;
+        //                var dropdownSelector = '#ddlInstanceSlotSearch';
+        //                var dropdown = $(dropdownSelector);
+        //                var valueField = 'instancesubjectId';
+        //                var textField = 'subjectName';
+        //                //dropdown.empty();
+        //                dropdown.append($('<option>', {
+        //                    value: '',
+        //                    text: '---Select---'
+        //                }));
+        //                $.each(response, function (index, item) {
+        //                    dropdown.append($('<option>', {
+        //                        value: item[valueField],
+        //                        text: item[textField]
+        //                    }));
+        //                });
+        //            },
+        //            error: function (xhr, status, error) {
 
-                        console.error('Error sending data:', error);
-                    }
-                });
+        //                console.error('Error sending data:', error);
+        //            }
+        //        });
           
 
-        });
+        //});
 
 
         /*--- === *** CLASS TEACHER DROPDOWNS DATA BIND FUNCTION CODE *** === ---*/
@@ -122,6 +135,7 @@ $(document).ready(function () {
     else {
        
         $('#Roldisplaydate').remove();
+        $('#Ddldepartment').empty();
 
         //======>>> Classification Dropdown
         fetchDataAndPopulateDropdown(
@@ -133,22 +147,93 @@ $(document).ready(function () {
         );
 
 
-        $(document).on('change', '#Ddldepartment', function () {
-            var selectedValues = $(this).val();
-            debugger;
-            Departmentbysubclassdd(selectedValues);
-        });
+        //$(document).on('change', '#Ddldepartment', function () {
+        //    var selectedValues = $(this).val();
+        //   /* $('#DdlSubClass').val();*/
+        //    $('#DdlSubClass').empty();
+        //    debugger;
+        //    Departmentbysubclassdd(selectedValues);
+        //});
 
-        $('#DdlSubClass').change(function () {
-            var ClassificationId = $('#Ddldepartment').val();
-            var SubClassificationId = $('#DdlSubClass').val();
-            var FilterTeachingSubjects = 0;
-            debugger;
-            Subclassbyslotsdd(ClassificationId, SubClassificationId, FilterTeachingSubjects);
-        });
+        //$('#DdlSubClass').change(function () {
+        //    var ClassificationId = $('#Ddldepartment').val();
+        //    var SubClassificationId = $('#DdlSubClass').val();
+        //    var FilterTeachingSubjects = 0;
+        //    $('#Ddslotsid').empty();
+        //    Subclassbyslotsdd(ClassificationId, SubClassificationId, FilterTeachingSubjects);
+        //});
     }
     
 });
+$(document).on('change', '#ddlInstanceClassificationSearch', function () {
+    var selectedValues = $(this).val();
+    /*debugger;*/
+    fetchDataAndPopulateDropdown(                          //==== << ** Subclassification Dropdown ** >>
+        '/Attendance/Teacher_attendancesubclassification', // URL for data fetching
+        '#ddlInstanceSubclassificationSearch',             // Dropdown selector
+        'value',                                           // Field name for option text
+        'text',                                            // Field name for option values
+        'manageClassification'                             // Response value return class name
+    );
+});
+
+$(document).on('change', '#ddlInstanceSubclassificationSearch', function () {
+    var ClassificationId = $('#ddlInstanceClassificationSearch').val();
+    var SubClassificationId = $(this).val();
+    var FilterTeachingSubjects = 1;
+    debugger;
+    $.ajax({
+        url: '/Attendance/Attendanceslot?ClassificationId=' + ClassificationId + "&SubClassificationId=" + SubClassificationId + "&FilterTeachingSubjects=" + FilterTeachingSubjects,
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
+            debugger;
+            var dropdownSelector = '#ddlInstanceSlotSearch';
+            var dropdown = $(dropdownSelector);
+            var valueField = 'instancesubjectId';
+            var textField = 'subjectName';
+            //dropdown.empty();
+            dropdown.append($('<option>', {
+                value: '',
+                text: '---Select---'
+            }));
+            $.each(response, function (index, item) {
+                dropdown.append($('<option>', {
+                    value: item[valueField],
+                    text: item[textField]
+                }));
+            });
+        },
+        error: function (xhr, status, error) {
+
+            console.error('Error sending data:', error);
+        }
+    });
+
+
+});
+
+
+$(document).off('change', '#Ddldepartment');
+$(document).off('change', '#DdlSubClass');
+
+$(document).on('change', '#Ddldepartment', function () {
+    var selectedValues = $(this).val();
+    /* $('#DdlSubClass').val();*/
+    $('#DdlSubClass').empty();
+    debugger;
+    Departmentbysubclassdd(selectedValues);
+});
+
+$('#DdlSubClass').change(function () {
+    var ClassificationId = $('#Ddldepartment').val();
+    var SubClassificationId = $('#DdlSubClass').val();
+    var FilterTeachingSubjects = 0;
+    $('#Ddslotsid').empty();
+    Subclassbyslotsdd(ClassificationId, SubClassificationId, FilterTeachingSubjects);
+});
+
+
 
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
     debugger;
@@ -169,7 +254,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
     debugger;
-    dropdown.empty(); // Clear existing options
+   // dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
         text: '---Select---'
@@ -194,7 +279,7 @@ function Departmentbysubclassdd(Departmentvalue) {
             var dropdown = $(dropdownSelector);
             var valueField = 'instanceSubclassificaitionId';
             var textField = 'subClassificationName';
-            dropdown.empty();
+            //dropdown.empty();
             dropdown.append($('<option>', {
                 value: '',
                 text: '---Select---'
@@ -219,12 +304,12 @@ function Subclassbyslotsdd(ClassificationId, SubClassificationId, FilterTeaching
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            /*debugger;*/
             var dropdownSelector = '#Ddslotsid';
             var dropdown = $(dropdownSelector);
             var valueField = 'instancesubjectId';
             var textField = 'subjectName';
-            dropdown.empty();
+           // dropdown.empty();
             dropdown.append($('<option>', {
                 value: '',
                 text: '---Select---'
@@ -300,7 +385,7 @@ $('#Postattendaceformid').on('submit', function () {
         debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
+        $("#Errormessage").text("");
         var validationMessagesLength = validationMessages.length;
        
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {         
@@ -315,18 +400,20 @@ $('#Postattendaceformid').on('submit', function () {
                 function (response) {
                     debugger;
 
-
                     var DepartmentText = $("#Ddldepartment option:selected").text();
                     var SubClassText = $("#DdlSubClass option:selected").text();
                     var holidaynameslist = response[0].holidaysnames;
-                 
+                    var validateornotmessage=response[0].attendanceValidateornotretunmessage;
+                    var formattedDates = "";
                     if (holidaynameslist && holidaynameslist.length > 0) {
 
                         for (var i = 0; i < holidaynameslist.length; i++) {
-                            var holidayName = holidaynameslist[i].holidayName;
+                            var holidayNames = holidaynameslist[i].holidayName;
                             var originalDate = holidaynameslist[i].holidayDate;
-                            var formattedDate = formatDate(originalDate);
-                            formattedDates += formattedDate + " (" + holidayName + "),";
+                            var formattedDate = new Date(originalDate).toLocaleDateString('en-GB');
+
+                            //var formattedDate = formatDate(originalDate);
+                            formattedDates += formattedDate + " (" + holidayNames + "),";
                         }
                         // $("#GetAttendance_Table").html(resp);      
 
@@ -334,18 +421,19 @@ $('#Postattendaceformid').on('submit', function () {
                         $('#Errormessage').text('There are holidays/week-offs in the selected date range on ' + formattedDates);
                     }
                     else {
+                        debugger;
+                        if (validateornotmessage == "0") {
+                            $('#Errormessage').text('you cannot select start date less than Effective Date ');
+                        } else {
+                            $("#GetAttendance_Table").html(response);
 
-                        $("#GetAttendance_Table").html(response);
-
-                        $('#Printattendancereport #Selecteddepartmentclassnamesdiv').text('' + DepartmentText + ' ' + SubClassText);
-
+                            $('#Printattendancereport #Selecteddepartmentclassnamesdiv').text('' + DepartmentText + ' ' + SubClassText);
+                        }  
                     }
-
                     loaddingimg.css('display', 'none');
-
                 },
                 function (status, error) {
-                    debugger;
+                    /*debugger;*/
                     console.error("Error fetching data:", error);
                     loaddingimg.css('display', 'none');
                 },
@@ -358,17 +446,9 @@ $('#Postattendaceformid').on('submit', function () {
 
 
 
-//$(document).ready(function () {
-//    if ('@item.SplAttenanceComments1' != '') {
-
-//        $('.content').show();
-//        $('.submit-comments-btn').text('Edit Comments');
-
-//    }
-//});
- 
 
 function formatDate(dateString) {
+    /*debugger;*/
     var date = new Date(dateString);
     var formattedDate = date.toLocaleDateString('en-GB', {
         day: '2-digit',
@@ -379,165 +459,408 @@ function formatDate(dateString) {
     return formattedDate;
 }
 
-/*-- *** SELECT ALL CHECKBOX ***--*/
 
-//$("#selectAll").click(function () {
-//    debugger;
-//    $(".checkbox").prop("checked", $(this).prop("checked"));
-//});
+/*onclick = "Attendanceposting();"*/
+function Attendanceposting() {
+    debugger;
+    /*try {*/
+    loaddingimg.css('display', 'block');
+        debugger;
+    event.preventDefault();
+    $("#Errormessage").text("");
+    var StudentallValues = new FormData();
+    var SubjectSlotID =$('#Ddslotsid').val();
+    var rowData = [];
+   
 
-/*-- *** SELECT ALL CHECKBOX ***--*/
+    var table = document.getElementById('TableData');
+    var tablehead = table.querySelector('thead');
+    var tableBody = table.querySelector('tbody');
+    //var tableBody = document.querySelector('#TableData tbody');
+  
+        if (tableBody) {
+           
+            var rows = tableBody.querySelectorAll('tr');
+            var headrows = tablehead.querySelectorAll('tr');
+         
+            if (rows && rows.length > 0) {
+                debugger;
+                rows.forEach(function (row, index) {
+                  
+
+
+                            var i = 1;
+                            var cells = row.querySelectorAll('td');
+
+                            var Attendancedetails = [];
+                            var rowObject = {
+                                Studentuserid: cells[1].textContent.trim(),
+                                ParentPhNo: cells[2].textContent.trim(),
+                                studentName: cells[3].textContent.trim(),
+                                InstanceUserCode: cells[4].textContent.trim(),
+                                StudentSMS: cells[5].textContent.trim(),
+                                ParentSMS: cells[6].textContent.trim(),
+                                StudEmail: cells[7].textContent.trim(),
+                                ParentEmail: cells[8].textContent.trim(),
+                                SubjectSlotID: SubjectSlotID,
+                                attendancedetails: Attendancedetails
+                            };
+
+                    //var Attendancedetails = {};
+                    var Lastdayofattendace;
+                    var dropdownValue;
+                    var dropdowntext;
+                    var textareaValue;
+                    var isPresentValue;
+                    var attendancedatetext;
+                    var hiddenInput
+                    var hiddenInputValue
+                    var hiddenInputName
+                    var i = 1;
+                    cells.forEach(function (cell, cellIndex) {
+                        hiddenInput = row.querySelector('#Parentdetailstxt');
+                        //hiddenInput = document.getElementById('Parentdetailstxt');
+                        hiddenInputValue = hiddenInput.value;
+                        hiddenInputName = hiddenInput.getAttribute('name');
+
+
+                        if (cellIndex < 10) {
+                            return true;
+                        }
+
+
+                        attendancedatetext = $('#Attendancedate_' + i).text();
+                        Lastdayofattendace = $('#Lastdayofattendacetxtid_' + i).val();
+                        ckDay = $(cell).find('#ckDay');
+                        var displayStyle = ckDay.css('display');
+
+                        if (!ckDay.prop('disabled')) {
+                            if (ckDay.prop('checked') && displayStyle === 'inline-block') {
+                                isPresentValue = "1";
+                                dropdownValue = "";
+                                textareaValue = "";
+                                dropdowntext = "";
+                                Lastdayofattendace = "";
+
+                            }
+                            else {
+                                isPresentValue = "0";
+                                dropdownValue = $(cell).find('#ddDataattType').val();
+                                dropdowntext = $(cell).find('#ddDataattType option:selected').text();
+                                if (dropdowntext == "--Select--") {
+                                    dropdowntext = "";
+                                }
+
+                                textareaValue = $(cell).find('#commentTextArea').val();
+                                Lastdayofattendace = "";
+                            }
+                        }
+
+                        var Attendancerowdata = {
+                            'attendancedate': attendancedatetext,
+                            'isPresentValue': isPresentValue,
+                            'dropdownValue': dropdownValue,
+                            'Comments': textareaValue,
+                            'ParentId': hiddenInputValue,
+                            'ParentName': hiddenInputName,
+                            'dropdowntext': dropdowntext,
+                            'Lastdayofattendace': Lastdayofattendace,
+                        };
+                        Attendancedetails.push(Attendancerowdata);
+                        i++;
+                    });
+
+                    rowData.push(rowObject);
+                   
+                    // rowData.push(Attendancedetails);
+                });
+
+                var formData = new FormData();
+                formData.append('dataList', JSON.stringify(rowData));
+                $.ajax({
+                    url: "/Attendance/PostAttendance",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var allOnes = result.every(function (item) {
+                            return item === "1";
+                        });
+                        if (allOnes) {
+                            $('#Errormessage').text('Attendance saved successfully .');
+                        } else {
+                            $('#Errormessage').text('Something went wrong please try again.');
+                        }
+                        //if (result == "1") {
+                        //    $('#Errormessage').text('Attendance saved successfully .');
+                        //    loaddingimg.css('display', 'none');
+                        //}
+                        loaddingimg.css('display', 'none');
+                    }
+                });
+
+
+                //var dataList = JSON.stringify(rowData);
+                //Ajaxmethod('POST', '/Attendance/PostAttendance', { dataList: dataList },
+                //    function (response) {
+                //        // Success callback function
+                //        // Handle the response here
+                //    },
+                //    function (status, error) {
+                //        // Error callback function
+                //        // Handle the error here
+                //        loaddingimg.css('display', 'none');
+                //    }                    
+                //);
+            } else {
+                console.log("No rows found in the table body.");
+            }
+        }
+        else {
+            console.log("Table data found.");
+        }   
+    //} catch (e) {
+    //    alert("Someting error");
+    //}
+}
 
 
 
+
+
+/*--*** ATTENDANCE POSTING CODE START ***--*/
+$('#submitbtn_').click(function () {
+    try {
+        debugger;
+        loaddingimg.css('display', 'block');
+        $("#Errormessage").text("");
+        var tbodyRowCount = $('#TableData tbody tr').length;
+        var SubjectSlotID = $("#Ddslotsid").val();
+        var dataList = [];
+        var k = 1;
+        var l = 2;
+        debugger;
+        for (var i = 0; i < tbodyRowCount; i++) {
+            
+            var data = {};
+            var formattedDate = $("#A_PostingDate").text().trim();
+            var parts = formattedDate.split("/");
+            var dateValue = parts[2] + "-" + parts[1] + "-" + parts[0];
+
+            //var $checkbox = $('#TableData tr:eq(' + l + ') input[type=checkbox]');
+
+            //if ($checkbox.prop("disabled")) {
+            //    data.Ispresent = "Disablecheckbox";
+            //}
+            //else
+
+                if (document.getElementById(l).checked == true) {
+                data.Ispresent = "1";
+                data.Name = document.getElementById(l).title;
+                data.UserId = document.getElementById(l).name;
+                data.comment = "0";
+                data.Dropdownvalue = 0;
+                data.AttendanceTypeId = 0;
+
+                if ($("#Email_Stu_Checkboxid").is(":checked")) {
+                    data.StudEmail = $('#TableData tr:eq(' + k + ') td:eq(8) #Stu_Email').val();
+                }
+                data.ParentEmail = $('#TableData tr:eq(' + k + ') td:eq(9) #Pa_Email').val();
+                data.ParentId = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').val();
+                data.ParentName = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').attr('name');
+             }
+             else {
+                data.Ispresent = "0";
+                data.Name = $('#TableData tr:eq(' + k + ') td:eq(3)').text();
+                data.UserId = $('#TableData tr:eq(' + k + ') td:eq(1)').text();
+                data.ParentId = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').val();
+                data.ParentName = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').attr('name');
+                data.comment = $('#TableData tr:eq(' + k + ') td:eq(7) #commentTextArea').val();
+                data.Dropdownvalue = $('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').text();
+                data.AttendanceTypeId = $('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').val();
+
+                if ($(".Email_Stu_Checkboxid").is(":checked")) {
+                    data.StudEmail = $('#TableData tr:eq(' + k + ') td:eq(8)').text().trim();
+                }
+
+                if ($(".Email_Par_Checkboxid").is(":checked")) {
+                    data.ParentEmail = $('#TableData tr:eq(' + k + ') td:eq(9)').text().trim();
+                }
+
+                data.AttendanceTypeId = data.AttendanceTypeId == null || data.AttendanceTypeId == "--Select--" ? 0 :
+                    parseInt(data.AttendanceTypeId, 10);
+
+                data.Dropdownvalue = data.Dropdownvalue == null || data.Dropdownvalue == "--Select--" ? 0 : data.Dropdownvalue;
+            }
+
+            data.SubjectSlotID = SubjectSlotID;
+            data.dateValue = dateValue;
+            dataList.push(data);
+            k++;
+            l++;
+        }
+        debugger;
+        var formData = new FormData();
+        formData.append('dataList', JSON.stringify(dataList));
+        $.ajax({            
+            url: "/Attendance/PostAttendance",            
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+
+            }
+        });
+    } catch (e) {
+        alert("Something error");
+    }
+});
+
+
+/*--*** ATTENDANCE POSTING CODE END ***--*/
 
 
 
 
 /*--Attendance Submit code start--*/
-$("#submitbtn").click(function () {
+$("#submitbtn_").click(function () {
+  
 
-    try {
-        loaddingimg.css('display', 'block');
+    //try {
+    //    loaddingimg.css('display', 'block');
 
-        $("#Errormessage").text("");
-        //$("#MailS_ErrorMsg").text("");
+    //    $("#Errormessage").text("");
+        
+    //    var SubjectSlotID = $("#Ddslotsid").val(); 
+    //    var tbodyRowCount = $('#TableData tbody tr').length;
 
-        //var LgUserid = $('#Lg_UserId_Txtid').val();
-        var SubjectSlotID = $("#Ddslotsid").val(); 
-        var leng = $('#TableData tr').length;
+    //    var dataList = []; // Create an empty array to store the data     
+    //    var Studentemail = "";
+    //    var ParentEmail = "";
+    //    var k = 2;
+    //    /*debugger;*/
+    //    for (var i = 0; i < tbodyRowCount; i++) {
 
-        var dataList = []; // Create an empty array to store the data
+    //        var data = {}; // Create an object to hold the data for each row
 
+    //        var formattedDate = $("#A_PostingDate").text();
 
-
-        for (var i = 2; i < leng; i++) {
-
-            var data = {}; // Create an object to hold the data for each row
-
-            var formattedDate = $("#A_PostingDate").text();
-
-            var parts = formattedDate.split("/");
-            var day = parts[0];
-            var month = parts[1];
-            var year = parts[2];
-
-
-            var dateValue = year + "-" + month + "-" + day;
-
-            if (document.getElementById(i).checked == true) {
-                data.Ispresent = "1";
-                data.Name = document.getElementById(i).title;
-                data.UserId = document.getElementById(i).name;
-                data.comment = "0";
-                data.Dropdownvalue = 0;
-                data.AttendanceTypeId = 0;
-
-                debugger;
-                if ($("#solid6").is(":checked")) {
-                    data.StudEmail = $('#TableData tr:eq(' + i + ') td:eq(8) #Stu_Email').val();
-                }
-                data.ParentEmail = $('#TableData tr:eq(' + i + ') td:eq(9) #Pa_Email').val();
-            }
-            else {
-
-                data.Ispresent = "";
-                data.Name = $('#TableData tr:eq(' + i + ') td:eq(3)').text();
-                data.UserId = $('#TableData tr:eq(' + i + ') td:eq(1)').text();
-                data.comment = $('#TableData tr:eq(' + i + ') td:eq(7) #commentTextArea').val();
-                data.Dropdownvalue = $('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').text();
-                data.AttendanceTypeId = $('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').val();
-
-                var stEmail = "";
-
-                if ($(".Email_Stu_Checkboxid").is(":checked")) {
-                    stEmail = $('#TableData tr:eq(' + i + ') td:eq(8)').text().trim();
-                }
-                data.StudEmail = stEmail;
-
-                if ($(".Email_Par_Checkboxid").is(":checked")) {
-                    var ParentEmail = $('#TableData tr:eq(' + i + ') td:eq(9)').text().trim();
-                    data.ParentEmail = ParentEmail;
-                }
+    //        var parts = formattedDate.split("/");
+    //        var day = parts[0];
+    //        var month = parts[1];
+    //        var year = parts[2];
 
 
+    //        var dateValue = year + "-" + month + "-" + day;
 
-                if (data.AttendanceTypeId == null || data.AttendanceTypeId == "--Select--") {
-                    data.AttendanceTypeId = 0;
-                }
-                else {
-                    data.AttendanceTypeId = parseInt($('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').val(), 10);
+    //        if (document.getElementById(k).checked == true) {
+    //            data.Ispresent = "1";
+    //            data.Name = document.getElementById(k).title;
+    //            data.UserId = document.getElementById(k).name;
+    //            data.comment = "0";
+    //            data.Dropdownvalue = 0;
+    //            data.AttendanceTypeId = 0;                
+                
+    //            if ($("#Email_Stu_Checkboxid").is(":checked")) {
+    //                data.StudEmail = $('#TableData tr:eq(' + k + ') td:eq(8) #Stu_Email').val();
+    //            }
+    //            data.ParentEmail = $('#TableData tr:eq(' + k + ') td:eq(9) #Pa_Email').val();
+    //            data.ParentId = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').val();
+    //            data.ParentName = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').attr('name');
+    //        }
+    //        else {
+    //            data.Ispresent = "0";
+    //            data.Name = $('#TableData tr:eq(' + k + ') td:eq(3)').text();
+    //            data.UserId = $('#TableData tr:eq(' + k + ') td:eq(1)').text();
+    //            data.ParentId = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').val();
+    //            data.ParentName = $('#TableData tr:eq(' + k + ') td:eq(6) input[type=hidden]').attr('name');
+    //            data.comment = $('#TableData tr:eq(' + k + ') td:eq(7) #commentTextArea').val();
+    //            data.Dropdownvalue = $('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').text();
+    //            data.AttendanceTypeId = $('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').val();                
 
-                }
-                if (data.Dropdownvalue == null || data.Dropdownvalue == "--Select--") {
+    //            if ($(".Email_Stu_Checkboxid").is(":checked")) {
+    //                Studentemail = $('#TableData tr:eq(' + k + ') td:eq(8)').text().trim();
+    //            }
+    //            data.StudEmail = Studentemail;
 
-                    data.Dropdownvalue = 0;
+    //            if ($(".Email_Par_Checkboxid").is(":checked")) {
+    //                 ParentEmail = $('#TableData tr:eq(' + k + ') td:eq(9)').text().trim();
+    //                data.ParentEmail = ParentEmail;
+    //            }
 
-                }
-                else {
-                    data.Dropdownvalue = $('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').text();
+    //            if (data.AttendanceTypeId == null || data.AttendanceTypeId == "--Select--") {
+    //                data.AttendanceTypeId = 0;
+    //            }
+    //            else {
+    //                data.AttendanceTypeId = parseInt($('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').val(), 10);
+    //            }
+    //            if (data.Dropdownvalue == null || data.Dropdownvalue == "--Select--") {
+    //                data.Dropdownvalue = 0;
+    //            }
+    //            else {
+    //                data.Dropdownvalue = $('#TableData tr:eq(' + k + ') td:eq(7) .dropdown option:selected').text();
+    //                //data.AttendanceTypeId = $('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').val();
+    //            }
+    //        }
+    //        //data.CreatedBy = LgUserid;
+    //        data.SubjectSlotID = SubjectSlotID;
+    //        data.dateValue = dateValue;
+    //        dataList.push(data);
+    //        k++;
+    //    }
+    //    debugger;
+    //    var formData = new FormData();
+    //    formData.append('dataList', JSON.stringify(dataList));
 
-                    //data.AttendanceTypeId = $('#TableData tr:eq(' + i + ') td:eq(7) .dropdown option:selected').val();
-                }
-            }
-            //data.CreatedBy = LgUserid;
-            data.SubjectSlotID = SubjectSlotID;
-            data.dateValue = dateValue;
+    //    $.ajax({
 
+    //        // url: "/Attendance/Post_Attendance",
+    //        url: "/Attendance/PostAttendance",
+    //        // url: "/Attendance/post_ate",  // testing mails url
+    //        type: "POST",
 
-            dataList.push(data);
-        }
+    //        data: formData,
+    //        contentType: false,
+    //        processData: false,
+    //        success: function (result) {
+    //            debugger;
 
-        var formData = new FormData();
-        formData.append('dataList', JSON.stringify(dataList));
-
-        $.ajax({
-
-            // url: "/Attendance/Post_Attendance",
-            url: "/Attendance/PostAttendance",
-            // url: "/Attendance/post_ate",  // testing mails url
-            type: "POST",
-
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                debugger;
-
-                var data1 = result.data1;
-                var successCount = result.successCount;
-                var failureList = result.failureList;
-                var successList = result.successList;
-                var successMessage = "";
-
-
-                if (data1 != 0) {
-
-                    document.getElementById('Errormessage').innerHTML = "Attendance saved successfully";
-                }
-                else {
-
-                    $("#Errormessage").text("Attendance Not Posted").fadeOut(5000);
-                }
+    //            var data1 = result.data1;
+    //            var successCount = result.successCount;
+    //            var failureList = result.failureList;
+    //            var successList = result.successList;
+    //            var successMessage = "";
 
 
-                if (successList.length > 0) {
+    //            if (data1 != 0) {
 
-                    successMessage = "Email successfully sent to Students.For User" + successList.join(", ");
-                    document.getElementById('MailS_ErrorMsg').innerHTML = successMessage;
-                }
-                else {
-                    var FailureMessage = "Email successfully sent to Students.For User" + failureList.join(", ") + "No Email Id's Exists for Students.";
+    //                document.getElementById('Errormessage').innerHTML = "Attendance saved successfully";
+    //            }
+    //            else {
 
-                    document.getElementById('Errormessage').innerHTML = FailureMessage;
-                }
-                loaddingimg.css('display', 'none');
-            }
-        });
-    }
-    catch (e) {
+    //                $("#Errormessage").text("Attendance Not Posted").fadeOut(5000);
+    //            }
 
-    }
+
+    //            if (successList.length > 0) {
+
+    //                successMessage = "Email successfully sent to Students.For User" + successList.join(", ");
+    //                document.getElementById('MailS_ErrorMsg').innerHTML = successMessage;
+    //            }
+    //            else {
+    //                var FailureMessage = "Email successfully sent to Students.For User" + failureList.join(", ") + "No Email Id's Exists for Students.";
+
+    //                document.getElementById('Errormessage').innerHTML = FailureMessage;
+    //            }
+    //            loaddingimg.css('display', 'none');
+    //        }
+    //    });
+    //}
+    //catch (e) {
+
+    //}
 });
 
 

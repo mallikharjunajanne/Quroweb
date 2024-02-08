@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Manage_Bank_Accounts";
+    //ViewData["Title"] = "Manage_Bank_Accounts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
+    @*<style>
         span.validation {
             display: block;
             color: red;
@@ -26,10 +26,10 @@
             box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
         }
         
-    </style>
+    </style>*@
 
-    <link href="~/css/maps/ManageBankAccounts.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    @*<link href="~/css/maps/ManageBankAccounts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />*@
 </head>
 <body>
     <div class="card">

@@ -17,6 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Attendance\GetViewAttendanceDetailstbl" />
+    <None Remove="Views\FeeSection\ManageBankAccounts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Attendance\GetViewAttendanceDetailstbl" />
+    <Content Include="Views\FeeSection\ManageBankAccounts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />

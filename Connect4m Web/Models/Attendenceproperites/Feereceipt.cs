@@ -53,24 +53,29 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public int UserReceiptGenerationID { get; set; }
     }
 
-    public class New_GenerateFeeReceipt
+    public class New_GenerateFeeReceipt:Commonproperties
     {
-        public int InstanceId { get; set; }
-        public string UserId { get; set; }
+        [Required(ErrorMessage = "Department is required")]
         public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
+        [Required(ErrorMessage = "Class is required")]
         public int InstanceSubClassificationId { get; set; }
         public string SubClassificationName { get; set; }
         public string FirstName { get; set; }
 
-
+        [Required(ErrorMessage = "Fee Terms is required")]
         public string FeeTermId { get; set; }
+
         public int AcademicYearId { get; set; }
         public string TermName { get; set; }
         public string FeeTypeId { get; set; }
+
+        [Required(ErrorMessage = "Fee Types is required")]
         public int FeeTypeIds { get; set; }
         public string FeeType { get; set; }
 
+        [Required(ErrorMessage = "Receipt Created Date is required")]
+        public string ReceiptCreatedDate { get; set; }
 
         public string FeeAmount { get; set; }
         public string totalAmount { get; set; }
@@ -78,6 +83,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public int UserReceiptGenerationID { get; set; }
     }
 
+    public class GenerateFeeReceipt
+    {      
+        public int InstanceClassificationId { get; set; }
+      
+        public int InstanceSubClassificationId { get; set; }
+    }
     public class TransferChallan
     {
         public string Amount { get; set; }

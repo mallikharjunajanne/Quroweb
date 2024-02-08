@@ -7,27 +7,24 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models.Attendenceproperites
 {
-    public class Admin_Attendance_Posting
+    public class AttendancePosting   //Admin_Attendance_Posting
     {
         public DateTime StartDate { get; set; }
 
-
-        public string InstanceClassificationId { get; set; }
-
-        [DisplayName("Department")]
-        [Required(ErrorMessage = "Please Select Department")]
-        public string ClassificationName { get; set; }
-
-     
-        public string InstanceSubClassificationId { get; set; }
-
-        [DisplayName("Class")]
-        [Required(ErrorMessage = "Please Select Class")]
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
+        public string ClassificationName { get; set; }        
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubClassificationId { get; set; }
         public string SubClassificationName { get; set; }
 
+        [Required(ErrorMessage = "Slot is required")]
+        public int SubjectSlotID { get; set; }
         public string SubjectSlotName { get; set; }
-
-        public string SubjectSlotID { get; set; }
+        [Required(ErrorMessage = "Period is required")]
+        public int Period { get; set; }
+        [Required(ErrorMessage = "Faculty is required")]
+        public int Faculty { get; set; }
 
         public String MentorName { get; set; }
         public String Qualification { get; set; }
@@ -36,7 +33,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public String RoleName { get; set; }
         public String UserId { get; set; }
         public String InstanceUserCode { get; set; }
-        public String Period { get; set; }
+
 
     }
+    public class Facultydropdown 
+    {
+        public  string MentorUserid { get; set; }
+        public  string MentorName{ get; set; }
+    }
+
 }

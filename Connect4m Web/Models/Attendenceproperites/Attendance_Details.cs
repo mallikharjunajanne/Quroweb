@@ -8,27 +8,36 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models.Attendenceproperites
 {
+    public class InstanceCommonproperties
+    {
+        public int InstanceId { get; set; }
+        public int UserId { get; set; }
+        public int CreatedBy { get; set; }
+    }
+
     public class Attendance_Details
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
-        [DisplayName("Department")]
-        [Required(ErrorMessage = "Please Select Department")]
+        
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
-
-
-        [DisplayName("Class")]
-        [Required(ErrorMessage = "Please Select Class")]
+       
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubclassificaitionId { get; set; }
         public string SubClassificationName { get; set; }
         public string UserId { get; set; }
+        [Required(ErrorMessage = "Student is required")]
+        public int Studentuserid { get; set; }
         public string FirstName { get; set; }
-
-        [DisplayName("Slot")]
-        [Required(ErrorMessage = "Please Select Slot Name")]
+        
+        [Required(ErrorMessage = "Slots is required")]
+        public int SubjectSlotID { get; set; }
         public string SubjectName { get; set; }
-
-
+        [Required(ErrorMessage = "Display only for is required")]
+        public string bFlagForDisplay { get; set; } 
+        public int InstanceSubjectId { get; set; }
         public string[] SlotSubjectsNames { get; set; }
         public string SubjectSlotName { get; set; }
         public string Mentors { get; set; }
@@ -37,57 +46,73 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string Present { get; set; }
         public string AttendanceRequired { get; set; }
         public string PeriodId { get; set; }
-        public int InstanceID { get; set; }
-        public string SubjectSlotID { get; set; }
-        public string bFlagForDisplay { get; set; }
-
-
-
-
-
-        //[DateGreaterThan("From_date", ErrorMessage = "To Date must be greater than From Date.")]
-        //public class DateGreaterThanAttribute : ValidationAttribute, IClientModelValidator
-        //{
-        //    private readonly string _comparisonProperty;
-
-        //    public DateGreaterThanAttribute(string comparisonProperty)
-        //    {
-        //        _comparisonProperty = comparisonProperty;
-        //    }
-
-        //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        //    {
-        //        var property = validationContext.ObjectType.GetProperty(_comparisonProperty);
-
-        //        if (property == null)
-        //        {
-        //            return new ValidationResult($"Unknown property: {_comparisonProperty}");
-        //        }
-
-        //        var comparisonValue = property.GetValue(validationContext.ObjectInstance);
-
-        //        if (value is DateTime toDate && comparisonValue is DateTime fromDate)
-        //        {
-        //            if (toDate <= fromDate)
-        //            {
-        //                return new ValidationResult(ErrorMessage);
-        //            }
-        //        }
-
-        //        return ValidationResult.Success;
-        //    }
-        //}
-
-       //Student Login Attedance details properts
-        public int InstanceSubjectId { get; set; }
-        //public string SubjectSlotName { get; set; }
-        //Student Login Attedance details properts
-        public Student_Attendance_Details StudentAttendanceDetails { get; set; }
     }
-
-    public class Student_Attendance_Details
+   
+    public class detailsattendance:InstanceCommonproperties
     {
-       
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
+        public string ClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubclassificaitionId { get; set; }
+        public string SubClassificationName { get; set; }       
+        [Required(ErrorMessage = "Student is required")]
+        public int Studentuserid { get; set; }
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Slots is required")]
+        public int SubjectSlotID { get; set; }
+        public string SubjectName { get; set; }
+        [Required(ErrorMessage = "Display only for is required")]
+        public int bFlagForDisplay { get; set; }        
     }
+
+
+
+    public class Detailsforattedance:Commonproperties
+    {
+        public string[] SlotSubjectsNames { get; set; }
+        public string SubjectSlotName { get; set; }
+        public string Mentors { get; set; }
+        public string IsPresent { get; set; }
+        public string CreatedDate { get; set; }
+        public string Present { get; set; }
+        public string AttendanceRequired { get; set; }
+        public string PeriodId { get; set; }
+    }
+
+
+   public class Studentattendancedetails:InstanceCommonproperties
+    {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; } 
+        public int Month { get; set; }  
+        public int SubjectSlotID { get; set; }
+        public string SubjectName { get; set; }         
+        
+    }
+    public class StudentDetailsforattedance : Commonproperties
+    {
+        public string[] SlotSubjectsNames { get; set; }       
+        public string ClassificationName { get; set; }
+        public string SubClassificationName { get; set; }
+        public string SubjectSlotName { get; set; }
+        public string Mentors { get; set; }
+        public string IsPresent { get; set; }
+        public string CreatedDate { get; set; }
+        public string Present { get; set; }
+        public string AttendanceRequired { get; set; }
+        public string PeriodId { get; set; }
+    }
+
+    public class studentsummary : InstanceCommonproperties
+    {
+        public int AcademicYear { get; set; }
+       
+    }
+
 }

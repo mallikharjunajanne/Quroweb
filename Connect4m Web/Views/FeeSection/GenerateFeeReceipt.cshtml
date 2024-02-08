@@ -1,7 +1,7 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.New_GenerateFeeReceipt
 
 @{
-    ViewData["Title"] = "GenerateFeeReceipt";
+    //ViewData["Title"] = "GenerateFeeReceipt";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,83 +9,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="~/css/GenarateFeeChallana.css" rel="stylesheet" />
-    <style>
+    @*<link href="~/css/GenarateFeeChallana.css" rel="stylesheet" />
+        <style>
 
 
 
-        .form-group {
-            margin-bottom: 0px;
-        }
-        /*table Styles Code Starting */
-
-        /*table Styles Code End */
-
-        input[type="checkbox"] {
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
-
-            /* Styling the checked checkbox */
-            input[type="checkbox"]:checked {
-                /* Add any styles you want for the checked checkbox */
-                border: 2px solid #008000; /* Example border style for the checked checkbox */
-                background-color: #008000; /* Example background color for the checked checkbox */
-                color: #fff; /* Example text color for the checked checkbox */
+            .form-group {
+                margin-bottom: 0px;
             }
-    </style>
+            /*table Styles Code Starting */
+
+            /*table Styles Code End */
+
+            input[type="checkbox"] {
+                border: 2px solid #ccc;
+                border-radius: 5px;
+            }
+
+                /* Styling the checked checkbox */
+                input[type="checkbox"]:checked {
+                    /* Add any styles you want for the checked checkbox */
+                    border: 2px solid #008000; /* Example border style for the checked checkbox */
+                    background-color: #008000; /* Example background color for the checked checkbox */
+                    color: #fff; /* Example text color for the checked checkbox */
+                }
+        </style>*@
 </head>
 <body>
-    <div style=" font-size: 20px; text-align: center;">
-        <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: 0px; ">GENERATE FEE CHALLAN</h1>
-    </div>
-    <div class="card" style="margin-left: 16px;">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>GENERATE FEE CHALLAN </h4>
+        <span id="Errormessage" class="text-danger"></span>
 
 
-        <div class="card-header pb-0">
-            <div style="color: red; font-size: 12px;">
-                <div id="validation2" style="color: red;"></div>
-                <div id="validationMessage" style="color: red;"></div>
-
-                <p id="MessageID"></p>
-            </div>
-            <span id="ErrorMessage_SpanId1" style=" color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
-        </div>
-        <div id="Feereceipt_SerachFields_DIVID" class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div>
+        <div class="row mb-2" id="FeeTypesDiscountTbl_Divid">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn  collapsed Header_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="">
-                                SEARCH USERS
-                            </button>
+                            SEARCH USERS
                         </h5>
                     </div>
-                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                        <div class="card-body">
-                            <div id="searchFormContainer">
-                                <form asp-action="Feereceipt" id="searchForm">
-                                    <div class="row">
-                                        <div class="row">
-                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-2">
-                                                <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font> Department: </label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <input type="hidden" asp-for="InstanceId" id="InstanceId_DD" value="@ViewBag.InstanceId" />
-                                                <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="dropdownDD">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col" id="searchFormContainer">
+                                <form id="Generatefeereceiptform">
+                                    @*searchForm*@
+                                    <div class="row mb-3">
+                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end required space">Department </label>
+                                        <div class="col-sm-4">
+                                            <select class="select2 form-select select2-hidden-accessible" id="DdlDepartment" asp-for="InstanceClassificationId" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)">
+                                            </select>
+                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                        </div>
+                                        <label asp-for="InstanceSubClassificationId" class="control-label col-sm-2 col-form-label text-end required space">Class</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="DdlClass" asp-for="InstanceSubClassificationId">
                                                 </select>
-                                            </div>
-                                            <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-1">
-                                                <label class="control-label lbl" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font> Class: </label>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="dropdownDD">
-                                                </select>
+                                                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div style=" text-align: center; margin-top: 14px;">
-                                            <input type="button" value="Clear" id="Clear_Btn" class="btn btn-pill btn-outline-danger-2x"/>
-                                            <input type="submit" value="Search" @*class="Serch_Btn"*@ class="btn btn-pill btn-outline-success-2x" onclick="SearchBankAccountsData(event);">
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Generatefeereceiptform')" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
                                         </div>
                                     </div>
                                 </form>
@@ -95,71 +83,98 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div>
-        <div id="User_Tbl_data" style="margin-top: -43px; width: 102%;">
-            <div class="card-body">
-                <div class="default-according style-1" id="accordionoc">
-                    <div class="card">
 
-                        <span style=" margin-left: 26px; font-size: 15px;"></span>
 
-                        <input type="checkbox" id="CheckAll_UserIds" style=" width: 16px; height: 16px; margin-left: 16px; margin-top: 3px;" /> <label style="margin-left: 36px; margin-top: -18px; font-family: none; ">
-                            Check All
-                        </label>
-                        <div>
-                            <h5 class="mb-0">
-                                <button class="btn   Header_Btn" style="font-weight: bolder; color:white;">YOUR SEARCH RESULTED  :<span id="TableCount" style="color: red; background-color: white; border-radius: 11px; font-weight: bold; padding: 3px; "></span> RECORDS.</button>
-                            </h5>
-                        </div>
-                        <div class="collapse show" aria-labelledby="" data-bs-parent="#">
-                         
-                            <div id="FeeRecipt_Table" style=" margin-top: 5px;">
-                                <table class="FeeRecipttable">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center;width:10px;">Select</th>
-                                            <th>Name</th>
-                                            <th>Department</th>
-                                            <th>Class</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-
-                                    </tfoot>
-                                </table>
-                                <div id="ManageBankAccounts_pagination"></div>
-                            </div>
-                           
-                        </div>
+        <div id="Userdetailstablediv">
+            @*User_Tbl_data*@
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <input type="checkbox" class="form-check-input checkbox_animated" id="CheckAll_UserIds">
+                        <label class="form-check-label " for="CheckAll_UserIds" id="CheckAll_UserIds">Check All</label>
                     </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span>
+                                YOUR SEARCH RESULTED  :<span id="TableCount" class="TableCount_SpId"></span> RECORDS.
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="card-body" id="FeeRecipt_Table">
+                        <table class="table table-bordered" id="FeeRecipttable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+                        <div id="ManageBankAccounts_pagination"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
         @*Table Html And Table Data Bind Code End*@
-    </div>
 
-    <div>
-
-        <div class="card-body" style="width: 102%; margin-top: -14px;">
-            <div id="FEE_TERM_DETAILS_DIVID">
-                <div class="default-according style-1" id="accordionoc">
-                    <div class="card">
-                        <div id="validation2GFCS" style="color: red; margin-left: 16px; font-family: none; font-weight: 600; font-size: 12px; "></div>
-                        <div id="validationMessageGFCS" style="color: red; margin-left: 16px; font-family: none; font-weight: 600; font-size: 12px; "></div>
-                        <span id="ErrorMessageChallana_SpanId" style="color: red; font-size: 13px; margin-left: 8px; font-family: none; font-weight: 600;"></span>
-                        <div>
-                            <h5 class="mb-0">
-                                <button class="btn  collapsed Header_Btn" aria-controls="collapse11" style="font-weight: bolder; color:white;"> FEE TERM DETAILS</button>
-                            </h5>
-                        </div>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
-                            <div class="card-body">
-                                <form asp-action="GenerateFeeReceipt_New_Users_Challan_Result_Tbl" id="feeChallanForm">
-                                    <div class="row">
+        <div id="Feetermdetailsdiv">
+            @*FEE_TERM_DETAILS_DIVID*@
+        <div class="row mb-2" id="FeeTypesDiscountTbl_Divid">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <span class="text-danger" id="ErrorMessageChallana_SpanId"></span>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            FEE TERM DETAILS
+                        </h5><small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <form class="form" id="feeChallanForm">
+                                    @*GenerateFeeReceipt_New_Users_Challan_Result_Tbl*@
+                                <div class="row mb-3">
+                                    <label asp-for="FeeTermId" class="control-label col-sm-4 col-form-label text-end required space">Fee Terms </label>
+                                    <div class="col-sm-4">
+                                        <select multiple class="select2 form-select select2-hidden-accessible" id="Ddlfeetermid" asp-for="FeeTermId">
+                                        </select>@*FeeTermId_DD*@
+                                        <span asp-validation-for="FeeTermId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="FeeTypeIds" class="control-label col-sm-4 col-form-label text-end required space">Fee Types </label>
+                                    <div class="col-sm-4">
+                                        <select multiple class="select2 form-select select2-hidden-accessible" id="Ddlfeetype" asp-for="FeeTypeIds">
+                                        </select>@*FeeTypeId_DD*@
+                                        <span asp-validation-for="FeeTypeIds" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="ReceiptCreatedDate" class="control-label col-sm-4 col-form-label text-end required space">Receipt Created Date </label>
+                                    <div class="col-sm-4">
+                                        <input type="date" id="Receiptcreateddatetxtid" asp-for="ReceiptCreatedDate" class="form-control">
+                                        <span asp-validation-for="ReceiptCreatedDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row justify-content text-center">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success waves-effect waves-light" id="btn">Generate Fee Challan for Selected Students</button>
+                                    </div>
+                                </div>
+                                @*<div class="row">
                                         <div class="row" style=" margin-left: 92px;">
                                             <div style="padding: 0px; text-align: end; margin-top: 5px;" class="form-group col-3">
                                                 <label class="control-label lbl"><font style="color: red; font-size: 13px;">*</font> Fee Terms: </label>
@@ -179,54 +194,50 @@
                                                 <label class="control-label lbl" style=" height: 30px;"><font style="color: red; font-size: 13px;">*</font> Receipt Created Date: </label>
                                             </div>
                                             <div class="form-group col-8">
-                                                <input type="date" id="Receipt_Created_Date" style="margin-top: 3px; border-radius: 4px; border: 1px solid; width: 36%;"/>
+                                                <input type="date" id="Receipt_Created_Date" style="margin-top: 3px; border-radius: 4px; border: 1px solid; width: 36%;" />
                                             </div>
                                         </div>
                                         <div style="margin-left: 27%;">
                                             <input type="submit" value="Generate Fee Challan for Selected Students." class="GFCSS_Btn btn btn-pill btn-outline-primary-2x " />
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
+                                    </div>*@
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div>
-        <div id="Challana_User_DIVID" style=" width: 102%; margin-top: -22px;">
-            <div class="card-body">
-                <div class="default-according style-1" id="accordionoc">
-                    <div class="card">
-                        <h5 class="mb-0">
-                            <button class="btn  collapsed Header_Btn" aria-controls="collapse11" style="font-weight: bolder; color:white;"> YOUR SEARCH RESULTED <span id="Challan_Count_SPID" style="color: red; background-color: white; border-radius: 11px; font-weight: bold; padding: 3px;"></span> RECORDS.</button>
-                        </h5>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
-                            <div class="card-body" style="padding: 0px;">
-                                <table id="Challan_CreatedUserS_Tbl" class="ChalanaCreatedUsersTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Fee Term</th>
-                                            <th>Fee Type</th>
-                                            <th>Fee Amount</th>
-                                            <th>Challan No</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="Challan_CreatedUserS_TblBody">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="col-md-12 col-lg-12 mb-3" id="Challana_Usersdivid">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                <span>
+                    @*YOUR SEARCH RESULTED  :<span id="TableCount" class="TableCount_SpId"></span> RECORDS.*@
+                    YOUR SEARCH RESULTED <span id="Challan_Count_SPID" class="TableCount_SpId"></span> RECORDS.
+                </span>
+            </h5>
+        </div>
+        <div class="card-body" id="FeeRecipt_Table">
+            <table class="table table-bordered" id="Challan_CreatedUserS_Tbl">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Fee Term</th>
+                        <th>Fee Type</th>
+                        <th>Fee Amount</th>
+                        <th>Challan No</th>
+                    </tr>
+                </thead>
+                <tbody id="Challan_CreatedUserS_TblBody">
+                </tbody>
+            </table>
         </div>
     </div>
-
-
+</div>
+</div>
 </body>
 </html>
 
@@ -235,87 +246,94 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="~/js/Feereceiptgenerate.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
 
 <script>
 
 
     $(document).ready(function () {
-
         debugger;
-        $('#User_Tbl_data').hide();
-        $('#FEE_TERM_DETAILS_DIVID').hide();
-        $('#Challana_User_DIVID').hide();
+        // CommonDropdownFunction("GET", "/AttendanceController/DepartmentsDropdown_Caliingfunction", "DdlDepartment", "Select a Department", false)
+        //debugger;
+        //$('#Userdetailstablediv').hide();
+        //$('#Feetermdetailsdiv').hide();
+        //$('#Challana_Usersdivid').hide();
 
     });
 
-    $('#Clear_Btn').click(function () {
+    //$('#Clear_Btn').click(function () {
 
-        $('#ErrorMessage_SpanId1').text('');
-        $('#MessageID').text('');
-        $('#validationMessage').text('');
-        $('#validation2').text('');
-        /*location.reload();*/
+    //    $('#ErrorMessage_SpanId1').text('');
+    //    $('#MessageID').text('');
+    //    $('#validationMessage').text('');
+    //    $('#validation2').text('');
+    //    /*location.reload();*/
 
 
-    });
+    //});
 
 
 
     /*----Fee Terms DROPDOWN FUNCTION CODE START---*/
 
-    function FeeTerms_dropdown_Function() {
+    //function FeeTerms_dropdown_Function() {
 
-        /*  debugger;*/
-        var dropdown = document.getElementById("FeeTermId_DD");
+    //    /*  debugger;*/
+    //    var dropdown = document.getElementById("Ddlfeetermid");
 
-        // Clear existing options
-        dropdown.innerHTML = "";
-        /*debugger;*/
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId_DD").value;
+    //    // Clear existing options
+    //    dropdown.innerHTML = "";
+    //    /*debugger;*/
+    //    // Get the InstanceId value from the hidden input field
+    //    const instanceId = document.getElementById("InstanceId_DD").value;
 
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/GenerateFeeReceipt_New_FeeTerms_DD?InstanceId=${instanceId}`;
+    //    // Construct the fetch URL with the InstanceId as a query parameter
+    //    const fetchURL = `/FeeSection/GenerateFeeReceipt_New_FeeTerms_DD?InstanceId=${instanceId}`;
 
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
+    //    fetch(fetchURL)
+    //        .then(response => {
+    //            if (!response.ok) {
+    //                throw new Error("Request failed with status " + response.status);
+    //            }
+    //            return response.text();
+    //        })
+    //        .then(responseText => {
+    //            /* debugger;*/
+    //            const data = JSON.parse(responseText); // Parse the response
 
-                // Get the dropdown element
-                const dropdown = document.getElementById("FeeTermId_DD");
+    //            // Get the dropdown element
+    //            const dropdown = document.getElementById("Ddlfeetermid");
 
-                // Clear existing options
-                dropdown.innerHTML = "";
+    //            // Clear existing options
+    //            dropdown.innerHTML = "";
 
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
+    //            // Create the "--select--" option
+    //            const selectOption = document.createElement("option");
+    //            selectOption.value = ""; // Set the value to an empty string or any other appropriate value
+    //            selectOption.textContent = "-----Select------"; // Set the display text for the option
+    //            dropdown.appendChild(selectOption);
 
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
+    //            // Iterate through each item in the data
+    //            for (let i = 0; i < data.length; i++) {
+    //                const item = data[i];
+    //                const option = document.createElement("option");
+    //                option.value = item.value;
+    //                option.textContent = item.text;
+    //                dropdown.appendChild(option);
+    //            }
+    //        })
 
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
+    //        .catch(error => {
+    //            console.error("Error:", error);
+    //        });
+    //}
 
-    window.addEventListener('load', FeeTerms_dropdown_Function);
+    /* window.addEventListener('load', FeeTerms_dropdown_Function);*/
 
     /*----Fee Terms DROPDOWN FUNCTION CODE END---*/
 
@@ -325,7 +343,7 @@
 
     function sendFeeType_BY_FeeTermSelectedValue() {
         /*debugger;*/
-        var InstanceClassificationdropdownValue = document.getElementById("FeeTermId_DD");
+        var InstanceClassificationdropdownValue = document.getElementById("Ddlfeetermid");
         var selecteValue = InstanceClassificationdropdownValue.value;
         const instanceId = document.getElementById("InstanceId_DD").value;
 
@@ -341,7 +359,7 @@
                 const data = JSON.parse(responseText); // Parse the response
 
                 // Get the dropdown element
-                const dropdown_DD = document.getElementById("FeeTypeId_DD");
+                const dropdown_DD = document.getElementById("Ddlfeetype");
 
                 // Clear existing options
                 dropdown_DD.innerHTML = "";
@@ -367,8 +385,8 @@
     }
 
     // Attach the event listener to the dropdown
-    var dropdown = document.getElementById("FeeTermId_DD");
-    dropdown.addEventListener("change", sendFeeType_BY_FeeTermSelectedValue);
+    var dropdown = document.getElementById("Ddlfeetermid");
+    //dropdown.addEventListener("change", sendFeeType_BY_FeeTermSelectedValue);
 
     /*--------FeeType DROPDOWN GET BY FeeTerm dropdown  CODE  END-----------*/
 
@@ -443,52 +461,52 @@
 
     /*--------Department DROPDOWN GET BY Class dropdown CODE START -----------*/
 
-    function sendDepartment_BY_ClassSelectedValue() {
-        /* debugger;*/
-        var InstanceClassificationdropdownValue = document.getElementById("InstanceClassificationId_DD");
-        var INCselectedValue = InstanceClassificationdropdownValue.value;
-        const instanceId = document.getElementById("InstanceId_DD").value;
+    //function sendDepartment_BY_ClassSelectedValue() {
+    //    /* debugger;*/
+    //    var InstanceClassificationdropdownValue = document.getElementById("InstanceClassificationId_DD");
+    //    var INCselectedValue = InstanceClassificationdropdownValue.value;
+    //    const instanceId = document.getElementById("InstanceId_DD").value;
 
-        fetch("/FeeSection/GenerateFeeReceipt_New_Class_DD?InstanceClassificationId=" + INCselectedValue + "&instanceId=" + instanceId)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /*  debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
+    //    fetch("/FeeSection/GenerateFeeReceipt_New_Class_DD?InstanceClassificationId=" + INCselectedValue + "&instanceId=" + instanceId)
+    //        .then(response => {
+    //            if (!response.ok) {
+    //                throw new Error("Request failed with status " + response.status);
+    //            }
+    //            return response.text();
+    //        })
+    //        .then(responseText => {
+    //            /*  debugger;*/
+    //            const data = JSON.parse(responseText); // Parse the response
 
-                // Get the dropdown element
-                const dropdown = document.getElementById("InstanceSubClassificationId_DD");
+    //            // Get the dropdown element
+    //            const dropdown = document.getElementById("InstanceSubClassificationId_DD");
 
-                // Clear existing options
-                dropdown.innerHTML = "";
+    //            // Clear existing options
+    //            dropdown.innerHTML = "";
 
-                // Create the  option
-                const selectOption = document.createElement("option");
-                selectOption.value = "";
-                selectOption.textContent = "---------Select-----------";
-                dropdown.appendChild(selectOption);
+    //            // Create the  option
+    //            const selectOption = document.createElement("option");
+    //            selectOption.value = "";
+    //            selectOption.textContent = "---------Select-----------";
+    //            dropdown.appendChild(selectOption);
 
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
+    //            // Iterate through each item in the data
+    //            for (let i = 0; i < data.length; i++) {
+    //                const item = data[i];
+    //                const option = document.createElement("option");
+    //                option.value = item.value;
+    //                option.textContent = item.text;
+    //                dropdown.appendChild(option);
+    //            }
+    //        })
+    //        .catch(error => {
+    //            console.error("Error:", error);
+    //        });
+    //}
 
-    // Attach the event listener to the dropdown
-    var dropdown = document.getElementById("InstanceClassificationId_DD");
-    dropdown.addEventListener("change", sendDepartment_BY_ClassSelectedValue);
+    //// Attach the event listener to the dropdown
+    //var dropdown = document.getElementById("InstanceClassificationId_DD");
+    //dropdown.addEventListener("change", sendDepartment_BY_ClassSelectedValue);
 
     /*--------Department DROPDOWN GET BY Class dropdown  CODE  END-----------*/
 
@@ -580,22 +598,20 @@
 
                     debugger;
 
-                    $('#User_Tbl_data').show();
+                    $('#Userdetailstablediv').show();
 
-                    $('#FEE_TERM_DETAILS_DIVID').hide();
-                    $('#Challana_User_DIVID').hide();
+                    $('#Feetermdetailsdiv').hide();
+                    $('#Challana_Usersdivid').hide();
 
 
 
                     var CountTabledata = response.length;
                     $('#TableCount').text(CountTabledata);
 
-                    console.log(response); // Log the response object in the browser's console
-
                     var table = $('#FeeRecipt_Table');
                     var tbody = table.find('tbody');
 
-                    // Clear the existing table body
+
                     tbody.empty();
 
                     $.each(response, function (index, bacTable) {
@@ -604,7 +620,7 @@
                         var cell1 = $('<td class="editable-cell"></td>').css({
                             'cursor': 'pointer',
                             'text-align': 'center'
-                            
+
                         });
                         var userId = bacTable.userId;
                         var checkboxId = 'checkbox_' + userId; // Generating a unique id for each checkbox
@@ -666,6 +682,9 @@
         }
     }
     /*----------------------Fee Recipt User Table function code end-------------------------------*/
+
+
+
     // Check/uncheck all checkboxes with the class "user-checkbox"
     function checkAllCheckboxes(checked) {
         debugger;
@@ -673,11 +692,11 @@
     }
 
     // Click event for the "Check All" checkbox
-    $('#CheckAll_UserIds').click(function () {
-        debugger;
-        var checked = $(this).prop('checked');
-        checkAllCheckboxes(checked);
-    });
+    //$('#CheckAll_UserIds').click(function () {
+    //    debugger;
+    //    var checked = $(this).prop('checked');
+    //    checkAllCheckboxes(checked);
+    //});
 
 
     // Click event for the "Go to Step 2" button
@@ -688,8 +707,8 @@
 
         if ($('.user-checkbox:checked').length === 0) {
             window.scroll(0, 0);
-            $('#FEE_TERM_DETAILS_DIVID').hide();
-            $('#Challana_User_DIVID').hide();
+            $('#Feetermdetailsdiv').hide();
+            $('#Challana_Usersdivid').hide();
 
             $('#ErrorMessage_SpanId1').text('Please Select Atleast one Student to Generate Challan for Fee.');
             return;
@@ -717,7 +736,6 @@
 
         var userId = $(this).val();
         var isChecked = $(this).prop('checked');
-        /* alert("User ID: " + userId + ", Checked: " + isChecked);*/
     });
 
     /*-------============================== Goto  Step 2 button click fire function  code start====================--------------------*/
@@ -726,7 +744,7 @@
         debugger;
 
         /*alert(userIds);*/
-        $('#FEE_TERM_DETAILS_DIVID').show();
+        $('#Feetermdetailsdiv').show();
         console.log("Selected User IDs:", userIds);
 
         var selectedUserIdsValues = userIds;
@@ -740,10 +758,10 @@
     function validation_GFCS() {
 
 
-        
+
         debugger;
-        var FeeTypeId = $('#FeeTypeId_DD').val();
-        var FeeTermId = $('#FeeTermId_DD').val();
+        var FeeTypeId = $('#Ddlfeetype').val();
+        var FeeTermId = $('#Ddlfeetermid').val();
         var Receipt_Created_Date = $('#Receipt_Created_Date').val();
 
 
@@ -783,129 +801,113 @@
 
 
 
-    $('#feeChallanForm').submit(function (event) {
-        debugger;
+    //$('#feeChallanForm').submit(function (event) {
+    //    debugger;
 
-        event.preventDefault(); // Prevent default form submission
+    //    event.preventDefault(); // Prevent default form submission
 
-        FeeTypeIdsSelectedValues = $('#FeeTermId_DD').val();
-
-
-        debugger;
-
-        if (FeeTypeIdsSelectedValues.length > 1) {
-
-            $('#ErrorMessageChallana_SpanId').text("Please Select only one Fee Term to Generate challan for Miscellaneous Fee.");
+    //    FeeTypeIdsSelectedValues = $('#Ddlfeetermid').val();
 
 
-        } else {
-            if (validation_GFCS()) {
+    //    debugger;
+
+    //    if (FeeTypeIdsSelectedValues.length > 1) {
+
+    //        $('#ErrorMessageChallana_SpanId').text("Please Select only one Fee Term to Generate challan for Miscellaneous Fee.");
 
 
-                FeeTypeIds = $('#FeeTypeId_DD').val();
-                FeeTermId = $('#FeeTermId_DD').val();
-                debugger;
+    //    } else {
+    //        if (validation_GFCS()) {
 
 
-              
-                var formData = new FormData(this);
+    //            FeeTypeIds = $('#Ddlfeetype').val();
+    //            FeeTermId = $('#Ddlfeetermid').val();
+    //            debugger;
+
+    //            var formData = new FormData(this);
 
 
 
-                var selectedUserIds = [];
-                $('input.user-checkbox:checked:not(.user-checkbox[value="on"])').each(function () {
+    //            var selectedUserIds = [];
+    //            $('input.user-checkbox:checked:not(.user-checkbox[value="on"])').each(function () {
 
-                    selectedUserIds.push($(this).val());
+    //                selectedUserIds.push($(this).val());
 
-                });
-
-                console.log(selectedUserIds);
-
+    //            });
+    //            console.log(selectedUserIds);
 
 
-                var InstanceId = $('#InstanceId_DD').val();
 
-                /*alert(selectedUserIds);*/
+    //            var InstanceId = $('#InstanceId_DD').val();
 
-                $.ajax({
-                    url: '/FeeSection/GenerateFeeReceipt_New_Users_Challan_Result_Tbl?FeeTypeIds=' + FeeTypeIds + '&FeeTermId=' + FeeTermId + '&UserIds=' + selectedUserIds + '&InstanceId=' + InstanceId,
-                    type: 'POST',
+    //            /*alert(selectedUserIds);*/
 
-                    processData: false, // Prevent jQuery from processing the data
-                    contentType: false, // Let the server handle the content type
-                    success: function (response) {
+    //            $.ajax({
+    //                url: '/FeeSection/GenerateFeeReceipt_New_Users_Challan_Result_Tbl?FeeTypeIds=' + FeeTypeIds + '&FeeTermId=' + FeeTermId + '&UserIds=' + selectedUserIds + '&InstanceId=' + InstanceId,
+    //                type: 'POST',
+    //                processData: false, // Prevent jQuery from processing the data
+    //                contentType: false, // Let the server handle the content type
+    //                success: function (response) {
+    //                    debugger;
+    //                    console.log(response);
+    //                    debugger;
+    //                    $('#Challana_Usersdivid').show();
+    //                    var ChallanaCount = response.length;
 
-                        debugger;
+    //                    $('#Challan_Count_SPID').text(ChallanaCount);
 
-                        console.log(response);
+    //                    if (ChallanaCount > 0) {
 
-                        debugger;
+    //                        $('#ErrorMessageChallana_SpanId').text('Challan is already generated for below user(s).');
 
-                        $('#Challana_User_DIVID').show();
-                        var ChallanaCount = response.length;
+    //                    } else if (ChallanaCount == 0) {
 
+    //                        $('#Challana_Usersdivid').hide();
+    //                        $('#ErrorMessageChallana_SpanId').text('Fees Haven' + "'" + 't scheduled for selected user(s).');
 
-                        $('#Challan_Count_SPID').text(ChallanaCount);
+    //                    }
 
-                        if (ChallanaCount > 0) {
-
-                            $('#ErrorMessageChallana_SpanId').text('Challan is already generated for below user(s).');
-
-                        } else if (ChallanaCount == 0) {
-
-                            $('#Challana_User_DIVID').hide();
-                            $('#ErrorMessageChallana_SpanId').text('Fees Haven' + "'" + 't scheduled for selected user(s).');
-
-                        }
-
-                      
-
-                        var table = $('#Challan_CreatedUserS_Tbl');
-                        var tbody = table.find('#Challan_CreatedUserS_TblBody');
+    //                    var table = $('#Challan_CreatedUserS_Tbl');
+    //                    var tbody = table.find('#Challan_CreatedUserS_TblBody');
 
 
-                        $('#validation2GFCS').text('');
-                        $('#validationMessageGFCS').text('');
-                     //   $('#ErrorMessageChallana_SpanId').text('');
-                        
-                      
-                        tbody.empty();
+    //                    $('#validation2GFCS').text('');
+    //                    $('#validationMessageGFCS').text('');
 
-                        $.each(response, function (index, dataEntry) {
-                            var row = $('<tr></tr>');
+    //                    tbody.empty();
+    //                    $.each(response, function (index, dataEntry) {
+    //                        var row = $('<tr></tr>');
 
-                            // Create table cells for each column and populate them with data
-                            var cell1 = $('<td></td>').text(dataEntry.firstName);
-                            var cell2 = $('<td></td>').text(dataEntry.termName);
-                            var cell3 = $('<td></td>').text(dataEntry.feeType);
-                            var cell4 = $('<td></td>').text(parseFloat(dataEntry.amount).toFixed(2));
-                           /* var cell4 = $('<td></td>').text(dataEntry.amount);*/
-                            var cell5 = $('<td></td>').text(dataEntry.userReceiptGenerationID).css('font-weight', 'bold');
+    //                        // Create table cells for each column and populate them with data
+    //                        var cell1 = $('<td></td>').text(dataEntry.firstName);
+    //                        var cell2 = $('<td></td>').text(dataEntry.termName);
+    //                        var cell3 = $('<td></td>').text(dataEntry.feeType);
+    //                        var cell4 = $('<td></td>').text(parseFloat(dataEntry.amount).toFixed(2));
+    //                       /* var cell4 = $('<td></td>').text(dataEntry.amount);*/
+    //                        var cell5 = $('<td></td>').text(dataEntry.userReceiptGenerationID).css('font-weight', 'bold');
 
-                            //var cell5 = $('<td></td>').text(dataEntry.userReceiptGenerationID).css('font-weight','bold;');
+    //                        // Append the cells to the row
+    //                        row.append(cell1);
+    //                        row.append(cell2);
+    //                        row.append(cell3);
+    //                        row.append(cell4);
+    //                        row.append(cell5);
 
-                            // Append the cells to the row
-                            row.append(cell1);
-                            row.append(cell2);
-                            row.append(cell3);
-                            row.append(cell4);
-                            row.append(cell5);
+    //                        // Append the row to the table body
+    //                        tbody.append(row);
+    //                    });
 
-                            // Append the row to the table body
-                            tbody.append(row);
-                        });
+    //                },
+    //                error: function (xhr, textStatus, error) {
+    //                    // Handle the error in case of AJAX request failure
+    //                    console.log(xhr.responseText);
+    //                }
+    //            })
 
-                    },
-                    error: function (xhr, textStatus, error) {
-                        // Handle the error in case of AJAX request failure
-                        console.log(xhr.responseText);
-                    }
-                })
+    //        }
 
-            }
-
-        }
-    });
+    //    }
+    //});
 
 
 

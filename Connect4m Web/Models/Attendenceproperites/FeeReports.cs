@@ -428,6 +428,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
     }
     public class Classmonthattendancereport
     {
+        public string Returnmessage { get; set; }
         public List<classwisemonthreport> classwisemonthreport { get; set; }
         public List<Presentabsentdetails> percentagedetails { get; set; }
         public List<Attendancesummarydetails> attendancesummary { get; set; }

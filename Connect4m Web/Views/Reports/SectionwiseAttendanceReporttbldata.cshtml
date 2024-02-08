@@ -17,6 +17,12 @@
 </style>
 
 <div class="row mb-2">
+    
+
+    <div id="Attendancereporttblmain">
+        <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_AttendancereportExportExcel" />
+        <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_attendancereportPrint" />
+    </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
@@ -26,11 +32,8 @@
                     </span>
                 </h5>
             </div>
-            <div class="card-body" id="Attendancereporttblmain">
-                <div>
-                    <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_AttendancereportExportExcel" />
-                    <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_attendancereportPrint" />
-                </div>
+            <div class="card-body">
+
                 <div class="card-datatable text-nowrap">
                     <div class="table-responsive">
                         <div class="table-responsive text-nowrap" id="Printattendancereport">
@@ -41,15 +44,15 @@
                                     </div>
                                 </div>
                             </div>
-                           
-                            <table class="table-bordered" id="StudentwiseattendaceReport">
-                                <thead class="table-dark" id="tablehead">
+
+                            <table class="" id="StudentwiseattendaceReport" style="border-collapse: separate;">
+                                <thead id="tablehead">
 
                                 </thead>
                                 <tbody id="tableBody">
                                 </tbody>
                                 <tfoot id="tablefooter">
-
+                                   
                                 </tfoot>
                             </table>
                             <div id="AttendanceSignaturesdiv">

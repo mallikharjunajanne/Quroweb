@@ -8,7 +8,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
     public class PayFeeCorrection
     {
 
-        
+
 
     }
     public class PAY_FEE_CORRECTIONS_BY_USERS_Tbl1
@@ -170,5 +170,30 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string ChequeAmount { get; set; }
         public string discountamount { get; set; }
         public string Payedamount { get; set; }
+    }
+
+    public class PFCfeedetailstbl
+    {
+        public List<FeedetialsbyuserId> feedetialsli { get; set; }
+        public List<Usertotalpayedamount> userpayedli { get; set; }
+        public List<PFCfeetermsnames> feetermsnames { get; set; }
+        public List<PFCfeetermdetialsbyuserId> Termdetaisli { get; set; }
+        public List<Feedetialsbyuseridforpreviousdues> Previousduesli { get; set; }
+
+
+    }
+
+    public class PFCfeetermsnames
+    {
+        public int FeeTermId { get; set; }
+        public string TermName { get; set; }
+        public string UserReceiptGenerationID { get; set; }
+        public string TermNameReceiptNo { get; set; }
+    }
+    public class PFCfeetermdetialsbyuserId
+    {
+        public int FeeTermId { get; set; }
+        public int AcademicYearId { get; set; }
+        public string TermName { get; set; }
     }
 }

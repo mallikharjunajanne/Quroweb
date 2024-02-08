@@ -31,9 +31,9 @@
         }
 
 
-        .Set_Fee_Users_Table {
-            width: 99%;
-        }
+    .Set_Fee_Users_Table {
+        width: 99%;
+    }
 
         .Set_Fee_Users_Table th {
             width: 17.8%;
@@ -151,61 +151,70 @@
 }
 
 <div id="SetFee_ForUsers_table_DIVID">
-
-    <div id="DiscountAmount_users_ErrorsMessage" style=" color: red; margin-left: 10px; font-family: none;"></div>
-    <div style=" margin-left: 16px;">
-        <label class="DueDate"><font style="color: red; font-size: 13px;">*</font>Due Date:</label>
-        <input type="date" id="duedatedata" style=" outline: none;" />
-    </div>
-
-    <div class="default-according style-1" id="accordionoc">
-        <div class="card">
-            <div>
-                <h5 class="mb-0">
-                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse1" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width: 99.5%"> <span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span> </button>
-                </h5>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="row mb-2">
+            <div id="DiscountAmount_users_ErrorsMessage" style=" color: red; margin-left: 10px; font-family: none;"></div>
+            <div style=" margin-left: 16px;">
+                <label class="DueDate"><font style="color: red; font-size: 13px;">*</font>Due Date:</label>
+                <input type="date" id="duedatedata" style=" outline: none;" />
             </div>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">
+                            <span>YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span>
+                            @*<span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span>*@
+                        </h6>
+                    </div>
+
+                    @*<div class="default-according style-1" id="accordionoc">
+                        <div class="card">
+                            <div>
+                                <h5 class="mb-0">
+                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse1" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width: 99.5%"> <span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span> </button>
+                                </h5>
+                            </div>*@
 
 
-            <span class="Amount_TxtSp">
-                Enter Amount: <input type="text" id="amountInput" style="border: 1px solid #607D8B; outline:none;" maxlength="8">&nbsp;<input type="checkbox" id="checkbox" onclick="toggleSameAmount(this)">Set Same Amount for All STUDENT(s) <span class="question-mark" data-tippy-content="NOTE: Enter Amount in TextBox then Tick the CheckBox to Copy the Same Amount to All Users in Fee Column.">?</span>
-            </span>
+                    <span class="Amount_TxtSp">
+                        Enter Amount: <input type="text" id="amountInput" style="border: 1px solid #607D8B; outline:none;" maxlength="8">&nbsp;<input type="checkbox" id="checkbox" onclick="toggleSameAmount(this)">Set Same Amount for All STUDENT(s) <span class="question-mark" data-tippy-content="NOTE: Enter Amount in TextBox then Tick the CheckBox to Copy the Same Amount to All Users in Fee Column.">?</span>
+                    </span>
 
 
 
 
-            <div style="width: 100%;">
-                <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
-                    <thead style="background-color:white;">
-                        <tr style=" background-color: #DDDEEE; text-align: center;">
-                            <th>S.No</th>
-                            <th data-sort-col="Name">Name</th>
-                            <th data-sort-col="RegNo"><b>Reg. No</b></th>
-                            <th class="hideable">Route Name</th>
-                            <th class="hideable">Stop Name</th>
-                            <th>Fee Amount</th>
-                            <th>Discount Type</th>
-                            <th>Discount Amount</th>
-                            <th>Comments</th>
-                        </tr>
-                    </thead>
-                    <tbody id="Discount_Users_tbl" style="background-color: whitesmoke;">
-                        @{
-                            int Sno = 1;
-                        }
-                        @foreach (var item in groupedUsers)
-                        {
-                            var DiscountUsers = item.First();
-                            <tr>
-                                <td>@Sno</td>
-                                <td>@DiscountUsers.FirstName</td>
-                                <td hidden id="UserId">@DiscountUsers.UserId</td>
-                                <td hidden id="FeeTypeid">@DiscountUsers.FeeTypeid</td>
-                                <td hidden id="ConcedingAmount">@DiscountUsers.ConcedingAmount</td>
-                                <td hidden id="DueDate">
-                                    @DiscountUsers.DueDate
+                    @*<div style="width: 100%;">*@
+                    <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
+                        <thead style="background-color:white;">
+                            <tr style=" background-color: #DDDEEE; text-align: center;">
+                                <th>S.No</th>
+                                <th data-sort-col="Name">Name</th>
+                                <th data-sort-col="RegNo"><b>Reg. No</b></th>
+                                <th class="hideable">Route Name</th>
+                                <th class="hideable">Stop Name</th>
+                                <th>Fee Amount</th>
+                                <th>Discount Type</th>
+                                <th>Discount Amount</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Discount_Users_tbl" style="background-color: whitesmoke;">
+                            @{
+                                int Sno = 1;
+                            }
+                            @foreach (var item in groupedUsers)
+                            {
+                                var DiscountUsers = item.First();
+                                <tr>
+                                    <td>@Sno</td>
+                                    <td>@DiscountUsers.FirstName</td>
+                                    <td hidden id="UserId">@DiscountUsers.UserId</td>
+                                    <td hidden id="FeeTypeid">@DiscountUsers.FeeTypeid</td>
+                                    <td hidden id="ConcedingAmount">@DiscountUsers.ConcedingAmount</td>
+                                    <td hidden id="DueDate">
+                                        @DiscountUsers.DueDate
 
-                                    <script>
+                                        <script>
 
                                 $(document).ready(function () {
                                     var formattedDate = formatDate("@DiscountUsers.DueDate");
@@ -219,71 +228,75 @@
                                     }
                                     return "";
                                 }
-                                    </script>
-                                </td>
-                                <td>@DiscountUsers.InstanceUserCode</td>
-                                                               
+                                        </script>
+                                    </td>
+                                    <td>@DiscountUsers.InstanceUserCode</td>
 
-                                @if (!string.IsNullOrEmpty(DiscountUsers.RouteName))
-                                {
-                                    <td class="hideable">@DiscountUsers.RouteName</td>
-                                }
-                                else
-                                {
-                                    <td class="hideable" style="display: none;"></td>
-                                }
-                                @if (!string.IsNullOrEmpty(DiscountUsers.StopName))
-                                {
-                                    <td class="hideable">@DiscountUsers.StopName</td>
-                                }
-                                else
-                                {
-                                    <td class="hideable" style="display: none;"></td>
-                                }
 
-                                <td align="center">
-                                    <input type="text" id="UserFeeAmount_TxtId" value="@DiscountUsers.FeeAmount" style="width: 70%;" />
-                                    @if (DiscountUsers.DisplayIcon == "1")
+                                    @if (!string.IsNullOrEmpty(DiscountUsers.RouteName))
                                     {
-                                        <span class="search-icon">🔍</span>
-
+                                        <td class="hideable">@DiscountUsers.RouteName</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="hideable" style="display: none;"></td>
+                                    }
+                                    @if (!string.IsNullOrEmpty(DiscountUsers.StopName))
+                                    {
+                                        <td class="hideable">@DiscountUsers.StopName</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="hideable" style="display: none;"></td>
                                     }
 
-
-                                </td>
-                                <td align="center">        
-                                    <select id="@DiscountUsers.UserId" onchange="ToggleChange(this)">
-                                        @foreach (var DisocuntDD in DiscountUsers.Discount_Amount_DD)
+                                    <td align="center">
+                                        <input type="text" id="UserFeeAmount_TxtId" value="@DiscountUsers.FeeAmount" style="width: 70%;" />
+                                        @if (DiscountUsers.DisplayIcon == "1")
                                         {
-                                            if (DisocuntDD.Value == DiscountUsers.ConcedingTypeId)
-                                            {
-                                                <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
-                                            }
+                                            <span class="search-icon">🔍</span>
 
                                         }
-                                    </select>
+
+
+                                    </td>
+                                    <td align="center">
+                                        <select id="@DiscountUsers.UserId" onchange="ToggleChange(this)">
+                                            @foreach (var DisocuntDD in DiscountUsers.Discount_Amount_DD)
+                                            {
+                                                if (DisocuntDD.Value == DiscountUsers.ConcedingTypeId)
+                                                {
+                                                    <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
+                                                }
+
+                                            }
+                                        </select>
+                                    </td>
+                                    <td align="center"><input type="text" id="DiscountAmount_TxtId_@DiscountUsers.UserId" class="DiscountAmount_TxtId" value="@DiscountUsers.ConcedingAmount" style="width: 70%;" /></td>
+                                    <td><textarea></textarea></td>
+                                </tr>
+                                Sno++;
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td align="center" colspan="9">
+                                    <button value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-success waves-effect waves-light">Submit</button>
+
+                                    @*<input type="Submit" value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-pill btn-outline-success-2x" style="width: 11%; letter-spacing: 3px; border-radius: 8px;" />*@
                                 </td>
-                                <td align="center"><input type="text" id="DiscountAmount_TxtId_@DiscountUsers.UserId" class="DiscountAmount_TxtId" value="@DiscountUsers.ConcedingAmount" style="width: 70%;" /></td>
-                                <td><textarea></textarea></td>
                             </tr>
-                            Sno++;
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td align="center" colspan="9"><input type="Submit" value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-pill btn-outline-success-2x" style="width: 11%; letter-spacing: 3px; border-radius: 8px;" /></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

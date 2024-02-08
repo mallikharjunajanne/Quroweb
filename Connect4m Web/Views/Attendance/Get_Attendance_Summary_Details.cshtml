@@ -4,68 +4,57 @@
     Layout = null;
 }
 
-<link href="~/css/maps/Summary.css" rel="stylesheet" />
+<span class="text-danger">Total Number Of @ViewBag.Records Records </span>
+<div class="row mb-2">
+    <div class="col-md-12 col-lg-12 mb-3">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <span>
+                        ATTENDANCE SUMMARY
+                    </span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="card-datatable text-nowrap">
+                    <div class="table-responsive">
+                        <div class="table-responsive text-nowrap" id="Printattendancereport">
+                            <table class="table table-bordered" id="FeeType_Tbl">
+                                <thead class="table-dark">
 
-<div class="card">
-    <div class="card-body">
-        <div class="default-according style-1" id="accordionoc2">
-            <div class="card">
-                <p class="ErrorMessage">Total Number Of @ViewBag.Records Records </p>
+                                    <tr>
+                                        <th align="left" scope="col">Slot</th>
+                                        <th align="left" scope="col">Faculty Name</th>
+                                        <th align="left" scope="col">Total Classes</th>
+                                        <th align="left" scope="col">Present</th>
+                                        <th align="left" scope="col">Absent</th>
+                                        <th align="left" scope="col">Percentage</th>
+                                        <th align="left" scope="col">Required(%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                <div class="card-header bg-primary">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">ATTENDANCE SUMMARY</button>
-                    </h5>
-                </div>
-               
-                <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-                    <div class="card-body">
-                        <div class="col-sm-12 col-lg-12 col-xl-12">
-                            <div>
-                                <table class="FeeType_Tbl">
-                                    <tbody>
-                                        <tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">
-                                            <th align="left" scope="col">Slot</th>
-                                            <th align="left" scope="col">Faculty Name</th>
-                                            <th align="left" scope="col">Total Classes</th>
-                                            <th align="left" scope="col">Present</th>
-                                            <th align="left" scope="col">Absent</th>
-                                            <th align="left" scope="col">Percentage</th>
-                                            <th align="left" scope="col">Required(%)</th>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr style="background-color:White;height:24px;">
+                                            <td align="left" style="width:300px;"> @Html.DisplayFor(modelItem => item.SubjectSlotName)</td>
+
+                                            <td align="left">  @Html.DisplayFor(modelItem => item.Mentors)</td>
+                                            <td align="left">   @Html.DisplayFor(modelItem => item.TotalClasses)</td>
+                                            <td align="left">     @Html.DisplayFor(modelItem => item.TotalPresent)</td>
+                                            <td align="left"> @Html.DisplayFor(modelItem => item.TotalAbsent)</td>
+                                            @{
+                                                double attendancePercentage = Convert.ToDouble(item.AttendancePercentage);
+                                                string textColor = (attendancePercentage < 70) ? "red" : "green";
+                                            }
+                                            <td align="left" style="color: @textColor;">@Html.DisplayFor(modelItem => item.AttendancePercentage)</td>
+
+                                            <td align="left">@Html.DisplayFor(modelItem => item.AttendanceRequiredPercent)</td>
                                         </tr>
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr style="background-color:White;height:24px;">
-                                                <td align="left" style="width:300px;"> @Html.DisplayFor(modelItem => item.SubjectSlotName)</td>
+                                    }
+                                </tbody>
 
-                                                <td align="left">  @Html.DisplayFor(modelItem => item.Mentors)</td>
-                                                <td align="left">   @Html.DisplayFor(modelItem => item.TotalClasses)</td>
-                                                <td align="left">     @Html.DisplayFor(modelItem => item.TotalPresent)</td>
-                                                <td align="left"> @Html.DisplayFor(modelItem => item.TotalAbsent)</td>
-                                                @{
-                                                    double attendancePercentage = Convert.ToDouble(item.AttendancePercentage);
-                                                    string textColor = (attendancePercentage < 70) ? "red" : "green";
-                                                }
-                                                <td align="left" style="color: @textColor;">@Html.DisplayFor(modelItem => item.AttendancePercentage)</td>
-
-
-                                                @*@{double i = @Convert.ToDouble(item.AttendancePercentage);}
-                                                    @if (i < 70)
-                                                    {
-                                                        <td align="left" style="color:red;"> @item.AttendancePercentage</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td align="left">@Html.DisplayFor(modelItem => item.AttendancePercentage)</td>
-
-                                                    }*@
-                                                <td align="left">@Html.DisplayFor(modelItem => item.AttendanceRequiredPercent)</td>
-                                            </tr>
-                                        }
-
-
-                                </table>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -73,3 +62,4 @@
         </div>
     </div>
 </div>
+

@@ -237,289 +237,245 @@
                                             <th>Parent Sms Status</th>
                                             @if (ViewBag.DateList != null && ViewBag.DateList.Count > 0)
                                             {
+                                                var datecount = 1;
                                                 foreach (var date in ViewBag.DateList)
                                                 {
-                                                    <th id="A_PostingDate">@date</th>
+                                                    
+                                                    <th id="Attendancedate_@datecount" title="attendancedatechangecolorchange">@date</th>
+
+                                                    //A_PostingDate_ @date.Replace("/", "")
+                                                    datecount++;
                                                 }
-                                            }
-                                            <!--<th id="A_PostingDate">-->@*<input type="hidden" readonly class="A_PostingDate" value="@ViewBag.Date"> @ViewBag.DateFormate*@<!--</th>-->
+
+                                            }                                           
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @{int index = 1; int i = 2;}
-
-
+                                        @{int index = 1; int i = 2; int m = 1; int j = 1; int l = 1;}
+                                       
+                                        @*//Row value*@
                                         @foreach (var item in flattenedDetailsList)
                                         {
+                                            m = 1;
+                                            j = 1;
+                                            l = 1;
 
-                                            <tr class="border-bottom-secondary">
+                                        <tr id="trday_@index">
 
-                                                <td scope="row"> @index</td>
-                                                <td hidden>@item.Studentuserid</td>
-                                                <td hidden>@item.ParentPhNo</td>
+                                            <td scope="row"> @index</td>
+                                            <td hidden>@item.Studentuserid</td>
+                                            <td hidden>@item.ParentPhNo</td>
+                                            @*<td style="color: @(item.LastDateofAttendance == "" ? "black" : "red"); font-weight: @(item.LastDateofAttendance == "" ? 200 : "normal");">@item.FirstName</td>*@
 
-                                                @if (item.LastDateofAttendance == "")
+                                            @if (item.LastDateofAttendance == "")
+                                            {
+                                                <td style="color:black;font-weight:200;"> @item.FirstName</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color:red;">@item.FirstName</td>
+                                            }
+
+
+                                            <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
+                                            @if (item.StudentSMS == "True")
+                                            {
+                                                <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
+                                            }
+                                            @if (item.ParentSMS == "True")
+                                            {
+                                                <td style="text-align: center;">
+                                                    <img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" />
+                                                    <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align: center;" title="@item.ParentPhNo">
+                                                    <img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" />
+                                                    <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                </td>
+                                            }
+                                            <td hidden id="Stu_Email">@item.StudEmail</td>
+                                            <td hidden id="Pa_Email">@item.ParentEmail</td>
+                                            <td hidden id="AttendanceId1_Color_Chainge">
+                                                @for (l = 1; l <= ViewBag.DateList.Count; l++)
                                                 {
-                                                    <td style="color:black;font-weight:200;"> @item.FirstName</td>
+                                                    var AttendaceId = "AttendanceId" + l;
+                                                    <label id="Attendancecolorchange_@l">
+                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                    </label>
                                                 }
-                                                else
-                                                {
-                                                    <td style="color:red;">@item.FirstName</td>
-                                                }
+                                            </td>
 
 
-                                                <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
-                                                @if (item.StudentSMS == "True")
-                                                {
-                                                    <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
-                                                }
-                                                @if (item.ParentSMS == "True")
-                                                {
-                                                    <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" /></td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align: center;" title="@item.ParentPhNo"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" /></td>
-                                                }
-
-
-                                                @if (item.LastDateofAttendance == "")
+                                            @if (item.LastDateofAttendance == "")
+                                            {
+                                                //COLUMN VALUE
+                                                @for (int k = 1; k <= ViewBag.DateList.Count; k++)
                                                 {
 
-                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
-                                                    {
-                                                        string columnName = "column" + k;
-                                                        var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
+                                                    string columnName = "column" + k;
+                                                    string tdcolums = "tdDay" + k;
+                                                    string checkboxdayid = "ckDay" + k;
+                                                    string ddDataattTypes = "ddDataattType" + k;
+                                                    var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
+                                                    var Commnetspropertyvalue = "SplAttenanceComments" + j;
+                                                    
+                                                    //string columnName = "column" + (i + 1);
+                                                    //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
 
-                                                        //string columnName = "column" + (i + 1);
-                                                        //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
 
 
-                                                        <td align="center">
-                                                            @if (columnValue != null && columnValue.ToString() == "1")
-                                                            {
-                                                                <input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
+                                                    <td align="center" id="tdDay_@k">
+                                                        @if (columnValue != null && columnValue.ToString() == "1")
+                                                        {
 
-                                                                <div class="eye-icon">
-                                                                    <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
-                                                                </div>
+                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
+                                                            <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                            <div class="eye-icon">
+                                                                <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                            </div>
 
-                                                                <div class="content">
-                                                                    <div class="dropdown">
-                                                                        <select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid" style="width: 96%;">
-                                                                            @*box form-select input-air-primary digits*@
-                                                                            <option>--Select--</option>-->
-                                                                            @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                            <div id="Divcontent" class="content" style="display:none">
+                                                                <div class="dropdown">
+                                                                    @*<select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid" style="width: 96%;">*@
+                                                                    <select id="ddDataattType" asp-items="@( new SelectList(""))">
+                                                                        @*box form-select input-air-primary digits*@
+                                                                        <option>--Select--</option>
+
+                                                                        @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                        {
+
+
+                                                                            //if (@items.Value == item.column+m.ToString())
+                                                                            var columnName1 = "column" + m;
+
+                                                                            if (items.Value == item.GetType().GetProperty(columnName1)?.GetValue(item, null)?.ToString())
                                                                             {
-                                                                                if (@items.Value == item.column1.ToString())
-                                                                                {
-                                                                                    <option value="@items.Value" selected>@items.Text</option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option value="@items.Value">@items.Text</option>
-                                                                                }
+
+
+                                                                                <option value="@items.Value" selected>@items.Text</option>
                                                                             }
-                                                                        </select>
-                                                                    </div>
-                                                                    <div id="CMT_BTN">
-                                                                        @*<button class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal">Add Comments</button>*@
-                                                                        <input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />
-                                                                    </div>
-                                                                    <div class="popup arrow-top">
+                                                                            else
+                                                                            {
+                                                                                <option value="@items.Value">@items.Text</option>
+                                                                            }
+                                                                            //m++;
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                                <div id="CMT_BTN">
+
+                                                                    <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                                    <div id="popupid" class="popup arrow-top" style="display:none">
                                                                         <div class="popup-wrapper">
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">×</span>
                                                                             </button>
-                                                                            <div style="color: black; font-size: 14px;">
-                                                                                Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
-                                                                            </div>
-                                                                            <textarea id="commentTextArea" class="CommentsArea" required>@item.SplAttenanceComments1</textarea>
-                                                                            <br />
-                                                                            @*<input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />*@
-                                                                            <button type="button" class="submit-comments-btn btn btn-primary waves-effect waves-light">OK</button>
+                                                                            <span id="Popuptextspanid" class="text-dark" style="    text-wrap:initial;"></span>
+
+                                                                            <textarea id="commentTextArea" class="form-control" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                            <span id="charCount"></span>
+
+                                                                            <button type="button" id="Btnsubmitcomments" class="">OK</button>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                <input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" />
-
-                                                                <div class="eye-icon">
-                                                                    <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                                    @*<input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />*@
                                                                 </div>
 
-                                                                <div class="content">
-                                                                    <div class="dropdown">
-                                                                        <select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid">
-                                                                            @*box form-select input-air-primary digits*@
-                                                                            <option>--Select--</option>-->
-                                                                            @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            @*<input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" />*@
+                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" />
+                                                            <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                            <div class="eye-icon">
+                                                                <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                            </div>
+
+                                                            <div id="Divcontent" class="content" style="display:none">
+                                                                <div class="dropdown">
+                                                                    <select id="ddDataattType" asp-items="@( new SelectList(""))" class="">
+                                                                        @*<select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid">*@
+                                                                        @*box form-select input-air-primary digits*@
+                                                                        <option>--Select--</option>-->
+                                                                        @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                        {
+                                                                            //if (@items.Value == item.column1.ToString())
+                                                                            //{
+                                                                            var columnNamesOfDdl = "column" + m;
+
+                                                                            if (items.Value == item.GetType().GetProperty(columnNamesOfDdl)?.GetValue(item, null)?.ToString())
                                                                             {
-                                                                                if (@items.Value == item.column1.ToString())
-                                                                                {
-                                                                                    <option value="@items.Value" selected>@items.Text</option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option value="@items.Value">@items.Text</option>
-                                                                                }
+                                                                                <option value="@items.Value" selected>@items.Text</option>
                                                                             }
-                                                                        </select>
-                                                                    </div>
-                                                                    <div id="CMT_BTN">
-                                                                        <input type="button" class="add-comments-btn  Box_Btn" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />
-                                                                        @*<button type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" >Add comments</button>*@
-                                                                    </div>
-                                                                    <div class="popup arrow-top">
-                                                                        <div class="popup-wrapper">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">×</span>
-                                                                            </button>
-                                                                            <div style="color: black; font-size: 14px;">
-                                                                                Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
-                                                                            </div>
-                                                                            <textarea id="commentTextArea" class="CommentsArea" required>@item.SplAttenanceComments1</textarea>
-                                                                            <br />
-                                                                            @*<input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />*@
-                                                                            <button type="button" class="submit-comments-btn btn btn-primary waves-effect waves-light">OK</button>
-                                                                        </div>
+                                                                            else
+                                                                            {
+                                                                                <option value="@items.Value">@items.Text</option>
+                                                                            }
+
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                                <div id="CMT_BTN">
+                                                                    <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                                </div>
+                                                                <div id="popupid" class="popup arrow-top" style="display:none">
+                                                                    <div class="popup-wrapper">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">×</span>
+                                                                        </button>
+                                                                        <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
+
+
+                                                                        <textarea id="commentTextArea" class="form-control" maxlength="500" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                        <span id="charCount"></span>
+                                                                        <button type="button" id="Btnsubmitcomments">OK</button>
                                                                     </div>
                                                                 </div>
-                                                            }
-                                                            @if (item.column1 == "1")
-                                                            {
-                                                                <!--<input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
 
-                                                <div class="eye-icon">
-                                                    <img src="~/assets/images/details_open.png" id="Leave_Img_Comment" />
-                                                </div>
-
-                                                <div class="content">
-                                                    <div class="dropdown">
-                                                        <select id="ddData" asp-items="@( new SelectList(""))" class="box form-select input-air-primary digits" style="width: 96%;">
-                                                            <option>--Select--</option>-->
-                                                                @*@foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                    {
-                                                        if (@items.Value == item.column1.ToString())
-                                                        {
-                                                            <option value="@items.Value" selected>@items.Text</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@items.Value">@items.Text</option>
-                                                        }
-                                                    }*@
-                                                                <!--</select>-->
-                                                                @*@Html.DropDownListFor(modelItem => item.AttendanceTypeId, new SelectList(ViewBag.AttendanceLeave_Types, "Value", "Text", item.AttendanceTypeId), "--Select--", new { @id = "ddData", @class = "Dropdown form-select input-air-primary digits", @style = "width: 96%;" })*@
-                                                                <!--</div>
-
-                                                    <div id="CMT_BTN">
-                                                        <input type="button" class="add-comments-btn  Box_Btn" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />
-                                                    </div>
-                                                    <div class="popup arrow-top">
-                                                        <div class="popup-wrapper">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            <div style="color: black; font-size: 14px;">
-                                                                Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
                                                             </div>
-                                                            <textarea id="commentTextArea" class="CommentsArea" required>@item.SplAttenanceComments1</textarea>
-                                                            <br />
-                                                            <input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />
 
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-                                                            }
-                                                            else
-                                                            {
-                                                                <!--<input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" />
-
-                                                <div class="eye-icon">
-                                                    <img src="~/assets/images/details_open.png" id="Leave_Img_Comment" />
-                                                </div>
-
-                                                <div class="content">
-                                                    <div class="dropdown">
-                                                        <select id="ddData" asp-items="@( new SelectList(""))" class="box form-select input-air-primary digits">
-                                                            <option>--Select--</option>-->
-                                                                @*@foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                    {
-                                                        if (@items.Value == item.column1.ToString())
-                                                        {
-                                                            <option value="@items.Value" selected>@items.Text</option>
                                                         }
-                                                        else
-                                                        {
-                                                            <option value="@items.Value">@items.Text</option>
-                                                        }
-                                                    }*@
-                                                                <!--</select>-->
-                                                                @*@Html.DropDownListFor(modelItem => item.AttendanceTypeId, new SelectList(ViewBag.AttendanceLeave_Types, "Value", "Text", item.AttendanceTypeId), "--Select--", new { @id = "ddData", @class = "Dropdown form-select input-air-primary digits", @style = "width: 96%;" })*@
-                                                                <!--</div>
 
-                                                    <div id="CMT_BTN">
-                                                        <input type="button" class="add-comments-btn  Box_Btn" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />
-                                                    </div>
-                                                    <div class="popup arrow-top">
-                                                        <div class="popup-wrapper">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            <div style="color: black; font-size: 14px;">
-                                                                Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
-                                                            </div>
-                                                            <textarea id="commentTextArea" class="CommentsArea" required>@item.SplAttenanceComments1</textarea>
-                                                            <br />
-                                                            <input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />
 
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-                                                                @*<script>
-                                                        $(document).ready(function () {
-                                                            if ('@item.SplAttenanceComments1' != '') {
+                                                    </td>
 
-                                                                $('.content').show();
-                                                                $('.submit-comments-btn').text('Edit Comments');
-
-                                                            }
-                                                        });
-                                                    </script>*@
-                                                            }
-                                                        </td>
-                                                    }
+                                                    m++;
+                                                    j++;
                                                 }
-                                                else
+                                            }
+                                            else
+                                            {
+                                                @for (int k = 1; k <= ViewBag.DateList.Count; k++)
                                                 {
-                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
-                                                    {
-                                                        <td align="center">
-                                                            <input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
-                                                        </td>
-                                                    }
-                                                }
 
-                                                <td hidden id="Stu_Email">@item.StudEmail</td>
-                                                <td hidden id="Pa_Email">@item.ParentEmail</td>
-                                                <td hidden id="AttendanceId1_Color_Chainge">@item.AttendanceId1</td>
-                                            </tr>
+
+                                                    <td align="center" id="tdDay_@k">
+                                                        <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
+                                                        <input type="hidden" id="Lastdayofattendacetxtid_@k" value="@item.LastDateofAttendance" />
+
+                                                    </td>
+                                                }
+                                            }
+
+
+                                        </tr>
                                             index++;
                                             i++;
                                         }
 
                                     </tbody>
                                 </table>
-
                                 <div id="AttendanceSignaturesdiv">
-
                                 </div>
                             </div>
                         </div>
@@ -527,7 +483,7 @@
                     <div class="row justify-content text-center">
                         <div class="col-sm-12">
                             <button class="btn btn-secondary waves-effect waves-light" type="submit">Preview</button>
-                            <button class="btn btn-success waves-effect waves-light" type="button" id="submitbtn">Submit</button>
+                            <button class="btn btn-success waves-effect waves-light" type="button" id="submitbtn" onclick="Attendanceposting();">Submit</button>
                             @*<button class="btn btn-pill btn-success active" type="button" id="submit-btn">Submit</button>*@
                         </div>
                     </div>
@@ -536,7 +492,19 @@
         </div>
     </div>
 
-
+    <!--<div id="popupDiv" style="display: none;">
+        This is the popup content.        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <div style="color: black; font-size: 14px;">
+            Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
+        </div>
+        <textarea id="commentTextArea" class="CommentsArea" required>-->@*@item.SplAttenanceComments1*@<!--</textarea>
+        <br />
+        <input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />
+        <button type="button" class="submit-comments-btn btn btn-primary waves-effect waves-light">OK</button>        
+    </div>-->
 
 
 
@@ -546,53 +514,6 @@
 
         </div>
     </div>
-    <!--<div style="width: 100%;">
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="HeaderBtn collapsed btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">NOTE</button>
-                        </h5>
-                    </div>
-                    <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-                        <div class="card-body">
-                            <div class="row">-->
-    @*<div class="row">
-            <div class="col-6"><span class="span_text" style="color:green;">Green Date--Indicates attendance already posted.</span></div>
-            <div class="col-6"><span class="span_text"> <img src="~/assets/images/tick.png" alt="Image to indicate Send Sms is true." style="height:16px;width:16px;border-width:0px;">-- Indicates Send Sms is true.</span></div>
-            <div class="col-6"><span class="span_text" style="color:red;">Red Date--Indicates attendance not yet posted (if any withdrawal applied students are there in a class).</span></div>
-            <div class="col-6">
-                <span class="span_text">
-                    <img src="~/assets/images/cross.png" />-- Indicates Send Sms is false.
-                </span>
-            </div>
-            <div class="col-6">
-                <span class="span_text">
-                    <img src="~/assets/images/AuditIcon.png" style="height: 13px;" /> --Indicates Attendance modified.
-                </span>
-            </div>
-            <div class="col-6">
-                <span class="span_text">
-                    <img src="~/assets/images/exclaim.png" style="height: 17px;" />--Indicates Parent Data is not available.
-                </span>
-            </div>
-            <div class="col-6">
-                <span class="span_text">
-                    <img src="~/assets/images/details_open.png" />    --To post Special Attendance click on this icon, a dropdown will display.
-                </span>
-            </div>
-            <div class="col-6">
-                <span class="span_text" style="color:red;">Red Color --Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance.</span>
-            </div>
-        </div>*@
-    <!--</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 
     <div>
         <span id="Errormessage" style="color: red; font-size: 14px;"></span>
@@ -616,8 +537,318 @@
 <script src="~/js/Get_ClassificationNames.js"></script>
 
 
+    <script>
+
+        $(document).ready(function () {
+            $("#selectAll").click(function () {
+                //$(".checkbox").prop("checked", $(this).prop("checked"));
+                $(".checkbox:enabled").prop("checked", $(this).prop("checked"));
+            });
+        });
+
+        $(document).ready(function () {
+            debugger;
+
+            $(".eye-icon").click(function () {
+                debugger;
+                var row = $(this).closest("tr td");
+                //var checkboxElement = row.find(".checkbox");
+                var checkboxElement = row.find("input[type=checkbox]");
+                var contentElement = row.find(".content");
+                var btnElement = row.find(".add-comments-btn");
+                var btnelementsid = row.find("#Btncomments");
+                var Dropdown = row.find("#ddDataattType");
+                var Textareacomments = row.find("#commentTextArea");
+
+                if (checkboxElement.is(":visible")) {
+                    checkboxElement.hide();
+                    contentElement.show();
+                    btnElement.show();
+                } else {
+                    Dropdown.prop('selectedIndex', 0);
+                    Textareacomments.val('');               
+                    btnelementsid.text('Add Comments');
+                    checkboxElement.show();
+                    checkboxElement.prop("checked", false);
+                    contentElement.hide();
+
+                }
+
+            });
+
+            $('#commentTextArea').on('input', function () {
+                debugger;
+                $('#charCount').text(500 - this.value.length + ' characters remaining');
+            });
+
+            $('#popupid').hide();
+            $('#TableData').on('click', '#Btncomments', function () {
+                debugger;
+                var table = $(this).closest("table");
+                var clickedRowtext = $(this).closest("tr");
+                var clickedRow = $(this).closest("tr td");
+                
+                var tdNumber = clickedRowtext.find("td").index($(this).closest("td"));
+                var attendancedatetext = table.find('thead').find('th').eq(tdNumber - 5).text();   
+
+                var studentName = clickedRowtext.find("td:nth-child(4)").text().trim();
+                var popupContent = clickedRow.find("#Popuptextspanid");
+              
+                var popupspantext = 'Enter Comments to the date  ' + attendancedatetext + '  for student ' + ' " ' + studentName + ' " ';
+
+                popupContent.text(popupspantext);
+                
+                clickedRow.find("#popupid").toggle();
+
+            });
 
 
+
+            $('#TableData').on('click','#Btnsubmitcomments', function () {
+            //$('#CMT_BTN').on('click','#Btnsubmitcomments', function () {
+                debugger;
+                var comment = $('#commentTextArea').val(); // Get the entered text from the textarea
+                if (comment !== '') {
+
+                    console.log('Comment:', comment);
+                }
+                $(this).closest('#popupid').hide();
+                //$('.popup').hide();
+            });
+
+
+           // $('#Btncomments').click(function () {
+            //$('#TableData').on('click', '#Btncomments', function () {
+            //    var clickedRow = $(this).closest("tr");
+            //    var studentName = clickedRow.find("td:nth-child(4)").text().trim();
+
+            //    debugger;
+            //    //var clickedRow = $(this).closest("tr td");
+            //    //var studentname = clickedRow.find("td:nth-child(4)").text();
+            //    //var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
+            //    //var rowDate = thId.split('_')[1];
+
+            //    var popupspantext = 'Enter Comments to the date' + + 'for student' + '"' + studentName+ '"';
+            //    $('#Popuptextspanid').text(popupspantext);
+
+            //    clickedRow.find("#popupid").show();
+            //    $('.popupid').show();
+            //});
+
+
+            //$('#popupid').hide();
+           // $('#TableData').on('click', '#CMT_BTN', function () {
+            //$('#TableData').on('click', '#Btncomments', function () {
+                //debugger;
+                //var clickedRow = $(this).closest("tr td");
+                //var rowData = clickedRow.find("td:nth-child(4)").text();
+
+                //var popupContent = clickedRow.find("#popupContent");
+
+                //// Extract the date from the th id
+                //var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
+                //var rowDate = thId.split('_')[1];
+                //  popupContent.text(rowData);
+                //$("#popuprowDate").text(rowDate);
+               
+                //clickedRow.find("#popupid").toggle();
+
+                ////debugger;
+                ////var clickedRow = $(this).closest("tr");
+                ////var rowData = clickedRow.find("td:nth-child(4)").text();
+                ////var popupContent = clickedRow.find("#popupContent");
+
+                //////var rowDate = $("th#A_PostingDate").find("input.A_PostingDate").val();
+                ////var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
+                ////popupContent.text(rowData);
+                ////$("#popuprowDate").text(rowDate);
+                ////clickedRow.find(".popup").toggle();
+
+           // });
+
+
+
+
+
+           // $('.submit-comments-btn').on('click', function () {
+           
+
+
+            //$("#Btncomments").click(function () {
+            //    debugger;
+            //    var row = $(this).closest("tr td");
+            //    var Studentname = row.find("td:eq(0)").text();
+            //    var popupDiv = $(this).closest("td").find(".popupDiv");
+            //    popupDiv.show();
+            //    /*var firstTdText = $(this).closest("tr").find("td:first").text();*/
+            //});
+
+
+
+
+
+
+
+            $('#TableData tbody tr').each(function () {
+                debugger;
+                var row = $(this);
+
+                row.find('td').each(function (index) {
+                    debugger;
+                    //if (index > 8) {
+                    //    var attedancepostornotdatecolorchangeElement = $(this).text().trim(); // Accessing the text content of the 5th cell (index 4)                       
+                    //}
+
+                    
+
+                    if (index == 9) {
+                        var labelValues = [];
+                        debugger;
+                        $('td#AttendanceId1_Color_Chainge label').each(function (index) {
+                            var labelText = $(this).text().trim();
+                            labelValues.push(labelText); // Push label text content to the array
+                        });
+                        var allEmpty = labelValues.every(function (value) {
+                            return value === '';
+                        });
+                        var anyNotEmpty = labelValues.some(function (value) {
+                            return value !== '';
+                        });
+                        if (allEmpty) {
+                            alert('All values are empty. Showing red alert.');
+                        } else if (anyNotEmpty) {
+                            alert('Green color');
+                        }
+
+
+                        //var tdElement = $('#AttendanceId1_Color_Chainge');
+                        //// Find all <label> elements within the <td>
+                        //var labels = tdElement.find('label');
+                        //// Iterate over the labels
+                        //labels.each(function (index) {
+                        //    debugger;
+
+                        //    var labelText = $(this).text().trim();
+                        //    console.log('Label ' + index + ' text: ' + labelText);
+                        //});
+                    }
+                    
+                   
+
+
+
+                    //var attedancepostornotdatecolorchangeElement = $(this).find('#AttendanceId1_Color_Chainge');
+                    //var attedancepostornotdatecolorchange = attedancepostornotdatecolorchangeElement.length > 0 ? attedancepostornotdatecolorchangeElement.text() : '';
+
+                    ////var attedancepostornotdatecolorchange = $(this).find('#AttendanceId1_Color_Chainge').textContent;
+
+                    ////var tdNumber = clickedRowtext.find("td").index($(this).closest("td"));
+                    ////var attendancedatetext = table.find('thead').find('th').eq(tdNumber - 5).text();
+
+                    //if (attedancepostornotdatecolorchange && attedancepostornotdatecolorchange.trim().length > 0) {
+                    //    //postingDateElement.style.color = "green";
+                    //} else {
+
+                    //}
+                   
+
+                    //if (true) {
+
+                    //}
+                    if (index < 5) {
+                        return true;
+                    }
+                    //var ddDataValue = $(this).find('.content_' + trdd + ' select').val();
+                    var ddDataValue = $(this).find('#ddDataattType').val();
+                    var Commentstextareavalue = $(this).find('#commentTextArea').val();
+                    if (ddDataValue && ddDataValue !== '--Select--') {
+                        debugger;
+                        if (typeof ddDataValue === 'undefined') {
+                            $(this).find("#ckDay").show();
+                        } else {
+                            $(this).find("#ckDay").hide();
+                            $(this).find("#Divcontent").show();
+
+                            if (Commentstextareavalue) {
+                                debugger;
+                                $(this).find("#Btncomments").text('Edit Comments').show();
+                            } else {
+                                debugger;
+                                $(this).find("#Btncomments").text('Add Comments').show();
+                            }                           
+                        }
+                    } else {
+                        $(this).find("#ckDay").show();
+                        $(this).find(".eye-icon").show();
+                        $(this).find('#Divcontent').hide();
+                        $(this).find("#Btncomments").text('Add Comments');
+                    }
+                });
+            });
+           
+
+
+       // var Tblleng = $('#TableData tr').length;
+       // debugger;
+//        var trdd = 1;
+//        for (var i = 1; i < Tblleng; i++) {
+
+//            var dynamicId = '#ddDataattType_' + trdd;
+//        var contents = '.content_' +trdd;
+
+//        //var ddDataValue = $('#TableData tr:eq(' + i + ') .content #ddData').val();
+//        //var ddDataValue = $('#TableData tr:eq(' + i + ') .content #ddDataattType_' + i).val();
+//        var tbllengthvalues = $('#TableData tbody tr:eq(' + i + ') ' + contents + ' ' + dynamicId);
+//        //alert(tbllengthvalues);
+//        //var ddDataValue = $('#TableData tbody tr:eq(' + i + ') ' + contents + ' ' + dynamicId).val();
+//        //var ddDataValues = $('#TableData tbody tr:eq(1)  .content_1 #ddDataattType_1').val();
+//        //var ddDataValues1 = $('#TableData tbody tr:eq(1) #ddDataattType_1').val();
+//        //var ddDataValues11 = $('#TableData tbody  #ddDataattType_1').val();
+//        var ddDataValue = $('#ddDataattType_' + trdd).val();
+
+
+//        // var cell2Text = $('#TableData tbody tr:eq(' + i + ') td:nth-child(2)').text().trim();
+//        // var commentTextAreavalue = $('#TableData tbody tr:eq(' + i + ') .content #commentTextArea').val();
+//        debugger;
+//       // var row = $('#TableData tbody tr:eq(' + i + ')');
+
+
+           
+
+
+
+//        var row = $('#TableData tbody tr');
+//        if (ddDataValue != '--Select--' && ddDataValue != '') {
+//        debugger;
+//        if (typeof ddDataValue == 'undefined') {
+//            row.find(".checkbox").show();
+//        } else {
+//            row.find(".checkbox").hide();
+//        row.find(".eye-icon").show();
+//        row.find(".content_" + trdd).show();
+//        row.find(".add-comments-btn").val('Edit Comments').show();
+//        }
+//    }
+//        else {
+//            row.find(".checkbox").show();
+//        row.find(".eye-icon").show();
+
+//        row.find(".content_" + i).hide();
+//        row.find(".add-comments-btn").val('Add Comments');
+//    }
+//        trdd++;
+//}
+
+
+
+
+
+
+          
+});
+
+
+</script>
 
 
 
@@ -758,11 +989,7 @@
 </script>
 <!--Onely in table checkbox select code start-->
 <script>
-    $(document).ready(function () {
-        $("#selectAll").click(function () {
-            $(".checkbox").prop("checked", $(this).prop("checked"));
-        });
-    });
+  
 </script>
 
 
@@ -786,16 +1013,17 @@
     */
     .popup {
         width: 400px;
-        margin: 0 auto;
+        margin-left: -34%;
+        /* margin: 0 auto; */
         position: absolute;
-        z-index: 999;
+        /* z-index: 999;
     }
 
 
         /*
     Different arrow positioning
     */
-        .popup.arrow-top:before {
+        .popup.arrow-top:before{
             left: calc(50% - 10px);
             top: -8px;
         }
@@ -817,14 +1045,14 @@
 
 
     .popup-wrapper {
-        width: 100%;
-        padding: 1px;
+        /* width: 100%; */
+        /* padding: 1px; */
         border-radius: 15px;
         background: #fff;
         position: relative;
-        margin-left: -262px;
-        height: 200px;
-        border: 2px solid blueviolet;
+        /* margin-left: -262px; */
+        /* height: 200px; */
+        border: 2px solid;
     }
 
     .close {
@@ -845,117 +1073,16 @@
     }
 
     #commentTextArea {
-        border: 1px solid brown;
+       /* border: 1px solid brown;
         border-radius: 4px;
         width: 87%;
         height: 100px;
         resize: unset;
-        filter: drop-shadow(1px 2px 2px black);
+        filter: drop-shadow(1px 2px 2px black);*/
     }
 </style>
 <!--Last Try-->
 <!--popup show and checkbox hide and dropdown code start-->
 
 
-
-<script>
-    $(document).ready(function () {
-        /* debugger;*/
-
-        $(".eye-icon").click(function () {
-            /* debugger;*/
-            var row = $(this).closest("tr");
-            //var checkboxElement = row.find(".checkbox");
-            var checkboxElement = row.find("input[type=checkbox]");
-            var contentElement = row.find(".content");
-            var btnElement = row.find(".add-comments-btn");
-
-            if (checkboxElement.is(":visible")) {
-                checkboxElement.hide();
-                contentElement.show();
-                btnElement.show();
-            } else {
-                checkboxElement.show();
-                checkboxElement.prop("checked", false);
-                contentElement.hide();
-            }
-
-        });
-
-        var Tblleng = $('#TableData tr').length;
-        debugger;
-        for (var i = 2; i < Tblleng; i++) {
-
-            //var ddData  ddData
-            var ddDataValue = $('#TableData tr:eq(' + i + ') .content #ddData').val();
-            /* alert(ddDataValue);*/
-            var commentTextAreavalue = $('#TableData tr:eq(' + i + ') .content #commentTextArea').val();
-            debugger;
-            var row = $('#TableData tr:eq(' + i + ')');
-            if (ddDataValue != '--Select--' && ddDataValue != '') {
-                if (typeof ddDataValue == 'undefined') {
-                    row.find(".checkbox").show();
-                } else {
-                    row.find(".checkbox").hide();
-                    row.find(".eye-icon").show();
-                    row.find(".content").show();
-                    row.find(".add-comments-btn").val('Edit Comments').show();
-                }
-            }
-            else {
-                row.find(".checkbox").show();
-                row.find(".eye-icon").show();
-                row.find(".content").hide();
-                row.find(".add-comments-btn").val('Add Comments');
-            }
-            //if ((ddDataValue == '' || ddDataValue !== '')&& commentTextAreavalue && commentTextAreavalue !== '') {
-            //    row.find(".checkbox").hide();
-            //    row.find(".eye-icon").show();
-            //    row.find(".content").show();
-            //    row.find(".add-comments-btn").val('Edit Comments').show();
-            //} else {
-            //    row.find(".checkbox").show();
-            //    row.find(".eye-icon").show();
-            //    row.find(".content").hide();
-            //    row.find(".add-comments-btn").val('Add Comments');
-            //}
-
-
-
-        }
-
-
-
-
-
-
-        $('.popup').hide();
-        $('#TableData').on('click', '#CMT_BTN', function () {
-            //   alert("CMT_BTN");
-            /*  debugger;*/
-            var clickedRow = $(this).closest("tr");
-            var rowData = clickedRow.find("td:nth-child(4)").text();
-            var popupContent = clickedRow.find("#popupContent");
-
-            var rowDate = $("th#A_PostingDate").find("input.A_PostingDate").val();
-
-            popupContent.text(rowData);
-            $("#popuprowDate").text(rowDate);
-            clickedRow.find(".popup").toggle();
-
-        });
-        $('.submit-comments-btn').on('click', function () {
-            /*  debugger;*/
-            var comment = $('#commentTextArea').val(); // Get the entered text from the textarea
-            if (comment !== '') {
-
-                console.log('Comment:', comment);
-            }
-
-            $('.popup').hide();
-        });
-    });
-
-
-</script>
 <!--popup show and checkbox hide and dropdown code End-->

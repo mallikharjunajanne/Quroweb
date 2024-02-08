@@ -1,4 +1,4 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.Admin_Attendance_Posting
+﻿@model Connect4m_Web.Models.Attendenceproperites.AttendancePosting
 
 
 @{
@@ -24,167 +24,82 @@
     </style>
 </head>
 <body>
-
-
-    @*--------*******Change  html code start*******-----*@
-    <div class="card">
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>POST ATTENDANCE</span></h6>
-
-                    <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
-                        <button class="btn btn-pill btn-outline-primary btn-aprimary" id="Post_Previous_Attendance_Link" style=" border-radius: 15px; height: 35px; margin-bottom: 3px;">
-                            Click to Post Previous Attendance
-                        </button>
-                    </div>
-                    <div id="Posting_Attendance_DateId">
-                        <label>StartDate:</label><input type="date" /><input type="submit" value="Shiow Periods" />
-                    </div>
-
-                    <div class="col-12" id="accordionoc1 PostPeriodMaindiv1">
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
-                            </h5>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE POSTING </h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
+                    <button class="btn btn-pill btn-outline-primary btn-aprimary" id="Post_Previous_Attendance_Link" style=" border-radius: 15px; height: 35px; margin-bottom: 3px;">
+                        Click to Post Previous Attendance
+                    </button>
+                </div>
+                <div id="Posting_Attendance_DateId">
+                    <div class="row mb-3">
+                        <label asp-for="StartDate" id="RlStartdate" class="control-label col-1 col-form-label space">StartDate</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" /><input type="submit" value="Shiow Periods" />
                         </div>
-                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-                            <div class="padding-search row" id="PostPeriodAttendanceMaindiv">
-                                <form class="form" id="myform">
-                                    <div class="row" id="Ct_Lg_DivId">
+                    </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                SEARCH FOR STUDENTS
+                            </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col" id="PostPeriodAttendanceMaindiv">
+                                    <form class="form" id="myform">
+                                        <div class="row mb-3">
+                                            <label asp-for="Faculty" class="control-label col-sm-4 col-form-label text-end required space">Faculty </label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    @{
+                                                        var MentorNames = ViewBag.TcNames as List<AttendancePosting>;
+                                                        var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
+                                                    }
 
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <label class="form-grop control-label required  space">Faculty </label>
+                                                    @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "form-select" })
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            @{
-                                                var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
-                                                var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
-                                            }
-
-                                            @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "form-select" })
-
+                                        <div class="row mb-3">
+                                            <label asp-for="Period" class="control-label col-sm-4 col-form-label text-end required space">Period </label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="Period">
+                                                        <option value="">---------Select---------</option>
+                                                       
+                                                    </select>
+                                                    <span asp-validation-for="Period" class="text-danger"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <label class="form-grop control-label required space">Period </label>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end"></label>
+                                            <div class="col-sm-4">
+                                                <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                                <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show On Duty</label>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <select class="form-select"><option></option></select>
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
+                                            </div>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <input type="checkbox" class="checkbox_animated">Show On Duty
-                                        </div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2"></div>
-                                        <div class="form-group col-4">
-                                            <input type="button" id="Get_atd_btn" style=" margin-left: 66%;" name="Search" value="Get Attendance Form" class="btn btn-pill btn-outline-success btn-air-success">
-                                        </div>
-                                        <div class="col-3"></div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-            </div>
         </div>
     </div>
 
 
     @*--------*******Change  html code End*******-----*@
-    <!--<div class="card">
-        <div class="card-header pb-0">
-            <div style=" font-size: 20px; text-align: center;">
-                <h1 style="background-color: cadetblue; color: snow; font-weight: 700; font-size: 25px; margin-top: -13px; "> </h1>
-            </div>
-        </div>
-        <div style="color:red; font-size:13px;">
-            <div id="validation2" style="color: red;"></div>
-            <div id="validationMessage" style="color: red;"></div>
-        </div>
 
-
-
-        <div>
-            <a href="#" id="Post_Previous_Attendance_Link">
-                <u>Click to Post Previous Attendance</u>
-            </a>
-            <div id="Posting_Attendance_DateId">
-                <label>StartDate:</label><input type="date" /><input type="submit" value="Shiow Periods" />
-            </div>
-
-            <div class="card-body">
-                <div class="default-according style-1" id="accordionoc">
-                    <div class="card">-->
-    @*<div class="card-header bg-primary">
-            <h5 class="mb-0">
-                <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
-            </h5>
-        </div>*@
-    <!--<div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-        <div class="card-body">
-
-            <form class="form" id="myform">
-                <div class="form-group row g-3">
-                    <div id="Ct_Lg_DivId" class="row">
-                        <div class="form-group row">
-
-                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Faculty:</label>
-                            <div class="col-sm-9">-->
-    @*@{
-            var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
-            var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
-        }
-
-        @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "Dropdownbox" })
-    *@
-    <!--</div>
-
-                                                <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Period:</label>
-                                                <div class="col-sm-9">
-                                                    <select>
-                                                        <option></option>
-                                                        <option></option>
-                                                        <option></option>
-                                                        <option></option>
-                                                        <option></option>
-                                                        <option></option>
-                                                    </select>
-                                                </div>
-
-
-                                                <label class="col-sm-3 col-form-label"></label>
-                                                <div class="col-sm-9">
-                                                    <input type="checkbox" class="checkbox_animated">Show On Duty
-                                                </div>
-
-                                                <label></label>
-                                                <div class="S_btn" style="display: flex; grid-gap: 16px;">
-                                                    <input type="submit" value="Get Attendance Form" id="Get_atd_btn" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </body>
 </html>
 
@@ -196,9 +111,9 @@
         $("#Posting_Attendance_DateId").hide();
 
         $("#Post_Previous_Attendance_Link").click(function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
 
-            
+
             $("#Posting_Attendance_DateId").toggle();
         });
     });

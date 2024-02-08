@@ -39,9 +39,8 @@ function CallToAjax(method, url, data, successCallback, errorCallback, hasFileUp
 }
 
 
-function Maintblfunction() {
-   
-    CallToAjax('GET', '/FeeSection/Tbl_FeeConcedingTypes', null,
+function Mainfunction() {
+    CallToAjax('GET', '/FeeSection/M_N_A_Tbl', null,
 
         //function bindDatatable();
         function (status, error) {
@@ -50,29 +49,49 @@ function Maintblfunction() {
     );
 }
 
-function Create_NewFeeDiscountType(event) {
-    
-    event.preventDefault();   
-    $("#Errormessage").text('');    
-   
-    $('#UpdateDiscountFeeType_Divid').hide();
-    $("#FeeTypesDiscountTbl_Divid").hide();
-    $("#CreateFeeDiscountType_Divid").show();
-}
 
 $(document).ready(function () {
-    $("#FeeTypesDiscountTbl_Divid").show();
-    $("#CreateFeeDiscountType_Divid").hide();
-    $("#UpdateDiscountFeeType_Divid").hide();
+  
+    $('#Managebankaccounttablediv1').show();   //M_Bank_Ac_Tbl_Divid
+    $('#CreateBankAccount_Divid').hide();      //CreateBankAccount_Divid
+    $('#UpdateBank_Account_Divid').hide();     //UpdateBank_Account_Divid
+
+    Mainfunction();
    
-    Maintblfunction();  
+
+
+
+    //fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
+    //    '/Attendance/Attendancepostingdepartment',          // URL for data fetching
+    //    '#Ddldepartment',                                   // Dropdown selector
+    //    'value',                                            // Field name for option text
+    //    'text',                                             // Field name for option values
+    //    'manageClassification'                              // Response value return class name
+    //);
+    //fetchDataAndPopulateDropdown(                           //==== << ** Faculty Dropdown ** >>
+    //    '/Attendance/Facultynamesdd',                        // URL for data fetching
+    //    '#Ddfaculty',                                        // Dropdown selector
+    //    'mentorUserid',                                      // Field name for option text
+    //    'mentorName',                                        // Field name for option values
+    //    'manageClassification'                               // Response value return class name
+    //);
 });
 
-
-$('#Searchbtn').click(function () {
+function Create_NewFeeBankAccount(event) {
+    event.preventDefault();
     $("#Errormessage").text('');
-    var formData = $('#Searchfeedescounttypesform').serialize();  
-    CallToAjax('GET', '/FeeSection/Tbl_FeeConcedingTypes', formData,
+    $('#Managebankaccounttablediv1').hide();
+    $('#CreateBankAccount_Divid').show();
+    $('#UpdateBank_Account_Divid').hide();
+}
+
+
+
+$('#Searchbanksdata').click(function () {
+    debugger;
+    var formData = $('#Searchbankaccountsform').serialize();
+
+    CallToAjax('GET', '/FeeSection/M_N_A_Tbl', formData,
 
         //function bindDatatable();
         function (status, error) {
@@ -80,9 +99,6 @@ $('#Searchbtn').click(function () {
         }
     );
 });
-
-
-
 function GetDateFormat() {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -95,12 +111,12 @@ function GetDateFormat() {
 function bindDatatable(response) {
 
     var formattedDate = GetDateFormat();
-  
-    var table = $('#FeeDiscountTable').DataTable();
+    debugger;
+    var table = $('#BankAccounts_Table').DataTable();
     table.destroy();
     $("#TableCount").text(response.length);
 
-    var newTable = $("#FeeDiscountTable").DataTable({
+    var newTable = $("#BankAccounts_Table").DataTable({
         dom: 'Bfrtip',
         buttons: [
             //{
@@ -170,22 +186,22 @@ function bindDatatable(response) {
             //},
 
             {
-                data: "ConcedingTypeName",
+                data: "BankName",
 
                 render: function (data, type, row, meta) {
                     //  length++;
 
-                    return row.concedingTypeName
+                    return row.bankName
 
                 }
             },
             {
-                data: "Amount",
+                data: "AccountNumber",
 
                 render: function (data, type, row, meta) {
                     //  length++;
 
-                    return row.amount
+                    return row.accountNumber
 
                 }
             },
@@ -195,30 +211,30 @@ function bindDatatable(response) {
                 render: function (data, type, row, meta) {
                     //  length++;
 
-                    return row.description + '<input type="text" value=' + row.concedingTypeId + ' hidden/>'
+                    return row.description + '<input type="text" value=' + row.bankAccountId + ' hidden/>'
 
                 }
-            },
+            },          
             {
-                data: "ConcedingTypeId",
+                data: "BankAccountId",
 
                 render: function (data, type, row, meta) {
                     // return row.holidayId
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
                     // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'  
                 }
-            }
+            }            
         ]
 
     });
 
     table.on('draw', function () {
-        $('#FeeDiscountTable').find('td:nth-child(1)').attr('title', 'Edit').css({
+        $('#BankAccounts_Table').find('td:nth-child(1)').attr('title', 'Edit').css({
             'text-decoration': 'underline',
             'font-weight': 'bold'
         });;
     });
-    $('#FeeDiscountTable').find('td:nth-child(1)').attr('title', 'Edit').css({
+    $('#BankAccounts_Table').find('td:nth-child(1)').attr('title', 'Edit').css({
         'text-decoration': 'underline',
         'font-weight': 'bold'
     });;
@@ -226,11 +242,52 @@ function bindDatatable(response) {
 
 
 
+//-------------------------------------   Click For Update in the list(table)
+$(document).on('click', '#BankAccounts_Table td:nth-child(1)', function (event) {
+    event.stopImmediatePropagation();
+    debugger;
+    loaddingimg.css('display', 'block');
+    var parent = $(event.target).closest('tr');
+    var bankAccountId = $(parent).find('td').find('input[type="text"]').val();
+    var table = $('#ManageHolidaystbl').DataTable();
+    //tabletargetpagetblSEMsearchresults = table.page.info().page;
+    Editbankaccountfunction(bankAccountId);
+})
+function Editbankaccountfunction(bankAccountId) {
+    $.ajax({
+        url: '/FeeSection/Bank_Account_EditGet?BankAccountId=' + bankAccountId,
+        type: 'GET',
+        //data: data,
+        success: function (response) {          
+            $('#Editbankaccounttxtid').val(response.bankAccountId);
+            $('#Edittxtbanknameid').val(response.bankName);
+            $('#Edittxtaccountnumberid').val(response.accountNumber);
+            $('#Edittxtbranchcodeid').val(response.branchCode);
+            $('#Edittxtifsccodeid').val(response.ifCcode);
+            $('#Edittxtaddressid').val(response.address);
+            $('#Edittxtdescriptionid').val(response.description);
+            $('#Managebankaccounttablediv1').hide();
+            $('#CreateBankAccount_Divid').hide();
+            $('#UpdateBank_Account_Divid').show();
+            loaddingimg.css('display', 'none');
+        },
+        error: function (xhr, status, error) {
+            $("#Errormessage").text("Something went wrong please try again.");
+            loaddingimg.css('display', 'none');
+        }
+    });
+}
+
+
+
+
+
+
 
 //=== ***<< NEW BANK ACCOUNT INSERTING CODE START >>*** ====
+//$('#Newbankaccountform').on('submit', function () {
+$('#Newbankaccountform').submit(function () {
 
-$('#Newdiscountfeetypeform').submit(function () {
-    $("#Errormessage").text('');
     event.preventDefault();
     event.stopImmediatePropagation();
     var attributeval = $(this).val();
@@ -243,12 +300,29 @@ $('#Newdiscountfeetypeform').submit(function () {
 
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
             loaddingimg.css('display', 'block');
-            var ConcedingTypeName = $('#txtConcedingTypeNameid').val();
-            var amount = $('#txtamountid').val();
+            var Bankname = $('#txtbanknameid').val();
+            var Accountnumber = $('#txtaccountnumberid').val();
+            var Branchcode = $('#txtbranchcodeid').val();
+            var Ifsccode = $('#txtifsccodeid').val();
+            var BankAddress = $('#txtaddressid').val();
             var description = $('#txtdescriptionid').val();
-            //var formattedAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+
+
+            var bankAccountData = {
+                BankName: Bankname,
+                AccountNumber: Accountnumber,
+                BranchCode: Branchcode,
+                IFSCCode: Ifsccode,
+                Address: BankAddress,
+                Description: description,
+            };
+            //var Bankname = $('#txtbanknameid').val();
+            //var Accountnumber = $('#txtaccountnumberid').val();
+            //var Branchcode = $('#txtbranchcodeid').val();
+            //var Ifsccode= $('#txtifsccodeid').val();  
+            //var BankAddress = $('#txtaddressid').val();
             //var formData = $(this).serialize();
-            var url = "/FeeSection/ManageFeeConcedingTypes?ConcedingTypeName=" + ConcedingTypeName + "&amount=" + amount + "&Description=" + description;
+            var url = "/FeeSection/ManageBankAccounts?BankName=" + Bankname + "&AccountNumber=" + Accountnumber + "&Branchcode=" + Branchcode + "&IFSCCode=" + Ifsccode + "&Address=" + BankAddress + "&Description=" + description;
             $.ajax({
                 url: url,
                 method: 'POST',
@@ -257,10 +331,8 @@ $('#Newdiscountfeetypeform').submit(function () {
                 dataType: "json",
                 success: function (response) {
                     debugger;
-                    if (response == null) {
-                        $("#Errormessage").text("An error occurred. Please try again.");
-                    }else if (response == "0") {
-                        $("#Errormessage").text("Fee DiscountType with the Name" + '"' + ConcedingTypeName + '"' + " already exists ");
+                    if (response == "0") {
+                        $("#Errormessage").text("Account Number with Name " + '"' + Accountnumber + '"' + " already exists in " + '"' + Bankname + '"' + " Bank");
                     } else {
                         $("#Errormessage").text("Record inserted successfully.");
                     }
@@ -294,18 +366,20 @@ $('#Newdiscountfeetypeform').submit(function () {
         }
     }, 50);
 });
-
 //=== ***<< NEW BANK ACCOUNT INSERTING CODE END >>*** ====
+
+
+
 
 
 //==== ***<<< NEXT PAGE  &&&  PREVIOUS PAGE FUCNTION >>>***====
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-    
+        debugger;      
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
-            window.location.href = `/FeeSection/${url}`;
+            window.location.href = `/FeeSection/${url}`;            
             loaddingimg.css('display', 'none');
             resolve();
         }, (status, error) => {
@@ -333,50 +407,30 @@ function previouspages(url, data) {
 //==== ***<<< NEXT PAGE  &&&  PREVIOUS PAGE FUCNTION >>>***====
 
 
-
-
-
-
-//-------------------------------------   Click For Update in the list(table)
-$(document).on('click', '#FeeDiscountTable td:nth-child(1)', function (event) {
-    event.stopImmediatePropagation();
+//==== ***<<< BACK TO SEARCH FUCNTION >>>***====
+function backtosearch(event) {
+    event.preventDefault();
     debugger;
-    loaddingimg.css('display', 'block');
-    var parent = $(event.target).closest('tr');
-    var concedingtypeid = $(parent).find('td').find('input[type="text"]').val();
-    var table = $('#FeeDiscountTable').DataTable();
-    //tabletargetpagetblSEMsearchresults = table.page.info().page;
-    Editfunction(concedingtypeid);
-})
-function Editfunction(concedingtypeid) {
-    $.ajax({
-        url: '/FeeSection/DiscountFT_Edit?ConcedingTypeId=' + concedingtypeid,
-        type: 'GET',
-        //data: data,
-        success: function (response) {
-            $('#EdittxtConcedingTypeid').val(response.concedingTypeId);
-            $('#EdittxtConcedingTypeNameid').val(response.concedingTypeName);
-            $('#Edittxtamountid').val(response.amountFormatted);
-            $('#Edittxtdescriptionid').val(response.description);
+    $('#Newbankaccountform')[0].reset();
+    $("#Errormessage").text('');
+    CallToAjax('GET', '/FeeSection/M_N_A_Tbl', null,
 
-            $('#FeeTypesDiscountTbl_Divid').hide();
-            $('#CreateFeeDiscountType_Divid').hide();
-            $('#UpdateDiscountFeeType_Divid').show();
-            loaddingimg.css('display', 'none');
-        },
-        error: function (xhr, status, error) {
-            $("#Errormessage").text("Something went wrong please try again.");
-            loaddingimg.css('display', 'none');
+        //function bindDatatable();
+        function (status, error) {
+            // Handle error if needed
         }
-    });
-}
+    );
+    $('#Managebankaccounttablediv1').show();
+    $('#CreateBankAccount_Divid').hide();
+    $('#UpdateBank_Account_Divid').hide();
 
+}
 
 
 
 //=====>>>>  *** <<<UPDATE BANK ACCOUNTS >>> *** <<<========
 
-$('#Updatediscountfeetypeform').submit(function () {
+$('#updatebankaccountform').submit(function () {
 
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -385,19 +439,33 @@ $('#Updatediscountfeetypeform').submit(function () {
         debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
+
         var validationMessagesLength = validationMessages.length;
 
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
-            loaddingimg.css('display', 'block');   
-            var concedingTypeId = $('#EdittxtConcedingTypeid').val();
-            var concedingTypeName = $('#EdittxtConcedingTypeNameid').val();
-            var amountFormatted = $('#Edittxtamountid').val();           
+            loaddingimg.css('display', 'block');
+            var BankAccountId = $('#Editbankaccounttxtid').val();
+            var Bankname = $('#Edittxtbanknameid').val();
+            var Accountnumber = $('#Edittxtaccountnumberid').val();
+            var Branchcode = $('#Edittxtbranchcodeid').val();
+            var Ifsccode = $('#Edittxtifsccodeid').val();
+            var BankAddress = $('#Edittxtaddressid').val();
             var description = $('#Edittxtdescriptionid').val();
-            $('#Btnupdate').prop('disabled', false);
-            $('#Btndelete').prop('disabled', false);
 
 
-             var url = "/FeeSection/DiscountFT_Edit?ConcedingTypeId=" + concedingTypeId + "&ConcedingTypeName=" + concedingTypeName + "&Amount=" + amountFormatted + "&Description=" + description;
+            //var UpdateBA_Data = {
+            //    BankAccountId: BankAccountId,               
+            //    AccountNumber: Accountnumber,
+            //    BankName: Bankname,
+            //    Address: BankAddress,
+            //    BranchCode: Branchcode,
+            //    IFCcode: Ifsccode,
+            //    Description: description
+            //};
+
+           
+            //var url = "/FeeSection/ManageBankAccount_EditUpdate";
+            var url = "/FeeSection/ManageBankAccount_EditUpdate?BankAccountId=" + BankAccountId + "&BankName=" + Bankname + "&AccountNumber=" + Accountnumber + "&Branchcode=" + Branchcode + "&IFSCCode=" + Ifsccode + "&Address=" + BankAddress + "&Description=" + description;
             $.ajax({
                 url: url,
                 method: 'POST',
@@ -406,13 +474,9 @@ $('#Updatediscountfeetypeform').submit(function () {
                 dataType: "json",
                 success: function (response) {
                     debugger;
-                    if (response == null) {
-                        $("#Errormessage").text("Something went wrong please try again.");
-                    }else if (response == "0") {
-                        $("#Errormessage").text("Fee DiscountType with the Name" + '"' + ConcedingTypeName + '"' + " already exists ");
-                    } else if (response =="2") {
-                        $("#Errormessage").text("Fee Discount Type Associated with few users you cannot update the Amount.");
-                    }else {
+                    if (response == "0") {
+                        $("#Errormessage").text("Account Number with Name " + '"' + Accountnumber + '"' + " already exists in " + '"' + Bankname + '"' + " Bank");
+                    } else {
                         $("#Errormessage").text("Record updated successfully.");
                         $('#Btnupdate').prop('disabled', true);
                         $('#Btndelete').prop('disabled', true);
@@ -450,38 +514,46 @@ $('#Updatediscountfeetypeform').submit(function () {
 //=== ***<< UPDATE BANK ACCOUNT INSERTING CODE END >>*** ====
 
 
-
-
 function deleteaccount() {
-    var ConcedingTypeid = $("#EdittxtConcedingTypeid").val();
+    var BankAccountId = $("#Editbankaccounttxtid").val();
     if (confirm('Are you sure you want to delete this Fee Term?\nClick ' + 'OK' + ' to delete or ' + 'Cancel' + ' to stop deleting.')) {
-        deletingfunction(ConcedingTypeid);
+        accountdeleting(BankAccountId);
     }
 }
-$(document).on('click', '#FeeDiscountTable .fa-trash-o', function (event) {
+$(document).on('click', '#BankAccounts_Table .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
-   
+    //var data = {
+    //    InstanceSalaryAttributeId: $(this).find('input[type="text"]').val()
+    //};
     debugger;
     var parent = $(event.target).closest('tr');
-    var ConcedingTypeid = $(parent).find('td').find('input[type="text"]').val();
-
+    var BankAccountId = $(parent).find('td').find('input[type="text"]').val();
+  
+    //var BankAccountId = $(this).find('input[type="text"]').val();
     if (confirm('Are you sure you want to delete this Fee Term?\nClick ' + 'OK' + ' to delete or ' + 'Cancel' + ' to stop deleting.')) {
-        deletingfunction(ConcedingTypeid);
-    }   
+        accountdeleting(BankAccountId);
+    }
+   // var table = $('#tblCSAsearchresults').DataTable();
+    //tabletargetpagetblSEMsearchresults = table.page.info().page;
+    //CommonDeleteFunction('Salary Attribute', 'GET', '/PayRoll/DeleteSAlaryAttribute', data, function (response) {
+    //    $('.alert-success p').text("Record Deleted Successfully.");
+    //    $(".alert-success").show().delay(5000).fadeOut()
+    //    searchSalaryAttributes();
+    //});
 })
 
 
-function deletingfunction(ConcedingTypeid) {
+function accountdeleting(BankAccountId) {
     $.ajax({
-        url: '/FeeSection/Delete_Manage_FeeDisountType',
+        url: '/FeeSection/Bank_account_Delete',
         method: 'POST',
         data: {
-            concedingTypeId: ConcedingTypeid
+            BankAccountId: BankAccountId
         },
         success: function (response) {
             debugger;
 
-            if (response == '1') {
+            if (response == '0') {
                 debugger;
                 $('#Errormessage').text('Record deleted successfully.');
                 $('#Managebankaccounttablediv1').show();
@@ -489,34 +561,16 @@ function deletingfunction(ConcedingTypeid) {
                 $('#UpdateBank_Account_Divid').hide();
 
                 ///====>>> MAIN FUNCTION
-                Maintblfunction();
-            }  else {
-                $('#Errormessage').text('This DiscountType is Associated with one of Fee Types you cannot delete it.');
+                Mainfunction();
+
+
+            } else if (response == '001324') {
+                $('#Errormessage').text('Some fee installments are already associated with this Bank Account. So you cannot delete this account.');
+
+            } else {
+                $('#Errormessage').text('Record not deleted.');
             }
         }
     });
 }
 
-//==== ***<<< BACK TO SEARCH FUCNTION >>>***====
-function backtosearch(Formid) {
-    debugger;
-    event.preventDefault();   
-    $('#' + Formid)[0].reset();
-    $("#Errormessage").text('');
-    Maintblfunction();
-    $("#FeeTypesDiscountTbl_Divid").show();
-    $("#CreateFeeDiscountType_Divid").hide();
-    $("#UpdateDiscountFeeType_Divid").hide();
-}
-
-
-function isNumber(event) {
-    // Get the input value
-    var inputValue = event.key;
-
-    // Check if the input value is a number or a valid decimal point
-    if (!/^\d*\.?\d*$/.test(inputValue)) {
-        // Prevent the input if it's not a number or a valid decimal point
-        event.preventDefault();
-    }
-}

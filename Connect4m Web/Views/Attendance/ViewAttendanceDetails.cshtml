@@ -1,0 +1,120 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Studentattendancedetails
+
+@{
+    ViewData["Title"] = "ViewAttendanceDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="flex-grow-1 container-p-y container-fluid">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE DETAILS </h4>
+    <span id="Validationmessage" class="text-danger"></span>
+    <div class="row mb-2">
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="row mb-3">
+                    <label class="control-label col-sm-2 col-form-label text-end  space">Search Attendance By</label>
+                    <div class="col-1 form-check">
+                        <input type="radio" value="0" name="RadioSearch" class="form-check-input" id="defaultRadio1" onclick="ShowFields()" checked>
+                        <label class="form-check-label" for="defaultRadio1">Dates</label>
+                    </div>
+                    <div class="col-1 form-check">
+                        <input type="radio" value="1" name="RadioSearch" class="form-check-input" id="defaultRadio2" onclick="ShowFields()">
+                        <label class="form-check-label" for="defaultRadio2">Months</label>
+                    </div>
+                </div>
+
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">
+                        VIEW ATTENDANCE DETAILS
+                    </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <form id="Studentattendancedetailsform">
+
+                                @*  DATES WISE VIEW CODE START *@
+
+                                <div id="DateWise_Id_fields">
+                                    <div class="row mb-4">
+                                        <label asp-for="StartDate" class="control-label col-sm-2 col-form-label text-end required space">StartDate</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
+                                        </div>
+                                        <label asp-for="EndDate" class="control-label col-sm-2 col-form-label text-end required space">EndDate</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                @*  DATES WISE VIEW CODE END *@
+
+                                @*  MONTH WISE VIEW CODE START *@
+                                <div id="MonthWise_Id_fields">
+                                    <div class="row mb-3">
+                                        <label asp-for="Month" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddlmonth" asp-for="Month">
+                                                    <option value="0">----------Select----------</option>
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July</option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*  MONTH WISE VIEW CODE END *@
+                                <div class="row mb-3">
+                                    <label asp-for="SubjectSlotID" class="control-label col-sm-4 col-form-label text-end required space">Slots </label>
+                                    <div class="col-sm-4">
+                                        <div class="position-relative">
+                                            <select  class="select2 form-select select2-hidden-accessible" id="Slotddl" asp-for="SubjectSlotID">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content text-center">
+                                    <div class="col-sm-12">
+                                        <button type="button" class="btn btn-success waves-effect waves-light" id="detailsbtn">Search </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Studentattendancedetailstbl">
+
+    </div>
+</div>
+
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+<script src="~/js/Studentattendancedetails.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

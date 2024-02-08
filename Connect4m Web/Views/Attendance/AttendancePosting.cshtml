@@ -1,8 +1,8 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.Admin_Attendance_Posting
+﻿@model Connect4m_Web.Models.Attendenceproperites.AttendancePosting
 
 
 @{
-    ViewData["Title"] = "AttendancePosting";
+    // ViewData["Title"] = "AttendancePosting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,234 +10,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        span.validation {
-            display: block;
-            color: red;
-        }
-        .radio-style1 {
-            /* Define your styles for the first radio button here */
-            /* Example styles */
-            border: 2px solid #f00;
-            padding: 5px;
-        }
+    @*<style>
+            span.validation {
+                display: block;
+                color: red;
+            }
+            .radio-style1 {
+                /* Define your styles for the first radio button here */
+                /* Example styles */
+                border: 2px solid #f00;
+                padding: 5px;
+            }
 
-        .radio-style2 {
-            /* Define your styles for the second radio button here */
-            /* Example styles */
-            background-color: #f00;
-            color: #fff;
-            padding: 10px;
-        }
-        .Dropdownbox {
-            width: 242px;
-            height: 23px;
-            border: 2px solid #999;
-            font-size: 13px;
-            color: tomato;
-            background-color: azure;
-            border-radius: 5px;
-        }
-        .textbox {
-            width: 242px;
-            height: 23px;
-            border: 2px solid #999;
-            font-size: 13px;
-            color: tomato;
-            background-color: azure;
-            border-radius: 5px;
-        }
-        .S_btn {
-            width: 7%;
-            height: 28px;
-            margin-top: 16px;
-            margin-left: 26%;
-        }
-    </style>
-    <link href="~/css/PostAttendance.css" rel="stylesheet" />
+            .radio-style2 {
+                /* Define your styles for the second radio button here */
+                /* Example styles */
+                background-color: #f00;
+                color: #fff;
+                padding: 10px;
+            }
+            .Dropdownbox {
+                width: 242px;
+                height: 23px;
+                border: 2px solid #999;
+                font-size: 13px;
+                color: tomato;
+                background-color: azure;
+                border-radius: 5px;
+            }
+            .textbox {
+                width: 242px;
+                height: 23px;
+                border: 2px solid #999;
+                font-size: 13px;
+                color: tomato;
+                background-color: azure;
+                border-radius: 5px;
+            }
+            .S_btn {
+                width: 7%;
+                height: 28px;
+                margin-top: 16px;
+                margin-left: 26%;
+            }
+        </style>
+        <link href="~/css/PostAttendance.css" rel="stylesheet" />*@
 </head>
 <body>
     @*-----*** REPLACE OLD TO NEW CODE START ***------*@
-    <div class="card">
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <h6><span>ATTENDANCE POSTING</span></h6>
-                    <div style="color:red; font-size:13px;">
-                        <div id="validation2" style="color: red;"></div>
-                        <div id="validationMessage" style="color: red;"></div>
-                    </div>
-
-                    <div id="AttendancePOsting_Maindiv1">
-                        <div class="col-12" id="accordionoc1">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn"><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-                                <div class="padding-search row" id="Attanceposying_Searchdiv2">
-                                    <div class="row">
-                                        <form class="form" id="myform">
-                                            <div class="form-group row g-3">
-                                                <div id="Ct_Lg_DivId" class="row">
-                                                    <div class="form-group row">
-                                                        @*<div class="col-3"></div>
-                                                <div class="form-group col-2"><label class="form-grop control-label space">Notice Type </label></div>
-                                                <div class="form-group col-4">*@
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Start Date  </label> @*class="col-sm-3 col-form-label"*@
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            @*<div class="col-sm-9">*@
-                                                            <input type="date" asp-for="StartDate" class="form-control" id="StartDateid">@*textbox*@
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Department </label>@*col-sm-3 col-form-label*@
-                                                        </div>
-                                                        <div class="form-group col-4" id="F_IN_Class">
-                                                            @Html.DropDownListFor(Model => Model.InstanceClassificationId, new SelectList(ViewBag.Names, "Value", "Text"), "--Select a Department--", new { @id = "F_IC_Id", @class = "form-select" })@*Dropdownbox*@
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Class </label>
-                                                        </div>
-                                                        <div class="form-group col-4" id="F_IN_SubId">
-                                                            @Html.DropDownListFor(Model => Model.InstanceSubClassificationId, new SelectList(string.Empty, "Value", "Text"), "--Please select a class--", new { @id = "F_IC_Sub_Id", @class = "form-select" })@*Dropdownbox*@
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Period</label>
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            <select class="form-select" id="PeriodId" asp-for="Period">
-                                                                @*Dropdownbox*@
-                                                                <option value="">---------Select---------</option>
-                                                                <option value="1">P1</option>
-                                                                <option value="2">P2</option>
-                                                                <option value="3">P3</option>
-                                                                <option value="4">P4</option>
-                                                                <option value="5">P5</option>
-                                                                <option value="6">P6</option>
-                                                                <option value="7">P7</option>
-                                                                <option value="8">P8</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Faculty</label>
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            @{
-                                                                var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
-                                                                var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
-                                                            }
-
-                                                            @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "form-select" })@*Dropdownbox*@
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Slot</label>
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            @Html.DropDownListFor(Model => Model.SubjectSlotID, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = " form-select", @id = "SubjectName" })@*Dropdownbox*@
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="form-grop control-label required space">Sort By</label>@*col-sm-3 col-form-label*@
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            <div class="radio radio-primary" style="margin-top:4px;">
-                                                                <input id="radioinline1" type="radio" name="radio1" value="FirstName Asc">
-                                                                <label class="mb-0" for="radioinline1">Name</label>
-                                                                &nbsp;&nbsp;
-                                                                <input id="radioinline2" type="radio" name="radio1" value="InstanceUserCode Asc">
-                                                                <label class="mb-0" for="radioinline2">Register No</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="form-group col-2">
-                                                            <label class="col-sm-3 col-form-label"></label>
-                                                        </div>
-                                                        <div class="form-group col-4">
-                                                            <input type="checkbox" class="checkbox_animated">Show On Duty
-                                                        </div>
-                                                        <div class="col-3"></div>
-                                                        <div class="col-3"></div>
-                                                        <div class="S_btn" style="margin-left: 136px; ">
-                                                            <input type="submit" class="btn btn-pill btn-outline-success btn-air-success" value="Get Attendance Form" id="Get_atd_btn" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="Get_Admin_Attendance_Table">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    @*-----*** REPLACE OLD TO NEW CODE START ***------*@
-
-    <!--<div class="card">-->
-        @*<div class="card-header pb-0">
-            <div style=" font-size: 20px; text-align: center;">
-                <h1 style="background-color: cadetblue; color: snow; font-weight: 700; font-size: 25px; margin-top: -13px; ">ATTENDANCE POSTING</h1>
-            </div>
-        </div>*@
-        @*<div style="color:red; font-size:13px;">
-            <div id="validation2" style="color: red;"></div>
-            <div id="validationMessage" style="color: red;"></div>
-        </div>*@
-
-        <!--<!--<div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div class="card-header bg-primary">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE POSTING </h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i>SEARCH FOR STUDENTS</button>
-                        </h5>
+                            SEARCH FOR STUDENTS
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                        <div class="card-body">-->-->
-                            <!--@*<form class="form" id="myform">
-                                <div class="form-group row g-3">
-                                    <div id="Ct_Lg_DivId" class="row">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Start Date  </label>
-                                            <div class="col-sm-9">
-                                                <input type="date" asp-for="StartDate" class="textbox" id="StartDateid" style="width:36%">
-                                            </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <form class="form" id="Attendancepostingform">
+                                    <div class="row mb-3">
+                                        <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
+                                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
 
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Department:</label>
-                                            <div class="col-sm-9" id="F_IN_Class">
-                                                @Html.DropDownListFor(Model => Model.InstanceClassificationId, new SelectList(ViewBag.Names, "Value", "Text"), "--Select a Department--", new { @id = "F_IC_Id", @class = "Dropdownbox" })
+                                    <div class="row mb-3">
+                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative" id="F_IN_Class">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                                </select>
+                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                             </div>
-
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Class:</label>
-                                            <div class="col-sm-9" id="F_IN_SubId">
-                                                @Html.DropDownListFor(Model => Model.InstanceSubClassificationId, new SelectList(string.Empty, "Value", "Text"), "--Please select a class--", new { @id = "F_IC_Sub_Id", @class = "Dropdownbox" })
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="InstanceSubClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Class </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative" id="F_IN_SubId">
+                                                <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubClassificationId">
+                                                </select>
+                                                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
                                             </div>
+                                        </div>
+                                    </div>
 
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Period:</label>
-                                            <div class="col-sm-9">
-                                                <select class="Dropdownbox" id="PeriodId" asp-for="Period">
+                                    <div class="row mb-3">
+                                        <label asp-for="Period" class="control-label col-sm-4 col-form-label text-end required space">Period </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="Period">
                                                     <option value="">---------Select---------</option>
                                                     <option value="1">P1</option>
                                                     <option value="2">P2</option>
@@ -248,61 +116,69 @@
                                                     <option value="7">P7</option>
                                                     <option value="8">P8</option>
                                                 </select>
+                                                <span asp-validation-for="Period" class="text-danger"></span>
                                             </div>
-
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Faculty:</label>
-                                            <div class="col-sm-9">
-                                                @{
-                                                    var MentorNames = ViewBag.TcNames as List<Admin_Attendance_Posting>;
-                                                    var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
-                                                }
-
-                                                @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "Dropdownbox" })
-                                            </div>
-
-
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Slot:</label>
-                                            <div class="col-sm-9">
-                                                @Html.DropDownListFor(Model => Model.SubjectSlotID, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "Dropdownbox", @id = "SubjectName" })
-                                            </div>
-
-                                            <label class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Sort By:</label>
-                                            <div class="col-sm-9">
-                                                <div class="radio radio-primary" style="margin-top:4px;">
-                                                    <input id="radioinline1" type="radio" name="radio1" value="FirstName Asc">
-                                                    <label class="mb-0" for="radioinline1">Name</label>
-                                                    &nbsp;&nbsp;
-                                                    <input id="radioinline2" type="radio" name="radio1" value="InstanceUserCode Asc">
-                                                    <label class="mb-0" for="radioinline2">Register No</label>
-                                                </div>
-                                            </div>
-
-                                            <label class="col-sm-3 col-form-label"></label>
-                                            <div class="col-sm-9">
-                                                <input type="checkbox" class="checkbox_animated">Show On Duty
-                                            </div>
-
-
-                                            <div class="S_btn" style="display: flex; grid-gap: 16px;">
-                                                <input type="submit" value="Get Attendance Form" id="Get_atd_btn" />
-                                            </div>
-
                                         </div>
                                     </div>
-                                </div>
-                            </form>*@-->
-                        <!--<!--</div>
+
+                                    <div class="row mb-3">
+                                        <label asp-for="Faculty" class="control-label col-sm-4 col-form-label text-end required space">Faculty </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddfaculty" asp-for="Faculty">
+                                                </select>
+                                                <span asp-validation-for="Faculty" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="SubjectSlotID" class="control-label col-sm-4 col-form-label text-end required space">Slot</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddslotsid" asp-for="SubjectSlotID">
+                                                </select>
+                                                <span asp-validation-for="SubjectSlotID" class="text-danger"></span>
+                                                @*@Html.DropDownListFor(Model => Model.SubjectName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "form-select Dropdown", @id = "SubjectName" })*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="control-label col-sm-4 col-form-label text-end  space">Sort By</label>
+                                        <div class="col-1 form-check">
+                                            <input type="radio" value="0" name="RadioSearch" class="form-check-input" id="defaultRadio1">
+                                            <label class="form-check-label" for="defaultRadio1">Name</label>
+                                        </div>
+                                        <div class="col-1 form-check">
+                                            <input type="radio" value="1" name="RadioSearch" class="form-check-input" id="defaultRadio2">
+                                            <label class="form-check-label" for="defaultRadio2">Register No</label>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="control-label col-sm-4 col-form-label text-end"></label>
+                                        <div class="col-sm-4">
+                                            <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                            <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show On Duty</label>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('attendancesummaryform')" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>-->-->
+                </div>
+            </div>
+        </div>
 
-                <!--@*<div id="Get_Admin_Attendance_Table">
+        <div id="Get_Admin_Attendance_Table">
 
-                </div>*@-->
-
-            <!--</div>
-        </div>-->
-    <!--</div>-->
-
+        </div>
+    </div>
+    @*-----*** REPLACE OLD TO NEW CODE START ***------*@
 
 
 
@@ -314,10 +190,13 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/Postingattendance.js"></script>
 
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 <script>
-    $("#F_IN_Class").change(fun01);
+    //$("#F_IN_Class").change(fun01);
     function fun01() {
         debugger;
         var value = $('#F_IC_Id').val();
@@ -334,7 +213,7 @@
     }
 
 
-    $("#F_IN_SubId").change(fun03);
+    /*  $("#F_IN_SubId").change(fun03);*/
     function fun03() {
         debugger;
         var SubClassificationId = $('#F_IC_Sub_Id').val();
@@ -355,7 +234,6 @@
 
     $(document).ready(function () {
         debugger;
-        // Add event listener to the form's submit event
         $("#myform").submit(function (event) {
             event.preventDefault(); // Prevent form submission
 
@@ -416,8 +294,7 @@
 
 
             }
-            else
-            {
+            else {
 
                 $("#validationMessage").html("");
                 $("#validation2").html("");

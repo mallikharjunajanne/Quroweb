@@ -373,59 +373,59 @@
 
     /*----ROLE DROPDOWN FUNCTION CODE START---*/
 
-    function Role_dropdown_Function() {
+    //function Role_dropdown_Function() {
 
-        /*  debugger;*/
-        var dropdown = document.getElementById("InstanceClassificationId_DD");
+    //    /*  debugger;*/
+    //    var dropdown = document.getElementById("InstanceClassificationId_DD");
 
-        // Clear existing options
-        dropdown.innerHTML = "";
-        /* debugger;*/
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId_DD").value;
+    //    // Clear existing options
+    //    dropdown.innerHTML = "";
+    //    /* debugger;*/
+    //    // Get the InstanceId value from the hidden input field
+    //    const instanceId = document.getElementById("InstanceId_DD").value;
 
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/Feereceipt_Classification_DD?InstanceId=${instanceId}`;
+    //    // Construct the fetch URL with the InstanceId as a query parameter
+    //    const fetchURL = `/FeeSection/Feereceipt_Classification_DD?InstanceId=${instanceId}`;
 
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
+    //    fetch(fetchURL)
+    //        .then(response => {
+    //            if (!response.ok) {
+    //                throw new Error("Request failed with status " + response.status);
+    //            }
+    //            return response.text();
+    //        })
+    //        .then(responseText => {
+    //            /* debugger;*/
+    //            const data = JSON.parse(responseText); // Parse the response
 
-                // Get the dropdown element
-                const dropdown = document.getElementById("InstanceClassificationId_DD");
+    //            // Get the dropdown element
+    //            const dropdown = document.getElementById("InstanceClassificationId_DD");
 
-                // Clear existing options
-                dropdown.innerHTML = "";
+    //            // Clear existing options
+    //            dropdown.innerHTML = "";
 
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
+    //            // Create the "--select--" option
+    //            const selectOption = document.createElement("option");
+    //            selectOption.value = ""; // Set the value to an empty string or any other appropriate value
+    //            selectOption.textContent = "-----Select------"; // Set the display text for the option
+    //            dropdown.appendChild(selectOption);
 
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
+    //            // Iterate through each item in the data
+    //            for (let i = 0; i < data.length; i++) {
+    //                const item = data[i];
+    //                const option = document.createElement("option");
+    //                option.value = item.value;
+    //                option.textContent = item.text;
+    //                dropdown.appendChild(option);
+    //            }
+    //        })
 
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
+    //        .catch(error => {
+    //            console.error("Error:", error);
+    //        });
+    //}
 
-    window.addEventListener('load', Role_dropdown_Function);
+    //window.addEventListener('load', Role_dropdown_Function);
 
     /*----ROLE DROPDOWN FUNCTION CODE END---*/
 

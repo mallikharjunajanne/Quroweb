@@ -103,6 +103,7 @@ function Departmentbysubclassdd(Departmentvalue) {
             var dropdown = $(dropdownSelector);
             var valueField = 'instanceSubclassificaitionId';
             var textField = 'subClassificationName';
+            dropdown.empty();
             $.each(response, function (index, item) {
                 dropdown.append($('<option>', {
                     value: item[valueField],
@@ -123,13 +124,14 @@ $("#Monthlyattendanceformid").on('submit', function () {
     event.stopImmediatePropagation();
     debugger;
     setTimeout(function () {
-
+        $('#Main_Span_Error').text('');
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationMessagesLength = validationMessages.length;
 
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
+
+            
 
             var formData = $('#Monthlyattendanceformid').serialize();
 
@@ -152,267 +154,346 @@ $("#Monthlyattendanceformid").on('submit', function () {
             var urls = "/Reports/MonthandClassattendancereport";
             handleAjax('GET', urls, formData,
                 function (response) {
-                    //bindDatatable(response); 
-                    debugger;
-                    var Tabledatarepsonse = response.classwisemonthreport;
-                    var Percentagedetails = response.percentagedetails;
-                    var attendancesummarydetails = response.attendancesummary;
+                    var retunmessage = response.returnmessage;
+                    if (retunmessage == "0") {
+                        $('#Main_Span_Error').text('Attendance is not Posted for the selected criteria');
+                        loaddingimg.css('display', 'none');
+                    } else {
+                        //bindDatatable(response); 
+                        $('#Appendsmonthwiseattendancereportdiv').show();
+                        debugger;
+                        var Tabledatarepsonse = response.classwisemonthreport;
+                        var Percentagedetails = response.percentagedetails;
+                        var attendancesummarydetails = response.attendancesummary;
 
-                    var table = $('#myTable').length;
-                    var tblhead = $('#tablehead');
-                    var tableBody = $('#tableBody');
-                    var tablefooter = $('#tablefooter');
+                        var table = $('#myTable').length;
+                        var tblhead = $('#tablehead');
+                        var tableBody = $('#tableBody');
+                        var tablefooter = $('#tablefooter');
 
-                    var month = $("#Month").val();
-                    var year = $("#Year").val();
+                        var month = $("#Month").val();
+                        var year = $("#Year").val();
 
-                    var DepartmentselectedText = $('#DdlDepartment option:selected').text();
-                    var ClassselectedText = $('#DdlClass option:selected').text();
+                        var DepartmentselectedText = $('#DdlDepartment option:selected').text();
+                        var ClassselectedText = $('#DdlClass option:selected').text();
 
-                    var labelElement = $('<label>').text('ADS SCHOOL');
-                    var headingText = "Attendance for " + DepartmentselectedText + ClassselectedText + " for the month of  " + month + "," + year;
-                    $('#Selectedclassnamesmonthwisediv').append($('<h6>').append(labelElement));
-                    $('#Selectedclassnamesmonthwisediv').append($('<h6>').text(headingText));
-
-
-
-
-
-
-
-
-                    var monthIndex = new Date(Date.parse(month + " 1, " + year)).getMonth();
-                    var monthName = new Date(Date.UTC(year, monthIndex, 1)).toLocaleString('en', { month: 'short' });
-                    var daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+                        var labelElement = $('<label>').text('ADS SCHOOL');
+                        var headingText = "Attendance for " + DepartmentselectedText + ClassselectedText + " for the month of  " + month + "," + year;
+                        $('#Selectedclassnamesmonthwisediv').append($('<h6>').append(labelElement));
+                        $('#Selectedclassnamesmonthwisediv').append($('<h6>').text(headingText));
 
 
 
-                    var firstRow = `<tr>
-    <td rowspan="2" align="center">S.No.</td>
-    <td rowspan="2" align="center">Adm.No.</td>
-    <td  align="center">Name</td>`;
-
-                    for (var day = 1; day <= daysInMonth; day++) {
-                        firstRow += `<td align="center" style="width:8px">${day}</td>`;
-                    }
-
-                    firstRow += `<td colspan="3" align="center">Present</td>
-    <td colspan="2" align="center">Absent</td>
-    <td colspan="2" align="center">Attendance%</td>
-</tr>`;
-                    var secondRow = '<tr>' +
-                        `<td align="center">Date</td>` + // Date column below Name
-                        `<td colspan="${daysInMonth}" align="center"></td>` +
-                        `<td align="center">${monthName}</td>` +
-                        '<td align="center">CarryFwd</td>' +
-                        '<td align="center">Total</td>' +
-                        `<td align="center">${monthName}</td>` +
-                        '<td align="center">Total</td>' +
-                        '<td align="center">Month</td>' +
-                        '<td align="center">Till Date</td>' +
-                        '</tr>';
 
 
-                    tblhead.append(firstRow);
-                    tblhead.append(secondRow);
-                    tableBody.empty();
-                    var rowCount = Tabledatarepsonse.length;;
 
-                    for (var i = 0; i < rowCount; i++) {
 
-                        var rowData = Tabledatarepsonse[i];
 
-                        if (rowData && rowData.dynamicColumns) {
-                            var dynamicColumns = rowData.dynamicColumns;
+                        var monthIndex = new Date(Date.parse(month + " 1, " + year)).getMonth();
+                        var monthName = new Date(Date.UTC(year, monthIndex, 1)).toLocaleString('en', { month: 'short' });
+                        var daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
 
+
+
+                        var firstRow = `<tr><td rowspan="2" align="center" style="border: 1px solid;">S.No.</td>
+                                            <td rowspan="2" align="center" style="border: 1px solid;">Adm.No.</td>
+                                            <td  align="center" style="border: 1px solid;">Name</td>`;
+
+                        for (var day = 1; day <= daysInMonth; day++) {
+                            firstRow += `<td align="center" style="width:8px; border: 1px solid;">${day}</td>`;
                         }
-                        if (typeof rowData === 'undefined') {
-                            continue; // Skip the iteration if 'item' is undefined
+
+                        firstRow += `<td colspan="3" align="center" style="border: 1px solid;">Present</td>
+                                      <td colspan="2" align="center" style="border: 1px solid;">Absent</td>
+                                       <td colspan="2" align="center" style="border: 1px solid;">Attendance%</td>
+                                     </tr>`;
+
+                        var secondRow = '<tr>' +
+                            `<td align="center" style="border: 1px solid;">Date</td>` + // Date column below Name
+                            `<td colspan="${daysInMonth}" align="center" style="border: 1px solid;"></td>` +
+                            `<td align="center" style="border: 1px solid;">${monthName}</td>` +
+                            '<td align="center" style="border: 1px solid;">CarryFwd</td>' +
+                            '<td align="center" style="border: 1px solid;">Total</td>' +
+                            `<td align="center" style="border: 1px solid;">${monthName}</td>` +
+                            '<td align="center" style="border: 1px solid;">Total</td>' +
+                            '<td align="center" style="border: 1px solid;">Month</td>' +
+                            '<td align="center" style="border: 1px solid;">Till Date</td>' +
+                            '</tr>';
+
+
+                        tblhead.append(firstRow);
+                        tblhead.append(secondRow);
+                        tableBody.empty();
+                        var rowCount = Tabledatarepsonse.length;;
+                        var loopExecuted = false;
+                        var itstrue = false;
+                        for (var i = 0; i < rowCount; i++) {
+
+                            var rowData = Tabledatarepsonse[i];
+
+                            if (rowData && rowData.dynamicColumns) {
+                                var dynamicColumns = rowData.dynamicColumns;
+
+                            }
+                            if (typeof rowData === 'undefined') {
+                                continue; // Skip the iteration if 'item' is undefined
+                            }
+                            var tableRow = $('<tr>');
+                            $('<td style="border: 1px solid;">').text(i + 1).prependTo(tableRow);
+                            tableRow.append($('<td style="border: 1px solid;">').text(rowData.admissionNumber));
+                            tableRow.append($('<td style="border: 1px solid;">').text(rowData.name));
+
+                            debugger;
+                            
+                            dynamicColumns.forEach(function (columnValue, index) {
+                                // Count the occurrences of <br> tags in the columnValue
+                                debugger;
+                                if (index>0) {
+
+                                
+                                var brCount = (columnValue.match(/<br>/g) || []).length;
+
+                                // Generate the HTML for the cell
+                                var cellHtml;
+                                if (brCount > 0) {
+                                    if (!itstrue) {
+                                        cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                                        itstrue = false;
+                                    } else {
+                                        cellHtml = `<td hidden ></td>`;
+                                    }
+                                    // If <br> tags are present, set rowspan based on the count of <br> tags
+                                    
+
+                                }
+                                else {
+                                    // If no <br> tags, generate a regular cell
+                                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                                }
+
+                                // Append the cell to the table row
+                               // tableRow.append($(cellHtml));
+
+                                /*if (!loopExecuted) {*/
+                                    tableRow.append($(cellHtml));
+                                    /* }*/
+                                }
+                            });
+                            loopExecuted = true;
+                            itstrue = true;
+                            
+                           
+                            //for (var index = 0; index <= daysInMonth; index++) {
+                            ////for (var index = 1; index <= daysInMonth; index++) {
+                            //    var columnValue = dynamicColumns[index];
+                            //    var cellHtml;
+                            //    debugger;
+                            //    if (i === 0) {
+                            //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                            //            cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //            rowspanStartRow = i;
+                            //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                            //            cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //            rowspanStartRow = i;
+                            //        } else {
+                            //            isEveryColumnSaturdaySunday = false;
+                            //            cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //        }
+                            //    } else {
+                            //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                            //            cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                            //            rowspanStartRow = i;
+                            //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                            //            cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
+                            //            rowspanStartRow = i;
+                            //        } else {
+                            //            isEveryColumnSaturdaySunday = false;
+                            //            cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //        }
+                            //    }
+
+
+
+                            //    //if (i === 0) {
+                            //    //    if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                            //    //        cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //    //        rowspanStartRow = i;
+                            //    //    } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                            //    //        cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                            //    //        rowspanStartRow = i;
+                            //    //    } else {
+                            //    //        isEveryColumnSaturdaySunday = false;
+                            //    //        cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //    //    }
+                            //    //} else {
+                            //    //    if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                            //    //        cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                            //    //        rowspanStartRow = i;
+                            //    //    } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                            //    //        cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                            //    //        rowspanStartRow = i;
+                            //    //    } else {
+                            //    //        isEveryColumnSaturdaySunday = false;
+                            //    //        cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                            //    //    }
+                            //    //}
+
+                            //    tableRow.append($(cellHtml));
+                            //}
+
+                            ///===========================
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 2]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 3]));
+                            //tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 4]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 5]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 6]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 7]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 8]));
+                            //tableRow.append($('<td style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 9]));
+                            //================================
+
+
+                            //tableRow.append($('<td align="center">').text(rowData.monthwise));
+                            //tableRow.append($('<td align="center">').text(rowData.Carry_Fwd));
+                            //tableRow.append($('<td align="center">').text(rowData.total));
+                            //tableRow.append($('<td align="center">').text(rowData.monthwise1));
+                            //tableRow.append($('<td align="center">').text(rowData.month));
+                            //tableRow.append($('<td align="center" style="border: 1px solid black;">').text(rowData.tillDate));
+
+                            tableBody.append(tableRow);
+
+                            rowCount++;
                         }
-                        var tableRow = $('<tr>');
-                        $('<td>').text(i + 1).prependTo(tableRow);
-                        tableRow.append($('<td>').text(rowData.admissionNumber));
-                        tableRow.append($('<td>').text(rowData.name));
 
-                        for (var index = 1; index <= daysInMonth; index++) {
-                            var columnValue = dynamicColumns[index];
-                            var cellHtml;
+                        var presentRow = $('<tr>');
+                        var absentRow = $('<tr>');
+                        var presentTotal = 0;
+                        var absentTotal = 0;
+                        presentRow.append($('<td colspan="3" style="border: 1px solid;">').text('Present Students'));
+                        absentRow.append($('<td colspan="3" style="border: 1px solid;">').text('Absent Students'));
+                        for (var j = 0; j < Percentagedetails.length; j++) {
 
-                            if (i === 0) {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
-                                }
-                            } else {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
-                                }
+                            var percentageData = Percentagedetails[j];
+
+                            var presentValue = parseFloat(percentageData.totalPresentsinDay);
+                            var absentValue = parseFloat(percentageData.totalAbsentsinDay);
+
+                            if (!isNaN(presentValue)) {
+                                presentTotal += presentValue;
+                            }
+                            if (!isNaN(absentValue)) {
+                                absentTotal += absentValue;
                             }
 
-                            tableRow.append($(cellHtml));
+                            presentRow.append($('<td align="center" style="border: 1px solid;">').text(presentValue === 0.0 ? '-' : presentValue.toString()));
+                            absentRow.append($('<td align="center" style="border: 1px solid;">').text(absentValue === 0.0 ? '-' : absentValue.toString()));
                         }
 
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 1]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 2]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 3]));
-                        tableRow.append($('<td align="center">').text(dynamicColumns[daysInMonth + 4]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 5]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 6]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 7]));
-                        tableRow.append($('<td>').text(dynamicColumns[daysInMonth + 8]));
+                        presentRow.append(presentTotal);
+                        absentRow.append(absentTotal);
 
-                        //tableRow.append($('<td align="center">').text(rowData.monthwise));
-                        //tableRow.append($('<td align="center">').text(rowData.Carry_Fwd));
-                        //tableRow.append($('<td align="center">').text(rowData.total));
-                        //tableRow.append($('<td align="center">').text(rowData.monthwise1));
-                        //tableRow.append($('<td align="center">').text(rowData.month));
-                        tableRow.append($('<td align="center">').text(rowData.tillDate));
+                        tableBody.append(presentRow);
+                        tableBody.append(absentRow);
 
-                        tableBody.append(tableRow);
-
-                        rowCount++;
-                    }
-
-                    var presentRow = $('<tr>');
-                    var absentRow = $('<tr>');
-                    var presentTotal = 0;
-                    var absentTotal = 0;
-                    presentRow.append($('<td colspan="3">').text('Present Students'));
-                    absentRow.append($('<td colspan="3">').text('Absent Students'));
-                    for (var j = 0; j < Percentagedetails.length; j++) {
-
-                        var percentageData = Percentagedetails[j];
-
-                        var presentValue = parseFloat(percentageData.totalPresentsinDay);
-                        var absentValue = parseFloat(percentageData.totalAbsentsinDay);
-
-                        if (!isNaN(presentValue)) {
-                            presentTotal += presentValue;
-                        }
-                        if (!isNaN(absentValue)) {
-                            absentTotal += absentValue;
-                        }
-
-                        presentRow.append($('<td align="center">').text(presentValue === 0.0 ? '-' : presentValue.toString()));
-                        absentRow.append($('<td align="center">').text(absentValue === 0.0 ? '-' : absentValue.toString()));
-                    }
-
-                    presentRow.append(presentTotal);
-                    absentRow.append(absentTotal);
-
-                    tableBody.append(presentRow);
-                    tableBody.append(absentRow);
-
-                    var trElement = tableBody.find('tr:first');
-                    var tdCount = trElement.find('td').length;
-                    var SummaryRow = $('<tr>');
-                    SummaryRow.append($('<td colspan="' + tdCount + '" align="center">').text('Summary').css('text-align', 'center'));
-                    tableBody.append(SummaryRow);
+                        var trElement = tableBody.find('tr:first');
+                        var tdCount = trElement.find('td').length;
+                        var SummaryRow = $('<tr>');
+                        SummaryRow.append($('<td colspan="' + tdCount + '" align="center" style="border: 1px solid;">').text('Summary').css('text-align', 'center'));
+                        tableBody.append(SummaryRow);
 
 
 
-                    var numberOfStudentsRow = `<td colspan="17" align="center">Number of Students</td>
-    <td colspan="17" align="center">Attendance</td>
-    <td colspan="2" rowspan="3" align="center">Holidays</td>
-    <td colspan="4"  align="center">Working Days</td>
+                        var numberOfStudentsRow = `<td colspan="17" align="center" style="border: 1px solid;">Number of Students</td>
+    <td colspan="17" align="center" style="border: 1px solid;">Attendance</td>
+    <td colspan="2" rowspan="3" align="center" style="border: 1px solid;">Holidays</td>
+    <td colspan="4"  align="center" style="border: 1px solid;">Working Days</td>
 </tr>`;
-                    var holidaysWorkingDaysRow = '<tr>' +
-                        `<td colspan="3" align="center">Start of Month</td>` +
-                        `<td colspan="5" align="center">End of Month</td>` +
-                        `<td colspan="4" align="center">Joinees</td>` +
-                        '<td colspan="5" align="center">Withdrawals</td>' +
-                        '<td colspan="5" align="center">Boys</td>' +
-                        `<td colspan="6" align="center">Girls</td>` +
-                        '<td colspan="6" align="center">Total</td>' +
-                        '<td colspan="1" align="center">' + monthName + '</td>' +
-                        '<td colspan="3" align="center">Since Start of Session</td>' +
-                        '</tr>';
-                    var boysgirlsrow = '<tr>' +
-                        `<td colspan="3" align="center"></td>` +
-                        `<td colspan="2" align="center">Boys</td>` +
-                        `<td colspan="3" align="center">Girls</td>` +
-                        '<td colspan="4" align="center"></td>' +
-                        '<td colspan="5" align="center"></td>' +
-                        `<td colspan="1" align="center">P(%)</td>` +
-                        '<td colspan="2" align="center">A(%)</td>' +
-                        '<td colspan="2" align="center">Avg.</td>' +
-                        '<td colspan="2" align="center">P(%)</td>' +
-                        '<td colspan="2" align="center">A(%)</td>' +
-                        '<td colspan="2" align="center">Avg.</td>' +
-                        '<td colspan="2" align="center">P(%)</td>' +
-                        '<td colspan="2" align="center">A(%)</td>' +
-                        '<td colspan="2" align="center">Avg.</td>' +
-                        '<td colspan="1" align="center"></td>' +
-                        '<td colspan="3" align="center"></td>' +
-                        '</tr>';
+                        var holidaysWorkingDaysRow = '<tr>' +
+                            `<td colspan="3" align="center" style="border: 1px solid;">Start of Month</td>` +
+                            `<td colspan="5" align="center" style="border: 1px solid;">End of Month</td>` +
+                            `<td colspan="4" align="center" style="border: 1px solid;">Joinees</td>` +
+                            '<td colspan="5" align="center" style="border: 1px solid;">Withdrawals</td>' +
+                            '<td colspan="5" align="center" style="border: 1px solid;">Boys</td>' +
+                            `<td colspan="6" align="center" style="border: 1px solid;">Girls</td>` +
+                            '<td colspan="6" align="center" style="border: 1px solid;">Total</td>' +
+                            '<td colspan="1" align="center" style="border: 1px solid;">' + monthName + '</td>' +
+                            '<td colspan="3" align="center" style="border: 1px solid;">Since Start of Session</td>' +
+                            '</tr>';
+                        var boysgirlsrow = '<tr>' +
+                            `<td colspan="3" align="center" style="border: 1px solid;"></td>` +
+                            `<td colspan="2" align="center" style="border: 1px solid;">Boys</td>` +
+                            `<td colspan="3" align="center" style="border: 1px solid;">Girls</td>` +
+                            '<td colspan="4" align="center" style="border: 1px solid;"></td>' +
+                            '<td colspan="5" align="center" style="border: 1px solid;"></td>' +
+                            `<td colspan="1" align="center" style="border: 1px solid;">P(%)</td>` +
+                            '<td colspan="2" align="center" style="border: 1px solid;">A(%)</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">Avg.</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">P(%)</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">A(%)</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">Avg.</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">P(%)</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">A(%)</td>' +
+                            '<td colspan="2" align="center" style="border: 1px solid;">Avg.</td>' +
+                            '<td colspan="1" align="center" style="border: 1px solid;"></td>' +
+                            '<td colspan="3" align="center" style="border: 1px solid;"></td>' +
+                            '</tr>';
 
-                    tableBody.append(numberOfStudentsRow);
-                    tableBody.append(holidaysWorkingDaysRow);
-                    tableBody.append(boysgirlsrow);
-
-
-
-                    var SummarydetailsRow = $('<tr>');
-                    var Summarydetails = attendancesummarydetails[0];
-
-                    SummarydetailsRow.append($('<td colspan="3" align="center">').text(Summarydetails.startofmonth));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.boys));
-                    SummarydetailsRow.append($('<td colspan="3" align="center">').text(Summarydetails.girls));
-                    SummarydetailsRow.append($('<td colspan="4" align="center">').text(Summarydetails.joinees));
-                    SummarydetailsRow.append($('<td colspan="5" align="center">').text(Summarydetails.withdrawals));
-                    SummarydetailsRow.append($('<td colspan="1" align="center">').text(Summarydetails.boysPresent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.boysAbsent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.boysAvg));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.girlsPresent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.girlsAbsent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.girlsAvg));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.totalPresent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.totalAbsent));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.totalAvg));
-                    SummarydetailsRow.append($('<td colspan="2" align="center">').text(Summarydetails.holidays));
-                    SummarydetailsRow.append($('<td colspan="1" align="center">').text(Summarydetails.currentmonth));
-                    SummarydetailsRow.append($('<td colspan="3" align="center">').text(Summarydetails.sincestartofsession));
+                        tableBody.append(numberOfStudentsRow);
+                        tableBody.append(holidaysWorkingDaysRow);
+                        tableBody.append(boysgirlsrow);
 
 
-                    tableBody.append(SummarydetailsRow);
+
+                        var SummarydetailsRow = $('<tr>');
+                        var Summarydetails = attendancesummarydetails[0];
+
+                        SummarydetailsRow.append($('<td colspan="3" align="center" style="border: 1px solid;">').text(Summarydetails.startofmonth));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.boys));
+                        SummarydetailsRow.append($('<td colspan="3" align="center" style="border: 1px solid;">').text(Summarydetails.girls));
+                        SummarydetailsRow.append($('<td colspan="4" align="center" style="border: 1px solid;">').text(Summarydetails.joinees));
+                        SummarydetailsRow.append($('<td colspan="5" align="center" style="border: 1px solid;">').text(Summarydetails.withdrawals));
+                        SummarydetailsRow.append($('<td colspan="1" align="center" style="border: 1px solid;">').text(Summarydetails.boysPresent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.boysAbsent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.boysAvg));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.girlsPresent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.girlsAbsent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.girlsAvg));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.totalPresent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.totalAbsent));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.totalAvg));
+                        SummarydetailsRow.append($('<td colspan="2" align="center" style="border: 1px solid;">').text(Summarydetails.holidays));
+                        SummarydetailsRow.append($('<td colspan="1" align="center" style="border: 1px solid;">').text(Summarydetails.currentmonth));
+                        SummarydetailsRow.append($('<td colspan="3" align="center" style="border: 1px solid;">').text(Summarydetails.sincestartofsession));
 
 
-                    debugger;
-
-                    var classTeacherLabel = $('<label>').text('Class Teacher').appendTo('#AttendanceSignaturesdiv');
-                    var classTeacherInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
-
-                    // Team Leader
-                    var teamLeaderLabel = $('<label>').text('Team Leader').appendTo('#AttendanceSignaturesdiv');
-                    var teamLeaderInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
-
-                    // Principal
-                    var principalLabel = $('<label>').text('Principal').appendTo('#AttendanceSignaturesdiv');
-                    var principalInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
-
-                    // Add CSS styles for better presentation
-                    $('.tablefooter label').css({
-                        'display': 'block', // Display labels on a new line
-                        'margin-bottom': '10px' // Add some space below each label
-                    });
+                        tableBody.append(SummarydetailsRow);
 
 
-                    loaddingimg.css('display', 'none');
+                        debugger;
+
+                        var classTeacherLabel = $('<label>').text('Class Teacher').appendTo('#AttendanceSignaturesdiv');
+                        var classTeacherInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
+
+                        // Team Leader
+                        var teamLeaderLabel = $('<label>').text('Team Leader').appendTo('#AttendanceSignaturesdiv');
+                        var teamLeaderInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
+
+                        // Principal
+                        var principalLabel = $('<label>').text('Principal').appendTo('#AttendanceSignaturesdiv');
+                        var principalInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
+
+                        // Add CSS styles for better presentation
+                        $('.tablefooter label').css({
+                            'display': 'block', // Display labels on a new line
+                            'margin-bottom': '10px' // Add some space below each label
+                        });
 
 
+                        loaddingimg.css('display', 'none');
+
+
+                    }
                 },
                 function (status, error) {
                     console.error("Error fetching data:", error);
@@ -683,9 +764,161 @@ $(document).on('click', '#Getmonthwiseattendnacetblmain #_monthwiseattendancerep
     window.print();
     document.body.innerHTML = originalContents;
 });
+//$(document).on('click', '#_MonthwiseattendancereportExportExcel', function () {
+//    var formattedDate = GetDateFormat();
 
+//    debugger;
 
+//    var workbook = new ExcelJS.Workbook();
+//    var worksheet = workbook.addWorksheet('Sheet1');
 
+//    // Set titles
+//    worksheet.addRows([
+//        ["Student wise attendance Report"],
+//        ["Quro Schools"],
+//        ["Report On:  " + formattedDate],
+//        [""]
+//    ]).forEach(row => row.font = { bold: true });
+
+//    // Set background color for titles and merge cells
+//    ['A1', 'A2', 'A3', 'A4'].forEach(cell => {
+//        worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
+//        worksheet.mergeCells(cell + ':AG' + cell.substring(1));
+//    });
+
+//    // Process StudentwiseattendaceReport table
+//    debugger;
+//    var tableData2 = document.getElementById("myTable");
+//    for (var i = 0; i < tableData2.rows.length; i++) {
+//        var row = tableData2.rows[i];
+//        var colIdx = 0;
+//        for (var j = 0; j < row.cells.length; j++) {
+//            var cell = row.cells[j];
+//            var colspan = cell.colSpan || 1;
+//            var rowspan = cell.rowSpan || 1;
+
+//            if (colspan > 1 || rowspan > 1) {
+//                worksheet.mergeCells(
+//                    i + 1,
+//                    colIdx + 1,
+//                    i + rowspan,
+//                    colIdx + colspan
+//                );
+
+//                // Set empty values to the rest of the merged area to avoid duplication
+//                for (var k = i + 1; k < i + rowspan; k++) {
+//                    for (var l = colIdx + 1; l < colIdx + colspan; l++) {
+//                        worksheet.getCell(k + 1, l + 1).value = '';
+//                    }
+//                }
+
+//                colIdx += colspan;
+//            } else {
+//                var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+//                addedCell.value = cell.innerText;
+//                colIdx++;
+//            }
+//        }
+//    }
+
+//    // Set border and width for cells
+//    for (var col = 3; col <= 34; col++) {
+//        worksheet.getColumn(col).width = 40; // Set the width as needed
+//    }
+//    worksheet.getColumn(1).width = 12;
+//    worksheet.getColumn(2).width = 20;
+
+//    // Generate .xls file and initiate download
+//    workbook.xlsx.writeBuffer().then(function (buffer) {
+//        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+//        var link = document.createElement("a");
+
+//        link.href = URL.createObjectURL(blob);
+//        link.download = "MonthWiseFullStatusofClassAttendanceReport.xls";
+
+//        document.body.appendChild(link);
+//        link.click();
+//        document.body.removeChild(link);
+//    });
+//});
+
+$(document).on('click', '#_MonthwiseattendancereportExportExcel', function () {
+    var formattedDate = GetDateFormat();
+
+    debugger;
+
+    var workbook = new ExcelJS.Workbook();
+    var worksheet = workbook.addWorksheet('Sheet1');
+
+    // Set titles
+    worksheet.addRows([
+        ["Student wise attendance Report"],
+        ["Quro Schools"],
+        ["Report On:  " + formattedDate],
+        [""]
+    ]).forEach(row => row.font = { bold: true });
+
+    // Set background color for titles and merge cells
+    ['A1', 'A2', 'A3', 'A4'].forEach(cell => {
+        worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
+        worksheet.mergeCells(cell + ':AG' + cell.substring(1));
+    });
+
+    // Process StudentwiseattendaceReport table
+    debugger;
+    var tableData2 = document.getElementById("myTable");
+    for (var i = 0; i < tableData2.rows.length; i++) {
+        var row = tableData2.rows[i];
+        var colIdx = 0;
+        for (var j = 0; j < row.cells.length; j++) {
+            var cell = row.cells[j];
+            var colspan = cell.colSpan || 1;
+            var rowspan = cell.rowSpan || 1;
+
+            if (colspan > 1 || rowspan > 1) {
+                worksheet.mergeCells(
+                    i + 1,
+                    colIdx + 1,
+                    i + rowspan,
+                    colIdx + colspan
+                );
+
+                // Set empty values to the rest of the merged area to avoid duplication
+                for (var k = i + 1; k < i + rowspan; k++) {
+                    for (var l = colIdx + 1; l < colIdx + colspan; l++) {
+                        worksheet.getCell(k + 1, l + 1).value = '';
+                    }
+                }
+
+                colIdx += colspan;
+            } else {
+                var addedCell = worksheet.getCell(i + 1, colIdx + 1);
+                addedCell.value = cell.innerText;
+                colIdx++;
+            }
+        }
+    }
+
+    // Set border and width for cells
+    for (var col = 3; col <= 34; col++) {
+        worksheet.getColumn(col).width = 30; // Set the width as needed
+    }
+    worksheet.getColumn(1).width = 12;
+    worksheet.getColumn(2).width = 20;
+
+    // Generate .xls file and initiate download
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "SectionwiseAttendanceReport.xls";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+});
 
 
 
@@ -802,7 +1035,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
     debugger;
-    //dropdown.empty(); // Clear existing options
+    dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
         text: '---Select---'
@@ -944,38 +1177,52 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                         tableRow.append($('<td>').text(rowData.gender));
                         tableRow.append($('<td>').text(rowData.dateOfJoining));
 
-
+                        debugger;
                         for (var index = 0; index <= daysInMonth; index++) {
                             var columnValue = dynamicColumns[index];
                             var cellHtml;
 
-
-                            if (i === 0) {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
-                                }
+                            if (index === 0) {
+                                // First row, set rowspan
+                                cellHtml = `<td rowspan="2" colspan="2" align="center">${columnValue}</td>`;
                             } else {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
-                                }
+                                // Other rows, hide cell with rowspan
+                                cellHtml = `<td rowspan="2" colspan="2" hidden>${columnValue}</td>`;
                             }
 
                             tableRow.append($(cellHtml));
                         }
+                        //for (var index = 0; index <= daysInMonth; index++) {
+                        //    var columnValue = dynamicColumns[index];
+                        //    var cellHtml;
+
+
+                        //    if (i === 0) {
+                        //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else {
+                        //            isEveryColumnSaturdaySunday = false;
+                        //            cellHtml = `<td align="center">${columnValue}</td>`;
+                        //        }
+                        //    } else {
+                        //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else {
+                        //            isEveryColumnSaturdaySunday = false;
+                        //            cellHtml = `<td align="center">${columnValue}</td>`;
+                        //        }
+                        //    }
+
+                        //    tableRow.append($(cellHtml));
+                        //}
 
                         tableRow.append($('<td align="center">').text(dynamicColumns[daysInMonth + 1]));
 

@@ -15,8 +15,108 @@
     #FirstTable td {
         border: 1px solid black;
     }
+
+    .ScreenShotImage span {
+        display: none;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .ScreenShotImage:hover span {
+        display: inline-block;
+    }
+
+    .ScreenShotImage {
+        position: relative;
+    }
+
+        .ScreenShotImage:hover::before {
+            display: none;
+            position: absolute;
+        }
 </style>
 
+<div id="Registertablediv1">
+    <div class="row mb-2">
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">
+                        STEPS TO BE FOLLOWED TO TAKE PRINT
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <table width="100%" cellpadding="0" cellspacing="0" align="center" class="tablesideborders">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 24px;">
+                                            <table cellpadding="0" id="tblinstructions" width="100%" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 1:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage1" src="~/Images/Print1.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;">
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <label>Click on "Preferences" button on General Tab of Print window.</label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 2:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage2" src="../Images/Print2.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <label>Click on "Orientation" Dropdown and select "Landscape" option.</label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="24%">
+                                                            &nbsp;<b>Step 3:-</b>&nbsp;
+                                                            <a class="ScreenShotImage" href="#">
+                                                                (<u>View screenshot</u>)
+                                                                <span>
+                                                                    <img id="screenshotImage3" src="~/Images/Print.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <label>Adjust left and right margins by clicking print preview option.</label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content">
+    <div class="col-sm-6">
+        <input type="button" value="Export Excel" title="Export To Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_MonthwiseattendancereportExportExcel" />
+    </div>
+    <div class="col-sm-6 text-end " id="Getmonthwiseattendnacetblmain">
+        <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_monthwiseattendancereportPrint" />
+    </div>
+</div>
 <div class="row mb-2">
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4" id="PayementdetailsSearchpagemaindiv">
@@ -31,15 +131,53 @@
                 <div class="card-datatable text-nowrap">
                     <div class="table-responsive">
                         <div class="table-responsive text-nowrap">
-                            <div>
-                                <input type="button" value="Export Excel" title="Export To Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_MonthwiseattendancereportExportExcel" />
-                                <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_monthwiseattendancereportPrint" />
-                            </div>
+
                             <div class="table-responsive text-nowrap" id="Printmonthwiseattendancereport">
+                                <table width="100%" border="0" style="background-color: white; color: slateblue; font-weight: bolder; background-color: white; color: slateblue; font-weight: bolder;">
+                                    <tbody>
+                                        <tr>
+                                            <td align="left" colspan="3" style="font-size:12px;font-weight:color:#000000;">
+                                                <b>Note: </b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left" style="font-size:10px;font-weight:200;">
+                                                <ul>
+                                                    <li> P-- Present </li>
+                                                    <li> A-- Absent </li>
+                                                    <li> OS-- Out of Station </li>
+                                                    <li> UW-- Urgent Work </li>
+                                                    <li> OL-- Official Leave </li>
+
+
+                                                </ul>
+                                            </td>
+                                            <td align="left" style="font-size:10px;font-weight:200;">
+                                                <ul>
+
+                                                    <li> DA-- Doctor Appointment  </li>
+                                                    <li> NA-- No Application </li>
+                                                    <li> NE-- No Examination </li>
+
+                                                    <li> PL-- Preparatory Leave </li>
+                                                    <li> UFR-- Urgent Family Reason  </li>
+                                                </ul>
+                                            </td>
+                                            <td align="left" style="font-size:10px;font-weight:200;">
+                                                <ul>
+                                                    <li> 1HP-- First half Present </li>
+                                                    <li> 2HP-- Second half Present </li>
+                                                    <li> IL-- Illness </li>
+                                                    <li> O-- Others </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 <div id="Selectedclassnamesmonthwisediv">
 
                                 </div>
-                                <table class="table-bordered" id="myTable">
+                                <table class="" id="myTable" style=" border-collapse: separate;">
                                     <thead class="table-warning" id="tablehead">
 
                                     </thead>
@@ -63,3 +201,9 @@
 
 <script src="~/js/GeneralFunctions.js"></script>
 <script src="~/js/Monthwiseclassattendancereport.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>

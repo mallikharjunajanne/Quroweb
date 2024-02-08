@@ -1,38 +1,28 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model List<ChallanaDetails>
 
 
-@*@model List<PAY_FEE_CORRECTIONS_BY_USERS>*@
-@model List<Feeupdaterecieptdetails>
-
-<div class="row justify-content text-end">
-    <div class="col-sm-12">
-        <button id="Printmatrixbutton" class="btn btn-secondary waves-effect waves-light">PRINT On Dot-Matrix</button>
-        <button id="printbtn" class="btn btn-secondary waves-effect waves-light">Print</button>
-    </div>
-</div>
 
 
-<div class="card-body" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
-    @*<div>
-            <h5 class="mb-0">
-                <button class="FeeTerms_Edit_ButtonView" style="width: 100%; margin-left: 0px;">
-                    FEE RECEIPT(S)
-                </button>
-            </h5>
-        </div>*@
-    <div>
-        @foreach (var item in ViewBag.ChallanDetails)
+    <div class="row justify-content text-end">
+        <div class="col-sm-12">
+            <button id="Print_Matrix_Button" class="btn btn-secondary waves-effect waves-light">PRINT On Dot-Matrix</button>
+            <button id="Print_Button" class="btn btn-secondary waves-effect waves-light">Print</button>   
+        </div>
+    </div> 
+
+    <div class="card-body" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
+        @foreach (var item in Model)
         {
-
-            <div id="Fee_DetailsPrintUpdatechallanprint">
+            <div id="Fee_DetailsPrint">
                 <table class="table table-bordered">
                     <tbody style="">
                         <tr style="border: white;text-align: right;">
                             <td colspan="12" class="">
-                                <span id="dateSpan">@item.PaidDate</span><br>
-                                <span id="timeSpan"> @item.PaidTime</span>
+                                <span id="dateSpan"></span><br>
+                                <span id="timeSpan"></span>
                             </td>
                         </tr>
                         <tr style="border-color:white;">
@@ -55,12 +45,12 @@
                                 Name :
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.FirstName
+                                @item.Challana_UserName
                             </td>
 
                             <td class="" style=" text-align: right;">Fee Amount :</td>
                             <td class="" style="text-align: left;">
-                                @item.FeeAmount
+                                @item.Challana_FeeAmount
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -68,12 +58,12 @@
                                 Registration Number:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.AdmissionNumber
+                                @item.Challana_UserRegId
                             </td>
 
                             <td class="" style=" text-align: right;">Discount Type :</td>
                             <td class="" style="text-align: left;">
-                                @(item.DiscountName != "" ? item.DiscountName : "NA")
+                                @(string.IsNullOrEmpty(item.Challana_DiscountType) ? "NA" : item.Challana_DiscountType)
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -81,12 +71,12 @@
                                 Department:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.ClassificationName
+                                @item.Challana_ClassificationName
                             </td>
 
                             <td class="" style=" text-align: right;">Discount Amount :</td>
                             <td class="" style="text-align: left;">
-                                @(item.ConcedingAmount == "0.00" ? "NILL" : item.ConcedingAmount)
+                                @(item.Challana_DiscountAmount == null ? "NILL" : item.Challana_DiscountAmount.ToString())
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -94,12 +84,12 @@
                                 Semester:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.SubClassificationName
+                                @item.Challana_subclassificationName
                             </td>
 
                             <td class="" style=" text-align: right;">Paid Amount :</td>
                             <td class="" style="text-align: left;">
-                                @item.Amount_Txt
+                                @item.Challana_PaidAmount
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -107,12 +97,12 @@
                                 Term:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.Term
+                                @item.Challana_TermName
                             </td>
 
                             <td class="" style=" text-align: right;">Due Amount :</td>
                             <td class="" style="text-align: left;">
-                                @item.DueAmount
+                                @item.Challana_DueAmount
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -120,12 +110,12 @@
                                 Due Date:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.DueDate
+                                @item.Challana_DueDate
                             </td>
 
                             <td class="" style=" text-align: right;">Paying Amount :</td>
                             <td class="" style="text-align: left;">
-                                @item.Amount_Txt
+                                @item.Challana_PayingAmount
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -133,12 +123,12 @@
                                 Fee type:
                             </td>
                             <td class="" style="text-align: left;">
-                                @item.FeeType
+                                @item.Challana_FeeType
                             </td>
 
                             <td class="" style=" text-align: right;">Balance Due :</td>
                             <td class="" style="text-align: left;">
-                                @item.balanceamount
+                                @item.Challana_BalanceDue
                             </td>
                         </tr>
                         <tr style="border: white;">
@@ -151,15 +141,12 @@
 
                             <td style="text-align: center;">Signature Of Payee</td>
                         </tr>
-                        <tr style="">
-                        </tr>
                     </tbody>
                 </table>
             </div>
 
 
-
-            <div id="MatricChallanaPrintUpdatechallandiv">
+            <div id="MatricChallanaPrint">
                 <table class="table table-bordered">
                     <tbody style="">
                         <tr style="border: white;text-align: center;">
@@ -179,12 +166,12 @@
                                 RECEIPT NO :
                             </td>
                             <td colspan="2" class="" style="text-align: left;">
-                                @item.ReceiptNo
+                                @item.ReturnStringValue
                             </td>
 
                             <td colspan="2" class="" style=" text-align: right;">RECEIPT DATE :</td>
                             <td colspan="1" class="" style="text-align: left;">
-                                @item.PaidDate
+                                @item.Challana_UserName
                             </td>
                         </tr>
                         <tr style="border-color: white;">
@@ -194,16 +181,15 @@
                                 Name :
                             </td>
                             <td colspan="1" class="lbl" style="text-align: left;">
-                                @item.FirstName
+                                @item.Challana_UserName
                             </td>
                             <td class="" style=" text-align: right;">CLASS :</td>
-                            <td colspan="1" class="">@item.ClassificationName</td>
+                            <td colspan="1" class="">@item.Challana_subclassificationName</td>
                             <td colspan="1" class="" style="text-align: right;">
                                 ADM.NO :
                             </td>
-                            <td colspan="2" class="">@item.AdmissionNumber</td>
+                            <td colspan="2" class="">@item.Challana_UserRegId</td>
                         </tr>
-
                         <tr>
                         </tr>
 
@@ -215,14 +201,14 @@
                             <td colspan="4" class="" style="text-align: right;">
                                 Instalment Number ****
                             </td>
-                            <td class="">@item.Term</td>
+                            <td class="">@item.Challana_TermName</td>
 
                         </tr>
                         <tr style="border-color: white;">
                             <td colspan="4" class="" style="text-align: right;">
                                 Amount ****
                             </td>
-                            <td class="Inslbl">@item.Amount_Txt</td>
+                            <td class="Inslbl">@item.Challana_PayingAmount</td>
                         </tr>
                         <tr style="border-color: white;">
 
@@ -235,7 +221,7 @@
                             <td colspan="4" class="" style="text-align: right;">
                                 TOTAL FEE      ****
                             </td>
-                            <td colspan="5" class="">@item.Amount_Txt</td>
+                            <td colspan="5" class="">@item.Challana_PayingAmount</td>
                         </tr>
                         <tr style="border-color: white;">
 
@@ -244,7 +230,6 @@
                             </td>
 
                         </tr>
-
 
                         <tr style="border-color: white;">
                             <td colspan="12" style="text-align: right;">
@@ -257,90 +242,96 @@
                 </table>
             </div>
 
-
         }
+        <div class="row justify-content text-center">
+            <div class="col-sm-12">
+                <button type="button" id="Pfuchallanbacktosearchbtn" class="btn btn-dark waves-effect waves-light">Back To Search</button>
+                <button type="button" id="Pfuchallanbacktopayfeebtn" class="btn btn-dark waves-effect waves-light">Back To Pay Fee</button>
+            </div>
+        </div>
     </div>
-    </div>
 
-
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          
 
 
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-    <script>
-        $(document).ready(function () {
-
-
-            updateDateTime();
-
-
-            setInterval(updateDateTime, 1000);
-
-
-        });
-
-        function updateDateTime() {
-            const currentDate = new Date();
-            const months = [
-                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-            ];
-
-            const month = months[currentDate.getMonth()];
-            const day = currentDate.getDate();
-            const year = currentDate.getFullYear();
-            const hours = currentDate.getHours();
-            const minutes = currentDate.getMinutes();
-            const amOrPm = hours >= 12 ? "PM" : "AM";
-            const formattedHours = hours % 12 || 12;
-
-            const formattedDate = `${month} ${day} ${year}`;
-            const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
-
-            // Update the <span> elements with the formatted date and time
-            document.getElementById("dateSpan").textContent = formattedDate;
-            document.getElementById("timeSpan").textContent = formattedTime;
-        }
-
-        document.getElementById("Printmatrixbutton").addEventListener("click", function () {
-            // Get the content of the div with id 'MatricChallanaPrint'
-            const printContent = document.getElementById("MatricChallanaPrintUpdatechallandiv").innerHTML;
-
-            // Create a new window for printing
-            const printWindow = window.open('', '', 'width=800,height=600');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Print</title></head><body>');
-
-            // Write the content to the new window
-            printWindow.document.write(printContent);
-
-            // Close the new window after printing
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-            printWindow.close();
-        });
 
 
 
-        document.getElementById("printbtn").addEventListener("click", function () {
-            const printContent = document.getElementById("Fee_DetailsPrintUpdatechallanprint").innerHTML;
-            const printWindow = window.open('', '', 'width=800,height=600');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
-            printWindow.document.write(printContent);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-            printWindow.close();
-        });
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Payfeeforuserpartialview.js"></script>
+
+<script>
+    //$(document).ready(function () {
 
 
-    </script>
+    //    updateDateTime();
+
+
+    //    setInterval(updateDateTime, 1000);
+
+
+    //});
+
+    //function updateDateTime() {
+    //    const currentDate = new Date();
+    //    const months = [
+    //        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    //        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    //    ];
+
+    //    const month = months[currentDate.getMonth()];
+    //    const day = currentDate.getDate();
+    //    const year = currentDate.getFullYear();
+    //    const hours = currentDate.getHours();
+    //    const minutes = currentDate.getMinutes();
+    //    const amOrPm = hours >= 12 ? "PM" : "AM";
+    //    const formattedHours = hours % 12 || 12;
+
+    //    const formattedDate = `${month} ${day} ${year}`;
+    //    const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
+
+    //    // Update the <span> elements with the formatted date and time
+    //    document.getElementById("dateSpan").textContent = formattedDate;
+    //    document.getElementById("timeSpan").textContent = formattedTime;
+    //}
+
+    //document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
+    //    // Get the content of the div with id 'MatricChallanaPrint'
+    //    const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
+    //    //const printContent = document.getElementById("MatricChallanaPrintdiv").innerHTML;
+
+    //    // Create a new window for printing
+    //    const printWindow = window.open('', '', 'width=800,height=600');
+    //    printWindow.document.open();
+    //    printWindow.document.write('<html><head><title>Print</title></head><body>');
+
+    //    // Write the content to the new window
+    //    printWindow.document.write(printContent);
+
+    //    // Close the new window after printing
+    //    printWindow.document.write('</body></html>');
+    //    printWindow.document.close();
+    //    printWindow.print();
+    //    printWindow.close();
+    //});
+
+
+
+    //document.getElementById("Print_Button").addEventListener("click", function () {
+    //    //const printContent = document.getElementById("Fee_DetailsPrintdiv").innerHTML;
+    //    const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
+    //    const printWindow = window.open('', '', 'width=800,height=600');
+    //    printWindow.document.open();
+    //    printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
+    //    printWindow.document.write(printContent);
+    //    printWindow.document.write('</body></html>');
+    //    printWindow.document.close();
+    //    printWindow.print();
+    //    printWindow.close();
+    //});
+
+
+</script>
