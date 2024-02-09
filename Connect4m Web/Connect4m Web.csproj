@@ -762,7 +762,6 @@
     <None Include="wwwroot\assets\js\ui-navbar.js" />
     <None Include="wwwroot\assets\js\ui-popover.js" />
     <None Include="wwwroot\assets\js\ui-toasts.js" />
-    <None Include="wwwroot\assets\js\vertical-menu.js" />
     <None Include="wwwroot\assets\js\wizard-ex-checkout.js" />
     <None Include="wwwroot\assets\js\wizard-ex-create-deal.js" />
     <None Include="wwwroot\assets\js\wizard-ex-property-listing.js" />
@@ -1324,6 +1323,7 @@
     <None Include="wwwroot\assets\vendor\fonts\fontawesome\fa-solid-900.woff2" />
     <None Include="wwwroot\assets\vendor\fonts\fontawesome\fa-v4compatibility.woff2" />
     <None Include="wwwroot\assets\vendor\fonts\tabler\tabler-icons.woff2" />
+    <None Include="wwwroot\assets\vendor\js\bootstrap.js" />
     <None Include="wwwroot\assets\vendor\js\dropdown-hover.js" />
     <None Include="wwwroot\assets\vendor\js\helpers.js" />
     <None Include="wwwroot\assets\vendor\js\mega-dropdown.js" />

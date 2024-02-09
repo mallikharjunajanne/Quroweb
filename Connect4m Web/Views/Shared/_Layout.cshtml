@@ -171,15 +171,15 @@
                         <div class="navbar-nav align-items-center">
                             <div class="nav-item navbar-search-wrapper mb-0">
                                 @*<a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);">
-        <i class="ti ti-search ti-md me-2"></i>
-            <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
-           </a>*@
+                                    <i class="ti ti-search ti-md me-2"></i>
+                                        <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
+                                       </a>*@
 
 
                                 @if (@Context.Request.Cookies["UserNameHeader_"] != null)
                                 {
-                                <label class="col-sm-3 col-form-label text-end">@Context.Request.Cookies["UserNameHeader_"].ToUpper()</label>
-                                   
+                                    <label class="col-sm-3 col-form-label text-end">@Context.Request.Cookies["UserNameHeader_"].ToUpper()</label>
+
                                 }
 
                             </div>
@@ -575,7 +575,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt="" class="h-auto rounded-circle" />
+                                        <img src="~/assets/img/avatars/1.png" alt class="h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -645,87 +645,6 @@
                                 </ul>
                             </li>
                             <!--/ User -->
-
-                            <!--Rakesh-->
-                            <!--<li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
-                                    <div class="avatar avatar-online">
-                                        <img src="../../assets/img/avatars/1.png" alt="" class="h-auto rounded-circle">
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end show" data-bs-popper="static">
-                                    <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        <img src="../../assets/img/avatars/1.png" alt="" class="h-auto rounded-circle">
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <span class="fw-medium d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-profile-user.html">
-                                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
-                                            <i class="ti ti-settings me-2 ti-sm"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-account-settings-billing.html">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-faq.html">
-                                            <i class="ti ti-help me-2 ti-sm"></i>
-                                            <span class="align-middle">FAQ</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-pricing.html">
-                                            <i class="ti ti-currency-dollar me-2 ti-sm"></i>
-                                            <span class="align-middle">Pricing</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>-->
-                                        @*<a class="dropdown-item" href="auth-login-cover.html" target="_blank">
-            <i class="ti ti-logout me-2 ti-sm"></i>
-            <span class="align-middle">Log Out</span>
-        </a>*@
-                                        <!--<a class="dropdown-item" href="/Attendance/LogoutPage">
-                                            <i class="ti ti-logout me-2 ti-sm"></i>
-                                            <span class="align-middle">Log Out</span>
-                                        </a>
-
-                                    </li>
-                                </ul>
-                            </li>-->
-                            <!--Rakesh-->
-
                         </ul>
                     </div>
 
@@ -796,7 +715,7 @@
 
 
 
-                        @*--------------Alert-success span  *@
+
                         <div class="alert alert-success dark alert-dismissible fade show" role="alert" style="border: 1px solid black;">
 
                             <p style="overflow: visible !important; white-space: pre-wrap;max-width: 95% !important;text-align:initial "> </p>
@@ -845,7 +764,7 @@
     <script src="~/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="~/assets/vendor/libs/popper/popper.js"></script>
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>*@
+        <script src="~/lib/jquery/dist/jquery.js"></script>*@
     <script src="~/assets/vendor/js/bootstrap.js"></script>
 
     <script src="~/assets/vendor/libs/node-waves/node-waves.js"></script>
@@ -864,7 +783,7 @@
     @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
- 
+
 
 
 
