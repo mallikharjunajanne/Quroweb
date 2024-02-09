@@ -1,95 +1,172 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ManageClassification
 @{
-    ViewData["Title"] = "ManageClassification";
+    //ViewData["Title"] = "ManageClassification";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl " id="Managedepartmentmaindiv">
 
+        @*<span id="Studentdetailsid" class="text-dark"></span><input type="hidden" id="Studentuseridspid" />
+            <span id="Errormessage" class="text-danger"></span>*@
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>MANAGE DEPARTMENT </h4>
 
-<div class="card">
-    <div class="card-body">
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <h6><span>MANAGE DEPARTMENT</span></h6>
+        @*<<<<==== USER FEE PAYEMENT DETAILS SEARCH DIV START =====>>>*@
 
-                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
-                    <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 79%; border-radius: 15px; height: 35px; margin-bottom: 3px;" id="addnewmanagequotes">
-                        Create Department
-                    </button>
-                </div>
-                <div id="Manageclassificationmaindiv">
-                    <div class="col-12" id="accordionoc1">
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">SEARCH DEPARTMENT</button>
-                            </h5>
-                        </div>
-                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-                            <div class="padding-search row" id="ManageHolidaysMaindivId">
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="form-grop control-label space">Department Name </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <input type="text" class="form-control" name="DepartName" id="DepartName_txtid" />
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="form-grop control-label space">Description  </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                       <textarea class="form-control" id="Descriptiontxtid"></textarea>
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"></div>
-                                    <div class="form-group col-4">
-                                        <input type="button" id="Mainview_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
-                                        <input type="button" id="Mainview_Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
-                                    </div>
-                                    <div class="col-3"></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Manageclassification_containerdivId">
-                        <span id="Errmsg" class="text-danger" style="position: absolute; margin: -20px 10px 0px 5px; "></span>
-                        <div class="col-12" id="accordionoc2">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">	YOUR SEARCH RESULTED <span id="Classification_Recordscount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORDS.</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-                                <div class="rowheight">
-                                  <table class="table table-bordered" id="ManageClassificationtbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                        <thead>
-                                            <tr style="border-color: black;">
-                                                <th style=" border-color: blue; width: 16px; " class="bg-primary;">SNO</th>
-                                                <th style=" border-color: blue; width: 60%; " class="bg-primary">Department</th>
-                                                <th style=" border-color: blue; width: 63px;" class="bg-primary">Description</th>
-                                                <th style=" border-color: blue; width: 0%;" class="bg-primary">Delete</th>
-                                            </tr>
-                                        </thead>
-                                        @*<tbody>            </tbody>*@
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="Manageclassification_Insertdiv2">
-
-                </div>
-                <div id="Manageclassification_Updatediv3">
-
-                </div>               
+    <div class="row mb-2" id="Searchuserfields_tabledatadiv1">
+        @*Searchuserfields_tabledatadiv1*@
+        <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
+            <div class="col-sm-12 text-end">
+                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " id="addnewmanagequotes" onclick="Create_NewFeeSection(event);">Create Department</button>
             </div>
         </div>
+        <div id="Manageclassificationmaindiv">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            SEARCH DEPARTMENT
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @*id="Manageclassificationmaindiv"*@
+                        <div class="row">
+                            <div class="col">
+
+                                @*<div class="card">
+                                <div class="card-body">
+                                    <div class="default-according style-1" id="accordionoc">
+                                        <div class="card">
+                                            <h6><span>MANAGE DEPARTMENT</span></h6>
+
+                                            <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
+                                                <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 79%; border-radius: 15px; height: 35px; margin-bottom: 3px;" id="addnewmanagequotes">
+                                                    Create Department
+                                                </button>
+                                            </div>*@
+                                @*<div id="Manageclassificationmaindiv">
+                                <div class="col-12" id="accordionoc1">
+                                    <div class="card-header bg-primary">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">SEARCH DEPARTMENT</button>
+                                        </h5>
+                                    </div>*@
+                                <form class="form" id="SEARCH_FEE_TYPES_FORM">
+                                    <div class="row mb-3">
+                                        <label class="control-label col-sm-4 col-form-label text-end space">Department Name </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="DepartName" id="DepartName_txtid" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="control-label col-sm-4 col-form-label text-end space">Description </label>
+                                        <div class="col-sm-4">
+                                            <textarea class="form-control" id="Descriptiontxtid"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            @* <button type="button" class="btn btn-info waves-effect waves-light">Previous Page</button>*@
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('attendancesummaryform')" id="Mainview_Clearbtn">Clear</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light" id="Mainview_Searchbtn">Search</button>
+                                            @* <button type="submit" class="btn btn-primary waves-effect waves-light">Next Page</button>*@
+
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                                @*<div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
+                                        <div class="padding-search row" id="ManageHolidaysMaindivId">
+                                            <div class="row">
+                                                <div class="col-3"></div>
+                                                <div class="form-group col-2">
+                                                    <label class="form-grop control-label space">Department Name </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <input type="text" class="form-control" name="DepartName" id="DepartName_txtid" />
+                                                </div>
+                                                <div class="col-3"></div>
+                                                <div class="col-3"></div>
+                                                <div class="form-group col-2">
+                                                    <label class="form-grop control-label space">Description  </label>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <textarea class="form-control" id="Descriptiontxtid"></textarea>
+                                                </div>
+                                                <div class="col-3"></div>
+                                                <div class="col-3"></div>
+                                                <div class="form-group col-2"></div>
+                                                <div class="form-group col-4">
+                                                    <input type="button" id="Mainview_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                                                    <input type="button" id="Mainview_Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
+                                                </div>
+                                                <div class="col-3"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Manageclassification_containerdivId">
+                <span id="Errmsg" class="text-danger" style="position: absolute; margin: -20px 10px 0px 5px; "></span>
+
+
+                @*<div class="col-12" id="accordionoc2">*@
+                    @*<div class="card-header bg-primary">
+            <h5 class="mb-0">
+                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">	YOUR SEARCH RESULTED <span id="Classification_Recordscount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORDS.</button>
+            </h5>
+        </div>*@
+                    <div class="col-md-12 col-lg-12 mb-3">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <h5 class="mb-0">
+                                    YOUR SEARCH RESULTED<span id="Classification_Recordscount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span>RECORDS.
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
+                                    <div class="rowheight">
+                                        <table class="table table-bordered" id="ManageClassificationtbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
+                                            <thead>
+                                                <tr style="border-color: black;">
+                                                    <th style=" border-color: blue; width: 16px; " class="bg-primary;">SNO</th>
+                                                    <th style=" border-color: blue; width: 60%; " class="bg-primary">Department</th>
+                                                    <th style=" border-color: blue; width: 63px;" class="bg-primary">Description</th>
+                                                    <th style=" border-color: blue; width: 0%;" class="bg-primary">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            @*<tbody>            </tbody>*@
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="Manageclassification_Insertdiv2">
+
+                    </div>
+                    <div id="Manageclassification_Updatediv3">
+
+                    </div>
+                </div>
+           
+       
     </div>
-</div>
+
+</body>
+</html>
+
 
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>

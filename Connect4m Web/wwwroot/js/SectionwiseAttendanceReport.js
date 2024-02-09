@@ -827,8 +827,8 @@ $(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelb
 
 
 
-$(document).on('click', '#_AttendancereportExportExcel_', function () {
-    var formattedDate = GetDateFormat();
+//$(document).on('click', '#_AttendancereportExportExcel_', function () {
+//    var formattedDate = GetDateFormat();
 
 //    var workbook = new ExcelJS.Workbook();
 //    var worksheet = workbook.addWorksheet('Sheet1');
@@ -978,7 +978,7 @@ $(document).on('click', '#_AttendancereportExportExcel_', function () {
 //    //==============================================  For Table 1
 
     //var tableData1 = document.getElementById("FirstTable");
-    var tableData2 = document.getElementById("StudentwiseattendaceReport");
+   // var tableData2 = document.getElementById("StudentwiseattendaceReport");
     
 
    
@@ -1165,7 +1165,7 @@ $(document).on('click', '#_AttendancereportExportExcel_', function () {
 //});
 
 
-function extractBackgroundColor(html) {
-    var match = /background-color\s*:\s*([^;]+);/i.exec(html);
-    return match ? match[1] : 'ffffff'; // Default color if not found
-}
+//function extractBackgroundColor(html) {
+//    var match = /background-color\s*:\s*([^;]+);/i.exec(html);
+//    return match ? match[1] : 'ffffff'; // Default color if not found
+//}

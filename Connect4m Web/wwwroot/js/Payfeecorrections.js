@@ -391,9 +391,7 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
             handleAjax('GET', `/FeeSection/Pfcuserwisefeedetails`, { UserId: StudentUserId },
             function (response) {
                 debugger;
-            //var responseData = response[0];
-            //var tbl1Array = responseData.paY_FEE_CORRECTIONS_BY_USERS_Tbl1;
-            //var tbl3Array = responseData.paY_FEE_CORRECTIONS_BY_USERS_Tbl3;
+         
 
 
                 var Feetermsdropdownvalues = response.feetermsnames;
@@ -402,6 +400,8 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
                 var feedetialsbyuseridtbl = response.feedetialsli;//--
                 var totalpayedamounttbl = response.userpayedli;
                 var termsdd = response.termdetaisli;//--
+                var Managefeedetailsfeeterms = response.managefeedetailsfeeterms;//--
+                $('#Challan_DDId').empty();
 
             if (Feetermsdropdownvalues.length != 0) {
 
@@ -410,8 +410,8 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
                     var optionForTermId = $('<option></option>').val(termsdd[i].feeTermId).text(termsdd[i].termName);
                     $('#ddltermid').append(optionForTermId);
                 }
-                for (var k = 0; k < termsdd.length; k++) {
-                    var optionForFeetermid = $('<option></option>').val(termsdd[k].feeTermId).text(termsdd[k].termName);
+                for (var k = 0; k < Managefeedetailsfeeterms.length; k++) {
+                    var optionForFeetermid = $('<option></option>').val(Managefeedetailsfeeterms[k].feeTermId).text(Managefeedetailsfeeterms[k].termName);
                     $('#ddlFeetermid').append(optionForFeetermid);
                 }
                 for (var k = 0; k < Feetermsdropdownvalues.length; k++) {
@@ -1374,6 +1374,9 @@ function backToSearchfun(event) {
     $('#Update_SubmitvalidationMessage').text('');
     $('#SubmitvalidationMessage').text('');
 
+    $('#validationMessage').text('');
+    $('#validation').text('');
+
     $('#MANAGEFEEDETAILSFORM')[0].reset();
     $('#Searchuserfields_tabledatadiv1').show();
     $('#Userfeedetailsdiv2').hide();
@@ -1415,26 +1418,29 @@ function Dropdwonfunction(FeetermId) {
 }
 
 
-$('#ddlfeetype').change(function () {
-
+//$('#ddlfeetype').change(function () {
+$('#ddlfeetypedivid').change(function () {
+    debugger;
     var FeetypeId = $('#ddlfeetype').val();
     Feetypedropdwonfunction(FeetypeId);
 });
 function Feetypedropdwonfunction(FeetypeId) {
     //PFUC_Feetypeby_Discounttype
-    handleAjax('GET', '/FeeSection/PfuDiscounttypebyfeetype', { FeetypeId: FeetypeId },
+    
+    debugger;
+    handleAjax('GET', '/FeeSection/Pfucfeetypebydiscountdd', { FeetypeId: FeetypeId },
         function (response) {
             var FeeTypedropdownText = $('#ddlfeetype option:selected').text();
             var FeeTermdropdownText = $('#ddlFeetermid option:selected').text();
+        
 
-
-            const subddData = response[0].discountTypeList;
-            const pfuQuantityList = response[0].quantityList;
+            const subddData = response.discountTypeList;
+            const pfuQuantityList = response.quantityList;
             document.getElementById("Span_IconId_Quantity").style.display = "none";
             //document.getElementById("Quantitydivid").style.display = "none";
             $('#Quantitydivid').hide();
 
-
+            debugger;
 
             const dropdown = document.getElementById("Discount_TypeDDId");
             dropdown.innerHTML = "";
@@ -1500,12 +1506,20 @@ function Feetypedropdwonfunction(FeetypeId) {
                         }
                     }
 
+                    //debugger;
+                    //if (Discount_Amount != "") {
+                        
+                    //}else {
+                        
+                    //}
+
                     debugger;
                     if (displayIcon1Value != "1") {
                         document.getElementById("Span_IconId_Quantity").style.display = "none";
                     } else {
                         document.getElementById("Span_IconId_Quantity").style.display = "block";
                     }
+
                     function convertToDateInputFormat(dateString) {
                         const parts = dateString.split('/');
                         if (parts.length !== 3) return ""; // Invalid date format
@@ -1513,11 +1527,13 @@ function Feetypedropdwonfunction(FeetypeId) {
                         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
                     }
 
-
+                    debugger;
                     if (Discount_Amount === "Nill") {
                         var Discount_Amounts = "0.0";
+                        document.getElementById("Spandiscountamouniconid").style.display = "none";
                     } else {
                         var Discount_Amounts = Discount_Amount;
+                        document.getElementById("Spandiscountamouniconid").style.display = "block";
                     }
                     const inputElement = document.getElementById('DueDate_TxtID');
 
@@ -1566,3 +1582,299 @@ $('#Discount_TypeDDId').change(function () {
 
         }, false);
 });
+
+
+///======>>> SET FEE AMOUNT
+function setFeeAmount(input) {
+    debugger;
+    // Get the entered quantity from the input field
+    var quantity = parseFloat(input.value) || 0;
+    var Quantitywisesetfeeamounttxt = $('#Quantityamountvaluesetfeewisetxtid').val();
+    // Calculate the total amount by multiplying the quantity with 500
+    var totalAmount = quantity * Quantitywisesetfeeamounttxt;
+
+    // Update the value of the Total Amount text box
+    document.getElementById('FeeAmount_TxtID').value = totalAmount.toFixed(2); // Using toFixed to limit decimal places
+}
+
+function isNumber(event) {
+   
+    var inputValue = event.key;
+
+
+    if (!/^\d*\.?\d*$/.test(inputValue)) {
+
+        event.preventDefault();
+    }
+}
+
+
+
+
+$('#Addfeeuserbtn').click(function () {
+    if (AddFeeValidation()) {
+        debugger;
+        $('#validationMessage').text('');
+        $('#Update_SubmitvalidationMessage').text('');
+
+        var StudentuserId = $("#Studentuseridspid").val();
+        var FeeTerm = $('#ddlFeetermid').val();
+        var FeeType = $('#ddlfeetype').val();
+        var DiscountType = $("#Discount_TypeDDId").val();
+        var DiscountAmount = $('#DiscountAmount_TXTID').val();
+        var Quantity = $("#QuantityAmount_TxtID").val();
+        var Feeamount = $("#FeeAmount_TxtID").val();
+        var Duedate = $('#DueDate_TxtID').val();
+        var Comments = $("#Comments_TxtID").val();
+        var ChallanId = $("#Challan_DDId").val();
+        var AcademicYearId = 1;
+
+        var UpdateFee_SaveFeeData = {
+            StudentuserId: StudentuserId,
+            FeeTermId: FeeTerm,//FeeTermId
+            FeeTypeId: FeeType,//FeeTypeId
+            ConcedingTypeId: DiscountType,
+            ConcedingAmount: DiscountAmount,
+            Quantity: Quantity,
+            FeeAmount: Feeamount,//Amount
+            DueDate: Duedate, //Duedate
+            Comments: Comments,
+            AcademicYearId: AcademicYearId,
+            ChallanId: ChallanId//ChallanId
+        };
+        $.ajax({
+
+            //url: '/FeeSection/SaveFee_UpdateFee_ByTblUser',
+           // url: '/FeeSection/Pfuuserfee_BulkUpdate',
+            url: '/FeeSection/PFC_SaveFee_UpdateFee_ByTblUser',
+            type: 'POST',
+            data: UpdateFee_SaveFeeData,
+            success: function (response) {
+                debugger;
+
+                if (response == "1") {
+                    $('#Update_SubmitvalidationMessage').text('Record Inserted Succesfully');
+                    Searchfeetermsbtnclickfunction(StudentuserId, null);
+                } else if (response == "2") {
+                    $('#Update_SubmitvalidationMessage').text('Record Updated Succesfully');
+                    Searchfeetermsbtnclickfunction(StudentuserId, null);
+                } else if (response == "3") {
+                    $('#Update_SubmitvalidationMessage').text('User Already Fee payed, Record can not be Updated');
+                } else if (response == "4") {
+                    $('#Update_SubmitvalidationMessage').text('For User Already Fee set, Record can not be Updated');
+                } else {
+
+                }
+            }
+
+        });
+
+
+
+    }
+});
+
+function AddFeeValidation() {
+
+    debugger;
+    $('#Update_SubmitvalidationMessage').text('');
+
+    var buttonValue = $('#Addfeeuserbtn').val();
+
+    var FeeTerm = $('#ddlFeetermid').val();
+    var FeeType = $('#ddlfeetype').val();
+    var DiscountType = $("#Discount_TypeDDId").val();
+    var DiscountAmount = $('#DiscountAmount_TXTID').val();
+    var Quantitytxtval = $("#QuantityAmount_TxtID").val();
+    var Feeamount = $("#FeeAmount_TxtID").val();
+    var Duedate = $('#DueDate_TxtID').val();
+
+    var Update_SubmitvalidationMessage = "";
+    var hasError = false;
+    const selectedDate = new Date(Duedate);
+    const currentdate = new Date();
+
+    if (FeeTerm === "") {
+        Update_SubmitvalidationMessage += "Please select Fee Term.<br>";
+        hasError = true;
+    }
+    if (FeeType === "") {
+        Update_SubmitvalidationMessage += "Please select Fee Type.<br>";
+        hasError = true;
+    }
+    if (buttonValue == "Update") {
+        debugger;
+        if (DiscountType !== "") {
+            var FeeTypedropdownText = $('#ddlfeetype option:selected').text();
+            var FeeTermdropdownText = $('#ddlFeetermid option:selected').text();
+            debugger;
+            //const table = document.getElementById("Studentfeedetailstbl");
+            const table = document.getElementById("Search_By_User_FeeTableData_Id");
+            const rows = table.getElementsByTagName("tr");
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const feeTermCell = row.cells[1];
+                const feeTypeCell = row.cells[2];
+                const PaidAmountCell = row.cells[6];
+                const feeTerm = feeTermCell.textContent.trim();
+                const feeType = feeTypeCell.textContent.trim();
+                //const PaidAmount = PaidAmountCell.textContent.trim();
+                //const DueAmount = DueAmountCell.textContent.trim();
+
+                if (feeTerm === FeeTermdropdownText && feeType === FeeTypedropdownText) {
+                    const parsedDiscountAmount = parseInt(DiscountAmount);
+                    const parsedPaidAmount = parseInt(PaidAmountCell.textContent);
+                    if (PaidAmountCell.textContent.trim().toLowerCase() !== "nill") {
+                        if (PaidAmountCell.textContent !== "") {
+                            if (parseInt(DiscountAmount) - parseInt(DiscountAmount) >= parseInt(PaidAmountCell.textContent)) {
+                                // Assuming drSelectedItem and dsSelectedItems are the corresponding variables
+                                PaidAmountCell.textContent = DiscountAmount;
+                            } else {
+                                // Display the error message
+                                //Update_SubmitvalidationMessage += "You cannot apply discount for this fee type.<br>";
+                                //hasError = true;
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            // Display the error message
+            Update_SubmitvalidationMessage += "Please select Discount Type.<br>";
+            hasError = true;
+        }
+        if (DiscountAmount > Feeamount) {
+            Update_SubmitvalidationMessage += "Discount Amount Should not be greater than Fee Amount.<br>";
+            hasError = true;
+        }
+        if (Feeamount === "") {
+            Update_SubmitvalidationMessage += "Please Enter Fee Amount.<br>";
+            hasError = true;
+        }
+    } else if (buttonValue == "Submit") {
+
+        if ($('#Quantitydivid').is(':visible')) {
+            if (Quantitytxtval = "") {
+                Update_validationMessage += "Please Enter Quantity.<br>";
+                hasError = true;
+            }
+        }
+        if (Duedate === "") {
+            Update_SubmitvalidationMessage += "Please select DueDate.<br>";
+            hasError = true;
+        }
+        if (selectedDate <= currentdate) {
+
+            Update_SubmitvalidationMessage += "Due date should be greater than current date.<br>";
+            hasError = true;
+        }
+        if (DiscountAmount > Feeamount) {
+            Update_SubmitvalidationMessage += "Discount Amount Should not be greater than Fee Amount.<br>";
+            hasError = true;
+        }
+    } else {
+        $('#Errormessage').text('The button value is missing. Please check and verify, and try again. Button Value: ' + buttonValue);
+    }
+
+    if (hasError) {
+
+        $('#validation').html("Following fields have invalid data :");
+        $("#validationMessage").html(Update_SubmitvalidationMessage);
+
+        return false; // Return false to prevent form submission
+
+    } else {
+
+        $("#SubmitvalidationMessage").html("");
+        return true; // Return true to proceed with form submission
+    }
+
+}
+
+
+
+function CommonClearfunction(Formid) {
+    document.getElementById("Span_IconId_Quantity").style.display = "none";
+    document.getElementById(Formid).reset(); // Reset the form   
+    $('#Addfeeuserbtn').val('Submit').html('Submit');
+    $('#validationMessage').text('');
+    $('#validation').text('');
+}
+
+
+function Dltfunction() {
+    $('#Update_SubmitvalidationMessage').text('');
+    var StudentuserId = $("#Studentuseridspid").val();
+    var FeeTerm = $('#ddlFeetermid').val();
+    var FeeType = $('#ddlfeetype').val();
+    //var DiscountType = $("#Discount_TypeDDId").val();
+    //var DiscountAmount = $('#DiscountAmount_TXTID').val();
+    //var Quantity = $("#QuantityAmount_TxtID").val();
+    //var Feeamount = $("#FeeAmount_TxtID").val();
+    //var Duedate = $('#DueDate_TxtID').val();
+    //var Comments = $("#Comments_TxtID").val();
+    var ChallanId = $("#Challan_DDId").val();
+
+    if (FeeTerm === "") {
+        $('#Update_SubmitvalidationMessage').text('Feeterm is required');
+        return false;
+    }
+    if (FeeType === "") {
+        $('#Update_SubmitvalidationMessage').text('Feetype is required');
+        return false;
+    }
+    if (ChallanId === "") {
+        $('#Update_SubmitvalidationMessage').text('Challanid is required');
+        return false;        
+    }
+
+    var UpdateFee_SaveFeeData = {
+        StudentuserId: StudentuserId,
+        FeeTermId: FeeTerm,  //FeeTermId
+        FeeTypeId: FeeType,  //FeeTypeId
+        ChallanId: ChallanId //ChallanId
+        //ConcedingTypeId: DiscountType,
+        //ConcedingAmount: DiscountAmount,
+        //Quantity: Quantity,
+        //FeeAmount: Feeamount,//Amount
+        //DueDate: Duedate, //Duedate
+        //Comments: Comments,
+        //AcademicYearId: AcademicYearId,
+        
+    };
+  
+    handleAjax('POST', '/FeeSection/PFUC_Terms_Delte', { data: UpdateFee_SaveFeeData },
+        function (response) {
+
+            if (response == "1") {
+
+                $('#Update_SubmitvalidationMessage').text('Fee not set to user.');
+            } else if (response == "2") {
+        
+                Searchfeetermsbtnclickfunction(StudentuserId, null);
+                $('#Update_SubmitvalidationMessage').text('Deleted succesfully.');
+            }
+            loaddingimg.css('display', 'none');
+
+        }, function (status, error) {
+            loaddingimg.css('display', 'none');
+        }, false);
+
+    //$.ajax({
+    //        url: '/FeeSection/PFUC_Terms_Delte?InstanceId=' + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId,
+    //        type: 'POST',         
+    //        success: function (response) {
+
+    //            if (response == "1") {
+
+    //                $('#Update_SubmitvalidationMessage').text('Fee not set to user.');
+    //            } else if (response == "2") {
+    //                var userId = $("#userIdTextBox").val();
+    //                table_SearchByUser_FeeDues(userId);
+    //                $('#Update_SubmitvalidationMessage').text('Deleted succesfully.');
+    //            }
+
+    //        }
+    //    });
+
+}
