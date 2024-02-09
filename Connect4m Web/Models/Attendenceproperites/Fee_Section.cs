@@ -696,6 +696,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string DueAmount { get; set; }
         public string balanceamount { get; set; }
     }
+
+    public class PayFeeCorrectionsupdateinpayfeeforusers : Commonproperties
+    {
+        public int ChallanId { get; set; }
+        public int StudentuserId { get; set; }
+        public int FeeTypeId { get; set; }
+        public int AcademicYearId { get; set; }
+        public int FeeTermId { get; set; }
+        public string ConcedingTypeId { get; set; }
+        public string Quantity { get; set; }
+        public string FeeAmount { get; set; }
+        public string ConcedingAmount { get; set; }
+        public DateTime DueDate { get; set; }
+        public string Comments { get; set; }
+    }
     #endregion
 
 

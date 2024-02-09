@@ -144,10 +144,11 @@ namespace Connect4m_Web.Controllers
 
 
             val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using
+                                                        // val.SubDomineName = "Quro.connect4m.com";//it is temperory using
                                                         //  val.SubDomineName = HttpContext.Request.Host.Host.ToUpper();
 
-            //val.IPAddress = "183.82.116.209";
-            val.IPAddress = await GetPublicIpAddress();//to get IP address
+                //val.IPAddress = "183.82.116.209";
+                val.IPAddress = await GetPublicIpAddress();//to get IP address
 
 
             // val.URL = "http://develop.connect4m.com";

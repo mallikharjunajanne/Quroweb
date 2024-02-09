@@ -1440,6 +1440,98 @@ namespace Connect4m_Web.Controllers
            
             return Json(list);
         }
+        public IActionResult Pfucfeetypebydiscountdd(int FeeTypeId)
+        {
+            DiscountAndQuantitylist list = new DiscountAndQuantitylist();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFU_DiscountType_ByFeeType?InstanceId=" + InstanceId + "&FeeTypeId=" + FeeTypeId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data1 = response.Content.ReadAsStringAsync().Result;
+
+                list = JsonConvert.DeserializeObject<DiscountAndQuantitylist>(data1);
+            }
+            return Json(list);
+        }
+        [HttpPost]
+        //public IActionResult PFC_SaveFee_UpdateFee_ByTblUser(int UserId, int FeeTermId, int FeeTypeId, string Amount, int ChallanId, DateTime DueDate)
+        public IActionResult PFC_SaveFee_UpdateFee_ByTblUser(PayFeeCorrectionsupdateinpayfeeforusers obj)
+        {
+
+
+            // exec Stp_insert_update_setandchallanfee InstanceId=545,UserId=80781,FeeTermId=4582,FeeTypeId=3680,         
+            //Amount = 400000,ChallanId= 222930,Duedate= '2023-08-09 00:00:00',CreatedBy= 217606,CreatedDate= '2023-08-03 00:00:00'
+
+            //Already 2100.00 paid for this fee type.
+
+            //exec Stp_insert_update_setandchallanfee @InstanceId = 545,@UserId = 80796,@FeeTermId = 5634,@FeeTypeId = 1466,@Amount = 825000,@ChallanId = 223405,@Duedate = '2024-02-21 00:00:00',@CreatedBy = 32891,@CreatedDate = '2024-02-08 00:00:00'
+            //This Procedure return --->3 Error message ===>>>. User Already Fee payed, Record can not be Updated
+            //---->> 4 ===>>> For User Already Fee set, Record can not be Updated
+
+            obj.CreatedBy = UserId;
+            obj.InstanceId= InstanceId;
+
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFC_SaveFee_UpdateFeeByTblUser", content).Result;
+
+
+
+            //string Duedate = DueDate.ToString("yyyy-MM-dd");
+            //var Querystring = $"?UserId={UserId}&FeeTermId={FeeTermId}&FeeTypeId={FeeTypeId}&Amount={Amount}&ChallanId={ChallanId}&DueDate={Duedate}&CreatedBy={CreatedBy}&InstanceId={InstanceId}";
+
+            //StringContent content = new StringContent("application/json");
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFC_SaveFee_UpdateFeeByTblUser" + Querystring, content).Result;
+
+
+            var items = "";
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+            return Json(items);
+            //return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult PFUC_Terms_Delte(PayFeeCorrectionsupdateinpayfeeforusers obj)
+        //public IActionResult PFUC_Terms_Delte(int InstanceId, int UserId, int TermId, int TypeId, int ChallanId)
+        {
+             // var UpdatedBy = Request.Cookies["LoginUserId"];
+            //var UpdatedBy = UserId;
+
+            // url: '/FeeSection/PFUC_Terms_Delte?InstanceId=' + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId,
+
+            obj.CreatedBy = UserId;
+            obj.InstanceId = InstanceId;
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFUC_tblFeeTerms_DELETE_ByInstanceId", content).Result;
+
+
+
+
+
+
+            //StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFUC_tblFeeTerms_DELETE_ByInstanceId?InstanceId=" + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId + "&UpdatedBy=" + UpdatedBy, content).Result;
+
+            var items = "";
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+
+            return Json(items);
+        }
+
+
 
         //public IActionResult PFUC_Feetypeby_Discounttype(int FeeTypeId)
         //    //   PFU_DiscountType_By_FeeType
@@ -1876,26 +1968,7 @@ namespace Connect4m_Web.Controllers
 
 
         
-        [HttpPost]
-        public IActionResult PFUC_Terms_Delte(int InstanceId, int UserId, int TermId, int TypeId, int ChallanId)
-        {
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
-            // url: '/FeeSection/PFUC_Terms_Delte?InstanceId=' + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId,
-            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFUC_tblFeeTerms_DELETE_ByInstanceId?InstanceId=" + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId + "&UpdatedBy=" + UpdatedBy, content).Result;
-
-            var items = "";
-
-            if (response.IsSuccessStatusCode)
-            {
-                var data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            return Json(items);
-        }
-
+       
 
         /*--------***  PayFeeForUserForChallana Dropdwons Methods Start ***-------*/
 
@@ -2001,34 +2074,7 @@ namespace Connect4m_Web.Controllers
 
         //PAY_FEE_BY_CorrectionUSERS EDIT METHOD AND POST METHOD CODE START
         
-        [HttpPost]
-        public IActionResult PFC_SaveFee_UpdateFee_ByTblUser(int UserId, int FeeTermId, int FeeTypeId, string Amount, int ChallanId, DateTime DueDate)
-        {
-
-
-            // exec Stp_insert_update_setandchallanfee InstanceId=545,UserId=80781,FeeTermId=4582,FeeTypeId=3680,         
-            //Amount = 400000,ChallanId= 222930,Duedate= '2023-08-09 00:00:00',CreatedBy= 217606,CreatedDate= '2023-08-03 00:00:00'
-
-            var CreatedBy = Request.Cookies["LoginUserId"];
-            int InstanceId = 545;
-
-
-
-            string Duedate = DueDate.ToString("yyyy-MM-dd");
-            var Querystring = $"?UserId={UserId}&FeeTermId={FeeTermId}&FeeTypeId={FeeTypeId}&Amount={Amount}&ChallanId={ChallanId}&DueDate={Duedate}&CreatedBy={CreatedBy}&InstanceId={InstanceId}";
-
-            StringContent content = new StringContent("application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFC_SaveFee_UpdateFeeByTblUser" + Querystring, content).Result;
-            var items = "";
-
-            if (response.IsSuccessStatusCode)
-            {
-                var data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-            return Json(items);
-            //return View();
-        }
+       
 
 
 

@@ -174,6 +174,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
     public class PFCfeedetailstbl
     {
+        public List<PFCfeetermsnames> Managefeedetailsfeeterms { get; set; }
         public List<FeedetialsbyuserId> feedetialsli { get; set; }
         public List<Usertotalpayedamount> userpayedli { get; set; }
         public List<PFCfeetermsnames> feetermsnames { get; set; }
