@@ -274,7 +274,10 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
-
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
         //====================================Apply Student Leave==================================================
         #region
         [Authorize]

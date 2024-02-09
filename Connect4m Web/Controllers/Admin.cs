@@ -1491,52 +1491,12 @@ namespace Connect4m_Web.Controllers
         #endregion
 
 
-        #region  MANAGE CLASSES  ///----
+        #region  MANAGE CLASSES 
 
         public IActionResult ManageSubClassification()
         {
             return View();
         }
-
-        public IActionResult InstanceClassification_DD()
-        {
-            ManageSubClassification model = new ManageSubClassification();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassification_dd?InstanceId=" + InstanceId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult Subclass_Classteacher_DD()
-        {
-            string RoleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,EXECUTIVE ASSISTANT,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
-            ManageSubClassification model = new ManageSubClassification();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + RoleName).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
-            }
-            return Json(model);
-        }
-
-
-        public IActionResult Subclass_CoClassteacher_DD()
-        {
-            string RoleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
-            ManageSubClassification model = new ManageSubClassification();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + RoleName).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
-            }
-            return Json(model);
-        }
-
         public IActionResult Subclass_Tabledata(ManageSubClassification obj)
         {
             List<ManageSubClassification> items = new List<ManageSubClassification>();
@@ -1559,9 +1519,43 @@ namespace Connect4m_Web.Controllers
             }
         }
 
+        public IActionResult InstanceClassification_DD()
+        {
+            ManageSubClassification model = new ManageSubClassification();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassification_dd?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult Subclass_Classteacher_DD()
+        {
+            string RoleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,EXECUTIVE ASSISTANT,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
+            ManageSubClassification model = new ManageSubClassification();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + RoleName).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult Subclass_CoClassteacher_DD()
+        {
+            string RoleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
+            ManageSubClassification model = new ManageSubClassification();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + RoleName).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<ManageSubClassification>(data);
+            }
+            return Json(model);
+        }
 
-
-
+        
 
         [HttpGet]
         public IActionResult Insert_ManageSubClassification()
@@ -1637,13 +1631,8 @@ namespace Connect4m_Web.Controllers
             return Json(items);
         }
 
+       
         #endregion
 
-
-
-
-
-       
-       
     }
 }

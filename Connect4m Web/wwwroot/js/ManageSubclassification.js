@@ -8,11 +8,12 @@
         }
     });
 }
-function TblCallToAjax(method, url, data, successCallback, errorCallback) {
+
+function TblCallToAjax(method, url,  successCallback, errorCallback) {
     $.ajax({
         url: url,
         type: method,
-        data: data,
+        /*data: data,*/
         success: bindDatatables,
         error: function (xhr, status, error) {
             errorCallback(xhr.status, error);
@@ -21,72 +22,35 @@ function TblCallToAjax(method, url, data, successCallback, errorCallback) {
 }
 
 
+function CallToAjax(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data:data,
+        success: bindDatatables,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+
 
 $(document).ready(function () {
-    function CallToAjax_Withoutdata(method, url, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            success: successCallback,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
-    function CallToAjax(method, url, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            success: bindDatatables,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
-
-
+    debugger;
     fetchDataAndPopulateDropdown(
-        '/Admin/InstanceClassification_DD', // URL for data fetching
-        '#Classificationdd_Search',  // Dropdown selector
-        'instanceClassificationId',  // Field name for option values
-        'classificationName',         // Field name for option text
-        'classificationList'          // Response value return class name
-    );
-
-
-    //CallToAjax_Withoutdata('GET', '/Admin/Classification_dd',
-    //    function (response) {
-
-    //        populateClassificationDropdown(response.classificationList);
-    //       // populateRoleDropdown(response.roleList);
-    //    },
-    //    function (status, error) {
-    //        // Handle errors here...!
-    //    }
-    //);
-
-    //function populateClassificationDropdown(classificationList) {
-    //    var classificationDropdown = $('#Classificationdd_Search');
-    //    $.each(classificationList, function (index, item) {
-    //        classificationDropdown.append($('<option>', {
-    //            value: item.instanceClassificationId, 
-    //            text: item.classificationName 
-    //        }));
-    //    });
-    //}
- 
-
-
-    CallToAjax('GET', '/Admin/Subclass_Tabledata',
-
-        function (status, error) {
-
-        }
-    );
-       
+        '/Admin/InstanceClassification_DD',      // URL for data fetching
+        '#ddldepartmentid',                      // Dropdown selector
+        //'#Classificationdd_Search',            // Dropdown selector
+        'instanceClassificationId',              // Field name for option values
+        'classificationName',                    // Field name for option text
+        'classificationList'                     // Response value return class name
+    ); // In Search view Dropdown data bind calling function
+    Subclasstabledatabinding();// Subclass table data calling function
 });
 
-///-----------******* DROPDOWN FUNCTION CODE START
+
+
+// DROPDOWN FUNCTION CODE START
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField,Responsevalues) {
     CallToAjax_Withoutdata('GET', url,
         function (response) {
@@ -100,10 +64,9 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
         }
     );
 }
-
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    dropdown.empty(); // Clear existing options
+    //dropdown.empty(); // Clear existing options
 
     dropdown.append($('<option>', {
         value: '',
@@ -117,34 +80,45 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
     });
 }
 
+//Search table data fucntion code start
+$('#btnsearch').click(function () {
+    debugger;
+    var formdata = $('#Classificaitionformid').serialize();
+    var InstanceClassificationId = $('#ddldepartmentid').val();
+    var SubClassificationName = $('#txtclassid').val();
+    var SubClassificationDescription = $('#txtdescrid').val();
 
+    var sendData = {
+        'InstanceClassificationId': InstanceClassificationId,
+        'SubClassificationName': SubClassificationName,
+        'SubClassificationDescription': SubClassificationDescription
+    };
+    
+    CallToAjax('GET', '/Admin/Subclass_Tabledata', sendData,
 
-///-----***** MAIN CLASSIFICATION SEARCH TABLE DATA
-$('#Mainview_Searchbtn').click(function () {
-    SearchSubclassifications();
+        function (status, error) {
+
+        }
+    );
+
 });
 
-function SearchSubclassifications() {
-    var DepartName = $('#DepartName_txtid').val();
-    var Description = $('#Descriptiontxtid').val();
-    debugger;
-    var dataToSend = {
-        ClassificationName: DepartName,
-        ClassificationDescription: Description
-    };
 
-    TblCallToAjax('GET', '/Admin/Subclass_Tabledata', dataToSend,
 
-        //function bindDatatables();
+
+
+
+//-----------------DataTable Data Dinding Function
+function Subclasstabledatabinding() {
+    TblCallToAjax('GET', '/Admin/Subclass_Tabledata',
+
         function (status, error) {
-            // Handle error if needed
+
         }
     );
 }
-
-//-----------------DataTable Data Dinding Function
 function bindDatatables(response) {
-
+    debugger;
     var formattedDate = GetDateFormat();
     debugger;
     var table = $('#ManageSubclassificationtbl').DataTable();
@@ -334,7 +308,6 @@ function bindDatatables(response) {
     });
     $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit');
 }
-
 function GetDateFormat() {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -380,9 +353,8 @@ $('#addnewsubclass').click(function () {
     CallToAjax_Withoutdata('GET', '/Admin/Insert_ManageSubClassification',
         function (response) {
             debugger;
-            $('#ManageSubclassification_Containermaindiv').hide(); 
-            $('#ManageSubclassification_Updatecontainerdiv3').empty();
-            $('#ManageSubclassification_Insertcontainerdiv2').html(response);
+            $('#ManageSubclassification_Containermaindiv').hide();        
+            $('#ManagesubclassificationInsertUpdatediv').html(response);
         },
         function (status, error) {
             // Handle error if needed
@@ -391,12 +363,13 @@ $('#addnewsubclass').click(function () {
 });
 
 
+
 $('#IN_Clearbtn').click(function () {
     //$('#Insertclassificationid')[0].reset();
-    $('#Class_insertformid')[0].reset();
+    $('#Insertclassformid')[0].reset();
 });
 
-$('#IN_BackToSearchbtn').click(function () {
+$('#INBacktosearchbtn').click(function () {
     location.reload();
 });
 
@@ -404,7 +377,7 @@ $('#IN_BackToSearchbtn').click(function () {
 
 
 ///-----**** INSERTING CLASSES ***-----
-$('#Class_insertformid').submit(function (event) {
+$('#Insertclassformid').submit(function (event) {
     event.preventDefault();
     debugger;
     setTimeout(function () {
@@ -415,19 +388,7 @@ $('#Class_insertformid').submit(function (event) {
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
             debugger;
-            var formData = $('#Class_insertformid').serialize();
-           // var TitleValue = $('#Title').val();
-    //debugger;
-    //setTimeout(function () {
-    //    var validationMessages = $('.field-validation-error');
-    //    var validationMessages2 = $('.error2');
-
-    //    var validationmelength = validationMessages.length;
-
-    //    if (validationmelength == 0 && validationMessages2.length == 0) {
-    //        debugger;
-    //        var formData = $('#Class_insertformid').serialize();
-    //        var TitleValue = $('#Title').val();
+            var formData = $('#Insertclassformid').serialize();
             $.ajax({
                 url: '/Admin/Insert_ManageSubClassification_',
                 type: 'POST',
@@ -505,3 +466,91 @@ $('#classificationDropdown').change(function () {
         }
     );
 });
+
+
+
+
+
+//CLEAR FUCNTION
+function Clearcommonfunction(Formid, ErrorMessageSpanId) {
+    document.getElementById(Formid).reset(); // Reset the form 
+    if (ErrorMessageSpanId) {
+        document.getElementById(ErrorMessageSpanId).innerText = '';
+    }
+}
+
+
+function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
+
+    var ajaxOptions = {
+        url: url,
+        method: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    };
+
+    if (hasFileUpload) {
+        ajaxOptions.processData = false;
+        ajaxOptions.contentType = false;
+    }
+
+    $.ajax(ajaxOptions);
+}
+
+
+$('#Discount_TypeDDId').change(function () {
+    var ConcedingTypeId = $('#Discount_TypeDDId').val();
+    //Feetypedropdwonfunction(ConcedingTypeId);
+    handleAjax('GET', '/FeeSection/pfudiscounttypebydiscountamount', { ConcedingTypeId: ConcedingTypeId },
+        function (response) {
+            debugger;
+            $('#DiscountAmount_TXTID').text(response[0].text).val(response[0].text);
+        },
+        function (status, error) {
+
+
+        }, false);
+});
+
+
+
+function updateCharCount() {
+    // Get the textarea element
+    var textarea = document.getElementById("description_txt");
+
+    // Get the element to display character count
+    var charCount = document.getElementById("char-count");
+
+    // Calculate remaining characters
+    var remaining = 1000 - textarea.value.length;
+
+    // Update the character count display
+    charCount.textContent = remaining +" Remaing characters";
+}
+
+//-----**Date Compare function**-------
+function DatesCompare(Sdate, Edate) {
+    try {
+        debugger;
+        var Startdate = new Date($("#Effectivedatetxtid").val());
+        var Enddate = new Date($("#Enddatetxtid").val());
+
+        if (Enddate < Startdate) {
+            $('#Errormessages').text(Edate + " must be greater than " + Sdate + ".");
+
+        } else {
+            $('#Errormessages').text("");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+//-------------------***Date Compare
+$("#Effectivedatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
+$("#Enddatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
+

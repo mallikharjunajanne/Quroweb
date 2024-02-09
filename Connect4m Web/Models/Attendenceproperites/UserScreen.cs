@@ -56,13 +56,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public class ManageClassification : Insatnceids
         {
             public int InstanceClassificationId { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Department is required")]
             public string ClassificationName { get; set; }
             public string ClassificationDescription { get; set; }
             public string Description { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Attendance Effective Date is required")]
             public DateTime? StartDate { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Attendance End Date is required")]
             public DateTime? EndDate { get; set; }          
             public int ProgramTypeId { get; set; }
             public int AllowedDialougeCount { get; set; }      
@@ -71,12 +71,18 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         public class ManageSubClassification : Insatnceids
         {
-            [Required]
+            [Required(ErrorMessage = "Class is required")]
             public int InstanceSubclassificaitionId { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Department is required")]
             public int InstanceClassificationId { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Class is required")]
             public string SubClassificationName { get; set; }
+            [Required(ErrorMessage = "Results Display Mode is required")]
+            public int ResultsModeID { get; set; }
+            [Required(ErrorMessage = "Attendance End Date is required")]
+            public DateTime? AttendanceEndDate { get; set; }
+            [Required(ErrorMessage = "Attendance Effective Date is required")]
+            public DateTime? AttendanceEffectiveDate { get; set; }
             public string SubClassificationDescription { get; set; }
             public string ClassificationName { get; set; }           
             public string ClassTeacher { get; set; }
@@ -84,19 +90,15 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string SubClassificationDescriptionWords { get; set; }
             public string DisplayOrder { get; set; }                      
             public string StartDate { get; set; }                      
-            public string EndDate { get; set; }       
-            [Required]
-            public int ResultsModeID { get; set; }                      
+            public string EndDate { get; set; }
+                                 
             public string CoClassTeacher { get; set; }
             [Required]
             public int ClassTeacherId { get; set; }
             [Required]
             public int CoClassTeacherId { get; set; }
             public int IsActive { get; set; }
-            [Required]
-            public DateTime? AttendanceEndDate { get; set; }
-            [Required]
-            public DateTime? AttendanceEffectiveDate { get; set; }
+           
             public List<ClassificationList> ClassificationList { get; set; }
             public List<Classteacher> ClassteacherList { get; set; }
             public List<CoClassteacher> CoClassteacherList { get; set; }   

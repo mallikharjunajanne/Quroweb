@@ -24,34 +24,6 @@ function PostingAjax(url, method, data, successCallback, errorCallback) {
     });
 }
 
-//----------**** TABLE DATA BIND FUNCTION ****------------
-
-//function CallToAjax(method, url, successCallback, errorCallback) {
-//    $.ajax({
-//        url: url,
-//        type: method,
-//        success: successCallback,
-//        error: function (xhr, status, error) {
-//            errorCallback(xhr.status, error);
-//        }
-//    });
-//}
-
-//function handleSuccess(response) {
-//    debugger;
-//    bindDatatables(response);
-//    // Process the response data here
-//    console.log(response);
-//}
-
-//function handleError(status, error) {
-//    // Handle errors here
-//    console.error("Error occurred:", status, error);
-//}
-
-//// Make the AJAX call without using $(document).ready()
-//CallToAjax('GET', '/Admin/ManageClassificationTabledata', handleSuccess, handleError);
-
 
 
 $(document).ready(function () {
@@ -75,6 +47,13 @@ $(document).ready(function () {
     );
 
 });
+
+// Clear function
+function Clearcommonfunction(Formid, ErrorMessageSpanId) {
+    document.getElementById(Formid).reset(); // Reset the form 
+    document.getElementById(ErrorMessageSpanId).innerText = '';
+}
+
 
 
 function DataCallToAjax(method, url, data, successCallback, errorCallback) {
@@ -103,6 +82,7 @@ function CallToAjax_Withoutdata(method, url, successCallback, errorCallback) {
 
 //-----------------Search Quote
 $('#Mainview_Searchbtn').click(function () {
+    $('#Errmsg').text('');
     Searchclassifications();
 });
 
@@ -128,7 +108,7 @@ function Searchclassifications() {
 //-----------------DataTable Data Dinding Function
 function bindDatatables(response) {
 
-    var formattedDate = GetDateFormat();
+    //var formattedDate = GetDateFormat();
     debugger;
     var table = $('#ManageClassificationtbl').DataTable();
     table.destroy();
@@ -207,9 +187,19 @@ function bindDatatables(response) {
  
    
     table.on('draw', function () {
-        $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit');
+        $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+            color: 'black',
+            'text-decoration': 'underline',
+            cursor: 'pointer',
+            fontWeight:'bold'
+        });
     });
-    $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+        color: 'black',
+        'text-decoration': 'underline',
+        cursor: 'pointer',
+        fontWeight: 'bold'
+    });
 }
 
 function GetDateFormat() {
@@ -243,11 +233,24 @@ $(document).on('click', '#ManageClassificationtbl .fa-trash-o', function (event)
 
         $.ajax({
             url: '/Admin/Delete_Classification?InstanceClassificationId=' + InstanceClassificationId,
-            //url: '/Admin/Delete_Quote?QuoteId=' + QuoteId,
             type: 'GET',
             success: function (response) {
-                $('#Errmsg').text('Record deleted successfully');
-                Searchclassifications();
+                if (response == "1") {
+                    $('#Errmsg').text('Record deleted successfully');
+                    Searchclassifications();//====Search table data calling function
+                } else if (response == "0") {
+                    $('#Errmsg').text('You cannot delete active Department')
+                } else if (response == "-2") {
+                    $('#Errmsg').text('Elective subjects are associated with Department.');
+                } else if (response == "-3") {
+                    $('#Errmsg').text('Academic subjects are associated with Department.');
+                } else if (response == "-4") {
+                    $('#Errmsg').text('Timetable has created for this Department.');
+                } else if (response == "-5") {
+                    $('#Errmsg').text('Users have been created for this Department.');
+                } else {
+                    $('#Errmsg').text('Some unexpected error occured.');
+                }
             },
             error: function (xhr, status, error) {
                 errorCallback(xhr.status, error);
@@ -261,7 +264,7 @@ $(document).on('click', '#ManageClassificationtbl .fa-trash-o', function (event)
 
 
 ///------*** CREATE NEW CLASSIFICATION ***-------
-$('#addnewmanagequotes').click(function () {
+$('#Addnewdepartmentbtn').click(function () {
     debugger;
     CallToAjax_Withoutdata('GET', '/Admin/Insert_Classification',
         function (response) {
@@ -284,7 +287,7 @@ function DatesCompare(Sdate, Edate) {
         var Startdate = new Date($("#StartDate_txtid").val());
         var Enddate = new Date($("#EndDate_txtid").val());
 
-        if (Enddate <= Startdate) {
+        if (Enddate < Startdate) {
             $('#Error_Sp').text(Edate + " must be greater than " + Sdate + ".");
             
         } else {           
@@ -297,8 +300,8 @@ function DatesCompare(Sdate, Edate) {
 
 
 //-------------------***Date Compare
-$(".form-group #StartDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
-$(".form-group #EndDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
+$("#StartDate_txtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
+$("#EndDate_txtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
 
 
 
@@ -313,7 +316,8 @@ $('#Insertclassificationid').submit(function (event) {
         var validationmelength = validationMessages.length;
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
-            debugger;            
+            debugger;
+            $('#Errormessages').text('');
             var formData = $('#Insertclassificationid').serialize();
             var TitleValue = $('#Title').val();
             $.ajax({
@@ -331,7 +335,7 @@ $('#Insertclassificationid').submit(function (event) {
                     } else if (response === "Exists") {
                         $('#Errormessages').text('Department with Name ' + ' " ' + TitleValue + ' " ' + ' already exists.');
                     } else {                      
-                        $('#Errormessages').text('An error occurred.');
+                        $('#Errormessages').text('Some unexpected error occurred.');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -355,10 +359,6 @@ $('#Insert_BackToSearchbtn').click(function () {
 
 
 
-///-----**** INSERTING VIEW CLEAR BUTTON ***-----
-$('#Insert_Clearbtn').click(function () {
-    $('#Insertclassificationid')[0].reset();
-});
 
 
 //-------------------------------------   Click For Update in the list(table)
@@ -400,6 +400,7 @@ $('#UpdateClassification_formid').submit(function (event) {
         var validationmelength = validationMessages.length;
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
+            $('#Errormessage').text('');
             var formData = new FormData($('#UpdateClassification_formid')[0]);
             var classificationnamevalue = $('#ClassificationNametxtid').val();
 
@@ -440,23 +441,30 @@ $('#Update_Dltbtn').click(function () {
         type: 'GET',       
         success: function (response) {
             debugger;
-            if (response == "Deleted") {
-                debugger;
-               // $('#Manageclassificationmaindiv').show(); /*Manageclassificationmaindiv*/
-               
-                //$('#Manageclassification_Insertdiv2').empty(); /*ManageHolidaystbl_containerdivId*/
-               // $('#Manageclassification_Updatediv3').empty(); /*Manageclassification_Insertdiv2, Manageclassification_Updatediv3*/
+            if (response == "1") {
                 $('#Errormessage').text('Record deleted successfully.');
-               // Searchclassifications();
+                //location.reload();
+                Searchclassifications();//====Search table data calling function
+            } else if (response == "0") {
+                $('#Errmsg').text('You cannot delete active Department')
+            } else if (response == "-2") {
+                $('#Errmsg').text('Elective subjects are associated with Department.');
+            } else if (response == "-3") {
+                $('#Errmsg').text('Academic subjects are associated with Department.');
+            } else if (response == "-4") {
+                $('#Errmsg').text('Timetable has created for this Department.');
+            } else if (response == "-5") {
+                $('#Errmsg').text('Users have been created for this Department.');
             } else {
-                $('#Errmsg').text('Sommething went wrong...!')
-            }
+                $('#Errmsg').text('Some unexpected error occured.');
+            }          
         }
     });
 })
 
 
-$('#Update_BackToSearchbtn').click(function () {
+$('#Uptobacktosearchbtn').click(function () {
+    $('#Errormessage').text('');
     location.reload();
     //$('#Manageclassificationmaindiv').show(); 
     //$('#Manageclassification_Insertdiv2').empty();
