@@ -159,6 +159,7 @@ function Departmentbysubclass(Departmentvalue) {
             var dropdown = $(dropdownSelector);
             var valueField = 'instanceSubclassificaitionId';
             var textField = 'subClassificationName';
+            dropdown.empty();
             $.each(response, function (index, item) {
                 dropdown.append($('<option>', {
                     value: item[valueField],
@@ -287,28 +288,28 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
                     var currentDate = new Date(fromDate);
                     var firstRow = `<tr>
-    <td rowspan="2" align="center">S.No.</td>
-    <td rowspan="2" align="center">Class</td>
-    <td rowspan="2" align="center">Name</td>
-    <td rowspan="2" align="center">Adm.No.</td>
-    <td rowspan="2" align="center">Gender</td>
-    <td  align="center">Date</td>`;
+    <td rowspan="2" align="center" style="border: 1px solid black;">S.No.</td>
+    <td rowspan="2" align="center" style="border: 1px solid black;">Class</td>
+    <td rowspan="2" align="center" style="border: 1px solid black;">Name</td>
+    <td rowspan="2" align="center" style="border: 1px solid black;">Adm.No.</td>
+    <td rowspan="2" align="center" style="border: 1px solid black;">Gender</td>
+    <td  align="center" style="border: 1px solid black;">Date</td>`;
                     var daysInMonth = 0;
                     while (currentDate <= toDate) {
                         var currentMonth = currentDate.toLocaleString('en', { month: 'short' });
                         var currentDay = currentDate.getDate();
-                        firstRow += `<td align="center" style="width:8px">${currentDay}-${currentMonth}</td>`;
+                        firstRow += `<td align="center" style="width:8px; border: 1px solid black;">${currentDay}-${currentMonth}</td>`;
 
                         currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
                         daysInMonth++;
                     }
-                    firstRow += `<td  align="center">Total days present</td>
-                 <td align="center">Working days</td>    
+                        firstRow += `<td  align="center" style="border: 1px solid black;">Total days present</td>
+                 <td align="center" style="border: 1px solid black;">Working days</td>
                  </tr>`;
                     var secondRow = '<tr>' +
 
-                        `<td align="center">DOJ/DOW</td>` + // Date column below Name
-                        `<td colspan="${daysInMonth + 2}" align="center"></td>` +
+                        `<td align="center" style="border: 1px solid black;">DOJ/DOW</td>` + // Date column below Name
+                        `<td colspan="${daysInMonth + 2}" align="center" style="border: 1px solid black;"></td>` +
                         '</tr>';
 
                     tblhead.append(firstRow);
@@ -330,12 +331,12 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                             continue; // Skip the iteration if 'item' is undefined
                         }
                         var tableRow = $('<tr>');
-                        $('<td>').text(i + 1).prependTo(tableRow);
-                        tableRow.append($('<td>').text(rowData.subclassificationName));
-                        tableRow.append($('<td>').text(rowData.name));
-                        tableRow.append($('<td>').text(rowData.admissionNumber));
-                        tableRow.append($('<td>').text(rowData.gender));
-                        tableRow.append($('<td>').text(rowData.dateOfJoining));
+                        $('<td style="border: 1px solid black;">').text(i + 1).prependTo(tableRow);
+                        tableRow.append($('<td style="border: 1px solid black;">').text(rowData.subclassificationName));
+                        tableRow.append($('<td style="border: 1px solid black;">').text(rowData.name));
+                        tableRow.append($('<td style="border: 1px solid black;">').text(rowData.admissionNumber));
+                        tableRow.append($('<td style="border: 1px solid black;">').text(rowData.gender));
+                        tableRow.append($('<td style="border: 1px solid black;">').text(rowData.dateOfJoining));
 
 
                         for (var index = 0; index <= daysInMonth; index++) {
@@ -345,32 +346,32 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
                             if (i === 0) {
                                 if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
                                     rowspanStartRow = i;
                                 } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
                                     rowspanStartRow = i;
                                 } else {
                                     isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
+                                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
                                 }
                             } else {
                                 if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
                                     cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
                                     rowspanStartRow = i;
                                 } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
                                     rowspanStartRow = i;
                                 } else {
                                     isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center">${columnValue}</td>`;
+                                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
                                 }
                             }
 
                             tableRow.append($(cellHtml));
                         }
 
-                        tableRow.append($('<td align="center">').text(dynamicColumns[daysInMonth + 1]));
+                        tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));
 
                         tableBody.append(tableRow);
                         rowCount++;
@@ -381,7 +382,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                     var trElement = tableBody.find('tr:first');
                     var tdCount = trElement.find('td').length;
                     var SummaryRow = $('<tr>');
-                    SummaryRow.append($('<td colspan="' + tdCount + '" align="center">').text('Summary').css('text-align', 'center'));
+                        SummaryRow.append($('<td colspan="' + tdCount + '" align="center" style="border: 1px solid black;">').text('Summary').css('text-align', 'center'));
                     tableBody.append(SummaryRow);
 
 
@@ -394,10 +395,10 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                     var thirdColspan = Math.floor(remainingCols / 3);
                     var fourthColspan = remainingCols - secondColspan - thirdColspan; // Calculating the fourth colspan
 
-                    var numberOfStudentsRow = '<tr>' + `<td  colspan="${firstColspan}" align="center">Class</td>
-                               <td  colspan="${secondColspan}" align="center">Presents</td>
-                               <td  colspan="${thirdColspan}" align="center">Working Days</td>
-                               <td  colspan="${fourthColspan}" align="center">Attendance %</td>
+                        var numberOfStudentsRow = '<tr>' + `<td  colspan="${firstColspan}" align="center" style="border: 1px solid black;">Class</td>
+                               <td  colspan="${secondColspan}" align="center" style="border: 1px solid black;">Presents</td>
+                               <td  colspan="${thirdColspan}" align="center" style="border: 1px solid black;">Working Days</td>
+                               <td  colspan="${fourthColspan}" align="center" style="border: 1px solid black;">Attendance %</td>
                                </tr>`;
 
                     var Secoundcellcell = Math.floor(secondColspan / 3);
@@ -421,17 +422,17 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
 
                     var Percentagerow = $('<tr>');
-                    Percentagerow.append($('<td colspan="' + firstColspan + '" align="center">').text(""));
-                    Percentagerow.append($('<td colspan="' + firstSecoundcell + '" align="center">').text("Total Presents of Boys"));
-                    Percentagerow.append($('<td colspan="' + SecoundSecoundcell + '" align="center">').text("Total Presents of Girls"));
-                    Percentagerow.append($('<td colspan="' + Thirdsecoundcell + '" align="center">').text("Total Presents"));
-                    Percentagerow.append($('<td colspan="' + firstthirdcell + '" align="center">').text("Total Working Days for Boys"));
-                    Percentagerow.append($('<td colspan="' + Secoundthirdcell + '" align="center">').text("Total Working Days for Girls"));
-                    Percentagerow.append($('<td colspan="' + Thirdthirdcell + '" align="center">').text("Total Working Days"));
-                    Percentagerow.append($('<td colspan="' + firstfourthcell + '" align="center">').text("Attendance % of Boys"));
-                    Percentagerow.append($('<td colspan="' + Secoundfourthcell + '" align="center">').text("Attendance % of Girls"));
-                    Percentagerow.append($('<td colspan="' + Thirdfourthcell + '" align="center">').text("Attendance %"));
-
+                        Percentagerow.append($('<td colspan="' + firstColspan + '" align="center" style="border: 1px solid black;">').text(""));
+                        Percentagerow.append($('<td colspan="' + firstSecoundcell + '" align="center" style="border: 1px solid black;">').text("Total Presents of Boys"));
+                        Percentagerow.append($('<td colspan="' + SecoundSecoundcell + '" align="center" style="border: 1px solid black;">').text("Total Presents of Girls"));
+                        Percentagerow.append($('<td colspan="' + Thirdsecoundcell + '" align="center" style="border: 1px solid black;">').text("Total Presents"));
+                        Percentagerow.append($('<td colspan="' + firstthirdcell + '" align="center" style="border: 1px solid black;">').text("Total Working Days for Boys"));
+                        Percentagerow.append($('<td colspan="' + Secoundthirdcell + '" align="center" style="border: 1px solid black;">').text("Total Working Days for Girls"));
+                        Percentagerow.append($('<td colspan="' + Thirdthirdcell + '" align="center" style="border: 1px solid black;">').text("Total Working Days"));
+                        Percentagerow.append($('<td colspan="' + firstfourthcell + '" align="center" style="border: 1px solid black;">').text("Attendance % of Boys"));
+                        Percentagerow.append($('<td colspan="' + Secoundfourthcell + '" align="center" style="border: 1px solid black;">').text("Attendance % of Girls"));
+                        Percentagerow.append($('<td colspan="' + Thirdfourthcell + '" align="center" style="border: 1px solid black;">').text("Attendance %"));
+                         
                     tableBody.append(numberOfStudentsRow);
                     tableBody.append(Percentagerow);
 
@@ -442,16 +443,16 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                         for (var i = 0; i < attendancesummarydetails.length; i++) {
                             var summaryDetails = attendancesummarydetails[i];
                             var SummarydetailsRow = $('<tr>');
-                            SummarydetailsRow.append($('<td colspan="' + firstColspan + '" align="center">').text(summaryDetails.subclass));
-                            SummarydetailsRow.append($('<td colspan="' + firstSecoundcell + '" align="center">').text(summaryDetails.totalPresentofBoys));
-                            SummarydetailsRow.append($('<td colspan="' + SecoundSecoundcell + '" align="center">').text(summaryDetails.totalPresentofGirls));
-                            SummarydetailsRow.append($('<td colspan="' + Thirdsecoundcell + '" align="center">').text(summaryDetails.totalPresents));
-                            SummarydetailsRow.append($('<td colspan="' + firstthirdcell + '" align="center">').text(summaryDetails.totalWorkingdaysforBoys));
-                            SummarydetailsRow.append($('<td colspan="' + Secoundthirdcell + '" align="center">').text(summaryDetails.totalWorkingdaysforGirls));
-                            SummarydetailsRow.append($('<td colspan="' + Thirdthirdcell + '" align="center">').text(summaryDetails.totalWorkingdays));
-                            SummarydetailsRow.append($('<td colspan="' + firstfourthcell + '" align="center">').text(summaryDetails.attendancepercentageofboys));
-                            SummarydetailsRow.append($('<td colspan="' + Secoundfourthcell + '" align="center">').text(summaryDetails.attendancepercentageofgirls));
-                            SummarydetailsRow.append($('<td colspan="' + Thirdfourthcell + '" align="center">').text(summaryDetails.attendancepercentage));
+                            SummarydetailsRow.append($('<td colspan="' + firstColspan + '" align="center" style="border: 1px solid black;">').text(summaryDetails.subclass));
+                            SummarydetailsRow.append($('<td colspan="' + firstSecoundcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalPresentofBoys));
+                            SummarydetailsRow.append($('<td colspan="' + SecoundSecoundcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalPresentofGirls));
+                            SummarydetailsRow.append($('<td colspan="' + Thirdsecoundcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalPresents));
+                            SummarydetailsRow.append($('<td colspan="' + firstthirdcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalWorkingdaysforBoys));
+                            SummarydetailsRow.append($('<td colspan="' + Secoundthirdcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalWorkingdaysforGirls));
+                            SummarydetailsRow.append($('<td colspan="' + Thirdthirdcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.totalWorkingdays));
+                            SummarydetailsRow.append($('<td colspan="' + firstfourthcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.attendancepercentageofboys));
+                            SummarydetailsRow.append($('<td colspan="' + Secoundfourthcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.attendancepercentageofgirls));
+                            SummarydetailsRow.append($('<td colspan="' + Thirdfourthcell + '" align="center" style="border: 1px solid black;">').text(summaryDetails.attendancepercentage));
                             tableBody.append(SummarydetailsRow);
                         }
                     }
@@ -570,32 +571,32 @@ function Classwisesectionwiseattendancereportbinddata(response) {
 
             if (i === 0) {
                 if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
                     rowspanStartRow = i;
                 } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" align="center">${columnValue}</td>`;
+                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
                     rowspanStartRow = i;
                 } else {
                     isEveryColumnSaturdaySunday = false;
-                    cellHtml = `<td align="center">${columnValue}</td>`;
+                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
                 }
             } else {
                 if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
                     rowspanStartRow = i;
                 } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
                     rowspanStartRow = i;
                 } else {
                     isEveryColumnSaturdaySunday = false;
-                    cellHtml = `<td align="center">${columnValue}</td>`;
+                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
                 }
             }
 
             tableRow.append($(cellHtml));
         }
 
-        tableRow.append($('<td align="center">').text(dynamicColumns[daysInMonth + 1]));
+        tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));
 
         tableBody.append(tableRow);
         rowCount++;
@@ -606,7 +607,7 @@ function Classwisesectionwiseattendancereportbinddata(response) {
     var trElement = tableBody.find('tr:first');
     var tdCount = trElement.find('td').length;
     var SummaryRow = $('<tr>');
-    SummaryRow.append($('<td colspan="' + tdCount + '" align="center">').text('Summary').css('text-align', 'center'));
+    SummaryRow.append($('<td colspan="' + tdCount + '" align="center" style="border: 1px solid black;">').text('Summary').css('text-align', 'center'));
     tableBody.append(SummaryRow);
 
 
@@ -619,10 +620,10 @@ function Classwisesectionwiseattendancereportbinddata(response) {
     var thirdColspan = Math.floor(remainingCols / 3);
     var fourthColspan = remainingCols - secondColspan - thirdColspan; // Calculating the fourth colspan
 
-    var numberOfStudentsRow = '<tr>' + `<td  colspan="${firstColspan}" align="center">Class</td>
-                               <td  colspan="${secondColspan}" align="center">Presents</td>
-                               <td  colspan="${thirdColspan}" align="center">Working Days</td>
-                               <td  colspan="${fourthColspan}" align="center">Attendance %</td>
+    var numberOfStudentsRow = '<tr>' + `<td  colspan="${firstColspan}" align="center" style="border: 1px solid black;">Class</td>
+                               <td  colspan="${secondColspan}" align="center" style="border: 1px solid black;">Presents</td>
+                               <td  colspan="${thirdColspan}" align="center" style="border: 1px solid black;">Working Days</td>
+                               <td  colspan="${fourthColspan}" align="center" style="border: 1px solid black;">Attendance %</td>
                                </tr>`;
 
     var Secoundcellcell = Math.floor(secondColspan / 3);
@@ -701,6 +702,8 @@ $(document).on('click', '#Attendancereporttblmain #_attendancereportPrint', func
 /*--== Attendance Report Export To Excel ==-*/
 $(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelbyarjun', function () {
     var formattedDate = GetDateFormat();
+
+    debugger;
 
     var workbook = new ExcelJS.Workbook();
     var worksheet = workbook.addWorksheet('Sheet1');
@@ -795,11 +798,11 @@ $(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelb
     worksheet.addRow(["This is a system generated report, contain confidential information intended for a specific individual and purpose, and is intended for the addressee only. Any unauthorized"]).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '00CFE8' } };
 
     // Set border and width for cells
-    //for (var col = 3; col <= 34; col++) {
-    //    worksheet.getColumn(col).width = 10; // Set the width as needed
-    //}
-    //worksheet.getColumn(1).width = 12;
-    //worksheet.getColumn(2).width = 20;
+    for (var col = 3; col <= 34; col++) {
+        worksheet.getColumn(col).width = 30; // Set the width as needed
+    }
+    worksheet.getColumn(1).width = 12;
+    worksheet.getColumn(2).width = 20;
 
     // Generate .xls file and initiate download
     workbook.xlsx.writeBuffer().then(function (buffer) {
@@ -824,8 +827,8 @@ $(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelb
 
 
 
-//$(document).on('click', '##_AttendancereportE33xportExcel_', function () {
-//    var formattedDate = GetDateFormat();
+$(document).on('click', '#_AttendancereportExportExcel_', function () {
+    var formattedDate = GetDateFormat();
 
 //    var workbook = new ExcelJS.Workbook();
 //    var worksheet = workbook.addWorksheet('Sheet1');
@@ -974,93 +977,11 @@ $(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelb
 //    // Loop through rows
 //    //==============================================  For Table 1
 
-//    worksheet.mergeCells('A5:F5');
-//    worksheet.mergeCells('G5:R5');
-//    worksheet.mergeCells('S5:AC5');
-//    worksheet.mergeCells('AD5:AG5');
+    //var tableData1 = document.getElementById("FirstTable");
+    var tableData2 = document.getElementById("StudentwiseattendaceReport");
+    
 
-//    worksheet.mergeCells('A6:F6');
-//    worksheet.mergeCells('G6:R6');
-//    worksheet.mergeCells('S6:AC6');
-//    worksheet.mergeCells('AD6:AG6');
-
-//    worksheet.mergeCells('A7:F7');
-//    worksheet.mergeCells('G7:R7');
-//    worksheet.mergeCells('S7:AC7');
-//    worksheet.mergeCells('AD7:AG7');
-
-//    //for (var i = 0; i < tableData1.rows.length; i++) {
-//    //    // debugger;
-//    //    var row = tableData1.rows[i];
-//    //    //  var rowData = [];
-//    //    // Loop through cells
-//    //    // rowData.push("");
-//    //    // for (var j = 0; j < row.cells.length; j++) {
-//    //    worksheet.getCell('A' + (i + 5)).value = "";
-//    //    worksheet.getCell('G' + (i + 5)).value = row.cells[0].innerText;
-//    //    worksheet.getCell('S' + (i + 5)).value = row.cells[1].innerText;
-
-//    //    //   rowData.push(row.cells[j].innerText);
-//    //    // }
-
-
-//    //    // var addedRow = worksheet.addRow(rowData);
-//    //}
-
-//    const cellsToAlign = ['G5', 'G6', 'G7'];
-
-//    cellsToAlign.forEach(cellAddress => {
-//        worksheet.getCell(cellAddress).alignment = { horizontal: 'right', vertical: 'right' };
-//        worksheet.getCell(cellAddress).font = { size: 12, bold: true, color: { argb: '000000' } };
-//    });
-
-//    worksheet.getCell('G5').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-
-//    worksheet.getCell('G6').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-
-//    worksheet.getCell('G7').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-//    worksheet.getCell('S5').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-
-//    worksheet.getCell('S6').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-
-//    worksheet.getCell('S7').border = {
-//        top: { style: 'thin', color: { argb: '000000' } },
-//        left: { style: 'thin', color: { argb: '000000' } },
-//        bottom: { style: 'thin', color: { argb: '000000' } },
-//        right: { style: 'thin', color: { argb: '000000' } }
-//    };
-
-
-
-
-
-//    worksheet.addRow([""]).font = { bold: false };  ///  gap between two tables
-//    worksheet.mergeCells('A8:AG8');
+   
 
 //    //============================         For Table 2
 

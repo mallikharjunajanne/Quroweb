@@ -90,8 +90,66 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string comment { get; set; }
         public string SubjectSlotID { get; set; }
         public string ErrorMessages { get; set; }
+
+        public string ParentId { get; set; }
     }
 
+
+
+    #region
+    public class Attendanceposting
+    {
+        //public int Studentuserid { get; set; }
+        //public string ParentPhNo { get; set; }
+        //public string studentName { get; set; }
+        //public string InstanceUserCode { get; set; }
+        //public string StudentSMS { get; set; }
+        //public string ParentSMS { get; set; }
+        //public int SubjectSlotID { get; set; }
+        //public string attendancedate { get; set; }
+        //public string isPresentValue { get; set; }
+        //public string dropdownValue { get; set; }
+        //public string dropdowntext { get; set; }
+        //public string Comments { get; set; }
+        //public string ParentId { get; set; }
+        //public string ParentName { get; set; }
+        //public string NotificationSubject { get; set; }
+        //public string StudEmail { get; set; }
+        //public string ParentEmail { get; set; }
+        //public int NoticeTypeId { get; set; }
+        // public List<string> attendancedetails { get; set; }
+        public string Studentuserid { get; set; }
+        public string ParentPhNo { get; set; }
+        public string studentName { get; set; }
+        public string InstanceUserCode { get; set; }
+        public string StudentSMS { get; set; }
+        public string ParentSMS { get; set; }
+        public int InstanceId { get; set; }
+        public int CreatedBy { get; set; }
+        public int SubjectSlotID { get; set; }
+        public List<AttendanceDetail> attendancedetails { get; set; }
+
+        public int NoticeTypeId { get; set; }
+        public string NotificationSubject { get; set; }
+        public string  StudEmail{ get; set; }
+        public string ParentEmail { get; set; }
+        public string DataList { get; set; }
+
+    }
+    public class AttendanceDetail
+    {
+        public string attendancedate { get; set; }
+        public string isPresentValue { get; set; }
+        public string dropdownValue { get; set; }
+        public string textareaValue { get; set; }
+        public string ParentId { get; set; }
+        public string ParentName { get; set; }
+        public string Comments { get; set; }
+        public string dropdowntext { get; set; }
+        public string Lastdayofattendace { get; set; }
+    }
+
+    #endregion
 
     public class Attendancepost : Commonproperties
     {
@@ -123,6 +181,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
     public class GetAttendancelist
     {
+        public string AttendanceValidateornotretunmessage { get; set; }
         public List<Getattendancedetails> getattendancedetails { get; set; }
         public List<GetholidaystoStopPostingAttenance> holidaysnames { get; set; }
         public List<DateTime> Dates { get; set; }
@@ -197,7 +256,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string StopId { get; set; }
         public string DropRouteId { get; set; }
         public string DropStopId { get; set; }
-        public string ParentID { get; set; }
+        public string ParentId { get; set; }
         //public int Studentuserid { get; set; }
         //public int InstanceSubclassificaitionId { get; set; }
         //public int InstancesubjectId { get; set; }

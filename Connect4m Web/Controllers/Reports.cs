@@ -54,48 +54,47 @@ namespace Connect4m_Web.Controllers
         }
 
 
+        #region STUDENT REGISTER ///StudentAttendanceRegister
 
+        
         [HttpGet]
         public IActionResult StudentAttendanceRegister()
+        {            
+            return View();
+        }
+        public IActionResult Reportdepartment()
         {
-            List<SelectListItem> List = new List<SelectListItem>();
+            List<SelectListItem> Departmentlist = new List<SelectListItem>();
             HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Str_Classification_DD?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
             if (Response.IsSuccessStatusCode)
             {
                 string data1 = Response.Content.ReadAsStringAsync().Result;
-                List = JsonConvert.DeserializeObject<List<SelectListItem>>(data1);
+                Departmentlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data1);
             }
-            ViewBag.Slot_Subjectnames = List;
-            return View();
+            //ViewBag.Slot_Subjectnames = Departmentlist;
+            return Json(Departmentlist);
         }
-
-        [HttpGet]
-        public IActionResult Get_SClNames_ByInsCl(string InstanceId, string InstanceClassificationId)
-        {
-            //var instanceid = Request.Cookies["INSTANCEID"];
-            //var instanceid = Request.Cookies["INSTANCEID"];
-
-            List<SelectListItem> value1 = new List<SelectListItem>();
+        public IActionResult GetSubclassbydepartment(int InstanceClassificationId)
+        {        
+            List<SelectListItem> Classlist = new List<SelectListItem>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                value1 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+                Classlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-            ViewBag.SubClassificationNames = value1;
-
-            return View();
-
+            ViewBag.SubClassificationNames = Classlist;
+            return Json(Classlist);
         }
 
         [HttpPost]
-        public IActionResult StudentAttendanceRegister(StudentAttendanceRegister obj)
-        {
-            //var instanceid = Request.Cookies["INSTANCEID"];
+        //public IActionResult StudentAttendanceRegister(Attendanceregisterreport obj)
+        public IActionResult StudentAttendanceRegister(int Month, int Year, int InstanceClassificationId,int InstanceSubClassificationId)
+        {          
 
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/St_At_Reports?InstanceID=" + InstanceId + "&Month=" + obj.Month + "&Year=" + obj.Year + "&InstanceClassificationId=" + obj.InstanceClassificationId + "&InstanceSubClassificationId=" + obj.InstanceSubClassificationId, content).Result;
+            //string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/St_At_Reports?InstanceID=" + InstanceId + "&Month=" + Month + "&Year=" + Year + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId, content).Result;
             AttendanceReportData reportData = new AttendanceReportData();
             if (response.IsSuccessStatusCode)
             {
@@ -104,24 +103,33 @@ namespace Connect4m_Web.Controllers
             }
 
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var data2 = response.Content.ReadAsStringAsync().Result;
-
-            //    reportData = JsonConvert.DeserializeObject<AttendanceReportData>(data2);
-            //}
-            // ViewBag.Reportlist = liitems;
-            //ViewBag.MyData = Newtonsoft.Json.JsonConvert.SerializeObject(liitems);
-
-            ViewBag.Reportlist = reportData.AttendanceList;
-            ViewBag.AttendanceAverage = reportData.AttendanceAverage;
-            ViewBag.Stu_wises = reportData.Stu_wise;
-            ViewBag.StuAtd_Tbl2 = reportData.Stu_Atd_tbl2;
-            ViewBag.M_Stuabs = reportData.M_Stuabs;
+            //ViewBag.Reportlist = reportData.AttendanceList;
+            //ViewBag.AttendanceAverage = reportData.AttendanceAverage;
+            //ViewBag.Stu_wises = reportData.Stu_wise;
+            //ViewBag.StuAtd_Tbl2 = reportData.Stu_Atd_tbl2;
+            //ViewBag.M_Stuabs = reportData.M_Stuabs;
 
 
             return Json(reportData);
         }
+
+        #endregion
+        //[HttpGet]
+        //public IActionResult Get_SClNames_ByInsCl(string InstanceId, string InstanceClassificationId)
+        //{            
+        //    List<SelectListItem> value1 = new List<SelectListItem>();
+        //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string data = response.Content.ReadAsStringAsync().Result;
+        //        value1 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+        //    }
+        //    ViewBag.SubClassificationNames = value1;
+
+        //    return View();
+
+        //}
+
 
         /*==========******** FEE CHALLANA REPORTS ********==========*/
 

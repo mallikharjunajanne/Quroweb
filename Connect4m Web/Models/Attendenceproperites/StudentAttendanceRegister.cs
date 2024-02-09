@@ -37,7 +37,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
         [JsonProperty("Stu_Atd_tbl2")]
         public List<Student_Attendance_Tbl2> Stu_Atd_tbl2 { get; set; }
 
-       
+        public string retunmessage{ get; set; }
+
+
     }
 
 
@@ -64,25 +66,27 @@ namespace Connect4m_Web.Models.Attendenceproperites
     }
 
 
+    public class Attendanceregisterreport 
+    {
+        [Required(ErrorMessage = "Department is required")]
+        public string InstanceClassificationId { get; set; }
+        public string ClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Class is required")]
+        public string InstanceSubClassificationId { get; set; }
+        public string SubClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Month is required")]
+        public string Month { get; set; }
+
+        [Required(ErrorMessage = "Year is required")]
+        public string Year { get; set; }
+    }
+
+
 
     public class StudentAttendanceRegister
-    {
-        [DisplayName("Department")]
-        [Required(ErrorMessage = "Please Select Department")]
-        public string ClassificationName { get; set; }
-        public string InstanceClassificationId { get; set; }
-
-
-        [DisplayName("Class")]
-        [Required(ErrorMessage = "Please Select Class")]
-        public string SubClassificationName { get; set; }
-        public string InstanceSubClassificationId { get; set; }
-        public string Month { get; set; }
-        public string Year { get; set; }
-
-
-
-
+    {   
         //Report Get Properties
         public string UserID { get; set; }
         public string Name { get; set; }
@@ -93,8 +97,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string EWS         { get; set; }
         public string Repeater    { get; set; }
         public string Dropout    { get; set; }
-
-
 
 
         public List<string> DynamicColumns { get; set; }

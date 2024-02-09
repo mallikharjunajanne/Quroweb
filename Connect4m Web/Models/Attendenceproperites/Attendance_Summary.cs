@@ -7,18 +7,24 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models.Attendenceproperites
 {
-    public class Attendance_Summary
+    public class SummaryCommonproperties
     {
-        public string InstanceId { get; set; }
-        [DisplayName("Department")]
-        [Required(ErrorMessage = "Please Select Department")]
+        public int InstanceId { get; set; }
+        public int UserId { get; set; }
+        public int CreatedBy { get; set; }
+    }
+    public class Attendance_Summary: SummaryCommonproperties
+    { 
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
-
-
-        [DisplayName("Class")]
-        [Required(ErrorMessage = "Please Select Class")]
+        
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubclassificaitionId { get; set; }
         public string SubClassificationName { get; set; }
-        public string UserId { get; set; }
+
+        [Required(ErrorMessage = "Student is required")]
+        public int Studentuserid { get; set; }
         public string FirstName { get; set; }
         public string InstanceUserCode { get; set; }
         public DateTime AttendanceEffectiveDate { get; set; }

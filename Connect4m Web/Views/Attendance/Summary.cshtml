@@ -9,81 +9,70 @@
     <link href="~/css/maps/Summary.css" rel="stylesheet" />
 </head>
 <body>
-
-    <div class="card">
-
-        <div class="card-header pb-0">
-            <h6><span>VIEW ATTENDANCE SUMMARY</span></h6>
-        </div>
-
-        <div style="color:red; font-size:13px;">
-            <div id="validation2" style="color: red;"></div>
-            <div id="validationMessage" style="color: red;"></div>
-        </div>
-
-        <div class="card-body">
-            <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div class="card-header bg-primary">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>VIEW ATTENDANCE SUMMARY </h4>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="width: 99%;">ATTENDANCE SUMMARY</button>
-                        </h5>
+                            ATTENDANCE SUMMARY
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                        <div class="card-body">
-                            <form class="form">
-                                <div class="row">
-                                    <div class="row">
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <label asp-for="ClassificationName" class="form-label required space">Department </label>
-                                        </div>
-                                        <div class="form-group col-4" id="SDCFN10">
-                                            @Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Names, "Value", "Text"), "--Select--", new { @id = "CFNID1", @class = "form-select" })
-                                        </div>
-                                        <div class="col-3"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <form class="form" id="Summerydetails">
+                                    <div class="row mb-3">
+                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                                </select>
+                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
 
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2">
-                                            <label asp-for="SubClassificationName" class="form-label required space">Class </label>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4" id="SSCFNID2">
-                                            @Html.DropDownListFor(Model => Model.SubClassificationName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SCFNID1", @class = "form-select" })
-                                        </div>
-                                        <div class="col-3"></div>
-
-
-                                        <div class="col-3"></div>
-
-                                        <div class="form-group col-2">
-                                            <label class="form-label required space">Student Name </label>
-                                        </div>
-                                        <div class="form-group col-4" id="StudentNames">
-                                            @Html.DropDownListFor(Model => Model.FirstName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SN1", @class = "form-select" })
-                                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-3"></div>
-
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2"></div>
-                                        <div class="form-group col-4">
-                                            <button  class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>
-                                            <input type="button" class="btn btn-pill btn-outline-success btn-air-success" value="Search" id="Get_atdsummary_btn">
-                                        </div>
-                                        <div class="col-3"></div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="row mb-3">
+                                        <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
+                                                </select>
+                                                <span asp-validation-for="InstanceSubclassificaitionId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Studentuserid" class="control-label col-sm-4 col-form-label text-end required space">Student Name</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Studentnamesddl" asp-for="Studentuserid">
+                                                </select>
+                                                <span asp-validation-for="Studentuserid" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Summerydetails')" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light">Search </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
+        <div id="Attendance_Summary_Tbl">
 
-
-    </div>
-    <div id="Attendance_Summary_Tbl">
-
+        </div>
     </div>
 </body>
 </html>
@@ -93,117 +82,122 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/Attendancesummary.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 <script>
-    $("#SDCFN10").change(fun1012);
-    function fun1012() {
-        debugger;
-        var value = $('#CFNID1').val();
+    //$("#SDCFN10").change(fun1012);
+    //function fun1012() {
+    //    debugger;
+    //    var value = $('#CFNID1').val();
 
-        /*alert(value);*/
-        $.ajax({
-            url: "/Attendance/Get_SubClassificationNames_ByInstanceClassifications?InstanceClassificationId=" + value,
-            type: "GET",
-            success: fun10112
-        });
-        function fun10112(response) {
-            debugger;
-            $("#SCFNID1").html(response);
-        }
+    //    /*alert(value);*/
+    //    $.ajax({
+    //        url: "/Attendance/Get_SubClassificationNames_ByInstanceClassifications?InstanceClassificationId=" + value,
+    //        type: "GET",
+    //        success: fun10112
+    //    });
+    //    function fun10112(response) {
+    //        debugger;
+    //        $("#SCFNID1").html(response);
+    //    }
 
-    }
-    $("#SSCFNID2").change(fun1021);
-    function fun1021() {
-        debugger;
+    //}
+    //$("#SSCFNID2").change(fun1021);
+    //function fun1021() {
+    //    debugger;
 
-        var InstanceClassificationId = $('#CFNID1').val();
-        var InstanceSubClassificationId = $('#SCFNID1').val();
-        //alert(InstanceClassificationId);
-        //alert(InstanceSubClassificationId);
-        $.ajax({
-            url: "/Attendance/SlotidBy_Student_Names?InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId,
-            type: "GET",
-            success: fun10121
-        });
-        function fun10121(response) {
-            debugger;
-            $("#SN1").html(response);
-        }
-    }
+    //    var InstanceClassificationId = $('#CFNID1').val();
+    //    var InstanceSubClassificationId = $('#SCFNID1').val();
+    //    //alert(InstanceClassificationId);
+    //    //alert(InstanceSubClassificationId);
+    //    $.ajax({
+    //        url: "/Attendance/SlotidBy_Student_Names?InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId,
+    //        type: "GET",
+    //        success: fun10121
+    //    });
+    //    function fun10121(response) {
+    //        debugger;
+    //        $("#SN1").html(response);
+    //    }
+    //}
 </script>
 
 
 <script>
-    $("#Get_atdsummary_btn").click(fun012);
+    //$("#Get_atdsummary_btn").click(fun012);
 
-    function fun012() {
-        /*debugger;*/
-        var InstanceClassificationId = $("#CFNID1").val();
-        var InstanceSubClassificationId = $("#SCFNID1").val();
-        var StudentName = $("#SN1").val();
+    //function fun012() {
+    //    /*debugger;*/
+    //    var InstanceClassificationId = $("#CFNID1").val();
+    //    var InstanceSubClassificationId = $("#SCFNID1").val();
+    //    var StudentName = $("#SN1").val();
 
-        /*debugger;*/
-        var validationMessage = "";
-        var validation2Message = "";
-        var hasError = false;
+    //    /*debugger;*/
+    //    var validationMessage = "";
+    //    var validation2Message = "";
+    //    var hasError = false;
 
-        if (InstanceClassificationId === "") {
+    //    if (InstanceClassificationId === "") {
 
-            validationMessage += "Department is required.<br>";
-            hasError = true;
-        }
+    //        validationMessage += "Department is required.<br>";
+    //        hasError = true;
+    //    }
 
-        if (InstanceSubClassificationId === "") {
+    //    if (InstanceSubClassificationId === "") {
 
-            validationMessage += "Class is required.<br>";
-            hasError = true;
-        }
+    //        validationMessage += "Class is required.<br>";
+    //        hasError = true;
+    //    }
 
-        if (StudentName === "") {
+    //    if (StudentName === "") {
 
-            validationMessage += "Student Name is required.<br>";
-            hasError = true;
-        }
-        if (hasError) {
-            validation2Message = "Following fields have invalid data:<br>";
-            $("#validationMessage").html(validationMessage);
-            $("#validation2").html(validation2Message);
-
-
-        } else {
-
-            $("#validationMessage").html("");
-            $("#validation2").html("");
+    //        validationMessage += "Student Name is required.<br>";
+    //        hasError = true;
+    //    }
+    //    if (hasError) {
+    //        validation2Message = "Following fields have invalid data:<br>";
+    //        $("#validationMessage").html(validationMessage);
+    //        $("#validation2").html(validation2Message);
 
 
+    //    } else {
 
-            $.ajax({
-                url: "/Attendance/Get_Attendance_Summary_Details?UserID=" + StudentName,
-                type: "GET",
-                success: function (response) {
-                    $("#Attendance_Summary_Tbl").html(response);
-                }
-                //success: fun0123
-            });
-            //function fun0123(resp) {
-            //    /* debugger;*/
-            //    $("#Attendance_Summary_Tbl").html(resp);
-            //}
-        }
-    }
+    //        $("#validationMessage").html("");
+    //        $("#validation2").html("");
 
 
 
-    //button refresh code
+    //        $.ajax({
+    //            url: "/Attendance/Get_Attendance_Summary_Details?UserID=" + StudentName,
+    //            type: "GET",
+    //            success: function (response) {
+    //                $("#Attendance_Summary_Tbl").html(response);
+    //            }
+    //            //success: fun0123
+    //        });
+    //        //function fun0123(resp) {
+    //        //    /* debugger;*/
+    //        //    $("#Attendance_Summary_Tbl").html(resp);
+    //        //}
+    //    }
+    //}
 
-    $("button[type='reset']").click(function () {
-        /* debugger;*/
-        // Clear the form fields
-        $("#CFNID1").val("");
-        $("#SCFNID1").val("");
-        $("#SN1").val("");
 
-        // Clear the content of Attendance_Summary_Tbl div
-        $("#Attendance_Summary_Tbl").html("");
-    });
+
+    ////button refresh code
+
+    //$("button[type='reset']").click(function () {
+    //    /* debugger;*/
+    //    // Clear the form fields
+    //    $("#CFNID1").val("");
+    //    $("#SCFNID1").val("");
+    //    $("#SN1").val("");
+
+    //    // Clear the content of Attendance_Summary_Tbl div
+    //    $("#Attendance_Summary_Tbl").html("");
+    //});
 </script>

@@ -56,7 +56,9 @@ namespace Connect4m_Web.Controllers
             StudentUserid = _userService.StudentUserid;
         }
 
-        /*--------------------------------MANAGE FEE TYPES CODE START  GET AND POST AND DELETE AND EDIT AND UPDATE ----------------------------------------------*/
+     
+        #region  MANAGE FEE TYPES
+        
         public IActionResult ManageFeeTypes(string FeeTypeSearchname)
         {
             //var InstanceId = Request.Cookies["INSTANCEID"];
@@ -83,20 +85,43 @@ namespace Connect4m_Web.Controllers
             ViewBag.Discount_Types_DDValues = new SelectList(discountItems, "Value", "Text");
             return View();
         }
+        public IActionResult Discounttypsdd()
+        {
+            var ConcedingTypeName = " ";
 
+            List<SelectListItem> Distypesli = new List<SelectListItem>();
+            HttpResponseMessage Repsonse = client.GetAsync(client.BaseAddress + "/DiscountTypes_DD?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName).Result;
+            if (Repsonse.IsSuccessStatusCode)
+            {
+                string data = Repsonse.Content.ReadAsStringAsync().Result;
+                Distypesli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+
+            //var discountItems = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
+            //};
+
+            //foreach (var item in Dis_Typesli)
+            //{
+            //    discountItems.Add(new SelectListItem { Value = item.ConcedingTypeId.ToString(), Text = item.ConcedingTypeName.ToString() });
+            //}
+            //ViewBag.Discount_Types_DDValues = new SelectList(discountItems, "Value", "Text");
+
+            return Json(Distypesli);
+
+        }
 
         [HttpPost]
         public IActionResult ManageFeeTypes(Fee_Section Obj)
         {
-            //var InstanceId = Request.Cookies["INSTANCEID"];
-            var CreatedBy = Request.Cookies["LoginUserId"];
-
+            int ReceiptNoFrom = 0;
             string data1 = JsonConvert.SerializeObject(Obj);
 
             decimal amount = Convert.ToDecimal(Obj.Amount);
             string concdingIds = string.Join(",", Obj.ConcedingtypeIds); // Convert the list to a comma-separated string
 
-            string url = $"{client.BaseAddress}/ManageFeeTypes_Post?InstanceId={InstanceId}&FeeType={Obj.FeeType}&FeeTypeStatus={Obj.FeeTypeStatus}&Description={Obj.Description}&Quantity={Obj.Quantity}&Amount={amount}&ConcedingtypeIds={concdingIds}&CreatedBy={CreatedBy}";
+            string url = $"{client.BaseAddress}/ManageFeeTypes_Post?InstanceId={InstanceId}&FeeType={Obj.FeeType}&FeeTypeStatus={Obj.FeeTypeStatus}&Description={Obj.Description}&Quantity={Obj.Quantity}&Amount={amount}&ConcedingtypeIds={concdingIds}&CreatedBy={UserId}&ReceiptNoFrom={ReceiptNoFrom}";
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(url, content).Result;
 
@@ -116,7 +141,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult Tbl_FeeTypes(string FeeTypeSearchname)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
 
             List<Fee_Section> Feeli = new List<Fee_Section>();
             HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Fee_TypesTbl?InstanceId=" + InstanceId + "&FeeType=" + FeeTypeSearchname).Result;
@@ -185,9 +210,7 @@ namespace Connect4m_Web.Controllers
             return Json(result);
         }
 
-
-
-        /*--------------------------------MANAGE FEE TYPES CODE END  GET AND POST AND DELETE AND EDIT AND UPDATE ----------------------------------------------*/
+        #endregion
 
 
 
@@ -204,7 +227,7 @@ namespace Connect4m_Web.Controllers
 
 
         /*--------------------------------- MANAGE DISCOUNT FEE TYPES CODE START---------------------------------------*/
-
+        #region  MANAGE DISCOUNT FEE TYPES
         public IActionResult ManageFeeConcedingTypes()
         {
             return View();
@@ -212,65 +235,48 @@ namespace Connect4m_Web.Controllers
 
 
         [HttpPost]
-        public ActionResult ManageFeeConcedingTypes(Fee_Section obj)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            var CreatedBy = Request.Cookies["LoginUserId"];
-
-
-            decimal amount = Convert.ToDecimal(obj.Amount);
-
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageCreateDiscountType?InstanceId=" + InstanceId + "&ConcedingTypeName=" + obj.ConcedingTypeName + "&Description=" + obj.Description + "&Amount=" + amount + "&CreatedBy=" + CreatedBy, content).Result;
-
-            var data2 = "";
+        public ActionResult ManageFeeConcedingTypes(string ConcedingTypeName,decimal amount, string Description)
+        {   
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageCreateDiscountType?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName + "&Description=" + Description + "&Amount=" + amount + "&CreatedBy=" + UserId, content).Result;
+                        
             var items = "";
-
             if (response.IsSuccessStatusCode)
             {
-                data2 = response.Content.ReadAsStringAsync().Result;
+                string data2 = response.Content.ReadAsStringAsync().Result;
                 items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            //return View();
+            }           
             return Json(items);
         }
 
-
-
         /*--------------------------------MANAGE DISCOUNT FEE TYPE ACTION METHODS START-----------------------------------*/
-
 
         [HttpGet]
         public IActionResult DiscountFT_Edit(int ConcedingTypeId)
         {
-            Fee_Section item = null;
-
+            FeeConcedingTypes item = null;
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DicountFee_Type_EditGet?ConcedingTypeId=" + ConcedingTypeId).Result;
-
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<Fee_Section>(data);
+                item = JsonConvert.DeserializeObject<FeeConcedingTypes>(data);
             }
-
             return Json(item);
         }
 
         [HttpPost]
-        public IActionResult DiscountFT_Edit(Fee_Section obj)
+        //public IActionResult DiscountFT_Edit(Fee_Section obj)
+        ////exec stp_tblFeeConcedingTypes_UPDATE @ConcedingTypeId=2997,@InstanceId=545,@ConcedingTypeName='Staff chilldren dico',@Amount=$0.0000,@Description=default,@UpdatedBy=32891,@UpdatedDate='2024-01-30 10:27:27.253'
+
+        public IActionResult DiscountFT_Edit(int ConcedingTypeId,string ConcedingTypeName,decimal Amount,string Description)
         {
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
+            //var UpdatedBy = Request.Cookies["LoginUserId"];
             //exec stp_tblFeeConcedingTypes_UPDATE @ConcedingTypeId = 1970,@InstanceId = 545,@ConcedingTypeName = 'TestDiscount',@Amount =$150.0000,@Description = 'ABCD bc',@UpdatedBy = 217606,@UpdatedDate = '2023-07-14 14:43:30.390'
+            //decimal amount = Convert.ToDecimal(obj.Amount);
+            //string data1 = JsonConvert.SerializeObject(obj);
 
-            decimal amount = Convert.ToDecimal(obj.Amount);
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/DicountFee_Type_EditUpdate?ConcedingTypeId=" + obj.ConcedingTypeId + "&InstanceId=" + obj.InstanceId + "&ConcedingTypeName=" + obj.ConcedingTypeName + "&Amount=" + amount + "&Description=" + obj.Description + "&UpdatedBy=" + UpdatedBy, content).Result;
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/DicountFee_Type_EditUpdate?ConcedingTypeId=" + ConcedingTypeId + "&InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName + "&Amount=" + Amount + "&Description=" + Description + "&UpdatedBy=" + UserId, content).Result;
 
             string items = "";
             if (response.IsSuccessStatusCode)
@@ -278,33 +284,30 @@ namespace Connect4m_Web.Controllers
                 string data2 = response.Content.ReadAsStringAsync().Result;
                 items = JsonConvert.DeserializeObject<string>(data2);
             }
-
             return Json(items);
         }
 
         public IActionResult Tbl_FeeConcedingTypes(string ConcedingTypeName)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+        {           
 
-            List<Fee_Section> DiscountLi = new List<Fee_Section>();
+            List<FeeConcedingTypes> DiscountLi = new List<FeeConcedingTypes>();
             HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/ManageDiscountType_Tbl?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName).Result;
             if (Response.IsSuccessStatusCode)
             {
                 string data = Response.Content.ReadAsStringAsync().Result;
-                DiscountLi = JsonConvert.DeserializeObject<List<Fee_Section>>(data);
+                DiscountLi = JsonConvert.DeserializeObject<List<FeeConcedingTypes>>(data);
             }
-            ViewBag.DiscountCount = DiscountLi.Count();
-            ViewBag.Discount = DiscountLi;
-
+           // ViewBag.DiscountCount = DiscountLi.Count();
+           // ViewBag.Discount = DiscountLi;
             //return View();
-
-            return new JsonResult(ViewBag.Discount);
+           // return new JsonResult(ViewBag.Discount);
+            return Json(DiscountLi);
         }
 
 
         public IActionResult Delete_Manage_FeeDisountType(int ConcedingTypeId)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
             HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_Discount_FeeType?InstanceId=" + InstanceId + "&ConcedingTypeId=" + ConcedingTypeId).Result;
             string result = "";
             if (response.IsSuccessStatusCode)
@@ -316,11 +319,8 @@ namespace Connect4m_Web.Controllers
             return Json(result);
         }
         /*--------------------------------MANAGE DISCOUNT FEE TYPE ACTION METHODS END------------------------------*/
+        #endregion
 
-
-
-
-        /*--------------------------------- MANAGE DISCOUNT FEE TYPES CODE END---------------------------------------*/
 
 
 
@@ -328,46 +328,44 @@ namespace Connect4m_Web.Controllers
 
 
 
-        /*----------------------------------MANAGE FEE TERMS METHODS START----------------------------------------------------*/
-
-
+        #region MANAGE FEE TERMS        
 
         [HttpGet]
         public IActionResult ManageFeeTerms(string TermName, string AcademicYearId)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
 
             /*AcademicYear DD Code start*/
-            List<SelectListItem> AcYear = new List<SelectListItem>();
-            HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId).Result;
-            if (YearResponse.IsSuccessStatusCode)
-            {
-                string Yearsdata = YearResponse.Content.ReadAsStringAsync().Result;
-                AcYear = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
-            }
-            ViewBag.AcadamicYearDD = AcYear;
+            //List<SelectListItem> AcYear = new List<SelectListItem>();
+            //HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId).Result;
+            //if (YearResponse.IsSuccessStatusCode)
+            //{
+            //    string Yearsdata = YearResponse.Content.ReadAsStringAsync().Result;
+            //    AcYear = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
+            //}
+            //ViewBag.AcadamicYearDD = AcYear;
 
             /*AcademicYear DD Code End*/
 
 
             /*Fee Type DD Code start*/
-            List<SelectListItem> FeeTypeDD = new List<SelectListItem>();
-            HttpResponseMessage FeeTyperesponse = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId).Result;
-            if (FeeTyperesponse.IsSuccessStatusCode)
-            {
-                string FTypes = FeeTyperesponse.Content.ReadAsStringAsync().Result;
-                FeeTypeDD = JsonConvert.DeserializeObject<List<SelectListItem>>(FTypes);
-            }
-            SelectListItem defaultOption = new SelectListItem
-            {
-                Value = "",
-                Text = "--Select--"
-            };
-            FeeTypeDD.Insert(0, defaultOption);
+            //List<SelectListItem> FeeTypeDD = new List<SelectListItem>();
+            //HttpResponseMessage FeeTyperesponse = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId).Result;
+            //if (FeeTyperesponse.IsSuccessStatusCode)
+            //{
+            //    string FTypes = FeeTyperesponse.Content.ReadAsStringAsync().Result;
+            //    FeeTypeDD = JsonConvert.DeserializeObject<List<SelectListItem>>(FTypes);
+            //}
+            //SelectListItem defaultOption = new SelectListItem
+            //{
+            //    Value = "",
+            //    Text = "--Select--"
+            //};
+            //FeeTypeDD.Insert(0, defaultOption);
 
-            SelectList feeTypesSelectList = new SelectList(FeeTypeDD, "Value", "Text");
+            //SelectList feeTypesSelectList = new SelectList(FeeTypeDD, "Value", "Text");
 
-            ViewBag.Feetypesdd = feeTypesSelectList;
+            //ViewBag.Feetypesdd = feeTypesSelectList;
 
             /*Fee Type DD Code End*/
 
@@ -379,16 +377,37 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-
+        public IActionResult GetAcadamicyeardd()
+        {
+            List<SelectListItem> AcYear = new List<SelectListItem>();
+            HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId).Result;
+            if (YearResponse.IsSuccessStatusCode)
+            {
+                string Yearsdata = YearResponse.Content.ReadAsStringAsync().Result;
+                AcYear = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
+            }
+            //ViewBag.AcadamicYearDD = AcYear;
+            return Json(AcYear);
+        }
+        public IActionResult Getfeetypesdd()
+        {
+            List<SelectListItem> feetypesli = new List<SelectListItem>();
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId).Result;
+            if (Response.IsSuccessStatusCode)
+            {
+                string Yearsdata = Response.Content.ReadAsStringAsync().Result;
+                feetypesli = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
+            }
+            
+            return Json(feetypesli);
+        }
         [HttpPost]
         public IActionResult ManageFeeTerms(Manage_Fee_Terms Obj)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            var CreatedBy = Request.Cookies["LoginUserId"];
-
+           
             string data1 = JsonConvert.SerializeObject(Obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/New_ManageFeeTerms?InstanceId=" + InstanceId + "&AcademicYearId=" + Obj.AcademicYearId + "&FeeTypeIds=" + Obj.FeeTypeIds + "&TermName=" + Obj.TermName + "&Description=" + Obj.Description + "&CreatedBy=" + CreatedBy, content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/New_ManageFeeTerms?InstanceId=" + InstanceId + "&AcademicYearId=" + Obj.AcademicYearId + "&FeeTypeIds=" + Obj.FeeTypeIds + "&TermName=" + Obj.TermName + "&Description=" + Obj.Description + "&CreatedBy=" + UserId, content).Result;
             var data2 = "";
             var items = "";
 
@@ -403,66 +422,45 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
         public IActionResult Fee_Terms_GetTable(string TermName, string AcademicYearId)
         {
 
-
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
-            List<Manage_Fee_Terms> DiscountLi = new List<Manage_Fee_Terms>();
+            List<Manage_Fee_Terms> livallues = new List<Manage_Fee_Terms>();
             HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/ManageFeeTerms_Tbl?InstanceId=" + InstanceId + "&AcademicYearId=" + AcademicYearId + "&TermName=" + TermName).Result;
             if (Response.IsSuccessStatusCode)
             {
                 string data = Response.Content.ReadAsStringAsync().Result;
-                DiscountLi = JsonConvert.DeserializeObject<List<Manage_Fee_Terms>>(data);
+                livallues = JsonConvert.DeserializeObject<List<Manage_Fee_Terms>>(data);
             }
 
-            ViewBag.FT_Tbl = DiscountLi;
-
-            return new JsonResult(ViewBag.FT_Tbl);
+            return Json(livallues);
         }
 
 
-        public IActionResult Delete_FeeTerm(string InstanceId, string FeeTermId, string FeeTypeId)
-        {
+        public IActionResult Delete_FeeTerm(int FeeTermId, int FeeTypeId)
+        {          
 
-            //var InstanceId = Request.Cookies["INSTANCEID"];
-            //HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_Discount_FeeType?InstanceId=" + InstanceId + "&ConcedingTypeId=" + ConcedingTypeId).Result;
-            //string result = "";
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string Data = response.Content.ReadAsStringAsync().Result;
-            //    result = JsonConvert.DeserializeObject<string>(Data);
-            //}
-
-            //return Json(result);
-
-            int Instanceid = int.Parse(InstanceId);
-            int FeeTermid = int.Parse(FeeTermId);
-
-            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_FeeTerm?InstanceId=" + Instanceid + "&FeeTermId=" + FeeTermid + "&FeeTypeId=" + FeeTypeId).Result;
+            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_FeeTerm?InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId + "&FeeTypeId=" + FeeTypeId).Result;
             string result = "";
             if (response.IsSuccessStatusCode)
             {
                 string Data = response.Content.ReadAsStringAsync().Result;
                 result = JsonConvert.DeserializeObject<string>(Data);
             }
-
             return Json(result);
         }
 
         [HttpGet]
         public IActionResult Fee_Terms_EditGet(int FeeTermId)
         {
-            Manage_Fee_Terms item = null;
+            List<Manage_Fee_Terms> item = null;
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeeTermId_EditGet?FeeTermId=" + FeeTermId).Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<Manage_Fee_Terms>(data);
+                item = JsonConvert.DeserializeObject<List<Manage_Fee_Terms>>(data);
             }
 
             return Json(item);
@@ -491,9 +489,7 @@ namespace Connect4m_Web.Controllers
             return Json(items);
         }
 
-
-        /*----------------------------------MANAGE FEE TERMS METHODS END----------------------------------------------------*/
-
+        #endregion
 
 
 
@@ -501,45 +497,35 @@ namespace Connect4m_Web.Controllers
 
 
 
-        /*----------------------------------MANAGE BANK ACCOUNTS ACTION METHODS START ----------------------------------*/
 
-        public IActionResult Manage_Bank_Accounts()
+        #region  MANAGE BANK ACCOUNTS
+        public IActionResult ManageBankAccounts()//Manage_Bank_Accounts
         {
             return View();
         }
-
-        public IActionResult M_N_A_Tbl(string AccountNumber, string BankName)
-        {
-            //exec stp_tblInstanceBankAccounts_SEARCH @InstanceId=545,@AccountNumber='',@BankName=''
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
+             
+        public IActionResult M_N_A_Tbl(Manage_Bank_accounts obj)
+        {   
             List<Manage_Bank_accounts> DiscountLi = new List<Manage_Bank_accounts>();
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/ManageBankAccounts_Tbl?InstanceId=" + InstanceId + "&AccountNumber=" + AccountNumber + "&BankName=" + BankName).Result;
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/ManageBankAccounts_Tbl?InstanceId=" + InstanceId + "&AccountNumber=" + obj.AccountNumber + "&BankName=" + obj.BankName).Result;
             if (Response.IsSuccessStatusCode)
             {
                 string data = Response.Content.ReadAsStringAsync().Result;
                 DiscountLi = JsonConvert.DeserializeObject<List<Manage_Bank_accounts>>(data);
-            }
-
-            ViewBag.FT_Tbl = DiscountLi;
-
-            return new JsonResult(ViewBag.FT_Tbl);
+            }       
+            return Json(DiscountLi);
         }
 
-
-        public IActionResult Bank_account_Delete(string InstanceId, string BankAccountId)
-        {
-            int Instanceid = int.Parse(InstanceId);
-            int BankAccountid = int.Parse(BankAccountId);
-
-            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_BankAccounts?InstanceId=" + Instanceid + "&BankAccountId=" + BankAccountid).Result;
+        [HttpPost]
+        public IActionResult Bank_account_Delete(int BankAccountId)
+        {  
+            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_BankAccounts?InstanceId=" + InstanceId + "&BankAccountId=" + BankAccountId).Result;
             string result = "";
             if (response.IsSuccessStatusCode)
             {
                 string Data = response.Content.ReadAsStringAsync().Result;
                 result = JsonConvert.DeserializeObject<string>(Data);
             }
-
             return Json(result);
         }
 
@@ -559,17 +545,12 @@ namespace Connect4m_Web.Controllers
             return Json(item);
         }
 
-        [HttpPost]
-        public IActionResult ManageBankAccount_EditUpdate(Manage_Bank_accounts obj)
-        {
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
-
-            //int BankAccountId,int InstanceId,string AccountNumber,string Address,string BranchCode,string IFCcode,string BankName,string Description,string UpdatedBy
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageBankAccount_EditUpdate?InstanceId=" + obj.InstanceId + "&BankAccountId=" + obj.BankAccountId + "&AccountNumber=" + obj.AccountNumber + "&Address=" + obj.Address + "&BranchCode=" + obj.BranchCode + "&IFCcode=" + obj.IFCcode + "&BankName=" + obj.BankName + "&Description=" + obj.Description + "&UpdatedBy=" + UpdatedBy, content).Result;
+        [HttpPost]       
+        public IActionResult ManageBankAccount_EditUpdate(int BankAccountId,string BankName, string AccountNumber, string Branchcode, string IFSCCode, string Address, string Description)      
+        {       
+           
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageBankAccount_EditUpdate?InstanceId=" + InstanceId + "&BankAccountId=" + BankAccountId + "&AccountNumber=" + AccountNumber + "&Address=" + Address + "&BranchCode=" + Branchcode + "&IFCcode=" + IFSCCode + "&BankName=" + BankName + "&Description=" + Description + "&UpdatedBy=" + UserId, content).Result;
 
             string items = "";
             if (response.IsSuccessStatusCode)
@@ -582,37 +563,27 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Manage_Bank_Accounts(Manage_Bank_accounts obj)
+        public IActionResult ManageBankAccounts(string BankName, string AccountNumber, string Branchcode, string IFSCCode, string Address, string Description)
         {
-
-            //   New_BankAccounts_Create exec stp_tblInstanceBankAccounts_INSERT InstanceId=545,AccountNumber='123456789',BankName='ABCD',Address='Bank Branch Address',BranchCode='154263',IFCcode='1452369871',Description='Description',AccountName=default,Swiftcode=default,CreatedBy=217606,CreatedDate='2023-07-15 15:40:06.660'
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            var CreatedBy = Request.Cookies["LoginUserId"];
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/New_BankAccounts_Create?InstanceId=" + InstanceId + "&AccountNumber=" + obj.AccountNumber + "&BranchCode=" + obj.BranchCode + "&IFCcode=" + obj.IFCcode + "&BankName=" + obj.BankName + "&Address=" + obj.Address + "&Description=" + obj.Description + "&CreatedBy=" + CreatedBy, content).Result;
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/New_BankAccounts_Create?InstanceId=" + InstanceId + "&AccountNumber=" + AccountNumber + "&BranchCode=" + Branchcode + "&IFCcode=" + IFSCCode + "&BankName=" + BankName + "&Address=" + Address + "&Description=" + Description + "&CreatedBy=" + UserId, content).Result;
             var data2 = "";
             var items = "";
-
             if (response.IsSuccessStatusCode)
             {
                 data2 = response.Content.ReadAsStringAsync().Result;
                 items = JsonConvert.DeserializeObject<string>(data2);
             }
-
-            //return View();
             return Json(items);
         }
 
-        /*----------------------------------MANAGE BANK ACCOUNTS ACTION METHODS END ----------------------------------*/
-
+        #endregion
 
 
 
 
         /*==========================SET FEE FOR USERS ACTION METHOD  START==================================*/
-
+        #region SET FEE FOR USERS
         public IActionResult ManageFeeDetails()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -857,14 +828,664 @@ namespace Connect4m_Web.Controllers
             return Json(ViewBag.MFD_Users_Data);
         }
 
+        #endregion
 
         /*==========================SET FEE FOR USERS ACTION METHOD  END==================================*/
 
 
+        #region Payfeeforuser
+        public IActionResult PayFeeForUsers()
+        {
+            return View();
+        }
+        public IActionResult Pfudepartmentdd()
+        { 
+            List<SelectListItem> ddli = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Pfudepartmentddl?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string DD_Data = response.Content.ReadAsStringAsync().Result;
+                ddli = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
+            }
+            return Json(ddli);
+        }
+        public IActionResult PfuStudentquota()
+        {  
+            List<SelectListItem> SQddli= new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFU_StudentQuota_GetDD?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string SQuota_DD_Data = response.Content.ReadAsStringAsync().Result;
+                SQddli = JsonConvert.DeserializeObject<List<SelectListItem>>(SQuota_DD_Data);
+            } 
+            return Json(SQddli);
+        }
+        public IActionResult Pfubankaccountsdd()
+        {
+            //exec stp_tblInstanceBankAccounts_SELECTALL @InstanceId=545
+
+            List<SelectListItem> ddli = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/pfubankaccountsddl?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                ddli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }      
+            return Json(ddli);
+        }
+        public IActionResult PfuPaymentdd()
+        {    
+            List<SelectListItem> ddli = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/pfuPaymentmodeddl").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                ddli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return Json(ddli);
+        }
+        //PFU_PaymentMode_DD
+
+        public IActionResult PfuSubClass(int InstanceClassificationId)
+        {
+            List<SelectListItem> Cli= new List<SelectListItem>();
+            HttpResponseMessage Clresponse = client.GetAsync(client.BaseAddress + "/Pfusubclass?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            if (Clresponse.IsSuccessStatusCode)
+            {
+                string Sub_DD_Data = Clresponse.Content.ReadAsStringAsync().Result;
+                Cli = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+            }   
+            return Json(Cli);
+        }
+
+        public IActionResult Payfeeforuserssearchtbl(Userpayfee obj)
+        {
+            List<Payfeebyuserstbl> items = new List<Payfeebyuserstbl>();
+            try
+            {
+                obj.InstanceId = InstanceId;
+                string data1 = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfusearchusers", content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string data2 = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<Payfeebyuserstbl>>(data2);
+                }
+                return Json(items);
+            }
+            catch (Exception)
+            {
+                return Json(items);
+            }
+        }
 
 
-        /*==========      PayFeeForUser ACTION METHOD GET AND POST METHOD START ===========*/
+        [HttpGet]
+        public IActionResult Getfeedetailsbyuser(int UserId)
+        {
+            List<GetUserfeedetails> item = null;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Pfufeedetailsforusers?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<GetUserfeedetails>>(data);
+            }
+            return Json(item);
+        }
 
+        public IActionResult Getfeedetailsbyfeeterms(int UserId, string FeeTermIds)
+        {
+            List<GetUserfeedetails> item = null;
+            if (FeeTermIds == "null")
+            {
+                FeeTermIds = default;
+            }
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Termwisesearchfeedetails?UserId=" + UserId + "&InstanceId=" + InstanceId+ "&FeeTermIds="+ FeeTermIds).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<GetUserfeedetails>>(data);
+            }
+            return Json(item);
+        }
+        public IActionResult Pfufeetermbyfeetype(int FeeTermId)
+        {  
+            //exec stp_tblFeeTerms_SELECTALLByAcadamicYearId @InstanceId=545
+
+            List<SelectListItem> feetypelist= new List<SelectListItem>();
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Pfufeetermbyfeetypedd?InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId).Result;
+            if (Response.IsSuccessStatusCode)
+            {
+                string data = Response.Content.ReadAsStringAsync().Result;
+                feetypelist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            } 
+            return Json(feetypelist);
+        }
+
+        public IActionResult Pfufeetypebydiscountdd(int FeeTypeId)
+        {
+            List<DiscountAndQuantitylist> list = new List<DiscountAndQuantitylist>();         
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PfuDiscounttypebyfeetype?InstanceId=" + InstanceId + "&FeeTypeId=" + FeeTypeId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data1 = response.Content.ReadAsStringAsync().Result;
+
+                list = JsonConvert.DeserializeObject<List<DiscountAndQuantitylist>>(data1);              
+            }           
+            return Json(list);
+        }
+        public IActionResult pfudiscounttypebydiscountamount(int ConcedingTypeId)            
+        {            
+            List<SelectListItem> list = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Discounttypebydiscountamount?InstanceId=" + InstanceId + "&ConcedingTypeId=" + ConcedingTypeId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }    
+            return Json(list); 
+        }
+
+        [HttpPost]
+        public IActionResult Pfuuserfee_BulkUpdate(Feeupdateinpayfeeforusers obj)       
+        {
+            var items = "";
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfuuserfeebulkupdate", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+            return Json(items);           
+        }
+
+        [HttpPost]
+        public IActionResult Pfuuserfeeinstallment(Feeinstallmentsinsert obj)    //(PAY_FEE_BY_USERS obj)//PFU_AmountPay_Recipt
+        {
+            obj.CreatedBy = UserId;
+            obj.InstanceId = InstanceId;
+            obj.PaymentDate = DateTime.Now;         
+
+           
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfufeeinstallmentsinsert", content).Result;
+            FeeInstallmentResult items = new FeeInstallmentResult();
+           
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<FeeInstallmentResult>(data2);
+            }
+            int returnmessage= int.Parse(items.Insertretunmessage);
+            //string returnmessage=items.Insertretunmessage;
+            int ReceiptNo =int.Parse(items.ReceiptNo);
+
+            List<ChallanaDetails> limodel = new List<ChallanaDetails>();
+
+            limodel.Add(new ChallanaDetails
+            {
+
+                //Item = item,
+                Challana_TermName = obj.Challana_TermName,                            //1  "Challana_TermName",              
+                Challana_FeeType = obj.Challana_FeeType,                              //2  "Challana_FeeType",               
+                Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),                          //3  "Challana_FeeAmount",             
+                Challana_DiscountType = obj.Challana_DiscountType,                    //4  "Challana_DiscountType",          
+                Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5  "Challana_DiscountAmount",        
+                Challana_PaidAmount = obj.Challana_PaidAmount,
+                Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),//6  "Challana_PaidAmount",            
+
+                Challana_DueAmount = obj.Challana_DueAmount,                          //7  "Challana_PayingAmount",----          
+                Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),                        //8  "Challana_DueAmount",             
+                Challana_DueDate = obj.Challana_DueDate,                              //9  "Challana_BalanceDue",            
+                Challana_UserRegId = obj.Challana_UserRegId,                          //10 "Challana_DueDate",               
+                Challana_ClassificationName = obj.Challana_ClassificationName,        //11 "Challana_UserRegId",             
+                Challana_subclassificationName = obj.Challana_subclassificationName,  //12 "Challana_ClassificationName",    
+                Description = obj.Description,
+                Challana_UserName = obj.Challana_UserName,                             //13 "Challana_subclassificationName", 
+                ReturnStringValue = returnmessage,
+
+            });
+
+            //return Json(item);
+            //dlete partial view();
+            return PartialView("_Installmentreceipt", limodel);
+            //return PartialView("_PFU_AmountPay_Recipt", limodel);
+
+        }
+
+        [HttpGet]
+        public IActionResult Pfusingleuserpaidamount_edit(Feedetaisledit obj)
+        {
+            List<Feedetaisleditupdateproperties> item = new List<Feedetaisleditupdateproperties>();
+            try
+            {
+            string data1 = JsonConvert.SerializeObject(obj);
+
+            //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId @UserId=80781,@FeeTermId=4582,@UserFeeId1=417163
+           
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetPfusingleuserpaidamountedit?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;            
+            
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Feedetaisleditupdateproperties>>(data);
+            }           
+                ViewBag.itemscount = item.Count();
+                return PartialView("_PFU_PaidAmount_Edit_SingleUser", item);
+            }
+            catch (Exception)
+            {
+               
+                return PartialView("_PFU_PaidAmount_Edit_SingleUser", item);
+                throw;
+            }
+          
+        }
+        [HttpGet]
+        public IActionResult PfusingleuserpaidamountSearchicon(Feedetaisledit obj)
+        {
+            List<Feedetaisleditupdateproperties> item = new List<Feedetaisleditupdateproperties>();
+            try
+            {
+                string data1 = JsonConvert.SerializeObject(obj);
+
+                //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId @UserId=80781,@FeeTermId=4582,@UserFeeId1=417163
+
+                StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetPfusingleuserpaidamountedit?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    item = JsonConvert.DeserializeObject<List<Feedetaisleditupdateproperties>>(data);
+                }
+                return Json(item);
+            }
+            catch (Exception)
+            {
+                return Json(item);
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult Pfusingleuserfeeinstallment(string UpdateData, string ChallanDetails)//PFU_FeeInstallments_BulkFeeUPDATE
+        {
+            //_PFU_PaidAmount_Edit_SingleUser Partial view means updating table
+            //_PFU_FeeInstallments_BulkFeeUPDATE Partial view means Challan report view table
+
+            string data1 = JsonConvert.SerializeObject(UpdateData);
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFU_FeeInstallments_BulkFeeUpdate_By_Users?UpdateData=" + UpdateData + "&InstanceId=" + InstanceId + "&UpdatedBy=" + UserId, content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfufeeinstallmentsupdatebyusers?UpdateData=" + UpdateData + "&InstanceId=" + InstanceId + "&UpdatedBy=" + UserId, content).Result;
+
+            var items = "";
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+
+            if (items == "1")
+            {
+                var challanaDetailsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(ChallanDetails);
+
+                ViewBag.ChallanDetails = challanaDetailsList;
+                return PartialView("_PFU_FeeInstallments_BulkFeeUPDATE");
+
+            }
+            else if (items == "-2")
+            {
+                ViewBag.ErrorMessage = "Entered Amount is Exceeding the Fee Amount,Please Verify the Amount. ";
+                return PartialView("_PFU_PaidAmount_Edit_SingleUser", ViewBag.ErrorMessage);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = " Something Went Wrong Please Try Again.........!";
+            }
+            return PartialView("_PFU_PaidAmount_Edit_SingleUser");
+        }
+
+
+
+        #endregion
+
+        #region PAY FEE  CORRECTIONS // PayFeeForUserForChallan
+        public IActionResult PayFeeForUserForChallan()
+        {
+            //var InstanceId = Request.Cookies["INSTANCEID"];
+            //ViewBag.InstanceId = InstanceId;
+            return View();
+        }
+
+        //public IActionResult PFUC_Classification_DD()
+        //{
+        //    var InstanceId = Request.Cookies["INSTANCEID"];
+
+        //    List<SelectListItem> PFU_Cl_DD = new List<SelectListItem>();
+        //    HttpResponseMessage ClS_DD_Response = client.GetAsync(client.BaseAddress + "/PFU_Classification_GetDD?InstanceId=" + InstanceId).Result;
+        //    if (ClS_DD_Response.IsSuccessStatusCode)
+        //    {
+        //        string DD_Data = ClS_DD_Response.Content.ReadAsStringAsync().Result;
+        //        PFU_Cl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
+        //    }
+        //    ViewBag.AcadamicYearDD = PFU_Cl_DD;
+
+        //    return Json(ViewBag.AcadamicYearDD);
+
+        //}
+
+        //public IActionResult PFC_challanaddl(string Userid)
+        //{
+        //    var InstanceId = Request.Cookies["INSTANCEID"];
+
+        //    List<PAY_FEE_CORRECTIONS_BY_USERS> items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
+        //    HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFC_Challana_DD?InstanceId=" + InstanceId + "&Userid=" + Userid).Result;
+        //    if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
+        //    {
+        //        string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
+        //        items = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS>>(Sub_DD_Data);
+        //    }
+        //    ViewBag.Subdd_Data = items;
+
+        //    return Json(items);
+        //}
+
+        //public IActionResult PFC_tblFeeTerms_Challana_DD(string Userid)
+        //{
+        //    var InstanceId = Request.Cookies["INSTANCEID"];
+
+        //    List<PAY_FEE_CORRECTIONS_BY_USERS> items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
+        //    HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFC_Challana_DD?InstanceId=" + InstanceId + "&Userid=" + Userid).Result;
+        //    if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
+        //    {
+        //        string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
+        //        items = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS>>(Sub_DD_Data);
+        //    }
+        //    ViewBag.Subdd_Data = items;
+
+        //    return Json(items);
+        //}
+
+        [HttpPost]
+        public IActionResult PayFeeForUserForChallan(Userpayfee obj)//PAY_FEE_CORRECTIONS_BY_USERS
+        {
+            //List<PAY_FEE_CORRECTIONS_BY_USERS> items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
+            //exec stp_tblUser_SEARCHUSERSFORPAYFEE @InstanceId=545,@UserName='',@FirstName='',@LastName='',@InstanceUserCode='',@PortalEmail='',@ParentName='',@MobilePhone='',@InstanceClassificationId=806,@InstanceSubClassificationId=1172,@StudentQuota=default
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForPayFeeCorrections_SearchUsers", content).Result; delete this method after
+
+            List<Payfeebyuserstbl> items = new List<Payfeebyuserstbl>();
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfusearchusers", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<List<Payfeebyuserstbl>>(data2);
+            }
+            return Json(items);
+        }
+
+        public IActionResult Pfcuserwisefeedetails(int UserId) 
+        {
+            PFCfeedetailstbl itesmode = new PFCfeedetailstbl();
+            
+            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFC_FeeTermDetials_ByUserId_Get?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Pfcuserwisefedetailsedit?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                itesmode = JsonConvert.DeserializeObject<PFCfeedetailstbl>(data);
+            }
+            return Json(itesmode);
+        } 
+        
+        [HttpGet]
+        public IActionResult PFC_GetFeeTermDetialsByUserId(int UserId)
+        {
+            //var InstanceId = Request.Cookies["INSTANCEID"];
+            List<PAY_FEE_CORRECTIONS_BY_USERS_Tbl1> item = null;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFC_FeeTermDetials_ByUserId_Get?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS_Tbl1>>(data);
+            }
+            return Json(item);
+        }
+
+
+
+        public IActionResult PFCfeedetails_byfeetermstableData(int UserId, string FeeTermIds)
+        {
+            if (FeeTermIds == "null")
+            {
+                FeeTermIds = default;
+            }
+            PFCfeedetailstbl Items = new PFCfeedetailstbl();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFC_SearchUserByTableData?UserId=" + UserId + "&FeeTermIds=" + FeeTermIds + "&InstanceId=" + InstanceId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                Items = JsonConvert.DeserializeObject<PFCfeedetailstbl>(data);
+            }
+
+            return Json(Items);
+
+        }
+        /*-Search Icon Click Show New Window -*/
+        [HttpGet]
+        //public IActionResult PFUC_PaidAmount_Edit_User(PAY_FEE_BY_USERS obj)
+        public IActionResult PFUC_PaidAmount_Edit_User(Feedetaisledit obj)
+        {
+            List<Feedetaisleditupdateproperties> item = new List<Feedetaisleditupdateproperties>();
+
+            //List<PAY_FEE_BY_USERS> item = null;
+            string data1 = JsonConvert.SerializeObject(obj);
+            //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId @UserId=80781,@FeeTermId=4582,@UserFeeId1=417163
+
+            //StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUC_PaidAmount_EditUsers_Get?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Feedetaisleditupdateproperties>>(data);
+                //item = JsonConvert.DeserializeObject<List<PAY_FEE_BY_USERS>>(data);
+            }
+
+            return Json(item);
+
+            //return View();
+        }
+
+        /*-Search Icon Click Show New Window -*/
+        [HttpGet]
+        public IActionResult PFU_FC_PaidAmount_Edit_User(Feedetaisledit obj)/*PAY_FEE_BY_USERS objs*/
+        {
+
+            List<Feedetaisleditupdateproperties> item = new List<Feedetaisleditupdateproperties>();
+            //List<PAY_FEE_BY_USERS> item = null;
+            string data1 = JsonConvert.SerializeObject(obj);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUC_PaidAmount_EditUsers_Get?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
+           // HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUFC_PaidAmount_EditUsers_Get?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Feedetaisleditupdateproperties>>(data);
+            }
+            ViewBag.itemscount = item.Count();
+            return PartialView("_Payfeecorrectionspaidamountupdate", item);
+            //return PartialView("_PFU_FC_PaidAmount_Edit_User", item);
+
+        }
+
+        [HttpPost]
+        //public IActionResult PFUC_AmountPay_Recipt(PAY_FEE_BY_USERS obj)
+        public IActionResult PFUC_AmountPay_Recipt(Feeinstallmentsinsert obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.PaymentDate = DateTime.Now;
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/FeeInstallments_INSERT_challan?", content).Result;
+
+            FeeInstallmentResult items = new FeeInstallmentResult();
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<FeeInstallmentResult>(data2);
+            }
+           
+            int returnmessage = int.Parse(items.Insertretunmessage);
+            //string returnmessage=items.Insertretunmessage;
+            int ReceiptNo = int.Parse(items.ReceiptNo);
+
+            List<ChallanaDetails> limodel = new List<ChallanaDetails>();
+
+            limodel.Add(new ChallanaDetails
+            {
+
+                //Item = item,
+                Challana_TermName = obj.Challana_TermName,                            //1  "Challana_TermName",              
+                Challana_FeeType = obj.Challana_FeeType,                              //2  "Challana_FeeType",               
+                Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),                          //3  "Challana_FeeAmount",             
+                Challana_DiscountType = obj.Challana_DiscountType,                    //4  "Challana_DiscountType",          
+                Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5  "Challana_DiscountAmount",        
+                Challana_PaidAmount = obj.Challana_PaidAmount,
+                Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),//6  "Challana_PaidAmount",            
+
+                Challana_DueAmount = obj.Challana_DueAmount,                          //7  "Challana_PayingAmount",----          
+                Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),                        //8  "Challana_DueAmount",             
+                Challana_DueDate = obj.Challana_DueDate,                              //9  "Challana_BalanceDue",            
+                Challana_UserRegId = obj.Challana_UserRegId,                          //10 "Challana_DueDate",               
+                Challana_ClassificationName = obj.Challana_ClassificationName,        //11 "Challana_UserRegId",             
+                Challana_subclassificationName = obj.Challana_subclassificationName,  //12 "Challana_ClassificationName",    
+                Description = obj.Description,
+                Challana_UserName = obj.Challana_UserName,                             //13 "Challana_subclassificationName", 
+                ReturnStringValue = returnmessage,
+
+            });
+            return PartialView("_PFUC_AmountPay_Recipts", limodel);
+
+        }
+        [HttpPost]
+        public IActionResult PFUC_FeeInstallments_BulkFeeUPDATE(string UpdateData, string ChallanDetails)
+        {
+            //var InstanceId = Request.Cookies["INSTANCEID"];
+            //var UpdatedBy = Request.Cookies["LoginUserId"];
+
+
+
+
+            string data1 = JsonConvert.SerializeObject(UpdateData);
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFU_FeeInstallments_BulkFeeUpdate_By_Challans?UpdateData=" + UpdateData + "&InstanceId=" + InstanceId + "&UpdatedBy=" + UserId, content).Result;
+
+            var items = "";
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+
+            if (items == "1")
+            {
+                var challanaDetailsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(ChallanDetails);
+
+                ViewBag.ChallanDetails = challanaDetailsList;
+                return PartialView("_PFU_FeeInstallments_BulkFeeUPDATE");
+
+            }
+            else if (items == "-2")
+            {
+                ViewBag.ErrorMessage = "Entered Amount is Exceeding the Fee Amount,Please Verify the Amount. ";
+                return PartialView("_PFU_PaidAmount_Edit_SingleUser", ViewBag.ErrorMessage);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = " Something Went Wrong Please Try Again.........!";
+            }
+
+
+            return PartialView("_PFU_PaidAmount_Edit_SingleUser");
+        }
+
+        public IActionResult PFUC_Termidbyfeetype(int FeeTermId)//PFU_FeeType_By_FeeTerms
+        {           
+            List<SelectListItem> list = new List<SelectListItem>();
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/PFU_Feetermbyfeetype?InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId).Result;
+            if (Response.IsSuccessStatusCode)
+            {
+                string Sub_DD_Data = Response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+            }
+           
+            return Json(list);
+        }
+
+        //public IActionResult PFUC_Feetypeby_Discounttype(int FeeTypeId)
+        //    //   PFU_DiscountType_By_FeeType
+        //{
+        //    //PfuDiscounttypebyfeetype
+        //    List<DiscountAndQuantitylist> list = new List<DiscountAndQuantitylist>();
+        //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUC_Feetypbydescountamount?InstanceId=" + InstanceId + "&FeeTypeId=" + FeeTypeId).Result;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string data1 = response.Content.ReadAsStringAsync().Result;
+
+        //        list = JsonConvert.DeserializeObject<List<DiscountAndQuantitylist>>(data1);
+        //    }
+        //    return Json(list);
+
+
+        //    // old PFU_DiscountType_ByFeeType
+        //    // New method PFUC_Feetypbydescountamount
+
+        //    //List<SelectListItem> list = new List<SelectListItem>();
+        //    //List<SelectListItem> PFU_quantityList = new List<SelectListItem>();
+        //    //HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFU_DiscountType_ByFeeType?InstanceId=" + InstanceId + "&FeeTypeId=" + FeeTypeId).Result;
+        //    //if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
+        //    //{
+        //    //    string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
+
+        //    //    //PFU_SubCl_GetByCl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+        //    //    var data = JsonConvert.DeserializeObject<DiscountAndQuantityData>(Sub_DD_Data);
+        //    //    PFU_SubCl_GetByCl_DD = data.DiscountTypeList;
+        //    //    PFU_quantityList = data.QuantityList;
+        //    //}
+        //    //ViewBag.Subdd_Data = list;
+        //    //ViewBag.PFU_quantityList = PFU_quantityList;
+
+        //    ////return Json(ViewBag.Subdd_Data);
+        //    //return Json(new { Subdd_Data = PFU_SubCl_GetByCl_DD, PFU_quantityList = PFU_quantityList });
+
+        //}
+
+
+        #endregion
+
+
+
+        /*==========     PayFeeForUser ACTION METHOD GET AND POST METHOD START ===========*/
+        #region PayFeeForUser
         public IActionResult PayFeeForUser()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -872,40 +1493,38 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
+
+        // Search table data bind action method
         [HttpPost]
         public IActionResult PayFeeForUser(PAY_FEE_BY_USERS obj)
         {
+            obj.InstanceId = InstanceId;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForPayFee_SearchUsers", content).Result;
-            var data2 = "";
-            List<PAY_FEE_BY_USERS> items = new List<PAY_FEE_BY_USERS>();
+            
+            //List<PAY_FEE_BY_USERS> items = new List<PAY_FEE_BY_USERS>();
+            List<Payfeebyuserstbl> items = new List<Payfeebyuserstbl>();
 
             if (response.IsSuccessStatusCode)
             {
-                data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<List<PAY_FEE_BY_USERS>>(data2);
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<List<Payfeebyuserstbl>>(data2);
             }
             return Json(items);
         }
 
-
         [HttpGet]
         public IActionResult GetFeeTermDetialsByUserId(int UserId)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+        {            
             List<PAY_FEE_BY_USERS> item = null;
-
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeeTermDetials_ByUserId_Get?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
-
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<PAY_FEE_BY_USERS>>(data);
             }
-
             return Json(item);
-
         }
 
 
@@ -987,7 +1606,7 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult PFU_FeeInstallments_BulkFeeUPDATE(string UpdateData, string ChallanDetails)
+        public IActionResult PFU_FeeInstallments_BulkFeeUPDATE(string UpdateData, string ChallanDetails)//--
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
             var UpdatedBy = Request.Cookies["LoginUserId"];
@@ -1074,11 +1693,13 @@ namespace Connect4m_Web.Controllers
             //return Json(item);
             ViewBag.itemscount = item.Count();
 
+
+
             return PartialView("_PFU_PaidAmount_Edit_SingleUser", item);
         }
 
 
-
+        #endregion
 
         //---========= ##-- PAY FEE FOR USER DROPDOWNS ACTION METHODS START --####-----------------------------------
 
@@ -1155,27 +1776,11 @@ namespace Connect4m_Web.Controllers
             return Json(ViewBag.Subdd_Data);
         }
 
-        public IActionResult PFU_FeeType_By_FeeTerms(int FeeTermId)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
-            //exec stp_tblFeeTerms_SELECTALLByAcadamicYearId @InstanceId=545
-
-            List<SelectListItem> PFU_SubCl_GetByCl_DD = new List<SelectListItem>();
-            HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFU_FeeType_ByFeeTerms?InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId).Result;
-            if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
-                PFU_SubCl_GetByCl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-            }
-            ViewBag.Subdd_Data = PFU_SubCl_GetByCl_DD;
-
-            return Json(ViewBag.Subdd_Data);
-        }
+        
 
         public IActionResult PFU_SearchUser_By_TableData(int UserId, string FeeTermIds)
         {
-            var InstanceId = Request.Cookies["INSTANCEID"];
+            //var InstanceId = Request.Cookies["INSTANCEID"];
 
 
 
@@ -1192,32 +1797,7 @@ namespace Connect4m_Web.Controllers
 
         }
 
-        public IActionResult PFU_DiscountType_By_FeeType(int FeeTypeId)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
-
-
-            List<SelectListItem> PFU_SubCl_GetByCl_DD = new List<SelectListItem>();
-            List<SelectListItem> PFU_quantityList = new List<SelectListItem>();
-            HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFU_DiscountType_ByFeeType?InstanceId=" + InstanceId + "&FeeTypeId=" + FeeTypeId).Result;
-            if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
-
-                //PFU_SubCl_GetByCl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-                var data = JsonConvert.DeserializeObject<DiscountAndQuantityData>(Sub_DD_Data);
-                PFU_SubCl_GetByCl_DD = data.DiscountTypeList;
-                PFU_quantityList = data.QuantityList;
-            }
-            ViewBag.Subdd_Data = PFU_SubCl_GetByCl_DD;
-            ViewBag.PFU_quantityList = PFU_quantityList;
-
-            //return Json(ViewBag.Subdd_Data);
-            return Json(new { Subdd_Data = PFU_SubCl_GetByCl_DD, PFU_quantityList = PFU_quantityList });
-
-        }
-
+       
         public IActionResult PFU_DiscountType_By_DiscountAmount(int ConcedingTypeId)
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -1292,60 +1872,10 @@ namespace Connect4m_Web.Controllers
 
         /* ====================PAY FEE CORRECTIONS  FOR USERS  GET AND POST METHODS CODE START========================= */
 
-        public IActionResult PayFeeForUserForChallan()
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            ViewBag.InstanceId = InstanceId;
-            return View();
-        }
+        
 
 
-        [HttpPost]
-        public IActionResult PFUC_FeeInstallments_BulkFeeUPDATE(string UpdateData, string ChallanDetails)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
-
-
-
-            string data1 = JsonConvert.SerializeObject(UpdateData);
-            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/PFU_FeeInstallments_BulkFeeUpdate_By_Challans?UpdateData=" + UpdateData + "&InstanceId=" + InstanceId + "&UpdatedBy=" + UpdatedBy, content).Result;
-
-            var items = "";
-
-            if (response.IsSuccessStatusCode)
-            {
-                var data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            if (items == "1")
-            {
-                var challanaDetailsList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(ChallanDetails);
-
-                ViewBag.ChallanDetails = challanaDetailsList;
-                return PartialView("_PFU_FeeInstallments_BulkFeeUPDATE");
-
-            }
-            else if (items == "-2")
-            {
-                ViewBag.ErrorMessage = "Entered Amount is Exceeding the Fee Amount,Please Verify the Amount. ";
-                return PartialView("_PFU_PaidAmount_Edit_SingleUser", ViewBag.ErrorMessage);
-            }
-            else
-            {
-                ViewBag.ErrorMessage = " Something Went Wrong Please Try Again.........!";
-            }
-
-
-            return PartialView("_PFU_PaidAmount_Edit_SingleUser");
-
-
-
-        }
-
+        
         [HttpPost]
         public IActionResult PFUC_Terms_Delte(int InstanceId, int UserId, int TermId, int TypeId, int ChallanId)
         {
@@ -1368,22 +1898,7 @@ namespace Connect4m_Web.Controllers
 
 
         /*--------***  PayFeeForUserForChallana Dropdwons Methods Start ***-------*/
-        public IActionResult PFUC_Classification_DD()
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
 
-            List<SelectListItem> PFU_Cl_DD = new List<SelectListItem>();
-            HttpResponseMessage ClS_DD_Response = client.GetAsync(client.BaseAddress + "/PFU_Classification_GetDD?InstanceId=" + InstanceId).Result;
-            if (ClS_DD_Response.IsSuccessStatusCode)
-            {
-                string DD_Data = ClS_DD_Response.Content.ReadAsStringAsync().Result;
-                PFU_Cl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
-            }
-            ViewBag.AcadamicYearDD = PFU_Cl_DD;
-
-            return Json(ViewBag.AcadamicYearDD);
-
-        }
 
         public IActionResult PFUC_StudentQuota()
         {
@@ -1405,57 +1920,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult PFUC_AmountPay_Recipt(PAY_FEE_BY_USERS obj)
-        {
-            var CreatedBy = Request.Cookies["LoginUserId"];
-            obj.CreatedBy = CreatedBy;
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/FeeInstallments_INSERT_challan?", content).Result;
-
-            var items = "";
-            if (response.IsSuccessStatusCode)
-            {
-                var data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-            int ReturnStringValue = int.Parse(items);
-
-            List<ChallanaDetails> limodel = new List<ChallanaDetails>();
-
-            limodel.Add(new ChallanaDetails
-            {
-
-                //Item = item,
-                Challana_TermName = obj.Challana_TermName,                            //1  "Challana_TermName",              
-                Challana_FeeType = obj.Challana_FeeType,                              //2  "Challana_FeeType",               
-                Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),                          //3  "Challana_FeeAmount",             
-                Challana_DiscountType = obj.Challana_DiscountType,                    //4  "Challana_DiscountType",          
-                Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5  "Challana_DiscountAmount",        
-                Challana_PaidAmount = obj.Challana_PaidAmount,
-                Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),//6  "Challana_PaidAmount",            
-
-                Challana_DueAmount = obj.Challana_DueAmount,                          //7  "Challana_PayingAmount",----          
-                Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),                        //8  "Challana_DueAmount",             
-                Challana_DueDate = obj.Challana_DueDate,                              //9  "Challana_BalanceDue",            
-                Challana_UserRegId = obj.Challana_UserRegId,                          //10 "Challana_DueDate",               
-                Challana_ClassificationName = obj.Challana_ClassificationName,        //11 "Challana_UserRegId",             
-                Challana_subclassificationName = obj.Challana_subclassificationName,  //12 "Challana_ClassificationName",    
-                Description = obj.Description,
-                Challana_UserName = obj.Challana_UserName,                             //13 "Challana_subclassificationName", 
-                ReturnStringValue = ReturnStringValue,
-
-            });
-
-
-
-
-            return PartialView("_PFUC_AmountPay_Recipts", limodel);
-
-        }
-
+       
         [HttpPost]
         public IActionResult PFU_FeeInstallments_BulkFeeUPDATE_Challana(string UpdateData, string ChallanDetails)
         {
@@ -1526,91 +1991,16 @@ namespace Connect4m_Web.Controllers
         /*--------***  PayFeeForUserForChallana Dropdwons Methods End ***-------*/
 
 
-        /*-Search Icon Click Show New Window -*/
-        [HttpGet]
-        public IActionResult PFUC_PaidAmount_Edit_User(PAY_FEE_BY_USERS obj)
-        {
-
-            List<PAY_FEE_BY_USERS> item = null;
-            string data1 = JsonConvert.SerializeObject(obj);
-            //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId @UserId=80781,@FeeTermId=4582,@UserFeeId1=417163
-
-            //StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUC_PaidAmount_EditUsers_Get?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<PAY_FEE_BY_USERS>>(data);
-            }
-
-            return Json(item);
-
-            //return View();
-        }
-
-        /*-Search Icon Click Show New Window -*/
+      
 
 
-        [HttpPost]
-        public IActionResult PayFeeForUserForChallan(PAY_FEE_CORRECTIONS_BY_USERS obj)
-        {
-            //exec stp_tblUser_SEARCHUSERSFORPAYFEE @InstanceId=545,@UserName='',@FirstName='',@LastName='',@InstanceUserCode='',@PortalEmail='',@ParentName='',@MobilePhone='',@InstanceClassificationId=806,@InstanceSubClassificationId=1172,@StudentQuota=default
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForPayFeeCorrections_SearchUsers", content).Result;
-            var data2 = "";
-            List<PAY_FEE_CORRECTIONS_BY_USERS> items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
+      
 
-            if (response.IsSuccessStatusCode)
-            {
-                data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS>>(data2);
-            }
-            return Json(items);
-        }
-
-
-        [HttpGet]
-        public IActionResult PFU_FC_PaidAmount_Edit_User(PAY_FEE_BY_USERS obj)
-        {
-            List<PAY_FEE_BY_USERS> item = null;
-            string data1 = JsonConvert.SerializeObject(obj);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFUFC_PaidAmount_EditUsers_Get?UserId=" + obj.UserId + "&FeeTermId=" + obj.FeeTermId + "&UserFeeId1=" + obj.UserFeeId1).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<PAY_FEE_BY_USERS>>(data);
-            }
-            ViewBag.itemscount = item.Count();
-            return PartialView("_PFU_FC_PaidAmount_Edit_User", item);
-
-        }
-
-
+      
 
 
         //PAY_FEE_BY_CorrectionUSERS EDIT METHOD AND POST METHOD CODE START
-        [HttpGet]
-        public IActionResult PFC_GetFeeTermDetialsByUserId(int UserId)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            List<PAY_FEE_CORRECTIONS_BY_USERS_Tbl1> item = null;
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFC_FeeTermDetials_ByUserId_Get?UserId=" + UserId + "&InstanceId=" + InstanceId).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS_Tbl1>>(data);
-            }
-
-            return Json(item);
-
-        }
-
-
+        
         [HttpPost]
         public IActionResult PFC_SaveFee_UpdateFee_ByTblUser(int UserId, int FeeTermId, int FeeTypeId, string Amount, int ChallanId, DateTime DueDate)
         {
@@ -1647,45 +2037,12 @@ namespace Connect4m_Web.Controllers
 
         /*----DROPDOWNS DATA PAY FEE CORRECTIONS START----*/
 
-        public IActionResult PFC_tblFeeTerms_Challana_DD(string Userid)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
-            List<PAY_FEE_CORRECTIONS_BY_USERS> items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
-            HttpResponseMessage SubCl_GetByCl_DD_Response = client.GetAsync(client.BaseAddress + "/PFC_Challana_DD?InstanceId=" + InstanceId + "&Userid=" + Userid).Result;
-            if (SubCl_GetByCl_DD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = SubCl_GetByCl_DD_Response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS>>(Sub_DD_Data);
-            }
-            ViewBag.Subdd_Data = items;
-
-            return Json(items);
-        }
 
 
         /*----DROPDOWNS DATA PAY FEE CORRECTIONS END----*/
 
 
-        public IActionResult PFC_SearchUser_By_TableData(int UserId, string FeeTermIds)
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-
-
-            List<PAY_FEE_CORRECTIONS_BY_USERS> Items = new List<PAY_FEE_CORRECTIONS_BY_USERS>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PFC_SearchUserByTableData?UserId=" + UserId + "&FeeTermIds=" + FeeTermIds + "&InstanceId=" + InstanceId).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Items = JsonConvert.DeserializeObject<List<PAY_FEE_CORRECTIONS_BY_USERS>>(data);
-            }
-
-            return Json(Items);
-
-        }
-
-
+       
         /* ====================PAY FEE CORRECTIONS  FOR USERS  GET AND POST METHODS CODE END========================= */
 
 
@@ -1800,7 +2157,7 @@ namespace Connect4m_Web.Controllers
 
 
         /*--------------------=======Generate Fee Receipt Action methods start===========------------------------------*/
-
+        #region  GenerateFeeReceipt     GENERATE FEE CHALLAN
         public IActionResult GenerateFeeReceipt()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -1808,88 +2165,76 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-
         [HttpPost]
-        public IActionResult GenerateFeeReceipt(int InstanceId, int ClassificationId, int SubClassificationId)
+    
+        public IActionResult GenerateFeeReceipt(int InstanceClassificationId, int InstanceSubClassificationId)    
         {
-            List<New_GenerateFeeReceipt> DiscountLi = new List<New_GenerateFeeReceipt>();
-
-            var queryString = $"?InstanceId={InstanceId}&ClassificationId={ClassificationId}&SubClassificationId={SubClassificationId}";
-            //exec stp_tblUser_HallTickets @InstanceId=545,@ClassificationId=806,@SubClassificationId=1172
-
+            List<New_GenerateFeeReceipt> list = new List<New_GenerateFeeReceipt>();         
+            var queryString = $"?InstanceId={InstanceId}&ClassificationId={InstanceClassificationId}&SubClassificationId={InstanceSubClassificationId}"; 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Feereceipt_UserTable_Get" + queryString).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                DiscountLi = JsonConvert.DeserializeObject<List<New_GenerateFeeReceipt>>(data);
-            }
+                list = JsonConvert.DeserializeObject<List<New_GenerateFeeReceipt>>(data);
+            }         
 
-            ViewBag.FT_Tbl = DiscountLi;
-
-            return new JsonResult(ViewBag.FT_Tbl);
-
+            return Json(list);
         }
-        public IActionResult GenerateFeeReceipt_New_Classification_DD(int InstanceId)
+        //public IActionResult GenerateFeeReceipt_New_Classification_DD()
+        //{
+        //    List<SelectListItem> lidd = new List<SelectListItem>();
+        //    HttpResponseMessage ClS_DD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_Classification_GetDD?InstanceId=" + InstanceId).Result;
+        //    if (ClS_DD_Response.IsSuccessStatusCode)
+        //    {
+        //        string DD_Data = ClS_DD_Response.Content.ReadAsStringAsync().Result;
+        //        lidd = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
+        //    }
+        //    ViewBag.AcadamicYearDD = lidd;
+
+        //    return Json(ViewBag.AcadamicYearDD);
+
+        //}
+        //public IActionResult GenerateFeeReceipt_New_Class_DD(int InstanceId, int InstanceClassificationId)
+        //{
+        //    List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
+        //    HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_ClassDD?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+        //    if (MFD_Response.IsSuccessStatusCode)
+        //    {
+        //        string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
+        //        MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+        //    }
+        //    ViewBag.MFD_Class_Data = MFD_ClassDD_li;
+
+        //    return Json(ViewBag.MFD_Class_Data);
+        //}
+
+        public IActionResult GenerateFeeReceipt_New_FeeTerms_DD()
         {
-            List<SelectListItem> PFU_Cl_DD = new List<SelectListItem>();
-            HttpResponseMessage ClS_DD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_Classification_GetDD?InstanceId=" + InstanceId).Result;
-            if (ClS_DD_Response.IsSuccessStatusCode)
-            {
-                string DD_Data = ClS_DD_Response.Content.ReadAsStringAsync().Result;
-                PFU_Cl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
-            }
-            ViewBag.AcadamicYearDD = PFU_Cl_DD;
-
-            return Json(ViewBag.AcadamicYearDD);
-
-        }
-        public IActionResult GenerateFeeReceipt_New_Class_DD(int InstanceId, int InstanceClassificationId)
-        {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
-            HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_ClassDD?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
-            if (MFD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-            }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
-        }
-
-        public IActionResult GenerateFeeReceipt_New_FeeTerms_DD(int InstanceId)
-        {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
+            List<SelectListItem> list = new List<SelectListItem>();
             HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_FeeTermsDD?InstanceId=" + InstanceId).Result;
             if (MFD_Response.IsSuccessStatusCode)
             {
                 string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-            }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
+                list = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+            }   
+            return Json(list);
         }
-        public IActionResult GenerateFeeReceipt_New_FeeType_DD(int InstanceId, int FeeTermIds)
+        public IActionResult GenerateFeeReceipt_New_FeeType_DD(string FeeTermIds)
         {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
-            HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_FeeTypeDD?InstanceId=" + InstanceId + "&FeeTermIds=" + FeeTermIds).Result;
-            if (MFD_Response.IsSuccessStatusCode)
+            List<SelectListItem> list = new List<SelectListItem>();
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/GenerateFeeReceipt_FeeTypeDD?InstanceId=" + InstanceId + "&FeeTermIds=" + FeeTermIds).Result;
+            if (Response.IsSuccessStatusCode)
             {
-                string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+                string data = Response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
+            return Json(list);
         }
 
 
         [HttpPost]
-        public IActionResult GenerateFeeReceipt_New_Users_Challan_Result_Tbl(string FeeTermId, string FeeTypeIds, string UserIds, int InstanceId)
+        public IActionResult GenerateFeeReceipt_New_Users_Challan_Result_Tbl(string FeeTermId, string FeeTypeIds, string UserIds)
         {
-
             StringContent content = new StringContent("application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/GenerateFeeReceipt_Users_Challan_Result?FeeTermId=" + FeeTermId + "&FeeTypeIds=" + FeeTypeIds + "&UserIds=" + UserIds + "&InstanceId=" + InstanceId, content).Result;
             var data2 = "";
@@ -1903,7 +2248,7 @@ namespace Connect4m_Web.Controllers
             return Json(items);
 
         }
-
+        #endregion
         /*--------------------=======Generate Fee Receipt Action methods end===========------------------------------*/
 
 

@@ -1,0 +1,489 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Userpayfee
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    @*Searchuserfields_tabledatadiv1=====>>>> Search input fields and tables data div id*@
+    @*Searchpayfeeuserstbl=====>>>> Search tables data div id*@
+    @*Getfeedetailsforuserwisemaindiv1=====>>>> USER FEE PAYEMENT DETAILS*@
+    @*Studentdetailsid ======>>>>> Student Details text showing Spanid*@
+    @*Studentfeedetailsscheduledornotspanid ======>>>>> Student fee details scheduled or not  Spanid*@
+
+    @*PfuPaymentdd   ======>>>>>   Payment dropdown id*@
+    @*Pfubankaccountsdd ======>>>>> Bankaccount dropdown id*@
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid" id="Payfeeforusermaindiv">
+        <span id="Errormessage" class="text-danger"></span>
+        <span id="Studentdetailsid" class="text-dark"></span><input type="hidden" id="Studentuseridspid" />
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>PAY FEE BY USERS </h4>
+
+        @*<<<<==== USER FEE PAYEMENT DETAILS SEARCH DIV START =====>>>*@
+
+        <div class="row mb-2" id="Searchuserfields_tabledatadiv1">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            SEARCH USER
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <form class="form" id="Payfeebyuserssearchform">
+                                    <div class="row mb-2">
+                                        <label asp-for="InstanceUserCode" class="control-label col-sm-2 col-form-label text-end  space">Reg. No </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtinstanceusercodeid" asp-for="InstanceUserCode" class="form-control">
+                                        </div>
+
+                                        <label asp-for="UserName" class="control-label col-sm-2 col-form-label text-end space">User Name </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtusernameid" asp-for="UserName" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label asp-for="FirstName" class="control-label col-sm-2 col-form-label text-end  space">First Name </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtfirstnameid" asp-for="FirstName" class="form-control">
+                                        </div>
+
+                                        <label asp-for="LastName" class="control-label col-sm-2 col-form-label text-end  space">Last Name </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtlastnameid" asp-for="LastName" class="form-control">@*name="Bank_NameTXT_Name"*@
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Department </label>
+                                        <div class="col-sm-4">
+                                            <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                            </select>
+                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                        </div>
+
+                                        <label asp-for="InstanceSubClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Class </label>
+                                        <div class="col-sm-4">
+                                            <select class="select2 form-select select2-hidden-accessible" id="DdlClass" asp-for="InstanceSubClassificationId">
+                                            </select>
+                                            <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <label asp-for="ParentName" class="control-label col-sm-2 col-form-label text-end  space">Parent Name </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtparentnameid" asp-for="ParentName" class="form-control">
+                                        </div>
+
+                                        <label asp-for="MobilePhone" class="control-label col-sm-2 col-form-label text-end  space">Mobile Number </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" asp-for="MobilePhone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label asp-for="PortalEmail" class="control-label col-sm-2 col-form-label text-end  space">Email ID </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtportalemailid" asp-for="PortalEmail" class="form-control">
+                                        </div>
+
+                                        <label asp-for="StudentQuota" class="control-label col-sm-2 col-form-label text-end  space">Student Quota/Type </label>
+                                        <div class="col-sm-4">
+                                            <select class="select2 form-select select2-hidden-accessible" id="ddlstudentquota" asp-for="StudentQuota">
+                                            </select>
+                                            <span asp-validation-for="StudentQuota" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label asp-for="ICNumber" class="control-label col-sm-2 col-form-label text-end  space">IC Number </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txticnumberid" asp-for="ICNumber" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <button type="reset" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeDetails',null)">Previous Page</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('FeeStatus',null)">Next Page</button>
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Payfeebyuserssearchform')" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" value="Search" id="Search_PayFeeUser">Search</button>
+                                            <button type="submit" class="btn btn-dark waves-effect waves-light" value="NoFee" id="Search_NoFeeUser">NoFee</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span id="Studentfeedetailsscheduledornotspanid" class="text-danger"></span>
+
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span>
+                                YOUR SEARCH RESULTED:<span id="TableCount" class="TableCount_Span"></span> RECORDS.
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="Searchpayfeeuserstbl">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>RegNo</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+                                    <th id="mobilenumber">Mobile Number</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<<<<==== USER FEE PAYEMENT DETAILS SEARCH DIV END =====>>>*@
+
+
+
+        @*<<<<====USER FEE PAYEMENT DETAILS TABLE DIV START=====>>>*@
+        <div id="Userfeedetailsdiv2">
+            <div class="row mb-2" id="Getfeedetailsforuserwisemaindiv1">
+                @*GetFeeTermDetialsByUser_DIVID*@
+                <input type="hidden" id="userIdTextBox">
+                <span id="Update_SubmitvalidationMessage" class="text-danger"></span>
+                <div class="row">
+                    <div class="row">
+                        <div class="flex-grow-1 container-p-y container-fluid col-6">
+                            <div class="row mb-2">
+                                <div class="col-md-12 col-lg-12 mb-3 ">
+                                    <div class="card mb-4">
+                                        <div class="card-header d-flex align-items-center justify-content-between">
+                                            <h5 class="mb-0">
+                                                SEARCH FEE DETAILS
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row mb-3">
+                                                        <label class="control-label col-sm-4 col-form-label text-end space">Select Terms </label>
+                                                        <div class="col-sm-7">
+                                                            <select multiple class="select2 form-select select2-hidden-accessible" id="ddltermid">
+                                                                @*UserFee_GetFeeTermDetialsByUser_DDId*@
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content text-center">
+                                                        <div class="col-sm-12">
+                                                            <button type="button" class="btn btn-success waves-effect waves-light" value="Search" id="searchbtnterms">Search</button>@*UserFee_Details_SearchBtn*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 container-p-y container-fluid col-6">
+                            <div class="row mb-2">
+                                <div class="col-md-12 col-lg-12 mb-3 ">
+                                    <div class="card mb-4">
+                                        <div class="card-header d-flex align-items-center justify-content-between">
+                                            <h5 class="mb-0">
+                                                MANAGE FEE DETAILS
+                                            </h5>
+                                        </div>
+                                        <div class="card-body" id="TableDate_forUsers_DivId">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <form id="MANAGEFEEDETAILSFORM">
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end required space"> Fee Term </label>
+                                                            <div class="col-sm-6" id="DDlTermid">
+                                                                <select id="ddlFeetermid" class="select2 form-select select2-hidden-accessible validate">
+                                                                    <option value="">--Select--</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end required space "> Fee Type </label>
+                                                            <div class="col-sm-6">
+                                                                <select id="ddlfeetype" class="select2 form-select select2-hidden-accessible validate">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end required space"> Discount Type </label>
+                                                            <div class="col-sm-6">
+                                                                <select id="Discount_TypeDDId" class="select2 form-select select2-hidden-accessible validate">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end  space"> Discount Amount  </label>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mb-1" id="QuantityAmountID">
+                                                                    <div class="col-9">
+                                                                        <input type="text" class="form-control" id="DiscountAmount_TXTID" />
+                                                                        <input type="hidden" class="form-control" id="paidAmount_TXTID" />
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <span id="Span_IconId_Quantity" style="display: none;"><i class="fa fa-search"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" id="Quantitydivid">
+                                                            <label class="control-label col-sm-5 col-form-label text-end  space" id="Quantity_DivLbl">  Quantity </label>
+                                                            <div class="col-sm-6" id="Quantity_DivTxt">
+                                                                <input type="text" class="form-control" id="QuantityAmount_TxtID" onblur="setFeeAmount(this);" onkeypress="return isNumber(event)" />
+                                                                <input type="hidden" id="Quantityamountvaluesetfeewisetxtid" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end required space">  Fee Amount </label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" class="form-control validate" id="FeeAmount_TxtID" onkeypress="return isNumber(event)" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end required space">  Due Date </label>
+                                                            <div class="date-picker col-sm-6" style="display: flex;">
+                                                                <input type="date" id="DueDate_TxtID" class="form-control validate" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="control-label col-sm-5 col-form-label text-end space"> Comments </label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" class="form-control" id="Comments_TxtID" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content text-center">
+                                                            <div class="col-sm-12">
+                                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearfun('MANAGEFEEDETAILSFORM')" id="BtnClear">Clear</button>
+                                                                <button type="button" class="btn btn-success waves-effect waves-light" id="Addfeeuserbtn" value="Submit">Submit</button>@*AddFeeByUser_Btn*@
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mb-2">
+                <span id="Validationmsgspid" class="text-danger"></span>
+                <span id="SubmitvalidationMessage" class="text-danger"></span>
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                FEE DETAILS FOR : <span id="Feedetailsusernamespanid">:</span>
+                            </h5>
+                        </div>
+
+                        <div class="table-responsive text-nowrap">
+                            <table id="Studentfeedetailstbl" class="table table-hover table-bordered no-footer">
+                                @*Search_FeeTable*@
+                                <thead>
+                                    <tr>
+                                        <th style="width:19px;">Sl. No</th>
+                                        <th>Term</th>
+                                        <th>Fee Type</th>
+                                        <th>Fee Amt</th>
+                                        <th>Discount Type</th>
+                                        <th>Challan No</th>
+                                        <th>Paid</th>
+                                        <th>Due</th>
+                                        <th>Due Date</th>
+                                        <th>Amount</th>
+                                        <th></th>
+                                        <th>Comments</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-14">
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-14">
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*---------------*@
+                        <div class="row">
+                            <div class="col">
+                                @*<div class="row">
+                                    <label class="control-label col-sm-5 col-form-label text-end required space"> Fee Term </label>
+                                    <div class="col-sm-6">
+                                        <select id="FeeTerms_DDId" class="select2 form-select select2-hidden-accessible">
+                                        </select>
+                                    </div>
+                                </div>*@
+
+                                <div class="row mb-2">
+                                    <label class="control-label col-sm-2 col-form-label text-end  space">Account No</label>
+                                    <div class="col-sm-4">
+                                        @*<input type="hidden" id="InstanceId_TXTId" value="@ViewBag.InstanceId" />*@
+                                        <select id="bankaccountsddl" class="select2 form-select select2-hidden-accessible"></select>@*BankAccounts_DDId*@
+                                    </div>
+                                    <label class="control-label col-sm-2 col-form-label text-end required space">Payment Mode </label>
+                                    <div class="col-sm-4">
+                                        <select id="paymentmodeddl" class="select2 form-select select2-hidden-accessible"></select>@*Payment_Mode_DDid*@
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                    <label class="control-label col-sm-4 col-form-label text-end required space">Payment Mode </label>
+                                    <div class="col-sm-6">
+                                        <select id="Payment_Mode_DDid" class="select2 form-select select2-hidden-accessible"></select>
+                                    </div>
+                                </div>*@
+                                @*<div id="Cheque_DD_DivId">*@
+                                <div class="row mb-2">
+                                    <label class="control-label col-sm-2 col-form-label text-end required space hideable">Cheque/DD No  </label>
+                                    <div class="col-sm-4 hideable">
+                                        @*hideable*@
+                                        <input type="text" id="Chequetxtid" class="form-control hideable" @*class="hideable"*@ />@*Cheque_DD_TxtId*@
+                                    </div>
+                                    <label class="control-label col-sm-2 col-form-label text-end required space hideable">Cheque/DD Date  </label>
+                                    <div class="col-sm-4 hideable">
+                                        <input type="date" id="Chequedatedttxtid" class="form-control hideable" @*style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px; border: 1px solid;"*@ />@*Cheque_DD_DateTxtId*@
+                                    </div>
+                                </div>
+                                @*<div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                    <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;"><font style="color: red; font-size: 13px;">*</font>Cheque/DD Date  :</label>
+                                </div>
+                                <div class="col-3 hideable">
+                                    <input type="date" id="Cheque_DD_DateTxtId" class="hideable" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px; border: 1px solid;" />
+                                </div>*@
+                                <div class="row mb-2">
+                                    <label class="control-label col-sm-2 col-form-label text-end required space hideable">Cheque/DD Bank Name </label>
+                                    <div class="col-sm-4 hideable">
+                                        <input type="text" id="Chequebanknametxtid" class="form-control hideable" />@*Cheque_DD_BankName_TxtId*@
+                                    </div>
+                                    <label class="control-label col-sm-2 col-form-label text-end  space hideable">Payable at </label>
+                                    <div class="col-sm-4 hideable">
+                                        <input type="text" id="Payble_TxtId" class="form-control hideable" />
+                                    </div>
+                                </div>
+                                @*<div style="padding: 0px; text-align: end; margin-top: 5px;" class="col-3 hideable">
+                                    <label class="control-label" style=" height: 30px; font-family: auto; font-size: 13px;">Payable at  :</label>
+                                </div>
+                                <div class="col-3 hideable">
+                                    <input type="text" id="Payble_TxtId" style="display: block; height: 24px; width: 80%; border-radius: 3px; font-family: auto; font-size: 13px;" />
+                                </div>*@
+                                @*</div>*@
+                                <div class="row mb-2">
+                                    <label class="control-label col-sm-2 col-form-label text-end  space">Description</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="descriptiontxtid" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row justify-content text-center">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-dark waves-effect waves-light" onclick="backToSearch(event);">Back To Search</button>
+                                        <button type="button" class="btn btn-warning waves-effect waves-light">Refund</button>
+                                        <button type="button" class="btn btn-success waves-effect waves-light" id="btnsubmit" onclick="Payinstallmentsubbtn(event)">Submit</button>@*onclick="AmountPaySubmitBtn(event);"*@
+                                    </div>
+                                </div>
+
+
+                                @*<div style=" margin-left: 37%;">
+                                    <input type="submit" class="btn btn-pill btn-outline-info-2x" value="Back To Search"  />
+                                    <input type="submit" value="Refund" class="btn btn-pill btn-outline-warning-2x" />
+                                    <input type="submit" value="Submit" onclick="AmountPaySubmitBtn(event);" class="btn btn-pill btn-outline-success-2x" />
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<<<<====USER FEE PAYEMENT DETAILS TABLE DIV END=====>>>*@
+
+
+
+
+
+        @* FEE UPDATE VIEW CODE START*@
+        <div id="Feedetailsupdateandedit_tablediv">
+            <div class="col-md-12 col-lg-12 mb-3 ">
+                <div class="card mb-4">
+                    <div id="Feedetailsupdateandedittablediv">
+
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        @* FEE UPDATE VIEW CODE END*@
+
+        @*FEE RECEIPT(S) VIEW CODE START*@
+
+        <div id="Feechallandiv">
+            <div class="col-md-12 col-lg-12 mb-3 ">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            FEE RECEIPT(S)
+                        </h5>
+                    </div>
+                    <div id="Feereceipt_partailcontaindiv">
+
+                    </div>                  
+                </div>
+            </div>
+        </div>
+
+        @*FEE RECEIPT(S) VIEW CODE END*@
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/Payfeebyusers.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

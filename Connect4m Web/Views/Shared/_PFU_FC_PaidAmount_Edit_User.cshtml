@@ -2,10 +2,9 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model List<PAY_FEE_BY_USERS>
+@*@model List<PAY_FEE_BY_USERS>*@
 
-
-<link href="~/css/PayFee_Corrections.css" rel="stylesheet" />
+<!--<link href="~/css/PayFee_Corrections.css" rel="stylesheet" />
 
 <div class="default-according style-1" id="accordionoc">
     <div>
@@ -89,19 +88,143 @@
                                 <input type="submit" value="Update" id="PFU_TermsFeeTable_IN_Update_Btnid" class="btn btn-pill btn-outline-success-2x" onclick="PFU_TermsFeeTable_IN_Update(event)" />
 
                                 <input type="submit" class="btn btn-pill btn-outline-info-2x" value="Back To Search" id="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn" onclick="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn(event)" />
-                                <a href="/FeeSection/FeeStatus" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>
+                                <a href="/FeeSection/FeeStatus" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>-->
+@* <a href="/FeeSection/ManageFeeDetails" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>*@
+@*<input type="submit" value="Back To Pay Fee" id="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToPayFee_btn" class="btn btn-pill btn-outline-warning-2x" onclick="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToPayFee_btn(event)" />*@
+@*<input type="submit" value="Update" id="PFU_TermsFeeTable_IN_Update_Btnid" onclick="PFU_TermsFeeTable_IN_Update(event)" class="btn btn-pill btn-outline-success-2x" />*@
+@*<input type="submit" class="btn btn-pill btn-outline-info-2x" value="Back To Search" id="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn" onclick="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn(event)" />*@
+@*<a href="/FeeSection/FeeStatus" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>*@
 
-                                @* <a href="/FeeSection/ManageFeeDetails" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>*@
-                                @*<input type="submit" value="Back To Pay Fee" id="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToPayFee_btn" class="btn btn-pill btn-outline-warning-2x" onclick="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToPayFee_btn(event)" />*@
-                                @*<input type="submit" value="Update" id="PFU_TermsFeeTable_IN_Update_Btnid" onclick="PFU_TermsFeeTable_IN_Update(event)" class="btn btn-pill btn-outline-success-2x" />*@
-                                @*<input type="submit" class="btn btn-pill btn-outline-info-2x" value="Back To Search" id="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn" onclick="PFU_TermsFeeTable_IN_EditbtnClick_Show_FeePaidTable_IN_BackToSearch_btn(event)" />*@
-                                @*<a href="/FeeSection/FeeStatus" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>*@
-
-                            </td>
+<!--</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
     </div>
-</div>
+</div>-->
+
+
+
+@model List<Feedetaisleditupdateproperties>
+@*<link href="~/css/maps/PayFeeByUser.css" rel="stylesheet" />*@
+
+@if (Model.Count() != 0)
+{
+
+
+    <div class="col-md-12 col-lg-12 mb-3 ">
+
+        <span id="SubmitvalidationMessage" class="text-danger">@ViewBag.ErrorMessage</span>
+        <div class="col-md-12 col-lg-12 mb-3">
+
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <span>
+                        NO OF RECORDS:@Model.Count() @*@ViewBag.itemscount.*@
+                    </span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="Search_FeeDetails_ByUserUpdate">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Sl. No</th>
+                            <th>Term Name</th>
+                            <th>Fee Type</th>
+                            <th>Amount</th>
+                            <th>Comments</th>
+                            <th>Paid On</th>
+                            <th>Collected By</th>
+                            <th hidden>InstallmentId</th>
+                            <th hidden>FeeAmount</th>
+                            <th hidden>ReceiptNo</th>
+                            <th hidden>FirstName</th>
+                            <th hidden>ClassificationName</th>
+                            <th hidden>SubClassificationName</th>
+                            <th hidden>DueDate</th>
+                            <th hidden>DueAmount</th>
+                            <th hidden>AdmissionNumber</th>
+                            <th hidden>ConcedingAmount</th>
+                            <th hidden>DiscountName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td id="1">@index</td>
+                                <td id="2">@item.TermName</td>
+                                <td id="3">@item.FeeType</td>
+                                <td id="4" align="center">
+                                    <input type="text" value="@item.Amount" class="form-control" />
+                                    <span hidden id="AmountTxt_Spanid">@item.Amount</span>
+                                    @if (item.DisplayIcon1 == "1")
+                                    {
+                                        @*<span class="search-icon">&#128269;</span>*@
+                                        <span class="search-icon">🔍</span>
+                                    }
+                                </td>
+                                <td id="5" align="center">
+                                    <textarea class="form-control">@item.InstallmentName</textarea>
+                                    <span hidden id="Installment_Spanid">@item.InstallmentName</span>
+                                </td>
+                                <td id="6">@item.CreatedDate</td>
+                                <td id="7">@item.CollectedBy</td>
+                                <td hidden id="InstallmentId 8">@item.InstallmentId</td>
+                                <td hidden id="FeeAmount 9">@item.FeeAmount</td>
+                                <td hidden id="ReceiptNo 10">@item.ReceiptNo</td>
+                                <td hidden id="FirstName 11">@item.FirstName</td>
+                                <td hidden id="ClassificationName 12">@item.ClassificationName</td>
+                                <td hidden id="SubClassificationName 13">@item.SubClassificationName</td>
+                                <td hidden id="DueDate 14">@item.DueDate</td>
+                                <td hidden id="DueAmount 15">@item.DueAmount</td>
+                                <td hidden id="AdmissionNumber 16">@item.AdmissionNumber</td>
+                                <td hidden id="ConcedingAmount 17">@item.ConcedingAmount</td>
+                                <td hidden id="ConcedingAmount 18">@item.DiscountName</td>
+                                <td hidden id="ReceiptNo 19">@item.ReceiptNo</td>
+                            </tr>
+
+                            index++;
+                        }
+
+
+                    </tbody>
+                </table>
+                <div class="row justify-content text-center">
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeDetails',null)">
+                            Previous Page
+                        </button>
+                        <button type="button" id="Pfuchallanbacktosearch_btn" class="btn btn-dark waves-effect waves-light">Back To Search</button>
+                        <button type="button" id="Pfuchallanbacktopayfee_btn" class="btn btn-dark waves-effect waves-light">
+                            Back To Pay Fee
+                        </button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="PFUtermsupdatbtnid">Update</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('FeeStatus',null)">
+                            Next Page
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+else
+{
+    <span class="text-danger"> Please Try agin</span>
+}
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@*<script src="~/js/Payfeebyusers.js"></script>*@
+<script src="~/js/Payfeeforusers2.js"></script>

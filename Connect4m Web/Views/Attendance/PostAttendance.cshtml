@@ -29,11 +29,12 @@
             <p id="MessageID"></p>
             <p id="DateError_Message"></p>
         </div>*@
-    <span id="Errormessage" class="text-danger"></span>
+   
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>POST ATTENDANCE </h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
+                <span id="Errormessage" class="text-danger"></span>
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
@@ -45,118 +46,97 @@
                             <div class="col">
                                 <form class="form" id="Postattendaceformid">
                                     @*id="myform"*@
-                                <input type="hidden" id="ROLENAMESPANID" value="@ViewBag.rolename" />
-                                <!--<div id="Ct_Lg_DivId">
-                                    <div class="row mb-3">
-                                        <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">Date  </label>
-                                        <div class="col-sm-4">
-                                            <span id="currentDate" class="form-control"></span>
+                                    <input type="hidden" id="ROLENAMESPANID" value="@ViewBag.rolename" />
+
+                                    <div id="Admin_Lg_Div_id">
+                                        <div class="row mb-3">
+                                            <label asp-for="StartDate" id="RlStartdate" class="control-label col-sm-4 col-form-label text-end required space">StartDate</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
+                                                <span id="Roldisplaydate" class="form-control"></span>
+                                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3" id="Rlenddate">
+                                            <label asp-for="EndDate" class="control-label col-sm-4 col-form-label text-end required space">EndDate </label>
+                                            <div class="col-sm-4">
+                                                <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
+                                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3" id="Rldepartment">
+                                            <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    @*id="DCFN10"*@
+                                                    <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                                    </select>
+                                                    <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+
+                                                    @*@Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Names, "Value", "Text"), "--Select--", new { @id = "CFNID1", @class = "Dropdown form-select" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3" id="Rlclass">
+                                            <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    @*id="SCFNID2"*@
+                                                    <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
+                                                    </select>
+                                                    <span asp-validation-for="InstanceSubclassificaitionId" class="text-danger"></span>
+                                                    @* @Html.DropDownListFor(Model => Model.SubClassificationName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SCFNID1", @class = "form-select" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label asp-for="InstancesubjectId" class="control-label col-sm-4 col-form-label text-end required space">Slot</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select class="select2 form-select select2-hidden-accessible" id="Ddslotsid" asp-for="InstancesubjectId">
+                                                    </select>
+                                                    <span asp-validation-for="InstancesubjectId" class="text-danger"></span>
+                                                    @*@Html.DropDownListFor(Model => Model.SubjectName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "form-select Dropdown", @id = "SubjectName" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end"></label>
+                                            <div class="col-sm-4">
+                                                <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                                <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show Change Activity</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                @*<input type="button" class="btn btn-success waves-effect waves-light" value="Get Attendance Form"  style=" border-radius: 13px;">*@
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label class="control-label col-sm-4 col-form-label text-end required space">Department</label>
-                                        <div class="col-sm-4" id="F_IN_Class">-->
-                                @* @Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Cl_DD, "Value", "Text"), "--Select--", new { @id = "CT_Classification_Id", @class = "Dropdown form-select input-air-primary digits" })*@
-                                <!--</div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="control-label col-sm-4 col-form-label text-end required space">Class</label>
-                                    <div class="col-sm-4" id="Cl_Subject_DD_by_slot_Dd">-->
-                                @* @Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Cl_Subject_DD, "Value", "Text"), "--Select--", new { @id = "CT_InsClassSub_Id", @class = "Dropdown form-select input-air-primary digits" })*@
-                                <!--</div>
-                                    </div>
-                                </div>-->
-
-
-                                <div id="Admin_Lg_Div_id">
-                                    <div class="row mb-3">
-                                        <label asp-for="StartDate" id="RlStartdate" class="control-label col-sm-4 col-form-label text-end required space">StartDate</label>
-                                        <div class="col-sm-4">
-                                            <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
-                                            <span id="Roldisplaydate" class="form-control"></span>
-                                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3" id="Rlenddate">
-                                        <label asp-for="EndDate" class="control-label col-sm-4 col-form-label text-end required space">EndDate </label>
-                                        <div class="col-sm-4">
-                                            <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
-                                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3" id="Rldepartment">
-                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
-                                        <div class="col-sm-4">
-                                            <div class="position-relative">
-                                                @*id="DCFN10"*@
-                                            <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
-                                            </select>
-                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-
-                                            @*@Html.DropDownListFor(Model => Model.ClassificationName, new SelectList(ViewBag.Names, "Value", "Text"), "--Select--", new { @id = "CFNID1", @class = "Dropdown form-select" })*@
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3" id="Rlclass">
-                                    <label asp-for="InstancesubjectId" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
-                                    <div class="col-sm-4">
-                                        <div class="position-relative">
-                                            @*id="SCFNID2"*@
-                                        <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
-                                        </select>
-                                        <span asp-validation-for="InstanceSubclassificaitionId" class="text-danger"></span>
-                                        @* @Html.DropDownListFor(Model => Model.SubClassificationName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @id = "SCFNID1", @class = "form-select" })*@
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label asp-for="InstancesubjectId" class="control-label col-sm-4 col-form-label text-end required space">Slot</label>
-                                <div class="col-sm-4">
-                                    <div class="position-relative">
-                                        <select class="select2 form-select select2-hidden-accessible" id="Ddslotsid" asp-for="InstancesubjectId">
-                                        </select>
-                                        <span asp-validation-for="InstancesubjectId" class="text-danger"></span>
-                                        @*@Html.DropDownListFor(Model => Model.SubjectName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "form-select Dropdown", @id = "SubjectName" })*@
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="control-label col-sm-4 col-form-label text-end"></label>
-                                <div class="col-sm-4">
-                                    <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
-                                    <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show Change Activity</label>
-                                </div>
-                            </div>
-
-                            <div class="row justify-content text-center">
-                                <div class="col-sm-12">
-                                    @*<input type="button" class="btn btn-success waves-effect waves-light" value="Get Attendance Form"  style=" border-radius: 13px;">*@
-                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
-                                </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+
+                <div id="GetAttendance_Table">
+
+                </div>
+
             </div>
         </div>
     </div>
 
-    <div id="GetAttendance_Table">
-
-    </div>
-
-</div>
-</div>
-</div>
 
 
-
-<input type="hidden" value="@ViewBag.LoginUserId" id="Lg_UserId_Txtid" />
-<input type="hidden" value="@ViewBag.InstanceClassificationId" id="Teacher_Lg_IncId_Txtid" />
-<input type="hidden" value="@ViewBag.InstanceSubClassificationId" id="Teacher_Lg_InscId_Txtid" />
-<input type="hidden" value="@ViewBag.Roleid" id="Teacher_Lg_Roleid_Txtid" />
+    @*<input type="hidden" value="@ViewBag.LoginUserId" id="Lg_UserId_Txtid" />
+        <input type="hidden" value="@ViewBag.InstanceClassificationId" id="Teacher_Lg_IncId_Txtid" />
+        <input type="hidden" value="@ViewBag.InstanceSubClassificationId" id="Teacher_Lg_InscId_Txtid" />
+        <input type="hidden" value="@ViewBag.Roleid" id="Teacher_Lg_Roleid_Txtid" />*@
 
 </body>
 </html>
