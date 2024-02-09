@@ -96,7 +96,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(model => model.Studentid, new SelectList(string.Empty, "Value", "Text"), "  ", new { @id = "studentid", @class = "select2 form-select select2-hidden-accessible" })
-                                                        <span asp-validation-for="Studentid" class="text-danger"></span>
+                                                        @*<span asp-validation-for="Studentid" class="text-danger"></span>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(model => model.Leavetypeid, new SelectList(ViewBag.LeaveType, "Value", "Text"), "-------select-------  ", new { @id = "leavetype", @class = "select2 form-select select2-hidden-accessible" })
-                                                        <span asp-validation-for="Leavetypeid" class="text-danger"></span>
+                                                        @*<span asp-validation-for="Leavetypeid" class="text-danger"></span>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@
                                                             <input class="form-check-input check" asp-for="Daystype" id="radioinline2" type="radio" name="Daystype" value="1" required />
                                                             <label class="form-check-label" for="radioinline2"> Half Day</label>
                                                         </div>
-                                                        <span asp-validation-for="Daystype" class="text-danger"></span>
+                                                        @*<span asp-validation-for="Daystype" class="text-danger"></span>*@
                                                     </div>
                                                 </div>
                                             </div>

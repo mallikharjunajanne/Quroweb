@@ -158,10 +158,11 @@ namespace Connect4m_Web.Models
 
         public string StudentName { get; set; }
        
+        [Display(Name ="Student")]
         public int Studentid { get; set; }
         
         public string Leavetype { get; set; }
-      
+        [Display(Name = "Leave type")]
         public int Leavetypeid { get; set; }
        
         public string AdmissionNumber { get; set; }
