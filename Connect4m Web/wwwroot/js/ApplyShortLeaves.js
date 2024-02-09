@@ -475,18 +475,11 @@ function MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, Ge
             var Totaldays = "";
             var sno = 1;
             $("#" + EffectiveTableid + " tbody").empty();
-
             $("#" + HeadSpanNameid).text("PRINT SHORT LEAVE DETAILS")
-
-
             $.each(response, function (i, value122) {
-
-
                 Totaldays = value122.totalTime;
-
                 $("#" + Schoolname).text(value122.instanceName)
-
-                $("#" + SchoolAddress).text(value122.address)
+               $("#" + SchoolAddress).text(value122.address)
 
                 $("#" + EffectiveTableid + " tbody").append("<tr style='border: 1px solid;'>" +
                     "<td style='border: 1px solid;' class='bonafidetxt' nowrap='' align='center'>" + sno + "</td > " +
