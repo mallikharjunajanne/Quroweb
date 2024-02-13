@@ -288,6 +288,10 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
+                if (val.Password == null)
+                {
+                    return Json(0);
+                }
                 if (Request.Cookies["ChangePWOnLogin"] != "1")
                 {
                     string vals = Request.Cookies["ChangePWOnLogin"];
@@ -296,11 +300,13 @@ namespace Connect4m_Web.Controllers
                 val.InstanceID = InstanceId;
                 val.UserId = UserId;
                 val.CreatedBy = UserId;
-                val.ParentFlag = 0;//i gave default work on this
-
-                if (val.Password == null)
-                {
-                    return Json(0);
+               
+               
+                if (Request.Cookies["RoleName"] == "PARENT") { 
+                    val.ParentFlag = 1;
+                 }
+                else{
+                    val.ParentFlag = 0;
                 }
 
                 val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
