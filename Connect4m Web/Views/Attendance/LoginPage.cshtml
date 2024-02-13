@@ -271,10 +271,10 @@
 
         //---------------------------------   When Click ON submit Button
         $("#LoginForm").submit(function (event) {
-            // debugger;
-            event.preventDefault();
             debugger;
+
             loaddingimg.css('display', 'block');
+            event.preventDefault();
             //$('#Insert_MSC input[type="radio"]').prop("disabled", false);
             //$('#Insert_MSC #dropdown_PayrollCategoryName_MSC').prop("disabled", false);
             var formdata_CSA = $(this).serialize();
@@ -293,7 +293,6 @@
                         //  debugger;
                         $("#errorSpan").empty();
                         if (response == "correct") {
-                            loaddingimg.css('display', 'none');
                            // $("#loading").css('display', 'none');
 
                             // this for remenber password
@@ -313,8 +312,15 @@
                                 localStorage.removeItem('savedUsername');
                             }
 
+                            //loaddingimg.css('display', 'none');
                             window.location.href = "/UserScreens/SchoolWelcomePage";
-                        } else {
+                        }
+                        else if (response == "changepassword") {
+
+                            loaddingimg.css('display', 'none');
+                            window.location.href = "/Attendance/ChangePassword";
+                        }
+                        else {
                             $('.alert-danger p').text("Please Enter Correct Username/Password.");
                             $(".alert-danger").show().delay(5000).fadeOut()
 

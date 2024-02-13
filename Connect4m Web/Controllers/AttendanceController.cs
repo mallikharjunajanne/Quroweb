@@ -21,6 +21,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace Connect4m_Web.Controllers
         HttpClient client;
         private readonly IMemoryCache _memoryCache;
         private int loginCount = 0;
+        private string returnvalue;
 
         private readonly IUserService _userService;
         private readonly int UserId;
@@ -75,6 +77,7 @@ namespace Connect4m_Web.Controllers
             RoleName = _userService.RoleName;
             UserNameHeader_ = _userService.UserNameHeader_;
         }
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         private int IncrementLoginCount(string username)
         {
@@ -109,7 +112,7 @@ namespace Connect4m_Web.Controllers
         public async Task< IActionResult> LoginPage()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            ViewBag.Layout = "LoginPage";
+           // ViewBag.Layout = "LoginPage";
             return View();
         }
         [HttpPost]
@@ -209,7 +212,7 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString());
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString());Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
 
 
                         var claims = new List<Claim>
@@ -225,8 +228,14 @@ namespace Connect4m_Web.Controllers
                         };
 
                  await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-                        return Json("correct");
+                            if (Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString()=="1")
+                            {
+                                return Json("changepassword");
+                            }
+                            else
+                            {
+                                return Json("correct");
+                            }
                     }
                     //else
                     //{
@@ -273,6 +282,42 @@ namespace Connect4m_Web.Controllers
         public IActionResult ChangePassword()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(LoginModel val)
+        {
+            try
+            {
+                if (Request.Cookies["ChangePWOnLogin"] != "1")
+                {
+                    string vals = Request.Cookies["ChangePWOnLogin"];
+                    return Json(1);
+                }
+                val.InstanceID = InstanceId;
+                val.UserId = UserId;
+                val.CreatedBy = UserId;
+                val.ParentFlag = 0;//i gave default work on this
+
+                if (val.Password == null)
+                {
+                    return Json(0);
+                }
+
+                val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
+                returnvalue = CommonMethodobj.CommonSaveMethod(val, "/ChangePassword", client);
+                if (returnvalue != "0")
+                {
+                return Json("correct");
+            }
+            else
+            {
+                return Json(0);
+            }
+            }
+            catch (Exception ex)
+            {
+                return Json(0);
+            }
         }
         public IActionResult ForgetPassword()
         {

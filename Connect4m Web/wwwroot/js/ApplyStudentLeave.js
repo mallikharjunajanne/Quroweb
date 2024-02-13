@@ -52,9 +52,11 @@ function fun32READYFUNCTION() {
         $("#Attendence_Div").hide();
 
         //var StudentId_ByParent = Context.Request.Cookies["StudentUserid"];
-        StudentApplyLeave_SelectById_ATTENDANCEDETAILS(StudentId_ByParent)
-        stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent)
 
+        if (RoleName == "PARENT") {
+            StudentApplyLeave_SelectById_ATTENDANCEDETAILS(StudentId_ByParent)
+            stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent)
+        }
 
         //var Month = $("#Monthid").val();
         //var AcadamicYearID = $("#AcadamicYearID").text();
