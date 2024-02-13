@@ -605,21 +605,23 @@ namespace Connect4m_Web.Controllers
         [Authorize]
         public IActionResult ApplyStudentLeave(bool Issuccess=false)
         {
-            if (Issuccess==true)
-            {
-                //var message =JsonConvert.DeserializeObject( HttpContext.Session.GetString("Returnmessage"));//step-4
-                //ViewBag.retuenmessage = message;
+            //if (Issuccess==true)
+            //{
+            //    //var message =JsonConvert.DeserializeObject( HttpContext.Session.GetString("Returnmessage"));//step-4
+            //    //ViewBag.retuenmessage = message;
+            //}
+
+
+            int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
+            if (Request.Cookies["RoleName"].Contains("STUDENT")){
+                ViewBag.StudentId_ByParent = LoginUserId;
+            }
+            else{
+                ViewBag.StudentId_ByParent = Request.Cookies["StudentUserid"];
             }
 
-
-            ViewBag.StudentId_ByParent = Request.Cookies["StudentUserid"];
-            int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
-
-
-
-            DateTime date = DateTime.Now;
+            //DateTime date = DateTime.Now;
 
             ////int LoginUserId = 113395;// 217606;
             ////int InstanceId12 = 604;// 545;

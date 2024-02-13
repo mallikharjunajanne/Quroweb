@@ -56,14 +56,15 @@ function fun32READYFUNCTION() {
         if (RoleName == "PARENT") {
             StudentApplyLeave_SelectById_ATTENDANCEDETAILS(StudentId_ByParent)
             stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent)
+
+            $("#StudentAttendanceDetails_Card").show();
+            $("#profile-tabs").show();
         }
 
         //var Month = $("#Monthid").val();
         //var AcadamicYearID = $("#AcadamicYearID").text();
         //stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves(StudentId_ByParent, Month, AcadamicYearID)
 
-        $("#StudentAttendanceDetails_Card").show();
-        $("#profile-tabs").show();
     }
 
     //else {
