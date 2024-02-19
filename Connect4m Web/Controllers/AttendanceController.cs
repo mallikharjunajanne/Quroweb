@@ -146,8 +146,8 @@ namespace Connect4m_Web.Controllers
             val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
 
 
-            val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using
-                                                        // val.SubDomineName = "Quro.connect4m.com";//it is temperory using
+                // val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using //DATABASE NAME:-Dev_C4MProd
+                val.SubDomineName = "Quro.connect4m.com";//it is temperory using  //NEW DATABASE Name:C4MProd
                                                         //  val.SubDomineName = HttpContext.Request.Host.Host.ToUpper();
 
                 //val.IPAddress = "183.82.116.209";
