@@ -1314,7 +1314,7 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get_FastAttendance_Table(int InstanceClassificationId, string[] InstanceSubClassificationId, DateTime StartDate, int SlotId)/*string InstanceID,*/
+        public IActionResult Get_FastAttendance_Table(int InstanceClassificationId, string[] InstanceSubClassificationId, DateTime StartDate, int SlotId)
         {
             List<FastAttendance> value = new List<FastAttendance>();
             try

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.UserScreen.Postnoticetabledate>
 @{
-    ViewData["Title"] = "ManageNotices_PostNoticeSearchtabledata";
+    //ViewData["Title"] = "ManageNotices_PostNoticeSearchtabledata";
     Layout = null;
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your Page Title</title>
+
     <!-- Include necessary libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -15,17 +15,27 @@
 </head>
 <body>
 
-    <div class="default-according style-1" id="accordionoc1">
-        <div class="card-header bg-primary">
-            <h5 class="mb-0">
-                <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
-                <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99.5%;">
+    <div class="col-md-12 col-lg-12 mb-3">
+        <span class="text-danger" id="ErrorMessage"></span>
+        <div class="">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">
+                    <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
                     YOUR SEARCH RESULTED  <span id="Search_result_count">@ViewBag.SMSTemplateScount</span> RECORDS.
-                </button>
-            </h5>
-        </div>
-        <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">
-            <div class="card-body" style="padding: 1px;">
+                </h5>
+            </div>
+
+            @*<div class="default-according style-1" id="accordionoc1">
+                <div class="card-header bg-primary">
+                    <h5 class="mb-0">
+                        <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
+                        <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99.5%;">
+                            YOUR SEARCH RESULTED  <span id="Search_result_count">@ViewBag.SMSTemplateScount</span> RECORDS.
+                        </button>
+                    </h5>
+                </div>*@
+            @*<div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">*@
+            <div class="card-body">
                 <div style="display:flex;">
                     <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;" id="twentyusersonlydiv">
                         <input class="form-check-input" type="checkbox" id="selecttwentyusersonly" onclick="Onlytwenty_users_addpostnotice('@ViewBag.ExcludeUserIds');">
@@ -40,59 +50,62 @@
                         <label id="chkSelectCurrentPageUserslbl" style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@ViewBag.SMSTemplateScount"> Select the below @ViewBag.SMSTemplateScount user(s).</label>
                     </div>
                 </div>
-                <table id="PostNoticetblid_searchandadduserspostthisnotice" class="display" style="width: 100%;">
-                    <thead>
-                        <tr style="font-size: 13px; font-family: auto; border: 1px solid #DC5 !important; ">
-                            <th style=" border: 1px solid #DC5 !important;">Select User</th>
-                            <th style=" border: 1px solid #DC5 !important;">Name</th>
-                            <th style=" border: 1px solid #DC5 !important;">Admission Number</th>
-                            <th style=" border: 1px solid #DC5 !important;">Role</th>
-                            <th style=" border: 1px solid #DC5 !important;">Department</th>
-                            <th style=" border: 1px solid #DC5 !important;">Class</th>
-                            <th style=" border: 1px solid #DC5 !important;">Email</th>
-                            <th style=" border: 1px solid #DC5 !important;">Student/Staff Mobile No.</th>
-                            <th style=" border: 1px solid #DC5 !important;">Parent Mobile No.</th>
-                            <th style=" border: 1px solid #DC5 !important;">Father Name</th>                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{ int Rowno = 0;}
-                        @if (Model != null && Model.Any())
-                        {
-                            @foreach (var tblitemvalue in Model)
-                            {
-                                <tr style=" font-size: 13px; font-family: auto; border: 1px solid #DC5 !important;" id="@Rowno">
-                                    <td style=" border: 1px solid #DC5 !important; text-align: center;">
-                                        <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                            <input class="form-check-input" type="checkbox" value="@tblitemvalue.UserId" name="Usercheckboxes" id="User_checkbox_@Rowno" onclick="AddUsertopostnotice(@tblitemvalue.UserId, '@Rowno','@ViewBag.ExcludeUserIds');">
-                                            <label style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@tblitemvalue.UserId"></label>
-                                        </div>
-                                    </td>
-                                    <td style=" border: 1px solid #DC5 !important;"> @tblitemvalue.FirstName</td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.AdmissionNumber</td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.RoleName</td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.ClassificationName</td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.SubClassificationName</td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.PortalEmail</td>
-                                    <td style=" border: 1px solid #DC5 !important;"></td>
-                                    <td style=" border: 1px solid #DC5 !important;"></td>
-                                    <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FatherName</td>
-                                </tr>
-                                Rowno++;
-                            }
-                        }
-                        else
-                        {
-                            <tr style="text-align: center; border: 1px solid #DC5 !important;">
-                                <td colspan="10">No records found</td>
+                @*<table id="PostNoticetblid_searchandadduserspostthisnotice" class="display" style="width: 100%;">*@
+                <div class="table-responsive text-nowrap">
+                    <table id="PostNoticetblid_searchandadduserspostthisnotice" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Select User</th>
+                                <th>Name</th>
+                                <th>Admission Number</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Class</th>
+                                <th>Email</th>
+                                <th>Student/Staff Mobile No.</th>
+                                <th>Parent Mobile No.</th>
+                                <th>Father Name</th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @{ int Rowno = 0;}
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var tblitemvalue in Model)
+                                {
+                                    <tr id="@Rowno">
+                                        <td align="center">
+                                            <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                                <input class="form-check-input" type="checkbox" value="@tblitemvalue.UserId" name="Usercheckboxes" id="User_checkbox_@Rowno" onclick="AddUsertopostnotice(@tblitemvalue.UserId, '@Rowno','@ViewBag.ExcludeUserIds');">
+                                                <label style=" font: 12px arial; color: #333333; " class="Checkbox-Name-label" value="@tblitemvalue.UserId"></label>
+                                            </div>
+                                        </td>
+                                        <td> @tblitemvalue.FirstName</td>
+                                        <td>@tblitemvalue.AdmissionNumber</td>
+                                        <td>@tblitemvalue.RoleName</td>
+                                        <td>@tblitemvalue.ClassificationName</td>
+                                        <td>@tblitemvalue.SubClassificationName</td>
+                                        <td>@tblitemvalue.PortalEmail</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@tblitemvalue.FatherName</td>
+                                    </tr>
+                                    Rowno++;
+                                }
+                            }
+                            else
+                            {
+                                <tr style="text-align: center; border: 1px solid #DC5 !important;">
+                                    <td colspan="10">No records found</td>
+                                </tr>
+                            }
 
 
-                    </tbody>
-                </table>   
-                <div id="Postnoticetable_pagination">
+                        </tbody>
+                    </table>
+                    <div id="Postnoticetable_pagination">
 
+                    </div>
                 </div>
             </div>
         </div>

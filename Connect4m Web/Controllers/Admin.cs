@@ -54,12 +54,20 @@ namespace Connect4m_Web.Controllers
 
 
 
+        public string BuildSMSTextInXML(string username, string password)
+        {
+            string xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                         "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                         "<REQUESTCREDIT USERNAME=\"{username}\" PASSWORD=\"{password}\">" +
+                         "</REQUESTCREDIT>";
 
+            return xml;
+        }
 
         #region Manage Notice 
 
-        #region  Main manage notice search screen
-        
+        #region Home manage notice search screen
+
         public IActionResult ManageNotices()
         {     
             return View();
@@ -102,46 +110,38 @@ namespace Connect4m_Web.Controllers
             return Json(item);
 
             //return PartialView("_ManageNotices_TableData", item);
+        }      
+        public IActionResult Edit_ENotices_ById(int ENoticeId)
+        {           
+            List<Homenoticeupdate> item = new List<Homenoticeupdate>();
+
+            string SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+            string SMSFromText = "ADSTEK";
+            string Action = "credits";
+            int CreatedBy = UserId;
+
+
+
+
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesEdit?ENoticeId=" + ENoticeId+ "&SMSTextInXML=" + SMSTextInXML + "&SMSFromText=" + SMSFromText + "&Action=" + Action + "&CreatedBy=" + CreatedBy+ "&InstanceId="+ InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Homenoticeupdate>>(data);
+            }
+
+            //return PartialView("_ManageNotices_Create", item);
+
+            return Json(item);
         }
-
-        #endregion
-
-
-
-
-
-        #endregion
-
-
-
-
-
-
-        #region Create Notice        
-
-        [HttpGet]
-        public IActionResult ManageNotices_Create()//int InstanceId, int Userid
-        {
-            //ViewBag.InstanceId = InstanceId;
-            //ViewBag.Userid = Userid;
-
-            return View();
-            //return PartialView("_ManageNotices_Create");
-        }
-
-    
 
         [HttpPost]
-        public IActionResult ManageNotices_Create(NoticeTypes obj)
+       public IActionResult Edit_ENotices_ById(Homenoticeupdate obj)
+       // public IActionResult Edit_ENotices_ById(NoticeTypes obj)
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
-                "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
-                "</REQUESTCREDIT>";
-            obj.SMSFromText = "ADSTEK";
-            obj.Action = "credits";
 
             var instanceId = InstanceId;
             var Documentattachement = obj.AttachedDocument;
@@ -171,27 +171,259 @@ namespace Connect4m_Web.Controllers
                 var fileNamedoc = Path.GetFileName(filenamedoc);
                 var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
                 string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + instanceId, fileNamedoc);
+
+
                 obj.DocSize = randomNumber.ToString();
                 using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
                 {
                     Documentattachement.CopyTo(fileSrteam);
                 }
             }
+            obj.AttachedDocument = null;
 
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticesUpdate", content).Result;
+
+            string items = "";
+            string data2 = response.Content.ReadAsStringAsync().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                
+                items = JsonConvert.DeserializeObject<string>(data2);
+            }
+
+            return Json(items);
+        }
+
+        //HOME DELETE ICON USE THIS METHOD AND .....!
+        public IActionResult Delete_ENotices_ById(int ENoticeId)
+        {
+            string item = "";
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesDelete?ENoticeId=" + ENoticeId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<string>(data);
+            }
+
+            return Json(item);
+
+        }
+
+        #endregion
+
+
+
+
+
+        #endregion
+
+
+
+
+
+
+        #region Create Notice        
+
+        [HttpGet]
+        public IActionResult ManageNotices_Create()
+        {               
+            return View();
+            //return PartialView("_ManageNotices_Create");
+        }
+
+        [HttpPost]
+        //public IActionResult ManageNotices_Create(NoticeTypes obj)
+        public IActionResult ManageNotices_Create(ENoticeTypes obj)
+        {
+            obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+            obj.SMSFromText = "ADSTEK";
+            obj.Action = "credits";
+            //int CreatedBy = UserId;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            
+            var instanceId = InstanceId;
+            var Documentattachement = obj.AttachedDocument;
+            Random random = new Random();
+            int randomNumber = random.Next(1000, 999999);
+
+            if (Documentattachement != null)
+            {
+                obj.NoticeDocument = Documentattachement.FileName;
+
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + instanceId);
+
+                if (!Directory.Exists(instanceFolderPath))
+                {
+                    Directory.CreateDirectory(instanceFolderPath);
+                }
+
+                string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                var filenamedoc = randomNumber + output;
+                var fileNamedoc = Path.GetFileName(filenamedoc);
+                var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + instanceId, fileNamedoc);
+
+                if (System.IO.File.Exists(filePathdoc))
+                {
+                    // File already exists, return a JSON response indicating the file exists
+                    return Json("File already exists");
+                }
+
+                obj.DocSize = randomNumber.ToString();
+                using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                {
+                    Documentattachement.CopyTo(fileSrteam);
+                }
+            }
+            obj.AttachedDocument = null;
 
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticesInsert", content).Result;
 
-            string items = "";
+            //string items = "";
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-               // items = JsonConvert.DeserializeObject<string>(data2);
+                string items = data2;
+                return Json(items);
+            }
+            else
+            {
+                return BadRequest("Error");
             }
 
-            return Json(items);
+            //return Json(items);
+        }
+        //public IActionResult Managenotices_saveNposting(TemplateDetails_SMS obj, NoticeTypes objs)
+        public IActionResult Managenotices_saveNposting(ENoticeTypes obj)
+        {
+            try
+            {
+                obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+                obj.SMSFromText = "ADSTEK";
+                obj.Action = "credits";               
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+                obj.DisplayOrder = 2;
+                obj.DMLTYPE = "GETRECORDS";
+                obj.CountFlag = 1;
+
+
+        //obj.InstanceId = InstanceId;
+        //obj.CreatedBy = UserId;
+        //obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+        //    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+        //    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+        //    "</REQUESTCREDIT>";
+        //obj.SMSFromText = "ADSTEK";
+        //obj.Action = "credits";
+        //objs.DisplayIcon = "";
+        //objs.DisplayOrder = 2;
+        //objs.ShowInLogin = "0";
+        //obj.InstanceId = InstanceId;
+        //obj.CreatedBy = UserId;
+        //obj.StartDate = obj.SDate;
+        //obj.EndDate = obj.ExDate;
+
+
+        var Documentattachement = obj.AttachedDocument;
+
+
+                //obj.EndDate = ConvertToDateTime(obj.ExDate);
+                if (obj.ENoticeId == 0)
+                {
+                    Random random = new Random();
+                    int randomNumber = random.Next(1000, 999999);
+
+                    if (Documentattachement != null)
+                    {
+                        obj.NoticeDocument = Documentattachement.FileName;
+
+                        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + InstanceId);
+
+                        if (!Directory.Exists(instanceFolderPath))
+                        {
+                            Directory.CreateDirectory(instanceFolderPath);
+                        }
+
+                        string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                        //var filenamedoc = randomNumber + output;
+                        var filenamedoc =  output;
+                        var fileNamedoc = Path.GetFileName(filenamedoc);
+                        var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                        string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
+                        obj.DocSize = randomNumber.ToString();
+                        using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                        {
+                            Documentattachement.CopyTo(fileSrteam);
+                        }
+                    }
+                }
+                ViewBag.Subject = obj.Subject;
+                ViewBag.StartDate = obj.StartDate;
+                ViewBag.EndDate = obj.ExpiryDate;
+                ViewBag.ENoticetypeid = obj.ENoticeTypeId;
+                ViewBag.NoticeTypetext = obj.NoticeTypetext;
+                ViewBag.ENoticeDescription = obj.ENoticeDescription;
+
+                string data1 = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
+
+                TemplateDetails_SMS items = new TemplateDetails_SMS();
+                if (response.IsSuccessStatusCode)
+                {
+                    string data2 = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
+                }
+                ViewBag.List = items;
+
+                if (items.ENoticeId != 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return Json(items.ENoticeId);
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+
+        public IActionResult Selecteduserdelete(string Userids)
+        {
+            string item="";
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Postnoticeselecteduserdelete?Userids=" + Userids).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<string>(data);
+            }
+            return Json(item);
         }
 
         public IActionResult NoticeTypedd()//int InstanceId
@@ -209,156 +441,25 @@ namespace Connect4m_Web.Controllers
             return Json(li);
         }
 
-        public IActionResult Managenotices_saveNposting(TemplateDetails_SMS obj, NoticeTypes objs)
-        {
-            try
-            {
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
-                    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
-                    "</REQUESTCREDIT>";
-                obj.SMSFromText = "ADSTEK";
-                obj.Action = "credits";
-
-                objs.DisplayIcon = "";
-                objs.DisplayOrder = 2;
-                //objs.ShowInLogin = "0";
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                var Documentattachement = objs.AttachedDocument;
-                obj.StartDate = obj.SDate;
-                obj.EndDate = obj.ExDate;
-                //obj.EndDate = ConvertToDateTime(obj.ExDate);
-                Random random = new Random();
-                int randomNumber = random.Next(1000, 999999);
-
-                if (Documentattachement != null)
-                {
-                    obj.NoticeDocument = Documentattachement.FileName;
-                    
-                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
-
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-
-                    string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + InstanceId);
-
-                    if (!Directory.Exists(instanceFolderPath))
-                    {
-                        Directory.CreateDirectory(instanceFolderPath);
-                    }
-
-                    string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
-                    var filenamedoc = randomNumber + output;
-                    var fileNamedoc = Path.GetFileName(filenamedoc);
-                    var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
-                    string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
-                    obj.DocSize = randomNumber.ToString();
-                    using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
-                    {
-                        Documentattachement.CopyTo(fileSrteam);
-                    }
-                }
-               
-                ViewBag.Subject = obj.Subject;
-                ViewBag.StartDate = obj.StartDate;
-                ViewBag.EndDate = obj.EndDate;
-                string data1 = JsonConvert.SerializeObject(obj);
-                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
-
-                TemplateDetails_SMS items = new TemplateDetails_SMS();
-                if (response.IsSuccessStatusCode)
-                {
-                    string data2 = response.Content.ReadAsStringAsync().Result;
-                    items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
-                }
-                ViewBag.List = items;
-                
-                if (items.ENoticeId !=0)
-                {
-                    return View();
-                }
-                else
-                {
-                    return Json(items.ENoticeId);
-                }
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
-                return View();
-            }
-        }
-    
+       
 
         #endregion
 
 
-        public IActionResult Edit_ENotices_ById(int ENoticeId)
-        {
-            List<NoticeTypes> item = new List<NoticeTypes>();
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesEdit?ENoticeId=" + ENoticeId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<NoticeTypes>>(data);
-            }
-
-            //return PartialView("_ManageNotices_Create", item);
-
-            return Json(item);
-        }
-
-        [HttpPost]
-        public IActionResult Edit_ENotices_ById(NoticeTypes obj)
-        {
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticesUpdate", content).Result;
-
-            string items = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            return Json(items);
-        }
-
-        public IActionResult Delete_ENotices_ById(int ENoticeId)
-        {
-            string item = "";
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesDelete?ENoticeId=" + ENoticeId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<string>(data);
-            }
-
-            return Json(item);
-
-        }
 
 
         #region Create SMS
       
         public IActionResult ManageNotices_CreateSMS()
-        {
-            List<TemplateDetails> item = new List<TemplateDetails>();
+        {         
+            List<Templatesms> item = new List<Templatesms>();
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_Noticesmstemplate?InstanceId=" + InstanceId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<TemplateDetails>>(data);
+          
+                item = JsonConvert.DeserializeObject<List<Templatesms>>(data);
             }
             ViewBag.SMSTemplates = item;
             return View();
@@ -366,28 +467,53 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult SMS_TemplateandDetails(int TemplateMasterPK)
         {
-            List<TemplateDetails> item = new List<TemplateDetails>();
+           
+            List<Templatesms> item = new List<Templatesms>();
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_SMSTemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<TemplateDetails>>(data);
+                item = JsonConvert.DeserializeObject<List<Templatesms>>(data);
             }
             ViewBag.SMSTemplates = item;
             return View();
         }
         [HttpPost]
-        public IActionResult ManagenoticeSMS_saveNposting(TemplateDetails_SMS obj)
+       //public IActionResult ManagenoticeSMS_saveNposting(TemplateDetails_SMS obj)
+        //public IActionResult ManagenoticeSMS_saveNposting(ENoticeTypes obj)
+        public IActionResult ManagenoticeSMS_saveNposting(InsertTemplatesms obj)
         {
+            obj.DisplayOrder = 1;
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
-                "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
-                "</REQUESTCREDIT>";
+            obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+            obj.NoticeDocument = " ";
+            obj.DocSize = default;
+            obj.ShowInLogin = "0";
+            obj.IsGlobalNotice = 0;
             obj.SMSFromText = "ADSTEK";
             obj.Action = "credits";
+
+
+            //exec stp_tblENotices_INSERT
+            //@InstanceId=545,
+            //@ENoticeTypeId=0,
+            //@Subject='Dear Staff, Wellcome.',
+            //@ENoticeDescription=default,
+            //@NoticeDocument='',@DocSize=default,
+            //@StartDate='2024-02-17 00:00:00',
+            //@ExpiryDate='2024-02-18 00:00:00',
+            //@DisplayOrder=1,@DisplayIcon='281',@ShowInLogin=0,@CreatedBy=32891,@CreatedDate='2024-02-17 15:51:21.747',@IsGlobalNotice=0
+
+
+            //obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+            //    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+            //    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+            //    "</REQUESTCREDIT>";
+
+
+
 
 
             if (obj.NoticeDocument == null)
@@ -395,11 +521,11 @@ namespace Connect4m_Web.Controllers
                 obj.NoticeDocument = "";
             }
             ViewBag.Subject = obj.Subject;
-            ViewBag.StartDate = obj.SDate;
-            ViewBag.EndDate = obj.ExDate;
-
             ViewBag.StartDate = obj.StartDate;
-            ViewBag.EndDate = obj.EndDate;
+            ViewBag.EndDate = obj.ExpiryDate;
+            
+
+
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
@@ -461,27 +587,302 @@ namespace Connect4m_Web.Controllers
 
         //=====>> Old Method its showing reloading so creating new method Name:-SaveandPostBtn_ManageNotices_CreateSMS
         [HttpPost]
-        public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
+        //public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
+        public IActionResult ENoticeMailSms_INSERT(Enoticetemplates obj)
         {
+            obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+            obj.SMSFromText = "ADSTEK";
+            obj.Action = "credits"; 
             obj.DMLTYPE = "GETRECORDS";
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.NotificationSubject = "Notices";
+
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Notices_SavePusNotifications", content).Result;
 
-            SmsSendingResult items = new SmsSendingResult();
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
+            //SmsSendingResult items = new SmsSendingResult();
+            
             if (response.IsSuccessStatusCode)
             {
+                //items = JsonConvert.DeserializeObject<SmsSendingResult>(data2);
+
                 string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<SmsSendingResult>(data2);
+                string items = JsonConvert.DeserializeObject<string>(data2);
+                return new JsonResult(items);
             }
-            return new JsonResult(items);
-            //return View();
+            else
+            {
+                return BadRequest("Failed to insert data.");
+            }
+           
         }
-       
-        
+
+
         #endregion
 
+        #region Create SMS and Notice      
+
+        public IActionResult CreateSmsNNotice()
+        {
+            var noticeTypeData = GetNoticetypdedd();
+            ViewBag.Noticetypedd = noticeTypeData;
+
+            return View();
+        }
+        [HttpPost]
+        //public IActionResult CreateSmsNNotice(NoticeTypes obj)
+        public IActionResult CreateSmsNNotice(ENoticeTypes  obj)
+        {
+            try
+            {
+                obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+                obj.SMSFromText = "ADSTEK";
+                obj.Action = "credits";
+                //int CreatedBy = UserId;
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+
+
+                //obj.InstanceId = InstanceId;
+                //obj.CreatedBy = UserId;
+                obj.DisplayIcon = "";
+                obj.DisplayOrder = 2;
+                //obj.ShowInLogin = "0";
+                var instanceId = InstanceId;
+                var Documentattachement = obj.AttachedDocument;
+                Random random = new Random();
+                int randomNumber = random.Next(1000, 999999);
+
+                if (Documentattachement != null)
+                {
+                    obj.NoticeDocument = Documentattachement.FileName;
+
+                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + instanceId);
+
+                    if (!Directory.Exists(instanceFolderPath))
+                    {
+                        Directory.CreateDirectory(instanceFolderPath);
+                    }
+
+                    string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                    var filenamedoc = output;
+                    //var filenamedoc = randomNumber + output;
+                    var fileNamedoc = Path.GetFileName(filenamedoc);
+                    var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                    string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + instanceId, fileNamedoc);
+
+                    if (System.IO.File.Exists(filePathdoc))
+                    {
+                        // File already exists, return a JSON response indicating the file exists
+                        return Json("File already exists");
+                    }
+
+
+                    obj.DocSize = randomNumber.ToString();
+                    using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                    {
+                        Documentattachement.CopyTo(fileSrteam);
+                    }
+                }
+                obj.AttachedDocument = null;
+
+                string jsonData = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticesInsert", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseapi = response.Content.ReadAsStringAsync().Result;
+                    string item = JsonConvert.DeserializeObject<string>(responseapi);
+                    return Json(item);
+                }
+                else
+                {
+                    return BadRequest("Error");
+                }
+                //return View();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+        //Searchuserstabledata_CSN
+        //public IActionResult CreateSmsNNotice_PostthisnoticeBtn(NoticeTypes obj)//TemplateDetails_SMS objs,
+        public IActionResult CreateSmsNNotice_PostthisnoticeBtn(ENoticeTypes obj)//TemplateDetails_SMS objs,
+        {
+            try
+            {
+                obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+                obj.SMSFromText = "ADSTEK";
+                obj.Action = "credits";
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+                obj.DisplayOrder = 2;
+                obj.DMLTYPE = "GETRECORDS";
+                obj.CountFlag = 1;
+
+
+                //obj.InstanceId = InstanceId;
+                //obj.CreatedBy = UserId;
+                //obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                //    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                //    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+                //    "</REQUESTCREDIT>";
+                //obj.SMSFromText = "ADSTEK";
+                //obj.Action = "credits";
+                //obj.DisplayIcon = "";
+                //obj.DisplayOrder = 2;
+
+                var Documentattachement = obj.AttachedDocument;
+                if (obj.ENoticeId == 0)
+                {
+                    Random random = new Random();
+                    int randomNumber = random.Next(1000, 999999);
+                    if (Documentattachement != null)
+                    {
+                        obj.NoticeDocument = Documentattachement.FileName;
+
+                        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + InstanceId);
+
+                        if (!Directory.Exists(instanceFolderPath))
+                        {
+                            Directory.CreateDirectory(instanceFolderPath);
+                        }
+
+                        string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                        var filenamedoc =output;
+                        //var filenamedoc = randomNumber + output;
+                        var fileNamedoc = Path.GetFileName(filenamedoc);
+                        var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                        string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
+                        if (System.IO.File.Exists(filePathdoc))
+                        {
+                            // File already exists, return a JSON response indicating the file exists
+                            return Json("File already exists");
+                        }
+
+                        obj.DocSize = randomNumber.ToString();
+                        using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                        {
+                            Documentattachement.CopyTo(fileSrteam);
+                        }
+                    }
+                }
+                //==new
+                ViewBag.Subject = obj.Subject;
+                ViewBag.StartDate = obj.StartDate;
+                ViewBag.EndDate = obj.ExpiryDate;
+                ViewBag.ENoticetypeid = obj.ENoticeTypeId;
+                ViewBag.NoticeTypetext = obj.NoticeTypetext;
+                ViewBag.ENoticeDescription = obj.ENoticeDescription;
+
+
+                //==old
+                //ViewBag.Subject = obj.Subject;
+                //ViewBag.StartDate = obj.StartDate;
+                //ViewBag.EndDate = obj.EndDate;
+
+
+
+                string data1 = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
+
+                TemplateDetails_SMS items = new TemplateDetails_SMS();
+                if (response.IsSuccessStatusCode)
+                {
+                    string data2 = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
+                }
+                ///=====NEW
+                ViewBag.List = items;
+
+                if (items.ENoticeId != 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    return Json(items.ENoticeId);
+                }
+
+                //====OLD
+                //ViewBag.List = items;
+                //if (items.ENoticeId != 0)
+                //{
+                //    return View();
+                //}
+                //else
+                //{
+                //    return Json(items.ENoticeId);
+                //}
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+        [HttpPost]
+        //public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
+        public IActionResult Enoticesmsandnotice_INSERT(Enoticetemplates obj)
+        {
+            obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+            obj.SMSFromText = "ADSTEK";
+            obj.Action = "credits";
+            obj.DMLTYPE = "GETRECORDS";
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.NotificationSubject = "Notices";
+
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SMSNotice_SavePusNotifications", content).Result;
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Notices_SavePusNotifications", content).Result;
+
+            //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
+            //SmsSendingResult items = new SmsSendingResult();
+
+            PostedNoticemessage model = new PostedNoticemessage();
+
+            if (response.IsSuccessStatusCode)
+            {
+                //items = JsonConvert.DeserializeObject<SmsSendingResult>(data2);
+
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                //string items = JsonConvert.DeserializeObject<string>(data2);
+                model = JsonConvert.DeserializeObject<PostedNoticemessage>(data2);
+                return new JsonResult(model);
+            }
+            else
+            {
+                return BadRequest("Failed to insert data.");
+            }
+
+        }
+
+
+        #endregion
 
 
 
@@ -655,181 +1056,19 @@ namespace Connect4m_Web.Controllers
             return li;
         }
 
-        #region Create SMS and Notice      
-
-        public IActionResult CreateSmsNNotice()
-        {
-            var noticeTypeData = GetNoticetypdedd();
-            ViewBag.Noticetypedd = noticeTypeData;
-
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateSmsNNotice(NoticeTypes obj)
-        {
-            try
-            {
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                obj.DisplayIcon = "";
-                obj.DisplayOrder = 2;
-                //obj.ShowInLogin = "0";
-                var instanceId = InstanceId;
-                var Documentattachement = obj.AttachedDocument;
-                Random random = new Random();
-                int randomNumber = random.Next(1000, 999999);
-
-                if (Documentattachement != null)
-                {
-                    obj.NoticeDocument = Documentattachement.FileName;
-
-                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
-
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-
-                    string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + instanceId);
-
-                    if (!Directory.Exists(instanceFolderPath))
-                    {
-                        Directory.CreateDirectory(instanceFolderPath);
-                    }
-
-                    string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
-                    var filenamedoc = randomNumber + output;
-                    var fileNamedoc = Path.GetFileName(filenamedoc);
-                    var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
-                    string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + instanceId, fileNamedoc);
-                    obj.DocSize = randomNumber.ToString();
-                    using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
-                    {
-                        Documentattachement.CopyTo(fileSrteam);
-                    }
-                }
-
-                string jsonData = JsonConvert.SerializeObject(obj);
-                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticesInsert", content).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseapi = response.Content.ReadAsStringAsync().Result;
-                    int i = JsonConvert.DeserializeObject<int>(responseapi);
-                    return Json(i);
-                }
-                return View();
-            }
-            catch (Exception)
-            {              
-                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
-                return View();
-            }
-        }
-
-        //Searchuserstabledata_CSN
-        public IActionResult CreateSmsNNotice_PostthisnoticeBtn(NoticeTypes obj)//TemplateDetails_SMS objs,
-        {
-            try
-            {
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
-                    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
-                    "</REQUESTCREDIT>";
-                obj.SMSFromText = "ADSTEK";
-                obj.Action = "credits";
-
-                obj.DisplayIcon = "";
-                obj.DisplayOrder = 2;
-
-                var Documentattachement = obj.AttachedDocument;
-
-                Random random = new Random();
-                int randomNumber = random.Next(1000, 999999);
-                if (Documentattachement != null)
-                {
-                    obj.NoticeDocument = Documentattachement.FileName;
-
-                    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs");
-
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-
-                    string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + InstanceId);
-
-                    if (!Directory.Exists(instanceFolderPath))
-                    {
-                        Directory.CreateDirectory(instanceFolderPath);
-                    }
-
-                    string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
-                    var filenamedoc = randomNumber + output;
-                    var fileNamedoc = Path.GetFileName(filenamedoc);
-                    var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
-                    string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
-                    obj.DocSize = randomNumber.ToString();
-                    using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
-                    {
-                        Documentattachement.CopyTo(fileSrteam);
-                    }
-                }
-                
-                ViewBag.Subject = obj.Subject;
-                ViewBag.StartDate = obj.StartDate;
-                ViewBag.EndDate = obj.EndDate;
-                string data1 = JsonConvert.SerializeObject(obj);
-                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_NoticessmstemplateInsert", content).Result;
-
-                TemplateDetails_SMS items = new TemplateDetails_SMS();
-                if (response.IsSuccessStatusCode)
-                {
-                    string data2 = response.Content.ReadAsStringAsync().Result;
-                    items = JsonConvert.DeserializeObject<TemplateDetails_SMS>(data2);
-                }
-                ViewBag.List = items;
-                if (items.ENoticeId != 0)
-                {
-                    return View();
-                }
-                else
-                {
-                    return Json(items.ENoticeId);
-                }               
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
-                return View();
-            }
-        }
         
-
-
-        #endregion
 
 
 
         #region Cool Links              ////----
 
         public IActionResult ManageCoolLinks()
-        {
-            //var InstanceId = Request.Cookies["INSTANCEID"];
-            //ViewBag.Instanceid = InstanceId;
-
-            //var UserId = Request.Cookies["LoginUserId"];
-            //ViewBag.LoginUserId = UserId;
-
-
+        {  
             return View();
         }
 
 
-        public IActionResult ManageCoolLinks_Tabledata(string LinkName, string LinkURL, string Description)//int InstanceId,
+        public IActionResult ManageCoolLinks_Tabledata(string LinkName, string LinkURL, string Description)
         {
             List<CoolLinks> item = new List<CoolLinks>();
 
@@ -841,15 +1080,19 @@ namespace Connect4m_Web.Controllers
                 item = JsonConvert.DeserializeObject<List<CoolLinks>>(data);
             }
 
-            item = item.OrderBy(link => link.LinkName).ToList();
-            ViewBag.itemscount = item.Count();
-            return PartialView("_ManageCoolLinks_Tabledata", item);
+            //item = item.OrderBy(link => link.LinkName).ToList();
+            //ViewBag.itemscount = item.Count();
+            //return PartialView("_ManageCoolLinks_Tabledata", item);
+
+            return Json(item);
 
         }
 
         [HttpPost]
         public IActionResult CoolLinks_INSERT(CoolLinks obj)
         {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_CoolLinks_INSERT", content).Result;
@@ -971,10 +1214,8 @@ namespace Connect4m_Web.Controllers
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
                 items = data2;
-            }
-            ViewBag.List = items;
-            return Json(items);
-            //return View();
+            }           
+            return Json(items);            
         }
 
         [HttpGet]
@@ -1125,9 +1366,8 @@ namespace Connect4m_Web.Controllers
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 model = JsonConvert.DeserializeObject<Managequote>(data);
-            }
-            ViewBag.Items = model;
-            return View();
+            }         
+            return View(model);
         }
 
         [HttpPost]
@@ -1568,45 +1808,62 @@ namespace Connect4m_Web.Controllers
             string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
+            obj.IsActive = 1;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageSubClassification_Insert_", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageSubClassification_Insert", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
                 items = data2;
             }
-            ViewBag.List = items;
+            return Json(items);
+            //ViewBag.List = items;
             //IsActive
-            return View();
+            //return View();
         }
 
 
         [HttpGet]
-        public IActionResult Update_ManageSubClassification(int PerformerId)
+        public IActionResult Update_ManageSubClassification(int InstanceSubClassificationId)
         {
-            //exec stp_tblInstanceHolidays_SELECT @HolidayId=3454
-            BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_Edit?PerformerId=" + PerformerId).Result;
+            ManageSubClassification model = new ManageSubClassification();
 
-            if (response.IsSuccessStatusCode)
+            var dropdownResponse = client.GetAsync(client.BaseAddress + "/ManageClassification_dd?InstanceId=" + InstanceId).Result;
+            var dropdownData = dropdownResponse.IsSuccessStatusCode ? dropdownResponse.Content.ReadAsStringAsync().Result : null;
+            var dropdownModel = JsonConvert.DeserializeObject<ManageSubClassification>(dropdownData);
+            ViewBag.Dropdowndata = dropdownModel?.ClassificationList;
+
+
+            string roleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,EXECUTIVE ASSISTANT,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
+            var classTeacherResponse = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + roleName).Result;
+            var classTeacherData = classTeacherResponse.IsSuccessStatusCode ? classTeacherResponse.Content.ReadAsStringAsync().Result : null;
+            var classTeacherModel = JsonConvert.DeserializeObject<ManageSubClassification>(classTeacherData);
+            ViewBag.Classteacherdd = classTeacherModel.ClassteacherList;
+            ViewBag.Coclassteacherdd = classTeacherModel.CoClassteacherList;
+
+
+
+            HttpResponseMessage editresponse = client.GetAsync(client.BaseAddress + "/Edit_GetSubclass?InstanceSubClassificationId=" + InstanceSubClassificationId).Result;
+
+            if (editresponse.IsSuccessStatusCode)
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<BestPerformer>(data);
+                string editmodeldata = editresponse.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<ManageSubClassification>(editmodeldata);
             }
             ViewBag.Items = model;
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Update_ManageSubClassification(Manageholidays obj)
+        public IActionResult Update_ManageSubClassification(ManageSubClassification obj)
         {
             string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Manageholidays_Update", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/UpdateSubclass", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
@@ -1617,10 +1874,10 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        public IActionResult Delete_ManageSubClassification(int PerformerId)
+        public IActionResult Delete_ManageSubClassification(int InstanceSubClassificationId)
         {
             string items = "";
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_Delete?PerformerId=" + PerformerId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Subclassdelete?InstanceSubClassificationId=" + InstanceSubClassificationId).Result;
 
             if (response.IsSuccessStatusCode)
             {

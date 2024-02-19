@@ -1,117 +1,143 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.TemplateDetails
+﻿@*@model Connect4m_Web.Models.Attendenceproperites.UserScreen.TemplateDetails*@
+@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Templatesms
 @{
     ViewData["Title"] = "SMS_TemplateandDetails";
     Layout = null;
 }
 
+<div class="row mb-3">
+    <span class="control-label col-sm col-form-label  text-danger" id="Errormessage"></span>
+</div>
 
+@*<span id="Errormessage" class="text-danger"></span>*@
+@*<span id="DateErrormsg" class="text-danger"></span>*@
+@*</div>*@
 
-<div class="card">
-    <div class="card-body">
-        <div>
-            <span id="Errormessage" class="text-danger"></span>
-            @*<span id="DateErrormsg" class="text-danger"></span>*@
-        </div>
-        <p>
-            @ViewBag.SMSTemplates[0].TemplateDescription
-            <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateMasterPK" asp-for="DisplayIcon" id="DisplayIcon_txt" />
-            <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateDescription" asp-for="Subject" id="Subject_txt" />
-        </p>
-        <div>
+<p>
+    @ViewBag.SMSTemplates[0].TemplateDescription
+    <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateMasterPK" asp-for="DisplayIcon" id="DisplayIcon_txt" />
+    <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateDescription" asp-for="Subject" id="Subject_txt" />
+</p>
 
+<div class="row mb-3">
+    @{
+        var Counts = ViewBag.SMSTemplates.Count;
+        var trueorfalse = false;
+        int counters = 1;
+        int j = 1;
+    }
+    @foreach (var detail in ViewBag.SMSTemplates)
+    {
+        var template = detail.TemplateDescription;
 
-            @{var Counts = ViewBag.SMSTemplates.Count;
-                var trueorfalse = false;
-                int counters = 1;
-                int j = 1;
+        for (int i = 0; i < ViewBag.SMSTemplates.Count; i++)
+        {
 
-            }
-            @foreach (var detail in ViewBag.SMSTemplates)
+            var textdetails = ViewBag.SMSTemplates[i];
+            string replacement = "";
+
+            if (textdetails.AttributeName.StartsWith("{TEXT"))
             {
-                var template = detail.TemplateDescription;
-
-                for (int i = 0; i < ViewBag.SMSTemplates.Count; i++)
-                {
-
-                    var textdetails = ViewBag.SMSTemplates[i];
-                    string replacement = "";
-
-                    if (textdetails.AttributeName.StartsWith("{TEXT"))
-                    {
-                        string textPlaceholder = textdetails.AttributeName;
-                        replacement = $"<input type='text' id='txt{j}' class='textInput' name='textValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Text'  oninput='storeTextboxValue(txt{j},this)'/>";
-                        template = template.Replace(textPlaceholder, replacement);
-
-                    }
-                    else if (textdetails.AttributeName.StartsWith("{DATE"))
-                    {
-                        string textPlaceholder = textdetails.AttributeName;
-                        replacement = $"<input type='text' id='txt{j}' class='textInput' name='dateValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='dd/mm/yy' onkeypress='return RestrictDateChar(event)' oninput='storeTextboxValue(txt{j},this)' />";
-                        template = template.Replace(textPlaceholder, replacement);
-                    }
-                    else if (textdetails.AttributeName.StartsWith("{TIME"))
-                    {
-                        string textPlaceholder = textdetails.AttributeName;
-                        replacement = $"<input type='text' id='txt{j}' class='textInput' name='timeValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Time'  oninput='storeTextboxValue(txt{j},this)'/>";
-                        template = template.Replace(textPlaceholder, replacement);
-                    }
-                    else if (textdetails.AttributeName.StartsWith("{NUMERIC"))
-                    {
-                        string textPlaceholder = textdetails.AttributeName;
-                        replacement = $"<input type='text' id='txt{j}' class='textInput' name='numericValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Numeric' onkeypress='return RestrictNumericInput(event)' oninput='storeTextboxValue(txt{j},this)' />";
-                        template = template.Replace(textPlaceholder, replacement);
-                    }
-
-                    j++;
-                }
-                trueorfalse = true;
-                if (trueorfalse)
-                {
-                    <div style=" line-height: 2;" id="TemplateDescription_divId">
-                        @Html.Raw(template)
-                    </div>
-                }
-                counters++;
-                break;
+                string textPlaceholder = textdetails.AttributeName;
+                replacement = $"<input type='text' id='txt{j}' class='textInput' name='textValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Text'  oninput='storeTextboxValue(txt{j},this)'/>";
+                template = template.Replace(textPlaceholder, replacement);
 
             }
-        </div>
-        @*<form enctype="multipart/form-data">*@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row" style=" margin: 25px;">
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="form-group col-2">
-                        <label asp-for="SDate" class="control-label required space">Start Date</label>
-                    </div>
-                    <div class="form-group col-4">
-                        <input type="date" id="Startdate_txt" asp-for="SDate" class="form-control" />
-                        <span asp-validation-for="SDate" class="text-danger"></span>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="form-group col-2">
-                        <label asp-for="ExDate" class="control-label required space" style=" margin-left: -34px;">End Date(Expiry Date) </label>
-                    </div>
-                    <div class="form-group col-4">
-                        <input type="date" id="EndDate_txt" asp-for="ExDate" class="form-control" />
-                        <span asp-validation-for="ExDate" class="text-danger"></span>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="col-6">
-                        <button id="btnBackSMSTemplate" class="btn btn-pill btn-outline-primary btn-sm">Back To Select SMS Template(s)</button> @*Backtoselectsmstemplate_btn*@
-                        <button id="btnSaveandPostSMSTemplate" class="btn btn-pill btn-outline-success btn-sm">Save and Post</button> @*SaveandPost_CreateSmsbtn*@
+            else if (textdetails.AttributeName.StartsWith("{DATE"))
+            {
+                string textPlaceholder = textdetails.AttributeName;
+                replacement = $"<input type='text' id='txt{j}' class='textInput' name='dateValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='dd/mm/yy' onkeypress='return RestrictDateChar(event)' oninput='storeTextboxValue(txt{j},this)' />";
+                template = template.Replace(textPlaceholder, replacement);
+            }
+            else if (textdetails.AttributeName.StartsWith("{TIME"))
+            {
+                string textPlaceholder = textdetails.AttributeName;
+                replacement = $"<input type='text' id='txt{j}' class='textInput' name='timeValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Time'  oninput='storeTextboxValue(txt{j},this)'/>";
+                template = template.Replace(textPlaceholder, replacement);
+            }
+            else if (textdetails.AttributeName.StartsWith("{NUMERIC"))
+            {
+                string textPlaceholder = textdetails.AttributeName;
+                replacement = $"<input type='text' id='txt{j}' class='textInput' name='numericValue' maxlength='{textdetails.length}' style='width: 20%;height: 23px;' placeholder='Numeric' onkeypress='return RestrictNumericInput(event)' oninput='storeTextboxValue(txt{j},this)' />";
+                template = template.Replace(textPlaceholder, replacement);
+            }
 
-                        @*<input type="button" id="Backtoselectsmstemplate_btn" value="Back To Select SMS Template(s)" class="btn btn-pill btn-outline-primary btn-sm" />
-                            <input type="button" id="SaveandPost_CreateSmsbtn" value="Save and Post" class="btn btn-pill btn-outline-success btn-sm" />*@
-                    </div>
-                    <div class="col-3"></div>
-                </div>
+            j++;
+        }
+        trueorfalse = true;
+        if (trueorfalse)
+        {
+            <div class="col-sm" style=" line-height: 2;" id="TemplateDescription_divId">
+                @Html.Raw(template)
             </div>
-        @*</form>*@
+        }
+        counters++;
+        break;
+
+    }
+</div>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row mb-3">
+    <label class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
+    <div class="col-sm-4">
+        <input type="date" id="Startdate_txt"  class="form-control" />
+        <span  class="text-danger"></span>
     </div>
 </div>
+<div class="row mb-3">
+    <label class="control-label col-sm-4 col-form-label text-end required space">End Date(Expiry Date)</label>
+    <div class="col-sm-4">
+        <input type="date" id="EndDate_txt"  class="form-control" />
+        <span  class="text-danger"></span>
+    </div>
+</div>
+<div class="row justify-content text-center">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-dark waves-effect waves-light" id="btnBackSMSTemplate">Back To Select SMS Template(s)</button>   
+        <button type="button" class="btn btn-success waves-effect waves-light" id="btnSaveandPostSMSTemplate">Save and Post</button>@*SearchNotice_Btn*@
+    </div>
+</div>
+
+
+
+<!--<div class="row" style=" margin: 25px;">
+    <div class="row">
+        <div class="col-3"></div>-->
+        @*<div class="form-group col-2">
+            <label asp-for="SDate" class="control-label required space">Start Date</label>
+        </div>
+        <div class="form-group col-4">
+            <input type="date" id="Startdate_txt" asp-for="SDate" class="form-control" />
+            <span asp-validation-for="SDate" class="text-danger"></span>
+        </div>*@
+        @*<div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="form-group col-2">
+            <label asp-for="ExDate" class="control-label required space" style=" margin-left: -34px;">End Date(Expiry Date) </label>
+        </div>
+        <div class="form-group col-4">
+            <input type="date" id="EndDate_txt" asp-for="ExDate" class="form-control" />
+            <span asp-validation-for="ExDate" class="text-danger"></span>
+        </div>*@
+        <!--<!--<div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-6">
+            <button id="btnBackSMSTemplate" class="btn btn-pill btn-outline-primary btn-sm">Back To Select SMS Template(s)</button>--><!--@*Backtoselectsmstemplate_btn*@-->
+            <!--<!--<button id="btnSaveandPostSMSTemplate" class="btn btn-pill btn-outline-success btn-sm">Save and Post</button>--> <!--@*SaveandPost_CreateSmsbtn*@
+
+            @*<input type="button" id="Backtoselectsmstemplate_btn" value="Back To Select SMS Template(s)" class="btn btn-pill btn-outline-primary btn-sm" />
+                <input type="button" id="SaveandPost_CreateSmsbtn" value="Save and Post" class="btn btn-pill btn-outline-success btn-sm" />*@-->
+        <!--</div>
+        <div class="col-3"></div>-->
+    <!--</div>
+</div>-->
+
+
+
+
+
+
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 @section Scripts {

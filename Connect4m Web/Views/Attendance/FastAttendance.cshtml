@@ -9,34 +9,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @*<style>
-        .validation {
-            font-size: 11px;
-            margin-left: 3%;
-            color: red;
-            display: block;
-        }
-
-        InDate {
-            width: 36%;
-            border-right: #b4b4b4 1px solid;
-            border-top: #b4b4b4 1px solid;
-            font-weight: normal;
-            font-size: 10px;
-            border-left: #b4b4b4 1px solid;
-            color: #000000;
-            border-bottom: #b4b4b4 1px solid;
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-        }
-    </style>*@
-
-    @*<link href="~/css/FastAttedance.css" rel="stylesheet" />*@
+ 
 </head>
 <body>   
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>Fast Attendance </h4>
-        <p id="ErrorMessage" style="font-size: 12px;color:red;"></p>
+        
         <div class="row mb-2">
+            <span id="ErrorMessage" class="text-danger"></span>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -95,10 +75,10 @@
                                                 <span asp-validation-for="SlotId" class="text-danger"></span>
 
                                                 @*@{
-                                                    var slotSubjectnames = ViewBag.Slot_Subjectnames as List<FastAttendance>;
-                                                    var dropdownList = new SelectList(slotSubjectnames, "SlotId", "SlotName");
-                                                }
-                                                @Html.DropDownList("SubjectSlotID", dropdownList, "--Select Slot--", new { id = "myDropdown", @class = "form-select DropTxtbox" })*@
+                                                var slotSubjectnames = ViewBag.Slot_Subjectnames as List<FastAttendance>;
+                                                var dropdownList = new SelectList(slotSubjectnames, "SlotId", "SlotName");
+                                            }
+                                            @Html.DropDownList("SubjectSlotID", dropdownList, "--Select Slot--", new { id = "myDropdown", @class = "form-select DropTxtbox" })*@
                                             </div>
                                         </div>
                                     </div>
@@ -140,8 +120,8 @@
 <script src="~/Datatable/jquery.dataTables.js"></script>
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
 
-<script src="~/js/FastAttendance.js"></script>
-
+@*<script src="~/js/FastAttendance.js"></script>*@
+<script src="~/js/Fastattendace1.js"></script>
 <script>
     //$(document).ready(function () {
     //    $("#F_At_Main_Form").submit(function (event) {

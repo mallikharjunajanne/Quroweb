@@ -19,6 +19,18 @@ function FileCallToAjax(method, url, data, successCallback, errorCallback, hasFi
 
     $.ajax(ajaxOptions);
 }
+function DataCallToAjax(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+
 
 
 $(document).ready(function () {
@@ -116,21 +128,17 @@ $(document).ready(function () {
 
 
 $('#btnBackToSearch').click(function () {
-
+    debugger;
+    $('#Message_spid').text('');
     $('#Addnotice_div1').empty();
-    $('#ManageNotices_CreateSMS_ViewDivid').empty();
-    $('#ManagenoticeMaindiv').show();
+    $('#Home_SearchNoticesdiv').show();
+    $('#Home_SearchNotices_Updatediv').hide();
+   
+
+    //$('#ManageNotices_CreateSMS_ViewDivid').empty();
+    //$('#ManagenoticeMaindiv').show();
 });
 
-
-//$('#btnClear').click(function () {
-//    $('#SavevalidationMessage').text('');
-//    $('#lblPostNoticeMsg').text('');
-//    $('#Savevalidation').text('');
-
-
-//    $('#Createnoticetypeform1')[0].reset();
-//});
 
 
 
@@ -141,7 +149,6 @@ function GetDateFormat(date) {
 
     return day + '-' + month + '-' + year;
 }
-
 
 //-----**Date Compare function**-------
 function DatesCompare(Sdate, Edate) {
@@ -172,10 +179,9 @@ function DatesCompare(Sdate, Edate) {
     }
 }
 
-
 //-------------------***Date Compare
-$(".form-group #Startdatetxt").on("change", function () { DatesCompare("Start Date", "End Date"); });
-$(".form-group #Exdatetxt").on("change", function () { DatesCompare("Start Date", "End Date"); });
+$("#Startdatetxt").on("change", function () { DatesCompare("Start Date", "End Date"); });
+$("#Exdatetxt").on("change", function () { DatesCompare("Start Date", "End Date"); });
 
 
 
@@ -189,8 +195,8 @@ $('#Createnoticetypeform1').submit(function (event) {
     setTimeout(function () {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationmelength = validationMessages.length;
+        $('#Message_spid').text('');
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
             var formdata_ISN = new FormData($('#Createnoticetypeform1')[0]);
@@ -205,55 +211,93 @@ $('#Createnoticetypeform1').submit(function (event) {
             formdata_ISN.append('ShowInLogin', ShowInLogin);   
             var Clickbuttonid = $(document.activeElement).attr('id');
             var Subject = $('#Subjecttxt').val();
+            var NoticeTypeId = $('#ENoticeTypeId_STXT').val();
+            var NoticeTypetext = $('#ENoticeTypeId_STXT option:selected').text();
+            var ENOTICEID = $('#ENoticeinsertedtxtid').val();
+            formdata_ISN.append('NoticeTypetext', NoticeTypetext);
+
+            //$('#TxtNoticetypeid').val(NoticeTypeId);
+            //$('#TxtNoticetypetext').val(NoticeTypetext);
+            //$('#TxtNoticetypeid').text(NoticeTypeId);
+            //$('#TxtNoticetypetext').text(NoticeTypetext);
 
             switch (Clickbuttonid) {
                 case 'btnsubmit':
-                    FileCallToAjax('POST', '/Admin/ManageNotices_Create', formdata_ISN,                      
+                    FileCallToAjax('POST', '/Admin/ManageNotices_Create', formdata_ISN,
                         function (response) {
-                            if (response == "Inserted") {
-                                $('#btnppostthisnotice').show();
-                                $('#btnsubmit, #btnsaveandpost, #btnClear').prop('disabled', true);
-                                $('#btnSave, #btnsaveandpost, #btnClear').removeClass('.btn .btn-pill .btn-outline-warning .btn-air-warning,.btn-outline-success,.btn-outline-info .btn-air-info');
-                                $("#SavevalidationMessage").text("Record inserted successfully.");
+                            //if (response == "Inserted") {
 
-                            } else if (response == "Not Inserted") {                             
-                                $("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+                            //    $('#btnppostthisnotice').show();
+                            //    $('#btnsubmit, #btnsaveandpost, #btnclear').prop('disabled', true);
+                            //    $("#Message_spid").text("Record inserted successfully.");
+                            //    //$("#SavevalidationMessage").text("Record inserted successfully.");
+
+                            //}
+                            debugger;
+                            if (response == "Not Inserted") {
+
+                                $("#Message_spid").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+                                
+
+                            } else if (response == "Error") {
+                                $("#Message_spid").text("Something went wrong please try again.");
+                            } else if (response == "File already exists") {
+                                $('#Message_spid').text('Already a file with the same name is attached to another notice. Please upload a new file.');
                             }
-                        },function (status, error) {
+                            else {
+                                $('#ENoticeinsertedtxtid').val(response);
+                                $('#btnppostthisnotice').show();
+                                $('#btnsubmit, #btnsaveandpost, #btnclear').prop('disabled', true);
+                                $("#Message_spid").text("Record inserted successfully.");
+                            }
+                        }, function (status, error) {
 
                         },
                         true);
                     break;
                 case 'btnsaveandpost':      /*CreateSmsNNotice_PostthisnoticeBtn*/
+                    formdata_ISN.append('ENoticeId', 0);
                     FileCallToAjax('POST', '/Admin/Managenotices_saveNposting', formdata_ISN,
                         function (response) {
                             debugger;
                             if (response != 0) {
+
+
                                 $('#Noticeandsms_Insertingdivid').hide();
                                 $('#Addnotice_div1').empty();
                                 $('#Noticeandsms_Insertingdivid').empty();
                                 $('#Postnoticemailsmsdiv').html(response);
                                 //$('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
                             } else {
-                                $("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+                                //$("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+                                $("#Message_spid").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
                             }
                         }, function (status, error) {
-
+                            $("#Message_spid").text("Something went wrong please try again.");
                         },
                         true);
                     break;
                 case 'btnppostthisnotice': /*CreateSmsNNotice_PostthisnoticeBtn*/
+                    
+                    formdata_ISN.append('ENoticeId', ENOTICEID);
+
                     FileCallToAjax('POST', '/Admin/Managenotices_saveNposting', formdata_ISN,
                         function (response) {
                             debugger;
+                            //$('#Noticeandsms_Insertingdivid').hide();
+                            //$('#Noticeandsms_Insertingdivid').empty();
+                            ///*$('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);*/
+                            //$('#Postnoticemailsmsdiv').html(response);
+
                             $('#Noticeandsms_Insertingdivid').hide();
+                            $('#Addnotice_div1').empty();
                             $('#Noticeandsms_Insertingdivid').empty();
-                            /*$('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);*/
                             $('#Postnoticemailsmsdiv').html(response);
 
+
+
                         }, function (status, error) {
-                            
-                            
+                            $("#Message_spid").text("Something went wrong please try again.");
                         },
                         true);
                     break;
@@ -263,6 +307,9 @@ $('#Createnoticetypeform1').submit(function (event) {
         }
     }, 50);
 });
+
+
+
 
 
 //---***** Post Notice screen *****------
@@ -280,6 +327,9 @@ function CheckAllUsers() {
         checkboxValues.push(checkbox.value);
         checkbox.disabled = selectAllCheckbox.checked;
     });
+
+    /*$('#Adduserstopostnotice_Div').hide();*/
+    $('#Adduserstopostnotice_Div').toggle();
 
     var ForAll = selectAllCheckbox.checked ? 1 : 0;
     return ForAll;
@@ -416,7 +466,7 @@ function handle_searchuserstopostnotice_btnclick_tabledata() {
     debugger;
     var form = document.getElementById("Searchuserstopostnotice_searchform");
     var formData = new FormData(form);
-    formData.append('InstanceId', Instanceid);
+   /* formData.append('InstanceId', Instanceid);*/
 
     var userName = $('#Ps_UserNametxt').val() || '';
     var roleId = $('#Instancerole_id').val() || '';
@@ -452,7 +502,7 @@ function handle_searchuserstopostnotice_btnclick_tabledata() {
         type: "POST",
         url: "/Admin/ManageNotices_PostNoticeSearchtabledata",
         data: {
-            InstanceId: Instanceid,
+            /*InstanceId: Instanceid,*/
             UserName: userName,
             InstanceRoleId: roleId,
             FirstName: firstName,
@@ -539,6 +589,8 @@ function Selectealladdusers_addpostnotice(Userscount, ExcludeUsersid) {
 
 function Alluserspostnotice(Userid, rowId, ExcludeUserIds) {
     debugger;
+    //$('#PostNoticeAddinguserstable_Div').empty();
+
     var Userids = "";
     var Noofusers = "ALL";
     if (ExcludeUserIds != '') {
@@ -566,7 +618,7 @@ function Alluserspostnotice(Userid, rowId, ExcludeUserIds) {
         validornot = true;
     }
 
-    if (validornot) {
+    /*if (validornot) {*/
 
         $.ajax({
             url: "/Admin/SELUsersByUserIds",
@@ -581,9 +633,9 @@ function Alluserspostnotice(Userid, rowId, ExcludeUserIds) {
             }
         });
         handle_searchuserstopostnotice_without_btnclick_tabledata(Userids, Noofusers);
-    } else {
-        checkbox.checked = false;
-    }
+    //} else {
+    //    checkbox.checked = false;
+    //}
 
 }
 //----> SELECT ALL USERS CHECKBOX FUNCTION CODE END
@@ -650,10 +702,11 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
 
     debugger;
     $('#PostNoticeAddinguserstable_Div').hide();
+    $('#PostnoticeSearch_tabledata_Divid').empty();
 
     var form = document.getElementById("Searchuserstopostnotice_searchform");
     var formData = new FormData(form);
-    formData.append('InstanceId', Instanceid);
+    /*formData.append('InstanceId', Instanceid);*/
     var userName = $('#Ps_UserNametxt').val() || '';
     var roleId = $('#Instancerole_id').val() || '';
     var firstName = $('#Ps_Firstnametxt').val() || '';
@@ -675,7 +728,7 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
         type: "POST",
         url: "/Admin/ManageNotices_PostNoticeSearchtabledata",
         data: {
-            InstanceId: Instanceid,
+            /*InstanceId: Instanceid,*/
             UserName: userName,
             InstanceRoleId: roleId,
             FirstName: firstName,
@@ -690,7 +743,9 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
             Noofusers: Noofusers
         },
         success: function (response) {
+            debugger;
 
+            $('#PostNoticeAddinguserstable_Div').show();
             $('#PostnoticeSearch_tabledata_Divid').html(response);
 
         },
@@ -732,7 +787,16 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
 
 
 //=======>>>  *** POST NOTICE SAVE NOTICE BUTTON  ***  <<<=======//
-$('#Postnoticebtn').click(function () {
+//$('.text-center').on('click', '#btnPostNotice', function () {
+//$('#PostnoticebtnDiv').on('click', '#btnPostNotice', function () {
+//$('#Postnoticebtnmaindiv, #PostnoticebtnDiv').on('click', '#btnPostNotice', function () {
+//$('#btnPostNotice').off('click').on('click', function (event) {
+
+
+$('.BTNSCLASS').on('click', '#btnPostNotice', function () {
+
+    event.stopPropagation();
+
     $('#lblPostNoticeMsg').text('');
 
     var S_SmsreturnedValue;
@@ -742,8 +806,13 @@ $('#Postnoticebtn').click(function () {
     var ForAll;
     var Tableuserids = [];
     var ENoticeId = $('#ENoticetxtid').val();
-    var CreatedBy = $('#Loginuser_Txtid').val();
-    var instanceid = Instanceid;
+    var NotificationMessage = $('#Lbl_Notificationmessageid').text();
+    var NoticeTypeId = $('#TxtNoticetypeid').val();
+    var NoticeTypeName = $('#TxtNoticetypetext').val();
+    var Noticetypdedescription = $('#TxtNoticetypedescription').val();
+
+    //var CreatedBy = $('#Loginuser_Txtid').val();
+    //var instanceid = Instanceid;
     if ($('#Sendsms_chk1').is(':checked')) {
         S_SmsreturnedValue = "1";
     } else {
@@ -756,11 +825,14 @@ $('#Postnoticebtn').click(function () {
         P_SmsreturnedValue = "0";
     }
 
+    //====Send email All students
     if ($('#Sendsms_chk3').is(':checked')) {
         S_EmailreturnedValue = "1";
     } else {
         S_EmailreturnedValue = "0";
     }
+
+    //===Send email for all parents
     if ($('#Sendsms_chk4').is(':checked')) {
         P_EmailreturnedValue = "1";
     } else {
@@ -795,8 +867,11 @@ $('#Postnoticebtn').click(function () {
     }
     var datatosend = {
         ENoticeId: ENoticeId,
-        CreatedBy: CreatedBy,
-        instanceid: instanceid,
+        //CreatedBy: CreatedBy,
+        //instanceid: instanceid,
+        NotificationMessage: NotificationMessage,
+        NoticeTypeId: NoticeTypeId,
+        NoticeTypeName: NoticeTypeName,
         RoleIds: Rolecheckboxvalues,
         GroupIds: Groupcheckboxvalues,
         ClassificationIds: Classificationcheckboxvalues,
@@ -804,7 +879,10 @@ $('#Postnoticebtn').click(function () {
         //UserIds: Tableuserids,
         SendSMS: S_SmsreturnedValue,
         SendEMail: S_EmailreturnedValue,
+        SendEmailForstudents: S_EmailreturnedValue,
+        SendEmailForParents: P_EmailreturnedValue,
         IncludeParents: P_EmailreturnedValue
+
     };
     if (Tableuserids.length > 0) {
         datatosend.UserIds = Tableuserids;
@@ -821,85 +899,105 @@ $('#Postnoticebtn').click(function () {
         Subclassificationcheckboxvalues.length > 0 ||
         Tableuserids.length > 0;
 
-    if (!anyCheckboxChecked) {
-        // If no checkboxes are checked, show the validation message
-        $('#lblPostNoticeMsg').text('No Selection Has Been Made. Please Select Any User');
-        return; // Prevent further execution
+
+
+    if (ForAll === 0) {
+        if (!anyCheckboxChecked) {
+            // If no checkboxes are checked, show the validation message
+            $('#lblPostNoticeMsg').text('No Selection Has Been Made. Please Select Any User');
+            return; // Prevent further execution
+        }
     }
 
-    $.ajax({
-        url: "/Admin/ENoticeMailSms_INSERT",
-        type: "POST",
-        data: datatosend,
-        success: function (response) {
-            debugger;
-            var string1 = response.pushNotifications_Notices;
-            var Subjecttext = $('#Search_result_count').val();
+        $.ajax({
+            url: "/Admin/ENoticeMailSms_INSERT",
+            type: "POST",
+            data: datatosend,
+            success: function (response) {
+                debugger;                
+                if (response == "1") {
+                    $(this).prop('disabled', true);
 
-            var Usersli = response.tblENotice_GetTargetUsers;
-            var usersWithoutEmail = [];
-            var usersWithoutMobile = [];
-            for (var i = 0; i < Usersli.length; i++) {
-                var UserfirstName = Usersli[i].firstName;
-                if (Usersli[i].mobilePhone === "0") {
-                    usersWithoutMobile.push(UserfirstName);
-                }
-                if (Usersli[i].portalEmail === "0") {
-                    usersWithoutEmail.push(UserfirstName);
+                    $("#lblPostNoticeMsg").text('Notice Posted Successfully.' + NotificationMessage + ".");
+                } else if (response == "-1") {
+                    $("#lblPostNoticeMsg").text('Notice Posted Successfully.' + NotificationMessage + ".");
+                } else {
+                    $("#lblPostNoticeMsg").text(response);
                 }
             }
-            if (P_SmsreturnedValue == "1") {
-                if (usersWithoutMobile.length > 0) {
-                    var mobileMsg = 'Notice Posted Successfully.' + Subjecttext + ' For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists for Parent(s).';
-                    $('#lblPostNoticeMsg').append(mobileMsg);
-                }
-            }
-
-            if (S_SmsreturnedValue == "1") {
-                if (usersWithoutMobile.length > 0) {
-                    var mobileMsg = 'For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists.';
-                    $('#lblPostNoticeMsg').append(mobileMsg);
-                }
-            }
-
-            if (S_EmailreturnedValue == "1") {
-                if (usersWithoutEmail.length > 0) {
-                    var emailMsg = 'Email successfully submitted To User(s).For Student(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
-                    $('#lblPostNoticeMsg').append(emailMsg);
-                }
-            }
-
-            if (P_EmailreturnedValue == "1") {
-                if (usersWithoutEmail.length > 0) {
-                    var emailMsg = '.Email successfully submitted to Parent(s).For Parent(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
-                    $('#lblPostNoticeMsg').append(emailMsg);
-                }
-            }           
-        }
-    });
+        });
+    
 });
 
 
 
-//function Selectalluserschkvalues() {
-//    var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
-//    var ForAll;
 
-//    if (selectAllCheckbox.checked) {
-//        ForAll = 1;
-//    } else {
-//        ForAll = 0;
+
+/*$('#Noticescreenbacktoscrbtn').click(function () {*/
+//$('#PostnoticeBacktosearchbtn').click(function () {
+
+$('#PostnoticebtnDiv').on('click', function () {
+    debugger;
+    $('#lblPostNoticeMsg').text('');
+    $('#Postnoticemailsmsdiv').empty();
+    $('#Home_SearchNotices_Updatediv').hide();
+    $('#Home_SearchNoticesdiv').show();
+    location.reload();
+   
+    //$('#ManagenoticeMaindiv').show(); 
+    //$('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').empty();
+});
+
+
+//=====DELETE ADDED USERS TABLE DATA IN DELETE USER
+//$('#PostNoticetblid_searchandadduserspostthisnotice_Table tbody').on('click', '.fa-trash-alt', function () {
+//    //exec stp_tblUser_SELUsersByUserIds @UserIds='28560'
+//    try {
+//        if (confirm('Are you sure you want to delete the User ?\n Click ' + 'OK' + ' to delete, else click ' + 'CANCEL' + 'to stop deleting.')) {
+//            var Row = $(this).closest('tr');
+//            var DeleteUserid = Row.find('td:nth-child(10) #Usersidtxt').val();
+//            var Userid = DeleteUserid;
+//            var Noofusers = "1_20";
+
+//            loaddingimg.css('display', 'block');
+//            var data = { Userids: Userid };
+
+//            DataCallToAjax('GET', '/Admin/Selecteduserdelete', data,
+//                function (response) {
+
+
+//                    debugger;
+//                    $.ajax({
+//                        url: "/Admin/SELUsersByUserIds?UserIds=" + Userids + "&Noofusers=" + Noofusers,
+//                        type: "GET",
+//                        success: function (response) {
+//                            $('#PostNoticeAddinguserstable_Div').show();
+//                            $('#PostNoticeAddinguserstable_Div').html(response);
+//                        }
+//                    });
+//                    handle_searchuserstopostnotice_without_btnclick_tabledata(Userids, Noofusers);
+
+
+//                    /*AddUsertopostnotice(Userid, rowId, ExcludeUserIds)*/
+
+//                    //handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofusers);
+//                    loaddingimg.css('display', 'none');
+    //                },
+    //                function (status, error) {
+    //                    // Handle errors here
+    //                    //$('#Home_SearchNoticesdiv').show();
+    //                    //$('#Home_SearchNotices_Updatediv').hide();
+    //                    loaddingimg.css('display', 'none');
+    //                }
+    //            );
+//            Row.remove();
+//        } 
+       
 //    }
-//    return ForAll;
-//}
-
-$('#Noticescreenbacktoscrbtn').click(function () {
-    //location.reload();
-    $('#ManagenoticeMaindiv').show(); 
-    $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').empty();
-});
-
-
+//    catch (e) {
+//        loaddingimg.css('display', 'none');
+//    }
+//});
 
 
 
@@ -934,27 +1032,31 @@ function NoticeDropdown_CreateNotice_In_View() {
     //});
 }
 
-//function NoticeDropdown_CreateNotice_In_View() {
-//    /* var InstanceIds = $('#Instance_STxt').val();*/
-//    debugger;
-//    $.ajax({
-//        type: "GET",
-//        url: "@Url.Action("NoticeTypedd", "Admin")",
-//        /*data: { InstanceId: InstanceIds },*/
-//        success: function (data) {
-//            $.each(data, function (index, item) {
-//                debugger;
-//                $("#ENoticeTypeId_STXT").append($('<option>', {
-//                    value: item.value,
-//                    text: item.text
-//                }));
-//            });
-//        },
-//        error: function (error) {
-//            console.error("Error fetching data:", error);
-//        }
-//    });
-//}
 
 
 /*--- CREATE NOTICE SCREEN JAVASCRIPT CODE END  ---*/
+
+
+
+/* CREATE NOTICE --1 */
+
+function CharCount() {
+    debugger;
+    var textarea = document.getElementById("Subjecttxt");
+    var charCount = document.getElementById("charCounts");
+    var Characterslength = document.getElementById("Characterslengths");
+    var remaining = 1000 - textarea.value.length;
+    charCount.textContent = remaining + " Character(s) remaining.";
+    Characterslength.textContent = "Typed Characters: " + textarea.value.length;
+}
+function Charactercount() {
+    debugger;
+    var textarea = document.getElementById("ENoticeDescription_STXT");
+    var charCount = document.getElementById("DescriptionCharacters");
+    var charCountlength = document.getElementById("Characterlengths");
+    var remaining = 6500 - textarea.value.length;
+    charCount.textContent = remaining + " Character(s) remaining. ";
+    charCountlength.textContent = "Typed Characters: " + textarea.value.length;
+}
+
+

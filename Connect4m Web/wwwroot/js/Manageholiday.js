@@ -29,12 +29,8 @@ function DatesCompare(Sdate, Edate) {
         var errorElement = $('.compare');
 
         if (Enddate <= Startdate) {
-            $('#Error_Sp').text(Edate + " must be greater than " + Sdate + ".");
-            //errorElement.addClass('error2');
-           // errorElement.text();
-        } else {
-            //errorElement.removeClass('error2');
-            //errorElement.text("");
+            $('#Error_Sp').text(Edate + " must be greater than " + Sdate + ".");          
+        } else {           
             $('#Error_Sp').text("");
         }
     } catch (error) {
@@ -44,15 +40,15 @@ function DatesCompare(Sdate, Edate) {
 
 
 //-------------------***Date Compare
-$(".form-group #SDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
-$(".form-group #EDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
+$("#SDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
+$("#EDate_txtid").on("change", function () { DatesCompare("Start Date", "End Date"); });
 
 $('#Insertholiday').submit(function (event) {
     event.preventDefault();
     debugger;
     if (!$(this).valid()) {
-
-        if (!$('input[name="radio1"]:checked').val()) {
+  
+        if (!$('input[name="default-radio-1"]:checked').val()) {
             $('#HolidaySp_id').text('Please select a Holiday Type');
             return;
         } else {
@@ -63,19 +59,19 @@ $('#Insertholiday').submit(function (event) {
     var formdata_ISN = new FormData($('#Insertholiday')[0]);
     CallToAjax('POST', '/Admin/Insert_Holiday', formdata_ISN,
         function (response) {
-            debugger;           
-            if (response === "Inserted") {
-                $('#Searchbtn, #Clearbtn').prop('disabled', true);
-                $('#Searchbtn, #Clearbtn').removeClass("btn btn-pill btn-outline-success btn-air-success")
-                $('#Errormessage').text('Record inserted successfully.');
-            } else if (response === "Not Inserted") {
-                $('#Errormessage').text('Record not insert');
-            } else if (response === "HolidayExists") {
+            debugger;          
+           
+            if (response == "0") {
                 $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
+            } else if (response == "2") {
+                $('#Errormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
+            } else if (response == " ") {
+                $('#Savebtn, #Clearbtn').prop('disabled', true);                
+                $('#Errormessage').text('Record inserted successfully.');
             } else {
-                // Handle other cases or display a generic error message
-                $('#Errormessage').text('An error occurred.');
+                $('#Errormessage').text('Something went wrong please try again.');
             }
+
         }, function (status, error) {
 
         },
@@ -150,10 +146,12 @@ $(document).ready(function () {
    
 
     //-----------------Search Holidays
-    $('#Searchbtn').click(function () {
+    $('#btnsearch').click(function () {
         var selectedYear = $('#Year').val();
         var selectedMonth = $('#Month').val();
-        var selectedHolidayType = $('input[name="radio1"]:checked').val();
+        var selectedHolidayType = $('input[name="default-radio-1"]:checked').val();
+
+        //var selectedHolidayType = $('input[name="radio1"]:checked').val();
         debugger;
         var dataToSend = {
             year: selectedYear,
@@ -393,14 +391,20 @@ function bindDatatable(response) {
     });
    
     table.on('draw', function () {
-        $('#ManageHolidaystbl').find('td:nth-child(2)').attr('title', 'Edit');
+        $('#ManageHolidaystbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+            color: 'black',
+            'text-decoration': 'underline',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+        });
     });
-    $('#ManageHolidaystbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#ManageHolidaystbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+        color: 'black',
+        'text-decoration': 'underline',
+        cursor: 'pointer',
+        fontWeight: 'bold'
+    });
 }
-
-
-
-
 function GetDateFormat() {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -410,6 +414,36 @@ function GetDateFormat() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
+
+
+$(document).on('click', '#ManageHolidaystbl .fa-trash-o', function (event) {
+    event.stopImmediatePropagation();
+    var confirmed = confirm("Are you sure you want to delete Holiday?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    if (confirmed) {
+        debugger;
+        var HolidayId = $(this).closest('tr').find('input[type="text"]').val();
+        var table = $('#ManageHolidaystbl').DataTable();
+        var tabletargetpagetblSEMsearchresults = table.page.info().page;
+
+        $.ajax({
+            url: '/Admin/Delete_Holiday?HolidayId=' + HolidayId,
+            type: 'GET',
+            //data: data,
+            success: function (response) {
+                debugger;
+                if (response == "1") {
+                   /* $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);*/
+                    //$('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');
+                    $('#Errormessage').text('Record deleted successfully.');
+                } else {
+                    $('#Errormessage').text('Sommething went wrong...!')
+                }
+            }
+        });
+    }
+});
+
+
 
 //-------------------------------------   Click For Update in the list(table)
 $(document).on('click', '#ManageHolidaystbl td:nth-child(2)', function (event) {
@@ -444,20 +478,21 @@ function Editholiday(Holidayid) {
 $('#UpdateHoliday').submit(function (event) {
     event.preventDefault();
     debugger;
-    //if (!$(this).valid()) {
-    //    if (!$('input[name="radio1"]:checked').val()) {
-    //        $('#HolidaySpid').text('Please select a Holiday Type');
-    //        return;
-    //    } else {
-    //        $('#HolidaySpid').text('');
-    //    }
-    //    return;
-    //}
+    
 
+    if (!$(this).valid()) {
 
+        if (!$('input[name="default-radio-1"]:checked').val()) {
+            $('#HolidaySpid').text('Please select a Holiday Type');
+            return;
+        } else {
+            $('#HolidaySpid').text('');
+        }
+        return;
+    }
     
    
-    var selectedValue = $('.mji input[name="radio1"]:checked').val();
+    var selectedValue = $('.mji input[name="default-radio-1"]:checked').val();
     var formdata_Uph = new FormData($('#UpdateHoliday')[0]);
     formdata_Uph.append("HType", selectedValue);
 
@@ -465,19 +500,30 @@ $('#UpdateHoliday').submit(function (event) {
         function (response) {
             debugger;         
 
-            if (response === "Updated") {
-                $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
-                $('#Dltbtn, #CEFTHbtn, #Updatebtn').removeClass('btn btn-pill btn-outline-danger btn-air-danger btn-outline-success btn-air-success btn-outline-info btn-air-info');
-                //$('#Dltbtn, #CEFTHbtn,#Updatebtn').removeClass('.btn .btn-pill .btn-outline-danger .btn-air-danger,.btn .btn-pill .btn-outline-success .btn-air-success,.btn .btn-pill .btn-outline-info .btn-air-info');
-                $('#Errormessage').text('Record updated successfully.');
-            } else if (response === "Not Update") {
-                $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists.');
-            } else if (response === "Exists") {
+            //if (response === "Updated") {
+            //    $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
+            //    $('#Dltbtn, #CEFTHbtn, #Updatebtn').removeClass('btn btn-pill btn-outline-danger btn-air-danger btn-outline-success btn-air-success btn-outline-info btn-air-info');               
+            //    $('#Errormessage').text('Record updated successfully.');
+            //} else if (response === "Not Update") {
+            //    $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists.');
+            //} else if (response === "Exists") {
+            //    $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
+            //} else {
+            //    // Handle other cases or display a generic error message
+            //    $('#Errormessage').text('An error occurred.');
+            //}
+
+            if (response = "0") {
                 $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
+            } else if (response = "2") {
+                $('#Errormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
+            } else if (response = "1") {
+                $('#Errormessage').text('Record updated successfully.');
+                $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
             } else {
-                // Handle other cases or display a generic error message
-                $('#Errormessage').text('An error occurred.');
+                $('#Errormessage').text('Something went wrong please try again.');
             }
+
         }, function (status, error) {
 
         },
@@ -495,12 +541,19 @@ $('#Dltbtn').click(function () {
         //data: data,
         success: function (response) {
             debugger;
-            if (response == "Deleted") {
+            if (response == "1") {
                 $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);                
-                $('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');
+                //$('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');
                 $('#Errormessage').text('Record deleted successfully.');
+                CallToAjax('GET', '/Admin/ManageHolidaysTabledata',
+
+                    //function bindDatatable();
+                    function (status, error) {
+                        // Handle error if needed
+                    }
+                );
             } else {
-                $('#Errormessage').text('Sommething went wrong...!')
+                $('#Errormessage').text('Something went wrong...!')
             }
         }
     });

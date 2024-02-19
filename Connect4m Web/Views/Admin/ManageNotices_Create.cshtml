@@ -1,149 +1,106 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.NoticeTypes
+﻿@*@model Connect4m_Web.Models.Attendenceproperites.UserScreen.NoticeTypes*@
+@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ENoticeTypes
 @{
     Layout = null;
 }
 
-
-
-<div class="default-according style-1" id="accordionoc4">
-    <div class="card" style="margin-bottom: 10px;">
-        <div style="color:red; font-size:13px;">
-            <span id="Savevalidation"></span>
-            <span id="SavevalidationMessage"></span>
-        </div>
-        <div class="card-header bg-primary">
+<div class="col-md-12 col-lg-12 mb-3">
+    <input type="hidden" id="ENoticeinsertedtxtid"/>
+    @*<div style="color:red; font-size:13px;">
+        <span id="Savevalidation"></span>
+        <span id="SavevalidationMessage"></span>
+    </div>
+    <span class="text-danger" id="UpdatevalidationMessage"></span>*@
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">
-                <button class="collapsed btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon4" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                    <span class="Header_text_span">
-                        SAVE NOTICE
-                    </span>
-                </button>
+                SAVE NOTICE
             </h5>
         </div>
-        <div class="collapse show" id="collapseicon4" aria-labelledby="collapseicon4" data-bs-parent="#accordionoc4" style="">
-            <div class="card-body">
-                <form id="Createnoticetypeform1" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
-                        <div class="row">
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right;"><label class="form-grop" style=" margin-left: 13px;"><font class="Required">*</font>Notice Type :</label></div>
-                            <div class="form-group col-4">
-                                <select id="ENoticeTypeId_STXT" asp-for="ENoticeTypeId" class="form-select">
-                                </select>
-                                <span asp-validation-for="ENoticeTypeId" class="text-danger"></span>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right;"><label class="form-grop" style=" margin: 13px 0px 0px 0px;"><font class="Required">*</font>Notice Subject  :</label>                                    </div>
-                            <div class="form-group col-4">
-                                <textarea id="Subjecttxt" asp-for="Subject" style="height: 60px; width: 300px;" class="form-control"></textarea>
-                                <span asp-validation-for="Subject" class="text-danger"></span>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right;"><label style=" margin: 13px 0px 0px 25px; " class="form-grop">Description  :</label></div>
-                            <div class="form-group col-4">
-                                <textarea asp-for="ENoticeDescription" id="ENoticeDescription_STXT" style="height: 60px; width: 300px;" class="form-control"></textarea>
-                                @* <div><span id="RemainingCharCount">1000</span> Character(s) remaining. Typed Characters: <span id="TypedCharCount">0</span></div>*@
-                            </div>
-                            <div class="col-3"></div>
-
-                            <div class="col-3"></div>
-                            <div class="col-2" style=" text-align: right;"></div>
-                            <div class="col-4"> <span style=" font: 13px arial;">Note:-Following characters are restricted: "</span></div>
-                            <div class="col-3"></div>
-
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right;"><label style=" margin-left: 25px; " class="form-grop"><font class="Required">*</font>Start Date  :</label></div>
-                            <div class="form-group col-4">
-                                <input type="date" asp-for="SDate" id="Startdatetxt" class="form-control" />
-                                <span asp-validation-for="SDate" class="text-danger"></span>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right;"><label style=" margin-left: -46px;" class="form-grop"><font class="Required">*</font>End Date(Expiry Date)   :</label></div>
-                            <div class="form-group col-4">
-                                <input type="date" asp-for="ExDate" id="Exdatetxt" class="form-control" />
-                                <span asp-validation-for="ExDate" class="text-danger"></span>
-                                <span id="Ermsgsp" class="text-danger"></span>
-                            </div>  
-                            <div class="col-3"></div>
-                            <div class="col-3"></div>
-                            <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label style=" margin-left: -55px;">Upload Notice document   :</label></div>
-                            <div class="form-group col-4">
-                                @*<input type="file" asp-for="NoticeDocument" id="NoticeDocument_STxtFile" />*@
-                                <input type="file" id="AttachedDocument" name="AttachedDocument" asp-for="AttachedDocument" class="form-control" />
-                                <span></span>
-                            </div>
-                            <div class="col-3"></div>
-                            <div class="col-3"></div>
-                            <div id="NoticeDisplaylogindivid" class="col-12" style="display: -webkit-box;">
-                                <div class="col-3"></div>
-                                <div class="form-group col-2" style="text-align: right; margin-top: 7px;">
-                                    <label class="form-group required space">Display this Notice in Login</label>
-                                </div>
-                                <div class="form-group col-4" style="margin: 8px;">
-                                    <div class="radio radio-success">
-                                        <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
-                                        <label class="mb-0" for="radio55">No</label>
-                                        <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
-                                        <label class="mb-0" for="radio55">Yes</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            @*<div id="NoticeDisplaylogindivid" class="col-12" style="display: -webkit-box;">
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label class="form-grop required space">Display this Notice in Login   </label></div>
-                                    <div class="form-group col-4" style=" margin: 8px;">
-                                        <div class="radio radio-success">
-                                            <input id="radioinline1" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
-                                            <label class="mb-0" for="radioinline1">No</label>
-                                            <input id="radioinline2" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
-                                            <label class="mb-0" for="radioinline2">Yes</label>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-
-
-                            @*<div id="NoticeDisplaylogin" class="col-12">
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2" style=" text-align: right; margin-top: 7px;"><label class="form-grop required space">Display this Notice in Login   </label></div>
-                                    <div class="form-group col-4" style=" margin: 8px;">
-                                        <div class="radio radio-primary">
-                                            <input id="radioinline1" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
-                                            <label class="mb-0" for="radioinline1">No</label>
-                                            <input id="radioinline2" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
-                                            <label class="mb-0" for="radioinline2">Yes</label>
-                                        </div>
-                                    </div>
-                                </div>*@
-                        <div style=" text-align: center;" class="form-grop col-12">
-                            <div class="col-3"></div>
-                            <input type="reset" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning"/>
-                            <!--<button id="btnClear" class="btn btn-pill btn-outline-warning btn-air-warning">Clear</button>--> @*btnClear*@
-                            <button id="btnBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>@*BacktosearchNotice_SaBtn*@
-                            <button id="btnppostthisnotice" class="btn btn-pill btn-outline-primary btn-aprimary">Post this Notice</button>@*btnppostthisnotice*@
-                            <button id="btnsubmit" class="btn btn-pill btn-outline-success btn-air-success">Save</button>   @*SaveNotice_SaBtn*@
-                            <button id="btnsaveandpost" class="btn btn-pill btn-outline-info btn-air-info">Save and Post</button>@*btnSubmitandPost*@
-
-                            @*<input type="button" id="BacktosearchNotice_SaBtn" class="btn btn-pill btn-outline-secondary btn-sm" value="Back To Search" />
-        <input type="button" id="PostthisNotice_SaBtn" class="btn btn-pill btn-outline-primary btn-aprimary" value="Post this Notice" />
-        <input type="button" id="Clear_SaBtn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
-        <input type="button" id="SaveNotice_SaBtn" class="btn btn-pill btn-outline-success btn-air-success" value="Save" />
-        <input type="button" id="savepostNotice_SaBtn" class="btn btn-pill btn-outline-info btn-air-info" value="Save and Post" />*@
-                        </div>
+        <div class="card-body">
+            <form id="Createnoticetypeform1" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end required space">Notice Type</label>
+                    <div class="col-sm-4">
+                        <select id="ENoticeTypeId_STXT" asp-for="ENoticeTypeId" class="form-select select2 form-select select2-hidden-accessible">
+                        </select>
+                        <span asp-validation-for="ENoticeTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end required space">Notice Subject</label>
+                    <div class="col-sm-4">
+                        <textarea id="Subjecttxt" asp-for="Subject" class="form-control" maxlength="1000" oninput="CharCount()"></textarea>
+                        <span id="charCounts" style="font-size: 12px;"></span>
+                        <span id="Characterslengths" style="font-size: 12px;"></span>
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end  space">Description</label>
+                    <div class="col-sm-4">
+                        <textarea asp-for="ENoticeDescription" id="ENoticeDescription_STXT" class="form-control" maxlength="6500" oninput="Charactercount()"></textarea>
+                        <span asp-validation-for="ENoticeDescription" class="text-danger"></span>
+                        <span id="DescriptionCharacters" style="font-size: 12px;"></span>
+                        <span id="Characterlengths" style="font-size: 12px;"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end "></label>
+                    <div class="col-sm-4">
+                        <b>Note</b>:-Following characters are restricted: "
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" asp-for="StartDate" id="Startdatetxt" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end required space">End Date(Expiry Date)</label>
+                    <div class="col-sm-4">
+                        <input type="date" asp-for="ExpiryDate" id="Exdatetxt" class="form-control" />
+                        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                        <span id="Ermsgsp" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="control-label col-sm-4 col-form-label text-end  space">Upload Notice document</label>
+                    <div class="col-sm-4">
+                        <input type="file" id="AttachedDocument" name="AttachedDocument" asp-for="AttachedDocument" class="form-control" />
+                    </div>
+                </div>
+                <div class="row mb-3" id="NoticeDisplaylogindivid">
+                    <label class="control-label col-sm-4 col-form-label text-end required space">Display this Notice in Login </label>
+                    <div class="col-sm-4">
+                        <div class="radio radio-primary">
+                            <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="0" checked>
+                            <label class="mb-0" for="radio55">No</label>
+                            <input id="radio55" type="radio" asp-for="ShowInLogin" name="radio1" value="1">
+                            <label class="mb-0" for="radio55">Yes</label>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="row justify-content text-center">
+                    <div class="col-sm-12">
+                        <button type="reset" class="btn btn-warning waves-effect waves-light" id="btnclear">Clear</button>
+                        <button type="button" class="btn btn-dark waves-effect waves-light" id="btnBackToSearch">Back To Search</button>
+                        <button type="submit" class="btn btn-info waves-effect waves-light" id="btnppostthisnotice">Post this Notice</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light" id="btnsubmit">Save</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="btnsaveandpost">Save and Post</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+
+
+
 
 
 
@@ -162,7 +119,7 @@
 
 
 <script>
-   
+
     @*$(document).ready(function () {
 
         const PostNoticeButton = document.getElementById("PostthisNotice_SaBtn");

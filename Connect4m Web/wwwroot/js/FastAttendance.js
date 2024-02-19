@@ -33,57 +33,150 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
 $(document).ready(function () {
     debugger;
+    //Classificationdropdown();
+    //Slotsdropdown();
+
     //======>>> Classification Dropdown
-    fetchDataAndPopulateDropdown(
-        '/Attendance/FastAttendanceClassification',         // URL for data fetching
-        '#Ddldepartment',                                   // Dropdown selector
-        'value',                                             // Field name for option text
-        'text',                                             // Field name for option values       
-        'manageClassification'                              // Response value return class name
-    );
+    //fetchDataAndPopulateDropdown(
+    //    '/Attendance/FastAttendanceClassification',         // URL for data fetching
+    //    '#Ddldepartment',                                   // Dropdown selector
+    //    'value',                                             // Field name for option text
+    //    'text',                                             // Field name for option values       
+    //    'manageClassification'                              // Response value return class name
+    //);
 
     //=======>>> Slots Dropdown
-    fetchDataAndPopulateDropdown(
-        '/Attendance/FastAttendancegetSlots',         // URL for data fetching
-        '#Ddslots',                                   // Dropdown selector
-        'slotId',                                             // Field name for option text
-        'slotName',                                             // Field name for option values
-        'slotSubjectnames'                              // Response value return class name
-    );
+    //fetchDataAndPopulateDropdown(
+    //    '/Attendance/FastAttendancegetSlots',         // URL for data fetching
+    //    '#Ddslots',                                   // Dropdown selector
+    //    'slotId',                                             // Field name for option text
+    //    'slotName',                                             // Field name for option values
+    //    'slotSubjectnames'                              // Response value return class name
+    //);
 
 });
 
 
-function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    CallToAjax('GET', url,
-        function (response) {
-
+ //======>>> Classification Dropdown
+function Classificationdropdown() {
+    //fetchDataAndPopulateDropdown(
+    //    '/Attendance/FastAttendanceClassification',         // URL for data fetching
+    //    '#Ddldepartment',                                   // Dropdown selector
+    //    'value',                                             // Field name for option text
+    //    'text',                                             // Field name for option values       
+    //    'manageClassification'                              // Response value return class name
+    //);
+    $.ajax({
+        url: '/Attendance/FastAttendanceClassification',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
             debugger;
-            var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
-            populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
+            var dropdownSelector = '#Ddldepartment';
+            var dropdown = $(dropdownSelector);
+            var valueField = 'value';
+            var textField = 'text';
+            dropdown.empty();
+            dropdown.append($('<option>', {
+                value: '',
+                text: '---Select---'
+            }));
+            $.each(response, function (index, item) {
+                dropdown.append($('<option>', {
+                    value: item[valueField],
+                    text: item[textField]
+                }));
+            });
         },
-        function (status, error) {
-            // Handle errors here
-            console.error("Error fetching data:", error);
+        error: function (xhr, status, error) {
+
+            console.error('Error sending data:', error);
         }
-    );
+    });
+
+
+
 }
 
-function populateDropdown(data, dropdownSelector, valueField, textField) {
-    var dropdown = $(dropdownSelector);
+
+
+
+
+
+  //=======>>> Slots Dropdown
+function Slotsdropdown() {
+    //fetchDataAndPopulateDropdown(
+    //    '/Attendance/FastAttendancegetSlots',         // URL for data fetching
+    //    '#Ddslots',                                   // Dropdown selector
+    //    'slotId',                                             // Field name for option text
+    //    'slotName',                                             // Field name for option values
+    //    'slotSubjectnames'                              // Response value return class name
+    //);
     debugger;
-    //dropdown.empty(); // Clear existing options
-    dropdown.append($('<option>', {
-        value: '',
-        text: '---Select---'
-    }));
-    $.each(data, function (index, item) {
-        dropdown.append($('<option>', {
-            value: item[valueField],
-            text: item[textField]
-        }));
+    $.ajax({
+        url: '/Attendance/FastAttendancegetSlots',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
+            debugger;
+            var dropdownSelector = '#Ddslots';
+            var dropdown = $(dropdownSelector);
+            var valueField = 'slotId';
+            var textField = 'slotName';
+            //dropdown.empty();
+            dropdown.append($('<option>', {
+                value: '',
+                text: '---Select---'
+            }));
+            $.each(response, function (index, item) {
+                dropdown.append($('<option>', {
+                    value: item[valueField],
+                    text: item[textField]
+                }));
+            });
+        },
+        error: function (xhr, status, error) {
+
+            console.error('Error sending data:', error);
+        }
     });
+
 }
+
+
+//function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
+//    CallToAjax('GET', url,
+//        function (response) {
+
+//            debugger;
+//            var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
+//            populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
+//        },
+//        function (status, error) {
+//            // Handle errors here
+//            console.error("Error fetching data:", error);
+//        }
+//    );
+//}
+
+//function populateDropdown(data, dropdownSelector, valueField, textField) {
+//    var dropdown = $(dropdownSelector);
+//    debugger;
+//    //dropdown.empty(); // Clear existing options
+//    dropdown.append($('<option>', {
+//        value: '',
+//        text: '---Select---'
+//    }));
+//    $.each(data, function (index, item) {
+//        dropdown.append($('<option>', {
+//            value: item[valueField],
+//            text: item[textField]
+//        }));
+//    });
+//}
+
+
+
 
 $('#Ddldepartment').change(function () {
     var selectedValues = $('#Ddldepartment').val();
@@ -190,6 +283,19 @@ $("#Fastattendanceform").on('submit', function () {
             handleAjax('GET', url, formData,
                 function (resp) {
                     loaddingimg.css('display', 'none');
+                    //$('#Ddldepartment').empty();
+                    //$('#Ddslots').empty();
+                    //if ($('#Ddldepartment').is(':empty')) {
+                    //    debugger;
+                    //    Classificationdropdown();
+                    //}
+                    //if ($('#Ddslots').is(':empty')) {
+                    //    debugger;
+                    //    Slotsdropdown();
+                    //}
+
+
+
                     if (resp.returnmessage == "0") {
                         debugger;
                         $('#Fast_Attendance_Table_data').empty();
@@ -203,8 +309,9 @@ $("#Fastattendanceform").on('submit', function () {
                     } else if (resp.returnmessage == "1") {
                         return;
                     }else{
-                        debugger;                       
-
+                        debugger;
+                        $('#Ddldepartment').empty();
+                        $('#Ddslots').empty();
                         $("#Fast_Attendance_Table_data").html(resp);
                     }      
                 },

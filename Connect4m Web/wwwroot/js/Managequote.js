@@ -335,7 +335,12 @@ function bindDatatable(response) {
     table.on('draw', function () {
         $('#ManageQuotestbl').find('td:nth-child(2)').attr('title', 'Edit');
     });
-    $('#ManageQuotestbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#ManageQuotestbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+        color: 'black',
+        'text-decoration': 'underline',
+        cursor: 'pointer',
+        fontWeight: 'bold'
+    });
 }
 
 function GetDateFormat() {

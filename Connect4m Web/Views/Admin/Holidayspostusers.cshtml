@@ -3,221 +3,250 @@
     Layout = null;
 }
 
-@*<!DOCTYPE html>
 
-<html>
-<head>
-
-
-</head>
-<body>*@
-
-<span id="Errormessage" class="text-danger" style="position: fixed; margin: -20px 10px 0px 5px; "></span>
-    <div class="default-according style-1" id="accordionoc5">
-        <div class="card">
-            <div class="card-header bg-primary">
-                <h5 class="mb-0">
-                    <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon8" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                        POST HOLIDAYS
-                    </button>
-                </h5>
-            </div>
-            <div class="collapse show" id="collapseicon10" aria-labelledby="collapseicon10" data-bs-parent="#accordionoc6" style="">
-                <div class="card-body" style="padding: 10px;">
-                    <div class="row">
-                        <div class="row" style=" border-left: 1px solid #cce3e9; border-right: 1px solid #cce3e9; border-bottom: 1px solid #cce3e9; border-top: 1px solid #cce3e9; background: #ffffff;">
-                            <div class="col-2 rowcol">
-                                <label>Selected Holiday Name:</label>
-                            </div>
-                            <div class="col-10 rowcol">
-                                <label class="form-check-label" id="HolidayNamelblid"></label>
-                                <input type="hidden" id="HolidayidlblId" value="" />
-                                @*<label class="form-check-label" id="HolidayidlblId"></label>*@
-                            </div>
-
-                            <div class="col-2 rowcol"></div>
-                            <div class="col-10 rowcol">
-                                <div class="form-check form-check-inline col-4">
-                                    @{
-                                        bool isChecked0 = false;
-
-                                        foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[0])
-                                        {
-                                            string Comparingvalue = Holidayitem.ForAll;
-
-                                            if (Comparingvalue == "True")
-                                            {
-                                                isChecked0 = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" @(isChecked0 ? "checked" : "")/>@*onclick="Selectalluserschkvalues()"*@
-                                    <label class="form-check-label" style="font: 12px arial; color: blue; ">Post to all users</label>
-                                </div>
-                            </div>
-                            <div class="col-12 rowcol">
-                                <label>   </label>
-                            </div>
-                            <div class="col-2 rowcol">
-                                <label style=" margin: 56% 24%;">Role:</label>
-                            </div>
-                            <div class="col-10 rowcol" style="margin-right: -3rem;">
-                                @*HolidayTargetTbl = Count = 5*@
-                                @{
-                                    var Rolesno = 0;
-                                    var Grpsno = 0;
-                                    var Cls = 0;
-                                    var Scl = 0;
-                                }
-                                @foreach (var item in ViewBag.List.IRoleList)
-                                {
-                                    bool isChecked = false;
-                                    int instanceRoleId = @item.InstanceRoleId;
-                                    string instanceRoleIdString = instanceRoleId.ToString();
-                                    foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[1])
-                                    {                                     
-                                        string ComparingvalueString = @Holidayitem.Value;
-
-                                        if (ComparingvalueString == instanceRoleIdString)
-                                        {
-                                            isChecked = true;
-                                            break;
-                                        }
-                                    }
-                                    <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                        <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox" type="checkbox" name="rolecheckboxs" value="@item.InstanceRoleId" @(isChecked ? "checked" : "") />
-                                        <label style=" font: 11px arial; color: #333333; " class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
-                                    </div>
-                                    @if (item.InstanceRoleId == 3)
-                                    {
-                                        break;
-                                    }
-                                    Rolesno++;
-                                }
-                            </div>
-                            <div class="col-12 rowcol" style="text-align: center;">
-                                <label>AND</label>
-                            </div>
-                            <div class="col-2 rowcol">
-                                <label style=" margin: 56% 24%;">Group:</label>
-                            </div>
-                            <div class="col-10 rowcol" style="margin-right: -3rem;">
-                                @foreach (var item in ViewBag.List.GroupList)
-                                {
-                                    bool isChecked = false;
-                                    int GroupId = @item.GroupId;
-                                    string GroupIdComparingvalueString = GroupId.ToString();
-
-                                    foreach (var Holidaygroup in ViewBag.List.HolidayTargetTbl[2])
-                                    {
-
-                                        string HolidaygroupComparingvaluestring = @Holidaygroup.Value;
-
-                                        if (HolidaygroupComparingvaluestring == GroupIdComparingvalueString)
-                                        {
-                                            isChecked = true;
-                                            break;
-                                        }
-                                    }
-                                    <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                        <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox" type="checkbox" name="Grpcheckboxs" value="@item.GroupId" @(isChecked ? "checked" : "") />
-                                        <label style=" font: 11px arial; color: #333333; ">@item.GroupName</label>
-                                    </div>
-                                    @if (item.GroupId == 3)
-                                    {
-                                        break;
-                                    }
-                                    Grpsno++;
-                                }
-                            </div>
-                            <div class="col-12 rowcol" style="text-align: center;">
-                                <label>AND</label>
-                            </div>
-                            <div class="col-2 rowcol">
-                                <label style="     margin: 56% 24%;">Department :</label>
-                            </div>
-                            <div class="col-10 rowcol" style="margin-right: -3rem;">
-                                @foreach (var item in ViewBag.List.ClassificationList)
-                                {
-                                    bool isChecked = false;
-                                    int ComparingInstanceClassificationId =@item.InstanceClassificationId;
-                                    string ComparingInstanceClassificationIdstring = ComparingInstanceClassificationId.ToString();
-
-                                    foreach (var Holidayclassification in ViewBag.List.HolidayTargetTbl[3])
-                                    {
-                                       
-                                        string HolidaygroupComparingvaluestring = @Holidayclassification.Value;
-
-                                        if (HolidaygroupComparingvaluestring == ComparingInstanceClassificationIdstring)
-                                        {
-                                            isChecked = true;
-                                            break;
-                                        }
-                                    }
-
-                                    <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                        <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckboxs" value="@item.InstanceClassificationId" @(isChecked ? "checked" : "") />
-                                        <label style=" font: 11px arial; color: #333333; ">@item.ClassificationName</label>
-                                    </div>
-                                    @if (item.InstanceClassificationId == 3)
-                                    {
-                                        break;
-                                    }
-                                    Cls++;
-                                }
-                            </div>
-                            <div class="col-12 rowcol" style="text-align: center;">
-                                <label>AND</label>
-                            </div>
-                            <div class="col-2">
-                                <label style="margin: 56% 24%;">Class  :</label>
-                            </div>
-                            <div class="col-10" style="margin-right: -3rem;">
-                                @foreach (var item in ViewBag.List.SubclassificationList)
-                                {
-                                    bool isChecked = false;
-                                    int ComparingInstancesubClassificationId = @item.InstanceSubClassificationId;
-                                    string ComparingInstancesubClassificationIdstring = ComparingInstancesubClassificationId.ToString();
-
-                                    foreach (var HolidaySubclassification in ViewBag.List.HolidayTargetTbl[4])
-                                    {
-                                       
-                                        string HolidaygroupComparingvaluestring = @HolidaySubclassification.Value;
-
-                                        if (HolidaygroupComparingvaluestring == ComparingInstancesubClassificationIdstring)
-                                        {
-                                            isChecked = true;
-                                            break;
-                                        }
-                                    }
-
-                                    <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                        <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Sclcheckboxs" value="@item.InstanceSubClassificationId" @(isChecked ? "checked" : "") />
-                                        <label style=" font: 11px arial; color: #333333; ">@item.SubClassificationName</label>
-                                    </div>
-                                    @if (item.InstanceSubClassificationId == 3)
-                                    {
-                                        break;
-                                    }
-                                    Scl++;
-                                }
-                            </div>
+<div class="col-md-12 col-lg-12 mb-3">
+    <span id="Errormessage" class="text-danger"></span>
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                POST HOLIDAYS
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" id="ManageHolidaysMaindivId">
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end space">Selected Holiday Name</label>
+                        <div class="col-sm-4">
+                            <label class="control-label col-sm-4 col-form-label text-right" id="HolidayNamelblid"></label>
+                            <input type="hidden" id="HolidayidlblId" value="" />
                         </div>
                     </div>
-                    <div style="text-align:center;">
-                        <input type="button" id="BacktoSearchinpostuserbtn" value="Back" class="btn btn-pill btn-outline-primary btn-aprimary"/>
-                        <input type="button" id="PostSmsMailbtn" value="Post" class="btn btn-pill btn-outline-success btn-air-success"/>
+
+                    @*<div class="col-2 rowcol">
+                            <label>Selected Holiday Name:</label>
+                        </div>
+                        <div class="col-10 rowcol">
+                            <label class="form-check-label" id="HolidayNamelblid"></label>
+                            <input type="hidden" id="HolidayidlblId" value="" />
+                            <label class="form-check-label" id="HolidayidlblId"></label>
+                        </div>*@
+
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end "></label>
+                        <div class="col-sm-4">
+                            @{
+                                bool isChecked0 = false;
+
+                                foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[0])
+                                {
+                                    string Comparingvalue = Holidayitem.ForAll;
+
+                                    if (Comparingvalue == "True")
+                                    {
+                                        isChecked0 = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            <input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" @(isChecked0 ? "checked" : "") style="margin:4px;" />@*onclick="Selectalluserschkvalues()"*@
+                            <label class="control-label col-sm-4 col-form-label" style="font: 14px arial; color: blue; ">Post to all users</label>
+                        </div>
+                    </div>
+
+                    <div class="col-10 rowcol">
+                        <div class="form-check form-check-inline col-4">
+                            @{
+                                //bool isChecked0 = false;
+
+                                //foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[0])
+                                //{
+                                //    string Comparingvalue = Holidayitem.ForAll;
+
+                                //    if (Comparingvalue == "True")
+                                //    {
+                                //        isChecked0 = true;
+                                //        break;
+                                //    }
+                                //}
+                            }
+                            <!--<input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" @(isChecked0 ? "checked" : "") />-->@*onclick="Selectalluserschkvalues()"*@
+                            <!--<label class="form-check-label" style="font: 12px arial; color: blue; ">Post to all users</label>-->
+                        </div>
+                    </div>
+                    <div class="col-12 rowcol">
+                        <label>   </label>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end space" style="margin: 6% 0%;">Role</label>
+                        <div class="col-sm-9">
+                            @*HolidayTargetTbl = Count = 5*@
+                            @{
+                                var Rolesno = 0;
+                                var Grpsno = 0;
+                                var Cls = 0;
+                                var Scl = 0;
+                            }
+                            @foreach (var item in ViewBag.List.IRoleList)
+                            {
+                                bool isChecked = false;
+                                int instanceRoleId = @item.InstanceRoleId;
+                                string instanceRoleIdString = instanceRoleId.ToString();
+                                foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[1])
+                                {
+                                    string ComparingvalueString = @Holidayitem.Value;
+
+                                    if (ComparingvalueString == instanceRoleIdString)
+                                    {
+                                        isChecked = true;
+                                        break;
+                                    }
+                                }
+                                <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                    <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox" type="checkbox" name="rolecheckboxs" value="@item.InstanceRoleId" @(isChecked ? "checked" : "") />
+                                    <label style=" font: 11px arial; color: black; " class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
+                                </div>
+                                @if (item.InstanceRoleId == 3)
+                                {
+                                    break;
+                                }
+                                Rolesno++;
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12 rowcol text-center">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end space" style="margin: 6% 0%;">Group</label>
+                        @*<label style=" margin: 56% 24%;">:</label>*@
+                        <div class="col-sm-9">
+                            @*<div class="col-10 rowcol" style="margin-right: -3rem;">*@
+                            @foreach (var item in ViewBag.List.GroupList)
+                            {
+                                bool isChecked = false;
+                                int GroupId = @item.GroupId;
+                                string GroupIdComparingvalueString = GroupId.ToString();
+
+                                foreach (var Holidaygroup in ViewBag.List.HolidayTargetTbl[2])
+                                {
+
+                                    string HolidaygroupComparingvaluestring = @Holidaygroup.Value;
+
+                                    if (HolidaygroupComparingvaluestring == GroupIdComparingvalueString)
+                                    {
+                                        isChecked = true;
+                                        break;
+                                    }
+                                }
+                                <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                    <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox" type="checkbox" name="Grpcheckboxs" value="@item.GroupId" @(isChecked ? "checked" : "") />
+                                    <label style=" font: 11px arial; color: black; ">@item.GroupName</label>
+                                </div>
+                                @if (item.GroupId == 3)
+                                {
+                                    break;
+                                }
+                                Grpsno++;
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12 rowcol text-center">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end space" style="margin: 6% 0%;">Department </label>
+                        <div class="col-sm-9">
+                            @foreach (var item in ViewBag.List.ClassificationList)
+                            {
+                                bool isChecked = false;
+                                int ComparingInstanceClassificationId = @item.InstanceClassificationId;
+                                string ComparingInstanceClassificationIdstring = ComparingInstanceClassificationId.ToString();
+
+                                foreach (var Holidayclassification in ViewBag.List.HolidayTargetTbl[3])
+                                {
+
+                                    string HolidaygroupComparingvaluestring = @Holidayclassification.Value;
+
+                                    if (HolidaygroupComparingvaluestring == ComparingInstanceClassificationIdstring)
+                                    {
+                                        isChecked = true;
+                                        break;
+                                    }
+                                }
+
+                                <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                    <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox" type="checkbox" name="Clscheckboxs" value="@item.InstanceClassificationId" @(isChecked ? "checked" : "") />
+                                    <label style=" font: 11px arial; color: black; ">@item.ClassificationName</label>
+                                </div>
+                                @if (item.InstanceClassificationId == 3)
+                                {
+                                    break;
+                                }
+                                Cls++;
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12 rowcol text-center">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-3 col-form-label  text-end space" style="margin: 6% 0%;">Class  </label>
+
+                        <div class="col-sm-9">
+                            @foreach (var item in ViewBag.List.SubclassificationList)
+                            {
+                                bool isChecked = false;
+                                int ComparingInstancesubClassificationId = @item.InstanceSubClassificationId;
+                                string ComparingInstancesubClassificationIdstring = ComparingInstancesubClassificationId.ToString();
+
+                                foreach (var HolidaySubclassification in ViewBag.List.HolidayTargetTbl[4])
+                                {
+
+                                    string HolidaygroupComparingvaluestring = @HolidaySubclassification.Value;
+
+                                    if (HolidaygroupComparingvaluestring == ComparingInstancesubClassificationIdstring)
+                                    {
+                                        isChecked = true;
+                                        break;
+                                    }
+                                }
+
+                                <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                    <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Sclcheckboxs" value="@item.InstanceSubClassificationId" @(isChecked ? "checked" : "") />
+                                    <label style=" font: 11px arial; color: black; ">@item.SubClassificationName</label>
+                                </div>
+                                @if (item.InstanceSubClassificationId == 3)
+                                {
+                                    break;
+                                }
+                                Scl++;
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row justify-content text-center">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-dark waves-effect waves-light" id="BacktoSearchinpostuserbtn">BackToSearch</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light" id="PostSmsMailbtn">Post</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            @*<div style="text-align:center;">
+                    <input type="button" id="BacktoSearchinpostuserbtn" value="Back" class="btn btn-pill btn-outline-primary btn-aprimary" />
+                    <input type="button" id="PostSmsMailbtn" value="Post" class="btn btn-pill btn-outline-success btn-air-success" />
+                </div>*@
         </div>
     </div>
+</div>
+
 
 
 
 @*</body>
-</html>*@
+    </html>*@
 <script src="~/js/Manageholiday.js"></script>
 
 
@@ -250,6 +279,6 @@
             }
         });
     });
-    
+
 
 </script>

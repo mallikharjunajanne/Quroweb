@@ -1,105 +1,116 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Managequote
 @{
-    ViewData["Title"] = "ManageQuote";
+    //ViewData["Title"] = "ManageQuote";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
+<!DOCTYPE html>
+<html>
+<head>
 
-<div class="card">
-    <div class="card-body">
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <h6><span>Manage Quote</span></h6>
+</head>
+<body>
 
-                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
-                    <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 82%; border-radius: 15px; height: 35px; margin-bottom: 3px;" id="addnewmanagequotes">
-                        @*addnewmanageholidays*@
-                        Create Quote
-                    </button>
+    <div class="flex-grow-1 container-p-y container-xxl ">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>MANAGE QUOTE </h4>
+        <div class="row mb-2">
+            <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
+                <div class="col-sm-12 text-end">
+                    <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " id="addnewmanagequotes"> Create Quote</button>
                 </div>
-                <div id="ManageQuotemaindiv">@*Manageholidays_Main1*@
-                    <div class="col-12" id="accordionoc1">
-                        <div class="card-header bg-primary">
+            </div>           
+            <div id="ManageQuotemaindiv">               
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">SEARCH QUOTES</button>
+                                SEARCH QUOTES
                             </h5>
                         </div>
-                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-                            <div class="padding-search row" id="ManageHolidaysMaindivId">
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="form-grop control-label space">Quote </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                       <input type="text"class="form-control" name="Quote" id="Quote" />
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="form-grop control-label space">Display Date  </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                     <input type="date" class="form-control" name="Displaydate" id="Displaydate"/>
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>                                   
-                                    <div class="form-group col-2"></div>
-                                    <div class="form-group col-4">
-                                        <input type="button" id="Clearbtnquote" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
-                                        <input type="button" id="Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
-                                    </div>
-                                    <div class="col-3"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col" id="ManageHolidaysMaindivId">
+                                    <form id="Classificaitionformid">
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end space">Quote</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Quote" id="Quote" />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end space">Display Date</label>
+                                            <div class="col-sm-4">
+                                                <input type="date" class="form-control" name="Displaydate" id="Displaydate" />
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearcommonfunction('Classificaitionformid', null)" id="Clearbtnquote">Clear</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    @*<label class="form-grop control-label space">  </label>
+                                        </div>
+                                        <div class="form-group col-4">
+
+                                        </div>
+                                        <div class="col-3"></div>
+                                        <div class="col-3"></div>
+                                        <div class="form-group col-2"></div>*@
+                                    @*<div class="form-group col-4">
+                                            <input type="button" id="Clearbtnquote" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
+                                            <input type="button" id="Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
+                                        </div>
+                                        <div class="col-3"></div>*@
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                    <div id="ManageHolidaystbl_containerdivId">                      
-                            <span id="Errmsg" class="text-danger" style="position: fixed; margin: -20px 10px 0px 5px; "></span>                      
-                        <div class="col-12" id="accordionoc2">
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">	YOUR SEARCH RESULTED <span id="Quote_Recordscount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORDS.</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-                                <div class="rowheight">
-                                    @*ManageHolidaystbl*@
-                                    <table class="table table-bordered" id="ManageQuotestbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                        <thead>
-                                            <tr style="border-color: black;">
-                                                <th style=" border-color: blue; width: 16px; " class="bg-primary;">SNO</th>
-                                                <th style=" border-color: blue; width: 60%; " class="bg-primary">Quote</th>
-                                                <th style=" border-color: blue; width: 63px;" class="bg-primary">Display Date</th>
-                                                <th style=" border-color: blue; width: 0%;" class="bg-primary">Delete</th>                                              
+                    <div id="ManageHolidaystbl_containerdivId">
+                        <span id="Errmsg" class="text-danger" style="position: fixed; margin: -20px 10px 0px 5px; "></span>
+                        <div class="col-md-12 col-lg-12 mb-3">
+                            <div class="card mb-4">
+                                <div class="card-header d-flex align-items-center justify-content-between">
+                                    <h5 class="mb-0">
+                                        YOUR SEARCH RESULTED <span id="Quote_Recordscount" class="text-dark"></span> RECORDS.
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered" id="ManageQuotestbl">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th style="width: 3%;">SNO</th>
+                                                <th style="width: 67%;">Quote</th>
+                                                <th>Display Date</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        @*<tbody>            </tbody>*@
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="Managequotes_Insertdiv2">                    @*Manageholidays_Insertdiv2*@
-
-                </div>
-                <div id="Managequotes_Updatediv3">
-                    @*Manageholidays_Updatediv3*@
-
-                </div>
-                <!--<div id="Managequotes_MailSMSPostingdiv4">-->
-                    @*Manageholidays_MailSMSPostingdiv4*@
-
-                <!--</div>-->
             </div>
+            <div id="Managequotes_Insertdiv2">
+              
+
+            </div>
+            <div id="Managequotes_Updatediv3">
+                
+
+            </div>          
         </div>
     </div>
-</div>
 
+
+</body>
+</html>
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 @section Scripts {

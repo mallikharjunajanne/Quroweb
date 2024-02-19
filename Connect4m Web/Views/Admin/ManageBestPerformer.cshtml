@@ -1,95 +1,87 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.BestPerformer
 @{
-    ViewData["Title"] = "ManageBestPerformer";
+    //ViewData["Title"] = "ManageBestPerformer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card">
-    <div class="card-body">
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <h6><span>MANAGE BEST PERFORMERS</span></h6>
+<!DOCTYPE html>
+<html>
+<head>
 
-                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
-                    <button class="btn btn-pill btn-outline-primary btn-aprimary" style=" margin-left: 75%; border-radius: 15px; height: 35px; margin-bottom: 3px;" id="addnewbestperformer">
-                        Create Best Performer
-                    </button>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl ">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>MANAGE BEST PERFORMERS</h4>
+        <div class="row mb-2">
+            <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
+                <div class="col-sm-12 text-end">
+                    <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " id="addnewbestperformer"> Create Best Performer</button>
                 </div>
-                <div id="Managebestperoformerdmaindiv">                    @*ManageQuotemaindiv*@
-                    <div class="col-12" id="accordionoc1">
-                        <div class="card-header bg-primary">
+            </div>
+            <div id="Managebestperoformerdmaindiv">
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <span class="text-danger" id="UpdatevalidationMessage"></span>
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
-                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">SEARCH BEST PERFORMERS</button>
+                                SEARCH BEST PERFORMERS
                             </h5>
                         </div>
-                        <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-                            <div class="padding-search row" id="ManageHolidaysMaindivId">
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2">
-                                        <label class="form-grop control-label space">Title </label>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <input type="text" class="form-control" name="Title" id="Titletxtid" />
-                                    </div>
-                                    <div class="col-3"></div>
-                                    <div class="col-3"></div>
-                                    <div class="form-group col-2"></div>
-                                    <div class="form-group col-4">
-                                        @*Clearbtnquote*@ <input type="button" id="Mainview_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
-                                        @*Searchbtn*@<input type="button" id="Mainview_Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
-                                    </div>
-                                    <div class="col-3"></div>
-                                </div>
-
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label text-end space">Title</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="Title" id="Titletxtid" />
+                            </div>
+                        </div>
+                        <div class="row justify-content text-center">
+                            <div class="col-sm-12">
+                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Mainview_Clearbtn">Clear</button>
+                                <button type="button" class="btn btn-success waves-effect waves-light" id="Mainview_Searchbtn">Search</button>
                             </div>
                         </div>
                     </div>
-                    <div id="ManageHolidaystbl_containerdivId">
-                        <span id="Errmsg" class="text-danger" style="position: fixed; margin: -20px 10px 0px 5px; "></span>
-                        <div class="col-12" id="accordionoc2">
-                            <div class="card-header bg-primary">
+                </div>
+
+
+                <div id="ManageHolidaystbl_containerdivId">
+                    <span id="Errmsg" class="text-danger" style="position: fixed; margin: -20px 10px 0px 5px; "></span>
+                    <div class="col-md-12 col-lg-12 mb-3">
+                        <span class="text-danger" id="UpdatevalidationMessage"></span>
+                        <div class="card mb-4">
+                            <div class="card-header d-flex align-items-center justify-content-between">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11">	YOUR SEARCH RESULTED <span id="ManagebestperformertblCount" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORDS.</button>
+                                    YOUR SEARCH RESULTED <span id="ManagebestperformertblCount"></span> RECORDS.
                                 </h5>
                             </div>
-                            <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2">
-                                <div class="rowheight">
-                                    @*ManageQuotestbl*@<table class="table table-bordered" id="Managebestperformertbl" style="background-color: whitesmoke; border-color: red; font-size: 11px;">
-                                        <thead>
-                                            <tr style="border-color: black;">
-                                                <th style=" border-color: blue; width: 16px; " class="bg-primary;">SNO</th>
-                                                <th style=" border-color: blue; width: 343px; " class="bg-primary">Title</th>
-                                                <th style=" border-color: blue; width: 63px;" class="bg-primary">Best Performer(User)</th>
-                                                <th style=" border-color: blue; width: 63px;" class="bg-primary">Display Until</th>
-                                                <th style=" border-color: blue; width: 0%;" class="bg-primary">Delete</th>
-                                            </tr>
-                                        </thead>
-                                        @*<tbody>            </tbody>*@
-                                    </table>
-                                </div>
-                            </div>
+                            <table class="table table-bordered" id="Managebestperformertbl">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="width: 5%;">SNO</th>
+                                        <th style="width: 30%;">Title</th>
+                                        <th>Best Performer(User)</th>
+                                        <th>Display Until</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>                                
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div id="Managebestperoformerd_Insertdiv2">
-                    @*Managequotes_Insertdiv2*@
+            </div>
 
-                </div>
-                <div id="Managebestperoformerd_Updatediv3">
-                 
 
-                </div>
-                <!--<div id="Managequotes_MailSMSPostingdiv4">-->
-                @*Manageholidays_MailSMSPostingdiv4*@
+            <div id="Managebestperoformerd_Insertdiv2">
+               
 
-                <!--</div>-->
+            </div>
+            <div id="Managebestperoformerd_Updatediv3">
+
+
             </div>
         </div>
     </div>
-</div>
-
-
+</body>
+</html>
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

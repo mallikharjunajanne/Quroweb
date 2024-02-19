@@ -20,8 +20,6 @@ function TblCallToAjax(method, url,  successCallback, errorCallback) {
         }
     });
 }
-
-
 function CallToAjax(method, url, data, successCallback, errorCallback) {
     $.ajax({
         url: url,
@@ -32,6 +30,27 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
             errorCallback(xhr.status, error);
         }
     });
+}
+
+
+function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
+
+    var ajaxOptions = {
+        url: url,
+        method: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    };
+
+    //if (hasFileUpload) {
+    //    ajaxOptions.processData = false;
+    //    ajaxOptions.contentType = false;
+    //}
+
+    $.ajax(ajaxOptions);
 }
 
 
@@ -304,9 +323,19 @@ function bindDatatables(response) {
 
 
     table.on('draw', function () {
-        $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit');
+        $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
+            color: 'black',
+            'text-decoration': 'underline',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+        });
     });
-    $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
+        color: 'black',
+        'text-decoration': 'underline',
+        cursor: 'pointer',
+        fontWeight: 'bold'
+    });
 }
 function GetDateFormat() {
     var currentDate = new Date();
@@ -317,6 +346,35 @@ function GetDateFormat() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
+//-------------------------------------   Click For Update in the list(table)
+$(document).on('click', '#ManageSubclassificationtbl td:nth-child(2)', function (event) {
+    event.stopImmediatePropagation();
+    debugger;
+    var parent = $(event.target).closest('tr');
+    var Subclassid = $(parent).find('td').find('input[type="text"]').val();
+    var table = $('#ManageSubclassificationtbl').DataTable();
+    tabletargetpagetblSEMsearchresults = table.page.info().page;
+    EditSubclassification(Subclassid);
+})
+
+
+function EditSubclassification(Subclassid) {
+
+    $.ajax({
+        url: '/Admin/Update_ManageSubClassification?InstanceSubClassificationId=' + Subclassid,
+        type: 'GET',
+        success: function (response) {
+            debugger;
+            $('#ManageSubclassification_Containermaindiv').hide();
+            $('#ManagesubclassificationInsertUpdatediv').html(response);
+        },
+        error: function (xhr, status, error) {
+            $('#ManageSubclassification_Containermaindiv').show();
+            $('#ManagesubclassificationInsertUpdatediv').empty();
+        }
+    });
+}
+
 
 
 
@@ -364,12 +422,10 @@ $('#addnewsubclass').click(function () {
 
 
 
-$('#IN_Clearbtn').click(function () {
-    //$('#Insertclassificationid')[0].reset();
-    $('#Insertclassformid')[0].reset();
-});
 
-$('#INBacktosearchbtn').click(function () {
+
+$('#btnBackToSearch').click(function () {
+    $('#Errormessages').text('');
     location.reload();
 });
 
@@ -384,33 +440,46 @@ $('#Insertclassformid').submit(function (event) {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 
-        var validationmelength = validationMessages.length;
+        $('#Errormessages').text('');
 
+        var validationmelength = validationMessages.length;
+      
         if (validationmelength == 0 && validationMessages2.length == 0) {
             debugger;
             var formData = $('#Insertclassformid').serialize();
-            $.ajax({
-                url: '/Admin/Insert_ManageSubClassification_',
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    debugger;
-                    if (response === "Inserted") {
-                        $('#Insert_Clearbtn, #Insert_Savebtn').prop('disabled', true);
-                        $('#Insert_Clearbtn, #Insert_Savebtn').removeClass("btn btn-pill btn-air-success")
-                        $('#Errormessages').text('Record inserted successfully.');
-                    } else if (response === "Not Inserted") {
-                        $('#Errormessages').text('Record insert Unsuccessfull');
-                    } else if (response === "Exists") {
-                        $('#Errormessages').text('Department with Name ' + ' " ' + TitleValue + ' " ' + ' already exists.');
-                    } else {
+            var Subclassname = $('#Subclass_txtid').val();
+            var Displayorder = $('#Displayordertxtid').val();
+            if (Displayorder==0) {
+                $('#Errormessages').text('Display Order cannot be Zero.');
+                return;
+            }
+
+            var url = '/Admin/Insert_ManageSubClassification';
+            handleAjax('POST', url, formData,
+                function (response) {
+                    debugger;                  
+                    if (response == "2") {
+                        $('#Errormessages').text("Attendance Effective Date and Attendance End Date should be with in the period of Department 's Effective Date and End Date.");
+                    } else if (response == "4") {
+                        $('#Errormessages').text("You can't create a new 'SubClassificationName' as the Class Teacher is Associated to other '" + ViewState("SubClassificationName") + "'.");
+                    } else if (response == "0") {
+                        $('#Errormessages').text('SubClassificationName with Name ' + ' " ' + Subclassname + ' " ' + ' already exists.');
+                    } else if (response == "5") {
+                        $('#Errormessages').text('Display Order Already Exists.');
+                    } else if (response == " ") {
                         $('#Errormessages').text('An error occurred.');
+                    } else {
+                        $('#btnclear, #btnsubmit').prop('disabled', true);
+                        $('#Errormessages').text('Record inserted successfully.');
+
                     }
                 },
-                error: function (xhr, status, error) {
-                    errorCallback(xhr.status, error);
-                }
-            });
+                function (status, error) {
+                    console.error("Error fetching data:", error);
+                    // Handle error scenario
+                },
+                true
+            );
         }
     }, 50);
 });
@@ -480,25 +549,6 @@ function Clearcommonfunction(Formid, ErrorMessageSpanId) {
 }
 
 
-function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
-
-    var ajaxOptions = {
-        url: url,
-        method: method,
-        data: data,
-        success: successCallback,
-        error: function (xhr, status, error) {
-            errorCallback(xhr.status, error);
-        }
-    };
-
-    if (hasFileUpload) {
-        ajaxOptions.processData = false;
-        ajaxOptions.contentType = false;
-    }
-
-    $.ajax(ajaxOptions);
-}
 
 
 $('#Discount_TypeDDId').change(function () {
@@ -538,12 +588,23 @@ function DatesCompare(Sdate, Edate) {
         var Startdate = new Date($("#Effectivedatetxtid").val());
         var Enddate = new Date($("#Enddatetxtid").val());
 
-        if (Enddate < Startdate) {
-            $('#Errormessages').text(Edate + " must be greater than " + Sdate + ".");
-
+        if (Enddate.getTime() === Startdate.getTime()) {
+            $('#Errormessages').text("End date and Start date cannot be the same.");
+        } else if (Enddate < Startdate) {
+            $('#Errormessages').text("End date should be greater than Start date.");
         } else {
             $('#Errormessages').text("");
         }
+
+        //if (Enddate = Startdate) {
+        //    $('#Errormessages').text(Edate + 'and' + Sdate + "cannot have same Date.");
+
+        //} else if (Enddate < Startdate) {
+        //    $('#Errormessages').text(Edate + 'should be less than' + Sdate + '.');
+        //}
+        //else {
+        //    $('#Errormessages').text("");
+        //}
     } catch (error) {
         console.log(error);
     }
@@ -553,4 +614,107 @@ function DatesCompare(Sdate, Edate) {
 //-------------------***Date Compare
 $("#Effectivedatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
 $("#Enddatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
+
+$('#btndelete').click(function () {
+    event.stopImmediatePropagation();
+    var confirmed = confirm("Are you sure you want to delete Class?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    if (confirmed) {
+        var Subclassificationid = $('#InstanceSubclassificaitionId').val();
+        var SubClassificationName = $('#Subclass_txtid').val();
+        var datatosend = {
+            InstanceSubClassificationId: Subclassificationid
+        };
+        handleAjax('GET', '/Admin/Delete_ManageSubClassification', datatosend,
+            function (response) {
+                if (response == "0") {
+                    $('#Errormessages').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
+                } else if (response == "-2") {
+                    $('#Errormessages').text("Elective subjects are associated with" + SubClassificationName + ".");
+                } else if (response == "-3") {
+                    $('#Errormessages').text("Academic subjects are associated with" + SubClassificationName + ".");
+                } else if (response == "-4") {
+                    $('#Errormessages').text("Timetable has created for this" + SubClassificationName + ".");
+                } else if (response == "-5") {
+                    $('#Errormessages').text("Users have been created for this" + SubClassificationName + ".");
+                } else if (response == "1") {
+                    $('#Errmsg').text("Record deleted successfully.");
+                    fetchDataAndPopulateDropdown(
+                        '/Admin/InstanceClassification_DD',      // URL for data fetching
+                        '#ddldepartmentid',                      // Dropdown selector                        
+                        'instanceClassificationId',              // Field name for option values
+                        'classificationName',                    // Field name for option text
+                        'classificationList'                     // Response value return class name
+                    );                                           // In Search view Dropdown data bind calling function
+                    $('#ManageSubclassification_Containermaindiv').show();
+                    $('#ManagesubclassificationInsertUpdatediv').empty();
+
+                } else {
+                    $('#Errormessages').text("Please try again.");
+                }
+            },
+            function (status, error) {
+                
+            }
+        );
+    }
+});
+
+//  UPDATE SUBCLASS BUTTON CLICK FIRE CODE START
+$('#Updateclassformid').submit(function (event) {
+    event.preventDefault();
+    debugger;
+    setTimeout(function () {
+        var validationMessages = $('.field-validation-error');
+        var validationMessages2 = $('.error2');
+
+        $('#Errormessages').text('');
+
+        var validationmelength = validationMessages.length;
+
+        if (validationmelength == 0 && validationMessages2.length == 0) {
+            debugger;
+            var formData = $('#Updateclassformid').serialize();
+            var Subclassname = $('#Subclass_txtid').val();         
+            var Classname = $('#Classificationtxtid option:selected').text();
+
+            var Displayorder = $('#Displayordertxtid').val();
+            if (Displayorder == 0) {
+                $('#Errormessages').text('Display Order cannot be Zero.');
+                return;
+            }
+
+            var url = '/Admin/Update_ManageSubClassification';
+            handleAjax('POST', url, formData,
+                function (response) {
+                    debugger;
+                    if (response == "3") {
+                        $('#Errormessages').text("Attendance Effective Date and Attendance End Date should be with in the period of" + Classname + "s Effective Date and End Date.");
+                    } else if (response == "4") {
+                        $('#Errormessages').text("You can't update " + Subclassname + " as the Class Teacher is Associated to othere " + Subclassname + ".");
+                    } else if (response == "0") {
+                        $('#Errormessages').text('Class with Name "' + Subclassname + '" already exists or the Attendance End Date can\'t be greater than ' + Classname + '\'s Attendance End Date.');
+                    } else if (response == "5") {
+                        $('#Errormessages').text('Display Already Exists.');
+                    } else if (response == " ") {
+                        $('#Errormessages').text('An error occurred.');
+                    } else if (response == "2") {
+                        $('#Errormessages').text("You can't update " + Subclassname + " as already marks are posted or Users are already Associated.");
+                    } else if (response == "1") {
+                        $('#btnclear, #btnsubmit').prop('disabled', true);
+                        $('#Errormessages').text('Record inserted successfully.');
+                    } else {
+                        $('#Errormessages').text('Please try again.');
+                    }
+                },
+                function (status, error) {
+                    console.error("Error fetching data:", error);
+                    // Handle error scenario
+                },
+                true
+            );
+        }
+    }, 50);
+});
+
+//  UPDATE SUBCLASS BUTTON CLICK FIRE CODE END
 

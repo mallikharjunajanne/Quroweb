@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites    .UserScreen.Postnoticetabledate>
+﻿@model IEnumerable<Connect4m_Web.Models.Attendenceproperites.UserScreen.Postnoticetabledate>
 @{
     ViewData["Title"] = "SELUsersByUserIds";
     Layout = null;
@@ -6,66 +6,81 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-<div class="default-according style-1" id="accordionoc1">
-    <div class="card-header bg-primary">
-        <h5 class="mb-0">
-            <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
-            <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99%;">
+<div class="col-md-12 col-lg-12 mb-3">
+    <span class="text-danger" id="ErrorMessage"></span>
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
                 YOUR HAVE SELECTED BELOW  <span id="Search_result_count" value="@ViewBag.SMSTemplateScount">@ViewBag.SMSTemplateScount</span> USER(S) TO POST THIS NOTICE.
-            </button>
-        </h5>
-    </div>
-    <div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">
-        <div class="card-body" style="padding: 10px;">
-            <table id="PostNoticetblid_searchandadduserspostthisnotice_Table" style="width: 100%;" class="display">
+            </h5>
+        </div>
+
+
+        @*<div class="default-according style-1" id="accordionoc1">
+            <div class="card-header bg-primary">
+                <h5 class="mb-0">
+                    <input type="hidden" id="PostnoticeSearchTabledatacount_txt" value="@ViewBag.SMSTemplateScount" />
+                    <button class="Headers_Btn btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon12" aria-expanded="true" aria-controls="collapse1" style="width:99%;">
+                        YOUR HAVE SELECTED BELOW  <span id="Search_result_count" value="@ViewBag.SMSTemplateScount">@ViewBag.SMSTemplateScount</span> USER(S) TO POST THIS NOTICE.
+                    </button>
+                </h5>
+            </div>*@
+        @*<div class="collapse show" id="collapseicon12" aria-labelledby="collapseicon12" data-bs-parent="#accordionoc7">*@
+    <div class="card-body">
+        @*<table id="PostNoticetblid_searchandadduserspostthisnotice_Table" style="width: 100%;" class="display">*@
+        <div class="table-responsive text-nowrap">
+            <table id="PostNoticetblid_searchandadduserspostthisnotice_Table" class="table table-bordered">
                 <thead>
-                    <tr style="font-size: 13px; font-family: auto; border: 1px solid #DC5 !important; ">
-                        <th style=" border: 1px solid #DC5 !important;">Name</th>
-                        <th style=" border: 1px solid #DC5 !important;">Admission Number</th>
-                        <th style=" border: 1px solid #DC5 !important;">Role</th>
-                        <th style=" border: 1px solid #DC5 !important;">Department</th>
-                        <th style=" border: 1px solid #DC5 !important;">Class</th>
-                        <th style=" border: 1px solid #DC5 !important;">Email</th>
-                        <th style=" border: 1px solid #DC5 !important;">Student/Staff Mobile No.</th>
-                        <th style=" border: 1px solid #DC5 !important;">Parent Mobile No.</th>
-                        <th style=" border: 1px solid #DC5 !important;">Father Name</th>
-                        <th style=" border: 1px solid #DC5 !important;">Remove</th>
+                    <tr>
+                        <th>Name</th>
+                        <th>Admission Number</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Class</th>
+                        <th>Email</th>
+                        <th>Student/Staff Mobile No.</th>
+                        <th>Parent Mobile No.</th>
+                        <th>Father Name</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
                     @{ var Sno = 1;}
                     @foreach (var tblitemvalue in Model)
                     {
-                        <tr style=" font-size: 13px; font-family: auto; border: 1px solid #DC5 !important;">
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FirstName</td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.AdmissionNumber</td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.RoleName</td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.ClassificationName</td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.SubClassificationName</td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.PortalEmail</td>
-                            <td style=" border: 1px solid #DC5 !important;"></td>
-                            <td style=" border: 1px solid #DC5 !important;"></td>
-                            <td style=" border: 1px solid #DC5 !important;">@tblitemvalue.FatherName</td>
+                        <tr>
+                            <td>@tblitemvalue.FirstName</td>
+                            <td>@tblitemvalue.AdmissionNumber</td>
+                            <td>@tblitemvalue.RoleName</td>
+                            <td>@tblitemvalue.ClassificationName</td>
+                            <td>@tblitemvalue.SubClassificationName</td>
+                            <td>@tblitemvalue.PortalEmail</td>
+                            <td></td>
+                            <td></td>
+                            <td>@tblitemvalue.FatherName</td>
                             <td align="center">
                                 <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i>
-                                <input type="hidden" id="Usersidtxt" value="@tblitemvalue.UserId" />                              
+                                <input type="hidden" id="Usersidtxt" value="@tblitemvalue.UserId" />
                             </td>
                         </tr>
                         Sno++;
                     }
                 </tbody>
             </table>
-            <div id="Pagination_Postnoticeaddinguserstbl">
-
-            </div>
         </div>
+        <div id="Pagination_Postnoticeaddinguserstbl">
+
+        </div>
+    </div>
     </div>
 </div>
 
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-@*<script src="~/js/ManageNotices.js"></script>*@
+@*<script src="~/js/Managenotice_1.js"></script>*@
+<script src="~/js/Managenoticedlt_1.js"></script>
 
 <script>
      $(document).ready(function () {
@@ -156,15 +171,15 @@
       }
     }
 
-    $('#PostNoticetblid_searchandadduserspostthisnotice_Table tbody').on('click', '.fa-trash-alt', function () {
+    //$('#PostNoticetblid_searchandadduserspostthisnotice_Table tbody').on('click', '.fa-trash-alt', function () {
 
-        if (confirm('Are you sure you want to delete the User ?\n Click ' + 'OK' + ' to delete, else click ' + 'CANCEL' + 'to stop deleting.')) {
-            var Row = $(this).closest('tr');
-            var DeleteUserid = Row.find('td:nth-child(10) #Usersidtxt').val();
-            //Row.hide();
-            Row.remove();           
-        }
-    });
+    //    if (confirm('Are you sure you want to delete the User ?\n Click ' + 'OK' + ' to delete, else click ' + 'CANCEL' + 'to stop deleting.')) {
+    //        var Row = $(this).closest('tr');
+    //        var DeleteUserid = Row.find('td:nth-child(10) #Usersidtxt').val();
+    //        //Row.hide();
+    //        Row.remove();
+    //    }
+    //});
 </script>
 
 

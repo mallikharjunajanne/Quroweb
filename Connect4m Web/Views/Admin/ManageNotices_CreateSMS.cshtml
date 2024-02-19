@@ -1,67 +1,60 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.TemplateDetails
+﻿@*@model Connect4m_Web.Models.Attendenceproperites.UserScreen.TemplateDetails*@
+@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Templatesms
 @{
     ViewData["Title"] = "ManageNotices_CreateSMS";
     Layout = null;
 }
 
 
+<!DOCTYPE html>
+<html>
+<head>
 
-<link href="~/css/Managehomepage.css" rel="stylesheet" />
-<div id="Managenotice_CreateSMS_Divid" class="card">
-    <div>
-        <span id="SmsErrormessage" style=" color: red; font-size: 13px; margin: -16px 6px -2px 27px; position: absolute;"></span>
-    </div>
-    <div class="default-according style-1" id="accordionoc1">
-        <div class="card" style="margin-bottom: 10px;">
-            <div class="card-header bg-primary">
+    <link href="~/css/Managehomepage.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col-md-12 col-lg-12 mb-3" id="Managenotice_CreateSMS_Divid">
+        <span id="SmsErrormessage" class="text-danger"></span>
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">
-                    <button class="collapsed Headers_Btn btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                        SAVE SMS
-                    </button>
+                    SAVE SMS
                 </h5>
             </div>
-            <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
-                <div class="card-body">
+            <div class="card-body">
+                <div class="row">
                     <div class="row">
-                        <div class="row">
-                            <div class="col-2">
-                                <label class="form-label space" style=" margin-top: 125px; margin-right: 26px;">SMS Template  </label>
+                        <div class="col-2">
+                            <label class="control-label col-sm-10 col-form-label text-end space" style=" margin-top: 125px; margin-right: 26px;">SMS Template  </label>
+                        </div>
+                        <div class="col-10">
+                            <form>
+                                <div style="height: 297px; width: 100%; overflow: scroll;">
+                                    <table class="table-responsive">
+                                        @foreach (var item in ViewBag.SMSTemplates)
+                                        {
+                                            <tr style="height: 31px;">
+                                                <td style=" font: 14px arial; color: #333333; "><input type="radio" value="@item.TemplateMasterPK" name="Radio1" id="@item.NumberofParameter" /></td>
+                                                <td style=" color: black; font-size: 12px; font-weight: normal; font-style: normal;">      @item.TemplateDescription    </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6">
+                            <span style=" font: 12px arial; color: black;">
+                                <b>NOTE:</b>   Following characters are restricted:<b>< > & | % "</b>
+                                Some Characters like <b>` ~ ^ + $</b> may not deliver properly to all mobiles.
+                                <b> Date format can be: dd/mm/yy or dd/mm/yyyy</b>
+                            </span>
+                        </div>
+                        <div class="row justify-content text-center">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-success waves-effect waves-light" id="btnSMSNext">Edit SMS Template</button>
+                                <button type="button" class="btn btn-dark waves-effect waves-light" id="btnSMSBackToSearch">Back To Search</button>
                             </div>
-                            <div class="col-10">
-                                <form>
-                                    <div style="height: 297px; width: 100%; overflow: scroll;">
-                                        <table class="table-responsive">
-                                            @foreach (var item in ViewBag.SMSTemplates)
-                                            {
-                                                <tr style="height: 31px;">
-                                                    <td style=" font: 14px arial; color: #333333; "><input type="radio" value="@item.TemplateMasterPK" name="Radio1" id="@item.NumberofParameter" /></td>
-                                                    <td style=" color: black; font-size: 12px; font-weight: normal; font-style: normal;">      @item.TemplateDescription    </td>
-                                                </tr>
-                                            }
-                                        </table>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                            <div class="col-2"></div>
-                            <div class="col-10">
-                                <span style=" font: 11px arial; color: #333333;">
-                                    <b>NOTE:</b>   Following characters are restricted:< > & | % "
-                                    Some Characters like ` ~ ^ + $ may not deliver properly to all mobiles.
-                                    Date format can be: dd/mm/yy or dd/mm/yyyy
-                                </span>
-                            </div>
-                            <div class="col-3"></div>
-
-                            <div class="col-6">
-                                <button id="btnSMSNext" class="btn btn-pill btn-outline-info btn-sm btn">Edit SMS Template</button>   @*EditSmsSubmitButton*@
-                                <button id="btnSMSBackToSearch" class="btn btn-pill btn-outline-secondary btn-sm">Back To Search</button>@*Backtosearch_AddSms*@
-
-                                @*<input type="submit" id="EditSmsSubmitButton" value="Edit SMS Template" class="btn btn-pill btn-outline-info btn-sm btn  " />
-                                <input type="button" id="Backtosearch_AddSms" value="Back To Search" class="btn btn-pill btn-outline-primary btn-sm" />*@
-                            </div>
-                            <div class="col-3"></div>
                         </div>
                     </div>
                 </div>
@@ -72,77 +65,33 @@
             </div>
         </div>
     </div>
-</div>
-
+</body>
+</html>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Managenoticesmstemplate_2.js"></script>
 <script src="~/js/Managenotice_2.js"></script>
 
 
 <script>
-    //$(document).ready(function () {
-    //    $('#Addnotice_div1').empty();
-    //    //$("#btnSMSNext").on("click", function () {
-
-    //    //    if ($("input[name='Radio1']:checked").length != 0) {
-
-    //    //        $('#SmsErrormessage').text('');
-
-    //    //        var TemplateMasterPK = $("input[name='Radio1']:checked").val();
-
-    //    //        var InstanceId = $("#Instance_Txtid").val();
-
-    //    //        var EditSMSSubmitbutton = document.getElementById('btnSMSNext');
-    //    //        EditSMSSubmitbutton.disabled = true;
-
-    //    //        var radioButtons = document.querySelectorAll("input[name='Radio1']");
-    //    //        radioButtons.forEach(function (radioElement) {
-    //    //            radioElement.disabled = true;
-    //    //        });
-
-    //    //        $.ajax({
-    //    //            url: "/Admin/SMS_TemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK,
-    //    //            type: "GET",
-    //    //            success: function (response) {
-    //    //                debugger;
-    //    //                $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').html(response);
-    //    //            }
-    //    //        });
-    //    //    } else {
-
-    //    //        $('#SmsErrormessage').text("Please select one template.");
-    //    //        return false;
-    //    //    }
-    //    //});
-      
-
-    //    //$("#Backtosearch_AddSms").click(function () {
-
-    //    //    $('#ManageNotices_CreateSMS_ViewDivid').empty();
-    //    //    location.reload();
-    //    //});
-
-
-
-    //});
 
     function RestrictDateChar(event) {
         var charCode = event.which || event.keyCode;
         var charStr = String.fromCharCode(charCode);
-      
+
         if (/[\d\/]/.test(charStr) && event.target.value.length < 10) {
             return true;
         } else {
             event.preventDefault();
             return false;
-        }       
+        }
     }
 
 
     function RestrictNumericInput(event) {
         var charCode = event.which || event.keyCode;
         var charStr = String.fromCharCode(charCode);
-       
+
         if (/^\d+$/.test(charStr) && event.target.value.length < 5) {
             return true;
         } else {

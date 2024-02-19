@@ -4,46 +4,21 @@
 
 
 
-////=========>>>Edit SMS Template  btnSMSNext
-////=========>>> Edit SMS Template button click fire function
-$("#btnSMSNext").on("click", function () {
-
-    if ($("input[name='Radio1']:checked").length != 0) {
-
-        $('#SmsErrormessage').text('');
-
-        var TemplateMasterPK = $("input[name='Radio1']:checked").val();
-
-        var InstanceId = $("#Instance_Txtid").val();
-
-        var EditSMSSubmitbutton = document.getElementById('btnSMSNext');
-        EditSMSSubmitbutton.disabled = true;
-
-        var radioButtons = document.querySelectorAll("input[name='Radio1']");
-        radioButtons.forEach(function (radioElement) {
-            radioElement.disabled = true;
-        });
-
-        $.ajax({
-            url: "/Admin/SMS_TemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK,
-            type: "GET",
-            success: function (response) {
-                debugger;
-                $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').html(response);
-            }
-        });
-    } else {
-
-        $('#SmsErrormessage').text("Please select one template.");
-        return false;
-    }
-});
+function DataCallToAjax(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        processData: false,
+        contentType: false,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
 
 
-$("#btnSMSBackToSearch").click(function () {
-    $('#ManageNotices_CreateSMS_ViewDivid').empty();
-    location.reload();
-});
 
 
 
@@ -116,12 +91,11 @@ $("#btnBackSMSTemplate").click(function () {
 //=====>>>> Save and Post button fire SaveandPost_CreateSmsbtn
 $("#btnSaveandPostSMSTemplate").click(function () {
     debugger;
-    var instanceid = $('#Instance_Txtid').val();
+    /*var instanceid = $('#Instance_Txtid').val();*/
     var StartDate = $('#Startdate_txt').val();
     var ExpiryDate = $('#EndDate_txt').val();
     var Subject = $('#Subject_txt').val();
-    var DisplayIcon = $('#DisplayIcon_txt').val();
-    var CreatedBy = $('#Loginuser_Txtid').val();
+    var DisplayIcon = $('#DisplayIcon_txt').val();   
     var divText = $('#TemplateDescription_divId').text().trim();
     var errorMessage = "";
     var textValues = [];
@@ -130,16 +104,17 @@ $("#btnSaveandPostSMSTemplate").click(function () {
         var inputValue = $(this).val();
         var inputName = $(this).attr('name');
         if (inputValue === "") {
-            errorMessage += "Please enter text in " + inputNumber + " text box .\n";
+            errorMessage += "Please enter text in " + inputNumber + " text box .<br>";
             inputValue = "";
             inputName = "";
+
         }
         if (inputName == "textValue") {
             textValues.push({ textValue: inputNumber, value: inputValue });
         } else if (inputName == "dateValue") {
             var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
             if (!dateRegex.test(inputValue)) {
-                errorMessage += "Incorrect date format in " + inputNumber + "text box .\n";
+                errorMessage += "Incorrect date format in " + inputNumber + "text box .<br>";
             } else {
                 textValues.push({ dateValue: inputNumber, value: inputValue });
             }
@@ -192,55 +167,83 @@ $("#btnSaveandPostSMSTemplate").click(function () {
         }
     }
 
-    var DisplayOrder = 1;
-    var formData = new FormData();
-    formData.append('InstanceId', instanceid);
-    formData.append('SDate', StartDate);
-    formData.append('ExDate', ExpiryDate);
+    /* var DisplayOrder = 1;*/
+
+    var formData = new FormData();    
+    formData.append('StartDate', StartDate);
+    formData.append('ExpiryDate', ExpiryDate);
     formData.append('Subject', Subjecttext);
-    formData.append('DisplayIcon', DisplayIcon);
-    formData.append('CreatedBy', CreatedBy);
-    formData.append('NoticeDocument', '');
-    formData.append('DisplayOrder', DisplayOrder);
+    formData.append('DisplayIcon', DisplayIcon);    
+    
 
-
-    $.ajax({
-        url: "/Admin/ManagenoticeSMS_saveNposting", //=====>>>New Method Adding
-        //url: "/Admin/SaveandPostBtn_ManageNotices_CreateSMS",
-        type: "POST",
-        data: formData,
-        processData: false,  
-        contentType: false,
-        success: function (response) {
-            debugger;
-            /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
-            $('#Managenotice_CreateSMS_Divid').hide();
-            $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
-        }
-    });
+    /*formData.append('DisplayOrder', DisplayOrder);*/
+    //$.ajax({
+    //    url: "/Admin/ManagenoticeSMS_saveNposting", //=====>>>New Method Adding
+    //    //url: "/Admin/SaveandPostBtn_ManageNotices_CreateSMS",
+    //    type: "POST",
+    //    data: formData,
+    //    processData: false,  
+    //    contentType: false,
+    //    success: function (response) {
+    //        debugger;
+    //        /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
+    //        $('#Managenotice_CreateSMS_Divid').hide();
+    //        $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
+    //    }
+    //});
 
 
     /*console.log(Subjecttext);*/
 
     if (textValues.length === 0) {
-        errorMessage += "No text inputs found.\n";
+        errorMessage += "No text inputs found.<br>";
     }
 
     if (StartDate === "") {
-        errorMessage += "Start date is empty.\n";
+        errorMessage += "Start date is empty.<br>";
     }
 
     if (ExpiryDate === "") {
-        errorMessage += "End date is empty.\n";
+        errorMessage += "End date is empty.<br>";
     }
 
     if (StartDate > ExpiryDate) {
-        errorMessage += "Start date cannot be greater than end date.\n";
+        errorMessage += "Start date cannot be greater than end date.<br>";
     }
 
     if (errorMessage !== "") {
-        $("#Errormessage").text(errorMessage);
+        $("#Errormessage").html(errorMessage);
         return false;
+    }
+
+    if (errorMessage =="") {
+        $.ajax({
+            url: "/Admin/ManagenoticeSMS_saveNposting", //=====>>>New Method Adding
+            //url: "/Admin/SaveandPostBtn_ManageNotices_CreateSMS",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                debugger;
+                /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
+                $('#Managenotice_CreateSMS_Divid').hide();
+                $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
+            }
+        });
+
+        //DataCallToAjax('GET', '/Admin/ManagenoticeSMS_saveNposting', formData,
+        //    function (response) {
+        //        $('#Managenotice_CreateSMS_Divid').hide();
+        //        $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
+        //        loaddingimg.css('display', 'none');
+        //    },
+        //    function (status, error) {
+        //        loaddingimg.css('display', 'none');
+        //    }
+        //);
+
+
     }
 });
 
@@ -402,7 +405,7 @@ function handle_searchuserstopostnotice_btnclick_tabledata() {
     debugger;
     var form = document.getElementById("Searchuserstopostnotice_searchform");
     var formData = new FormData(form);
-    formData.append('InstanceId', Instanceid);
+    /*formData.append('InstanceId', Instanceid);*/
 
     var userName = $('#Ps_UserNametxt').val() || '';
     var roleId = $('#Instancerole_id').val() || '';
@@ -438,7 +441,7 @@ function handle_searchuserstopostnotice_btnclick_tabledata() {
         type: "POST",
         url: "/Admin/ManageNotices_PostNoticeSearchtabledata",
         data: {
-            InstanceId: Instanceid,
+            /*InstanceId: Instanceid,*/
             UserName: userName,
             InstanceRoleId: roleId,
             FirstName: firstName,
@@ -663,7 +666,7 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
 
     var form = document.getElementById("Searchuserstopostnotice_searchform");
     var formData = new FormData(form);
-    formData.append('InstanceId', Instanceid);
+    /*formData.append('InstanceId', Instanceid);*/
     var userName = $('#Ps_UserNametxt').val() || '';
     var roleId = $('#Instancerole_id').val() || '';
     var firstName = $('#Ps_Firstnametxt').val() || '';
@@ -685,7 +688,7 @@ function handle_searchuserstopostnotice_without_btnclick_tabledata(Userid, Noofu
         type: "POST",
         url: "/Admin/ManageNotices_PostNoticeSearchtabledata",
         data: {
-            InstanceId: Instanceid,
+            /*InstanceId: Instanceid,*/
             UserName: userName,
             InstanceRoleId: roleId,
             FirstName: firstName,
@@ -752,7 +755,7 @@ $('#Postnoticebtn').click(function () {
     var Tableuserids = [];
     var ENoticeId = $('#ENoticetxtid').val();
     var CreatedBy = $('#Loginuser_Txtid').val();
-    var instanceid = Instanceid;
+    /*var instanceid = Instanceid;*/
     if ($('#Sendsms_chk1').is(':checked')) {
         S_SmsreturnedValue = "1";
     } else {
@@ -804,8 +807,8 @@ $('#Postnoticebtn').click(function () {
     }
     var datatosend = {
         ENoticeId: ENoticeId,
-        CreatedBy: CreatedBy,
-        instanceid: instanceid,
+        /*CreatedBy: CreatedBy,*/
+       /* instanceid: instanceid,*/
         RoleIds: Rolecheckboxvalues,
         GroupIds: Groupcheckboxvalues,
         ClassificationIds: Classificationcheckboxvalues,

@@ -1,18 +1,50 @@
 ﻿           /*=====***** MANAGE NOTICE MAIN SCREEN CODE *****=====*/
 
 /* ------***** MANAGE NOTICE MAIN SCREEN  CODE START *****-------- */
+function DataCallToAjax(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+function CallToAjax(method, url, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        success: bindDatatable,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+
+function FileCallToAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
+    var ajaxOptions = {
+        url: url,
+        method: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    };
+    if (hasFileUpload) {
+
+        ajaxOptions.processData = false;
+        ajaxOptions.contentType = false;
+    }
+
+    $.ajax(ajaxOptions);
+}
+
 
 $(document).ready(function () {  
-    function CallToAjax(method, url, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            success: bindDatatable,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
+    
 
     function CallToAjax_Withoutdata(method, url, successCallback, errorCallback) {
         $.ajax({
@@ -41,7 +73,10 @@ $(document).ready(function () {
         });
     }
 
+
+
     // Call to retrieve data for classification dropdown
+     //Home Search Notices Dropdown use this method
     CallToAjax_Withoutdata('GET', '/Admin/MNNoticetype_dd',
         function (response) {
             populateDropdown(response); // Assuming response is an array of items
@@ -54,6 +89,7 @@ $(document).ready(function () {
 
 
     // Call to retrieve data for holidays table
+    //Home Search Notices Dropdown use this method
     CallToAjax('GET', '/Admin/ManageNotices_TableData', null,
         function (response) {
             debugger;
@@ -65,8 +101,32 @@ $(document).ready(function () {
     );
 });
 
+function HomeManageNoticetabledata() {
+    CallToAjax('GET', '/Admin/ManageNotices_TableData', null,
+        function (response) {
+            debugger;
+
+        },
+        function (status, error) {
+            // Handle errors here
+        }
+    );
+}
+
+
+
+function GetDateFormat() {
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    var day = currentDate.getDate().toString().padStart(2, '0');
+
+    var formattedDate = day + '-' + month + '-' + year;
+    return formattedDate;
+}
 
 ////-----Table data bind function
+ //Home Search Notices Dropdown use this method
 function bindDatatable(response) {
 
     var formattedDate = GetDateFormat();
@@ -78,37 +138,42 @@ function bindDatatable(response) {
     var newTable = $("#ManageNoticetbl").DataTable({
         dom: 'Bfrtip',
         buttons: [
-            {
-                extend: 'pdfHtml5',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-
-            }
-            ,
+           
             {
                 extend: 'excel',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-            },
-
-
-            {
-                extend: 'print',
-                title: 'Manage Holidays Report',
+                text: 'Excel', // Button text
+                title: 'Manage Notices', // Title for the Excel file
+                messageTop: 'ADS SCHOOL', // Additional message
                 message: "Report On: " + formattedDate,
                 exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
+                    columns: [0, 1, 2, 3] // Adjust column indexes based on your DataTable
                 },
+                customize: function (xlsx) {
+                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                    // Check if the sheet exists and has the range defined
+                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
+                        const range = sheet.sheetData[0].attributes['!ref'].value;
+
+                        for (let col = 0; col < 6; col++) { // Assuming 6 columns, adjust as needed
+                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
+
+                            for (let row = 1; row <= 100; row++) { // Iterate through rows, adjust the range as needed
+                                const cellRef = colLetter + row;
+                                const cell = $('c[r="' + cellRef + '"]', sheet);
+
+                                // Add black border to each cell in each column
+                                cell.attr('s', '42');
+                            }
+                        }
+                    } else {
+                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
+                    }
+                }
             }
+            
 
-
+            
         ],
 
         bProcessing: false,
@@ -197,13 +262,22 @@ function bindDatatable(response) {
     });
 
     table.on('draw', function () {
-        $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit');
+        $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+            'text-decoration': 'underline',
+            'font-weight': 'bold',
+            'color': 'black'
+        });
     });
-    $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#ManageNoticetbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+        'text-decoration': 'underline',
+        'font-weight': 'bold',
+        'color': 'black'
+    });
 }
 
 
 //------Notice Search button 
+ //Home Search Notices Dropdown use this method
 $('#Noticesearchbtn').click(function () {
     $('#ErrorMessage').text("");
     debugger;
@@ -225,8 +299,369 @@ $('#Noticesearchbtn').click(function () {
 });
 
 
+ //Home Search Notices Dropdown use this method
+$(document).on('click', '#ManageNoticetbl td:nth-child(2)', function (event) {
+    event.stopImmediatePropagation();
+    debugger;
+    var parent = $(event.target).closest('tr');
+    var ENoticeId = $(parent).find('td').find('input[type="text"]').val();
+    var table = $('#ManageNoticetbl').DataTable();
+    tabletargetpagetblSEMsearchresults = table.page.info().page;
+    HomeENoticeedit(ENoticeId);
+})
 
 
+
+$(document).on('click', '#ManageNoticetbl .fa-trash-o', function (event) {
+    event.stopImmediatePropagation();
+    var confirmed = confirm("Are you sure you want to delete Notice?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    if (confirmed) {
+        debugger;
+        var ENoticeId = $(this).closest('tr').find('input[type="text"]').val();
+        //var table = $('#ManageNoticetbl').DataTable();
+        //var tabletargetpagetblSEMsearchresults = table.page.info().page;
+
+        loaddingimg.css('display', 'block');
+        var data = { ENoticeId: ENoticeId };
+        DataCallToAjax('GET', '/Admin/Delete_ENotices_ById', data,
+            function (response) {
+                HomeManageNoticetabledata();
+                $('#ErrorMessage').text("Record deleted successfully.");
+                loaddingimg.css('display', 'none');
+            },
+            function (status, error) {          
+                loaddingimg.css('display', 'none');
+            }
+        );        
+    }
+});
+
+
+
+
+function HomeENoticeedit(ENoticeId) {
+    debugger;
+   
+    try {
+        loaddingimg.css('display', 'block');
+        var data = { ENoticeId: ENoticeId };
+
+            DataCallToAjax('GET', '/Admin/Edit_ENotices_ById', data,
+            function (response) {
+                debugger;
+                //$("#InstanceId_UTXT").val(response[0].instanceId);
+                //$("#CreatedBy_UTXT").val(response[0].createdBy);
+                $("#ENoticeId_UTXT").val(response[0].eNoticeId);
+
+                var eNoticeTypeId = response[0].eNoticeTypeId;
+
+                $('#ENoticeTypeId_UTXT option').each(function () {
+                    var ENoticeTypeValue = $(this).val();
+
+                    if (parseInt(ENoticeTypeValue) === parseInt(eNoticeTypeId)) {
+                        $(this).prop("selected", true);
+                    }
+                    else {
+                        $(this).prop("Selected", false);
+                    }
+                });
+                $("#Subject_UTXT").val(response[0].subject);
+
+                $("#ENoticeDescription_UTXT").val(response[0].eNoticeDescription);
+              
+                var showInLoginValue = response[0].showInLogin;
+
+                if (showInLoginValue == 1) {
+                    $('#radioinline2').prop('checked', true); // Yes
+                } else {
+                    $('#radioinline1').prop('checked', true); // No
+                }
+
+
+                debugger;
+
+                var originalstartDate = response[0].startDate;
+                var startdateParts = originalstartDate.split(' ')[0].split('-');
+                var formattedstartDate = startdateParts[2] + '-' + startdateParts[1] + '-' + startdateParts[0];
+
+                document.getElementById("StartDate_UTXT").value = formattedstartDate;
+                
+                var originalendtDate = response[0].expiryDate;
+                var enddateParts = originalendtDate.split(' ')[0].split('-');
+                var formattedendDate = enddateParts[2] + '-' + enddateParts[1] + '-' + enddateParts[0];
+
+                document.getElementById("EndDate_UTXT").value = formattedendDate;
+
+                var FileName = response[0].noticeDocument;
+
+                var characterCount = FileName.length;
+                if (characterCount > 0) {
+                    $("#currentFileName").text(FileName);
+                    $("#NoticeDocument_UTxtFile").hide();
+                    $("#deleteFileBtn").show();
+                    debugger;
+                    $("#NoticeDocument_UTxtFile").on("change click", function () {
+                        debugger;
+                        var fileName = $(this).val().split("\\").pop() || "";
+                        $("#currentFileName").text(fileName);
+                    });
+
+                    $("#currentFileName").on("click", function () {
+                        debugger;
+                        $("#NoticeDocument_UTxtFile").click();
+                    });
+                }
+                else {
+                    $("#NoticeDocument_UTxtFile").show();
+                    $("#currentFileName").text('');
+                    $("#deleteFileBtn").hide();
+                }
+
+                $('#Home_SearchNoticesdiv').hide();
+                $('#Home_SearchNotices_Updatediv').show();
+                loaddingimg.css('display', 'none');
+            },
+            function (status, error) {
+                // Handle errors here
+                $('#Home_SearchNoticesdiv').show();
+                $('#Home_SearchNotices_Updatediv').hide();
+                loaddingimg.css('display', 'none');
+            }
+        );
+
+    } catch (e) {
+        loaddingimg.css('display', 'none');
+    }
+}
+
+
+//HOME NOTICE
+function updateCharCount() {
+    var textarea = document.getElementById("Subject_UTXT");
+    var charCount = document.getElementById("charCount");
+    var Characterslength = document.getElementById("Characterslength");
+    var remaining = 1000 - textarea.value.length;
+    charCount.textContent = "Remaining characters: " + remaining;
+    Characterslength.textContent = "Typed Characters: " +textarea.value.length;
+}
+function Charactercounting() {
+    var textarea = document.getElementById("ENoticeDescription_UTXT");
+    var charCount = document.getElementById("DescriptionCharactercount");
+    var charCountlength = document.getElementById("Characterlength");
+    var remaining = 6500 - textarea.value.length;
+    charCount.textContent = "Remaining characters: " + remaining;
+    charCountlength.textContent = "Typed Characters: " + textarea.value.length;
+}
+
+
+
+//HOME NOTICE UPDATE
+$('#BacktosearchNotice_Btn').click(function () {
+    debugger;
+    $('#UpdateErrorMessage').text('');
+    $('#UpdatevalidationMessage').text('');
+    $('#Updatevalidation').text('');
+
+    //$('#ManagenoticeMaindiv').show();
+    $('#ErrorMessage').text("");
+
+    //managenotice_tabledata();
+    //$('#Home_SearchNotices_Updatediv').hide();
+    
+
+    HomeManageNoticetabledata();
+    $('#Home_SearchNoticesdiv').show();
+    $('#Home_SearchNotices_Updatediv').hide();
+    $('#NoticeDocument_UTxtFile').val('');
+});
+
+//HOME NOTICE UPDATE
+$('#Notice_UpdateForm').submit(function () {
+    if (UpdateValidation()) {
+        $('#UpdateErrorMessage').text('');
+        $('#UpdatevalidationMessage').text('');
+        $('#Updatevalidation').text('');
+
+        var formdata_ISN = new FormData($('#Notice_UpdateForm')[0]);
+        //var formData = new FormData($('#Notice_UpdateForm')[0]);
+
+        var ShowInLoginValue = $("input[name='radio1']:checked").val();
+        var file = document.getElementById("NoticeDocument_UTxtFile").files[0];
+        var fileInput = document.getElementById('NoticeDocument_UTxtFile');
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            formdata_ISN.append('AttachedDocument', file);
+        }
+        debugger;
+        formdata_ISN.append('ShowInLogin', ShowInLoginValue);
+        var Clickbuttonid = $(document.activeElement).attr('id');
+
+       // var Clickbuttonid = "UpdateNotice_Btn";
+        switch (Clickbuttonid) {
+            case 'UpdateNotice_Btn':
+                FileCallToAjax('POST', '/Admin/Edit_ENotices_ById', formdata_ISN,
+                    function (response) {
+                        if (response == "1") {
+                            $('#UpdateNotice_Btn , #btnnoticeupdatepost').prop('disabled', false);
+                            $('#UpdateErrorMessage').text("Record updated successfully.");
+                        } else if (response == "0") {
+                            $('#UpdateErrorMessage').text("Record update not success.");
+                        } else if (response == " ") {
+                            $('#UpdateErrorMessage').text("You Dont have any permission in this screen.");
+                        }
+                    }, function (status, error) {
+
+                    },
+                    true);
+                break;
+            case 'btnnoticeupdatepost':      /*CreateSmsNNotice_PostthisnoticeBtn*/
+                FileCallToAjax('POST', '/Admin/Managenotices_saveNposting', formdata_ISN,
+                    function (response) {
+                        debugger;
+                        if (response != 0) {
+                            $('#Noticeandsms_Insertingdivid').hide();
+                            $('#Addnotice_div1').empty();
+                            $('#Noticeandsms_Insertingdivid').empty();
+                            $('#Postnoticemailsmsdiv').html(response);
+                            //$('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);
+                        } else {
+                            $("#SavevalidationMessage").text("Notice with subject " + '"' + Subject + '"' + " already exists.");
+                        }
+                    }, function (status, error) {
+
+                    },
+                    true);
+                break;
+            case 'btnpostnotice': /*CreateSmsNNotice_PostthisnoticeBtn*/
+                FileCallToAjax('POST', '/Admin/Managenotices_saveNposting', formdata_ISN,
+                    function (response) {
+                        debugger;
+                        $('#Noticeandsms_Insertingdivid').hide();
+                        $('#Noticeandsms_Insertingdivid').empty();
+                        /*$('#Noticeandsms_Inserted_Postingemailorsmsdivid').html(response);*/
+                        $('#Postnoticemailsmsdiv').html(response);
+
+                    }, function (status, error) {
+
+
+                    },
+                    true);
+                break;
+            default:
+                break;
+        }
+    }
+});
+
+function UpdateValidation() {
+
+    debugger;
+    var Subject = $('#Subject_UTXT').val();
+    var ENoticeTypeId = $('#ENoticeTypeId_UTXT').val();
+    //var StartDate = $('#StartDate_UTXT').val();
+    //var ExpiryDate = $('#EndDate_UTXT').val();
+    var StartDate = new Date($('#StartDate_UTXT').val());
+    var ExpiryDate = new Date($('#EndDate_UTXT').val());
+
+    var validationMessage = "";
+    var hasError = false;
+
+    if (Subject === "") {
+        validationMessage += "Notice Subject<br>";
+        hasError = true;
+    }
+
+    if (ENoticeTypeId === "") {
+        validationMessage += "Notice Type<br>";
+        hasError = true;
+    }
+
+    if (StartDate === "") {
+        validationMessage += " Start date can not be left blank. <br>";
+        hasError = true;
+    }
+    if (ExpiryDate === "") {
+        validationMessage += " End date can not be left blank. <br>";
+        hasError = true;
+    }
+    //---
+    //if (StartDate > ExpiryDate) {
+    //    validationMessage += "Start date can not be greater than end date.<br>";
+    //    hasError = true;
+    //}
+    var currentDate = new Date();
+    if (StartDate < currentDate) {
+        validationMessage += "Start Date can not be less than today.<br>";
+        hasError = true;
+    }
+
+
+    currentDate.setHours(0, 0, 0, 0);
+    if (StartDate < currentDate) {
+        validationMessage += "Start date can not be greater than end date.<br>";
+        hasError = true;
+    }
+
+    if (ExpiryDate < currentDate) {
+        validationMessage += "End Date can not be less than today.<br>";
+        hasError = true;
+    }
+    //--
+    if (StartDate > ExpiryDate) {
+        validationMessage += "Start date cannot be greater than end date.<br>";
+        hasError = true;
+    }
+    
+
+
+    var allowedExtensions = [".doc", ".xls", ".ppt", ".docx", ".xlsx", ".pptx", ".txt", ".jpeg", ".jpg", ".pjpeg", ".gif", ".png", ".pdf"];
+    var fileInput = $("#NoticeDocument_UTxtFile")[0]; // Get the DOM element
+
+    if (fileInput.files.length > 0) {
+        var fileName = fileInput.files[0].name;
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+        if (allowedExtensions.indexOf("." + fileExtension) === -1) {
+
+            validationMessage += "Uploaded file extension is invalid. Only " + allowedExtensions.join(", ") + " are supported.";
+            event.preventDefault();
+            hasError = true;
+        }
+    }
+
+    if (hasError) {
+        $('#Updatevalidation').html("Following fields have invalid data :<br>");
+        $("#UpdatevalidationMessage").html(validationMessage);
+        return false;
+    } else {
+        $("#UpdatevalidationMessage").html("");
+        return true;
+    }
+}
+
+
+
+//HOME NOTICE UPDATE
+$('#DeleteNotice_UpBtn').click(function () {
+
+    $('#ManagenoticeMaindiv').show();
+    $('#Home_SearchNotices_Updatediv').hide();
+
+    var ENoticeId = $('#ENoticeId_UTXT').val();
+   // DeleteNotice(ENoticeId);
+
+    $.ajax({
+        url: "/Admin/Delete_ENotices_ById",
+        data: { ENoticeId: ENoticeId },
+        type: "GET",
+        success: function (response) {
+            //managenotice_tabledata();
+            HomeManageNoticetabledata();
+            $('#ErrorMessage').text("Record deleted successfully.");
+        }
+    });
+
+});
 
 
 
@@ -234,42 +669,73 @@ $('#Noticesearchbtn').click(function () {
 
 //--------->>>***** CREATE NOTICE BUTTON CLICK *****<<<-------
 $('#Addnotice').click(function () {
+    loaddingimg.css('display', 'block');
     $('#btnppostthisnotice').hide();
+    $('#Message_spid').text('');
+
     $.ajax({
         url: "/Admin/ManageNotices_Create",
         type: 'GET',
         success: function (data) {
             debugger;
+            $('#Home_SearchNoticesdiv').hide();
+            $('#Home_SearchNotices_Updatediv').hide();
             $("#Addnotice_div1").html(data);
-            $('#ManageNotices_CreateSMS_ViewDivid').empty();
-            $('#ManagenoticeMaindiv').hide();            
-            $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
-            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $('#Addsms_div2').empty();           
+            $('#Addnoticeandsms_div3').empty();
             $("#Postnoticemailsmsdiv").empty();
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+
+
+           
+            //$('#ManageNotices_CreateSMS_ViewDivid').empty();
+            //$('#ManagenoticeMaindiv').hide();            
+            //$("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
+      
+       
+
+
+            loaddingimg.css('display', 'none');
         },
         error: function (error) {
-            console.log('Error:', error);
+            loaddingimg.css('display', 'none');
         }
     });
 });
 
 
 //--------->>>***** CREATE SMS BUTTON CLICK *****<<<-------
-$('#AddnewSMS').click(function () {    
+$('#AddnewSMS').click(function () {
+    loaddingimg.css('display', 'block');
+    $('#Message_spid').text('');
+
     $.ajax({
         url: "/Admin/ManageNotices_CreateSMS",
         type: 'GET',
         success: function (data) {
             debugger;
-            $('#ManageNotices_CreateSMS_ViewDivid').html(data);
-            $('#ManagenoticeMaindiv').hide();
-            $("#Addnotice_div1").empty();
-            $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
-            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $('#Home_SearchNoticesdiv').hide();
+            $('#Home_SearchNotices_Updatediv').hide();
+            $('#Addnotice_div1').empty();
+            $('#Addsms_div2').html(data);
+            $('#Addnoticeandsms_div3').empty();
             $("#Postnoticemailsmsdiv").empty();
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+
+
+
+
+
+           // //$('#ManageNotices_CreateSMS_ViewDivid').html(data);
+           // $('#ManagenoticeMaindiv').hide();       
+           //// $("#ManageNotices_CreateSMSNNotice_ViewDivid").empty();
+      
+
+            loaddingimg.css('display', 'none');
         },
         error: function (error) {
             console.log('Error:', error);
+            loaddingimg.css('display', 'none');
         }
     });
 });
@@ -278,20 +744,34 @@ $('#AddnewSMS').click(function () {
 
 //--------->>>***** CREATE SMS AND NOTICE BUTTON CLICK *****<<<-------
 $('#AddnewSMSNNotices').click(function () {
+
+    loaddingimg.css('display', 'block');
+    $('#Message_spid').text('');
+
     $.ajax({
         url: "/Admin/CreateSmsNNotice",
         type: 'GET',
         success: function (data) {
             debugger;
-            $('#ManagenoticeMaindiv').hide();
-            $("#Addnotice_div1").empty();
-            $("#ManageNotices_CreateSMS_ViewDivid").empty();
-            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+            $('#Home_SearchNoticesdiv').hide();
+            $('#Home_SearchNotices_Updatediv').hide();
+            $('#Addnotice_div1').empty();
+            $('#Addsms_div2').empty();
+            $('#Addnoticeandsms_div3').html(data);
             $("#Postnoticemailsmsdiv").empty();
-            $("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
+            $("#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id").empty();
+
+
+
+            //$('#ManagenoticeMaindiv').hide();      
+            //$("#ManageNotices_CreateSMS_ViewDivid").empty();
+            //$("#ManageNotices_CreateSMSNNotice_ViewDivid").html(data);
+
+            loaddingimg.css('display', 'none');
         },
         error: function (error) {
             console.log('Error:', error);
+            loaddingimg.css('display', 'none');
         }
     });   
 });
@@ -319,8 +799,7 @@ $('#addnewmanagequotes').click(function () {
 
 
 
-/* -- MANAGE NOTICE MAIN SCREEN  CODE END -- */
-var Instanceid = $('#Instance_Txtid').val();
+
 
 
 
@@ -349,7 +828,7 @@ function PostNoticeaddusertoggle() {
 function adduserstopostthisnotice$InstanceClassificationSearch() {
    
     $.ajax({
-        url: "/Admin/ManageNotices_InstanceClassificationSearch?InstanceId="+Instanceid,
+        url: "/Admin/ManageNotices_InstanceClassificationSearch",
         type: "GET",      
         success: function (response) {
             debugger;
@@ -430,103 +909,13 @@ function getDatesBetween(startDate, endDate) {
 
 //------***SCHEDULE SMS BOX SCREEN CODE START***---------
 
-/*$(document).ready(function () {*/
-    $('#OnceNdailydd_id').change(function () {
-        var selectedValue = $(this).val();
-
-        if (selectedValue === 'Daily') {       
-            $('#Daily_div1, #Daily_div2, #Daily_div3, #Daily_div4').hide();
-        } else {            
-            $('#Daily_div1, #Daily_div2, #Daily_div3, #Daily_div4').show();
-        }
-    });
-/*});*/
-
-/*$(document).ready(function () {*/
-    $('#SchedulerClearbtn').click(function () {
-        $('#OnceNdailydd_id').val('');
-        $('select.form-control.form-select').val('');
-    });
-/*});*/
-
-
-/*$(document).ready(function () {*/
-    $('#SchedulerSubmitbtn').click(function () {
-        $('#Scheduleerrormessage').text();
-        debugger;
-        var Selectedvalue = $('#OnceNdailydd_id').val();
-        var SelectedDate = $('#datetxtid').val();
-        var Startdate = $('#Startdatetxtid').val();
-        var Enddate = $('#Enddatetxtid').val();
-        var formattedStartDate = convertDateFormat(Startdate); //--"YYYY-MM-DD"
-        var formattedEndDate = convertDateFormat(Enddate); //--"YYYY-MM-DD"
-        var SENDTIME;
-        var datesBetween = getDatesBetween(formattedStartDate, formattedEndDate);
-    
-        var selectedHour = parseInt($('#TimeHoursdd_id').val(),10);
-        var selectedMinute = parseInt($('#Timeminutesdd_id').val(), 10);
-
-        var currentTime = new Date();
-        var currentHour = currentTime.getHours();
-        var currentMinute = currentTime.getMinutes();        
-       
-        if (Selectedvalue && Selectedvalue !== '0') {
-            if (!isNaN(selectedHour) && !isNaN(selectedMinute)) {
-                if (SelectedDate =="" && !datesBetween.includes(SelectedDate)) {
-                    if (currentHour >= selectedHour) {
-                        if (currentMinute <= selectedMinute) {
-                            SENDTIM = SelectedDate + currentHour + ":" + currentMinute + ":" + "00";
-                        }
-                        else {
-                            $('#Scheduleerrormessage').text('Set Time Should be greater than current time');
-                            return;
-                        }
-                    }
-                    /*$('#Scheduleerrormessage').text('SMS Schedule date Should be in between Start Date and End Date');*/
-                    return;
-                } else {
-                    if (currentHour <= selectedHour) {
-                        if (currentMinute <= selectedMinute) {
-                            SENDTIM = SelectedDate + currentHour + ":" + currentMinute + ":" + "00";
-                        }
-                        else {
-                            $('#Scheduleerrormessage').text('Set Time Should be greater than current time');
-                            return;
-                        }
-                    }
-                    else{
-                        $('#Scheduleerrormessage').text('SMS Schedule date Should be in between Start Date and End Date');
-                        return;
-                    }
-                }
-            } else {
-                $('#Scheduleerrormessage').text('Set the Time For the SMS');
-            }
-        } else {
-            $("#Scheduleerrormessage").text('Select The Type');
-            return;
-        }
-    });
-/*});*/
-
-//------***SCHEDULE SMS BOX SCREEN CODE END***---------
-
-
-
-//=====SEARCH BUTTON CLICK TABLE DATA SHOWING  FUNCTION CODE START
-
-/*$(document).ready(function () {*/
-   
-
-   $('#searchButton').click(handle_searchuserstopostnotice_btnclick_tabledata);  
-    
-/*});*/
+$('#searchButton').click(handle_searchuserstopostnotice_btnclick_tabledata);
 
 function handle_searchuserstopostnotice_btnclick_tabledata() {
 
     //$('#PostNoticeAddinguserstable_Div').hide();
 
-   
+
     var form = document.getElementById("Searchuserstopostnotice_searchform");
     var formData = new FormData(form);
     formData.append('InstanceId', Instanceid);
@@ -542,24 +931,24 @@ function handle_searchuserstopostnotice_btnclick_tabledata() {
     var routeId = $('#Route_id').val() || '';
     var collegeHostel = $('#CollegeHostel_id').val() || '';
 
-  
+
 
     var AddedUsertablecount = $('#Search_result_count').text();
     var ExcludeUserIds;
 
     if (AddedUsertablecount == "") {
-         ExcludeUserIds = '';
+        ExcludeUserIds = '';
     } else {
         var Excludeuserarray = [];
-        var tabledata = $("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr");       
-        tabledata.each(function (row, tr) {          
+        var tabledata = $("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr");
+        tabledata.each(function (row, tr) {
             var ninthColumnText = $(tr).find('td:nth-child(10) #Usersidtxt').val();
             Excludeuserarray.push(ninthColumnText);
         });
-        ExcludeUserIds = Excludeuserarray.join(',');    
-    }   
+        ExcludeUserIds = Excludeuserarray.join(',');
+    }
     var Noofusers = '9_0_1_4';
- 
+
 
     $.ajax({
         type: "POST",
@@ -867,140 +1256,7 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
     return checkboxValues;
 }
 
-$('#Postsmsbtn').click(function () {
-/*});*/
 
-/*$('#Postsmsbtn').on('click', function () {*/
-    $('#lblPostNoticeMsg').text('');
-
-    var S_SmsreturnedValue;
-    var P_SmsreturnedValue;
-    var S_EmailreturnedValue;
-    var P_EmailreturnedValue;
-    var ForAll;
-    var Tableuserids = [];
-    var ENoticeId = $('#ENoticetxtid').val();
-    var CreatedBy = $('#Loginuser_Txtid').val();
-    var instanceid = Instanceid;
-    if ($('#Sendsms_chk1').is(':checked')) {
-        S_SmsreturnedValue = "1";
-    } else {
-        S_SmsreturnedValue = "0";
-    }
-
-    if ($('#Sendsms_chk2').is(':checked')) {
-        P_SmsreturnedValue = "1";
-    } else {
-        P_SmsreturnedValue = "0";
-    }
-
-    if ($('#Sendsms_chk3').is(':checked')) {
-        S_EmailreturnedValue = "1";
-    } else {
-        S_EmailreturnedValue = "0";
-    }
-    if ($('#Sendsms_chk4').is(':checked')) {
-        P_EmailreturnedValue = "1";
-    } else {
-        P_EmailreturnedValue = "0";
-    }
-
-    var RolecheckboxSelector = 'input[type="checkbox"][name="rolecheckbox"]';
-    var GrpcheckboxSelector = 'input[type="checkbox"][name="Grpcheckbox"]';
-    var ClscheckboxSelector = 'input[type="checkbox"][name="Clscheckbox"]';
-    var SclcheckboxSelector = 'input[type="checkbox"][name="Sclcheckbox"]';
-
-    debugger;
-
-    var Allcheckboxvalues = Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, ClscheckboxSelector, SclcheckboxSelector);
-    var Rolecheckboxvalues = Allcheckboxvalues['Rolecheckbox'];
-    var Groupcheckboxvalues = Allcheckboxvalues['Grpcheckbox']; 
-    var Classificationcheckboxvalues = Allcheckboxvalues['Clscheckbox']; 
-    var Subclassificationcheckboxvalues = Allcheckboxvalues['Sclcheckbox']; 
-
-    var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
-    if (selectAllCheckbox.checked) {
-        ForAll = 1;
-    } else {
-        ForAll = 0;
-    }
-    if ($("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr").length > 0) {
-        var tabledata = $("#PostNoticetblid_searchandadduserspostthisnotice_Table tbody tr");
-        tabledata.each(function (row, tr) {
-            var ninthColumnText = $(tr).find('td:nth-child(10) #Usersidtxt').val();
-            Tableuserids.push(ninthColumnText);
-        });
-    }
-    var datatosend = {
-        ENoticeId: ENoticeId,
-        CreatedBy: CreatedBy,
-        instanceid: instanceid,
-        RoleIds: Rolecheckboxvalues,
-        GroupIds: Groupcheckboxvalues,
-        ClassificationIds: Classificationcheckboxvalues,
-        SubClassificationIds: Subclassificationcheckboxvalues,
-        //UserIds: Tableuserids,
-        SendSMS: S_SmsreturnedValue,
-        SendEMail: S_EmailreturnedValue,
-        IncludeParents: P_EmailreturnedValue
-    };
-    if (Tableuserids.length > 0) {
-        datatosend.UserIds = Tableuserids;
-    }
-    $.ajax({
-        url: "/Admin/ENoticeMailSms_INSERT",
-        type: "POST",
-        data: datatosend,
-        success: function (response) {
-            debugger;
-            var string1 = response.pushNotifications_Notices;
-            var Subjecttext = $('#Search_result_count').val();
-
-            var Usersli = response.tblENotice_GetTargetUsers;
-            var usersWithoutEmail = [];
-            var usersWithoutMobile = [];
-            for (var i = 0; i < Usersli.length; i++) {
-                var UserfirstName = Usersli[i].firstName;
-                if (Usersli[i].mobilePhone === "0") {
-                    usersWithoutMobile.push(UserfirstName);
-                }
-                if (Usersli[i].portalEmail === "0") {
-                    usersWithoutEmail.push(UserfirstName);
-                }
-            }
-            if (P_SmsreturnedValue == "1") {
-                if (usersWithoutMobile.length > 0) {
-                    var mobileMsg = 'Notice Posted Successfully.' + Subjecttext + ' For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists for Parent(s).';
-                    $('#lblPostNoticeMsg').append(mobileMsg);
-                }
-            }
-
-            if (S_SmsreturnedValue == "1") {
-                if (usersWithoutMobile.length > 0) {
-                    var mobileMsg = 'For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists.';
-                    $('#lblPostNoticeMsg').append(mobileMsg);
-                }
-            }
-
-            if (S_EmailreturnedValue == "1") {
-                if (usersWithoutEmail.length > 0) {
-                    var emailMsg = 'Email successfully submitted To User(s).For Student(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
-                    $('#lblPostNoticeMsg').append(emailMsg);
-                }
-            }
-
-            if (P_EmailreturnedValue == "1") {
-                if (usersWithoutEmail.length > 0) {
-                    var emailMsg = '.Email successfully submitted to Parent(s).For Parent(s) ' + usersWithoutEmail.join(',') + 'No EMail Id Exists.';
-                    $('#lblPostNoticeMsg').append(emailMsg);
-                }
-            }
-
-            //var list1 = response.printmessages;
-            // var list2 = response.message1;
-        }
-    });
-});
 
 function Selectalluserschkvalues() {
     var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
@@ -1017,29 +1273,9 @@ function Selectalluserschkvalues() {
 
 
 
-
-//--------------------------=======================================***CREATE NOTICE AND SMS CODE START***================================================--------------------------------
-
-                   //----->NOTICE DROPDOWN FUNCTION CODE
-//function NoticeDropdown_UpdateNotice_In_View() {
-//    var InstanceIds = $('#Instance_STxt').val();
-//    var InstanceIdSS = $('#InstanceIdTXT').val();
-
-//    $.ajax({
-//        type: "GET",
-//        url: "@Url.Action("NoticeTypedd", "Admin")",
-//        data: { InstanceId: InstanceIdSS },
-//        success: function (data) {
-//            $.each(data, function (index, item) {
-//                $("#ENoticeTypeId_UTXT").append($('<option>', {
-//                    value: item.value,
-//                    text: item.text
-//                }));
-//            });
-//        },
-//        error: function (error) {
-//            console.error("Error fetching data:", error);
-//        }
-//    });
-//}
-//--------------------------=======================================***CREATE NOTICE AND SMS CODE END***================================================--------------------------------
+//--------HOME DELETE ICON CLEAR BUTTON
+$('#Noticebtnclear').click(function () {
+    debugger;
+    $('#FmSubjectSearch')[0].reset();
+    $('#ErrorMessage').text('');
+});

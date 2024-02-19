@@ -645,7 +645,6 @@
     <None Include="wwwroot\assets\js\app-user-view-security.js" />
     <None Include="wwwroot\assets\js\app-user-view.js" />
     <None Include="wwwroot\assets\js\bootstrap\bootstrap.bundle.min.js" />
-    <None Include="wwwroot\assets\js\bootstrap\bootstrap.min.js" />
     <None Include="wwwroot\assets\js\bootstrap\popper.min.js" />
     <None Include="wwwroot\assets\js\cards-actions.js" />
     <None Include="wwwroot\assets\js\cards-advance.js" />
@@ -1323,7 +1322,6 @@
     <None Include="wwwroot\assets\vendor\fonts\fontawesome\fa-solid-900.woff2" />
     <None Include="wwwroot\assets\vendor\fonts\fontawesome\fa-v4compatibility.woff2" />
     <None Include="wwwroot\assets\vendor\fonts\tabler\tabler-icons.woff2" />
-    <None Include="wwwroot\assets\vendor\js\bootstrap.js" />
     <None Include="wwwroot\assets\vendor\js\dropdown-hover.js" />
     <None Include="wwwroot\assets\vendor\js\helpers.js" />
     <None Include="wwwroot\assets\vendor\js\mega-dropdown.js" />

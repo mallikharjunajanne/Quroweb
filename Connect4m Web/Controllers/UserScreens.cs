@@ -255,13 +255,14 @@ namespace Connect4m_Web.Controllers
         [HttpGet]
         public IActionResult FlashNews(string ENoticeType, int IsGlobalNotice)
         {
-            List<NoticeTypes> item = new List<NoticeTypes>();  
+            //List<NoticeTypes> item = new List<NoticeTypes>();  
+            List<Flashnews> item = new List<Flashnews>();  
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_FlashNews?InstanceId=" + InstanceId + "&ENoticeType=" + ENoticeType + "&UserId=" + UserId+ "&IsGlobalNotice="+ IsGlobalNotice).Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<NoticeTypes>>(data);
+                item = JsonConvert.DeserializeObject<List<Flashnews>>(data);
             }        
             return PartialView("_FlashNews", item);
 

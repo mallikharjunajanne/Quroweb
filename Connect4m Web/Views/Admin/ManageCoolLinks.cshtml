@@ -1,6 +1,6 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.CoolLinks
 @{
-    ViewData["Title"] = "ManageCoolLinks";
+    //ViewData["Title"] = "ManageCoolLinks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,179 +10,236 @@
 <html>
 <head>
 
-    <link href="~/css/Managehomepage.css" rel="stylesheet" />
+    @*<link href="~/css/Managehomepage.css" rel="stylesheet" />*@
 
 </head>
 <body>
 
-    <div class="card">
-        <div class="card-header pb-0">
-            <h6><span>MANAGE COOL LINKS</span></h6>
-        </div>
-
-        <div style="margin-left: auto; margin-right: 15px;">
-            <input type="button" id="CreateNewCoolllink_Btn" class="btn btn-pill btn-outline-primary btn-aprimary" value="Create Cool Link" />
-        </div>
-        <div id="SearchCoollinkView">
-            <div class="default-according style-1" id="accordionoc1">
-                <div class="card" style="margin-bottom: 10px;">
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="collapsed Headers_Btn btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                                <span class="Header_text_span">
-                                    SEARCH COOL LINKS
-                                </span>
-                            </button>
-                        </h5>
+    <div class="flex-grow-1 container-p-y container-xxl ">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>MANAGE COOL LINKS </h4>
+        <div class="row mb-2">
+            <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
+                <div class="col-sm-12 text-end">
+                    <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " id="CreateNewCoolllink_Btn"> Create Cool Link</button>
+                </div>
+            </div>
+            <div id="SearchCoollinkView">
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <span class="text-danger" id="UpdatevalidationMessage"></span>
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                SEARCH COOL LINKS
+                            </h5>
+                        </div>
+                        <form id="Coollinksearchform">
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Cool Link Name</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="LinkName" id="LinkNameTXT" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Cool Link URL</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="LinkURL" id="LinkURLTXT" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
+                                <div class="col-sm-4">
+                                    <textarea class="form-control" asp-for="Description" id="DescriptionTXT"></textarea>
+                                </div>
+                            </div>
+                            <div class="row justify-content text-center">
+                                <div class="col-sm-12">
+                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearcommonfunction('Coollinksearchform', null)" id="Clearcoollink_Btn">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light" id="Searchcoollink_Btn">Search</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
+                </div>
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                YOUR SEARCH RESULTED <span id="Recordscount" class="text-dark"></span> RECORDS.
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive text-nowrap">
+                                <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer"> 
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>SNO</th>
+                                            <th>Cool Link Name</th>
+                                            <th>Cool Link URL</th>
+                                            <th>Description</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+
+
+
+
+
+
+
+
+            <div id="CreateNew_CoollinkView" style="display:none;">
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <span id="validation2" class="text-danger"></span>
+                    <span id="validationMessage" class="text-danger"></span>
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                SAVE COOL LINK
+                            </h5><small>* INDICATES MANDATORY FIELDS.</small>
+                        </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="row">
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-2 form-group"><label class="form-grop control-label space" style=" margin-left: 13px;">Cool Link Name </label></div>
-                                    <div class="col-4 form-group">
-                                        @*<input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="InstanceIdTXT" />
-                                        <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" />*@
-                                        <input type="text" asp-for="LinkName" id="LinkNameTXT" class="form-control" />
-                                    </div>
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-2 form-group"><label class="form-grop control-label space" style=" margin-left: 24px;"> Cool Link URL  </label>                                    </div>
-                                    <div class="col-4 form-group">  <input type="text" asp-for="LinkURL" id="LinkURLTXT" class="form-control" /></div>
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-2 form-group"><label class="Descriptionlbl control-label space">Description  </label></div>
-                                    <div class="col-4 form-group">  <textarea style=" height: 80px; width: 90%;" asp-for="Description" id="DescriptionTXT" class="form-control"></textarea></div>
-                                    <div class="col-3 form-group"></div>
-                                    <div class="col-12 form-group" style="text-align: center; margin-top: 12px; ">
-                                        <input type="button" id="Clearcoollink_Btn" class="btn btn-pill btn-outline-warning btn-air-warning" value="Clear" />
-                                        <input type="submit" id="Searchcoollink_Btn" class="btn btn-pill btn-outline-success btn-air-success" value="Search" />
-                                    </div>
+                                <div class="col" id="ManageHolidaysMaindivId">
+                                    <form id="MyForm" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" asp-for="LinkName" id="S_LinkNameTxt" class="form-control" />
+                                                <span asp-validation-for="LinkName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        @*<form id="MyForm">
+                                            <div class="row">*@
+                                        @*<div class="col-3"></div>
+                                            <div class="form-group col-2"><label class="form-grop" style=" margin-left: 9px;"><font class="Required">*</font>Cool Link Name :</label></div>
+                                            <div class="form-group col-4">
+                                                <input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="S_InstanceIdTxt" />
+                                                <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" id="S_UserIdTxt" />*@
+
+
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link URL</label>
+                                            <div class="col-sm-4">
+                                                <input type="url" asp-for="LinkURL" id="S_LinkURLTxt" class="form-control" />
+                                                <span asp-validation-for="LinkURL" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+                                        @*<div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2"><label class="form-grop" style=" margin-left: 21px;"><font class="Required">*</font>Cool Link URL  :</label>                                    </div>
+                                            <div class="form-group col-4">
+                                                <input type="url" asp-for="LinkURL" id="S_LinkURLTxt" style=" width: 90%;" class="form-control">
+                                            </div>*@
+
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
+                                            <div class="col-sm-4">
+                                                <textarea asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="col-3"></div>
+                                            <div class="col-3"></div>
+                                            <div class="form-group col-2"><label class="Descriptionlbl">Description  :</label></div>
+                                            <div class="form-group col-4">  <textarea style=" height: 80px; width: 90%;" asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea><span asp-validation-for="Description"></span></div>
+                                            <div class="col-3"></div>
+                                            <div class="col-3"></div>*@
+                                        @*<div class="col-12" style="text-align: center; margin-top: 12px; ">
+                                                <input type="button" class="btn btn-pill btn-outline-warning btn-air-warning" id="Clear_savebtn" value="Clear" />
+                                                <input type="button" class="btn btn-pill btn-outline-secondary btn-sm" id="Backtoseach_savebtn" value="Back To Search" />
+                                                <input type="button" class="btn btn-pill btn-outline-success btn-air-success" id="savecoollink_btn" value="Save" />
+                                            </div>*@
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Clear_savebtn">Clear</button>
+                                                <button type="button" class="btn btn-dark waves-effect waves-light" id="Backtoseach_savebtn">BackToSearch</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" id="savecoollink_btn">Save</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="Coollinks_PartailConatiner">
-
-            </div>
-
-        </div>
-
-        <div id="CreateNew_CoollinkView">
-            <div class="default-according style-1" id="accordionoc3">
-                <div class="card" style="margin-bottom: 10px;">
-                    <div style="color:red;font-size:13px;margin-right:auto;">
-                        <span id="validation2"></span>
-                        <span id="validationMessage"></span>
-                    </div>
-                    <div>
-                        <h5 class="mb-0">
-                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon3" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                                <span class="Header_text_span">SAVE COOL LINK</span>
-                            </button>
-                        </h5>
-                    </div>
 
 
-                    <div class="collapse show" id="collapseicon3" aria-labelledby="collapseicon3" data-bs-parent="#accordionoc3" style="">
-                        <div class="card-body" style="border-bottom-color: aquamarine;padding:6px;">
+
+            <div id="CoollinkUpdateView" style="display:none;">
+                <div class="col-md-12 col-lg-12 mb-3">
+                    <span id="Updatevalidation2" class="text-danger"></span>
+                    <span id="UpdatevalidationMessage" class="text-danger"></span>
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">
+                                UPDATE COOL LINK
+                            </h5><small>* INDICATES MANDATORY FIELDS.</small>
+                        </div>
+                        <div class="card-body">
                             <div class="row">
-                                @*<div class="row">*@
-                                <form id="MyForm">
-                                    <div class="row">
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2"><label class="form-grop" style=" margin-left: 9px;"><font class="Required">*</font>Cool Link Name :</label></div>
-                                        <div class="form-group col-4">
-                                            <input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="S_InstanceIdTxt" />
-                                            <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" id="S_UserIdTxt" />
-                                            <input type="text" asp-for="LinkName" id="S_LinkNameTxt" class="form-control" />
+                                <div class="col" id="ManageHolidaysMaindivId">
+                                    <form id="UpdateForm">
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="hidden" asp-for="CoollinkId" value="" id="CoollinkIdEditTxt" class="form-control" />
+                                                <input type="text" asp-for="LinkName" id="linkNameEditTxt" class="form-control" />
+                                                <span asp-validation-for="LinkName" class="text-danger"></span>
+                                            </div>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2"><label class="form-grop" style=" margin-left: 21px;"><font class="Required">*</font>Cool Link URL  :</label>                                    </div>
-                                        <div class="form-group col-4">
-                                            <input type="url" asp-for="LinkURL" id="S_LinkURLTxt" style=" width: 90%;" class="form-control">                                         
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link URL</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" asp-for="LinkURL" id="LinkURLEditTxt" class="form-control" />
+                                                <span asp-validation-for="LinkName" class="text-danger"></span>
+                                            </div>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="form-group col-2"><label class="Descriptionlbl">Description  :</label></div>
-                                        <div class="form-group col-4">  <textarea style=" height: 80px; width: 90%;" asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea><span asp-validation-for="Description"></span></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-12" style="text-align: center; margin-top: 12px; ">
-                                            <input type="button" class="btn btn-pill btn-outline-warning btn-air-warning" id="Clear_savebtn" value="Clear" />
-                                            <input type="button" class="btn btn-pill btn-outline-secondary btn-sm" id="Backtoseach_savebtn" value="Back To Search" />
-                                            <input type="button" class="btn btn-pill btn-outline-success btn-air-success" id="savecoollink_btn" value="Save" />
-                                        </div>
-                                    </div>
-                                </form>
-                                @*</div>*@
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
 
-        <div id="CoollinkUpdateView">
-            <div class="default-according style-1" id="accordionoc1">
-                <div class="card" style="margin-bottom: 10px;">
-                    <div style="color:red;font-size:13px;">
-                        <span id="Updatevalidation2"></span>
-                        <span id="UpdatevalidationMessage"></span>
-                    </div>
-                    <div>
-                        <h5 class="mb-0">
-                            <button class="collapsed Headers_Btn" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                                <span class="Header_text_span">
-                                    UPDATE COOL LINK
-                                </span>
-                            </button>
-                        </h5>
-                    </div>
-                    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1" style="">
-                        <div class="card-body" style="border-bottom-color: aquamarine; height: 235px;">
-                            <form id="UpdateForm">
-                                <div class="row">
-                                    <div class="row">
-                                        <div class="col-3"></div>
-                                        <div class="col-2"><label class="form-grop" style=" margin-left: 13px;">Cool Link Name :</label></div>
-                                        <div class="col-4">
-                                            <input type="hidden" asp-for="InstanceId" value="" id="InstanceIdEditTxt" />
-                                            <input type="hidden" asp-for="CoollinkId" value="" id="CoollinkIdEditTxt" />
-                                            <input type="text" asp-for="LinkName" id="linkNameEditTxt" />
+                                        <div class="row mb-3">
+                                            <label class="control-label col-sm-4 col-form-label  text-end space">Description</label>
+                                            <div class="col-sm-4">
+                                                <textarea asp-for="Description" id="DescriptionEditTxt" class="form-control"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
                                         </div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-2"><label class="form-grop" style=" margin-left: 24px;"> Cool Link URL  :</label>                                    </div>
-                                        <div class="col-4">  <input type="text" asp-for="LinkURL" id="LinkURLEditTxt" /></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-2"><label class="Descriptionlbl">Description  :</label></div>
-                                        <div class="col-4">  <textarea style=" height: 80px; width: 90%;" asp-for="Description" id="DescriptionEditTxt"></textarea></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-3"></div>
-                                        <div class="col-12" style="text-align: center; margin-top: 12px; ">
-                                            <input type="button" id="Delete_Upbtn" class="btn btn-outline-secondary" value="Delete" />
-                                            <input type="button" id="Backtoseach_Upbtn" class="btn btn-outline-primary" value="Back To Search" />
-                                            <input type="button" id="Updatecoollink_Btn" class="btn btn-outline-success" value="Update" />
+
+
+
+                                        <div class="row justify-content text-center">
+                                            <div class="col-sm-12">
+                                                <button type="button" class="btn btn-warning waves-effect waves-light" id="Delete_Upbtn">Delete</button>
+                                                <button type="button" class="btn btn-dark waves-effect waves-light" id="Backtoseach_Upbtn">BackToSearch</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light" id="Updatecoollink_Btn">Update</button>
+                                            </div>
                                         </div>
-                                    </div>
+
+
+
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>
 
@@ -190,348 +247,7 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/Coollinks.js"></script>
-<script>
 
-    //$(document).ready(function () {
-    //    $('#SearchCoollinkView').show();
-    //    $('#CreateNew_CoollinkView').hide();
-    //    $('#CoollinkUpdateView').hide();
-
-    //    ManageCoollinks();
-    //});
-
-    //$("#Searchcoollink_Btn").click(function () {
-
-    //    $('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-
-    //    ManageCoollinks();
-    //});
-
-    //function ManageCoollinks() {
-    //    //$('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-
-    //    var InstanceId = $("#InstanceIdTXT").val();
-
-    //    var LinkName = $("#LinkName").val();
-    //    var LinkURL = $("#LinkURL").val();
-    //    var Description = $("#Description").val();
-    //    var UserId = $("#UserId").val();
-
-
-
-    //    $.ajax({
-    //        url: "/Admin/ManageCoolLinks_Tabledata",
-    //        data: { InstanceId: InstanceId, LinkName: LinkName, LinkURL: LinkURL, Description: Description },
-    //        type: "GET",
-    //        success: function (response) {
-
-    //            $('#Coollinks_PartailConatiner').html(response);
-    //        }
-    //    });
-    //}
-
-    //$('#Clearcoollink_Btn').click(function () {
-
-
-    //    $('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-
-    //    $('#LinkNameTXT').val('');
-    //    $('#LinkURLTXT').val('');
-    //    $('#DescriptionTXT').val('');
-    //    //ManageCoollinks();
-    //});
-
-
-
-
-    //$('#CreateNewCoolllink_Btn').click(function () {
-
-    //    $('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-    //    $('#LinkNameTXT').val('');
-    //    $('#LinkURLTXT').val('');
-    //    $('#DescriptionTXT').val('');
-
-    //    $('#SearchCoollinkView').hide();
-    //    $('#CreateNew_CoollinkView').show();
-    //    $('#CoollinkUpdateView').hide();
-    //});
-
-
-    //$('#Backtoseach_savebtn').click(function () {
-
-
-    //    $('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-    //    $('#CreateNew_CoollinkView').hide();
-    //    $('#CoollinkUpdateView').hide();
-    //    ManageCoollinks();
-    //    $('#SearchCoollinkView').show();
-
-    //});
-
-
-    //$('#Clear_savebtn').click(function () {
-
-    //    $('#DeleteMessage').text('');
-    //    $('#validation2').text('');
-    //    $('#validationMessage').text('');
-    //    $('#S_InstanceIdTxt').val('');
-    //    $('#S_LinkNameTxt').val('');
-    //    $('#S_LinkURLTxt').val('');
-    //    $('#S_DescriptionTxt').val('');
-
-    //});
-
-
-    //$('#savecoollink_btn').click(function () {
-
-
-    //    debugger;
-    //    var LinkName = $('#S_LinkNameTxt').val();
-    //    if (SaveValidation()) {
-    //        var formdatastring = $("form").serialize();
-    //        $('#validation2').text('');
-    //        $('#validationMessage').text('');
-    //        $.ajax({
-    //            url: "/Admin/CoolLinks_INSERT",
-    //            data: formdatastring,
-    //            type: "POST",
-    //            success: function (response) {
-    //                if (response == "0") {
-    //                    $('#validationMessage').text("Record inserted successfully.");
-    //                    const SaveBtn = document.getElementById("savecoollink_btn");
-    //                    const ClearBtn = document.getElementById("Clear_savebtn");
-    //                    //SaveBtn.setAttribute("disabled", "");
-    //                    //ClearBtn.setAttribute("disabled", "");
-
-    //                    if (SaveBtn) {
-    //                        SaveBtn.disabled = true;
-    //                    }
-
-    //                    if (ClearBtn) {
-    //                        ClearBtn.disabled = true;
-    //                    }
-    //                } else {
-    //                    $('#validationMessage').text("Cool Link with Name " + '"' + LinkName + '"' + " already exists.");
-    //                }
-    //            }
-
-    //        });
-    //    }
-    //});
-
-    //function SaveValidation() {
-    //    var InstanceId = $('#S_InstanceIdTxt').val();
-    //    var LinkName = $('#S_LinkNameTxt').val();
-    //    var LinkURL = $('#S_LinkURLTxt').val();
-    //    var Description = $('#S_DescriptionTxt').val();
-
-    //    var validationMessage = "";
-    //    var hasError = false;
-
-    //    if (LinkName === "") {
-    //        validationMessage += "Cool Link Name<br>";
-    //        hasError = true;
-    //    }
-
-    //    if (LinkURL === "") {
-    //        validationMessage += "Cool Link URL<br>";
-    //        hasError = true;
-    //    }
-
-    //    //const isValidUrl = (url: string): boolean => {
-    //    //    const urlRegex = /^((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/g;
-    //    //    const result = url.match(urlRegex);
-
-    //    //    return result !== null;
-    //    //};
-
-    //    if (hasError) {
-    //        $('#validation2').html("Following fields have invalid data :<br>");
-    //        $("#validationMessage").html(validationMessage);
-    //        return false;
-    //    } else {
-    //        $("#validationMessage").html("");
-    //        return true;
-    //    }
-    //}
-
-
-
-
-
-
-    //function Dltfunction(Coollinkid) {
-
-    //    $('#DeleteMessage').text('');
-
-    //    if (confirm('Are you sure you want to delete the cool link?\nClick' + '"' + 'OK' + '"' + 'to delete or ' + '"' + 'Cancel' + '"' + ' to stop deleting.')) {
-
-    //        $.ajax({
-    //            url: "/Admin/CoolLinks_DELETE?CoollinkId=" + Coollinkid,
-    //            type: "POST",
-    //            success: function (response) {
-    //                ManageCoollinks();
-    //                $("#DeleteMessage").text('Record deleted successfully.');
-
-    //            }
-
-    //        });
-    //    }
-
-    //}
-
-    //function EditCoolinkFunction(Coollinkid) {
-
-    //    $.ajax({
-    //        url: "/Admin/CoolLinks_Edit?CoollinkId=" + Coollinkid,
-    //        type: "GET",
-    //        success: function (response) {
-
-    //            $('#CoollinkUpdateView').show();
-    //            $('#CreateNew_CoollinkView').hide();
-    //            $('#SearchCoollinkView').hide();
-
-
-    //            $('#CoollinkIdEditTxt').val(response[0].coollinkId);
-    //            $('#InstanceIdEditTxt').val(response[0].instanceId);
-    //            $('#linkNameEditTxt').val(response[0].linkName);
-    //            $('#LinkURLEditTxt').val(response[0].linkURL);
-    //            $('#DescriptionEditTxt').val(response[0].description);
-    //        }
-
-    //    });
-    //}
-
-
-    //$("#Delete_Upbtn").click(function () {
-
-    //    var CoollinkId = $("#CoollinkIdEditTxt").val();
-
-    //    if (confirm('Are you sure you want to delete the cool link?\nClick' + '"' + 'OK' + '"' + 'to delete or ' + '"' + 'Cancel' + '"' + ' to stop deleting.')) {
-
-    //        $.ajax({
-    //            url: "/Admin/CoolLinks_DELETE?CoollinkId=" + Coollinkid,
-    //            type: "POST",
-    //            success: function (response) {
-    //                ManageCoollinks();
-    //                //$('#CreateNew_CoollinkView').hide();
-    //                //$('#CoollinkUpdateView').hide();
-    //                //$('#SearchCoollinkView').show();
-    //                $('#linkNameEditTxt').val('');
-    //                $('#LinkURLEditTxt').val('');
-    //                $('#DescriptionEditTxt').val('');
-    //                $('#CoollinkIdEditTxt').val('');
-    //                $("#UpdatevalidationMessage").text('Record deleted successfully.');
-    //            }
-
-    //        });
-    //    }
-    //});
-
-
-    //$('#Backtoseach_Upbtn').click(function () {
-
-
-    //    $('#UpdatevalidationMessage').text('');
-    //    $('#Updatevalidation2').text('');
-    //    $('#DeleteMessage').text('');
-    //    $('#validationMessage').text('');
-    //    $('#validation2').text('');
-    //    $('#CreateNew_CoollinkView').hide();
-    //    $('#CoollinkUpdateView').hide();
-    //    ManageCoollinks();
-    //    $('#SearchCoollinkView').show();
-
-    //});
-
-    //$('#Updatecoollink_Btn').click(function () {
-    //    debugger;
-    //    var LinkName = $('#linkNameEditTxt').val();
-
-    //    if (UpdateValidation()) {
-    //        var Updatedata = $("#UpdateForm").serialize();
-    //        $('#Updatevalidation2').text('');
-    //        $('#UpdatevalidationMessage').text('');
-    //        $.ajax({
-    //            url: "/Admin/CoolLinks_UPDATE",
-    //            data: Updatedata,
-    //            type: "POST",
-    //            success: function (response) {
-    //                if (response == "1") {
-
-    //                    $('#SearchCoollinkView').hide();
-    //                    $('#CreateNew_CoollinkView').hide();
-    //                    $('#CoollinkUpdateView').show();
-
-    //                    $('#UpdatevalidationMessage').text("Record Updated successfully.");
-    //                    const UpdateBtn = document.getElementById("Updatecoollink_Btn");
-    //                    const Delete_Upbtn = document.getElementById("Delete_Upbtn");
-
-    //                    if (UpdateBtn) {
-    //                        SaveBtn.disabled = true;
-    //                    }
-
-    //                    if (Delete_Upbtn) {
-    //                        ClearBtn.disabled = true;
-    //                    }
-    //                } else {
-    //                    $('#UpdatevalidationMessage').text("Record Update unsuccessfully " + '"' + LinkName + '"');
-    //                }
-    //            }
-
-    //        });
-    //    }
-
-    //});
-    //function UpdateValidation() {
-    //    var InstanceId = $('#InstanceIdEditTxt').val();
-    //    var LinkName = $('#linkNameEditTxt').val();
-    //    var LinkURL = $('#LinkURLEditTxt').val();
-    //    var Description = $('#DescriptionEditTxt').val();
-    //    var CoollinkIdEditTxt = $('#CoollinkIdEditTxt').val();
-
-
-    //    var validationMessage = "";
-    //    var hasError = false;
-
-    //    if (LinkName === "") {
-    //        validationMessage += "Cool Link Name<br>";
-    //        hasError = true;
-    //    }
-
-    //    if (LinkURL === "") {
-    //        validationMessage += "Cool Link URL<br>";
-    //        hasError = true;
-    //    }
-
-    //    //const isValidUrl = (url: string): boolean => {
-    //    //    const urlRegex = /^((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/g;
-    //    //    const result = url.match(urlRegex);
-
-    //    //    return result !== null;
-    //    //};
-
-    //    if (hasError) {
-    //        $('#Updatevalidation2').html("Following fields have invalid data :<br>");
-    //        $("#UpdatevalidationMessage").html(validationMessage);
-    //        return false;
-    //    } else {
-    //        $("#UpdatevalidationMessage").html("");
-    //        return true;
-    //    }
-    //}
-
-</script>
 
 
 

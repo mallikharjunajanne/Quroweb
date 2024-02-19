@@ -221,9 +221,17 @@ function bindDatatable(response) {
     //Pdfs buttons hide this code
     newTable.buttons().container().hide();
     table.on('draw', function () {
-        $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+        $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+            'text-decoration': 'underline',
+            'font-weight': 'bold',
+            'color': 'black'
+        });
     });
-    $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+    $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit').css({
+        'text-decoration': 'underline',
+        'font-weight': 'bold',
+        'color': 'black'
+    });
 }
 
 function GetDateFormat() {
@@ -328,6 +336,27 @@ $('#Addbestperformerabtn').click(function () {
 });
 
 
+// in update add best performer
+$('#UpdateAddbestperformerabtn').click(function () {
+    debugger;
+    
+
+    CallToAjax_Withoutdata('GET', '/Admin/Adding_BestPerformer_dds',
+        function (response) {
+
+            populateClassificationDropdown(response.classificationList);
+            populateRoleDropdown(response.roleList);
+        },
+        function (status, error) {
+            // Handle errors here...!
+        }
+    );
+    //$('#Addbestperformerdataaddingaccordionoc2').show();
+    $('#Updateview_Addbestperformerdataaddingaccordionoc2').show();
+    $('#SelectedBestperformerusername_spid').text('Select');
+});
+
+
 // Function to populate the classification dropdown
 function populateClassificationDropdown(classificationList) {
     var classificationDropdown = $('#classificationDropdown');     
@@ -343,7 +372,8 @@ function populateClassificationDropdown(classificationList) {
 
 // Function to populate the role dropdown
 function populateRoleDropdown(roleList) {
-    var roleDropdown = $('#roleDropdown');    
+    var roleDropdown = $('#roleDropdown');
+    roleDropdown.empty();
     $.each(roleList, function (index, item) {
         roleDropdown.append($('<option>', {
             value: item.instanceRoleId, // Replace with your value property from JSON
@@ -376,10 +406,12 @@ $('#classificationDropdown').change(function () {
 
 ///------******Function to populate the classification dropdown
 function populateSubclassificationDropdown(subclassificationList) {
+    debugger;
     var classificationDropdown = $('#SubclassificationDropdown');
     $.each(subclassificationList, function (index, item) {
         classificationDropdown.append($('<option>', {
-            value: item.instanceClassificationId, // Replace with your value property from JSON
+            value: item.instanceSubClassificationId, // Replace with your value property from JSON
+            //value: item.instanceClassificationId, // Replace with your value property from JSON
             text: item.subClassificationName // Replace with your text property from JSON
         }));
     });
@@ -735,4 +767,226 @@ $('#UV_Deletebtn').click(function () {
             }
         }
     });
+})
+
+
+
+$('#UpdateView_SearchUserform_id').submit(function (event) {
+    debugger;
+    event.preventDefault();
+    var formData = new FormData($('#UpdateView_SearchUserform_id')[0]);
+
+    $.ajax({
+        url: '/Admin/Adding_BestPerformer_Searchtabledata',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').show();
+
+            var formattedDate = GetDateFormat();
+
+            var table = $('#Updateview_Bestperformertbl').DataTable();
+            table.destroy();
+            $("#bestperformertbl_Recordscount").text(response.length);
+
+
+            var newTable = $("#Updateview_Bestperformertbl").DataTable({
+                dom: 'Bfrtip',
+                buttons: [],
+
+                bProcessing: false,
+                bLengthChange: true,
+                /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+                bfilter: false,
+                bSort: true,
+                searching: false,
+                //scrollX: true,
+                //scrollY: '400px',
+                /* scrollCollapse: true,*/
+                paging: true,
+                bPaginate: true,
+                //  stateSave:true,
+                data: response,
+                columns: [
+
+                    //{
+                    //    data: "SNO",
+                    //    //visible: false,
+
+                    //    render: function (data, type, row, meta) {
+                    //        //  length++;
+                    //        return row.holidayId
+                    //    }
+                    //},
+                    {
+                        targets: 0, // Assuming this is the column index where you want to display numbering
+                        render: function (data, type, row, meta) {
+                            var currentPage = table.page.info().page;
+                            var rowsPerPage = table.page.info().length;
+                            return (0 * rowsPerPage) + meta.row + 1;
+                        }
+                    },
+                    {
+                        data: "UserId",
+
+                        render: function (data, type, row, meta) {
+
+                            /* row.firstName + */
+                            return '<input type="radio" name="' + row.firstName + '" value="' + row.userId + '" />';
+
+                        }
+                    },
+                    {
+                        data: "FirstName",
+
+                        render: function (data, type, row, meta) {
+
+
+                            return row.firstName
+
+                        }
+                    },
+                    {
+                        data: "RoleName",
+
+                        render: function (data, type, row, meta) {
+                            //  length++;
+
+                            return row.roleName
+
+                        }
+                    },
+                    {
+                        data: "ClassificationName",
+
+                        render: function (data, type, row, meta) {
+                            //  length++;
+
+                            return row.classificationName + '<input type="text" value=' + row.userId + ' hidden/>'
+
+                        }
+                    },
+                    {
+                        data: "PortalEmail",
+
+                        render: function (data, type, row, meta) {
+                            //  length++;
+
+                            return row.portalEmail
+
+                        }
+                    }
+                    //,
+                    //{
+                    //    data: "NoofDays",
+
+                    //    render: function (data, type, row, meta) {
+                    //        return row.noofDays
+                    //        //var paymentDate = new Date(row.paymentDate);
+
+                    //        // return paymentDate.toLocaleDateString();
+
+                    //    }
+                    //},
+                    //{
+                    //    data: "IsPosted",
+
+                    //    render: function (data, type, row, meta) {
+                    //        //return row.isPosted
+                    //        if (row.isPosted == 'False') {
+                    //            return 'Not Posted'
+                    //        } else {
+                    //            return 'Posted'
+                    //        }
+
+                    //        //if (row.docName.trim() !== "") {
+                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i><i class="fa fa-eye" title="View document" id="SEMView_document" ><span style="display:none">' + row.docName + '</span> </i>'
+                    //        //}
+                    //        //else {
+                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i>'
+                    //        //}
+
+                    //    }
+                    //}, {
+                    //    data: "HolidayId",
+
+                    //    render: function (data, type, row, meta) {
+                    //        // return row.holidayId
+                    //        return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
+                    //        // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'
+                    //        //if (row.expenditureType == 0) {
+                    //        //    return '<span>Credit</span>';
+
+                    //        //}
+                    //        //else {
+                    //        //    return '<span>Debit</span>';
+
+                    //        //}
+
+                    //    }
+                    //}
+                    //}, {
+                    //    data: "Approvals",
+
+                    //    render: function (data, type, row, meta) {
+                    //        if (row.approvals == null || row.approvals == "") {
+
+                    //            return '<div class="SEMapprovals"><img src="/Images_IMP/pending_02.png"  title="Pending" /></div>'
+                    //        }
+                    //        else if (row.approvals == "0") {
+                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/Rejects.png" title="Reject" /><i class="fa fa-eye" style="font-size:20px" title="View Comments" ></i></i></div>'
+                    //        }
+                    //        else {
+                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/approvals_1.png"  title="Approvals" /><i class="fa fa-eye" style="font-size:20px" title="View Comments"  ></i></i></div>'
+                    //        }
+
+                    //    }
+                    //}
+                    //, {
+
+                    //    render: function (data, type, row, meta) {
+                    //        //  length++;
+                    //        if (row.approvals == "1") {
+                    //            return ''
+                    //        }
+                    //        else {
+                    //            return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
+
+                    //        }
+
+                    //    }
+                    //}
+                ]
+
+
+            });
+            //$('.dt-buttons').css('display', 'block');
+            //table.on('draw', function () {
+            //    $('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+            //});
+            //$('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+        },
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+});
+
+///-----**** RADIO BUTTON SELECT USERNAME  FUNCTION CODE START
+$(document).on('click', '#Updateview_Bestperformertbl td:nth-child(2)', function (event) {
+    event.stopImmediatePropagation();
+    var selectedRow = $(this).closest('tr');
+    var selectedRadio = selectedRow.find('td input[type="radio"]:checked');
+    var userId = selectedRadio.val();
+
+    debugger;
+    var userName = selectedRadio.attr('name');
+    $('#SelectedBestperformerusername_spid').text(userName);
+    $('#SelectedBestperformerusername_spid').attr('value', userId);
+    $('#SelectedBestperformerusername_txtid').attr('value', userId);
+    $('#Updateview_Addbestperformerdataaddingaccordionoc2').hide();
+    $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').hide();
+
 })

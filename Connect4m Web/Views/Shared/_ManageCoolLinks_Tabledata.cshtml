@@ -5,43 +5,46 @@
 
 
 
-<span id="DeleteMessage" style="color:red;font-size:13px;"></span>
-<div class="default-according style-1" id="accordionoc2">
-    <div class="card" style="margin-bottom: 10px;">
-        <div class="card-header bg-primary">
+
+
+<div class="col-md-12 col-lg-12 mb-3">
+    <span id="DeleteMessage" class="text-danger"></span>
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">
-                <button class="collapsed Headers_Btn btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon2" aria-expanded="true" aria-controls="collapse11" style="width:99%;">
-                    <span class="Header_text_span">
-                        YOUR SEARCH RESULTED <span class="Header_Count_text">@ViewBag.itemscount</span> RECORDS.
-                    </span>
-                </button>
+                YOUR SEARCH RESULTED @ViewBag.itemscount RECORDS.
             </h5>
         </div>
-        <div class="collapse show" id="collapseicon2" aria-labelledby="collapseicon2" data-bs-parent="#accordionoc2" style="">
-            <div class="card-body" style="border-bottom-color: aquamarine;padding:6px;">
-                <table class="Coollinktable table-responsive" id="Coollinkstbl_id" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Cool Link Name</th>
-                            <th>Cool Link URL</th>
-                            <th>Description</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+        <div class="card-body">
+            <div id="table-responsive">
+                <div class="table-responsive text-nowrap">
+                    <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
+                        @*<table class="Coollinktable table-responsive" id="Coollinkstbl_id" width="100%">*@
+                        <thead class="table-dark">
                             <tr>
-                                <td width="10px"><span onclick="EditCoolinkFunction(@item.CoollinkId)" class="Linknametd">@item.LinkName</span></td>
-                                <td style="font-style:italic"><a href="@item.LinkURL" target="_blank" class="tdUrl">@item.LinkURL</a></td>
-                                <td>@item.Description</td>
-                                <td align="center"><span class="trasicon" onclick="Dltfunction(@item.CoollinkId)"><i class="fa fa-trash-o"></i></span></td>
+                                <th>Cool Link Name</th>
+                                <th>Cool Link URL</th>
+                                <th>Description</th>
+                                <th>Delete</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-                <div id="Pagination_div" style="text-align:center;"></div>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td width="10px">
+                                        <span onclick="EditCoolinkFunction(@item.CoollinkId)" class="Linknametd">@item.LinkName</span>
+                                    </td>
+                                    <td style="font-style:italic"><a href="@item.LinkURL" target="_blank" class="tdUrl">@item.LinkURL</a></td>
+                                    <td>@item.Description</td>
+                                    <td align="center"><span class="trasicon text-danger" onclick="Dltfunction(@item.CoollinkId)"><i class="fa fa-trash-o"></i></span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div id="Pagination_div" style="text-align:center;"></div>
 
+                </div>
             </div>
         </div>
     </div>

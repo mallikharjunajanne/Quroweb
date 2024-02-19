@@ -6,51 +6,46 @@
 
 }
 
-<span id="Errormessages" class="text-danger" style=" margin: -20px 10px 0px 5px; "></span>
 
-<div class="col-12" id="accordionoc1">
-    <div class="card-header bg-primary">
-        <h5 class="mb-0">
-            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" id="FlassNewsbtn">
+<div class="col-md-12 col-lg-12 mb-3">
+    <span id="Errormessages" class="text-danger"></span>
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
                 SAVE QUOTE
-            </button>
-        </h5>
-    </div>
-    <div class="collapse show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc1">
-        <form id="InsertQuote" enctype="multipart/form-data">@*Insertholiday*@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="padding-search row">
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="form-group col-2">
-                        <label class="form-grop control-label required  space">Quote </label>
-                    </div>
-                    <div class="form-group col-4">
-                        <input type="text" asp-for="Quote" id="Quote" class="form-control" />
-                        <span asp-validation-for="Quote" class="text-danger"></span>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="form-group col-2">
-                        <label class="form-grop control-label required  space">Display Date </label>
-                    </div>
-                    <div class="form-group col-4">
-                        <input type="date" asp-for="DisplayDate_" id="Displaydate_txtid" class="form-control" />
-                        <span asp-validation-for="DisplayDate_" class="text-danger" id="Error_Sp"></span>
-                        <span class="text-danger" id="Error_Sp"></span>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="form-group col-1"></div>
-                    <div class="form-group col-6">
-                        <input type="button" id="Insert_Clearbtn" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
-                        <input type="button" id="Insert_BackToSearchbtn" name="BackToSearch" value="BackToSearch" class="btn btn-pill btn-outline-primary btn-aprimary">
-                        <input type="submit" id="Insert_Savebtn" name="save" value="Save" class="btn btn-pill btn-outline-success btn-air-success">
-                    </div>
-                    <div class="col-3"></div>
+            </h5><small>* INDICATES REQUIRED FIELDS</small>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col" id="ManageHolidaysMaindivId">
+                    <form id="InsertQuote" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label required text-end space">Quote</label>
+                            <div class="col-sm-4">
+                                <input type="text" asp-for="Quote" id="Quote" class="form-control" />
+                                <span asp-validation-for="Quote" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label required text-end space">Display Date </label>
+                            <div class="col-sm-4">
+                                <input type="date" asp-for="DisplayDate_" id="Displaydate_txtid" class="form-control" />
+                                <span asp-validation-for="DisplayDate_" class="text-danger" id="Error_Sp"></span>
+                                <span class="text-danger" id="Error_Sp"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content text-center">
+                            <div class="col-sm-12">
+                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Insert_Clearbtn">Clear</button>
+                                <button type="button" class="btn btn-dark waves-effect waves-light" id="Insert_BackToSearchbtn">BackToSearch</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Insert_Savebtn">Save</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 

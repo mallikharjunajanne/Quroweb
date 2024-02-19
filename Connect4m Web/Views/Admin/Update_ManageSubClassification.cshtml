@@ -1,5 +1,7 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ManageSubClassification
+
 @{
+    ViewData["Title"] = "Update_ManageSubClassification";
     Layout = null;
 }
 
@@ -9,18 +11,25 @@
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">
-                SAVE CLASS
+                UPDATE CLASS
             </h5><small>* INDICATES REQUIRED FIELDS</small>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <form id="Insertclassformid">
+                    <form id="Updateclassformid">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row mb-3">
                             <label class="control-label col-sm-4 col-form-label required text-end space">Department Name  </label>
                             <div class="col-sm-4">
-                                <select asp-for="InstanceClassificationId" id="In_Subclassificationdd" class="select2 form-select select2-hidden-accessible">
+                                <select asp-for="InstanceClassificationId" id="Classificationtxtid" class="select2 form-select select2-hidden-accessible">
+                                    @foreach (var item in ViewBag.Dropdowndata)
+                                    {
+                                        <option value="@item.InstanceClassificationId"
+                                                selected="@item.InstanceClassificationId == @Model.InstanceClassificationId">
+                                            @item.ClassificationName
+                                            </option>
+                                        }
                                 </select>
                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                             </div>
@@ -29,6 +38,7 @@
                             <label class="control-label col-sm-4 col-form-label required text-end space">Class Name  </label>
                             <div class="col-sm-4">
                                 <input type="text" asp-for="SubClassificationName" id="Subclass_txtid" class="form-control" />
+                                <input type="hidden" asp-for="InstanceSubclassificaitionId" id="InstanceSubclassificaitionId" />
                                 <span asp-validation-for="SubClassificationName" class="text-danger"></span>
                             </div>
                         </div>
@@ -75,8 +85,14 @@
                         <div class="row mb-3">
                             <label class="control-label col-sm-4 col-form-label  text-end space">Class Teacher Mode  </label>
                             <div class="col-sm-4">
-                                <select asp-for="ClassTeacherId" id="In_ClassTeacherdd" class="select2 form-select select2-hidden-accessible">
-                                    @*<option value="">---Select---</option>*@
+                                <select asp-for="InstanceClassificationIdCT" id="In_ClassTeacherdd" class="select2 form-select select2-hidden-accessible">
+                                    @foreach (var Citem in ViewBag.Classteacherdd)
+                                    {
+                                        <option value="@Citem.UserId"
+                                                selected="@Convert.ToString(Citem.UserId) == @Model.ClsTeacherId">
+                                            @Citem.UserName
+                                        </option>
+                                    }
                                 </select>
                                 <span asp-validation-for="ClassTeacherId" class="text-danger"></span>
                             </div>
@@ -84,17 +100,37 @@
                         <div class="row mb-3">
                             <label class="control-label col-sm-4 col-form-label  text-end space">Co-Class Teacher  </label>
                             <div class="col-sm-4">
-                                <select asp-for="CoClassTeacherId" id="In_CoClassTeacherdd" class="select2 form-select select2-hidden-accessible">
-                                    @*<option value="">---Select---</option>*@
+                                <select asp-for="InstanceClassificationIdCoCT" id="In_CoClassTeacherdd" class="select2 form-select select2-hidden-accessible">
+                                    @foreach (var Coitem in ViewBag.Coclassteacherdd)
+                                    {
+                                        <option value="@Coitem.UserId_CO"
+                                                selected="@Coitem.UserId_CO == @Model.CoClsTeacherId">
+                                            @Coitem.UserName_CO
+                                        </option>
+                                    }
                                 </select>
                                 <span asp-validation-for="CoClassTeacherId" class="text-danger"></span>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label  text-end space">Is Active  </label>
+                            <div class="col-sm-4">
+                                @if (Model.ISACTIVE_ == "1")
+                                {
+                                    <input type="checkbox" @*asp-for="IsActive"*@ class="form-check-input checkbox_animated" id="chk_seacrh_icon" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" @*asp-for="IsActive"*@ class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                }
+
+                            </div>
+                        </div>
                         <div class="row justify-content text-center">
                             <div class="col-sm-12">
-                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearcommonfunction('Insertclassformid','Errormessages')" id="btnclear">Clear</button>
+                                <button type="reset" class="btn btn-warning waves-effect waves-light"  id="btndelete">Delete</button>
                                 <button type="button" class="btn btn-dark waves-effect waves-light" id="btnBackToSearch">BackToSearch</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="btnsubmit">Save</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light" id="btnsubmit">Update</button>
                             </div>
                         </div>
                     </form>
@@ -104,8 +140,9 @@
     </div>
 </div>
 
-
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -114,14 +151,4 @@
 
 
 
-@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/Datatable/jquery.dataTables.min.js"></script>
 <script src="~/js/ManageSubclassification.js"></script>
-
-
-@*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>*@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
