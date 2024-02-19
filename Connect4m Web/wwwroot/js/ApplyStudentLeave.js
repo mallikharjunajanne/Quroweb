@@ -52,16 +52,19 @@ function fun32READYFUNCTION() {
         $("#Attendence_Div").hide();
 
         //var StudentId_ByParent = Context.Request.Cookies["StudentUserid"];
-        StudentApplyLeave_SelectById_ATTENDANCEDETAILS(StudentId_ByParent)
-        stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent)
 
+        if (RoleName == "PARENT") {
+            StudentApplyLeave_SelectById_ATTENDANCEDETAILS(StudentId_ByParent)
+            stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId_ByParent)
+
+            $("#StudentAttendanceDetails_Card").show();
+            $("#profile-tabs").show();
+        }
 
         //var Month = $("#Monthid").val();
         //var AcadamicYearID = $("#AcadamicYearID").text();
         //stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves(StudentId_ByParent, Month, AcadamicYearID)
 
-        $("#StudentAttendanceDetails_Card").show();
-        $("#profile-tabs").show();
     }
 
     //else {

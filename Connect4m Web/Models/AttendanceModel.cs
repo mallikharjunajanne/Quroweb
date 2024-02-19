@@ -792,7 +792,12 @@ namespace Connect4m_Web.Models
         public string Photo { get; set; }
 
         [Required]
+        [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=]).{8,10}$", ErrorMessage = "Password must be 8 to 10 characters long and include at least one digit, one lowercase letter, one uppercase letter, and one special character.")]
         public string Password { get; set; }
+        [Required]
+
+        [Compare("Password", ErrorMessage = "The password and Confirm password do not match.")]
+        public string ConfirmPassword { get; set; }
         public string SubDomineName { get; set; }
         public string CHK { get; set; }
         public string IPAddress { get; set; }
@@ -810,6 +815,9 @@ namespace Connect4m_Web.Models
         public int ThemeId { get; set; }
         public string RoleName { get; set; }
 
+        public string ChangePWOnLogin { get; set; }
+
+        public int ParentFlag { get; set; }
     }
 
 
