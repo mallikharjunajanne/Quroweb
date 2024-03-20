@@ -11,7 +11,7 @@
             <td>Class - Section</td>
             <td>Count</td>
         </tr>
-   
+
         @{
             var countedNames = new Dictionary<string, int>(); // Dictionary to store counts of SubclassificationName
 
@@ -36,12 +36,55 @@
         @foreach (var pair in countedNames)
         {
             <tr style="color: Black; font-size: 14px; height: 25px; text-align: center;">
-                <td style="width: 30%; border: 1px solid #dbdbdb; height: 24px;">@pair.Key</td>
+                <td style="width: 30%; border: 1px solid #dbdbdb; height: 24px;" onclick="Absenteestudentsforthedaykey('@pair.Key', this);">@pair.Key</td>
                 <td style="width: 70%; border: 1px solid #dbdbdb; height: 24px;">@pair.Value</td>
             </tr>
-        }
+        }  
+
     </tbody>
 </table>
+
+
+
+@{
+    var json = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.StudentleaveName);
+}
+
+<script>
+    function Absenteestudentsforthedaykey(key, clickedElement) {
+        debugger;
+        $('.details-table').remove(); // Remove any existing details tables
+
+        // Create a new table for details       
+        var $detailsTable = $('<table class="details-table"></table>');
+        var $detailsRow = $('<tr></tr>');
+        var $detailsCell = $('<td colspan="2"></td>'); // Ensure colspan matches the number of columns
+
+        // Append the nested table to the cell
+        $detailsCell.append($detailsTable);
+
+        // Append the cell to the row
+        $detailsRow.append($detailsCell);
+
+        // Append the row below the clicked row
+        $(clickedElement).closest('tr').after($detailsRow);   
+
+        var studentLeaveData = @Html.Raw(json);
+
+        // Filter Student data for the selected key
+        var filteredData = studentLeaveData.filter(item => item.SubclassificationName === key);
+
+        // Populate the details table with the corresponding details
+        var detailsHtml = '<thead><tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; color: black;"><th>Name</th><th>Program</th><th>Admission Number</th><th>Parent Name</th><th>Mobile Number</th></tr></thead><tbody>';
+        debugger;
+        for (var i = 0; i < filteredData.length; i++) {
+            var item = filteredData[i];
+            detailsHtml += '<tr style="font-size: 10px;height: 25px;color: black;"><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;color: blueviolet;">' + item.FirstName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.ClassificationName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.AdmissionNumber + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.PFirstName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.MobilePhone + '</td></tr>';
+        }
+        detailsHtml += '</tbody>';
+        $detailsCell.append(detailsHtml);
+    }
+</script>
 
 
 

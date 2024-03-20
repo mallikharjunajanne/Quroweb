@@ -1,0 +1,75 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.BirthdaysByInstance
+@{
+    ViewData["Title"] = "BirthdaysByInstance";
+    Layout = null;
+}
+
+
+
+<style>
+    .Scrolling {
+        white-space: initial;
+        overflow: unset;
+        animation: scroll 8s linear infinite;
+        transform-origin: bottom;
+        list-style-type: none;
+    }
+
+        .Scrolling li {
+            padding-bottom: 10px;
+            text-wrap: normal;
+            /*line-height: 24px;*/
+            line-height: 50px;
+            padding: 0px;
+            list-style: decimal;
+        }
+
+        .Scrolling:hover {
+            animation-play-state: paused;
+        }
+
+    @@keyframes scroll {
+        0% {
+            transform: translateY(100%); /* Start from below the element */
+        }
+
+        100% {
+            transform: translateY(-100%); /* Scroll text to the top */
+        }
+    }
+
+    .scrolling-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        min-height: 240px;
+        overflow-y: hidden;
+    }
+</style>
+
+
+
+@{
+    var listcounts = ViewBag.Usersbirthdays.Count;
+}
+<div class="scrolling-container">
+    <ul class="Scrolling">
+        @if (listcounts != 0)
+        {
+        @foreach (var item in ViewBag.Usersbirthdays)
+        {
+        <li class="text-primary" style="list-style-type: none;">
+            <span><img src="path_to_your_images/@item.Photo">  @item.FirstName <b>@item.Class</b></span>
+        </li>        
+        }
+        }
+        else
+        {
+        <span class="text-primary" style="color:black;">
+            No birthdays today.
+        </span>
+        }
+    </ul>
+</div>
+
+

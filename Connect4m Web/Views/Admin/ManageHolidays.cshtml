@@ -51,10 +51,10 @@
                                                     <option value="2021">2021</option>
                                                     <option value="2022">2022</option>
                                                     <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label text-end space">Month</label>
                                             <div class="col-sm-4">
@@ -77,48 +77,33 @@
                                         </div>    
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label text-end space">Holiday Type </label>
-
                                             <div class="col-sm-4" style="display:flex;">
                                                 <div class="form-check col-4">
-                                                    <input name="default-radio-1" class="form-check-input" type="radio" value="1" id="defaultRadio1" checked="">
+                                                    <input name="radio-1" class="form-check-input" type="radio" value="1" id="Holidays">
                                                     <label class="form-check-label" for="defaultRadio1">
                                                         Holidays
                                                     </label>
                                                 </div>
                                                 <div class="form-check col-4">
-                                                    <input name="default-radio-1" class="form-check-input" type="radio" value="2" id="defaultRadio2" checked="">
+                                                    <input name="radio-1" class="form-check-input" type="radio" value="2" id="WeekEnds">
                                                     <label class="form-check-label" for="defaultRadio2">
                                                         Week-Ends
                                                     </label>
                                                 </div>
-                                                <div class="form-check col-4">
-                                                    <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" checked="">
+                                                <div class="form-check col-8">
+                                                    <input name="radio-1" class="form-check-input" type="radio" value="3" id="RestrictedHolidays">
                                                     <label class="form-check-label" for="defaultRadio3">
                                                         Restricted Holidays
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
-
-
-                                        
-                                        @*<div class="col-3"></div>
-                                            <div class="form-group col-2"></div>
-                                            <div class="form-group col-4">
-                                                <input type="button" name="Clear" value="Clear" class="btn btn-pill btn-outline-warning btn-air-warning">
-                                                <input type="button" id="Searchbtn" name="Search" value="Search" class="btn btn-pill btn-outline-success btn-air-success">
-                                            </div>
-                                            <div class="col-3"></div>*@
-
-
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
                                                 <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearcommonfunction('Classificaitionformid', null)" id="btnclear">Clear</button>
                                                 <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
                                             </div>
-                                        </div>
-
-                                       
+                                        </div>                                       
                                     </form>
                                 </div>
                             </div>

@@ -5,7 +5,7 @@
 }
 
 <style>
-    #tblStaffLeavesearchresults td {
+    /* #tblStaffLeavesearchresults td {
         padding: 2px;
         border: 3px solid black;
         font-weight: 600;
@@ -13,15 +13,17 @@
 
     #FirstTable td {
         border: 1px solid black;
-    }
+    }*/
 </style>
 
 <div class="row mb-2">
-    
-
-    <div id="Attendancereporttblmain">
-        <input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_AttendancereportExportExcel" />
-        <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_attendancereportPrint" />
+    <div class="row justify-content" style=" color: #7367f0;">
+        <div class="col-sm-6" id="Reporttblexporttoexcel">
+            <a herf="Javascript:void(0);" id="_AttendancereportExportExcel">Export To Excel</a>
+        </div>
+        <div class="col-sm-6 text-end" id="reporttblprint">
+            <a herf="javascript:void(0);" id="_attendancereportPrint">Print</a>
+        </div>
     </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4">
@@ -33,27 +35,19 @@
                 </h5>
             </div>
             <div class="card-body">
-
                 <div class="card-datatable text-nowrap">
                     <div class="table-responsive">
                         <div class="table-responsive text-nowrap" id="Printattendancereport">
-                            <div class="row mb-3">
-                                <div class="col-sm-12 text-center">
-                                    <div id="Selectedclassnamesdiv">
-
-                                    </div>
-                                </div>
+                            <div style=" text-align: center; font-weight: 500;">
+                                <b>Quro Schools</b>
+                                <p>Attendance for the Classes <span id="Selectedepartmentspid"></span> for the period of <span id="Fromdatespid"></span> To <span id="Enddatespid"></span></p>
                             </div>
-
-                            <table class="" id="StudentwiseattendaceReport" style="border-collapse: separate;">
-                                <thead id="tablehead">
+                            <table class="table table-bordered" id="SectionwiseattendaceReport" style="border-collapse: separate;">
+                                <thead id="tablehead" class="table-dark">
 
                                 </thead>
                                 <tbody id="tableBody">
                                 </tbody>
-                                <tfoot id="tablefooter">
-                                   
-                                </tfoot>
                             </table>
                             <div id="AttendanceSignaturesdiv">
 
@@ -67,4 +61,5 @@
 </div>
 
 <script src="~/js/GeneralFunctions.js"></script>
-<script src="~/js/Monthwiseclassattendancereport.js"></script>
+@*<script src="~/js/Monthwiseclassattendancereport.js"></script>*@
+<script src="~/js/SectionwiseAttendanceReport.js"></script>

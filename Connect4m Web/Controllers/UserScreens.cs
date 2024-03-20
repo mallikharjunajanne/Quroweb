@@ -271,16 +271,53 @@ namespace Connect4m_Web.Controllers
         [HttpGet]
         public IActionResult BirthdaysByInstance()
         {
-            List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();       
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BirthdaysByInstance?InstanceId=" + InstanceId).Result;
-
+            List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();   
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetUserbirthdays?InstanceId=" + InstanceId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<BirthdaysByInstance>>(data);
-            }        
-            return PartialView("_BirthdaysByInstance", item);
+            }
+            ViewBag.Usersbirthdays = item;
+            return View();
+            //return PartialView("_BirthdaysByInstance", item);
+        }
+
+        public IActionResult Timetablecriteria()
+        {
+            List<Timetablecriteria> item = new List<Timetablecriteria>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetTimetablecriterias?UserId=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Timetablecriteria>>(data);
+            }
+            ViewBag.Timetablecriteria = item;
+            return View();
+        }
+        public IActionResult Newadmissionstudents()
+        {
+            List<Newadmissionstudents> item = new List<Newadmissionstudents>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Newstudentadmission?InstanceId=" + InstanceId+ "&UserId="+ UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<Newadmissionstudents>>(data);
+            }
+            ViewBag.Newstudentadmissions = item;
+            return View();
+        }
+        public IActionResult Studentsunderwithdrawal()
+        {
+            List<studentwithdrawal> item = new List<studentwithdrawal>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/StudentsUnderWithdrawal?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<studentwithdrawal>>(data);
+            }
+            ViewBag.Withdrawal = item;
+            return View();
         }
 
         public IActionResult E_Noticeboard(string ENoticeType, int IsGlobalNotice)
@@ -297,7 +334,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.Enotice = item;
             return View();
         }
-
         public IActionResult LeaveStatus()
         {
             studentstaffleaves item = new studentstaffleaves();
@@ -323,7 +359,6 @@ namespace Connect4m_Web.Controllers
                 return Json(items);                             
             }
         }
-
         public IActionResult Absenteestudentsfortheday()
         {
             List<StudentleaveName> item = new List<StudentleaveName>();
@@ -334,11 +369,10 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<StudentleaveName>>(data);
             }
-            ViewBag.StudentleaveName = item;           
+            ViewBag.StudentleaveName = item;            
+
             return View();
         }
-
-        //exec stp_tblInstanceQuestions_SelectOthersQuestion @InstanceId=545,@AssignedToId=32891,@CategoryId=default 
         public IActionResult PostedQuestions()
         { 
             List<Posted_Questions> item = new List<Posted_Questions>();
@@ -353,8 +387,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.PostedQuestions = item;
             return View();
         }
-
-      
         public IActionResult CalendarEvents(int MonthId)
         {            
             string EventTitle = "";

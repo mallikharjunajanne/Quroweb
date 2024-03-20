@@ -1,6 +1,27 @@
 ﻿//------------Manage Holidays Insert Function code Start
+function DataCallToAjax(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
 
-//----***** Ajax Common Method *****---------
+function tableajax(method, url, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        success: bindDatatable,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+
 function CallToAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
     var ajaxOptions = {
         url: url,
@@ -23,12 +44,12 @@ function CallToAjax(method, url, data, successCallback, errorCallback, hasFileUp
 //-----**Date Compare function**-------
 function DatesCompare(Sdate, Edate) {
     try {
+        $('#Error_Sp').text("");
         debugger;
         var Startdate = new Date($("#SDate_txtid").val());
-        var Enddate = new Date($("#EDate_txtid").val());
-        var errorElement = $('.compare');
+        var Enddate = new Date($("#EDate_txtid").val());     
 
-        if (Enddate <= Startdate) {
+        if (Enddate < Startdate) {
             $('#Error_Sp').text(Edate + " must be greater than " + Sdate + ".");          
         } else {           
             $('#Error_Sp').text("");
@@ -59,35 +80,34 @@ $('#Insertholiday').submit(function (event) {
     var formdata_ISN = new FormData($('#Insertholiday')[0]);
     CallToAjax('POST', '/Admin/Insert_Holiday', formdata_ISN,
         function (response) {
-            debugger;          
-           
+            debugger; 
             if (response == "0") {
-                $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
+                $('#Inserterrormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
             } else if (response == "2") {
-                $('#Errormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
-            } else if (response == " ") {
+                $('#Inserterrormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
+            } else if (response == "") {
                 $('#Savebtn, #Clearbtn').prop('disabled', true);                
-                $('#Errormessage').text('Record inserted successfully.');
-            } else {
-                $('#Errormessage').text('Something went wrong please try again.');
+                $('#Inserterrormessage').text('Record inserted successfully.');
+            } else if (response=="-1") {
+                $('#Inserterrormessage').text('Something went wrong please try again.');
+            }else{
+                $('#Inserterrormessage').text('Something went wrong please try again.');
             }
-
         }, function (status, error) {
 
         },
         true);
-
-
-
 });
 
 $('#BackToSearchbtn').click(function () {
+    $('#Inserterrormessage').text('');
     $('#Manageholidays_Main1').show();
     $('#Manageholidays_Insertdiv2').empty();
     $('#Manageholidays_Updatediv3').empty();   
 })
 
-$('#Clearbtn').click(function () {   
+$('#Clearbtn').click(function () {
+    $('#Inserterrormessage').text('');
     $('#Insertholiday')[0].reset();
 });
 
@@ -102,91 +122,64 @@ $('#Clearbtn').click(function () {
 //----------Main Table Main Screen Code 
 
 $(document).ready(function () {
-    function CallToAjax(method, url, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            success: bindDatatable,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
-    function DataCallToAjax(method, url, data, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            data: data,
-            success: successCallback,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
-    function CallToAjax_Withoutdata(method, url, successCallback, errorCallback) {
-        $.ajax({
-            url: url,
-            type: method,
-            success: successCallback,
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
 
-    CallToAjax('GET', '/Admin/ManageHolidaysTabledata',
+   Holidaysbindingfun();
+});
+
+function Holidaysbindingfun() {
+    debugger;
+    tableajax('GET', '/Admin/ManageHolidaysTabledata', null,
 
         //function bindDatatable();
         function (status, error) {
             // Handle error if needed
         }
     );
+}
 
+$('#btnsearch').click(function () {
+    var selectedYear = $('#Year').val();
+    var selectedMonth = $('#Month').val();
+    var selectedHolidayType = $('input[name="default-radio-1"]:checked').val();
 
-   
+    $('#Errormessage').text('');
 
-    //-----------------Search Holidays
-    $('#btnsearch').click(function () {
-        var selectedYear = $('#Year').val();
-        var selectedMonth = $('#Month').val();
-        var selectedHolidayType = $('input[name="default-radio-1"]:checked').val();
+    debugger;
+    var dataToSend = {
+        year: selectedYear,
+        Monthid: selectedMonth,
+        Type: selectedHolidayType
+    };
 
-        //var selectedHolidayType = $('input[name="radio1"]:checked').val();
-        debugger;
-        var dataToSend = {
-            year: selectedYear,
-            month: selectedMonth,
-            Type: selectedHolidayType
-        };
-
-        DataCallToAjax('GET', '/Admin/ManageHolidaysTabledata', dataToSend,
-            function (response) {
-                bindDatatable(response);
-            }, function (status, error) {
-                // Handle error if needed
-            }
-        );
-    });
-
-
-
-    $('#addnewmanageholidays').click(function () {
-        debugger;
-        CallToAjax_Withoutdata('GET', '/Admin/Insert_Holiday',
-            function (response) {
-                debugger;
-                $('#Manageholidays_Main1').hide();                
-                $('#Manageholidays_Updatediv3').empty();
-                $('#Manageholidays_MailSMSPostingdiv4').empty();
-                $('#Manageholidays_Insertdiv2').html(response);
-            },
-            function (status, error) {
-                // Handle error if needed
-            }
-        );
-    });
-
+    DataCallToAjax('GET', '/Admin/ManageHolidaysTabledata', dataToSend,
+        function (response) {
+            bindDatatable(response);
+        }, function (status, error) {
+            // Handle error if needed
+        }
+    );
 });
+
+$('#addnewmanageholidays').click(function () {
+    $('#Updateerrormessage').text('');
+    debugger;
+    DataCallToAjax('GET', '/Admin/Insert_Holiday',null,    
+        function (response) {
+            debugger;
+            $('#Manageholidays_Main1').hide();
+            $('#Manageholidays_Updatediv3').empty();
+            $('#Manageholidays_MailSMSPostingdiv4').empty();
+            $('#Manageholidays_Insertdiv2').html(response);
+        },
+        function (status, error) {
+            // Handle error if needed
+        }
+    );
+});
+
+
+
+
 //-----------------DataTable Data Dinding Function
 function bindDatatable(response) {
 
@@ -198,39 +191,7 @@ function bindDatatable(response) {
 
     var newTable = $("#ManageHolidaystbl").DataTable({
         dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'pdfHtml5',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-
-            }
-            ,
-            {
-                extend: 'excel',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-            },
-
-
-            {
-                extend: 'print',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-            }
-
-
-        ],
+        buttons: [  ],
 
         bProcessing: false,
         bLengthChange: true,
@@ -342,16 +303,6 @@ function bindDatatable(response) {
                 render: function (data, type, row, meta) {
                     // return row.holidayId
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-                    // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'
-                    //if (row.expenditureType == 0) {
-                    //    return '<span>Credit</span>';
-
-                    //}
-                    //else {
-                    //    return '<span>Debit</span>';
-
-                    //}
-
                 }
             }
             //}, {
@@ -418,34 +369,35 @@ function GetDateFormat() {
 
 $(document).on('click', '#ManageHolidaystbl .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
-    var confirmed = confirm("Are you sure you want to delete Holiday?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
-    if (confirmed) {
-        debugger;
-        var HolidayId = $(this).closest('tr').find('input[type="text"]').val();
-        var table = $('#ManageHolidaystbl').DataTable();
-        var tabletargetpagetblSEMsearchresults = table.page.info().page;
+    var HolidayId = $(this).closest('tr').find('input[type="text"]').val();
 
-        $.ajax({
-            url: '/Admin/Delete_Holiday?HolidayId=' + HolidayId,
-            type: 'GET',
-            //data: data,
-            success: function (response) {
-                debugger;
-                if (response == "1") {
-                   /* $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);*/
-                    //$('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');
-                    $('#Errormessage').text('Record deleted successfully.');
-                } else {
-                    $('#Errormessage').text('Sommething went wrong...!')
-                }
-            }
-        });
-    }
+    Deletefun(HolidayId);
+
+
+    //var confirmed = confirm("Are you sure you want to delete Holiday?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    //if (confirmed) {
+    //    debugger;
+    //    var HolidayId = $(this).closest('tr').find('input[type="text"]').val();
+    //    var table = $('#ManageHolidaystbl').DataTable();
+    //    var tabletargetpagetblSEMsearchresults = table.page.info().page;
+
+    //    $.ajax({
+    //        url: '/Admin/Delete_Holiday?HolidayId=' + HolidayId,
+    //        type: 'GET',
+    //        //data: data,
+    //        success: function (response) {
+    //            debugger;
+    //            if (response == "1") {
+    //                $('#Errormessage').text('Record deleted successfully.');
+    //                Holidaysbindingfun();
+    //            } else {
+    //                $('#Errormessage').text('Sommething went wrong...!')
+    //            }
+    //        }
+    //    });
+    //}
 });
 
-
-
-//-------------------------------------   Click For Update in the list(table)
 $(document).on('click', '#ManageHolidaystbl td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
     debugger;
@@ -455,7 +407,6 @@ $(document).on('click', '#ManageHolidaystbl td:nth-child(2)', function (event) {
     tabletargetpagetblSEMsearchresults = table.page.info().page;
     Editholiday(Holidayid);
 })
-
 
 function Editholiday(Holidayid) {
     $.ajax({
@@ -473,20 +424,17 @@ function Editholiday(Holidayid) {
     });
 }
 
-
-
 $('#UpdateHoliday').submit(function (event) {
     event.preventDefault();
+    $('#HolidaytypeSpid').text('');
     debugger;
-    
-
     if (!$(this).valid()) {
-
-        if (!$('input[name="default-radio-1"]:checked').val()) {
-            $('#HolidaySpid').text('Please select a Holiday Type');
+        debugger;
+        if (!$('input[name="Holidaytyperadio1"]:checked').val()) {
+            $('#HolidaytypeSpid').text('Please select a Holiday Type');
             return;
         } else {
-            $('#HolidaySpid').text('');
+            $('#HolidaytypeSpid').text('');
         }
         return;
     }
@@ -498,81 +446,94 @@ $('#UpdateHoliday').submit(function (event) {
 
     CallToAjax('POST', '/Admin/Update_Holiday', formdata_Uph,
         function (response) {
-            debugger;         
-
-            //if (response === "Updated") {
-            //    $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
-            //    $('#Dltbtn, #CEFTHbtn, #Updatebtn').removeClass('btn btn-pill btn-outline-danger btn-air-danger btn-outline-success btn-air-success btn-outline-info btn-air-info');               
-            //    $('#Errormessage').text('Record updated successfully.');
-            //} else if (response === "Not Update") {
-            //    $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists.');
-            //} else if (response === "Exists") {
-            //    $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
-            //} else {
-            //    // Handle other cases or display a generic error message
-            //    $('#Errormessage').text('An error occurred.');
-            //}
-
-            if (response = "0") {
-                $('#Errormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
-            } else if (response = "2") {
-                $('#Errormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
-            } else if (response = "1") {
-                $('#Errormessage').text('Record updated successfully.');
+            debugger;
+            if (response == "0") {
+                $('#Updateerrormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
+            } else if (response == "2") {
+                $('#Updateerrormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
+            } else if (response == "1") {
+                $('#Updateerrormessage').text('Record updated successfully.');
                 $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
             } else {
-                $('#Errormessage').text('Something went wrong please try again.');
+                $('#Updateerrormessage').text('Something went wrong please try again.');
             }
 
         }, function (status, error) {
 
         },
         true);
-
-
-
 });
 
 $('#Dltbtn').click(function () {
-    var HolidayId = $('#HolidayId').val();   
-    $.ajax({
-        url: '/Admin/Delete_Holiday?HolidayId=' + HolidayId,
-        type: 'GET',
-        //data: data,
-        success: function (response) {
-            debugger;
-            if (response == "1") {
-                $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);                
-                //$('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');
-                $('#Errormessage').text('Record deleted successfully.');
-                CallToAjax('GET', '/Admin/ManageHolidaysTabledata',
+    var HolidayId = $('#HolidayId').val();
+    Deletefun(HolidayId);
 
-                    //function bindDatatable();
-                    function (status, error) {
-                        // Handle error if needed
-                    }
-                );
-            } else {
-                $('#Errormessage').text('Something went wrong...!')
-            }
-        }
-    });
+    //$.ajax({
+    //    url: '/Admin/Delete_Holiday?HolidayId=' + HolidayId,
+    //    type: 'GET',
+    //    //data: data,
+    //    success: function (response) {
+    //        debugger;
+    //        if (response == "1") {
+    //            $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);              
+               
+    //            $('#Errormessage').text('Record deleted successfully.');
+    //            CallToAjax('GET', '/Admin/ManageHolidaysTabledata',
+
+    //                //function bindDatatable();
+    //                function (status, error) {
+    //                    // Handle error if needed
+    //                }
+    //            );
+    //        } else {
+    //            $('#Errormessage').text('Something went wrong...!')
+    //        }
+    //    }
+    //});
 })
 
 
 $('#BackToSearchUbtn').click(function () {
     location.reload();
+    $('#Updateerrormessage').text('');
     $('#Manageholidays_Main1').show();
     $('#Manageholidays_Insertdiv2').empty();
     $('#Manageholidays_Updatediv3').empty();
 })
 
 
+function Deletefun(HolidayId) {
+    var confirmed = confirm("Are you sure you want to delete Holiday?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    var data = { HolidayId: HolidayId };
+    if (confirmed) {
+        DataCallToAjax('GET', '/Admin/Delete_Holiday', data,
+            function (response) {
+                debugger;
+                if (response == "1") {
+                    $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);
+                    $('#Errormessage').text('Record deleted successfully.');
+                    Holidaysbindingfun();
+                } else if (response == "") {
+                    $('#Errormessage').text('Something went wrong please try again.');
+                } else {
+                    $('#Errormessage').text('Something went wrong please try again.');
+                }
+
+            }, function (status, error) {
+
+            }
+        );
+    }
+}
+
+
+
 
 //---=========****####========= CREATE EXECPTION FOR TO HOLLIDAYS USERS POSTING BUTTON AFTER VIEW IN CODE =========####****=========---------------
 
 $('#CEFTHbtn').click(function () {
-    
+    $('#Updateerrormessage').text('');
+
     var HolidayName = $('#Holidaytxtid').val();
     var Holidayid = $('#HolidayId').val();
 
@@ -595,6 +556,7 @@ $('#CEFTHbtn').click(function () {
 
 $('#BacktoSearchinpostuserbtn').click(function () {
     debugger;
+    $('#Updateerrormessage').text('');
     location.reload();
     $('#Manageholidays_Heaingmaindiv0').show();
     $('#Manageholidays_Main1').show();

@@ -4,16 +4,26 @@
     Layout = null;
 }
 @{
-
     List<Connect4m_Web.Models.Attendenceproperites.Getattendancedetails> flattenedDetailsList = Model.SelectMany(x => x.getattendancedetails).ToList();
+
+    var Itemslist = Model.SelectMany(x => x.getattendancedetails).ToList();
+    var Attendanceid1 = Itemslist.Select(item => item.AttendanceId1).ToList();
+    var Attendanceid2 = Itemslist.Select(item => item.AttendanceId2).ToList();
+    var Attendanceid3 = Itemslist.Select(item => item.AttendanceId3).ToList();
+    var Attendanceid4 = Itemslist.Select(item => item.AttendanceId4).ToList();
+    var Attendanceid5 = Itemslist.Select(item => item.AttendanceId5).ToList();
+    var Attendanceid6 = Itemslist.Select(item => item.AttendanceId6).ToList();
+    var Attendanceid7 = Itemslist.Select(item => item.AttendanceId7).ToList();
+
 }
 
-@*@if (ViewBag.ModelMessage == "1")
-    {
-        <div style=" margin-top: -43%; position: absolute; color: red; font-size: 12px;">@ViewBag.E_Message</div>
-    }
-    else
-    {*@
+@if (flattenedDetailsList.Count == 0)
+{
+    <span id="Errormessage" class="text-danger">This Class Doesn't Contain any User(s).</span>
+}
+else
+{
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,7 +102,7 @@
 <body>
     <div class="row mb-2">
         <div class="col-md-12 col-lg-12 mb-3">
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">
                         <span>
@@ -102,57 +112,67 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col">
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Green Date-- </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name">Indicates attendance already posted. </label>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;color:green;">
+                                        <li><b>Green Date--Indicates attendance already posted.</b></li>
+                                    </ul>
                                 </div>
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    <img src="~/Images_IMP/tick_16.png" />--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name"> Indicates Send Sms is true. </label>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Red Date-- </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name">Indicates attendance not yet posted (if any withdrawal applied students are there in a class). </label>
-                                </div>
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    <img src="~/Images_IMP/cross.png" />--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name"> Indicates Send Sms is false. </label>
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li><img src="~/Images_IMP/tick_16.png" /><b>--Indicates Send Sms is true.</b></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    <img src="~/Images_IMP/AuditIcon.png" />--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name">Indicates Attendance modified. </label>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul style="list-style-type: none; color:red;">
+                                        <li>
+                                            <b>Red Date--Indicates attendance not yet posted (if any withdrawal applied students are there in a class).</b>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    <img src="~/Images_IMP/exclaim.png" />--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name"> Indicates Parent Data is not available. </label>
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li>
+                                            <img src="~/Images_IMP/cross.png" /><b>--Indicates Send Sms is false.</b>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    <img src="~/Images_IMP/details_open.png" />--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name">Indicates Attendance modified. </label>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li><img src="~/Images_IMP/AuditIcon.png" /><b>--Indicates Attendance modified.</b></li>
+                                    </ul>
                                 </div>
-                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name">
-                                    Red Color--
-                                </label>
-                                <div class="col-sm-4">
-                                    <label class="col-sm-12 col-form-label" for="basic-default-name"> Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance. </label>
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li>
+                                            <img src="~/Images_IMP/exclaim.png" /><b>--Indicates Parent Data is not available.</b>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li><img src="~/Images_IMP/details_open.png" /><b>--To post Special Attendance click on this icon, a dropdown will display.</b></li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul style="list-style-type: none;">
+                                        <li>
+                                            <b style="color:red;">Red Color</b>--  <b>Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance.</b>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -160,25 +180,8 @@
                 </div>
             </div>
         </div>
-        <!--<div class="checkbox checkbox-solid-danger ">-->
-        @*<input id="solid4" type="checkbox" class="SMS_Stu_Checkboxid">
-            <label for="solid4">Sms To Student</label>*@
-        <!--&nbsp;&nbsp;
-            <input id="solid5" type="checkbox" class="SMS_Par_Checkboxid" />
-            <label for="solid5">Sms To Parent</label>
-            &nbsp;&nbsp;
-            <input id="solid6" type="checkbox" class="Email_Stu_Checkboxid" />
-            <label for="solid6">Send Email To Students</label>
-            &nbsp;&nbsp;
-            <input id="solid7" type="checkbox" class="Email_Par_Checkboxid" />
-            <label for="solid7">Send Email To Parents</label>
-
-        </div>
-        <div style=" margin-left: 1.75%;">
-            <input type="checkbox" id="selectAll" class="checkbox-solid-success" />Check All
-        </div>-->
     </div>
-    <div class="row mb-3">
+    <div class="row">
         <div class="col-sm-3">
             <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Stu_Checkboxid">
             <label class="form-check-label " for="SmsToStudent" id="SMS_Stu_Checkboxid">Sms To Student</label>
@@ -202,7 +205,7 @@
     </div>
 
 
-    <div class="row mb-2">
+    <div class="row">
         <div class="col-md-12 col-lg-12 mb-3">
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
@@ -235,24 +238,40 @@
                                             <th>Reg.No</th>
                                             <th>Student Sms Status</th>
                                             <th>Parent Sms Status</th>
+
+                                            @{
+
+                                            }
                                             @if (ViewBag.DateList != null && ViewBag.DateList.Count > 0)
                                             {
+
                                                 var datecount = 1;
+                                                bool allEmpty1 = Attendanceid1.All(string.IsNullOrEmpty);
+                                                bool allEmpty2 = Attendanceid2.All(string.IsNullOrEmpty);
+                                                bool allEmpty3 = Attendanceid3.All(string.IsNullOrEmpty);
+                                                bool allEmpty4 = Attendanceid4.All(string.IsNullOrEmpty);
+                                                bool allEmpty5 = Attendanceid5.All(string.IsNullOrEmpty);
+                                                bool allEmpty6 = Attendanceid6.All(string.IsNullOrEmpty);
+                                                bool allEmpty7 = Attendanceid7.All(string.IsNullOrEmpty);
+
                                                 foreach (var date in ViewBag.DateList)
                                                 {
-                                                    
-                                                    <th id="Attendancedate_@datecount" title="attendancedatechangecolorchange">@date</th>
+                                                    bool[] allEmptyArray = { allEmpty1, allEmpty2, allEmpty3, allEmpty4, allEmpty5, allEmpty6, allEmpty7 };
+                                                    var thclass = "thClass_" + datecount;
+                                                    bool colorRelated = allEmptyArray[datecount - 1]; // Subtract 1 because arrays are zero-indexed
+                                                    thclass = colorRelated ? "red" : "green";
 
+                                                    <th id="Attendancedate_@datecount" title="attendancedatechangecolorchange" style="color:@thclass">@date</th>
                                                     //A_PostingDate_ @date.Replace("/", "")
                                                     datecount++;
-                                                }
 
-                                            }                                           
+                                                }
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @{int index = 1; int i = 2; int m = 1; int j = 1; int l = 1;}
-                                       
+
                                         @*//Row value*@
                                         @foreach (var item in flattenedDetailsList)
                                         {
@@ -260,215 +279,216 @@
                                             j = 1;
                                             l = 1;
 
-                                        <tr id="trday_@index">
+                                            <tr id="trday_@index">
 
-                                            <td scope="row"> @index</td>
-                                            <td hidden>@item.Studentuserid</td>
-                                            <td hidden>@item.ParentPhNo</td>
-                                            @*<td style="color: @(item.LastDateofAttendance == "" ? "black" : "red"); font-weight: @(item.LastDateofAttendance == "" ? 200 : "normal");">@item.FirstName</td>*@
+                                                <td scope="row"> @index</td>
+                                                <td hidden>@item.Studentuserid</td>
+                                                <td hidden>@item.ParentPhNo</td>
+                                                @*<td style="color: @(item.LastDateofAttendance == "" ? "black" : "red"); font-weight: @(item.LastDateofAttendance == "" ? 200 : "normal");">@item.FirstName</td>*@
 
-                                            @if (item.LastDateofAttendance == "")
-                                            {
-                                                <td style="color:black;font-weight:200;"> @item.FirstName</td>
-                                            }
-                                            else
-                                            {
-                                                <td style="color:red;">@item.FirstName</td>
-                                            }
-
-
-                                            <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
-                                            @if (item.StudentSMS == "True")
-                                            {
-                                                <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
-                                            }
-                                            else
-                                            {
-                                                <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
-                                            }
-                                            @if (item.ParentSMS == "True")
-                                            {
-                                                <td style="text-align: center;">
-                                                    <img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" />
-                                                    <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td style="text-align: center;" title="@item.ParentPhNo">
-                                                    <img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" />
-                                                    <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
-                                                </td>
-                                            }
-                                            <td hidden id="Stu_Email">@item.StudEmail</td>
-                                            <td hidden id="Pa_Email">@item.ParentEmail</td>
-                                            <td hidden id="AttendanceId1_Color_Chainge">
-                                                @for (l = 1; l <= ViewBag.DateList.Count; l++)
+                                                @if (item.LastDateofAttendance == "")
                                                 {
-                                                    var AttendaceId = "AttendanceId" + l;
-                                                    <label id="Attendancecolorchange_@l">
+                                                    <td style="color:black;font-weight:200;"> @item.FirstName</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="color:red;">@item.FirstName</td>
+                                                }
+
+
+                                                <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
+                                                @if (item.StudentSMS == "True")
+                                                {
+                                                    <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
+                                                }
+                                                @if (item.ParentSMS == "True")
+                                                {
+                                                    <td style="text-align: center;">
+                                                        <img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" />
+                                                        <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align: center;" title="@item.ParentPhNo">
+                                                        <img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" />
+                                                        <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                    </td>
+                                                }
+                                                <td hidden id="Stu_Email">@item.StudEmail</td>
+                                                <td hidden id="Pa_Email">@item.ParentEmail</td>
+                                                <td hidden id="AttendanceId1_Color_Chainge">
+                                                    @for (l = 1; l <= ViewBag.DateList.Count; l++)
+                                                    {
+                                                        var AttendaceId = "AttendanceId" + l;
+                                                        <label id="Attendancecolorchange_@l">
+                                                            @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                        </label>
+                                                    }
+                                                </td>
+
+
+                                                @if (item.LastDateofAttendance == "")
+                                                {
+                                                    //COLUMN VALUE
+                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
+                                                    {
+
+                                                        string columnName = "column" + k;
+                                                        string tdcolums = "tdDay" + k;
+                                                        string checkboxdayid = "ckDay" + k;
+                                                        string ddDataattTypes = "ddDataattType" + k;
+                                                        var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
+                                                        var Commnetspropertyvalue = "SplAttenanceComments" + j;
+                                                        var AttendaceId = "AttendanceId" + k;
+                                                        var DisplayIcons = "DisplayIcon" + k;
+                                                        var DisplayIconsalue = item.GetType().GetProperty(DisplayIcons).GetValue(item, null);
+
+                                                        //string columnName = "column" + (i + 1);
+                                                        //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
+
+
+
+                                            <td align="center" id="tdDay_@k">
+                                                @if (columnValue != null && columnValue.ToString() == "1")
+                                                {
+
+                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
+                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                    <div class="eye-icon">
+                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                    </div>
+
+                                                    <div id="Divcontent" class="content" style="display:none">
+                                                        <div class="dropdown">
+                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))">
+                                                                <option value="">--Select--</option>
+
+                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                {
+
+
+                                                                    //if (@items.Value == item.column+m.ToString())
+                                                                    var columnName1 = "column" + m;
+
+                                                                    if (items.Value == item.GetType().GetProperty(columnName1)?.GetValue(item, null)?.ToString())
+                                                                    {
+
+
+                                                                        <option value="@items.Value" selected>@items.Text</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@items.Value">@items.Text</option>
+                                                                    }
+                                                                    //m++;
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div id="CMT_BTN">
+
+                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                            <div id="popupid" class="popup arrow-top" style="display:none">
+                                                                <div class="popup-wrapper">
+                                                                    <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
+
+                                                                    <textarea id="commentTextArea" class="form-control" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                    <span id="charCount"></span>
+
+                                                                    <button type="button" id="Btnsubmitcomments" class="">OK</button>
+                                                                </div>
+                                                            </div>
+                                                            @*<input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />*@
+                                                        </div>
+
+                                                    </div>
+
+                                                    @*if (DisplayIconsalue.ToString() == "1")
+                                                    {
+                                                        <span class="search-icon" style="display: none;" onclick="Showchangeactivity('IsPresent',AttendaceId,'tblAttendance');">🔍</span>
+                                                    }*@
+                                                    <label id="Attendancecolorchange_@k" hidden>
+                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" />
+                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                    <div class="eye-icon">
+                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                    </div>
+
+                                                    <div id="Divcontent" class="content" style="display:none">
+                                                        <div class="dropdown">
+                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))" class="">
+                                                                <option value="">--Select--</option>
+                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                {
+                                                                    var columnNamesOfDdl = "column" + m;
+
+                                                                    if (items.Value == item.GetType().GetProperty(columnNamesOfDdl)?.GetValue(item, null)?.ToString())
+                                                                    {
+                                                                        <option value="@items.Value" selected>@items.Text</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@items.Value">@items.Text</option>
+                                                                    }
+
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div id="CMT_BTN">
+                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                        </div>
+                                                        <div id="popupid" class="popup arrow-top" style="display:none">
+                                                            <div class="popup-wrapper">
+                                                                <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
+                                                                <textarea id="commentTextArea" class="form-control" maxlength="500" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                <span id="charCount"></span>
+                                                                <button type="button" id="Btnsubmitcomments">OK</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    if (DisplayIconsalue.ToString() == "1")
+                                                    {
+                                                        <span class="search-icon" id="Showchangactivity" style=" cursor: pointer;" onclick="Showchangeactivity('IsPresent', @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString(),'tblAttendance');">🔍</span>
+                                                    }
+                                                    <label id="Attendancecolorchange_@k" hidden>
                                                         @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
                                                     </label>
                                                 }
                                             </td>
 
-
-                                            @if (item.LastDateofAttendance == "")
-                                            {
-                                                //COLUMN VALUE
-                                                @for (int k = 1; k <= ViewBag.DateList.Count; k++)
-                                                {
-
-                                                    string columnName = "column" + k;
-                                                    string tdcolums = "tdDay" + k;
-                                                    string checkboxdayid = "ckDay" + k;
-                                                    string ddDataattTypes = "ddDataattType" + k;
-                                                    var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
-                                                    var Commnetspropertyvalue = "SplAttenanceComments" + j;
-                                                    
-                                                    //string columnName = "column" + (i + 1);
-                                                    //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
-
-
-
-                                                    <td align="center" id="tdDay_@k">
-                                                        @if (columnValue != null && columnValue.ToString() == "1")
-                                                        {
-
-                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
-                                                            <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
-                                                            <div class="eye-icon">
-                                                                <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
-                                                            </div>
-
-                                                            <div id="Divcontent" class="content" style="display:none">
-                                                                <div class="dropdown">
-                                                                    @*<select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid" style="width: 96%;">*@
-                                                                    <select id="ddDataattType" asp-items="@( new SelectList(""))">
-                                                                        @*box form-select input-air-primary digits*@
-                                                                        <option>--Select--</option>
-
-                                                                        @foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                                        {
-
-
-                                                                            //if (@items.Value == item.column+m.ToString())
-                                                                            var columnName1 = "column" + m;
-
-                                                                            if (items.Value == item.GetType().GetProperty(columnName1)?.GetValue(item, null)?.ToString())
-                                                                            {
-
-
-                                                                                <option value="@items.Value" selected>@items.Text</option>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <option value="@items.Value">@items.Text</option>
-                                                                            }
-                                                                            //m++;
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                                <div id="CMT_BTN">
-
-                                                                    <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
-
-                                                                    <div id="popupid" class="popup arrow-top" style="display:none">
-                                                                        <div class="popup-wrapper">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">×</span>
-                                                                            </button>
-                                                                            <span id="Popuptextspanid" class="text-dark" style="    text-wrap:initial;"></span>
-
-                                                                            <textarea id="commentTextArea" class="form-control" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
-                                                                            <span id="charCount"></span>
-
-                                                                            <button type="button" id="Btnsubmitcomments" class="">OK</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    @*<input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />*@
-                                                                </div>
-
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            @*<input type="checkbox" class="checkbox" id="@i" title="@item.FirstName" name="@item.Studentuserid" />*@
-                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" />
-                                                            <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
-                                                            <div class="eye-icon">
-                                                                <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
-                                                            </div>
-
-                                                            <div id="Divcontent" class="content" style="display:none">
-                                                                <div class="dropdown">
-                                                                    <select id="ddDataattType" asp-items="@( new SelectList(""))" class="">
-                                                                        @*<select id="ddData" asp-items="@( new SelectList(""))" class="select2 form-select select2-hidden-accessible valid">*@
-                                                                        @*box form-select input-air-primary digits*@
-                                                                        <option>--Select--</option>-->
-                                                                        @foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                                        {
-                                                                            //if (@items.Value == item.column1.ToString())
-                                                                            //{
-                                                                            var columnNamesOfDdl = "column" + m;
-
-                                                                            if (items.Value == item.GetType().GetProperty(columnNamesOfDdl)?.GetValue(item, null)?.ToString())
-                                                                            {
-                                                                                <option value="@items.Value" selected>@items.Text</option>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <option value="@items.Value">@items.Text</option>
-                                                                            }
-
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                                <div id="CMT_BTN">
-                                                                    <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
-
-                                                                </div>
-                                                                <div id="popupid" class="popup arrow-top" style="display:none">
-                                                                    <div class="popup-wrapper">
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">×</span>
-                                                                        </button>
-                                                                        <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
-
-
-                                                                        <textarea id="commentTextArea" class="form-control" maxlength="500" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
-                                                                        <span id="charCount"></span>
-                                                                        <button type="button" id="Btnsubmitcomments">OK</button>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                        }
-
-
-                                                    </td>
-
-                                                    m++;
-                                                    j++;
+                                                        m++;
+                                                        j++;
+                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                @for (int k = 1; k <= ViewBag.DateList.Count; k++)
+                                                else
                                                 {
+                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
+                                                    {
 
 
-                                                    <td align="center" id="tdDay_@k">
-                                                        <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
-                                                        <input type="hidden" id="Lastdayofattendacetxtid_@k" value="@item.LastDateofAttendance" />
+                                                        <td align="center" id="tdDay_@k">
+                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
+                                                            <input type="hidden" id="Lastdayofattendacetxtid_@k" value="@item.LastDateofAttendance" />
 
-                                                    </td>
+                                                        </td>
+                                                    }
                                                 }
-                                            }
 
 
-                                        </tr>
+                                            </tr>
                                             index++;
                                             i++;
                                         }
@@ -484,28 +504,12 @@
                         <div class="col-sm-12">
                             <button class="btn btn-secondary waves-effect waves-light" type="submit">Preview</button>
                             <button class="btn btn-success waves-effect waves-light" type="button" id="submitbtn" onclick="Attendanceposting();">Submit</button>
-                            @*<button class="btn btn-pill btn-success active" type="button" id="submit-btn">Submit</button>*@
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--<div id="popupDiv" style="display: none;">
-        This is the popup content.        
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <div style="color: black; font-size: 14px;">
-            Enter Comments to the date <p style="margin: 0; display: inline;" id="popuprowDate"></p> for student '<p style="margin: 0; display: inline;" id="popupContent"></p>'
-        </div>
-        <textarea id="commentTextArea" class="CommentsArea" required>-->@*@item.SplAttenanceComments1*@<!--</textarea>
-        <br />
-        <input type="button" value="Ok" class="submit-comments-btn" style="background-color: wheat; border-radius: 31%;" />
-        <button type="button" class="submit-comments-btn btn btn-primary waves-effect waves-light">OK</button>        
-    </div>-->
-
 
 
     <div id="myModal">
@@ -520,10 +524,6 @@
     </div>
 </body>
 </html>
-@*}*@
-
-
-
 
 
 
@@ -537,465 +537,153 @@
 <script src="~/js/Get_ClassificationNames.js"></script>
 
 
-    <script>
+<script>
 
-        $(document).ready(function () {
-            $("#selectAll").click(function () {
-                //$(".checkbox").prop("checked", $(this).prop("checked"));
-                $(".checkbox:enabled").prop("checked", $(this).prop("checked"));
-            });
+    $(document).ready(function () {
+        $("#selectAll").click(function () {
+            //$(".checkbox").prop("checked", $(this).prop("checked"));
+            $(".checkbox:enabled").prop("checked", $(this).prop("checked"));
         });
+    });
 
-        $(document).ready(function () {
-            debugger;
-
-            $(".eye-icon").click(function () {
-                debugger;
-                var row = $(this).closest("tr td");
-                //var checkboxElement = row.find(".checkbox");
-                var checkboxElement = row.find("input[type=checkbox]");
-                var contentElement = row.find(".content");
-                var btnElement = row.find(".add-comments-btn");
-                var btnelementsid = row.find("#Btncomments");
-                var Dropdown = row.find("#ddDataattType");
-                var Textareacomments = row.find("#commentTextArea");
-
-                if (checkboxElement.is(":visible")) {
-                    checkboxElement.hide();
-                    contentElement.show();
-                    btnElement.show();
-                } else {
-                    Dropdown.prop('selectedIndex', 0);
-                    Textareacomments.val('');               
-                    btnelementsid.text('Add Comments');
-                    checkboxElement.show();
-                    checkboxElement.prop("checked", false);
-                    contentElement.hide();
-
-                }
-
-            });
-
-            $('#commentTextArea').on('input', function () {
-                debugger;
-                $('#charCount').text(500 - this.value.length + ' characters remaining');
-            });
-
-            $('#popupid').hide();
-            $('#TableData').on('click', '#Btncomments', function () {
-                debugger;
-                var table = $(this).closest("table");
-                var clickedRowtext = $(this).closest("tr");
-                var clickedRow = $(this).closest("tr td");
-                
-                var tdNumber = clickedRowtext.find("td").index($(this).closest("td"));
-                var attendancedatetext = table.find('thead').find('th').eq(tdNumber - 5).text();   
-
-                var studentName = clickedRowtext.find("td:nth-child(4)").text().trim();
-                var popupContent = clickedRow.find("#Popuptextspanid");
-              
-                var popupspantext = 'Enter Comments to the date  ' + attendancedatetext + '  for student ' + ' " ' + studentName + ' " ';
-
-                popupContent.text(popupspantext);
-                
-                clickedRow.find("#popupid").toggle();
-
-            });
-
-
-
-            $('#TableData').on('click','#Btnsubmitcomments', function () {
-            //$('#CMT_BTN').on('click','#Btnsubmitcomments', function () {
-                debugger;
-                var comment = $('#commentTextArea').val(); // Get the entered text from the textarea
-                if (comment !== '') {
-
-                    console.log('Comment:', comment);
-                }
-                $(this).closest('#popupid').hide();
-                //$('.popup').hide();
-            });
-
-
-           // $('#Btncomments').click(function () {
-            //$('#TableData').on('click', '#Btncomments', function () {
-            //    var clickedRow = $(this).closest("tr");
-            //    var studentName = clickedRow.find("td:nth-child(4)").text().trim();
-
-            //    debugger;
-            //    //var clickedRow = $(this).closest("tr td");
-            //    //var studentname = clickedRow.find("td:nth-child(4)").text();
-            //    //var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
-            //    //var rowDate = thId.split('_')[1];
-
-            //    var popupspantext = 'Enter Comments to the date' + + 'for student' + '"' + studentName+ '"';
-            //    $('#Popuptextspanid').text(popupspantext);
-
-            //    clickedRow.find("#popupid").show();
-            //    $('.popupid').show();
-            //});
-
-
-            //$('#popupid').hide();
-           // $('#TableData').on('click', '#CMT_BTN', function () {
-            //$('#TableData').on('click', '#Btncomments', function () {
-                //debugger;
-                //var clickedRow = $(this).closest("tr td");
-                //var rowData = clickedRow.find("td:nth-child(4)").text();
-
-                //var popupContent = clickedRow.find("#popupContent");
-
-                //// Extract the date from the th id
-                //var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
-                //var rowDate = thId.split('_')[1];
-                //  popupContent.text(rowData);
-                //$("#popuprowDate").text(rowDate);
-               
-                //clickedRow.find("#popupid").toggle();
-
-                ////debugger;
-                ////var clickedRow = $(this).closest("tr");
-                ////var rowData = clickedRow.find("td:nth-child(4)").text();
-                ////var popupContent = clickedRow.find("#popupContent");
-
-                //////var rowDate = $("th#A_PostingDate").find("input.A_PostingDate").val();
-                ////var thId = clickedRow.find("th[id^='A_PostingDate']").attr('id');
-                ////popupContent.text(rowData);
-                ////$("#popuprowDate").text(rowDate);
-                ////clickedRow.find(".popup").toggle();
-
-           // });
-
-
-
-
-
-           // $('.submit-comments-btn').on('click', function () {
-           
-
-
-            //$("#Btncomments").click(function () {
-            //    debugger;
-            //    var row = $(this).closest("tr td");
-            //    var Studentname = row.find("td:eq(0)").text();
-            //    var popupDiv = $(this).closest("td").find(".popupDiv");
-            //    popupDiv.show();
-            //    /*var firstTdText = $(this).closest("tr").find("td:first").text();*/
-            //});
-
-
-
-
-
-
-
-            $('#TableData tbody tr').each(function () {
-                debugger;
-                var row = $(this);
-
-                row.find('td').each(function (index) {
-                    debugger;
-                    //if (index > 8) {
-                    //    var attedancepostornotdatecolorchangeElement = $(this).text().trim(); // Accessing the text content of the 5th cell (index 4)                       
-                    //}
-
-                    
-
-                    if (index == 9) {
-                        var labelValues = [];
-                        debugger;
-                        $('td#AttendanceId1_Color_Chainge label').each(function (index) {
-                            var labelText = $(this).text().trim();
-                            labelValues.push(labelText); // Push label text content to the array
-                        });
-                        var allEmpty = labelValues.every(function (value) {
-                            return value === '';
-                        });
-                        var anyNotEmpty = labelValues.some(function (value) {
-                            return value !== '';
-                        });
-                        if (allEmpty) {
-                            alert('All values are empty. Showing red alert.');
-                        } else if (anyNotEmpty) {
-                            alert('Green color');
-                        }
-
-
-                        //var tdElement = $('#AttendanceId1_Color_Chainge');
-                        //// Find all <label> elements within the <td>
-                        //var labels = tdElement.find('label');
-                        //// Iterate over the labels
-                        //labels.each(function (index) {
-                        //    debugger;
-
-                        //    var labelText = $(this).text().trim();
-                        //    console.log('Label ' + index + ' text: ' + labelText);
-                        //});
-                    }
-                    
-                   
-
-
-
-                    //var attedancepostornotdatecolorchangeElement = $(this).find('#AttendanceId1_Color_Chainge');
-                    //var attedancepostornotdatecolorchange = attedancepostornotdatecolorchangeElement.length > 0 ? attedancepostornotdatecolorchangeElement.text() : '';
-
-                    ////var attedancepostornotdatecolorchange = $(this).find('#AttendanceId1_Color_Chainge').textContent;
-
-                    ////var tdNumber = clickedRowtext.find("td").index($(this).closest("td"));
-                    ////var attendancedatetext = table.find('thead').find('th').eq(tdNumber - 5).text();
-
-                    //if (attedancepostornotdatecolorchange && attedancepostornotdatecolorchange.trim().length > 0) {
-                    //    //postingDateElement.style.color = "green";
-                    //} else {
-
-                    //}
-                   
-
-                    //if (true) {
-
-                    //}
-                    if (index < 5) {
-                        return true;
-                    }
-                    //var ddDataValue = $(this).find('.content_' + trdd + ' select').val();
-                    var ddDataValue = $(this).find('#ddDataattType').val();
-                    var Commentstextareavalue = $(this).find('#commentTextArea').val();
-                    if (ddDataValue && ddDataValue !== '--Select--') {
-                        debugger;
-                        if (typeof ddDataValue === 'undefined') {
-                            $(this).find("#ckDay").show();
-                        } else {
-                            $(this).find("#ckDay").hide();
-                            $(this).find("#Divcontent").show();
-
-                            if (Commentstextareavalue) {
-                                debugger;
-                                $(this).find("#Btncomments").text('Edit Comments').show();
-                            } else {
-                                debugger;
-                                $(this).find("#Btncomments").text('Add Comments').show();
-                            }                           
-                        }
-                    } else {
-                        $(this).find("#ckDay").show();
-                        $(this).find(".eye-icon").show();
-                        $(this).find('#Divcontent').hide();
-                        $(this).find("#Btncomments").text('Add Comments');
-                    }
-                });
-            });
-           
-
-
-       // var Tblleng = $('#TableData tr').length;
-       // debugger;
-//        var trdd = 1;
-//        for (var i = 1; i < Tblleng; i++) {
-
-//            var dynamicId = '#ddDataattType_' + trdd;
-//        var contents = '.content_' +trdd;
-
-//        //var ddDataValue = $('#TableData tr:eq(' + i + ') .content #ddData').val();
-//        //var ddDataValue = $('#TableData tr:eq(' + i + ') .content #ddDataattType_' + i).val();
-//        var tbllengthvalues = $('#TableData tbody tr:eq(' + i + ') ' + contents + ' ' + dynamicId);
-//        //alert(tbllengthvalues);
-//        //var ddDataValue = $('#TableData tbody tr:eq(' + i + ') ' + contents + ' ' + dynamicId).val();
-//        //var ddDataValues = $('#TableData tbody tr:eq(1)  .content_1 #ddDataattType_1').val();
-//        //var ddDataValues1 = $('#TableData tbody tr:eq(1) #ddDataattType_1').val();
-//        //var ddDataValues11 = $('#TableData tbody  #ddDataattType_1').val();
-//        var ddDataValue = $('#ddDataattType_' + trdd).val();
-
-
-//        // var cell2Text = $('#TableData tbody tr:eq(' + i + ') td:nth-child(2)').text().trim();
-//        // var commentTextAreavalue = $('#TableData tbody tr:eq(' + i + ') .content #commentTextArea').val();
-//        debugger;
-//       // var row = $('#TableData tbody tr:eq(' + i + ')');
-
-
-           
-
-
-
-//        var row = $('#TableData tbody tr');
-//        if (ddDataValue != '--Select--' && ddDataValue != '') {
-//        debugger;
-//        if (typeof ddDataValue == 'undefined') {
-//            row.find(".checkbox").show();
-//        } else {
-//            row.find(".checkbox").hide();
-//        row.find(".eye-icon").show();
-//        row.find(".content_" + trdd).show();
-//        row.find(".add-comments-btn").val('Edit Comments').show();
-//        }
-//    }
-//        else {
-//            row.find(".checkbox").show();
-//        row.find(".eye-icon").show();
-
-//        row.find(".content_" + i).hide();
-//        row.find(".add-comments-btn").val('Add Comments');
-//    }
-//        trdd++;
-//}
-
-
-
-
-
-
-          
-});
-
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<script>
-        var Tblleng = $('#TableData tr').length;
+    $(document).ready(function () {
         debugger;
-        for (var i = 2; i < Tblleng; i++) {
-            var tdElement = document.getElementById('TableData').querySelectorAll('tr')[i].querySelectorAll('td')[7];
-            var contentElement = tdElement.querySelector('.content');
 
-            var commentTextAreavalue = $('#TableData tr:eq(' + i + ') .content #commentTextArea').val();
-            if (commentTextAreavalue && commentTextAreavalue !== '') {
+        $(".eye-icon").click(function () {
+            debugger;
+            var row = $(this).closest("tr td");
+            //var checkboxElement = row.find(".checkbox");
+            var checkboxElement = row.find("input[type=checkbox]");
+            var contentElement = row.find(".content");
+            var btnElement = row.find(".add-comments-btn");
+            var btnelementsid = row.find("#Btncomments");
+            var Dropdown = row.find("#ddDataattType");
+            var Textareacomments = row.find("#commentTextArea");
 
-
-                var eyeIconElement = $('#TableData tr:eq(' + i + ') .eye-icon');
-                eyeIconElement.show();
-
-
-
-                var contentElement = $('#TableData tr:eq(' + i + ') .content');
+            if (checkboxElement.is(":visible")) {
+                checkboxElement.hide();
                 contentElement.show();
-
-                var addCommentsBtnElement = $('#TableData tr:eq(' + i + ') .add-comments-btn');
-                addCommentsBtnElement.val('Edit Comments');
+                btnElement.show();
+            } else {
+                Dropdown.prop('selectedIndex', 0);
+                Textareacomments.val('');
+                btnelementsid.text('Add Comments');
+                checkboxElement.show();
+                checkboxElement.prop("checked", false);
+                contentElement.hide();
 
             }
 
-        }
-
-        //for (var i = 2; i < Tblleng; i++) {
-        //    debugger;
-        //    var tdElement = document.getElementById('TableData').querySelectorAll('tr')[i].querySelector('td');
-        //    var contentElement = tdElement.querySelector('.content');
-
-
-        //    var commentTextAreavalue = $("#commentTextArea").val();
-        //    if (commentTextAreavalue !== '') {
-
-
-        //        var eyeIconElement = $('#TableData tr:eq(' + i + ') td:eq(7) .eye-icon');
-        //        if (commentTextAreavalue !== '') {
-        //            eyeIconElement.hide();
-        //        }
-
-        //        var contentElement = $('#TableData tr:eq(' + i + ') td:eq(7) .content');
-        //        if (contentElement) {
-        //            contentElement.show();
-        //        }
-
-        //        var addCommentsBtnElement = $('#TableData tr:eq(' + i + ') td:eq(7) .add-comments-btn');
-        //        if (addCommentsBtnElement) {
-        //            addCommentsBtnElement.value = 'Edit Comments';
-        //        }
-        //    }
-        //    else {
-        //        var eyeIconElement = $('#TableData tr:eq(' + i + ') td:eq(7) .eye-icon');
-        //        if (commentTextAreavalue !== '') {
-        //            eyeIconElement.show();
-        //        }
-        //    }
-        //}
-
-
-    </script>*@
-
-
-
-
-<script>
-    ///-----Last time
-    //var attendanceId1 = document.getElementById("AttendanceId1_Color_Chainge").textContent;
-    //var postingDateElement = document.getElementById("A_PostingDate");
-
-
-    //if (attendanceId1 && attendanceId1.trim().length > 0) {
-
-    //    postingDateElement.style.color = "green";
-
-    //} else {
-    //    postingDateElement.style.color = "red";
-    //}
-     ///-----Last time
-
-@*click checkbox mails get one checkbox*@
-@*<script>
-        $(document).ready(function () {
-            $("#submit-btn").click(function () {
-                debugger;
-                var rows = $("tbody").find("tr");
-
-                var selectedEmails = [];
-                var unselectedEmails = [];
-
-                rows.each(function () {
-                    var checkbox = $(this).find(".checkbox");
-                    var email = $(this).find("td:nth-child(3)").text();
-
-                    if (checkbox.prop("checked")) {
-                        selectedEmails.push(email);
-                    } else {
-                        unselectedEmails.push(email);
-                    }
-                });
-
-                var selectedEmailCount = selectedEmails.length;
-                var unselectedEmailCount = unselectedEmails.length;
-
-                var message = "";
-
-                if (selectedEmailCount > 0) {
-                    message += "Selected emails: " + selectedEmails.join(", ") + "\n";
-                }
-
-                if (unselectedEmailCount > 0) {
-                    message += "Unselected emails: " + unselectedEmails.join(", ");
-                }
-
-                alert(message);
-
-                // Pass the selected and unselected values to your action method or perform any desired action
-            });
         });
 
-    </script>*@
+        $('#commentTextArea').on('input', function () {
+            debugger;
+            $('#charCount').text(500 - this.value.length + ' characters remaining');
+        });
+
+        $('#popupid').hide();
+        $('#TableData').on('click', '#Btncomments', function () {
+            debugger;
+            var table = $(this).closest("table");
+            var clickedRowtext = $(this).closest("tr");
+            var clickedRow = $(this).closest("tr td");
+
+            var tdNumber = clickedRowtext.find("td").index($(this).closest("td"));
+            var attendancedatetext = table.find('thead').find('th').eq(tdNumber - 5).text();
+
+            var studentName = clickedRowtext.find("td:nth-child(4)").text().trim();
+            var popupContent = clickedRow.find("#Popuptextspanid");
+
+            var popupspantext = 'Enter Comments to the date  ' + attendancedatetext + '  for student ' + ' " ' + studentName + ' " ';
+
+            popupContent.text(popupspantext);
+
+            clickedRow.find("#popupid").toggle();
+
+        });
+
+
+
+        $('#TableData').on('click', '#Btnsubmitcomments', function () {
+            //$('#CMT_BTN').on('click','#Btnsubmitcomments', function () {
+            debugger;
+            var comment = $('#commentTextArea').val(); // Get the entered text from the textarea
+            if (comment !== '') {
+
+                console.log('Comment:', comment);
+            }
+            $(this).closest('#popupid').hide();
+            //$('.popup').hide();
+        });
+
+        $('#TableData tbody tr').each(function () {
+            debugger;
+            var row = $(this);
+
+            row.find('td').each(function (index) {
+                debugger;
+                if (index == 9) {
+                    var labelValues = [];
+                    debugger;
+                    $('td#AttendanceId1_Color_Chainge label').each(function (index) {
+                        var labelText = $(this).text().trim();
+                        labelValues.push(labelText); // Push label text content to the array
+                    });
+                    var allEmpty = labelValues.every(function (value) {
+                        return value === '';
+                    });
+                    var anyNotEmpty = labelValues.some(function (value) {
+                        return value !== '';
+                    });
+
+                    //var thElement = document.querySelector('th[title="attendancedatechangecolorchange"]');
+                    //if (allEmpty) {
+                    //    thElement.style.color = 'red';
+                    //    //alert('All values are empty. Showing red alert.');
+                    //} else if (anyNotEmpty) {
+                    //    thElement.style.color = 'Green';
+                    //   // alert('Green color');
+                    //}
+                }
+
+
+
+
+
+                if (index < 5) {
+                    return true;
+                }
+                //var ddDataValue = $(this).find('.content_' + trdd + ' select').val();
+                var ddDataValue = $(this).find('#ddDataattType').val();
+                var Commentstextareavalue = $(this).find('#commentTextArea').val();
+                if (ddDataValue && ddDataValue !== '--Select--') {
+                    debugger;
+                    if (typeof ddDataValue === 'undefined') {
+                        $(this).find("#ckDay").show();
+                    } else {
+                        $(this).find("#ckDay").hide();
+                        $(this).find("#Divcontent").show();
+
+                        if (Commentstextareavalue) {
+                            debugger;
+                            $(this).find("#Btncomments").text('Edit Comments').show();
+                        } else {
+                            debugger;
+                            $(this).find("#Btncomments").text('Add Comments').show();
+                        }
+                    }
+                } else {
+                    $(this).find("#ckDay").show();
+                    $(this).find(".eye-icon").show();
+                    $(this).find('#Divcontent').hide();
+                    $(this).find("#Btncomments").text('Add Comments');
+                }
+            });
+        });
+    });
+
 
 </script>
-<!--Onely in table checkbox select code start-->
-<script>
-  
-</script>
-
-
-
-<!--Onely in table checkbox select code End-->
-<!--Last Try-->
 <style>
     * {
         box-sizing: border-box;
@@ -1007,30 +695,18 @@
         font-family: 'Montserrat', sans-serif;
     }
 
-    /*
-    Popup
-    Arrows and dropshadows are applied to .popup. Text align is "centered." You'll probably want to set it to "left."
-    */
+
     .popup {
         width: 400px;
         margin-left: -34%;
         /* margin: 0 auto; */
         position: absolute;
-        /* z-index: 999;
+        /* z-index: 999;*/
     }
 
-
-        /*
-    Different arrow positioning
-    */
-        .popup.arrow-top:before{
+        .popup.arrow-top:before {
             left: calc(50% - 10px);
             top: -8px;
-        }
-
-        .popup.arrow-right:before {
-            top: calc(50% - 10px);
-            right: -8px;
         }
 
         .popup.arrow-bottom:before {
@@ -1073,7 +749,7 @@
     }
 
     #commentTextArea {
-       /* border: 1px solid brown;
+        /* border: 1px solid brown;
         border-radius: 4px;
         width: 87%;
         height: 100px;
@@ -1081,8 +757,4 @@
         filter: drop-shadow(1px 2px 2px black);*/
     }
 </style>
-<!--Last Try-->
-<!--popup show and checkbox hide and dropdown code start-->
-
-
-<!--popup show and checkbox hide and dropdown code End-->
+}

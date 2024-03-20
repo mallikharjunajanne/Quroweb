@@ -1,0 +1,30 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Timetablecriteria
+@{
+    ViewData["Title"] = "Timetablecriteria";
+    Layout = null;
+}
+
+@if (ViewBag.Timetablecriteria.Count > 0)
+{
+    <table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+        <thead>
+            <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+                <th>TimeTableTypeId</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Timetablecriteria)
+            {
+                <tr>
+                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.TimeTableTypeId</td>
+                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.Duration</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span class="text-primary">No data available in this area.</span>
+}

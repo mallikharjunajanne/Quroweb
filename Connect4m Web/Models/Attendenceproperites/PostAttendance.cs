@@ -175,7 +175,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string DateString { get; set; }
         public int SunHolidy { get; set; }
         public int SatHolidy { get; set; }
-
+        public bool ShowChangeActivity { get; set; }
     }
 
 
@@ -350,4 +350,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public DateTime HolidayDate { get; set; }
     }
 
+    public class Changeactivity
+    {
+        public string AuditKey { get; set; }
+        public int SourceId { get; set; }
+        public string TableName { get; set; }
+    }
+    public class Changeactivitytbl 
+    {
+        public string AuditTrailId { get; set; }
+        public string AuditKey { get; set; }
+        public string CurrentValue { get; set; }
+        public string PreviousValue { get; set; }
+        public string PreviousValueCreatedBy { get; set; }
+        public string CurrentValueCreatedBy { get; set; }
+        public string CurrentValuecreateddate { get; set; }
+        public string Errormessage { get; set; }
+    }
 }

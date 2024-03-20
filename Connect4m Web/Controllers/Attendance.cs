@@ -55,9 +55,23 @@ namespace Connect4m_Web.Controllers
             InstanceClassificationId = _userService.InstanceClassificationId;
             Roleid = _userService.Roleid;
             StudentUserid = _userService.StudentUserid;
+          
 
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
+
+
+        //SMS Related Creaditials
+        public string BuildSMSTextInXML(string username, string password)
+        {
+            string xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                         "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                         "<REQUESTCREDIT USERNAME=" + username + " PASSWORD=" + password + ">" +
+                         "</REQUESTCREDIT>";
+
+            return xml;
+        }
+
         public IActionResult LoginPage1()
         {
 
@@ -170,6 +184,21 @@ namespace Connect4m_Web.Controllers
             return Json(Value2);
         }
 
+        public IActionResult Deleteattendance(Attendancepost obj)
+        {
+            obj.InstanceId = InstanceId;
+            string updatedDataList = JsonConvert.SerializeObject(obj);
+            StringContent contents = new StringContent(updatedDataList, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Deleteattendance",contents).Result;
+            string item = "";
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<string>(data);
+            }
+            return Json(item);
+        }
+
 
         #region TEACHER LOGIN DROPDOWN DATA BINDING METHODS
         public IActionResult Teacher_attendanceclassification()
@@ -227,12 +256,9 @@ namespace Connect4m_Web.Controllers
 
         //Post Attendance Main Method 
 
-
         //---this two methods are use many places so please dont touch 1.Get_SubClassificationNames_ByInstanceClassifications 2.Slot_by_subclassification
         public IActionResult Get_SubClassificationNames_ByInstanceClassifications(string InstanceId, string InstanceClassificationId)
-        {
-            //var instanceid = Request.Cookies["INSTANCEID"];
-            //var instanceid = Request.Cookies["INSTANCEID"];
+        {          
             List<SelectListItem> value1 = new List<SelectListItem>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
             if (response.IsSuccessStatusCode)
@@ -274,7 +300,20 @@ namespace Connect4m_Web.Controllers
 
             DateTime StDate = obj.StartDate;
             DateTime EDate = obj.EndDate;
-            string ColumnString = GenerateColumnStringds(StDate, EDate, obj.InstancesubjectId).TrimEnd(',');
+            
+            string ColumnString;
+            if (obj.ShowChangeActivity == true)
+            {
+                ColumnString = GenerateShowChangeActivityColumstringColumnString(StDate, EDate, obj.InstancesubjectId).TrimEnd(',');
+            }
+            else
+            {
+                ColumnString = GenerateColumnStringds(StDate, EDate, obj.InstancesubjectId).TrimEnd(',');
+            }
+
+
+
+            //string ColumnString = GenerateColumnStringds(StDate, EDate, obj.InstancesubjectId).TrimEnd(',');
             string startdate = obj.StartDate.ToString("yyyy-MM-dd HH:mm:ss");   //<<<----
             string enddate = obj.EndDate.ToString("yyyy-MM-dd HH:mm:ss");       //<<<----
             string Datestrings = "";
@@ -341,7 +380,6 @@ namespace Connect4m_Web.Controllers
             }
             ViewBag.AttendanceLeave_Types = Attendancetypeslist;
 
-
             if (holidaysNames.Count > 0)
             {
                 return Json(list);
@@ -354,153 +392,12 @@ namespace Connect4m_Web.Controllers
             {
                 return View(list);
             }
-
-
-
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?StartDate=" + startdate 
-            //    + "&EndDate=" + enddate + "&InstanceClassificationId=" + obj.InstanceClassificationId 
-            //    + "&InstanceSubClassificationId=" + obj.InstanceSubclassificaitionId
-            //    + "&SubjectSlotID=" + obj.InstancesubjectId + "&ColumnString=" + ColumnString
-            //    + "&DateString=" + DateString + "&InstanceId=" + InstanceId + "&SatHolidy=" + SatHolidy + "&SunHolidy=" + SunHolidy).Result;
-
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?" + ToQueryString(requestData)).Result;
-
-
-
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?StartDate=" + startdate + "&EndDate=" + enddate + "&InstanceClassificationId=" + obj.InstanceClassificationId + "&InstanceSubClassificationId=" + obj.InstanceSubclassificaitionId + "&SubjectSlotID=" + obj.InstancesubjectId + "&ColumnString=" + ColumnString + "&DateString=" + DateString + "&InstanceId=" + InstanceId).Result;
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?StartDate=" + StartDate + "&EndDate=" + EndDate + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&ColumnString=" + ColumnString + "&DateString=" + DateString + "&InstanceId=" + InstanceId).Result;
-            //string data = response.Content.ReadAsStringAsync().Result;
-            //string data = response.Content.ReadAsStringAsync().Result;
-            //if (response.IsSuccessStatusCode)
-            //{
-
-            //    //string data = response.Content.ReadAsStringAsync().Result;
-
-            //    Mainlist = JsonConvert.DeserializeObject<List<GetAttendancelist>>(data);
-            //}
-
-            //return View();
-            //return Json(list, JsonRequestBehavior.AllowGet);
-
-            //-----------------------------Last Try
-            // return Json(list);
-            //-----------------------------Last Try
-
-
-
-            //List<PostAttendance> value = new List<PostAttendance>();
-            //string ViewBagMyData="";
-            //string StartDate = obj.StartDate.ToString();                
-            //string EndDate = obj.EndDate.ToString();
-            //string SubjectSlotID =obj.InstancesubjectId;
-            //int InstanceClassificationId = int.Parse(obj.InstanceClassificationId);
-            //int InstanceSubClassificationId = int.Parse(obj.InstanceSubclassificaitionId);
-
-
-            ////ViewBag.Departementclass = ViewBagMyData; --->>
-            ////var instanceid = Request.Cookies["INSTANCEID"]; --->>
-
-            //string originalDate = StartDate;
-
-            //DateTime SDate = DateTime.Parse(originalDate);
-
-            //string convertedDate = SDate.ToString("dd'/'MM'/'yyyy");
-
-
-            //DateTime StDate = DateTime.Parse(StartDate);
-            //DateTime EDate = DateTime.Parse(EndDate);
-
-            ////string columnString3 = GenerateColumnStringds(StDate, EDate, SubjectSlotID);    --->>
-            ////columnString3 = columnString3.TrimEnd(',');---->>
-            ////string ColumnString = columnString3;--->>
-
-            //string ColumnString = GenerateColumnStringds(StDate, EDate, SubjectSlotID).TrimEnd(',');
-            //string StartDate1 = obj.StartDate.ToString("yyyy-MM-dd HH:mm:ss");//<<<----
-            //string EndDate1 = obj.EndDate.ToString("yyyy-MM-dd HH:mm:ss");//<<<----
-
-
-            //DateTime startDate = DateTime.Parse(StartDate);
-
-            //string Datestrings = "";
-            //for (int i = 0; i < 7; i++)
-            //{
-            //    DateTime currentDate = startDate.AddDays(i);
-            //    Datestrings += "[" + currentDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + "],";
-            //}
-
-            //Datestrings = Datestrings.TrimEnd(',');
-            //string DateString = Datestrings;
-            //string StartDates = Convert.ToString(StartDate);
-            //string dateFormat = startDate.ToString("dd'/'MM'/'yyyy");
-
-
-
-
-
-            //TempData["Date"] = Convert.ToString(StartDate);
-            //if (StartDate == EndDate)
-            //{
-            //    ViewBag.Date = StartDates;
-
-            //    ViewBag.DateFormate = dateFormat;
-            //}
-            //else
-            //{
-            //    ViewBag.Date = StartDates;
-            //    ViewBag.EndDate = EndDate;
-            //    ViewBag.DateFormate = dateFormat;
-            //}
-
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?StartDate=" + StartDate1 + "&EndDate=" + EndDate1 + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&ColumnString=" + ColumnString + "&DateString=" + DateString + "&InstanceId=" + InstanceId).Result;
-            ////HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_attendance?StartDate=" + StartDate + "&EndDate=" + EndDate + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&ColumnString=" + ColumnString + "&DateString=" + DateString + "&InstanceId=" + InstanceId).Result;
-            //string data = response.Content.ReadAsStringAsync().Result;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    //string data = response.Content.ReadAsStringAsync().Result;
-            //    value = JsonConvert.DeserializeObject<List<PostAttendance>>(data);
-            //}
-
-
-
-            //List<SelectListItem> Value2 = new List<SelectListItem>();
-            //HttpResponseMessage Get_Types_response = client.GetAsync(client.BaseAddress + "/Get_AttendanceTypes_Dd?InstanceId=" + InstanceId).Result;
-            //if (Get_Types_response.IsSuccessStatusCode)
-            //{
-            //    string data_DD = Get_Types_response.Content.ReadAsStringAsync().Result;
-            //    Value2 = JsonConvert.DeserializeObject<List<SelectListItem>>(data_DD);
-            //}
-            //ViewBag.AttendanceLeave_Types = Value2;
-
-            //if (value[0].ErrorMessages == "1")
-            //{
-            //    string originalDates = StartDate;
-            //    DateTime SDates = DateTime.Parse(originalDate);
-            //    string convertedDates = SDates.ToString("dd'/'MM'/'yyyy");
-            //    ViewBag.E_Message = "There are holidays/week-offs in the selected date range on " + convertedDates + " (Sunday).";
-
-            //    ViewBag.ModelMessage = "1";
-            //    return View();
-            //}
-
-            //ViewBag.Errormessage = value[0].ErrorMessages;
-            //ViewBag.CountAttendanceList = value.Count();
-
-            //return View(value);
-            //}
-            //catch (Exception)
-            //{
-            //    //return View();
-            //    throw;
-            //}
-
-
         }
 
 
 
 
-        //Create Columnstring parameter  Method
-        // public string GenerateColumnStringds(DateTime StDate, DateTime EDate,string SubjectSlotID)
+        //Create Columnstring parameter  Method        
         public string GenerateColumnStringds(DateTime StDate, DateTime EDate, int SubjectSlotID)
         {
             StringBuilder columnStringBuilder = new StringBuilder();
@@ -525,7 +422,38 @@ namespace Connect4m_Web.Controllers
 
             return columnStringBuilder.ToString();
         }
+        //Create Show Change Activity Columnstring parameter  Method       
+        public string GenerateShowChangeActivityColumstringColumnString(DateTime StDate, DateTime EDate, int SubjectSlotID)
+        {
+            StringBuilder columnStringBuilder = new StringBuilder();
+            int totalDays = (EDate - StDate).Days + 1;
 
+            //Append the columns for the provided dates 
+            int count = 0;
+            for (int i = 0; i < totalDays; i++)
+            {
+                DateTime currentDate = StDate.AddDays(i);
+                string convertedDate = currentDate.ToString("dd'/'MM'/'yyyy");
+                int columnNumber = i + 1;
+                columnStringBuilder.AppendFormat("[{0}] as column{1},[dbo].[fn_Get_AttendanceActivity](UserId," + SubjectSlotID + ",'" + convertedDate + "',NULL) as DisplayIcon{1},[dbo].[fn_Get_AttendanceId](UserId," + SubjectSlotID + ",'{0}',NULL) as AttendanceId{1},", convertedDate, columnNumber);
+                count++;
+            }
+            int leng = 7 - count;
+            for (int i = count + 1; i <= 7; i++)
+            {
+                columnStringBuilder.AppendFormat("NULL as column{0},0 as DisplayIcon{0},NULL as AttendanceId{0},", i);
+            }
+
+            return columnStringBuilder.ToString();
+        }
+
+
+        public IActionResult Changeactivitytblattendance(Changeactivity obj)
+        {
+            List<Changeactivitytbl> list = new List<Changeactivitytbl>();
+            list = CommonMethodobj.CommonListMethod<Changeactivity, Changeactivitytbl>(obj, "/Changeactivity", client);
+            return Json(list);          
+        }
 
         [HttpPost]
         public IActionResult post_ate(string dataList)
@@ -807,102 +735,7 @@ namespace Connect4m_Web.Controllers
        
         [HttpPost]
         public IActionResult PostAttendance(string dataList)
-        {
-            //List<Attendanceposting> attendanceData = JsonConvert.DeserializeObject<List<Attendanceposting>>(dataList);
-
-            //string items = "";
-
-
-            //int Instanceid = InstanceId;
-            //DateTime NotificationDate = DateTime.Now;
-            //string NotificationSubject = "Attendance";
-            //int NoticeTypeId = 1;
-
-
-            //string StudentNotificationMessage = "";
-            //string ParentNotificationMessage = "";
-
-            //string data1 = "";
-            //string apiUrl;
-            //var content = new StringContent(string.Empty);
-            //HttpResponseMessage response;
-
-
-            //foreach (var attendance in attendanceData)
-            //{
-            //    // Accessing properties of each Attendanceposting object
-            //    string studentId = attendance.Studentuserid;
-            //    string parentPhone = attendance.ParentPhNo;
-            //    string studentName = attendance.studentName;
-            //    // Accessing attendancedetails list within each Attendanceposting object
-            //    foreach (var detail in attendance.attendancedetails)
-            //    {
-            //        string attendanceDate = detail.attendancedate;
-            //        string isPresent = detail.isPresentValue;
-            //        string dropdownValue = detail.dropdownValue;
-            //        string comments = detail.Comments;
-            //        string parentId = detail.ParentId;
-            //        string parentName = detail.ParentName;
-
-
-            //        string dropdownText = detail.dropdowntext;
-            //        string dateValue = detail.attendancedate;                   
-                    
-            //        if (isPresent == "0")
-            //        {
-            //            // Check if AttendanceTypetext is empty
-            //            string attendanceType = string.IsNullOrEmpty(dropdownText) ? "Absent" : dropdownText.Trim();
-            //            // Absent message
-            //            StudentNotificationMessage = $"Dear {studentName}, your attendance for {dateValue} has been posted as {attendanceType}."; 
-            //        }
-            //        else
-            //        {
-            //            // Present message
-            //            StudentNotificationMessage = $"Dear {studentName}, your attendance for {dateValue} has been posted as Present.";
-            //        }
-
-            //        int StudentUserid1 = int.Parse(attendance.Studentuserid);
-            //        int IsParent = 0;
-                    
-                   
-
-            //         apiUrl = $"/AttendancePost_?InstanceId={InstanceId}&UserId={StudentUserid1}&IsParent={IsParent}&NotificationDate={NotificationDate}&NotificationSubject={NotificationSubject}&NotificationMessage={StudentNotificationMessage}&NoticeTypeId={NoticeTypeId}&CreatedBy={UserId}";
-            //        response = client.PostAsync(client.BaseAddress + apiUrl, content).Result;
-            //        data1 = response.Content.ReadAsStringAsync().Result;
-            //        //if (response.IsSuccessStatusCode)
-            //        //{
-
-            //        //}
-
-
-            //        if (isPresent == "0")
-            //        {
-            //            // Check if AttendanceTypetext is empty
-            //            string attendanceType = string.IsNullOrEmpty(dropdownText) ? "Absent" : dropdownText.Trim();
-            //            // Absent message
-            //            ParentNotificationMessage = $"Dear Parent ({parentName}), your ward's attendance for {dateValue} has been posted as {attendanceType}.";
-            //        }
-            //        else
-            //        {
-            //            // Present message
-            //            ParentNotificationMessage = $"Dear Parent ({parentName}), your ward's attendance for {dateValue} has been posted as Present.";
-            //        }
-
-                
-
-            //        if (detail.ParentId !="")
-            //        {
-            //            int Parentid = int.Parse(detail.ParentId);
-            //            int IsParents = 1;
-
-            //            var Apiurl = $"/AttendancePost_?InstanceId={InstanceId}&UserId={Parentid}&IsParent={IsParents}&NotificationDate={NotificationDate}&NotificationSubject={NotificationSubject}&NotificationMessage={ParentNotificationMessage}&NoticeTypeId={NoticeTypeId}&CreatedBy={UserId}";
-            //            response = client.PostAsync(client.BaseAddress + Apiurl, content).Result;
-            //            data1 = response.Content.ReadAsStringAsync().Result;
-            //        }
-            //    }
-            //}
-
-
+        {  
             List<Attendanceposting> attendanceList = JsonConvert.DeserializeObject<List<Attendanceposting>>(dataList);
             Attendanceposting listvalues = new Attendanceposting();
             listvalues.InstanceId = InstanceId;
@@ -916,7 +749,7 @@ namespace Connect4m_Web.Controllers
             string updatedDataList = JsonConvert.SerializeObject(listvalues);
             StringContent contents = new StringContent(updatedDataList, Encoding.UTF8, "application/json");
             HttpResponseMessage responses = client.PostAsync(client.BaseAddress + "/Attendanceinserting", contents).Result;
-            string itemss = "";
+            //string itemss = "";
             List<string> items = new List<string>();
             string data2 = responses.Content.ReadAsStringAsync().Result;
             if (responses.IsSuccessStatusCode)
@@ -926,75 +759,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(items);
             //return Json(itemss);
-
-
-
-            //try
-            //{
-            //    foreach (var attendance in attendanceData)
-            //    {
-            //        string studentId = attendance.Studentuserid;
-            //        string parentPhone = attendance.ParentPhNo;
-            //        string studentName = attendance.studentName;
-            //        int SubjectSlotID = attendance.SubjectSlotID;
-            //        foreach (var detail in attendance.attendancedetails)
-            //        {
-            //            string attendanceDate = detail.attendancedate;
-            //            string isPresent = detail.isPresentValue;
-            //            string dropdownValue = detail.dropdownValue;
-            //            string comments = detail.Comments;
-            //            string parentId = detail.ParentId;
-            //            string parentName = detail.ParentName;
-
-
-            //            string dropdownText = detail.dropdowntext;
-            //            string dateValue = detail.attendancedate;
-            //            DateTime date = DateTime.ParseExact(attendanceDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            //            string formattedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
-            //            if (dropdownValue == "--Select--")
-            //            {
-            //                dropdownValue = "";
-            //            }
-
-            //            StringContent contentss = new StringContent("", Encoding.UTF8, "application/json");
-            //            HttpResponseMessage responsess = client.PostAsync(client.BaseAddress + "/AttendanceSpecialCommentsinsert_?UserID="+ studentId+ "&SubjectSlotID="+ SubjectSlotID+ "&Ispresent="+ isPresent+ "&AttendanceDate="+ formattedDate+ "&AttendanceType="+ dropdownValue+ "&SplAttenanceComments="+ comments+ "&CreatedBy="+UserId, contentss).Result;
-
-            //            string data3 = responsess.Content.ReadAsStringAsync().Result;
-            //            if (responses.IsSuccessStatusCode)
-            //            {
-
-            //                items = JsonConvert.DeserializeObject<string>(data3);
-            //            }
-            //        }
-            //    }
-
-            //    //    foreach (var data in attendanceData)
-            //    //{
-            //    //    data.InstanceId = InstanceId;
-            //    //    data.CreatedBy = UserId;
-            //    //}
-
-            //    //string updatedDataJson = JsonConvert.SerializeObject(attendanceData);
-            //    //StringContent contents = new StringContent(updatedDataJson, Encoding.UTF8, "application/json");
-            //    //HttpResponseMessage responses = client.PostAsync(client.BaseAddress + "/AttendanceSpecialCommentsinsert", content).Result;
-            //    //string items = "";
-            //    //string data2 = responses.Content.ReadAsStringAsync().Result;
-            //    //if (responses.IsSuccessStatusCode)
-            //    //{
-
-            //    //    items = JsonConvert.DeserializeObject<string>(data2);
-            //    //}
-            //    //return Json(items);
-            //    return Json(items);
-            //}
-            //catch (Exception)
-            //{
-            //    return Json(items);
-            //    throw;
-            //}
-
-
-
 
         }
 
@@ -1075,7 +839,7 @@ namespace Connect4m_Web.Controllers
         {
 
             //var instanceid = Request.Cookies["INSTANCEID"];
-            var UserIDs = Request.Cookies["LoginUserId"];
+            //var UserIDs = Request.Cookies["LoginUserId"];
 
             
             ViewBag.TClassification = null;
@@ -1272,6 +1036,8 @@ namespace Connect4m_Web.Controllers
         [HttpGet]
         public IActionResult FastAttendance()
         {
+            string roleName = Request.Cookies["RoleName"];
+            ViewBag.rolename = roleName;
             return View();
         }
         public IActionResult FastAttendanceClassification()//Fast_Get_Classification
@@ -1294,9 +1060,7 @@ namespace Connect4m_Web.Controllers
                 string data1 = responseSlot.Content.ReadAsStringAsync().Result;
                 slotslist = JsonConvert.DeserializeObject<List<FastAttendance>>(data1);
             }
-            return Json(slotslist);
-            //ViewBag.Slot_Subjectnames = Valueslist;
-            //return View();
+            return Json(slotslist);           
         }
 
         public IActionResult FastAttendancegetSubclass(int InstanceClassificationId)
@@ -1363,9 +1127,8 @@ namespace Connect4m_Web.Controllers
 
         }
 
-        [HttpPost]
-        //public ActionResult FastAttendance(FastAttendance obj, string InstanceClassificationId, string StartDate, string SubjectSlotID, List<Dictionary<string, string>> formData,string CreatedBy)
-        public ActionResult FastAttendance(FastAttendance obj, int InstanceClassificationId, DateTime StartDate, int SubjectSlotID, List<Dictionary<string, string>> formData)
+        [HttpPost]   
+        public ActionResult FastAttendance(FastAttendance obj, int InstanceClassificationId, DateTime StartDate, int SubjectSlotID, List<Dictionary<string, string>> formData,bool Studentsms,bool Parentsms,string SubjectSlotName)
         {
 
             string items = "";
@@ -1382,25 +1145,25 @@ namespace Connect4m_Web.Controllers
 
                 for (int i = 0; i < instanceSubClassificationIds.Length; i++)
                 {
-                    var currentInstanceSubClassificationId = instanceSubClassificationIds[i];
 
-                    //for (int j = 0; j < textareaValues.Length; j++)
-                    //{
-                    //var currentTextareaValue = textareaValues[j];
+                    string SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
+                    string SMSFromText = "ADSTEK";
+                    string Action = "credits";                  
+
+
+
+                    var currentInstanceSubClassificationId = instanceSubClassificationIds[i];           
 
                     string data1 = JsonConvert.SerializeObject(obj);
                     StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Fast_At_Post?InstanceID=" + InstanceId + "&UserIds=" + textareaValue + "&InstanceClassificationId=" + InstanceClassificationId + "&StartDate=" + startDate + "&InstanceSubClassificationId=" + instanceSubClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&CreatedBy=" + UserId, content).Result;
+                    HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Fast_At_Post?InstanceID=" + InstanceId + "&UserIds=" + textareaValue + "&InstanceClassificationId=" + InstanceClassificationId + "&StartDate=" + startDate + "&InstanceSubClassificationId=" + instanceSubClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&CreatedBy=" + UserId+ "&Studentsms="+ Studentsms+ "&Parentsms="+ Parentsms+ "&SubjectSlotName="+ SubjectSlotName+ "&SMSTextInXML="+ SMSTextInXML+ "&SMSFromText="+ SMSFromText+ "&Action="+ Action, content).Result;
                     var data2 = "";
-
-                    //{ "type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"|6e47da35-45210d69253871e0.1.4d2e33eb_","errors":{ "StartDate":["The value '21-08-2023 00:00:00' is not valid."]} }
 
                     if (response.IsSuccessStatusCode)
                     {
                         data2 = response.Content.ReadAsStringAsync().Result;
                         items = JsonConvert.DeserializeObject<string>(data2);
-                    }
-                    //}
+                    }                   
                 }
             }
             return Json(items);

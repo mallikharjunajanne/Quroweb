@@ -8,10 +8,7 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-
-    @*<link href="~/css/Managehomepage.css" rel="stylesheet" />*@
-
+<head>  
 </head>
 <body>
 
@@ -118,15 +115,6 @@
                                                 <span asp-validation-for="LinkName" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        @*<form id="MyForm">
-                                            <div class="row">*@
-                                        @*<div class="col-3"></div>
-                                            <div class="form-group col-2"><label class="form-grop" style=" margin-left: 9px;"><font class="Required">*</font>Cool Link Name :</label></div>
-                                            <div class="form-group col-4">
-                                                <input type="hidden" asp-for="InstanceId" value="@ViewBag.Instanceid" id="S_InstanceIdTxt" />
-                                                <input type="hidden" asp-for="UserId" value="@ViewBag.LoginUserId" id="S_UserIdTxt" />*@
-
-
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link URL</label>
                                             <div class="col-sm-4">
@@ -134,34 +122,13 @@
                                                 <span asp-validation-for="LinkURL" class="text-danger"></span>
                                             </div>
                                         </div>
-
-
-                                        @*<div class="col-3"></div>
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2"><label class="form-grop" style=" margin-left: 21px;"><font class="Required">*</font>Cool Link URL  :</label>                                    </div>
-                                            <div class="form-group col-4">
-                                                <input type="url" asp-for="LinkURL" id="S_LinkURLTxt" style=" width: 90%;" class="form-control">
-                                            </div>*@
-
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
                                             <div class="col-sm-4">
                                                 <textarea asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea>
                                                 <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
-                                        </div>
-
-                                        @*<div class="col-3"></div>
-                                            <div class="col-3"></div>
-                                            <div class="form-group col-2"><label class="Descriptionlbl">Description  :</label></div>
-                                            <div class="form-group col-4">  <textarea style=" height: 80px; width: 90%;" asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea><span asp-validation-for="Description"></span></div>
-                                            <div class="col-3"></div>
-                                            <div class="col-3"></div>*@
-                                        @*<div class="col-12" style="text-align: center; margin-top: 12px; ">
-                                                <input type="button" class="btn btn-pill btn-outline-warning btn-air-warning" id="Clear_savebtn" value="Clear" />
-                                                <input type="button" class="btn btn-pill btn-outline-secondary btn-sm" id="Backtoseach_savebtn" value="Back To Search" />
-                                                <input type="button" class="btn btn-pill btn-outline-success btn-air-success" id="savecoollink_btn" value="Save" />
-                                            </div>*@
+                                        </div>                                      
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
                                                 <button type="reset" class="btn btn-warning waves-effect waves-light" id="Clear_savebtn">Clear</button>
@@ -182,7 +149,7 @@
             <div id="CoollinkUpdateView" style="display:none;">
                 <div class="col-md-12 col-lg-12 mb-3">
                     <span id="Updatevalidation2" class="text-danger"></span>
-                    <span id="UpdatevalidationMessage" class="text-danger"></span>
+                    <span id="UpdateMessage" class="text-danger"></span>
                     <div class="card mb-4">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
@@ -192,7 +159,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col" id="ManageHolidaysMaindivId">
-                                    <form id="UpdateForm">
+                                    <form id="UpdateForm" enctype="multipart/form-data">
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link Name</label>
                                             <div class="col-sm-4">
@@ -208,9 +175,6 @@
                                                 <span asp-validation-for="LinkName" class="text-danger"></span>
                                             </div>
                                         </div>
-
-
-
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label  text-end space">Description</label>
                                             <div class="col-sm-4">
@@ -218,9 +182,6 @@
                                                 <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
                                         </div>
-
-
-
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
                                                 <button type="button" class="btn btn-warning waves-effect waves-light" id="Delete_Upbtn">Delete</button>

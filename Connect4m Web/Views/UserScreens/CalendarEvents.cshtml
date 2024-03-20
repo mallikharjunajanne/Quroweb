@@ -127,22 +127,28 @@
             table.append('<td class="OtherMonth"></td>');
         }
 
+        
+
         for (let i = 1; i <= daysInMonth; i++) {
             let cellClass = 'Weekdays';
             let eventtitle = '';
             let EventName = '';
             let currentDateFormatted = formatDate(date);
-            let today = new Date(); // Get today's date
-            let isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === today.getDate();
+            let today = new Date(); // Get today's date       
 
+     
 
+            //ONLY ONE MONTH  TODAY DATE BACKGROUND COLOR BLACK
+            //let isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === today.getDate();
+
+            //EVERY MONTH TODAY DATE BACKGROUND COLOR BLACK
+            let isToday = i === today.getDate();
 
             let eventExists = false;
             for (let j = 0; j < eventCalendar.length; j++) {
                 let eventDate = new Date(eventCalendar[j].eventdate);
                 eventtitle = eventCalendar[j].EventTitle;
                 let formattedEventDate = formatDate(eventDate);
-
                 if (formattedEventDate === currentDateFormatted) {
                     eventExists = true;
                     break;
@@ -152,12 +158,14 @@
             let cellStyle = 'width: 10%;';
             if (eventExists) {
                 cellClass += ' EventDateStyle';
-                cellStyle += 'background-color:lightgreen;color:black;';
+                cellStyle += 'background-color:lightgreen;color:black;height:20%;';
                 EventName = eventtitle;
             }
             if (isToday) {
                 cellStyle += 'width: 10%;background-color: #999999;';
             }
+
+           
 
             //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
             table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="${cellStyle}">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
@@ -207,7 +215,7 @@
             'color': 'green',
             'background-color': 'lightgreen',
             'width':'10%;',
-            'border': '1px solid black' // Add border style as an example
+            /*'border': '1px solid black'*/ // Add border style as an example
         });
 
     });

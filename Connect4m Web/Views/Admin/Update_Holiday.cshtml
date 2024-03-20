@@ -6,7 +6,7 @@
 
 
 <div class="col-md-12 col-lg-12 mb-3">
-    <span id="Errormessage" class="text-danger"></span>
+    <span id="Updateerrormessage" class="text-danger"></span>
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">
@@ -45,19 +45,19 @@
                             <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Type </label>
                             <div class="col-sm-6" style="display:flex;">
                                 <div class="form-check col-4">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="1" id="defaultRadio1" asp-for="HType">
+                                    <input name="Holidaytyperadio1" class="form-check-input" type="radio" value="1" id="defaultRadio1" asp-for="HType">
                                     <label class="form-check-label" for="defaultRadio1">
                                         Holidays
                                     </label>
                                 </div>
                                 <div class="form-check col-4">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="2" id="defaultRadio2" asp-for="HType">
+                                    <input name="Holidaytyperadio1" class="form-check-input" type="radio" value="2" id="defaultRadio2" asp-for="HType">
                                     <label class="form-check-label" for="defaultRadio2">
                                         Week-Ends
                                     </label>
                                 </div>
-                                <div class="form-check col-4">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
+                                <div class="form-check col-8">
+                                    <input name="Holidaytyperadio1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
                                     <label class="form-check-label" for="defaultRadio3">
                                         Restricted Holidays
                                     </label>
@@ -65,9 +65,9 @@
                             </div>
                             <label class="control-label col-sm-4 col-form-label  text-end "></label>
                             <div class="col-sm-4">
-                                <span asp-validation-for="HolidayType" id="HolidaySpid" class="text-danger"></span>
+                                <span asp-validation-for="HolidayType" id="HolidaytypeSpid" class="text-danger"></span>
                             </div>
-                        </div>
+                        </div> 
 
 
                         <div class="row justify-content text-center">
@@ -79,32 +79,27 @@
                             </div>
                         </div>
                     </form>
-                        @*<div class="form-group col-9">
-                                <input type="button" id="Dltbtn" name="Delete" value="Delete" class="btn btn-pill btn-outline-danger btn-air-danger">
-                                <input type="button" id="BackToSearchUbtn" name="BackToSearch" value="BackToSearch" class="btn btn-pill btn-outline-primary btn-aprimary">
-                                <input type="button" id="CEFTHbtn" name="CEFTH" value="Create Exception for this Holiday" class="btn btn-pill btn-outline-info btn-air-info">
-                                <input type="submit" id="Updatebtn" name="Update" value="Update" class="btn btn-pill btn-outline-success btn-air-success">
-                            </div>
-                            <div class="col-3"></div>*@
-
-
-                   
                 </div>
             </div>
         </div>
     </div>
 </div>
-   
 
 
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/jquery/dist/jquery.min.js"></script>
-            <script src="~/Datatable/jquery.dataTables.min.js"></script>
 
-            <script src="~/js/Manageholiday.js"></script>
-            <script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
 
-        $(document).ready(function () {
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="~/js/Manageholiday.js"></script>
+<script>
+
+ $(document).ready(function () {
             debugger;
         var originalstartDate = '@ViewBag.Items.StartDate';
         var startdateParts = originalstartDate.split(' ')[0].split('-');
@@ -120,10 +115,10 @@
         $('#Holidaytxtid').val('@ViewBag.Items.HolidayName');
             var holidayType = '@ViewBag.Items.HolidayType';
 
-            $("input[name='default-radio-1'][value='" + holidayType + "']").prop('checked', true);
+     $("input[name='Holidaytyperadio1'][value='" + holidayType + "']").prop('checked', true);
 
         //$("input[name='radio1'][value='" + holidayType + "']").prop('checked', true);
 
     });
 
-            </script>
+</script>

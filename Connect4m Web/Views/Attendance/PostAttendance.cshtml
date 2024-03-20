@@ -53,7 +53,7 @@
                                             <label asp-for="StartDate" id="RlStartdate" class="control-label col-sm-4 col-form-label text-end required space">StartDate</label>
                                             <div class="col-sm-4">
                                                 <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
-                                                <span id="Roldisplaydate" class="form-control"></span>
+                                                <span id="Roldisplaydate" class="form-control" style="display:none;"></span>
                                                 <span asp-validation-for="StartDate" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                             <label asp-for="EndDate" class="control-label col-sm-4 col-form-label text-end required space">EndDate </label>
                                             <div class="col-sm-4">
                                                 <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
-                                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                                                <span asp-validation-for="EndDate" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -105,14 +105,14 @@
                                         <div class="row mb-3">
                                             <label class="control-label col-sm-4 col-form-label text-end"></label>
                                             <div class="col-sm-4">
-                                                <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
-                                                <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show Change Activity</label>
+                                                <input type="checkbox" class="form-check-input checkbox_animated" asp-for="ShowChangeActivity" id="Changactivitychk">
+                                                <label class="form-check-label" id="Changactivitychk" asp-for="ShowChangeActivity">Show Change Activity</label>
                                             </div>
                                         </div>
 
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
-                                                @*<input type="button" class="btn btn-success waves-effect waves-light" value="Get Attendance Form"  style=" border-radius: 13px;">*@
+                                                <button type="button" class="btn btn-warning waves-effect waves-light" id="btndelete" onclick="AttendancedeleteAll();" style="display:none;">Delete</button>
                                                 <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
                                             </div>
                                         </div>
@@ -160,28 +160,8 @@
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
 
 <script src="~/js/Get_ClassificationNames.js"></script>
-<style>
-    /*
-    .spinner-container {
-        display: flex;
-        align-items: center;
-    }
+<script src="~/js/Getclassification1.js"></script>
 
-    .spinner {
-        margin-right: 10px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        animation: spin 2s linear infinite;
-    }
-
-    keyframes spin {
-        transform: rotate(0deg);
-        transform: rotate(360deg);
-    }*/
-</style>
 
 <script>
     //Date Function Javascript Code start

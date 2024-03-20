@@ -36,6 +36,19 @@ $(document).ready(function () {
 
 });
 
+//==>>>BACK TO SEARCH CREATE SMS AND NOTICE TO NOTICE HOME PAGE 
+$('#btnBackToSearch').click(function () {
+    debugger;
+    $('#Message_spid').text('');
+    $('#Addnotice_div1').empty();
+    $('#Addsms_div2').empty();
+    $('#Addnoticeandsms_div3').empty();
+    $('#Home_SearchNoticesdiv').show();
+    $('#Home_SearchNotices_Updatediv').hide();
+});
+
+
+
 function Letterscount() {
     var textarea = document.getElementById("Subjecttxtid");
     var charCount = document.getElementById("LtCounts");
@@ -53,6 +66,17 @@ function remaingcount() {
     var remaining = 6500 - textarea.value.length;
     charCount.textContent = remaining + " Character(s) remaining. ";
     charCountlength.textContent = "Typed Characters: " + textarea.value.length;
+}
+
+function SpecialCharacters(event) {
+    debugger;
+    var key = event.key;
+    // Check if the pressed key is a single quote or a double quote
+    if (key === "'" || key === '"') {
+        event.preventDefault();
+        return false;
+    }
+    return true;
 }
 
 

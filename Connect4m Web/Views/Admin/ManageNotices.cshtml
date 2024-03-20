@@ -70,8 +70,8 @@
                                 </div>
                                 <div class="row justify-content text-center">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-warning waves-effect waves-light" id="Noticebtnclear">Clear</button>@*Clearcoollink_Btn*@
-                                        <button type="button" class="btn btn-success waves-effect waves-light" id="Noticesearchbtn">Search</button>@*SearchNotice_Btn*@
+                                        <button class="btn btn-warning waves-effect waves-light" id="Noticebtnclear">Clear</button>
+                                        <button type="button" class="btn btn-success waves-effect waves-light" id="Noticesearchbtn">Search</button>
                                     </div>
                                 </div>
                             </form>
@@ -82,6 +82,7 @@
             <div id="Searchnoticestablediv">
                 <div class="col-md-12 col-lg-12 mb-3">
                     <span class="text-danger" id="ErrorMessage"></span>
+                    <a href="javascript:void(0)" id="lnkexporttoexcel">Export To Excel</a>
                     <div class="card mb-4">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">
@@ -218,23 +219,7 @@
         <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id">
 
         </div>
-
-
     </div>
-
-
-
-
-    @*<div id="SearchNoticetableview">
-        <div style="color:red;font-size:13px;"><span id="ErrorMessage"></span></div>
-        <div id="Noticetabledata_div">
-        </div>
-    </div>
-    <div class="card">
-        <div id="Create_NoticeView">
-        </div>
-    </div>*@
-
 </body>
 </html>
 
@@ -244,216 +229,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
 <script src="~/js/ManageNotices.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.1/exceljs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 @*<script src="~/js/Managenotice_1.js"></script>*@
 
-<script>
-
-    $(document).ready(function () {
-
-       // managenotice_tabledata();
-        $('#ManagenoticeMaindiv').show();
-        $('#Home_SearchNotices_Updatediv').hide();
-        //var Instanceid = $('#Instance_Txtid').val();
-        //var Loginuser = $('#Loginuser_Txtid').val();
-
-        NoticeDropdown_UpdateNotice_In_View();        
-
-
-       
-
-    });
-
-
-   
-
-
-    /*--------CREATE NOTICE VIEWS CODE START-----------*/
-
-    $("a.btn-outline-primary").on("click", function (e) {
-        e.preventDefault();
-
-        $('#ManagenoticeMaindiv').hide();
-        $('#Home_SearchNotices_Updatediv').hide();
-        $('#ErrorMessage').text("");
-
-        $('#Managenotice_CreateSMS_Divid').remove();
-
-        $("#Addnotice_div1").load($(this).attr("href"));
-
-
-    });
-
-
-    /*--------CREATE NOTICE VIEWS CODE END-----------*/
-
-
-
-
-
-
-    /*-----------------------------------------------------------------#######   Update Table Notice Data Function Code Start  #######---------------------------------------------------------------------------------*/
-
-
-    function NoticeDropdown_UpdateNotice_In_View() {
-        var InstanceIds = $('#Instance_STxt').val();
-        var InstanceIdSS = $('#InstanceIdTXT').val();
-
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("NoticeTypedd", "Admin")",
-            data: { InstanceId: InstanceIdSS },
-            success: function (data) {
-                $.each(data, function (index, item) {
-                    $("#ENoticeTypeId_UTXT").append($('<option>', {
-                        value: item.value,
-                        text: item.text
-                    }));
-                });
-            },
-            error: function (error) {
-                console.error("Error fetching data:", error);
-            }
-        });
-    }
-
-    function ENoticeedit(ENoticeId) {
-        debugger;
-        $('#UpdateErrorMessage').text('');
-        $('#UpdatevalidationMessage').text('');
-        $('#Updatevalidation').text('');
-
-        NoticeDropdown_UpdateNotice_In_View();
-        $('#ManagenoticeMaindiv').hide();
-        $('#Home_SearchNotices_Updatediv').show();
-        $('#ErrorMessage').text("");
-
-
-
-        $.ajax({
-            url: "/Admin/Edit_ENotices_ById",
-            data: { ENoticeId: ENoticeId },
-            type: "GET",
-            success: function (response) {
-
-
-                debugger;
-
-                $("#InstanceId_UTXT").val(response[0].instanceId);
-                $("#CreatedBy_UTXT").val(response[0].createdBy);
-                $("#ENoticeId_UTXT").val(response[0].eNoticeId);
-
-                var eNoticeTypeId = response[0].eNoticeTypeId;
-
-                $('#ENoticeTypeId_UTXT option').each(function () {
-                    var ENoticeTypeValue=$(this).val();
-
-                    if (parseInt(ENoticeTypeValue) === parseInt(eNoticeTypeId)) {
-                        $(this).prop("selected", true);
-                    }
-                    else {
-                        $(this).prop("Selected",false);
-                    }
-                });
-                $("#Subject_UTXT").val(response[0].subject);
-                $("#ENoticeDescription_UTXT").val(response[0].eNoticeDescription);
-
-
-
-                var originalstartDate = response[0].startDate;
-                var startdateParts = originalstartDate.split(' ')[0].split('-');
-                var formattedstartDate = startdateParts[2] + '-' + startdateParts[1] + '-' + startdateParts[0];
-
-                document.getElementById("StartDate_UTXT").value = formattedstartDate;
-
-                var originalendtDate = response[0].expiryDate;
-                var enddateParts = originalendtDate.split(' ')[0].split('-');
-                var formattedendDate = enddateParts[2] + '-' + enddateParts[1] + '-' + enddateParts[0];
-
-                document.getElementById("EndDate_UTXT").value = formattedendDate;
-
-                var FileName = response[0].noticeDocument;
-
-                var characterCount = FileName.length;
-                if (characterCount > 0) {
-                    $("#currentFileName").text(FileName);
-                    $("#NoticeDocument_UTxtFile").hide();
-                    $("#deleteFileBtn").show();
-                    debugger;
-                    $("#NoticeDocument_UTxtFile").on("change click", function () {
-                        debugger;
-                        var fileName = $(this).val().split("\\").pop() || "";
-                        $("#currentFileName").text(fileName);
-                    });
-
-                    $("#currentFileName").on("click", function () {
-                        debugger;
-                        $("#NoticeDocument_UTxtFile").click();
-                    });
-                }
-                else {
-                    $("#NoticeDocument_UTxtFile").show();
-                    $("#currentFileName").text('');
-                    $("#deleteFileBtn").hide();
-                }
-
-                //$('#Noticetabledata_div').html(response);
-            }
-        });
-
-    }
-
-    $("#deleteFileBtn").on("click", function () {
-
-        $('#UpdateErrorMessage').text('');
-        $('#UpdatevalidationMessage').text('');
-        $('#Updatevalidation').text('');
-
-        $("#currentFileName").text(" ");
-        $("#NoticeDocument_UTxtFile").val("");
-        $("#deleteFileBtn").hide();
-        $("#NoticeDocument_UTxtFile").show();
-    });
-
-
-    function DeleteNotice(ENoticeId) {
-        debugger;
-        $.ajax({
-            url: "/Admin/Delete_ENotices_ById",
-            data: { ENoticeId: ENoticeId },
-            type: "GET",
-            success: function (response) {
-                managenotice_tabledata();
-                $('#ErrorMessage').text("Record deleted successfully.");
-            }
-        });
-    }
-
-
-  
-
-
-  
-
-   
-
-    /*----------- NOTICE DATA FUNCTION UPDATING CODE IS END -----------*/
-
-    /*----------- DELETE NOTICE TYPE IN UPDATE SCREEN THIS METHOD CODE IS START -----------*/
-
-    $('#DeleteNotice_UpBtn').click(function () {
-        debugger;
-        $('#ManagenoticeMaindiv').show();
-        $('#Home_SearchNotices_Updatediv').hide();
-
-        var ENoticeId = $('#ENoticeId_UTXT').val();
-        DeleteNotice(ENoticeId);
-
-    });
-
-    /*----------- DELETE NOTICE TYPE IN UPDATE SCREEN THIS METHOD CODE IS END -----------*/
-
-
-    /*-----------------------------------------------------------------####### Update Table Notice Data Function Code End #######---------------------------------------------------------------------------------*/
-
-
-</script>

@@ -39,7 +39,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         public string retunmessage{ get; set; }
 
-
+        public string ErrorMessage { get; set; }
     }
 
 

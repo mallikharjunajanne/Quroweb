@@ -1,0 +1,37 @@
+﻿
+@model Connect4m_Web.Models.Attendenceproperites.UserScreen.studentwithdrawal
+@{
+    ViewData["Title"] = "Studentsunderwithdrawal";
+    Layout = null;
+}
+
+@if (ViewBag.Withdrawal.Count > 0)
+{
+<table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+    <thead>
+        <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+            <th>Studentname</th>
+            <th>Student withdrawal Id</th>
+            <th>TC Issue Date</th>
+            <th>Department</th>
+            <th>Class</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Withdrawal)
+        {
+            <tr>
+                <td style="border: 1px solid #dbdbdb; height: 24px;">@item.FirstName</td>
+                <td style="border: 1px solid #dbdbdb; height: 24px;">@item.StudentWithdrawalID</td>
+                <td style="border: 1px solid #dbdbdb; height: 24px;">@item.TCIssueDate</td>
+                <td style="border: 1px solid #dbdbdb; height: 24px;">@item.ClassificationName</td>
+                <td style="border: 1px solid #dbdbdb; height: 24px;">@item.SubclassificationName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+<span class="text-primary">No data available in this area.</span>
+}

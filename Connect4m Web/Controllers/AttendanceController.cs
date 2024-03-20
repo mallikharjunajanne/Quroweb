@@ -120,8 +120,8 @@ namespace Connect4m_Web.Controllers
         //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginPage(LoginModel val)
         {
-            try
-            {
+            //try
+            //{
 
          
             //installed packeges 
@@ -212,7 +212,8 @@ namespace Connect4m_Web.Controllers
                         int DelegationClasses = 1;// This for Arjun
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString());Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString()); Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
+
 
 
                         var claims = new List<Claim>
@@ -227,8 +228,8 @@ namespace Connect4m_Web.Controllers
                             // Set additional properties if needed
                         };
 
-                 await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-                            if (Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString()=="1")
+                        await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                        if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString()=="1")
                             {
                                 return Json("changepassword");
                             }
@@ -255,11 +256,11 @@ namespace Connect4m_Web.Controllers
             //ViewBag.ErrorMessage = "Invalid User ID/Password.";
             //return View();
             return Json(0);
-            }
-            catch (Exception ex)
-            {
-                return Json(0);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Json(0);
+            //}
         }
 
         //public async Task<IActionResult> Logout()

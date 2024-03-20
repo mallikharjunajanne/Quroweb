@@ -33,6 +33,20 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
 $(document).ready(function () {
     debugger;
+    //var Rolename = $('#FAROLENAMESPANID').val().toUpperCase();
+    //if (Rolename == "CLASS TEACHER") {
+    //    $('#AdminAttendancediv').hide();
+    //    $('#Classteacherattendacediv').show();
+    //    var today = new Date();
+    //    var GetTodaydate = formatDateAndSetText(today);
+    //    $('#FAClassteacherlblid').text(GetTodaydate);
+    //} else {
+    //    $('#AdminAttendancediv').show();
+    //    $('#Classteacherattendacediv').hide();
+    //}
+
+
+
     //Classificationdropdown();
     //Slotsdropdown();
 
@@ -252,14 +266,20 @@ $("#Fastattendanceform").on('submit', function () {
     event.stopImmediatePropagation();
     debugger;
     $("#ErrorMessage").text('');
+    var FAStartdate;
+    if ($('#FAClassteacherlblid').is(":visible")) {
+        FAStartdate = $("#FAClassteacherlblid").val();
+    } else {
+        FAStartdate = $('#Startdatetxt').val();
+    }
+
 
     var StartdateInput = $("#Startdatetxt").val();
     var Startdate = new Date(StartdateInput);
     var formattedCurrentDate = getCurrentDateFormatted();
     var Subclasstext=$('#DdlSubClass option:selected');
     if (StartdateInput > formattedCurrentDate) {
-        $('#ErrorMessage').text("you cannot select the start date less than Effective Date for" + Subclasstext);
-       
+        $('#ErrorMessage').text("you cannot select the start date less than Effective Date for" + Subclasstext);       
         return; 
     } else {
         $('#ErrorMessage').text("");
@@ -277,25 +297,13 @@ $("#Fastattendanceform").on('submit', function () {
             var Subclassnames = $('#DdlSubClass').val();
 
             var formData = $('#Fastattendanceform').serialize();
+            formData += "&StartDate=" + FAStartdate;
 
             var url = "/Attendance/Get_FastAttendance_Table";
 
             handleAjax('GET', url, formData,
                 function (resp) {
-                    loaddingimg.css('display', 'none');
-                    //$('#Ddldepartment').empty();
-                    //$('#Ddslots').empty();
-                    //if ($('#Ddldepartment').is(':empty')) {
-                    //    debugger;
-                    //    Classificationdropdown();
-                    //}
-                    //if ($('#Ddslots').is(':empty')) {
-                    //    debugger;
-                    //    Slotsdropdown();
-                    //}
-
-
-
+                    loaddingimg.css('display', 'none');   
                     if (resp.returnmessage == "0") {
                         debugger;
                         $('#Fast_Attendance_Table_data').empty();
@@ -584,105 +592,7 @@ function formatDateAndSetText(inputDate) {
 
 $(document).ready(function () {
     $("#submitBtn").click(function (e) {
-        debugger;
-        //----<New>
-        //var formData = $('#Fastattendanceform').serialize();
-
-        
-        
-
-        //=====<< First Option >>
-        //$(".Fast_TextArea").each(function () {
-        //    var textareaValue = $(this).val();
-        //    var instanceSubClassificationId = $(this).closest("tr").find("td:first-child").text();
-
-        //    Userids.push({
-        //        "instanceSubClassificationId": instanceSubClassificationId,
-        //        "textareaValue": textareaValue
-        //    });
-        //});
-
-        //var requestData = {           
-        //    FormData: formData,
-        //    Userids: Userids
-        //};
-
-        ////===== << Secound Option >>
-        ////$(".Fast_TextArea").each(function () {
-        ////    var textareaValue = $(this).val();
-        ////    // Extract the Index from the textarea ID
-        ////    var index = $(this).attr('id').replace('Fast_TextArea_Id', '');
-
-        ////    formData.push({
-        ////        "instanceSubClassificationId": $("#Fast_TextArea_Id" + index).closest("tr").find("td:first-child").text(),
-        ////        "textareaValue": textareaValue
-        ////    });
-        ////});
-
-        //var url = "/Attendance/FastAttendance";
-        //handleAjax('POST', url, requestData,
-        //    function (result) {
-        //        if (result == 0) {
-
-        //            $('#ErrorMessage').text("Attendance already posted for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName);
-
-        //        }
-        //        else if (result == -2) {
-
-        //            $('#ErrorMessage').text("Entered REG. NO. 's are invalid for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName + " ");
-
-        //        }
-        //        else if (result == 1) {
-
-        //            $('#ErrorMessage').text('Attendance posted successfully.');
-
-        //        }
-        //    },
-        //    function (status, error) {
-        //        console.error("Error fetching data:", error);                
-        //    },
-        //    true
-        //);
-
-
-
-
-
-        //$.ajax({
-
-        //    url: "/Attendance/FastAttendance?InstanceClassificationId=" + InstanceClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&Startdate=" + Startdate + "&CreatedBy=" + LgUserid,
-        //    type: "POST",
-        //    //data: { formData: formData },
-        //    data: requestData,
-        //    success: function (result) {
-
-        //        debugger;
-        //        var errorMessage = document.getElementById('ErrorMessage');
-        //        if (result == 0) {
-
-        //            $('#ErrorMessage').text("Attendance already posted for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName);
-
-        //        }
-        //        else if (result == -2) {
-
-        //            $('#ErrorMessage').text("Entered REG. NO. 's are invalid for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName + " ");
-
-        //        }
-        //        else if (result == 1) {
-
-        //            $('#ErrorMessage').text('Attendance posted successfully.');
-
-        //        }
-        //        console.log(result);
-        //    },
-        //    error: function (xhr, status, error) {
-        //        // Handle the error response
-        //    }
-        //});
-
-
-
-        ////----<Old>
+        debugger;       
 
         $('#ErrorMessage').text('');
 
@@ -695,6 +605,9 @@ $(document).ready(function () {
         var SubjectSlotID = $('#Ddslots').val();
         var SubjectSlotName = $('#Ddslots option:selected').text();
 
+        var StudentsmsChecked = $('#Studentsmschk').prop('checked');
+        var ParentsmsChecked = $('#Parentsmschk').prop('checked');
+       
        
         //var Startdate = $('#FA_StartdateId1').val();
         //var LgUserid = $('#Lg_UserId_FastTxtid').val();
@@ -716,7 +629,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: "/Attendance/FastAttendance?InstanceClassificationId=" + InstanceClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&Startdate=" + Startdate,
+            url: "/Attendance/FastAttendance?InstanceClassificationId=" + InstanceClassificationId + "&SubjectSlotID=" + SubjectSlotID + "&Startdate=" + Startdate + "&Studentsms=" + StudentsmsChecked + "&Parentsms=" + ParentsmsChecked + "&SubjectSlotName=" + SubjectSlotName,
             type: "POST",
             data: { formData: formData },
             success: function (result) {              
@@ -726,17 +639,19 @@ $(document).ready(function () {
                
                 if (result == 0) {
                     $('#ErrorMessage').text("Attendance already posted for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName);
-                 }
+                }
                 else if (result == -2) {
 
                     $('#ErrorMessage').text("Entered REG. NO. 's are invalid for " + InstanceSubClassificationName + " class on " + DateSelected + " for " + SubjectSlotName + " ");
 
                 } else if (result == -3) {
                     $('#ErrorMessage').text("You Cannot Post Attendance as No Students Exists in " + InstanceSubClassificationName + "  " + SubjectSlotName + " ");
-
                 }
                 else if (result == 1) {
-                    $('#ErrorMessage').text('Attendance posted successfully.');                                     
+                    $('#ErrorMessage').text('Attendance posted successfully.');
+                }
+                else if (result == "SMS MODE IS OFF") {
+                    $('#ErrorMessage').text('Attendance posted successfully. \n Sms Status Mode is Off, SMS will not send.');
                 }
                 console.log(result);
             },

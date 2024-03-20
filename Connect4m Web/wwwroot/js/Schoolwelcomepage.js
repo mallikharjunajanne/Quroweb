@@ -78,9 +78,14 @@ function CategorytypesNames() {
                 Calendar();
                 PostedQuestions();
                 Leavestatus();
-                
+                Absenteestudentsfortheday();
+                Birthdaysinschool();
+                Timetablefun();
+                Newadmissiontblfun();
+                Studentsunderwithdrawalfun();
 
-            } else if (RoleName == "CLASS TEACHER") {
+            }
+            else if (RoleName == "CLASS TEACHER") {
              
                 var AddingCategorytypeNames = [
                     "BIRTHDAYS IN SCHOOL FOR THE DAY",
@@ -110,8 +115,13 @@ function CategorytypesNames() {
                 Calendar();
                 PostedQuestions();
                 Leavestatus();
-                
-            } else if (RoleName == "School Admin") {
+                Absenteestudentsfortheday();
+                Birthdaysinschool();
+                Timetablefun();
+                Newadmissiontblfun();
+                Studentsunderwithdrawalfun();
+            }
+            else if (RoleName == "School Admin") {
              
                 var AddingCategorytypeNames = [
                     "BIRTHDAYS IN SCHOOL FOR THE DAY",
@@ -141,8 +151,13 @@ function CategorytypesNames() {
                 Calendar();
                 PostedQuestions();
                 Leavestatus();
-                
-            } else if (RoleName == "PARENT") {
+                Absenteestudentsfortheday();
+                Birthdaysinschool();
+                Timetablefun();
+                Newadmissiontblfun();
+                Studentsunderwithdrawalfun();
+            }
+            else if (RoleName == "PARENT") {
                 debugger;
              
                 var AddingCategorytypeNames = [
@@ -170,7 +185,8 @@ function CategorytypesNames() {
                 StudentsixthboxWorksheets();
                 
 
-            } else if (RoleName == "STUDENT") {
+            }
+            else if (RoleName == "STUDENT") {
                 debugger;
              
                 var AddingCategorytypeNames = [
@@ -197,7 +213,8 @@ function CategorytypesNames() {
                 Coollinks();
                 StudentsixthboxWorksheets();
                 
-            } else {
+            }
+            else {
              
                 var AddingCategorytypeNames = [
                     "BIRTHDAYS IN SCHOOL FOR THE DAY",
@@ -384,7 +401,7 @@ function PostedQuestions() {
 function Absenteestudentsfortheday() {
     CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',null,
         function (response) {
-
+            debugger;
             $('#Four_PartailConatiner').html(response);
 
         },
@@ -394,6 +411,60 @@ function Absenteestudentsfortheday() {
     );
 }
 
+
+/* TIME TABLE  */
+function Timetablefun() {
+    CallToAjax('GET', '/UserScreens/Timetablecriteria', null,
+        function (response) {
+            if (response != 0) {
+                $('#Seventh_PartailConatiner').html(response);
+            } else {
+                var spanElement = $('<span>No Data Found</span>');
+                $('#Seventh_PartailConatiner').append(spanElement);
+            }
+        },
+        function (status, error) {
+            // Handle error if needed
+        }
+    );
+}
+
+/* NEW ADMISSION TABLE */
+function Newadmissiontblfun() {
+
+    debugger;
+
+    CallToAjax('GET', '/UserScreens/Newadmissionstudents', null,
+        function (response) {
+            if (response != 0) {
+                $('#Eight_PartailConatiner').html(response);
+            } else {
+                var spanElement = $('<span>No Data Found</span>');
+                $('#Eight_PartailConatiner').append(spanElement);
+            }
+        },
+        function (status, error) {
+            // Handle error if needed
+        }
+    );
+}
+/* Students Under Withdrawal */
+function Studentsunderwithdrawalfun() {
+    debugger;
+    CallToAjax('GET', '/UserScreens/Studentsunderwithdrawal', null,
+        function (response) {
+            if (response != 0) {
+                $('#Ninth_PartailConatiner').html(response);
+            } else {
+                var spanElement = $('<span>No Data Found</span>');
+                $('#Ninth_PartailConatiner').append(spanElement);
+            }
+        },
+        function (status, error) {
+            // Handle error if needed
+        }
+    );
+}
 function Leavestatus() {
     CallToAjax('GET', '/UserScreens/LeaveStatus',null,
         function (response) {

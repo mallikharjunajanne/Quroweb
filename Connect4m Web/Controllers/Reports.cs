@@ -55,7 +55,6 @@ namespace Connect4m_Web.Controllers
 
 
         #region STUDENT REGISTER ///StudentAttendanceRegister
-
         
         [HttpGet]
         public IActionResult StudentAttendanceRegister()
@@ -101,34 +100,11 @@ namespace Connect4m_Web.Controllers
                 var data2 = response.Content.ReadAsStringAsync().Result;
                 reportData = JsonConvert.DeserializeObject<AttendanceReportData>(data2);
             }
-
-
-            //ViewBag.Reportlist = reportData.AttendanceList;
-            //ViewBag.AttendanceAverage = reportData.AttendanceAverage;
-            //ViewBag.Stu_wises = reportData.Stu_wise;
-            //ViewBag.StuAtd_Tbl2 = reportData.Stu_Atd_tbl2;
-            //ViewBag.M_Stuabs = reportData.M_Stuabs;
-
-
             return Json(reportData);
         }
 
         #endregion
-        //[HttpGet]
-        //public IActionResult Get_SClNames_ByInsCl(string InstanceId, string InstanceClassificationId)
-        //{            
-        //    List<SelectListItem> value1 = new List<SelectListItem>();
-        //    HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string data = response.Content.ReadAsStringAsync().Result;
-        //        value1 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-        //    }
-        //    ViewBag.SubClassificationNames = value1;
-
-        //    return View();
-
-        //}
+        
 
 
         /*==========******** FEE CHALLANA REPORTS ********==========*/
@@ -613,7 +589,10 @@ namespace Connect4m_Web.Controllers
 
         #region MONTHLY ATTENDANCE REPORT 
 
-        public IActionResult MonthWiseFullStatusofClassAttendanceReport()
+
+        //MonthWiseFullStatusofClassAttendanceReport  This name change to MonthWiseClassAttendanceReport
+        //public IActionResult MonthWiseFullStatusofClassAttendanceReport()
+        public IActionResult MonthWiseClassAttendanceReport()
         {
             return View();
         }
@@ -722,8 +701,25 @@ namespace Connect4m_Web.Controllers
             }
             return Json(model);
         }
-       
+
         #endregion
 
+        #region ADMISSION PROCESS REPORTS
+
+        #region ADMISSIONS REPORT        
+        public IActionResult QuroAdmissionSummaryReport()
+        {
+            return View();
+        }
+        #endregion
+
+        #region ADMISSION SUMMARY REPORT
+        public IActionResult QuroAdmissionsReport()
+        {
+            return View();
+        }
+        #endregion
+
+        #endregion
     }
 }

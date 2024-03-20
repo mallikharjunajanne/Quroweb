@@ -1,4 +1,17 @@
-﻿//----------**** TABLE DATA BIND FUNCTION ****------------
+﻿function CallToAjaxmethod(method, url, data, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
+
+
+//----------**** TABLE DATA BIND FUNCTION ****------------
 $(document).ready(function () {
     $('#Addeventanduserphoto_Checkboxrelatedmain').hide();
     $('#Addeventanduserphoto_Checkboxrelated1').show();
@@ -6,6 +19,8 @@ $(document).ready(function () {
     $('#Addbestperformerdataaddingtbl_accordionoc3').hide();
     $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').hide();
     $('#Updateview_Addbestperformerdataaddingaccordionoc2').hide();
+
+    $('#Errormessage').text('');
 
     function CallToAjax(method, url, successCallback, errorCallback) {
         $.ajax({
@@ -110,35 +125,35 @@ function bindDatatable(response) {
     var newTable = $("#Managebestperformertbl").DataTable({
         dom: 'Bfrtip',
         buttons: [
-            {
-                extend: 'pdfHtml5',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
+            //{
+            //    extend: 'pdfHtml5',
+            //    title: 'Manage Holidays Report',
+            //    message: "Report On: " + formattedDate,
+            //    exportOptions: {
+            //        columns: [1, 2, 3, 4, 5, 6]
+            //    },
 
-            }
-            ,
-            {
-                extend: 'excel',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
+            //}
+            //,
+            //{
+            //    extend: 'excel',
+            //    title: 'Manage Holidays Report',
+            //    message: "Report On: " + formattedDate,
 
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-            },
+            //    exportOptions: {
+            //        columns: [1, 2, 3, 4, 5, 6]
+            //    },
+            //},
 
 
-            {
-                extend: 'print',
-                title: 'Manage Holidays Report',
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6]
-                },
-            }
+            //{
+            //    extend: 'print',
+            //    title: 'Manage Holidays Report',
+            //    message: "Report On: " + formattedDate,
+            //    exportOptions: {
+            //        columns: [1, 2, 3, 4, 5, 6]
+            //    },
+            //}
 
 
         ],
@@ -219,7 +234,7 @@ function bindDatatable(response) {
 
     });
     //Pdfs buttons hide this code
-    newTable.buttons().container().hide();
+   /* newTable.buttons().container().hide();*/
     table.on('draw', function () {
         $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit').css({
             'text-decoration': 'underline',
@@ -243,6 +258,19 @@ function GetDateFormat() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
+//Convert to date formate YYYY-MM-DD
+function convertDateFormat(inputDate) {
+    // Split the input date string into day, month, and year components
+    var parts = inputDate.split('-');
+
+    // Rearrange the components to form the yyyy-mm-dd format
+    var formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+
+    return formattedDate;
+}
+
+
+
 
 //----------Main View Clear Button
 $('#Mainview_Clearbtn').click(function () {
@@ -257,25 +285,30 @@ $('#Mainview_Clearbtn').click(function () {
 ////------*** ICON CLICK DELETE FUNCTION ***------- 
 $(document).on('click', '#Managebestperformertbl .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
-    var confirmed = confirm("Are you sure you want to delete the Best Performer?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
-    if (confirmed) {
+
+    var PerformerId = $(this).closest('tr').find('input[type="text"]').val();
+    var table = $('#Managebestperformertbl').DataTable();
+    Deletefunction(PerformerId);
+
+
+    //var confirmed = confirm("Are you sure you want to delete the Best Performer?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    //if (confirmed) {
      
-        var PerformerId = $(this).closest('tr').find('input[type="text"]').val();
-        var table = $('#Managebestperformertbl').DataTable();
-        var tabletargetpagetblSEMsearchresults = table.page.info().page;
-        debugger;
-        $.ajax({
-            url: '/Admin/Delete_ManageBestPerformer?PerformerId=' + PerformerId,
-            type: 'GET',
-            success: function (response) {
-                $('#Errmsg').text('Record deleted successfully');
-                SearchQuotes();
-            },
-            error: function (xhr, status, error) {
-                errorCallback(xhr.status, error);
-            }
-        });
-    }
+       
+    //    var tabletargetpagetblSEMsearchresults = table.page.info().page;
+    //    debugger;
+    //    $.ajax({
+    //        url: '/Admin/Delete_ManageBestPerformer?PerformerId=' + PerformerId,
+    //        type: 'GET',
+    //        success: function (response) {
+    //            $('#Errmsg').text('Record deleted successfully');
+    //            SearchQuotes();
+    //        },
+    //        error: function (xhr, status, error) {
+    //            errorCallback(xhr.status, error);
+    //        }
+    //    });
+    //}
 });
 
 
@@ -374,6 +407,11 @@ function populateClassificationDropdown(classificationList) {
 function populateRoleDropdown(roleList) {
     var roleDropdown = $('#roleDropdown');
     roleDropdown.empty();
+    roleDropdown.append($('<option>', {
+        value: '', // Set value to empty string
+        text: '--Select--' // Set text to '--select--'
+    }));
+
     $.each(roleList, function (index, item) {
         roleDropdown.append($('<option>', {
             value: item.instanceRoleId, // Replace with your value property from JSON
@@ -418,6 +456,7 @@ function populateSubclassificationDropdown(subclassificationList) {
 }
 
 $('#Insert_Clearbtn').click(function () {
+    $('#Errormessage').text('');
     $('#Insertbestperoformer')[0].reset();
     $('#Addbestperformerdataaddingaccordionoc2').hide();
     $('#Addbestperformerdataaddingtbl_accordionoc3').hide();
@@ -431,7 +470,9 @@ $('#Insert_BackToSearchbtn').click(function () {
 
 ///-----****Search best performer result functions
 $('#SearchUserform_id').submit(function (event) {
-   
+
+    $('#Errormessage').text('');
+
     event.preventDefault();
     var formData = new FormData($('#SearchUserform_id')[0]);
     
@@ -635,7 +676,6 @@ $('#SearchUserform_id').submit(function (event) {
 
 
 
-
 ///-----**** INSERTING CLASSIFICATION ***-----
 $('#Insertbestperoformer').submit(function (event) {
     event.preventDefault(); 
@@ -643,20 +683,34 @@ $('#Insertbestperoformer').submit(function (event) {
     setTimeout(function () {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationmelength = validationMessages.length;
 
+      
+
+        var displayUntilDate = $('#DisplayUntill_txtid').val();
+        debugger;
+       
+        var formattedDate = GetDateFormat();
+        var Todaydate = convertDateFormat(formattedDate);
+
+
         if (validationmelength == 0 && validationMessages2.length == 0) {
-            var valueToPass; // Declare the variable to store the value
+            var valueToPass; 
             debugger;
             if ($('#Addeventanduserphoto').is(':checked')) {
-                valueToPass = 1; // Assign 1 if the checkbox is checked
+                valueToPass = 1; 
             } else {
-                valueToPass = 0; // Assign 0 if the checkbox is unchecked
+                valueToPass = 0; 
             }
-            
+            if (displayUntilDate < Todaydate) {
+                $('#Error_Sp').text('Display Until should be greater than today.');
+                return;
+            }
+           
+            var displayUntil = displayUntilDate + " 00:00:00";
             var formdata_ISN = new FormData($('#Insertbestperoformer')[0]);
             formdata_ISN.append("IsEvent", valueToPass);
+            formdata_ISN.append("DisplayUntill", displayUntil);
 
             FileCallToAjax('POST', '/Admin/Insert_ManageBestPerformer', formdata_ISN,
                 function (response) {                   
@@ -673,11 +727,11 @@ $('#Insertbestperoformer').submit(function (event) {
                         // Handle other cases or display a generic error message
                         $('#Errormessages').text('An error occurred.');
                     }
-                }, function (status, error) {
+                },
+                function (status, error) {
 
-            },
+                },
                 true);
-            /* }*/
         }
     }, 50);
 
@@ -719,10 +773,6 @@ $(document).on('click', '#Managebestperformertbl td:nth-child(2)', function (eve
     Editperformer(PerformerId);
 })
 
-
-
-
-
 function Editperformer(PerformerId) {
     $.ajax({
         url: '/Admin/Update_ManageBestPerformer?PerformerId=' + PerformerId,
@@ -740,36 +790,77 @@ function Editperformer(PerformerId) {
     });
 }
 
+$('#Updatebestperoformer').submit(function (event) {
+    event.preventDefault();
+
+    setTimeout(function () {
+        var validationMessages = $('.field-validation-error');
+        var validationMessages2 = $('.error2');
+        var validationmelength = validationMessages.length;
 
 
 
+        var displayUntilDate = $('#DisplayUntilltxtid').val();
+        debugger;
+
+        var formattedDate = GetDateFormat();
+        var Todaydate = convertDateFormat(formattedDate);
 
 
-$('#UV_Deletebtn').click(function () {
-    var PerformerId = $('#PerformerId_txtid').val();
-    $.ajax({
-        url: '/Admin/Delete_ManageBestPerformer?PerformerId=' + PerformerId,
-        type: 'GET',
-        //data: data,
-        success: function (response) {
+        if (validationmelength == 0 && validationMessages2.length == 0) {
+            var valueToPass;
             debugger;
-            if (response == "Deleted") {
-                $('#Errmsg').text('Record deleted successfully');
-                SearchQuotes();
-                ///*  $('#Dltbtn, #Updatebtn').prop('disabled', true);*/
-                ///* $('#Dltbtn,').removeClass('.btn .btn-pill .btn-outline-success .btn-air-success');*/
-                //$('#Errormsg').text('Record deleted successfully.');
-                //$('#ManageQuotemaindiv').show();
-                //$('#Updateview_Addbestperformerdataaddingaccordionoc2').empty();
-                //$('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').empty();
+            if ($('#Addeventanduserphoto').is(':checked')) {
+                valueToPass = 1;
             } else {
-                $('#Errormessage').text('Sommething went wrong...!')
+                valueToPass = 0;
             }
+            if (displayUntilDate < Todaydate) {
+                $('#Error_Sp').text('Display Until should be greater than today.');
+                return;
+            }
+
+            var displayUntil = displayUntilDate + " 00:00:00";
+            var formdata_ISN = new FormData($('#Updatebestperoformer')[0]);
+            formdata_ISN.append("IsEvent", valueToPass);
+            formdata_ISN.append("DisplayUntill", displayUntil);
+
+            FileCallToAjax('POST', '/Admin/Update_ManageBestPerformer', formdata_ISN,
+                function (response) {
+                    if (response === "1") {
+                        $('#UV_Deletebtn, #UV_Savebtn').prop('disabled', true);                        
+                        $('#Errormessages').text('Record update successfully.');
+                    } else {                       
+                        $('#Errormessages').text('An error occurred.');
+                    }
+                },
+                function (status, error) {
+
+                },
+                true);
         }
-    });
-})
+    }, 50);
+
+});
 
 
+//$('#UV_Deletebtn').click(function () {
+//    var PerformerId = $('#PerformerId_txtid').val();
+//    $.ajax({
+//        url: '/Admin/Delete_ManageBestPerformer?PerformerId=' + PerformerId,
+//        type: 'GET',
+//        //data: data,
+//        success: function (response) {
+//            debugger;
+//            if (response == "Deleted") {
+//                $('#Errmsg').text('Record deleted successfully');
+//                SearchQuotes();                
+//            } else {
+//                $('#Errormessage').text('Sommething went wrong...!')
+//            }
+//        }
+//    });
+//})
 
 $('#UpdateView_SearchUserform_id').submit(function (event) {
     debugger;
@@ -786,13 +877,22 @@ $('#UpdateView_SearchUserform_id').submit(function (event) {
             $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').show();
 
             var formattedDate = GetDateFormat();
-
             var table = $('#Updateview_Bestperformertbl').DataTable();
             table.destroy();
             $("#bestperformertbl_Recordscount").text(response.length);
 
 
             var newTable = $("#Updateview_Bestperformertbl").DataTable({
+
+
+
+
+            //var table = $('#Updateview_Bestperformertbl').DataTable();
+            //table.destroy();
+            //$("#bestperformertbl_Recordscount").text(response.length);
+
+
+            /*var newTable = $("#Updateview_Bestperformertbl").DataTable({*/
                 dom: 'Bfrtip',
                 buttons: [],
 
@@ -990,3 +1090,34 @@ $(document).on('click', '#Updateview_Bestperformertbl td:nth-child(2)', function
     $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').hide();
 
 })
+
+
+//Delete function
+function Deletefunction(PerformerId) {
+    event.stopImmediatePropagation();
+
+    var confirmed = confirm("Are you sure you want to delete the Best Performer?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    var data = { PerformerId: PerformerId };
+
+    if (confirmed) {
+        debugger;
+        CallToAjaxmethod('GET', '/Admin/Delete_ManageBestPerformer', data,
+            function (response) {
+                if (response == "Deleted") {
+                    $('#Errormessage').text('Record deleted successfully');
+                    SearchQuotes();
+                } else {
+                    $('#Errormessage').text('Sommething went wrong...!');
+                }
+            },
+            function (status, error) {
+                $('#Errormessages').text('Delete method its not working!');
+            }
+        );
+    }
+}
+
+
+$('#UV_BackToSearchbtn').click(function () {
+    location.reload();
+});

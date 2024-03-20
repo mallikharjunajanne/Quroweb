@@ -56,24 +56,33 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
 $(document).ready(function () {
     debugger;
+    $('#In_Subclassificationdd').empty;
+    $('#In_ClassTeacherdd').empty;
+    $('#In_CoClassTeacherdd').empty;
+
+
     fetchDataAndPopulateDropdown(
         '/Admin/InstanceClassification_DD',      // URL for data fetching
-        '#ddldepartmentid',                      // Dropdown selector
-        //'#Classificationdd_Search',            // Dropdown selector
+        '#ddldepartmentid',                      // Dropdown selector      
         'instanceClassificationId',              // Field name for option values
         'classificationName',                    // Field name for option text
         'classificationList'                     // Response value return class name
-    ); // In Search view Dropdown data bind calling function
+    );                                           // In Search view Dropdown data bind calling function
     Subclasstabledatabinding();// Subclass table data calling function
 });
+
+
+
+
+
+
 
 
 
 // DROPDOWN FUNCTION CODE START
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField,Responsevalues) {
     CallToAjax_Withoutdata('GET', url,
-        function (response) {
-            debugger;
+        function (response) {            
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate , dropdownSelector, valueField, textField);
         },
@@ -102,6 +111,8 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
 //Search table data fucntion code start
 $('#btnsearch').click(function () {
     debugger;
+
+    $('#Errmsg').text('');
     var formdata = $('#Classificaitionformid').serialize();
     var InstanceClassificationId = $('#ddldepartmentid').val();
     var SubClassificationName = $('#txtclassid').val();
@@ -147,94 +158,7 @@ function bindDatatables(response) {
 
     var newTable = $("#ManageSubclassificationtbl").DataTable({
         dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'pdfHtml5',
-                title: 'Manage Class', // Title for the Excel file
-                messageTop: 'ADS SCHOOL', // Additional message
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4] // Adjust column indexes based on your DataTable
-                }
-            },
-            {
-                extend: 'excel',
-                text: 'Excel', // Button text
-                title: 'Manage Class', // Title for the Excel file
-                messageTop: 'ADS SCHOOL', // Additional message
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4] // Adjust column indexes based on your DataTable
-                },
-                customize: function (xlsx) {
-                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-                    // Check if the sheet exists and has the range defined
-                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        const range = sheet.sheetData[0].attributes['!ref'].value;
-
-                        for (let col = 0; col < 6; col++) { // Assuming 6 columns, adjust as needed
-                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
-
-                            for (let row = 1; row <= 100; row++) { // Iterate through rows, adjust the range as needed
-                                const cellRef = colLetter + row;
-                                const cell = $('c[r="' + cellRef + '"]', sheet);
-
-                                // Add black border to each cell in each column
-                                cell.attr('s', '42');
-                            }
-                        }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
-                    }
-                }
-            },
-
-            {
-                extend: 'print',
-                title: 'Manage Class', // Title for the Excel file
-                messageTop: 'ADS SCHOOL', // Additional message
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4] // Adjust column indexes based on your DataTable
-                },
-                customize: function (win) {
-                    $(win.document.body)
-                        .find('h4')
-                        .css('text-align', 'center'); // Center align the title
-
-                    $(win.document.body)
-                        .find('h5')
-                        .css('text-align', 'center'); // Center align the additional message
-                }
-            }
-            //{
-            //    extend: 'pdfHtml5',
-            //    title: 'Manage Subclassification Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-            //},
-            //{
-            //    extend: 'excel',
-            //    title: 'Manage Subclassification Report',
-            //    message: "Report On: " + formattedDate,
-
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    }
-            //},
-            //{
-            //    extend: 'print',
-            //    title: 'Manage Subclassification Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    }
-            //}
-
-        ],
+        buttons: [ ],
 
         bProcessing: false,
         bLengthChange: true,
@@ -250,16 +174,6 @@ function bindDatatables(response) {
         //  stateSave:true,
         data: response,
         columns: [
-
-            //{
-            //    data: "SNO",
-            //    //visible: false,
-
-            //    render: function (data, type, row, meta) {
-            //        //  length++;
-            //        return row.holidayId
-            //    }
-            //},
             {
                 targets: 0, // Assuming this is the column index where you want to display numbering
                 render: function (data, type, row, meta) {
@@ -268,7 +182,6 @@ function bindDatatables(response) {
                     return (0 * rowsPerPage) + meta.row + 1;
                 }
             },
-
             {
                 data: "SubClassificationName",
 
@@ -346,6 +259,196 @@ function GetDateFormat() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
+
+
+$('#exportToExcel').click(function () {
+    var InstanceClassificationId = $('#ddldepartmentid').val();
+    var SubClassificationName = $('#txtclassid').val();
+    var SubClassificationDescription = $('#txtdescrid').val();
+
+    var sendData = {
+        'InstanceClassificationId': InstanceClassificationId,
+        'SubClassificationName': SubClassificationName,
+        'SubClassificationDescription': SubClassificationDescription
+    };
+    handleAjax('GET', '/Admin/Subclassexporttoexcel', sendData,
+        function (response) {
+            debugger;
+            const startColumn = 'A';
+            const endColumn = 'N';
+            const startColumnIndex = 13;
+            var data = response;
+            const rowCount = data.length;
+            var workbook = new ExcelJS.Workbook();
+            var worksheet = workbook.addWorksheet('Sheet1');
+            var formattedDate = GetDateFormat();
+            worksheet.addRow(["Manage Class "]).font = { bold: true };
+            worksheet.addRow(["Quro Schools"]).font = { bold: true };
+            worksheet.addRow(["Report On:  " + formattedDate]).font = { bold: true };
+            worksheet.addRow([""]).font = { bold: false };
+           
+
+            // Enable worksheet protection
+            worksheet.protection = {
+                sheet: true
+            };
+            worksheet.protection.IsProtected = true;
+            worksheet.protection.AllowSelectLockedCells = false;
+
+            // Count the number of rows in the worksheet
+            
+            var headings = [
+                'S.No',
+                'Department',
+                'Class',
+                'Description',
+                'Attendance Effecive Date',
+                'Attendance End Date',
+                'Class Teacher',
+                'Class Teacher Emp Code',
+                'Class Teacher Mobile Phone',
+                'Class Teacher Email',
+                'Co-Class Teacher',
+                'Co-Class Teacher Emp Code',
+                'Co-Class Teacher Mobile Phone',
+                'Co-Class Teacher Email'
+            ];
+         
+            worksheet.addRow(headings);
+
+            var sno = 1; // Initialize the serial number
+            data.forEach(function (row) {
+                var rowData = [];
+                rowData.push(sno++);
+                rowData.push(row.classificationName);
+                rowData.push(row.subClassificationName);
+                rowData.push(row.subClassificationDescription);
+                rowData.push(row.startDate);
+                rowData.push(row.endDate);
+                rowData.push(row.classTeacher);
+                rowData.push(row.classteacherempcode);
+                rowData.push(row.classteachermobile);
+                rowData.push(row.classteacheremail);
+                rowData.push(row.coClassTeacher);
+                rowData.push(row.coclassteacherempcode);
+                rowData.push(row.coclassteachermobile);
+                rowData.push(row.coClassteacheremail);
+                worksheet.addRow(rowData);
+            });
+
+            for (var rowNum = 1; rowNum <= 3; rowNum++) {
+                // Get the row
+                const row = worksheet.getRow(rowNum);
+
+                // Iterate over each cell in the row
+                row.eachCell(function (cell) {
+                    // Apply cell styles
+                    cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: '000000' }, // Black background color
+                    };
+                    cell.font = { bold: true, color: { argb: 'FFFFFF' } }; // Bold white font color
+                    cell.alignment = { horizontal: 'center' }; // Align center horizontally
+                });
+                worksheet.mergeCells(`A${rowNum}:N${rowNum}`);
+                //worksheet.mergeCells('A1:N1');
+            }
+            worksheet.mergeCells('A4:N4');
+
+            worksheet.getRow(5).eachCell(function (cell) {
+                // Customize cell styles for headings here
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: '000000' }, // Example background color (black)
+                };
+                cell.font = { bold: true, color: { argb: 'FFFFFF' } }; // Example font style (bold, white color)
+
+            });
+
+            // Customize cell styles for data rows
+            worksheet.eachRow(function (row, rowNumber) {
+                if (rowNumber > 1) { // Skip the first row (headings)
+                    row.eachCell(function (cell, colNumber) {
+                        if (colNumber == 2) {
+                            let maxLength = 0;
+                            worksheet.getColumn(colNumber).eachCell({ includeEmpty: true }, function (cell) {
+                                const length = cell.value ? cell.value.toString().length : 0;
+                                maxLength = Math.max(maxLength, length);
+                            });
+                            // Set the width of the column based on the maximum length of its cells
+                            worksheet.getColumn(colNumber).width = maxLength > 0 ? maxLength + 2 : 10;
+
+                            //if (colNumber >= startColumnIndex) {
+                            //    cell.style.fill = {
+                            //        type: 'pattern',
+                            //        pattern: 'solid',
+                            //        fgColor: { argb: 'FFFFFF' } // White color
+                            //    };
+                            //}
+                        }
+                        else {
+                            cell.width = 20;
+                        }
+                    });
+                }               
+            });
+
+           /* var rowCount = response.length;*/
+
+            // Loop through rows after the data rows
+            //for (var i = rowCount + 2; i <= worksheet.rowCount; i++) {
+            //    var row = worksheet.getRow(i);
+            //    // Loop through cells in the row and set background color to white
+            //    row.eachCell(function (cell) {
+            //        cell.style.fill = {
+            //            type: 'pattern',
+            //            pattern: 'solid',
+            //            fgColor: { argb: 'FFFFFF' } // White color
+            //        };
+            //    });
+            //}
+
+         
+
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Create a download link
+                var link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+
+                // Set the file name
+                link.download = "Manage Class.xls";
+
+                // Append the link to the document and trigger the click event
+                document.body.appendChild(link);
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            });
+
+
+
+        },
+        function (status, error) {
+            // Handle errors
+        }
+    ); 
+});
+
+
+
+
+
+
+
+
+
+
+
 //-------------------------------------   Click For Update in the list(table)
 $(document).on('click', '#ManageSubclassificationtbl td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
@@ -356,8 +459,6 @@ $(document).on('click', '#ManageSubclassificationtbl td:nth-child(2)', function 
     tabletargetpagetblSEMsearchresults = table.page.info().page;
     EditSubclassification(Subclassid);
 })
-
-
 function EditSubclassification(Subclassid) {
 
     $.ajax({
@@ -377,8 +478,21 @@ function EditSubclassification(Subclassid) {
 
 
 
+//------FA FA TRASH ICON DELETE FUNCTION
+$(document).on('click', '#ManageSubclassificationtbl .fa-trash-o', function (event) {
+    event.stopImmediatePropagation();
+    debugger;
+    var parent = $(event.target).closest('tr');
+    var Subclassid = $(parent).find('td').find('input[type="text"]').val();
+    var Subclassname = $(parent).find('td:first').text().trim();
+    var table = $('#ManageSubclassificationtbl').DataTable();
+    tabletargetpagetblSEMsearchresults = table.page.info().page;
+    Deletefunction(Subclassid, Subclassname);
+})
 
-///------*** CREATE NEW SUBCLASSIFICATION ***-------
+
+
+/////------*** CREATE NEW SUBCLASSIFICATION ***-------
 $('#addnewsubclass').click(function () {
     debugger;
      //----Classification dropdown
@@ -424,15 +538,12 @@ $('#addnewsubclass').click(function () {
 
 
 
-$('#btnBackToSearch').click(function () {
-    $('#Errormessages').text('');
-    location.reload();
-});
 
 
 
 
-///-----**** INSERTING CLASSES ***-----
+
+/////-----**** INSERTING CLASSES ***-----
 $('#Insertclassformid').submit(function (event) {
     event.preventDefault();
     debugger;
@@ -449,7 +560,7 @@ $('#Insertclassformid').submit(function (event) {
             var formData = $('#Insertclassformid').serialize();
             var Subclassname = $('#Subclass_txtid').val();
             var Displayorder = $('#Displayordertxtid').val();
-            if (Displayorder==0) {
+            if (Displayorder == "0") {
                 $('#Errormessages').text('Display Order cannot be Zero.');
                 return;
             }
@@ -466,12 +577,11 @@ $('#Insertclassformid').submit(function (event) {
                         $('#Errormessages').text('SubClassificationName with Name ' + ' " ' + Subclassname + ' " ' + ' already exists.');
                     } else if (response == "5") {
                         $('#Errormessages').text('Display Order Already Exists.');
-                    } else if (response == " ") {
+                    } else if (response == "") {
                         $('#Errormessages').text('An error occurred.');
                     } else {
                         $('#btnclear, #btnsubmit').prop('disabled', true);
                         $('#Errormessages').text('Record inserted successfully.');
-
                     }
                 },
                 function (status, error) {
@@ -484,6 +594,11 @@ $('#Insertclassformid').submit(function (event) {
     }, 50);
 });
 
+
+$('#btnBackToSearch').click(function () {
+    $('#Errormessages').text('');
+    location.reload();
+});
 
 
 
@@ -594,17 +709,7 @@ function DatesCompare(Sdate, Edate) {
             $('#Errormessages').text("End date should be greater than Start date.");
         } else {
             $('#Errormessages').text("");
-        }
-
-        //if (Enddate = Startdate) {
-        //    $('#Errormessages').text(Edate + 'and' + Sdate + "cannot have same Date.");
-
-        //} else if (Enddate < Startdate) {
-        //    $('#Errormessages').text(Edate + 'should be less than' + Sdate + '.');
-        //}
-        //else {
-        //    $('#Errormessages').text("");
-        //}
+        }       
     } catch (error) {
         console.log(error);
     }
@@ -614,6 +719,8 @@ function DatesCompare(Sdate, Edate) {
 //-------------------***Date Compare
 $("#Effectivedatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
 $("#Enddatetxtid").on("change", function () { DatesCompare("Attendance Effective Date", "Attendance End Date"); });
+
+
 
 $('#btndelete').click(function () {
     event.stopImmediatePropagation();
@@ -659,6 +766,42 @@ $('#btndelete').click(function () {
     }
 });
 
+
+function Deletefunction(Subclassificationid, SubClassificationName) {
+    var confirmed = confirm("Are you sure you want to delete Class?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
+    if (confirmed) {
+        var datatosend = {
+            InstanceSubClassificationId: Subclassificationid
+        };
+        handleAjax('GET', '/Admin/Delete_ManageSubClassification', datatosend,
+            function (response) {
+                if (response == "0") {
+                    $('#Errormessages').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
+                } else if (response == "-2") {
+                    $('#Errormessages').text("Elective subjects are associated with" + SubClassificationName + ".");
+                } else if (response == "-3") {
+                    $('#Errormessages').text("Academic subjects are associated with" + SubClassificationName + ".");
+                } else if (response == "-4") {
+                    $('#Errormessages').text("Timetable has created for this" + SubClassificationName + ".");
+                } else if (response == "-5") {
+                    $('#Errormessages').text("Users have been created for this" + SubClassificationName + ".");
+                } else if (response == "1") {
+                    $('#Errmsg').text("Record deleted successfully.");
+                    Subclasstabledatabinding();
+                    $('#ManageSubclassification_Containermaindiv').show();
+                    $('#ManagesubclassificationInsertUpdatediv').empty();
+                } else {
+                    $('#Errmsg').text("Record can't be deleting.");
+                }
+            },
+            function (status, error) {
+
+            }
+        );
+    }
+}
+
+
 //  UPDATE SUBCLASS BUTTON CLICK FIRE CODE START
 $('#Updateclassformid').submit(function (event) {
     event.preventDefault();
@@ -666,9 +809,7 @@ $('#Updateclassformid').submit(function (event) {
     setTimeout(function () {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         $('#Errormessages').text('');
-
         var validationmelength = validationMessages.length;
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
@@ -676,13 +817,15 @@ $('#Updateclassformid').submit(function (event) {
             var formData = $('#Updateclassformid').serialize();
             var Subclassname = $('#Subclass_txtid').val();         
             var Classname = $('#Classificationtxtid option:selected').text();
-
+            var isactive = $('#Isactivechk').is(':checked') ? "1" : "0";
+          
             var Displayorder = $('#Displayordertxtid').val();
-            if (Displayorder == 0) {
+            if (Displayorder == "0") {
                 $('#Errormessages').text('Display Order cannot be Zero.');
                 return;
             }
 
+            formData += '&IsActive=' + isactive;
             var url = '/Admin/Update_ManageSubClassification';
             handleAjax('POST', url, formData,
                 function (response) {
@@ -695,13 +838,13 @@ $('#Updateclassformid').submit(function (event) {
                         $('#Errormessages').text('Class with Name "' + Subclassname + '" already exists or the Attendance End Date can\'t be greater than ' + Classname + '\'s Attendance End Date.');
                     } else if (response == "5") {
                         $('#Errormessages').text('Display Already Exists.');
-                    } else if (response == " ") {
+                    } else if (response == "") {
                         $('#Errormessages').text('An error occurred.');
                     } else if (response == "2") {
                         $('#Errormessages').text("You can't update " + Subclassname + " as already marks are posted or Users are already Associated.");
                     } else if (response == "1") {
                         $('#btnclear, #btnsubmit').prop('disabled', true);
-                        $('#Errormessages').text('Record inserted successfully.');
+                        $('#Errormessages').text('Record Updated successfully.');
                     } else {
                         $('#Errormessages').text('Please try again.');
                     }
@@ -714,6 +857,12 @@ $('#Updateclassformid').submit(function (event) {
             );
         }
     }, 50);
+});
+
+
+$('#Ubtnbacktosearch').click(function () {
+    $('#Errormessages').text('');
+    location.reload();
 });
 
 //  UPDATE SUBCLASS BUTTON CLICK FIRE CODE END

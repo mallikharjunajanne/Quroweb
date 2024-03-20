@@ -229,15 +229,13 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
     event.stopImmediatePropagation();
     setTimeout(function () {
 
+        $('#Main_Span_Error').text('');
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationMessagesLength = validationMessages.length;
-
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
 
             var SerializeData = $('#Classswisetudentwiseattendancereport').serialize();
-
             var url = "/Reports/SectionwiseAttendanceReporttbldata";
             debugger;
 
@@ -260,7 +258,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                 function (response) {
                     debugger;
                     var responsemessage = response.message;
-                    if (responsemessage != "2") {
+                    if (responsemessage != "Attendance is not posted") {
 
                    
 
@@ -271,34 +269,42 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                     var fromDate = new Date(document.getElementById('Startdatetxt').value);
                     var toDate = new Date(document.getElementById('Enddatetxt').value);
 
-                    var ClassselectedText = $('#DdlClass option:selected').text();
-                    var formattedFromDate = fromDate.toLocaleDateString('en-US');
-                    var formattedToDate = toDate.toLocaleDateString('en-US');
-                    var labelElement = $('<label>').text('ADS SCHOOL');
-                    var headingText = "Attendance for the Classes " + ClassselectedText + " for the period of " + formattedFromDate + " To " + formattedToDate;
-                    $('#Selectedclassnamesdiv').append($('<h6>').append(labelElement));
-                    $('#Selectedclassnamesdiv').append($('<h6>').text(headingText));
+                     /*   var ClassselectedText = $('#DdlClass option:selected').text();*/
+                        var ClassselectedText = $('#DdlClass option:selected').map(function () {
+                            return $(this).text();
+                        }).get().join(', ');
+                        var formattedFromDate = fromDate.toLocaleDateString('en-US');
+                        var formattedToDate = toDate.toLocaleDateString('en-US');
+                        $('#Selectedepartmentspid').text(ClassselectedText);
+                        $('#Fromdatespid').text(formattedFromDate);
+                        $('#Enddatespid').text(formattedToDate);
+
+                
+                    //    var labelElement = $('<label>').text('Quro Schools');
+                    //var headingText = "Attendance for the Classes " + ClassselectedText + " for the period of " + formattedFromDate + " To " + formattedToDate;
+                    //$('#Selectedclassnamesdiv').append($('<h6>').append(labelElement));
+                    //$('#Selectedclassnamesdiv').append($('<h6>').text(headingText));
 
 
 
-                    var table = $('#StudentwiseattendaceReport').length;
+                    var table = $('#SectionwiseattendaceReport').length;
                     var tblhead = $('#tablehead');
                     var tableBody = $('#tableBody');
                     var tablefooter = $('#tablefooter');
 
                     var currentDate = new Date(fromDate);
                     var firstRow = `<tr>
-    <td rowspan="2" align="center" style="border: 1px solid black;">S.No.</td>
-    <td rowspan="2" align="center" style="border: 1px solid black;">Class</td>
-    <td rowspan="2" align="center" style="border: 1px solid black;">Name</td>
-    <td rowspan="2" align="center" style="border: 1px solid black;">Adm.No.</td>
-    <td rowspan="2" align="center" style="border: 1px solid black;">Gender</td>
-    <td  align="center" style="border: 1px solid black;">Date</td>`;
+                                      <td rowspan="2" align="center" style="border: 1px solid black;">S.No.</td>
+                                      <td rowspan="2" align="center" style="border: 1px solid black;">Class</td>
+                                      <td rowspan="2" align="center" style="border: 1px solid black;">Name</td>
+                                      <td rowspan="2" align="center" style="border: 1px solid black;">Adm.No.</td>
+                                      <td rowspan="2" align="center" style="border: 1px solid black;">Gender</td>
+                                      <td  align="center" style="border: 1px solid black;">Date</td>`;
                     var daysInMonth = 0;
                     while (currentDate <= toDate) {
                         var currentMonth = currentDate.toLocaleString('en', { month: 'short' });
                         var currentDay = currentDate.getDate();
-                        firstRow += `<td align="center" style="width:8px; border: 1px solid black;">${currentDay}-${currentMonth}</td>`;
+                        firstRow += `<td align="center" style="border: 1px solid black;">${currentDay}-${currentMonth}</td>`;
 
                         currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
                         daysInMonth++;
@@ -317,7 +323,9 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                     tableBody.empty();
 
 
-                    var rowCount = Tabledatarepsonse.length;
+                        var rowCount = Tabledatarepsonse.length;
+                        var loopExecuted = false;
+                        var itstrue = false;
 
                     for (var i = 0; i < rowCount; i++) {
 
@@ -337,41 +345,70 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                         tableRow.append($('<td style="border: 1px solid black;">').text(rowData.admissionNumber));
                         tableRow.append($('<td style="border: 1px solid black;">').text(rowData.gender));
                         tableRow.append($('<td style="border: 1px solid black;">').text(rowData.dateOfJoining));
-
-
-                        for (var index = 0; index <= daysInMonth; index++) {
-                            var columnValue = dynamicColumns[index];
-                            var cellHtml;
-
-
-                            if (i === 0) {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                        ///NEW CODE
+                        dynamicColumns.forEach(function (columnValue, index) {
+                            // Count the occurrences of <br> tags in the columnValue                                
+                            if (index > 0) {
+                                var brCount = (columnValue.match(/<br>/g) || []).length;
+                                // Generate the HTML for the cell
+                                var cellHtml;
+                                if (brCount > 0) {
+                                    if (!itstrue) {
+                                        cellHtml = `<td rowspan="${rowCount}" align="center"  style="border: 1px solid;">${columnValue}</td>`;
+                                        itstrue = false;
+                                    } else {
+                                        /*cellHtml = `<td hidden ></td>`;*/
+                                        cellHtml = ` `;
+                                    }
                                 }
-                            } else {
-                                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
-                                    rowspanStartRow = i;
-                                } else {
-                                    isEveryColumnSaturdaySunday = false;
-                                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                                else {
+                                    // If no <br> tags, generate a regular cell
+                                    cellHtml = `<td align="center"  style="border: 1px solid;">${columnValue}</td>`;
                                 }
+
+                                // Append the cell to the table row
+                                tableRow.append($(cellHtml));
+
                             }
+                        });
+                        loopExecuted = true;
+                        itstrue = true;
 
-                            tableRow.append($(cellHtml));
-                        }
 
-                        tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));
+
+                        ///OLD CODE
+                        //for (var index = 0; index <= daysInMonth; index++) {
+                        //    var columnValue = dynamicColumns[index];
+                        //    var cellHtml;
+
+                        //    if (i === 0) {
+                        //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else {
+                        //            isEveryColumnSaturdaySunday = false;
+                        //            cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                        //        }
+                        //    } else {
+                        //        if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" hidden>${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
+                        //            cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
+                        //            rowspanStartRow = i;
+                        //        } else {
+                        //            isEveryColumnSaturdaySunday = false;
+                        //            cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
+                        //        }
+                        //    }
+
+                        //    tableRow.append($(cellHtml));
+                        //}
+
+                        /*tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));*/
 
                         tableBody.append(tableRow);
                         rowCount++;
@@ -438,8 +475,9 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
                     debugger;
 
-                    var Summarydetails = attendancesummarydetails[0];
-                    if (attendancesummarydetails.length > 0) {
+                 
+                        if (attendancesummarydetails.length > 0) {
+                            debugger;
                         for (var i = 0; i < attendancesummarydetails.length; i++) {
                             var summaryDetails = attendancesummarydetails[i];
                             var SummarydetailsRow = $('<tr>');
@@ -472,8 +510,10 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 
 
                         loaddingimg.css('display', 'none');
-                    } else {
+                    }
+                    else {
                         $('#Appendsclasswiseandstudentwiseattendancereportdiv').empty();
+                        $('#Main_Span_Error').text('Attendance is not Posted for the selected criteria');
                         loaddingimg.css('display', 'none');
                     }
                 },
@@ -487,685 +527,79 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
     }, 50);
 });
 
-function Classwisesectionwiseattendancereportbinddata(response) {
-    event.stopPropagation();
-
-    debugger;
-
-    var fromDate = new Date(document.getElementById('Startdatetxt').value);
-    var toDate = new Date(document.getElementById('Enddatetxt').value);
-
-    var ClassselectedText = $('#DdlClass option:selected').text();
-    var formattedFromDate = fromDate.toLocaleDateString('en-US');
-    var formattedToDate = toDate.toLocaleDateString('en-US');
-    var labelElement = $('<label>').text('ADS SCHOOL');
-    var headingText = "Attendance for the Classes " + ClassselectedText + " for the period of " + formattedFromDate + " To " + formattedToDate;
-    $('#Selectedclassnamesdiv').append($('<h6>').append(labelElement));
-    $('#Selectedclassnamesdiv').append($('<h6>').text(headingText));
-
-    var Tabledatarepsonse = response.attendancemonthreports;
-    var attendancesummarydetails = response.attendancemonthpercantage;
-
-    var table = $('#StudentwiseattendaceReport').length;
-    var tblhead = $('#tablehead');
-    var tableBody = $('#tableBody');
-    var tablefooter = $('#tablefooter');
-
-    var currentDate = new Date(fromDate);
-    var firstRow = `<tr>
-    <td rowspan="2" align="center">S.No.</td>
-    <td rowspan="2" align="center">Class</td>
-    <td rowspan="2" align="center">Name</td>
-    <td rowspan="2" align="center">Adm.No.</td>
-    <td rowspan="2" align="center">Gender</td>
-    <td  align="center">Date</td>`;
-    var daysInMonth = 0;
-    while (currentDate <= toDate) {
-        var currentMonth = currentDate.toLocaleString('en', { month: 'short' });
-        var currentDay = currentDate.getDate();
-        firstRow += `<td align="center" style="width:8px">${currentDay}-${currentMonth}</td>`;
-
-        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
-        daysInMonth++;
-    }
-    firstRow += `<td  align="center">Total days present</td>
-                 <td align="center">Working days</td>    
-                 </tr>`;
-    var secondRow = '<tr>' +
-
-        `<td align="center">DOJ/DOW</td>` + // Date column below Name
-        `<td colspan="${daysInMonth + 2}" align="center"></td>` +
-        '</tr>';
-
-    tblhead.append(firstRow);
-    tblhead.append(secondRow);
-    tableBody.empty();
-
-
-    var rowCount = Tabledatarepsonse.length;
-
-    for (var i = 0; i < rowCount; i++) {
-
-        var rowData = Tabledatarepsonse[i];
-
-        if (rowData && rowData.dynamicColumns) {
-            var dynamicColumns = rowData.dynamicColumns;
-
-        }
-        if (typeof rowData === 'undefined') {
-            continue; // Skip the iteration if 'item' is undefined
-        }
-        var tableRow = $('<tr>');
-        $('<td>').text(i + 1).prependTo(tableRow);
-        tableRow.append($('<td>').text(rowData.subclassificationName));
-        tableRow.append($('<td>').text(rowData.name));
-        tableRow.append($('<td>').text(rowData.admissionNumber));
-        tableRow.append($('<td>').text(rowData.gender));
-        tableRow.append($('<td>').text(rowData.dateOfJoining));
-
-
-        for (var index = 0; index <= daysInMonth; index++) {
-            var columnValue = dynamicColumns[index];
-            var cellHtml;
-
-
-            if (i === 0) {
-                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                    rowspanStartRow = i;
-                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                    rowspanStartRow = i;
-                } else {
-                    isEveryColumnSaturdaySunday = false;
-                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                }
-            } else {
-                if (columnValue === "S <br> <br> a <br> <br> t <br> <br> u <br> <br> r <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
-                    rowspanStartRow = i;
-                } else if (columnValue === "S <br> <br> u <br> <br> n <br> <br> d <br> <br> a <br> <br> y") {
-                    cellHtml = `<td rowspan="${rowCount}" hidden style="border: 1px solid black;">${columnValue}</td>`;
-                    rowspanStartRow = i;
-                } else {
-                    isEveryColumnSaturdaySunday = false;
-                    cellHtml = `<td align="center" style="border: 1px solid black;">${columnValue}</td>`;
-                }
-            }
-
-            tableRow.append($(cellHtml));
-        }
-
-        tableRow.append($('<td align="center" style="border: 1px solid black;">').text(dynamicColumns[daysInMonth + 1]));
-
-        tableBody.append(tableRow);
-        rowCount++;
-    }
-
-
-
-    var trElement = tableBody.find('tr:first');
-    var tdCount = trElement.find('td').length;
-    var SummaryRow = $('<tr>');
-    SummaryRow.append($('<td colspan="' + tdCount + '" align="center" style="border: 1px solid black;">').text('Summary').css('text-align', 'center'));
-    tableBody.append(SummaryRow);
-
-
-
-    var colspancounts = tdCount / 4;
-    var firstColspan = Math.floor(colspancounts);
-    var remainingCols = tdCount - firstColspan;
-
-    var secondColspan = Math.floor(remainingCols / 3); // Dividing the remaining columns into 3 parts
-    var thirdColspan = Math.floor(remainingCols / 3);
-    var fourthColspan = remainingCols - secondColspan - thirdColspan; // Calculating the fourth colspan
-
-    var numberOfStudentsRow = '<tr>' + `<td  colspan="${firstColspan}" align="center" style="border: 1px solid black;">Class</td>
-                               <td  colspan="${secondColspan}" align="center" style="border: 1px solid black;">Presents</td>
-                               <td  colspan="${thirdColspan}" align="center" style="border: 1px solid black;">Working Days</td>
-                               <td  colspan="${fourthColspan}" align="center" style="border: 1px solid black;">Attendance %</td>
-                               </tr>`;
-
-    var Secoundcellcell = Math.floor(secondColspan / 3);
-    var Secoundfirstremaining = secondColspan - (Secoundcellcell * 3);
-    var firstSecoundcell = Secoundcellcell;
-    var SecoundSecoundcell = Secoundcellcell;
-    var Thirdsecoundcell = Secoundcellcell + Secoundfirstremaining;
-
-    var thirdcell = Math.floor(thirdColspan / 3);
-    var Secoundremaining = thirdColspan - (thirdcell * 3);
-    var firstthirdcell = thirdcell;
-    var Secoundthirdcell = thirdcell;
-    var Thirdthirdcell = thirdcell + Secoundremaining;
-
-
-    var fourtcell = Math.floor(fourthColspan / 3);
-    var Secoundfourthremaining = fourthColspan - (fourtcell * 3);
-    var firstfourthcell = fourtcell;
-    var Secoundfourthcell = fourtcell;
-    var Thirdfourthcell = fourtcell + Secoundfourthremaining;
-
-
-
-    var Percentagerow = $('<tr>');
-    Percentagerow.append($('<td colspan="' + firstColspan + '" align="center">').text(""));
-    Percentagerow.append($('<td colspan="' + firstSecoundcell + '" align="center">').text("Total Presents of Boys"));
-    Percentagerow.append($('<td colspan="' + SecoundSecoundcell + '" align="center">').text("Total Presents of Girls"));
-    Percentagerow.append($('<td colspan="' + Thirdsecoundcell + '" align="center">').text("Total Presents"));
-    Percentagerow.append($('<td colspan="' + firstthirdcell + '" align="center">').text("Total Working Days for Boys"));
-    Percentagerow.append($('<td colspan="' + Secoundthirdcell + '" align="center">').text("Total Working Days for Girls"));
-    Percentagerow.append($('<td colspan="' + Thirdthirdcell + '" align="center">').text("Total Working Days"));
-    Percentagerow.append($('<td colspan="' + firstfourthcell + '" align="center">').text("Attendance % of Boys"));
-    Percentagerow.append($('<td colspan="' + Secoundfourthcell + '" align="center">').text("Attendance % of Girls"));
-    Percentagerow.append($('<td colspan="' + Thirdfourthcell + '" align="center">').text("Attendance %"));
-
-    tableBody.append(numberOfStudentsRow);
-    tableBody.append(Percentagerow);
-
-    var SummarydetailsRow = $('<tr>');
-    var Summarydetails = attendancesummarydetails[0];
-    SummarydetailsRow.append($('<td colspan="' + firstColspan + '" align="center">').text(Summarydetails.subclass));
-    SummarydetailsRow.append($('<td colspan="' + firstSecoundcell + '" align="center">').text(Summarydetails.totalPresentofBoys));
-    SummarydetailsRow.append($('<td colspan="' + SecoundSecoundcell + '" align="center">').text(Summarydetails.totalPresentofGirls));
-    SummarydetailsRow.append($('<td colspan="' + Thirdsecoundcell + '" align="center">').text(Summarydetails.totalPresents));
-    SummarydetailsRow.append($('<td colspan="' + firstthirdcell + '" align="center">').text(Summarydetails.totalWorkingdaysforBoys));
-    SummarydetailsRow.append($('<td colspan="' + Secoundthirdcell + '" align="center">').text(Summarydetails.totalWorkingdaysforGirls));
-    SummarydetailsRow.append($('<td colspan="' + Thirdthirdcell + '" align="center">').text(Summarydetails.totalWorkingdays));
-    SummarydetailsRow.append($('<td colspan="' + firstfourthcell + '" align="center">').text(Summarydetails.attendancepercentageofboys));
-    SummarydetailsRow.append($('<td colspan="' + Secoundfourthcell + '" align="center">').text(Summarydetails.attendancepercentageofgirls));
-    SummarydetailsRow.append($('<td colspan="' + Thirdfourthcell + '" align="center">').text(Summarydetails.attendancepercentage));
-
-    tableBody.append(SummarydetailsRow);
-
-
-    loaddingimg.css('display', 'none');
-}
-
-
-
-
-
-
 
 /*--==  Attendance Report Print ==--*/
-$(document).on('click', '#Attendancereporttblmain #_attendancereportPrint', function (event) {
-    debugger;
+//$(document).on('click', '#Attendancereporttblmain #_attendancereportPrint', function (event) {
+//    debugger;
+//    var printContents = $('#Printattendancereport').html();
+//    var originalContents = document.body.innerHTML;
+//    document.body.innerHTML = printContents;
+//    window.print();
+//    document.body.innerHTML = originalContents;
+//});
+
+
+$('#_attendancereportPrint').on('click', function () {
     var printContents = $('#Printattendancereport').html();
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
+    debugger;
+
+    // Create a new window to print the content
+    var printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title></title>');
+    printWindow.document.write('<style>');
+    printWindow.document.write('table,td { border: none; }'); // Collapse borders
+    printWindow.document.write('</style></head><body>');
+    printWindow.document.write('<table>');
+    // Add table content here
+    printWindow.document.write('</table>');
+    printWindow.document.write(printContents);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close(); // Close the document opened with document.write
+    printWindow.print();
+
 });
 
-
-
-/*--== Attendance Report Export To Excel ==-*/
-$(document).on('click', '#Attendancereporttblmain #_AttendancereportExportExcelbyarjun', function () {
-    var formattedDate = GetDateFormat();
-
+$('#Reporttblexporttoexcel, #_AttendancereportExportExcel').on('click', function () {
     debugger;
+    var className = $('#DdlClass option:selected').map(function () {return $(this).text();}).get().join(', ');
+    var Selectedfromdate = document.getElementById("Enddatespid").textContent;
+    var Selectedenddate = document.getElementById("Fromdatespid").textContent;
 
-    var workbook = new ExcelJS.Workbook();
-    var worksheet = workbook.addWorksheet('Sheet1');
-    var tablehead = $("#Selectedclassnamesdiv").find('h6');
-    var h6val = tablehead.eq(0).text();
-    var h6val2 = tablehead.eq(1).text();
+    var headerContent = `
+            <div style="display: grid; grid-template-columns: repeat(18, 1fr);">
+                <div style="grid-column: 1 / span 18;">
+                     <h4 style="margin: 0; text-align: center;">Quro Schools</h4>
+                     <p style="margin: 0; text-align: center;">Attendance for the Classes ${className} for the period of${Selectedfromdate} To ${Selectedenddate}</p>
+                </div>
+            </div>`;
 
-    // Set titles
-    worksheet.addRows([
-        [h6val],
-        [h6val2],
-        ["Report On:  " + formattedDate],
-        [""]
-    ]).forEach(row => row.font = { bold: true });
+    var table1 = document.getElementById("SectionwiseattendaceReport");
+    var table1Clone = table1.cloneNode(true);
+    var clonedThead = table1Clone.querySelector("thead");
 
-    // Set background color for titles and merge cells
-    //['A1', 'A2', 'A3', 'A4'].forEach(cell => {
-    //    worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
-    //    worksheet.mergeCells(cell + ':AG' + cell.substring(1));
-    //});
+    var cells = table1.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        debugger;
+        if (cells[i].style.display === "none") { // Check if the td element has the hidden attribute       
+            debugger;
+            cells[i].remove();
 
-    worksheet.getCell('A1').fill = { type: 'pattern', pattern: 'gray125' };
-    worksheet.getCell('A2').fill = { type: 'pattern', pattern: 'gray125' };
-    worksheet.getCell('A3').fill = { type: 'pattern', pattern: 'gray125' };
-    worksheet.getCell('A4').fill = { type: 'pattern', pattern: 'gray125' };
-    worksheet.getCell('A1').font = { size: 14, bold: true, color: { argb: '000000' } }; // Adjust the size as needed
-    worksheet.getCell('A2').font = { size: 14, bold: true, color: { argb: '000000' } };
-    worksheet.getCell('A3').font = { size: 14, bold: true, color: { argb: '000000' } };
-
-    
-   
-
-
-    // Merge cells for titles and center-align
-    worksheet.mergeCells('A1:AG1');
-    worksheet.mergeCells('A2:AG2');
-    worksheet.mergeCells('A3:AG3');
-    worksheet.mergeCells('A4:AG4');
-
-    worksheet.getCell('A1').alignment = { horizontal: 'center', vertical: 'center' };
-    worksheet.getCell('B2').alignment = { horizontal: 'center', vertical: 'center' };
-    worksheet.getCell('C3').alignment = { horizontal: 'center', vertical: 'center' };
-
-    // Process StudentwiseattendaceReport table
-    debugger;
-    var tableData2 = document.getElementById("StudentwiseattendaceReport");
-    for (var i = 0; i < tableData2.rows.length; i++) {
-        var row = tableData2.rows[i];
-        var colIdx = 0;
-        for (var j = 0; j < row.cells.length; j++) {
-            var cell = row.cells[j];
-            var colspan = cell.colSpan || 1;
-            var rowspan = cell.rowSpan || 1;
-            var isHidden = cell.hidden || window.getComputedStyle(cell).display === 'none';
-            if (!isHidden) {
-               
-                if (i < 1) {
-                    var km = i + 1;
-                    worksheet.getCell(i + 5, colIdx + 1).fill = { fgColor: { argb: '00CFE8' }, pattern: 'solid', };
-                    worksheet.getCell(km + 5, colIdx + 1).fill = { fgColor: { argb: '00CFE8' }, pattern: 'solid', };
-                }
-                var addedCell = worksheet.getCell(i + 5, colIdx + 1);
-
-                addedCell.value = cell.innerText;
-                colIdx++;
-               
-            } else {
-                if (i === 3) {
-                    debugger;
-                  
-                    var startind = colIdx + 4;  // Adjust the calculation as needed
-                    var colIdxToMerge = colIdx + 1;  // Adjust the calculation as needed
-                    var numRows = tableData2.rows.length;
-                    worksheet.mergeCells(7, colIdxToMerge, numRows, colIdxToMerge);
-                    var addedCell = worksheet.getCell(i + 4, colIdx + 1);
-
-                    addedCell.value = cell.innerText;
-                    colIdx++;
-                }
-                else {
-                    var addedCell = worksheet.getCell(i + 4, colIdx + 1);
-
-                    addedCell.value = cell.innerText;
-                    colIdx++;
-                }
-                
-            }
+        } else {          
+         cells[i].style.borderTop = "1px solid black";       
         }
     }
 
-    worksheet.addRow([""]).font = { bold: false };  //  Gap Between Second table and below data
-    worksheet.addRow(["This is a system generated report, contain confidential information intended for a specific individual and purpose, and is intended for the addressee only. Any unauthorized"]).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '00CFE8' } };
+    var FooterContent = `
+      <div style="grid-column: 1 / span 18; background-color: #e0e0e0; padding: 20px; border-radius: 5px;">
+        <p style="margin: 0; text-align: center;">This is a system generated report, contain confidential information intended for a specific individual and purpose, and is intended for the addressee only. Any unauthorized use, copying, or distribution of this report is strictly prohibited.</p>
+      </div>
+      `;
+    document.body.appendChild(table1Clone);
+    var combinedHtml = headerContent + table1Clone.outerHTML + FooterContent;
 
-    // Set border and width for cells
-    for (var col = 3; col <= 34; col++) {
-        worksheet.getColumn(col).width = 30; // Set the width as needed
-    }
-    worksheet.getColumn(1).width = 12;
-    worksheet.getColumn(2).width = 20;
+    const blob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+    saveAs(blob, 'SectionwiseAttendanceReport.xls');
 
-    // Generate .xls file and initiate download
-    workbook.xlsx.writeBuffer().then(function (buffer) {
-        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        var link = document.createElement("a");
-
-        link.href = URL.createObjectURL(blob);
-        link.download = "SectionwiseAttendanceReport.xls";
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
+    // Replace the original table with the cloned table in the document
+    table1.parentNode.replaceChild(table1Clone, table1);     
 });
-
-
-
-
-
-
-
-
-
-
-//$(document).on('click', '#_AttendancereportExportExcel_', function () {
-//    var formattedDate = GetDateFormat();
-
-//    var workbook = new ExcelJS.Workbook();
-//    var worksheet = workbook.addWorksheet('Sheet1');
-
-//    // Set titles
-//    worksheet.addRows([
-//        ["Student wise attendance Report"],
-//        ["Quro Schools"],
-//        ["Report On:  " + formattedDate],
-//        [""]
-//    ]).forEach(row => row.font = { bold: true });
-
-//    // Set background color for titles and merge cells
-//    ['A1', 'A2', 'A3', 'A4'].forEach(cell => {
-//        worksheet.getCell(cell).fill = { type: 'pattern', pattern: 'gray125' };
-//        worksheet.mergeCells(cell + ':AG' + cell.substring(1));
-//    });
-
- 
-  
-
-//    // Process StudentwiseattendaceReport table
-//    var tableData2 = document.getElementById("StudentwiseattendaceReport");
-//    debugger;
-   
-//    for (var i = 0; i < tableData2.rows.length; i++) {
-//        var row = tableData2.rows[i];
-//        var colIdx = 0;
-//        for (var j = 0; j < row.cells.length; j++) {
-//            var cell = row.cells[j];
-//            var cellHtml = cell.outerHTML;
-//            var colspan = cell.colSpan || 1;
-//            var rowspan = cell.rowSpan || 1;
-
-//            if (colspan > 1 || rowspan > 1) {
-//                worksheet.mergeCells(
-//                    i + 1,
-//                    colIdx + 1,
-//                    i + rowspan,
-//                    colIdx + colspan
-//                );
-
-//                // Set empty values to the rest of the merged area to avoid duplication
-//                for (var k = i + 1; k < i + rowspan; k++) {
-//                    for (var l = colIdx + 1; l < colIdx + colspan; l++) {
-//                        worksheet.getCell(k + 1, l + 1).value = '';
-//                    }
-//                }
-
-//                colIdx += colspan;
-//            } else {
-//                var addedCell = worksheet.getCell(i + 1, colIdx + 1);
-//                addedCell.value = cell.innerText;
-//                colIdx++;
-//            }
-//            //if (colspan > 1 || rowspan > 1) {
-//            //    worksheet.mergeCells(
-//            //        i + 1,
-//            //        colIdx + 1,
-//            //        i + rowspan,
-//            //        colIdx + colspan
-//            //    );
-
-//            //    // Set empty values to the rest of the merged area to avoid duplication
-//            //    for (var k = i + 1; k < i + rowspan; k++) {
-//            //        for (var l = colIdx + 1; l < colIdx + colspan; l++) {
-//            //            worksheet.getCell(k + 1, l + 1).value = '';
-//            //        }
-//            //    }
-
-//            //    colIdx += colspan;
-//            //} else {
-//            //    var addedCell = worksheet.getCell(i + 1, colIdx + 1);
-//            //    addedCell.value = cell.innerText;
-//            //    colIdx++;
-//            //}
-//        }
-//    }
-
-//    // Set border and width for cells
-//    for (var col = 3; col <= 34; col++) {
-//        worksheet.getColumn(col).width = 5; // Set the width as needed
-//    }
-//    worksheet.getColumn(1).width = 12;
-//    worksheet.getColumn(2).width = 20;
-
-//    // Generate .xls file and initiate download
-//    workbook.xlsx.writeBuffer().then(function (buffer) {
-//        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-//        var link = document.createElement("a");
-
-//        link.href = URL.createObjectURL(blob);
-//        link.download = "SectionwiseAttendanceReport.xls";
-
-//        document.body.appendChild(link);
-//        link.click();
-//        document.body.removeChild(link);
-//    });
-//});
-
-
-
-
-//$(document).on('click', '#_AttendancereportExportExcel_', function () {
-//    var formattedDate = GetDateFormat();
-//    debugger;
-//    // Create a new workbook
-//    var workbook = new ExcelJS.Workbook();
-//    var worksheet = workbook.addWorksheet('Sheet1');
-
-//    // Additional titles
-//    worksheet.addRow(["Student  wise attendace Report"]).font = { bold: true };
-//    worksheet.addRow(["Quro Schools"]).font = { bold: true };
-//    worksheet.addRow(["Report On:  " + formattedDate]).font = { bold: true };
-//    worksheet.addRow([""]).font = { bold: false };
-
-//    // Set background color for titles
-//    worksheet.getCell('A1').fill = { type: 'pattern', pattern: 'gray125' };
-//    worksheet.getCell('A2').fill = { type: 'pattern', pattern: 'gray125' };
-//    worksheet.getCell('A3').fill = { type: 'pattern', pattern: 'gray125' };
-//    worksheet.getCell('A4').fill = { type: 'pattern', pattern: 'gray125' };
-//    worksheet.getCell('A1').font = { size: 14, bold: true, color: { argb: '000000' } }; // Adjust the size as needed
-//    worksheet.getCell('A2').font = { size: 14, bold: true, color: { argb: '000000' } };
-//    worksheet.getCell('A3').font = { size: 14, bold: true, color: { argb: '000000' } };
-
-
-
-
-//    // Merge cells for titles and center-align
-//    worksheet.mergeCells('A1:AG1');
-//    worksheet.mergeCells('A2:AG2');
-//    worksheet.mergeCells('A3:AG3');
-//    worksheet.mergeCells('A4:AG4');
-
-//    worksheet.getCell('A1').alignment = { horizontal: 'center', vertical: 'center' };
-//    worksheet.getCell('B2').alignment = { horizontal: 'center', vertical: 'center' };
-//    worksheet.getCell('C3').alignment = { horizontal: 'center', vertical: 'center' };
-
-
-
-
-//    //var tableData1 = document.getElementById("FirstTable");
-//    var tableData2 = document.getElementById("StudentwiseattendaceReport");
-//    //var tableData3 = document.getElementById("StaffLeaveThirdtable");
-//    //var tabedata1length = tableData1.rows.length + tableData2.rows.length + 7;
-//    // Loop through rows
-//    //==============================================  For Table 1
-
-    //var tableData1 = document.getElementById("FirstTable");
-   // var tableData2 = document.getElementById("StudentwiseattendaceReport");
-    
-
-   
-
-//    //============================         For Table 2
-
-//    for (var i = 0; i < tableData2.rows.length; i++) {
-//        debugger;
-//        var row = tableData2.rows[i];
-//        var rowData = [];
-//        var colIdx = 0;
-//        for (var j = 0; j < row.cells.length; j++) {
-
-//            debugger;
-//            var cell = row.cells[j];
-//            var cellHtml = cell.outerHTML;
-//           // var cellHtml = row.cells[j].outerHTML;
-//            var backgroundColor = extractBackgroundColor(cellHtml);
-//            var color = "000000";
-//            if (backgroundColor == "Red") {
-//                backgroundColor = "FF0000";
-//                color = "ffffff";
-//            }
-//            else if (backgroundColor == "Green") {
-//                backgroundColor = "008000"; color = "ffffff";
-//            } else if (backgroundColor == "Blue") {
-//                backgroundColor = "0000FF"; color = "ffffff";
-//            } else if (backgroundColor == "orange") {
-//                backgroundColor = "FFA500"; color = "ffffff";
-//            } else if (backgroundColor == "yellow") {
-//                backgroundColor = "FFFF00"; color = "ffffff";
-//            } else if (backgroundColor == "Gray") {
-//                backgroundColor = "808080"; color = "ffffff";
-//            }
-//            var cellText = row.cells[j].innerText;
-//            var cellStyles = {
-//                fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: backgroundColor } },
-//                font: { bold: true, color: { argb: color } } // Assuming white text color
-//            };
-
-//            var colspan = parseInt(cell.colSpan);
-//            var rowspan = parseInt(cell.rowSpan);
-
-//            var addedCell = worksheet.getCell(i + 1, colIdx + 1);
-
-//            if (colspan > 1 || rowspan > 1) {
-//                // Merge cells if colspan or rowspan is greater than 1
-//                worksheet.mergeCells(i + 1, colIdx + 1, i + rowspan, colIdx + colspan);
-//            }
-
-//            addedCell.value = cellText;
-//            addedCell.fill = cellStyles.fill;
-//            addedCell.font = cellStyles.font;
-
-//            colIdx += colspan || 1;
-
-//            rowData.push({ text: cellText, style: cellStyles });
-//        }
-//        var addedRow = worksheet.addRow(rowData.map(cell => cell.text));
-
-//        addedRow.eachCell({ includeEmpty: true }, function (cell, colNumber) {
-//            var cellStyle = rowData[colNumber - 1].style;
-//            cell.fill = cellStyle.fill;
-//            cell.font = cellStyle.font;
-//        });
-
-//        addedRow.eachCell({ includeEmpty: true }, function (cell) {
-//            cell.border = {
-//                top: { style: 'thin', color: { argb: '000000' } },
-//                left: { style: 'thin', color: { argb: '000000' } },
-//                bottom: { style: 'thin', color: { argb: '000000' } },
-//                right: { style: 'thin', color: { argb: '000000' } }
-//            };
-//            // cell.alignment = { horizontal: 'center', vertical: 'middle' }; // Text alignment
-
-//        });
-
-
-
-//    }
-
-
-
-//    worksheet.addRow([""]).font = { bold: false };
-
-
-
-//    //============================         For Table 3
-
-//    //for (var i = 0; i < tableData3.rows.length; i++) {
-//    //    debugger;
-//    //    //  worksheet.mergeCells('A' + tabedata1length + ':C' + tabedata1length);
-//    //    // worksheet.getCell('A' + tabedata1length).alignment = { horizontal: 'center', vertical: 'center' };
-//    //    var row = tableData3.rows[i];
-//    //    var rowData = [];
-//    //    for (var j = 0; j < row.cells.length; j++) {
-//    //        var cellHtml = row.cells[j].outerHTML;
-//    //        var backgroundColor = extractBackgroundColor(cellHtml);
-//    //        if (backgroundColor == "Red") {
-//    //            backgroundColor = "FF0000";
-//    //        }
-//    //        else if (backgroundColor == "Green") {
-//    //            backgroundColor = "008000";
-//    //        } else if (backgroundColor == "Blue") {
-//    //            backgroundColor = "0000FF";
-//    //        } else if (backgroundColor == "orange") {
-//    //            backgroundColor = "FFA500";
-//    //        } else if (backgroundColor == "yellow") {
-//    //            backgroundColor = "FFFF00";
-//    //        } else if (backgroundColor == "Gray") {
-//    //            backgroundColor = "808080";
-//    //        }
-//    //        var cellText = row.cells[j].innerText;
-//    //        var cellStyles = {
-//    //            fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: backgroundColor } },
-//    //            font: { bold: true, color: { argb: '000000' } } // Assuming white text color
-//    //        };
-
-//    //        rowData.push({ text: cellText, style: cellStyles });
-//    //    }
-//    //    var addedRow = worksheet.addRow(rowData.map(cell => cell.text));
-
-//    //    addedRow.eachCell({ includeEmpty: true }, function (cell, colNumber) {
-//    //        var cellStyle = rowData[colNumber - 1].style;
-//    //        cell.fill = cellStyle.fill;
-//    //        cell.font = cellStyle.font;
-//    //    });
-
-//    //    //worksheet.mergeCells('A' + tabedata1length + ':C' + tabedata1length);
-//    //    //worksheet.getCell('A' + tabedata1length).alignment = { horizontal: 'center', vertical: 'center' };
-
-//    //    tabedata1length++;
-
-//    //}
-
-//    //worksheet.mergeCells('A11:AG11');
-//    //worksheet.mergeCells('C12:AG12');
-//    //worksheet.mergeCells('C13:AG13');
-//    //worksheet.mergeCells('C14:AG14');
-//    //worksheet.mergeCells('C15:AG15');
-//    //worksheet.mergeCells('C16:AG16');
-//    //worksheet.mergeCells('C17:AG17');
-
-//    worksheet.addRow([""]).font = { bold: false };  //  Gap Between Second table and below data
-//    worksheet.addRow(["This is a system generated report, contain confidential information intended for a specific individual and purpose, and is intended for the addressee only. Any unauthorized"]).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDEB887' } };
-
-//    // Set column widths
-//    for (var col = 3; col <= 34; col++) {
-//        worksheet.getColumn(col).width = 5; // Set the width as needed
-//    }
-//    worksheet.getColumn(1).width = 12;
-//    worksheet.getColumn(2).width = 20;
-//    // worksheet.getColumn(3).width = 17;
-//    // worksheet.getColumn(4).width = 9;
-//    // Generate .xls file
-//    workbook.xlsx.writeBuffer().then(function (buffer) {
-//        var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-//        // Create a download link
-//        var link = document.createElement("a");
-//        link.href = URL.createObjectURL(blob);
-
-//        // Set the file name
-//        link.download = "SectionwiseAttendanceReport.xls";
-
-//        // Append the link to the document and trigger the click event
-//        document.body.appendChild(link);
-//        link.click();
-
-//        // Remove the link from the document
-//        document.body.removeChild(link);
-//    });
-//});
-
-//$(document).on('click', '#_AttendancereportExportExcel', function () {
-//    var ws = XLSX.utils.table_to_sheet(document.getElementById('StudentwiseattendaceReport'));
-
-//    /* Create a workbook */
-//    var wb = XLSX.utils.book_new();
-//    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-//    /* Generate Excel File */
-//    XLSX.writeFile(wb, 'attendance_report.xlsx');
-//});
-
-
-//function extractBackgroundColor(html) {
-//    var match = /background-color\s*:\s*([^;]+);/i.exec(html);
-//    return match ? match[1] : 'ffffff'; // Default color if not found
-//}

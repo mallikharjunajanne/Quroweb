@@ -63,11 +63,9 @@ $('#InsertQuote').submit(function (event) {
                         $('#Errormessages').text('Record inserted successfully.');
                     } else if (response === "Not Inserted") {
                         $('#Errormessages').text('Already a Quote is Present on:' + formattedDate);
-                    } else if (response === "QuoteExists") {
-                       //Already a Quote is Present on: 15 / 12 / 2023
+                    } else if (response === "QuoteExists") {            
                         $('#Errormessages').text('Already a Quote is Present on:' + formattedDate);
-                    } else {
-                        // Handle other cases or display a generic error message
+                    } else {                        
                         $('#Errormessages').text('An error occurred.');
                     }
                 }, function (status, error) {
@@ -201,6 +199,8 @@ $('#Searchbtn').click(function () {
 });
 
 function SearchQuotes() {
+    $('#Errmsg').text('');
+
     var inputQuote = $('#Quote').val();
     var inputdate = $('#Displaydate').val();
     debugger;
@@ -378,29 +378,6 @@ $(document).on('click', '#ManageQuotestbl .fa-trash-o', function (event) {
 });
 
 
-//$(document).on('click', '#ManageQuotestbl .fa-trash-o', function (event) {
-//    event.stopImmediatePropagation();
-//    var confirmed = confirm("Are you sure you want to delete Quote?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
-//    if (confirmed) {
-              
-//       var  QuoteId: $(this).find('input[type="text"]').val();
-//        var table = $('#ManageQuotestbl').DataTable();
-//        tabletargetpagetblSEMsearchresults = table.page.info().page;
-
-//        $.ajax({
-//            url: '/Admin/Delete_Quote?QuoteId=' + QuoteId,
-//            type: 'GET',
-//            //data: data,
-//            success: function (repsonse) {
-//                $('#Errmsg').text('Record delete successfully');
-//                SearchQuotes();
-//            },
-//            error: function (xhr, status, error) {
-//                errorCallback(xhr.status, error);
-//            }
-//        });        
-//    }
-//})
 
 
 //-------------------------------------   Click For Update in the list(table)

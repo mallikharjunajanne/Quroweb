@@ -8,7 +8,7 @@
 
 
 <div class="col-md-12 col-lg-12 mb-3">
-    <span id="Errormessage" class="text-danger"></span>
+    <span id="Inserterrormessage" class="text-danger"></span>
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">
@@ -31,7 +31,7 @@
                             <label class="control-label col-sm-4 col-form-label required text-end space">End Date</label>
                             <div class="col-sm-4">
                                 <input type="date" asp-for="Edate" id="EDate_txtid" class="form-control" />
-                                <span asp-validation-for="Edate" class="text-danger" id="Error_Sp"></span>
+                                <span asp-validation-for="Edate" class="text-danger"></span>
                                 <span class="text-danger" id="Error_Sp"></span>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                         Week-Ends
                                     </label>
                                 </div>
-                                <div class="form-check col-4">
+                                <div class="form-check col-8">
                                     <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
                                     <label class="form-check-label" for="defaultRadio3">
                                         Restricted Holidays

@@ -1,7 +1,6 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.Attendanceregisterreport
 
 @{
-
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -99,18 +98,7 @@
     </style>
     <link rel="stylesheet" href="~/css/print.css" media="print" />
     <style>
-        /* Page styles */
-        @@media print {
-            /* Define print-specific styles here */
-            body {
-                margin: 0;
-                padding: 0;
-                size: A4 portrait; /* or size: A4 landscape; */
-            }
-            /* Add more styles as needed for your layout and paper size */
-        }
 
-        /* Print styles */
         #myTable .Table_report {
             border: 1px solid green;
             border-width: thin;
@@ -171,10 +159,20 @@
         .Table_report th {
             word-break: normal;
         }
+
+
+        @@media print {
+            .print-label {
+                display: block;
+                text-align: right;
+                margin-right: 10px; /* Adjust as needed */
+            }
+
+                .print-label.no-margin {
+                    margin-right: 0;
+                }
+        }
     </style>
-
-
-
 
 </head>
 <body>
@@ -348,207 +346,18 @@
                     </div>
                 </div>
             </div>
-            @*<div id="EXcel_Print_btns" style="display: flex; grid-gap: 16px;">
-                    <a href="#" id="exportButton" value="Export To Excel" style="font-weight: bold; margin-left: 18px;">Export To Excel</a>
-                    <a href="#" id="printButton" style="margin-left: 78%; font-weight: bold;">Print</a>
-                </div>*@
             <div class="row justify-content" id="EXcel_Print_btns">
                 <div class="col-sm-6">
-                    <button type="button" id="exportButton" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</button>
+
+                    <a href="javascript:void(0);" id="exportButton">Export To Excel</a>
+                    @*<button type="button" id="exportButton" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</button>*@
 
                 </div>
                 <div class="col-sm-6 text-end " id="Getmonthwiseattendnacetblmain">
-                    <button type="button" id="printButton" class="btn btn-pill btn-outline-info btn-air-info">Print</button>
+                    <a href="javascript:void(0)" id="printButton">Print</a>
+                    @*<button type="button" id="printButton" class="btn btn-pill btn-outline-info btn-air-info">Print</button>*@
                 </div>
             </div>
-
-
-            <!--<div id="EXcel_Print_btns" style="display: flex; grid-gap: 16px;">-->
-            @*<input type="button" value="Export Excel" title="Export Excel" class="btn btn-pill btn-outline-info btn-air-info" id="exportButton">
-                <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="printButton">*@
-            <!--<button type="button" id="exportButton" class="btn btn-pill btn-outline-info btn-air-info">Export To Excel</button>
-                <button type="button" id="printButton" class="btn btn-pill btn-outline-info btn-air-info">Print</button>
-
-            </div>-->
-
-            <div class="card">
-                @*<div class="card-header pb-0">
-                        <div style=" font-size: 20px; text-align: center;">
-                            <h1 style="background-color: white; color: darkorange; font-weight: 700; font-size: 25px; margin-top: -13px;">STUDENT REGISTER</h1>
-                        </div>
-                    </div>*@
-                @*<div style="color:red; font-size:13px;">
-                        <div id="validation2" style="color: red;"></div>
-                        <div id="validationMessage" style="color: red;"></div>
-                    </div>*@
-                <!--<div class="card-body">
-                <div class="default-according style-1">
-                    <div class="card">-->
-                @*<div style="color: red; font-size: 13px;">
-                        <p style="font-size: 12px;"></p>
-
-                    </div>
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="background-color: tomato;"><i class="icofont icofont-student-alt"></i>SEARCH STUDENT REGISTER</button>
-                        </h5>
-                    </div>*@
-                <!--<div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                                <div class="card-body">
-                                    <form id="myForm">
-                                        <div class="form-group row">
-                                            <label asp-for="Month" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Month :</label>
-                                            <div class="col-sm-9">
-                                                <select asp-for="Month" class="Dropdownbox" id="Month">
-                                                    <option value="">---------Select---------</option>
-                                                    <option value="01">January</option>
-                                                    <option value="02">February</option>
-                                                    <option value="03">March</option>
-                                                    <option value="04">April</option>
-                                                    <option value="05">May</option>
-                                                    <option value="06">June</option>
-                                                    <option value="07">July</option>
-                                                    <option value="08">August</option>
-                                                    <option value="09">September</option>
-                                                    <option value="10">October</option>
-                                                    <option value="11">November</option>
-                                                    <option value="12">December</option>
-                                                </select>
-                                                <span id="MonthError" style="color: red; font-size: 13px;"></span>
-                                            </div>
-
-                                            <label asp-for="Year" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Year :</label>
-                                            <div class="col-sm-9">
-                                                <select asp-for="Year" class="Dropdownbox" id="Year">
-                                                    <option value="">---------Select---------</option>
-                                                    <option value="2010">2010</option>
-                                                    <option value="2011">2011</option>
-                                                    <option value="2012">2012</option>
-                                                    <option value="2013">2013</option>
-                                                    <option value="2014">2014</option>
-                                                    <option value="2015">2015</option>
-                                                    <option value="2016">2016</option>
-                                                    <option value="2017">2017</option>
-                                                    <option value="2018">2018</option>
-                                                    <option value="2019">2019</option>
-                                                    <option value="2020">2020</option>
-                                                    <option value="2021">2021</option>
-                                                    <option value="2022">2022</option>
-                                                    <option value="2023">2023</option>
-                                                </select>
-                                                <span id="YearError" style="color: red; font-size: 13px;"></span>
-                                            </div>
-
-                                            <label asp-for="ClassificationName" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Department :</label>
-                                            <div class="col-sm-9" id="Str_DP_ID">
-                                                  <span id="DepartmentError" style="color: red; font-size: 13px;"></span>
-                                            </div>
-
-                                            <label asp-for="SubClassificationName" class="col-sm-3 col-form-label"><font style=" color: red; font-size: 13px;"><b>*</b></font>Class :</label>
-                                            <div class="col-sm-9">
-                                                 <span id="ClassError" style="color: red; font-size: 13px;"></span>
-                                            </div>
-
-                                            <div class="S_btn" style="display: flex; grid-gap: 16px;">
-                                                <input type="reset" value="Clear" />
-                                                <input type="submit" value="Search" />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-            </div>
-
-
-            @*register_ViewId*@
-            @*<div class="card-body">
-                    <div class="default-according style-1">
-                        <div class="card">
-                            <div style="color: red; font-size: 13px;">
-                                <p style="font-size: 12px;"></p>
-
-                            </div>
-                            <div class="card-header bg-primary">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="background-color: tomato;">STEPS TO BE FOLLOWED TO TAKE PRINT</button>
-                                </h5>
-                            </div>
-                            <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                                <div class="card-body">
-                                    <table width="100%" cellpadding="0" cellspacing="0" align="center" class="tablesideborders">
-                                        <tbody>
-                                            <tr>
-                                                <td style="height: 24px;">
-                                                    <table cellpadding="0" id="tblinstructions" width="100%" cellspacing="0">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="24%">
-                                                                    &nbsp;<b>Step 1:-</b>&nbsp;
-                                                                    <a class="ScreenShotImage" href="#">
-                                                                        (<u>View screenshot</u>)
-                                                                        <span>
-                                                                            <img id="screenshotImage1" src="~/Images/Print1.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;">
-                                                                        </span>
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <b style="font-size: 12px;">Click on "Preferences" button on General Tab of Print window.</b>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="24%">
-                                                                    &nbsp;<b>Step 2:-</b>&nbsp;
-                                                                    <a class="ScreenShotImage" href="#">
-                                                                        (<u>View screenshot</u>)
-                                                                        <span>
-                                                                            <img id="screenshotImage2" src="../Images/Print2.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
-                                                                        </span>
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <b style="font-size: 12px;">Click on "Orientation" Dropdown and select "Landscape" option.</b>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="24%">
-                                                                    &nbsp;<b>Step 3:-</b>&nbsp;
-                                                                    <a class="ScreenShotImage" href="#">
-                                                                        (<u>View screenshot</u>)
-                                                                        <span>
-                                                                            <img id="screenshotImage3" src="~/Images/Print.jpg" width="302px" height="237px" alt="" style="border: 1px solid #cbcbcb;"><br>
-                                                                        </span>
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <b style="font-size: 12px;">Adjust left and right margins by clicking print preview option.</b>
-                                                                </td>
-                                                            </tr>
-
-
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
-
-            @*<div id="EXcel_Print_btns" style="display: flex; grid-gap: 16px;">
-
-                    <a href="#" id="exportButton" value="Export To Excel" style="font-weight: bold; margin-left: 18px;">Export To Excel</a>
-
-                    <a href="#" id="printButton" style="margin-left: 78%; font-weight: bold;">Print</a>
-
-
-                </div>*@
-
             <div class="row mb-2">
                 <div class="col-md-12 col-lg-12 mb-3">
                     <div class="card mb-4">
@@ -563,56 +372,63 @@
                             <div class="card-datatable text-nowrap">
                                 <div class="table-responsive">
                                     <div class="table-responsive text-nowrap" id="printDiv">
-                                        <table width="100%" border="0" style="background-color: white; color: slateblue; font-weight: bolder; background-color: white; color: slateblue; font-weight: bolder;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="left" colspan="3" style="font-size:12px;font-weight:color:#000000;">
-                                                        <b>Note: </b>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="left" style="font-size:10px;font-weight:200;">
-                                                        <ul>
-                                                            <li> P-- Present </li>
-                                                            <li> A-- Absent </li>
-                                                            <li> OS-- Out of Station </li>
-                                                            <li> UW-- Urgent Work </li>
-                                                            <li> OL-- Official Leave </li>
+                                        <div id="Classdetailsdiv">
+                                            <div class="col-12">
+                                                <label class="">NOTE</label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 text-end space  ">P </label>
+                                                <label class="col-2 ">Present </label>
+                                                <label class="col-2 text-end space">DA </label>
+                                                <label class="col-2 ">Doctor Appointment </label>
+                                                <label class="col-2 text-end space">1HP </label>
+                                                <label class="col-2 ">First half Present  </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 text-end space  ">A </label>
+                                                <label class="col-2 ">Absent </label>
+                                                <label class="col-2 text-end space">NA </label>
+                                                <label class="col-2 ">No Application </label>
+                                                <label class="col-2 text-end space">2HP </label>
+                                                <label class="col-2 ">Second half Present  </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 text-end space  ">OS </label>
+                                                <label class="col-2 ">Out of Station </label>
+                                                <label class="col-2 text-end space">NE </label>
+                                                <label class="col-2 ">No Examination </label>
+                                                <label class="col-2 text-end space">IL </label>
+                                                <label class="col-2 ">Illness  </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 text-end space  ">UW </label>
+                                                <label class="col-2 ">Urgent Work </label>
+                                                <label class="col-2 text-end space">PL </label>
+                                                <label class="col-2 ">Preparatory Leave </label>
+                                                <label class="col-2 text-end space">O </label>
+                                                <label class="col-2 ">Others  </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-1 text-end space  ">OL </label>
+                                                <label class="col-2 ">Official Leave </label>
+                                                <label class="col-2 text-end space">UFR </label>
+                                                <label class="col-2 ">Urgent Family Reason </label>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-3 text-center">-------------</label>
+                                                <label class="col-3 text-center">-------------</label>
+                                                <label class="col-3 text-center">-------------</label>
+                                                <label class="col-3 text-center">-------------</label>
+                                            </div>
 
-
-                                                        </ul>
-                                                    </td>
-                                                    <td align="left" style="font-size:10px;font-weight:200;">
-                                                        <ul>
-
-                                                            <li> DA-- Doctor Appointment  </li>
-                                                            <li> NA-- No Application </li>
-                                                            <li> NE-- No Examination </li>
-
-                                                            <li> PL-- Preparatory Leave </li>
-                                                            <li> UFR-- Urgent Family Reason  </li>
-                                                        </ul>
-                                                    </td>
-                                                    <td align="left" style="font-size:10px;font-weight:200;">
-                                                        <ul>
-                                                            <li> 1HP-- First half Present </li>
-                                                            <li> 2HP-- Second half Present </li>
-                                                            <li> IL-- Illness </li>
-                                                            <li> O-- Others </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <div class="header" style=" text-align: center; margin-left: 27%; font-weight: 500;">
-                                            <b>ADS SCHOOL</b>
-                                            <p>Student Attendance Register for the Month of  <span id="MONTHIDMONTHID"></span>,<span id="YEARID"></span>  </p>
-                                            <p>Class : <span id="Cl"></span>      , Section: <span id="Section"></span>       , No-Of Teaching Days: <span id="Teaching_Days"></span></p>
+                                            <div id="Classdetailsdiv" style=" text-align: center; margin-left: 27%; font-weight: 500;">
+                                                <b>Quro Schools</b>
+                                                <p>Student Attendance Register for the Month of  <span id="MONTHIDMONTHID"></span>,<span id="YEARID"></span>  </p>
+                                                <p>Class : <span id="Cl"></span>      , Section: <span id="Section"></span>       , No-Of Teaching Days: <span id="Teaching_Days"></span></p>
+                                            </div>
                                         </div>
-
-                                        <table class="" id="Attendancereporttbl" style="border-collapse:separate;">
-                                            <thead class="" id="tblhead">
+                                        <table id="Attendancereporttbl">
+                                            <thead class="" id="tblhead" style="border: 1px solid; color: black;">
 
                                             </thead>
                                             <tbody id="tblBody">
@@ -622,42 +438,21 @@
                                             </tfoot>
                                         </table>
                                         <br />
-                                        <table id="myTbl">
-                                            <thead>
-                                                <tr><th colspan="2">Average Attendacne for the month</th></tr>
+                                        <table id="Avaragetbl" style="border: 1px solid;">
+                                            <thead style="border: 1px solid;">
+                                                <tr><th colspan="2" style="border: 1px solid; color: black;">Average Attendacne for the month</th></tr>
                                                 <tr>
-                                                    <th>Category of Student</th>
-                                                    <th>Average Attendance Rate</th>
+                                                    <th style="border: 1px solid; color: black;">Category of Student</th>
+                                                    <th style="border: 1px solid; color: black;">Average Attendance Rate</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="AvgTblbody">
                                             </tbody>
                                         </table>
 
-                                        @*<table id="myTable" class="Table_report">
-                                            <thead class="border-0" id="tablehead">
-
-                                            </thead>
-                                            <tbody id="tableBody">
-                                            </tbody>
-                                            <tfoot id="tablefooter">
-                                            <tr>
-                                            <td colspan="50" style="font-size: 10px; font-weight: bold; color: #000000;">&nbsp;</td>
-                                            </tr>
-                                            </tfoot>
-                                            </table>
-
-                                            <table>
-                                            <tbody id="Student_Absentes">
-                                            </tbody>
-                                            </table>*@
-
                                         <div id="Signaturediv">
 
                                         </div>
-                                        @*<div style="margin-left: 60%; position: absolute; margin-top: -12%;">
-                                                <span>Signature of Teacher________________________</span>
-                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -669,9 +464,6 @@
     </div>
 </body>
 </html>
-
-
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -680,8 +472,7 @@
 
 <script src="~/js/Student_Attendance_register.js"></script>
 
-<!-- Make sure to place this script tag after the definition of printDiv -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -689,10 +480,9 @@
 
 
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "GetMonthWiseFullStatusofClassAttendanceReporttbldata";
     Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
@@ -109,12 +110,12 @@
         </div>
     </div>
 </div>
-<div class="row justify-content">
+<div class="row justify-content" style=" color: #7367f0;">
     <div class="col-sm-6">
-        <input type="button" value="Export Excel" title="Export To Excel" class="btn btn-pill btn-outline-info btn-air-info" id="_MonthwiseattendancereportExportExcel" />
+        <a herf="Javascript:void(0);" id="_MonthwiseattendancereportExportExcel">Export To Excel</a>      
     </div>
-    <div class="col-sm-6 text-end " id="Getmonthwiseattendnacetblmain">
-        <input type="button" value="PRINT" title="Print" class="btn btn-pill btn-outline-info btn-air-info" id="_monthwiseattendancereportPrint" />
+    <div class="col-sm-6 text-end">
+        <a herf="javascript:void(0);" id="_monthwiseattendancereportPrint">Print</a>       
     </div>
 </div>
 <div class="row mb-2">
@@ -129,67 +130,72 @@
             </div>
             <div class="card-body" id="Getmonthwiseattendnacetblmain">
                 <div class="card-datatable text-nowrap">
-                    <div class="table-responsive">
+                    <div id="Printmonthwiseattendancereport">
+
+                        <div class="col-12">
+                            <label class=" space">NOTE</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-1 text-end space  ">P </label>
+                            <label class="col-2 ">Present </label>
+                            <label class="col-2 text-end space">DA </label>
+                            <label class="col-2 ">Doctor Appointment </label>
+                            <label class="col-2 text-end space">1HP </label>
+                            <label class="col-2 ">First half Present  </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-1 text-end space  ">A </label>
+                            <label class="col-2 ">Absent </label>
+                            <label class="col-2 text-end space">NA </label>
+                            <label class="col-2 ">No Application </label>
+                            <label class="col-2 text-end space">2HP </label>
+                            <label class="col-2 ">Second half Present  </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-1 text-end space  ">OS </label>
+                            <label class="col-2 ">Out of Station </label>
+                            <label class="col-2 text-end space">NE </label>
+                            <label class="col-2 ">No Examination </label>
+                            <label class="col-2 text-end space">IL </label>
+                            <label class="col-2 ">Illness  </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-1 text-end space  ">UW </label>
+                            <label class="col-2 ">Urgent Work </label>
+                            <label class="col-2 text-end space">PL </label>
+                            <label class="col-2 ">Preparatory Leave </label>
+                            <label class="col-2 text-end space">O </label>
+                            <label class="col-2 ">Others  </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-1 text-end space  ">OL </label>
+                            <label class="col-2 ">Official Leave </label>
+                            <label class="col-2 text-end space">UFR </label>
+                            <label class="col-2 ">Urgent Family Reason </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 text-center">-------------</label>
+                            <label class="col-3 text-center">-------------</label>
+                            <label class="col-3 text-center">-------------</label>
+                            <label class="col-3 text-center">-------------</label>
+                        </div>
+
                         <div class="table-responsive text-nowrap">
+                            <div style=" text-align: center; font-weight: 500;">
+                                <b>Quro Schools</b>
+                                <p>Attendance for  <span id="Selectedepartmentspid"></span>,<span id="SelecteSectionspid"></span> for the month of <span id="selectedmonthid"></span>,  <span id="SelectedYearid"></span></p>
+                            </div>
+                            <table id="myTable" class="table table-hover table-bordered">
+                                <thead class="table-dark" id="tablehead">
 
-                            <div class="table-responsive text-nowrap" id="Printmonthwiseattendancereport">
-                                <table width="100%" border="0" style="background-color: white; color: slateblue; font-weight: bolder; background-color: white; color: slateblue; font-weight: bolder;">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" colspan="3" style="font-size:12px;font-weight:color:#000000;">
-                                                <b>Note: </b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size:10px;font-weight:200;">
-                                                <ul>
-                                                    <li> P-- Present </li>
-                                                    <li> A-- Absent </li>
-                                                    <li> OS-- Out of Station </li>
-                                                    <li> UW-- Urgent Work </li>
-                                                    <li> OL-- Official Leave </li>
+                                <tbody id="tableBody">
+                                </tbody>
+                                <tfoot id="tablefooter">
 
+                                </tfoot>
+                            </table>
+                            <div id="AttendanceSignaturesdiv">
 
-                                                </ul>
-                                            </td>
-                                            <td align="left" style="font-size:10px;font-weight:200;">
-                                                <ul>
-
-                                                    <li> DA-- Doctor Appointment  </li>
-                                                    <li> NA-- No Application </li>
-                                                    <li> NE-- No Examination </li>
-
-                                                    <li> PL-- Preparatory Leave </li>
-                                                    <li> UFR-- Urgent Family Reason  </li>
-                                                </ul>
-                                            </td>
-                                            <td align="left" style="font-size:10px;font-weight:200;">
-                                                <ul>
-                                                    <li> 1HP-- First half Present </li>
-                                                    <li> 2HP-- Second half Present </li>
-                                                    <li> IL-- Illness </li>
-                                                    <li> O-- Others </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div id="Selectedclassnamesmonthwisediv">
-
-                                </div>
-                                <table class="" id="myTable" style=" border-collapse: separate;">
-                                    <thead class="table-warning" id="tablehead">
-
-                                    </thead>
-                                    <tbody id="tableBody">
-                                    </tbody>
-                                    <tfoot id="tablefooter">
-
-                                    </tfoot>
-                                </table>
-                                <div id="AttendanceSignaturesdiv">
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,5 +211,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>

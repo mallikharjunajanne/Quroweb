@@ -61,7 +61,7 @@ namespace Connect4m_Web.Models
         // public string SubCategoryText { get; set; }
         [Required]
        // [RegularExpression(@"^[a-z A-Z]+$", ErrorMessage = "Invalid First Name")]
-        [RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid First Name")]
+        //[RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid First Name")]
 
         [Display(Name = "First Name")]
         public string FirstNameInGeneral { get; set; }
@@ -131,7 +131,7 @@ namespace Connect4m_Web.Models
         public string SecurityQuestionId { get; set; }
         [Required]
         public string Answer { get; set; }
-        [RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid Middle Name")]
+        //[RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid Middle Name")]
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         public string NickName { get; set; }

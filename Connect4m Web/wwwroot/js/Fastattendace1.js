@@ -25,11 +25,37 @@
 
 $(document).ready(function () {
     debugger;
+
+    var Rolename = $('#FAROLENAMESPANID').val().toUpperCase();
+
+    if (Rolename == "CLASS TEACHER") {
+        $('#AdminAttendancediv').hide();
+        $('#Classteacherattendacediv').show();
+        $('#FAClassteacherlblid').show();
+
+        var today = new Date();
+        var GetTodaydate = Dateformdatechange(today);
+        $('#FAClassteacherlblid').text(GetTodaydate);
+    } else {
+        $('#AdminAttendancediv').show();
+        $('#Classteacherattendacediv').hide();
+        $('#Startdatetxt').hide();
+    }
+
     Classificationdropdown();
     Slotsdropdown();
 });
 
+function Dateformdatechange(inputDate) {
+    var dd = String(inputDate.getDate()).padStart(2, '0'); // Get the day and pad with leading zero if necessary
+    var mm = String(inputDate.getMonth() + 1).padStart(2, '0'); // Get the month and pad with leading zero if necessary
+    var yyyy = inputDate.getFullYear(); // Get the year
 
+    // Create the formatted date string in "dd/mm/yyyy" format
+    var formattedDate = dd + '/' + mm + '/' + yyyy;
+
+    return formattedDate;
+}
 
 //======>>> Classification Dropdown
 function Classificationdropdown() {

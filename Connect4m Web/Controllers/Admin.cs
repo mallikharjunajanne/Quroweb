@@ -69,7 +69,7 @@ namespace Connect4m_Web.Controllers
         #region Home manage notice search screen
 
         public IActionResult ManageNotices()
-        {     
+        {
             return View();
         }
 
@@ -82,8 +82,8 @@ namespace Connect4m_Web.Controllers
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 li = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }       
-            return Json(li);           
+            }
+            return Json(li);
         }
 
         public IActionResult ManageNotices_TableData(string Subject, string StartDate, string ExpiryDate, int ENoticeTypeId, int IsSMSTemplate)
@@ -99,7 +99,7 @@ namespace Connect4m_Web.Controllers
             int CreatedBy = UserId;
             int GetAll = 0;
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_Noticestabledata?InstanceId=" + InstanceId + "&Subject=" + Subject + "&StartDate=" + StartDate + "&ExpiryDate=" + ExpiryDate + "&ENoticeTypeId=" + ENoticeTypeId + "&IsSMSTemplate=" + IsSMSTemplate + "&GetAll=" + GetAll + "&SMSTextInXML="+ SMSTextInXML+ "&SMSFromText="+ SMSFromText+ "&Action="+ Action+ "&CreatedBy="+ CreatedBy).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_Noticestabledata?InstanceId=" + InstanceId + "&Subject=" + Subject + "&StartDate=" + StartDate + "&ExpiryDate=" + ExpiryDate + "&ENoticeTypeId=" + ENoticeTypeId + "&IsSMSTemplate=" + IsSMSTemplate + "&GetAll=" + GetAll + "&SMSTextInXML=" + SMSTextInXML + "&SMSFromText=" + SMSFromText + "&Action=" + Action + "&CreatedBy=" + CreatedBy).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -110,9 +110,26 @@ namespace Connect4m_Web.Controllers
             return Json(item);
 
             //return PartialView("_ManageNotices_TableData", item);
-        }      
+        }
+
+        public IActionResult ManagenoticeExporttoexcel(string Subject, string StartDate, string ExpiryDate, int ENoticeTypeId, int IsSMSTemplate)
+        {
+            List<NoticeTypes> item = new List<NoticeTypes>();
+
+            List<ManagenoticeExporttoexcel> livalues = new List<ManagenoticeExporttoexcel>();
+
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Exporttoexcel?InstanceId=" + InstanceId + "&Subject=" + Subject + "&StartDate=" + StartDate + "&ExpiryDate=" + ExpiryDate + "&ENoticeTypeId=" + ENoticeTypeId + "&IsSMSTemplate=" + IsSMSTemplate).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                livalues = JsonConvert.DeserializeObject<List<ManagenoticeExporttoexcel>>(data);
+            }
+            return Json(livalues);
+        }
+
         public IActionResult Edit_ENotices_ById(int ENoticeId)
-        {           
+        {
             List<Homenoticeupdate> item = new List<Homenoticeupdate>();
 
             string SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
@@ -124,7 +141,7 @@ namespace Connect4m_Web.Controllers
 
 
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesEdit?ENoticeId=" + ENoticeId+ "&SMSTextInXML=" + SMSTextInXML + "&SMSFromText=" + SMSFromText + "&Action=" + Action + "&CreatedBy=" + CreatedBy+ "&InstanceId="+ InstanceId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesEdit?ENoticeId=" + ENoticeId + "&SMSTextInXML=" + SMSTextInXML + "&SMSFromText=" + SMSFromText + "&Action=" + Action + "&CreatedBy=" + CreatedBy + "&InstanceId=" + InstanceId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -137,8 +154,8 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
-       public IActionResult Edit_ENotices_ById(Homenoticeupdate obj)
-       // public IActionResult Edit_ENotices_ById(NoticeTypes obj)
+        public IActionResult Edit_ENotices_ById(Homenoticeupdate obj)
+        // public IActionResult Edit_ENotices_ById(NoticeTypes obj)
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
@@ -189,7 +206,7 @@ namespace Connect4m_Web.Controllers
             string data2 = response.Content.ReadAsStringAsync().Result;
             if (response.IsSuccessStatusCode)
             {
-                
+
                 items = JsonConvert.DeserializeObject<string>(data2);
             }
 
@@ -200,8 +217,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Delete_ENotices_ById(int ENoticeId)
         {
             string item = "";
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesDelete?ENoticeId=" + ENoticeId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_NoticesDelete?ENoticeId=" + ENoticeId + "&InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -220,16 +236,11 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-
-
-
-
-
         #region Create Notice        
 
         [HttpGet]
         public IActionResult ManageNotices_Create()
-        {               
+        {
             return View();
             //return PartialView("_ManageNotices_Create");
         }
@@ -244,7 +255,7 @@ namespace Connect4m_Web.Controllers
             //int CreatedBy = UserId;
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            
+
             var instanceId = InstanceId;
             var Documentattachement = obj.AttachedDocument;
             Random random = new Random();
@@ -313,7 +324,7 @@ namespace Connect4m_Web.Controllers
             {
                 obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
                 obj.SMSFromText = "ADSTEK";
-                obj.Action = "credits";               
+                obj.Action = "credits";
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
                 obj.DisplayOrder = 2;
@@ -321,24 +332,24 @@ namespace Connect4m_Web.Controllers
                 obj.CountFlag = 1;
 
 
-        //obj.InstanceId = InstanceId;
-        //obj.CreatedBy = UserId;
-        //obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-        //    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
-        //    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
-        //    "</REQUESTCREDIT>";
-        //obj.SMSFromText = "ADSTEK";
-        //obj.Action = "credits";
-        //objs.DisplayIcon = "";
-        //objs.DisplayOrder = 2;
-        //objs.ShowInLogin = "0";
-        //obj.InstanceId = InstanceId;
-        //obj.CreatedBy = UserId;
-        //obj.StartDate = obj.SDate;
-        //obj.EndDate = obj.ExDate;
+                //obj.InstanceId = InstanceId;
+                //obj.CreatedBy = UserId;
+                //obj.SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                //    "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                //    "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+                //    "</REQUESTCREDIT>";
+                //obj.SMSFromText = "ADSTEK";
+                //obj.Action = "credits";
+                //objs.DisplayIcon = "";
+                //objs.DisplayOrder = 2;
+                //objs.ShowInLogin = "0";
+                //obj.InstanceId = InstanceId;
+                //obj.CreatedBy = UserId;
+                //obj.StartDate = obj.SDate;
+                //obj.EndDate = obj.ExDate;
 
 
-        var Documentattachement = obj.AttachedDocument;
+                var Documentattachement = obj.AttachedDocument;
 
 
                 //obj.EndDate = ConvertToDateTime(obj.ExDate);
@@ -367,7 +378,7 @@ namespace Connect4m_Web.Controllers
 
                         string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
                         //var filenamedoc = randomNumber + output;
-                        var filenamedoc =  output;
+                        var filenamedoc = output;
                         var fileNamedoc = Path.GetFileName(filenamedoc);
                         var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
                         string uploadsdoc = Path.Combine("wwwroot", "Managenoticesdocs", "Instanceid" + InstanceId, fileNamedoc);
@@ -416,7 +427,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult Selecteduserdelete(string Userids)
         {
-            string item="";
+            string item = "";
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Postnoticeselecteduserdelete?Userids=" + Userids).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -441,24 +452,21 @@ namespace Connect4m_Web.Controllers
             return Json(li);
         }
 
-       
+
 
         #endregion
 
-
-
-
         #region Create SMS
-      
+
         public IActionResult ManageNotices_CreateSMS()
-        {         
+        {
             List<Templatesms> item = new List<Templatesms>();
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_Noticesmstemplate?InstanceId=" + InstanceId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-          
+
                 item = JsonConvert.DeserializeObject<List<Templatesms>>(data);
             }
             ViewBag.SMSTemplates = item;
@@ -467,7 +475,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult SMS_TemplateandDetails(int TemplateMasterPK)
         {
-           
+
             List<Templatesms> item = new List<Templatesms>();
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_SMSTemplateandDetails?InstanceId=" + InstanceId + "&TemplateMasterPK=" + TemplateMasterPK).Result;
@@ -480,7 +488,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
         [HttpPost]
-       //public IActionResult ManagenoticeSMS_saveNposting(TemplateDetails_SMS obj)
+        //public IActionResult ManagenoticeSMS_saveNposting(TemplateDetails_SMS obj)
         //public IActionResult ManagenoticeSMS_saveNposting(ENoticeTypes obj)
         public IActionResult ManagenoticeSMS_saveNposting(InsertTemplatesms obj)
         {
@@ -523,7 +531,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.Subject = obj.Subject;
             ViewBag.StartDate = obj.StartDate;
             ViewBag.EndDate = obj.ExpiryDate;
-            
+
 
 
             string data1 = JsonConvert.SerializeObject(obj);
@@ -555,8 +563,8 @@ namespace Connect4m_Web.Controllers
                 "</REQUESTCREDIT>";
             obj.SMSFromText = "ADSTEK";
             obj.Action = "credits";
-            
-            
+
+
             if (obj.NoticeDocument == null)
             {
                 obj.NoticeDocument = "";
@@ -565,7 +573,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.StartDate = obj.SDate;
             ViewBag.EndDate = obj.ExDate;
 
-            ViewBag.StartDate = obj.StartDate;            
+            ViewBag.StartDate = obj.StartDate;
             ViewBag.EndDate = obj.EndDate;
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
@@ -592,7 +600,7 @@ namespace Connect4m_Web.Controllers
         {
             obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
             obj.SMSFromText = "ADSTEK";
-            obj.Action = "credits"; 
+            obj.Action = "credits";
             obj.DMLTYPE = "GETRECORDS";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
@@ -604,7 +612,7 @@ namespace Connect4m_Web.Controllers
 
             //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_ENoticemails_smssendinginsert", content).Result;
             //SmsSendingResult items = new SmsSendingResult();
-            
+
             if (response.IsSuccessStatusCode)
             {
                 //items = JsonConvert.DeserializeObject<SmsSendingResult>(data2);
@@ -617,7 +625,7 @@ namespace Connect4m_Web.Controllers
             {
                 return BadRequest("Failed to insert data.");
             }
-           
+
         }
 
 
@@ -634,7 +642,7 @@ namespace Connect4m_Web.Controllers
         }
         [HttpPost]
         //public IActionResult CreateSmsNNotice(NoticeTypes obj)
-        public IActionResult CreateSmsNNotice(ENoticeTypes  obj)
+        public IActionResult CreateSmsNNotice(ENoticeTypes obj)
         {
             try
             {
@@ -769,7 +777,7 @@ namespace Connect4m_Web.Controllers
                         }
 
                         string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
-                        var filenamedoc =output;
+                        var filenamedoc = output;
                         //var filenamedoc = randomNumber + output;
                         var fileNamedoc = Path.GetFileName(filenamedoc);
                         var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
@@ -884,9 +892,6 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-
-
-
         #region Department and classification dropdowns
 
 
@@ -917,8 +922,8 @@ namespace Connect4m_Web.Controllers
 
             return Json(item);
         }
-                                               
-        public IActionResult ManageNotices_PostNoticeSearchtabledata( string UserName, string InstanceRoleId, string FirstName, string LastName, string InstanceClassificationId, string InstanceSubClassificationId, string InstanceUserCodes, string PortalEmail, string RouteId, string CollegeHostel, string ExcludeUserIds, string Noofusers)
+
+        public IActionResult ManageNotices_PostNoticeSearchtabledata(string UserName, string InstanceRoleId, string FirstName, string LastName, string InstanceClassificationId, string InstanceSubClassificationId, string InstanceUserCodes, string PortalEmail, string RouteId, string CollegeHostel, string ExcludeUserIds, string Noofusers)
         {
             List<Postnoticetabledate> item = new List<Postnoticetabledate>();
 
@@ -1024,19 +1029,10 @@ namespace Connect4m_Web.Controllers
             return View(item);
         }
 
-      
+
 
 
         #endregion
-
-
-
-
-
-
-
-
-
 
 
         //------Create Notice and SMS  Button click view to start action methods
@@ -1056,14 +1052,14 @@ namespace Connect4m_Web.Controllers
             return li;
         }
 
-        
 
 
 
-        #region Cool Links              ////----
+
+        #region Cool Links ////=====
 
         public IActionResult ManageCoolLinks()
-        {  
+        {
             return View();
         }
 
@@ -1136,6 +1132,9 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult CoolLinks_UPDATE(CoolLinks obj)
         {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_CoolLinks_UPDATE", content).Result;
@@ -1153,7 +1152,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        #region  MANAGE HOLIDAYS         ////----
+        #region  MANAGE HOLIDAYS ////=====
 
         public IActionResult ManageHolidays()
         {
@@ -1165,20 +1164,8 @@ namespace Connect4m_Web.Controllers
             List<Manageholidays> items = new List<Manageholidays>();
             try
             {
-                if (obj.Year == 0)
-                {
-                    obj.Year = default;
-                }
-                if (obj.Month == null)
-                {
-                    obj.Month = default;
-                }
-                if (obj.Type == 0)
-                {
-                    obj.Type = default;
-                }
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageHolidays_tbl?InstanceId=" + InstanceId + "&Year=" + obj.Year + "&Month=" + obj.Month + "&Type=" + obj.Type).Result;
-                //var errorContent = response.Content.ReadAsStringAsync().Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageHolidays_tbl?InstanceId=" + InstanceId + "&Year=" + obj.Year + "&Month=" + obj.Monthid + "&Type=" + obj.Type + "&CreatedBy=" + UserId).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -1189,12 +1176,17 @@ namespace Connect4m_Web.Controllers
                 ViewBag.Holidayslistcount = items.Count();
                 return Json(items);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
-                return View();
+                string Issutype = ex.Message;
+                string ModuleName = "ManageHolidays";
+                string FunctionName = "Holidaysbindingfun";
+                //return View();
+                return RedirectToAction("CommonErrorpage", new { Message = Issutype, ModuleName = ModuleName, FunctionName = FunctionName });
             }
         }
+
 
         [HttpGet]
         public IActionResult Insert_Holiday()
@@ -1204,26 +1196,32 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult Insert_Holiday(Manageholidays obj)
         {
-            string items = "";
-            obj.InstanceId = InstanceId;
-            obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Manageholidays_Insert", content).Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-            }           
-            return Json(items);            
+                string items = "";
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+                string data1 = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Manageholidays_Insert", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data2 = response.Content.ReadAsStringAsync().Result;
+                    items = data2;
+                }
+                return Json(items);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
         public IActionResult Update_Holiday(int HolidayId)
         {
-            //exec stp_tblInstanceHolidays_SELECT @HolidayId=3454
             Manageholidays model = new Manageholidays();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Edit_Holiday?HolidayId=" + HolidayId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Edit_Holiday?HolidayId=" + HolidayId + "&InstanceId=" + InstanceId + "&Createdby=" + UserId).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -1256,7 +1254,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Delete_Holiday(int HolidayId)
         {
             string items = "";
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Delete_Holiday?HolidayId=" + HolidayId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Delete_Holiday?HolidayId=" + HolidayId + "&InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -1302,7 +1300,7 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
-        #region    ManageQuote  ////---
+        #region    ManageQuote ////=====
         public IActionResult ManageQuote()
         {
             return View();
@@ -1366,7 +1364,7 @@ namespace Connect4m_Web.Controllers
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 model = JsonConvert.DeserializeObject<Managequote>(data);
-            }         
+            }
             return View(model);
         }
 
@@ -1405,8 +1403,110 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
+        #region MANAGE CALENDAR ////=====
+        public IActionResult ManageCalendar()
+        {
+            List<EventsClander> items = new List<EventsClander>();
+            ViewBag.EventCalendar = items;
+            return View();
+        }
 
-        #region  MANAGE DEPARTMENT  ///----
+        public IActionResult Calendareventstbl(EventsClander obj)
+        {
+            List<EventsClander> items = new List<EventsClander>();
+            try
+            {
+                obj.InstanceId = InstanceId;
+
+
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/CalendarEvents?InstanceId=" + InstanceId + "&EventTitle=" + obj.EventTitle + "&EventDate=" + obj.dateofevent + "&MonthId=" + obj.MonthId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<EventsClander>>(data);
+                }
+
+                ViewBag.Holidayslist = items;
+                ViewBag.Holidayslistcount = items.Count();
+                return Json(items);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+        public IActionResult CalendareventsInsert()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CalendareventsInsert(EventsClander obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+
+            string items = "";
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/InsertCalendar", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = data2;
+            }
+            return Json(items);
+        }
+        [HttpGet]
+        public IActionResult Update_Calendar(int EventId)
+        {
+            EventsClander model = new EventsClander();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/EditCalendarevents?EventId=" + EventId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<EventsClander>(data);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Update_Calendar(EventsClander obj)
+        {
+            string items = "";
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Updatecalendar", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = data2;
+            }
+            return Json(items);
+        }
+
+
+        public IActionResult Delete_Calendar(int EventId)
+        {
+            string items = "";
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Deleteeventcalendar?EventId=" + EventId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                items = data;
+            }
+
+            return Json(items);
+        }
+        #endregion
+
+        #region  MANAGE DEPARTMENT ////=====
 
         public IActionResult ManageClassification()
         {
@@ -1427,7 +1527,7 @@ namespace Connect4m_Web.Controllers
                 {
                     obj.ClassificationName = "";
                 }
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassification_tbl?InstanceId=" + InstanceId + "&ClassificationDescription=" + obj.ClassificationDescription + "&ClassificationName=" + obj.ClassificationName).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassification_tbl?InstanceId=" + InstanceId + "&ClassificationDescription=" + obj.ClassificationDescription + "&ClassificationName=" + obj.ClassificationName + "&CreatedBy=" + UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -1521,8 +1621,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-
-        #region  MANAGE BEST PERFORMERS  ///----
+        #region  MANAGE BEST PERFORMERS ////=====
 
         public IActionResult ManageBestPerformer()
         {
@@ -1543,7 +1642,7 @@ namespace Connect4m_Web.Controllers
                     obj.IsWelcomePage = default;
                 }
 
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_tbl?InstanceId=" + InstanceId + "&Title=" + obj.Title + "&IsWelcomePage=" + obj.IsWelcomePage).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_tbl?InstanceId=" + InstanceId + "&Title=" + obj.Title + "&IsWelcomePage=" + obj.IsWelcomePage + "&CreatedBy=" + UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -1573,7 +1672,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Adding_BestPerformer_dds()
         {
             BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_dds?InstanceId=" + InstanceId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_dds?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -1590,7 +1689,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Adding_BestPerformer_Subclassification_dd(int InstanceClassificationId)
         {
             BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_Subclassification_dds?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_Subclassification_dds?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -1682,7 +1781,6 @@ namespace Connect4m_Web.Controllers
         [HttpGet]
         public IActionResult Update_ManageBestPerformer(int PerformerId)
         {
-            //exec stp_tblInstanceHolidays_SELECT @HolidayId=3454
             BestPerformer model = new BestPerformer();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_Edit?PerformerId=" + PerformerId).Result;
 
@@ -1696,20 +1794,55 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update_ManageBestPerformer(Manageholidays obj)
+        public IActionResult Update_ManageBestPerformer(BestPerformer obj)
         {
             string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
+
+            var instanceId = InstanceId;
+            var Documentattachement = obj.EventPhoto; //EventPhoto
+            Random random = new Random();
+            int randomNumber = random.Next(1000, 999999);
+            if (Documentattachement != null)
+            {
+                obj.Eventphotos = Documentattachement.FileName;
+
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Eventbestperformersdocs");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + instanceId);
+
+                if (!Directory.Exists(instanceFolderPath))
+                {
+                    Directory.CreateDirectory(instanceFolderPath);
+                }
+
+                string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                var filenamedoc = randomNumber + output;
+                var fileNamedoc = Path.GetFileName(filenamedoc);
+                var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                string uploadsdoc = Path.Combine("wwwroot", "Eventbestperformersdocs", "Instanceid" + instanceId, fileNamedoc);
+                //obj.DocSize = randomNumber.ToString();
+                using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                {
+                    Documentattachement.CopyTo(fileSrteam);
+                }
+            }
+
+
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Manageholidays_Update", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Managebestperformer_Update", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
                 items = data2;
             }
-            ViewBag.List = items;
             return Json(items);
         }
 
@@ -1730,8 +1863,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-
-        #region  MANAGE CLASSES 
+        #region  MANAGE CLASSES ////=====
 
         public IActionResult ManageSubClassification()
         {
@@ -1744,7 +1876,28 @@ namespace Connect4m_Web.Controllers
             {
                 //exec stp_tblInstanceSubClassification_SEARCH @InstanceId = 545,@InstanceClassificationId = 0,@SubClassificationName = '',@SubClassificationDescription = ''
 
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManagesubClassificationtbl?InstanceId=" + InstanceId + "&InstanceClassificationId=" + obj.InstanceClassificationId + "&SubClassificationName=" + obj.SubClassificationName + "&SubClassificationDescription=" + obj.SubClassificationDescription).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManagesubClassificationtbl?InstanceId=" + InstanceId + "&InstanceClassificationId=" + obj.InstanceClassificationId + "&SubClassificationName=" + obj.SubClassificationName + "&SubClassificationDescription=" + obj.SubClassificationDescription + "&CreatedBy=" + UserId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
+                }
+                return Json(items);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+
+        public IActionResult Subclassexporttoexcel(ManageSubClassification obj)
+        {
+            List<ManageSubClassification> items = new List<ManageSubClassification>();
+            try
+            {
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManagesubClassificationtblprint?InstanceId=" + InstanceId + "&InstanceClassificationId=" + obj.InstanceClassificationId + "&SubClassificationName=" + obj.SubClassificationName + "&SubClassificationDescription=" + obj.SubClassificationDescription).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -1795,7 +1948,7 @@ namespace Connect4m_Web.Controllers
             return Json(model);
         }
 
-        
+
 
         [HttpGet]
         public IActionResult Insert_ManageSubClassification()
@@ -1818,10 +1971,9 @@ namespace Connect4m_Web.Controllers
                 items = data2;
             }
             return Json(items);
-            //ViewBag.List = items;
-            //IsActive
-            //return View();
         }
+
+
 
 
         [HttpGet]
@@ -1836,7 +1988,7 @@ namespace Connect4m_Web.Controllers
 
 
             string roleName = "TEACHER,DISCIPLINE ADMINISTRATOR,CO-CLASS TEACHER,PROGRAM LEADER,CLASS TEACHER,EXECUTIVE ASSISTANT,ASSOCIATE DIRECTOR,DISCIPLINE DATA ENTRY COORDINATOR,DISCIPLINE LEADER,COUNSELLOR,TEACHER ADMIN,HR COORDINATOR,HR MANAGER,IT COORDINATOR,PROGRAM COORDINATOR,ADMISSIONSTUDENT,ADMISSIONPARENT,ADMISSION ADMINISTRATOR,CCE CO-ORDINATOR";
-            var classTeacherResponse = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + roleName).Result;
+            var classTeacherResponse = client.GetAsync(client.BaseAddress + "/ManageClassTeacher_dd?InstanceId=" + InstanceId + "&RoleName=" + roleName + "&CreatedBy=" + UserId).Result;
             var classTeacherData = classTeacherResponse.IsSuccessStatusCode ? classTeacherResponse.Content.ReadAsStringAsync().Result : null;
             var classTeacherModel = JsonConvert.DeserializeObject<ManageSubClassification>(classTeacherData);
             ViewBag.Classteacherdd = classTeacherModel.ClassteacherList;
@@ -1888,7 +2040,57 @@ namespace Connect4m_Web.Controllers
             return Json(items);
         }
 
-       
+
+        #endregion
+
+
+        public IActionResult CommonErrorpage(string Message, string ModuleName, string FunctionName)
+        {
+            int instanceid = InstanceId;
+            int userid = UserId;
+            //string Issutype= "";
+            //exec stp_tblErrorLog_INSERT
+            //@InstanceId=545,
+            //@UserId=32891,
+            //@ErrorDescription='Object reference not set to an instance of an object.',@FunctionName='PUSHNotifications',@ModuleName='ManageNotices.aspx',@Message='Object reference not set to an instance of an object.',@Source='App_Web_srpe-7l3',@StackTrace='   at Admin_ManageNotices.btnPostNotice_Click(Object sender, EventArgs e)',@ErrorTime='04/12/2023 18:56:39',@CreatedBy=32891,@CreatedDate='2023-12-04 18:56:39.253'
+
+            return View();
+        }
+
+
+        #region Bank Deposit
+
+        #region Bank Deposit Details
+        public IActionResult ManageBankDeposit()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Bank Deposit Details Report
+        public IActionResult BankDepositReport()
+        {
+            return View();
+        }
+        #endregion
+
+        #endregion
+
+        #region ADMISSION MODULE
+        #region MANAGE ADMISSIONS
+        public IActionResult QuroAdmissionProcess()
+        {
+            return View();
+        }
+        #endregion
+
+        #region CONFIRM ADMISSIONS
+        public IActionResult ManageQuroAdmissions()
+        {
+            return View();
+        }
+        #endregion
+
         #endregion
 
     }

@@ -14,6 +14,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int InstanceId { get; set; }
             public int UserId { get; set; }
             public int CreatedBy { get; set; }
+            public string ReturnMessageMain { get; set; }
         }
 
         public class Manageholidays: Insatnceids
@@ -40,6 +41,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             public int Year { get; set; }
             public string Month { get; set; }
+            public int Monthid { get; set; }
             public int Type { get; set; }
             public int CountFlag { get; set; }
 
@@ -49,7 +51,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string[] ClassificationIds { get; set; }
             public string[] SubClassificationIds { get; set; }
             public int ForAll { get; set; }
-
+            public string Methodname{ get; set; }
 
         }
 
@@ -112,6 +114,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ISACTIVE_ { get; set; }
             public string InstanceClassificationIdCT { get; set; }
             public string InstanceClassificationIdCoCT { get; set; }
+
+
+
+
+            public string CoClassteacheremail { get; set; }
+            public string Coclassteachermobile { get; set; }
+            public string Coclassteacherempcode { get; set; }
+            
+            public string Classteacheremail { get; set; }
+            public string Classteachermobile { get; set; }
+            public string Classteacherempcode { get; set; }
         }
 
        
@@ -178,6 +191,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string CollegeCode { get; set; }
 
             public IFormFile EventPhoto { get; set; }
+
+            public string BestperformerUserId { get; set; }
 
         }
 
@@ -249,14 +264,20 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ClassificationName { get; set; }
             public string SubclassificationName { get; set; }
         }
-        public class EventsClander
+        public class EventsClander: Insatnceids
         {
             public int EventId { get; set; }
             public string eventdate { get; set; }
+
+            [Required(ErrorMessage = "EventTitle is required")]
             public string EventTitle { get; set; }
             public string EventDescription { get; set; }
             public string calendardate { get; set; }
             public string diff { get; set; }
+
+            [Required(ErrorMessage = "Event Date  is required")]
+            public DateTime dateofevent { get; set; }
+            public int MonthId { get; set; }
         }
 
         public class Posted_Questions : StudentleaveName
@@ -371,7 +392,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime SDate { get; set; }
         }
 
-
+        public class ManagenoticeExporttoexcel
+        {
+            public string Subject { get; set; }
+            public string IsPosted { get; set; }
+            public string ExpiryDate { get; set; }
+        }
 
         public class Homenoticeupdate: Insatnceids
         {        
@@ -573,9 +599,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         public class BirthdaysByInstance
         {
-            public string DOB { get; set; }
-            //public string InstanceId { get; set; }
-            //public string ENoticeId { get; set; }
+            public string DOB { get; set; }        
             public string Dateofbirth { get; set; }
             public string FirstName { get; set; }
             public string Photo { get; set; }
@@ -583,10 +607,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Class { get; set; }
             public string InstanceId { get; set; }
             public string RoleName { get; set; }
-
         }
 
-
+        public class Timetablecriteria 
+        {
+            public string TimeTableTypeId { get; set; }
+            public string Duration { get; set; }
+            public string Errormessage { get; set; }
+        }
+        public class Newadmissionstudents 
+        {
+            public string FirstName{ get; set; }
+            public string ClassificationName{ get; set; }
+            public string SubclassificationName{ get; set; }
+            public string DateofJoining{ get; set; }
+        }
 
         #region CREATE SMS
         public class Templatesms

@@ -1059,4 +1059,16 @@ function Charactercount() {
     charCountlength.textContent = "Typed Characters: " + textarea.value.length;
 }
 
-
+function preventSpecialCharacters(event) {
+  /*debugger;*/
+    var key = event.key;
+    // Check if the pressed key is a single quote or a double quote
+    if (key === "'" || key === '"') {
+        // Prevent the default action of the key press (typing the character)
+        event.preventDefault();
+        // Optionally, you can display a message to the user informing them that these characters are not allowed
+        //alert("Single quotes (') and double quotes (\") are not allowed.");
+        return false;
+    }
+    return true;
+}

@@ -14,7 +14,6 @@
 <body>   
     <div class="flex-grow-1 container-p-y container-xxl">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>Fast Attendance </h4>
-        
         <div class="row mb-2">
             <span id="ErrorMessage" class="text-danger"></span>
             <div class="col-md-12 col-lg-12 mb-3">
@@ -28,14 +27,17 @@
                     </div>
                     <div class="card-body">
                         <form id="Fastattendanceform" enctype="multipart/form-data">
-                            @*<form id="F_At_Main_Form">*@
+                            <input type="hidden" id="FAROLENAMESPANID" value="@ViewBag.rolename" />
                             <div class="row">
                                 <div class="col">
                                     <div class="row mb-3">
                                         <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">Start Date </label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4" style="display:none;" id="AdminAttendancediv">
                                             <input type="date" id="Startdatetxt" asp-for="StartDate" class="form-control  Datetxtbox">
                                             <span asp-validation-for="StartDate" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-sm-4" style="display:none;" id="Classteacherattendacediv">
+                                            <label style="border: none; display: block;" id="FAClassteacherlblid" class="control-label col-sm-4 col-form-label text-right" asp-for="StartDate"></label>
                                         </div>
                                     </div>
 
@@ -43,12 +45,9 @@
                                         <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
                                         <div class="col-sm-4">
                                             <div class="position-relative">
-                                                @*id="F_IN_Class"*@
                                                 <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
                                                 </select>
                                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-
-                                                @* @Html.DropDownListFor(Model => Model.InstanceClassificationId, new SelectList(ViewBag.Names, "Value", "Text"), "--Select--", new { @id = "F_IC_Id", @class = "form-select DropTxtbox" })*@
                                             </div>
                                         </div>
                                     </div>
@@ -75,10 +74,10 @@
                                                 <span asp-validation-for="SlotId" class="text-danger"></span>
 
                                                 @*@{
-                                                var slotSubjectnames = ViewBag.Slot_Subjectnames as List<FastAttendance>;
-                                                var dropdownList = new SelectList(slotSubjectnames, "SlotId", "SlotName");
-                                            }
-                                            @Html.DropDownList("SubjectSlotID", dropdownList, "--Select Slot--", new { id = "myDropdown", @class = "form-select DropTxtbox" })*@
+                                var slotSubjectnames = ViewBag.Slot_Subjectnames as List<FastAttendance>;
+                                var dropdownList = new SelectList(slotSubjectnames, "SlotId", "SlotName");
+                            }
+                            @Html.DropDownList("SubjectSlotID", dropdownList, "--Select Slot--", new { id = "myDropdown", @class = "form-select DropTxtbox" })*@
                                             </div>
                                         </div>
                                     </div>

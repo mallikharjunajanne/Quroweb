@@ -74,7 +74,7 @@ namespace Connect4m_Web.Models
         //[Required(ErrorMessage = "The Admission Number is Requireddsfs")]
         //[Display(Name = "First Name1")]
         //public string FirstName1_ { get; set; }
-        [RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid Last Name")]
+        //[RegularExpression(@"^[a-zA-Z. ]+$", ErrorMessage = "Invalid Last Name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }

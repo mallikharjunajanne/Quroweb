@@ -229,26 +229,85 @@ $("#btnSaveandPostSMSTemplate").click(function () {
                 /*  $('#SmsTemplatedetailsViewDiv_ManageNotices_createsms').hide();*/
                 $('#Managenotice_CreateSMS_Divid').hide();
                 $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
+
+                // Call the function to create the dropdown
+                createTimeHoursDropdown();
+                CreateMinutesDropdown();
             }
         });
-
-        //DataCallToAjax('GET', '/Admin/ManagenoticeSMS_saveNposting', formData,
-        //    function (response) {
-        //        $('#Managenotice_CreateSMS_Divid').hide();
-        //        $('#ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id').html(response);
-        //        loaddingimg.css('display', 'none');
-        //    },
-        //    function (status, error) {
-        //        loaddingimg.css('display', 'none');
-        //    }
-        //);
-
-
     }
 });
 
 
+/* SMS After Insert Show Time Hours && Minutes Dropdown Code Start*/
 
+function createTimeHoursDropdown() {
+    // Get the select element
+    var select = document.getElementById("TimeHoursdd_id");
+
+    // Clear existing options
+    select.innerHTML = "";
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "--Select--";
+    select.appendChild(defaultOption);
+    // Loop to generate options for hours (24-hour format)
+    for (var i = 0; i < 24; i++) {
+        var minute = i.toString().padStart(2, '0');
+        var option = document.createElement("option");
+
+        // Set the value and text content to the padded minute
+        option.value = minute;
+        option.textContent = minute;
+
+        select.appendChild(option);
+
+
+        //// Create an option element
+        //var option = document.createElement("option");
+        //// Set the value attribute to the current hour
+        //option.value = i;
+        //// Set the text content to the current hour (padded with leading zero if needed)
+        //option.textContent = (i < 10 ? '0' : '') + i + ":00";
+        //// Append the option to the select element
+        //select.appendChild(option);
+    }
+}
+
+function CreateMinutesDropdown() {
+    var select = document.getElementById("Timeminutesdd_id");
+
+    // Clear existing options
+    select.innerHTML = "";
+
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "--Select--";
+    select.appendChild(defaultOption);
+
+    // Loop to generate options for hours (24-hour format)
+    for (var i = 0; i < 60; i++) {
+        // Create an option element
+        
+
+        var minute = i.toString().padStart(2, '0');
+        var option = document.createElement("option");
+
+        // Set the value and text content to the padded minute
+        option.value = minute;
+        option.textContent = minute;
+
+        select.appendChild(option);
+        //var option = document.createElement("option");
+        //// Set the value attribute to the current minute
+        //option.value = i;
+        //// Set the text content to the current minute (padded with leading zero if needed)
+        //option.textContent = (i < 10 ? '0' : '') + i;
+        //// Append the option to the select element
+        //select.appendChild(option);
+    }
+}
+/* SMS After Insert Show Time && Minutes Dropdown Code End*/
 
 
 
@@ -746,7 +805,7 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
 //=======>>>  *** POST NOTICE SAVE NOTICE BUTTON  ***  <<<=======//
 $('#Postnoticebtn').click(function () {
     $('#lblPostNoticeMsg').text('');
-
+    var $button = $(this);
     var S_SmsreturnedValue;
     var P_SmsreturnedValue;
     var S_EmailreturnedValue;
@@ -845,21 +904,32 @@ $('#Postnoticebtn').click(function () {
         data: datatosend,
         success: function (response) {
             debugger;
-            var string1 = response.pushNotifications_Notices;
-            var Subjecttext = $('#Search_result_count').val();
+            if (response == "1") {
 
-            var Usersli = response.tblENotice_GetTargetUsers;
-            var usersWithoutEmail = [];
-            var usersWithoutMobile = [];
-            for (var i = 0; i < Usersli.length; i++) {
-                var UserfirstName = Usersli[i].firstName;
-                if (Usersli[i].mobilePhone === "0") {
-                    usersWithoutMobile.push(UserfirstName);
-                }
-                if (Usersli[i].portalEmail === "0") {
-                    usersWithoutEmail.push(UserfirstName);
+                var SMSlbltext = $("#Lbl_Notificationmessageid").text();
+                $('#lblPostNoticeMsg').append('Notice Posted Successfully.' + SMSlbltext);
+                $button.prop('disabled', true);
+
+            }
+            else {
+                var string1 = response.pushNotifications_Notices;
+                var Subjecttext = $('#Search_result_count').val();
+
+                var Usersli = response.tblENotice_GetTargetUsers;
+                var usersWithoutEmail = [];
+                var usersWithoutMobile = [];
+                for (var i = 0; i < Usersli.length; i++) {
+                    var UserfirstName = Usersli[i].firstName;
+                    if (Usersli[i].mobilePhone === "0") {
+                        usersWithoutMobile.push(UserfirstName);
+                    }
+                    if (Usersli[i].portalEmail === "0") {
+                        usersWithoutEmail.push(UserfirstName);
+                    }
                 }
             }
+
+           
             if (P_SmsreturnedValue == "1") {
                 if (usersWithoutMobile.length > 0) {
                     var mobileMsg = 'Notice Posted Successfully.' + Subjecttext + ' For Users ' + usersWithoutMobile.join(',') + ' No Mobile Number Exists for Parent(s).';

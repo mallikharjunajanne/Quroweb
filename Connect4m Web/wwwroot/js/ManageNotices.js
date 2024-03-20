@@ -137,44 +137,7 @@ function bindDatatable(response) {
     debugger;
     var newTable = $("#ManageNoticetbl").DataTable({
         dom: 'Bfrtip',
-        buttons: [
-           
-            {
-                extend: 'excel',
-                text: 'Excel', // Button text
-                title: 'Manage Notices', // Title for the Excel file
-                messageTop: 'ADS SCHOOL', // Additional message
-                message: "Report On: " + formattedDate,
-                exportOptions: {
-                    columns: [0, 1, 2, 3] // Adjust column indexes based on your DataTable
-                },
-                customize: function (xlsx) {
-                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-                    // Check if the sheet exists and has the range defined
-                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        const range = sheet.sheetData[0].attributes['!ref'].value;
-
-                        for (let col = 0; col < 6; col++) { // Assuming 6 columns, adjust as needed
-                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
-
-                            for (let row = 1; row <= 100; row++) { // Iterate through rows, adjust the range as needed
-                                const cellRef = colLetter + row;
-                                const cell = $('c[r="' + cellRef + '"]', sheet);
-
-                                // Add black border to each cell in each column
-                                cell.attr('s', '42');
-                            }
-                        }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
-                    }
-                }
-            }
-            
-
-            
-        ],
+        buttons: [ ],
 
         bProcessing: false,
         bLengthChange: true,
@@ -280,7 +243,16 @@ function bindDatatable(response) {
  //Home Search Notices Dropdown use this method
 $('#Noticesearchbtn').click(function () {
     $('#ErrorMessage').text("");
+    $('#Message_spid').text("");
     debugger;
+    var startDate = $("#StartDateTXT").val();
+    var endDate = $("#EndDateTXT").val();
+
+    if (startDate > endDate) {
+        $('#Message_spid').text("Start date cannot be greater than end date.");
+        event.preventDefault(); // Prevent form submission
+        return false;
+    }
     var searchData = {   
         Subject: $("#SubjectTXT").val(),
         StartDate: $("#StartDateTXT").val(),
@@ -335,9 +307,6 @@ $(document).on('click', '#ManageNoticetbl .fa-trash-o', function (event) {
         );        
     }
 });
-
-
-
 
 function HomeENoticeedit(ENoticeId) {
     debugger;
@@ -434,6 +403,187 @@ function HomeENoticeedit(ENoticeId) {
     }
 }
 
+//HOME NOTICE TABLE Export To Excel
+$('#lnkexporttoexcel').click(function () {
+    debugger;
+    var ENoticeTypeId = $('#ENoticetypeid').val();
+    var Subject = $('#SubjectTXT').val();
+    var StartDate = $('#StartDateTXT').val();
+    var EndDate = $('#EndDateTXT').val();
+    var IsSMSTemplate = $("#checkbox-primary").prop("checked") ? 1 : 0
+    var sendData = {
+        'Subject': Subject,
+        'StartDate': StartDate,
+        'ExpiryDate': EndDate,
+        'ENoticeTypeId': ENoticeTypeId,
+        'IsSMSTemplate': IsSMSTemplate
+    };
+    DataCallToAjax('GET', '/Admin/ManagenoticeExporttoexcel', sendData,function (response) {
+            debugger;         
+                // Create a table element with headings
+                var htmlContent = `
+        <table style="border: 1px solid">
+            <thead>
+                <tr>
+                   <th style="border: 1px solid" colspan="5">MANAGE NOTICES </th>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid">Notice Subject</th>
+                    <th style="border: 1px solid">End Date(Expiry Date)</th>
+                    <th style="border: 1px solid">Posted</th>
+                    <th style="border: 1px solid">Repeat SMS to parents</th>
+                    <th style="border: 1px solid">Delete</th>
+                </tr>
+            </thead>
+            <tbody>    `;
+
+                // Extract data from the response and populate the table rows
+                response.forEach(function (rowData) {
+                    // Assuming rowData contains the necessary data for each row
+                    htmlContent += '<tr>';
+                    htmlContent += `<td style="border: 1px solid">${rowData.subject}</td>`; // Populate 1st cell
+                    htmlContent += `<td style="border: 1px solid">${rowData.expiryDate}</td>`; // Populate 2nd cell
+                    htmlContent += `<td style="border: 1px solid">${rowData.isPosted}</td>`; // Populate 3rd cell
+                    htmlContent += `<td style="border: 1px solid"> </td>`; // Populate 4th cell (subject)
+                    htmlContent += `<td style="border: 1px solid"> </td>`; // Populate 4th cell (subject)
+                    htmlContent += '</tr>';
+                });
+
+                // Close the table body and table element
+                htmlContent += `
+            </tbody>
+        </table>
+    `;
+
+                // Create Blob with HTML content
+                const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
+
+                // Trigger file download
+                saveAs(blob, 'ManageNotices.xls');
+            
+
+
+
+
+
+           // const startColumn = 'A';
+           // const endColumn = 'N';
+           // const startColumnIndex = 13;
+           // var data = response;
+           // const rowCount = data.length;
+           // var workbook = new ExcelJS.Workbook();
+           // var worksheet = workbook.addWorksheet('Sheet1');
+           // var formattedDate = GetDateFormat();
+           // worksheet.addRow(["MANAGE NOTICES "]).font = { bold: true };
+           // worksheet.addRow(["Quro Schools"]).font = { bold: true };
+           // worksheet.addRow(["Report On:  " + formattedDate]).font = { bold: true };
+           // worksheet.addRow([""]).font = { bold: false };
+
+
+           // // Enable worksheet protection
+           // worksheet.protection = {
+           //     sheet: true
+           // };
+           // worksheet.protection.IsProtected = true;
+           // worksheet.protection.AllowSelectLockedCells = false;
+
+           // // Count the number of rows in the worksheet
+
+           // var headings = [
+           //     'Notice Subject',
+           //     'End Date(Expiry Date)',
+           //     'Posted',
+           //     'Repeat SMS to parents',
+           //     'Delete'                
+           // ];
+
+           // worksheet.addRow(headings);
+
+           //// var sno = 1; // Initialize the serial number
+           // data.forEach(function (row) {
+           //     var rowData = [];
+           //     /*rowData.push(sno++);*/
+           //     rowData.push(row.subject);
+           //     rowData.push(row.expiryDate);
+           //     rowData.push(row.isPosted);               
+           //     worksheet.addRow(rowData);
+           // });
+
+           // for (var rowNum = 1; rowNum <= 3; rowNum++) {
+           //     // Get the row
+           //     const row = worksheet.getRow(rowNum);
+
+           //     // Iterate over each cell in the row
+           //     row.eachCell(function (cell) {
+           //         // Apply cell styles
+           //         cell.fill = {
+           //             type: 'pattern',
+           //             pattern: 'solid',
+           //             fgColor: { argb: '000000' }, // Black background color
+           //         };
+           //         cell.font = { bold: true, color: { argb: 'FFFFFF' } }; // Bold white font color
+           //         cell.alignment = { horizontal: 'center' }; // Align center horizontally
+           //     });
+           //     worksheet.mergeCells(`A${rowNum}:N${rowNum}`);
+           //     //worksheet.mergeCells('A1:N1');
+           // }
+           // worksheet.mergeCells('A4:N4');
+
+           // worksheet.getRow(5).eachCell(function (cell) {
+           //     // Customize cell styles for headings here
+           //     cell.fill = {
+           //         type: 'pattern',
+           //         pattern: 'solid',
+           //         fgColor: { argb: '000000' }, // Example background color (black)
+           //     };
+           //     cell.font = { bold: true, color: { argb: 'FFFFFF' } }; // Example font style (bold, white color)
+
+           // });
+
+           // // Customize cell styles for data rows
+           // worksheet.eachRow(function (row, rowNumber) {
+           //     if (rowNumber > 1) { // Skip the first row (headings)
+           //         row.eachCell(function (cell, colNumber) {
+           //             if (colNumber == 2) {
+           //                 let maxLength = 0;
+           //                 worksheet.getColumn(colNumber).eachCell({ includeEmpty: true }, function (cell) {
+           //                     const length = cell.value ? cell.value.toString().length : 0;
+           //                     maxLength = Math.max(maxLength, length);
+           //                 });
+           //                 // Set the width of the column based on the maximum length of its cells
+           //                 worksheet.getColumn(colNumber).width = maxLength > 0 ? maxLength + 2 : 10;
+                          
+           //             }
+           //             else {
+           //                 cell.width = 20;
+           //             }
+           //         });
+           //     }
+           // });
+
+           // workbook.xlsx.writeBuffer().then(function (buffer) {
+           //     var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+           //     // Create a download link
+           //     var link = document.createElement("a");
+           //     link.href = URL.createObjectURL(blob);
+
+           //     // Set the file name
+           //     link.download = "ManageNotices.xls";
+
+           //     // Append the link to the document and trigger the click event
+           //     document.body.appendChild(link);
+           //     link.click();
+
+           //     // Remove the link from the document
+           //     document.body.removeChild(link);
+           // });
+        },
+        function (status, error) {
+            // Handle errors
+        }
+    );
+});
 
 //HOME NOTICE
 function updateCharCount() {
@@ -796,21 +946,6 @@ $('#addnewmanagequotes').click(function () {
         }
     );
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function PostNoticeaddusertoggle() {
     var divToShow = document.getElementById('SearchUser_AddUser_DivId_Postnotice');
