@@ -761,3 +761,18 @@ $(document).on('click', '#exportButton', function () {
     table1.parentNode.replaceChild(table1Clone, table1);
     table2.parentNode.replaceChild(table2Clone, table2);
 });
+
+//====>>>>> CLEAR FUNCTION 
+function clearForm(formId) {
+    debugger;
+    var form = document.getElementById(formId);
+    if (form) {
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $('#Errormessage').text('');
+    }
+}
+

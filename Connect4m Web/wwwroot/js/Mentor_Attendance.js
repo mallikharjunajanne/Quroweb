@@ -1,13 +1,14 @@
 ﻿
 //========================================  Click On Check Box For Select All in the Select tag
 $("#Serach_MA #Select_All").click(function () {
-  //  $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", $(this).prop("checked"));
-
+    //  $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", $(this).prop("checked"));
+  
     if ($(this).prop("checked")) {
         $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", true);
     } else {
         $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", false);
     }
+    $('#ddlspMentors').text(''); //==>> Adding by Arjun
 });
 
 
@@ -307,9 +308,17 @@ $(document).on('click', "#Serach_MA #ClearSection", function (event) {
     event.stopImmediatePropagation;
     $("#Serach_MA #Select_All").prop('checked', false);
     $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", false);
-
-
 })
+
+//=================================Click Clear Selection Label in the multipule select dropdown    Adding By Arjun
+$(document).on('click', "#Serach_MA #ClearSelectionlbl", function (event) {
+    event.stopImmediatePropagation(); // Call stopImmediatePropagation as a function
+        $("#Serach_MA #Select_All").prop('checked', false);
+    $("#Serach_MA #dropdown_Mentors_MA option").prop("selected", false);
+});
+
+
+
 //============================================  Compare The date
 $(".form-group #StartDate").on("change", function () { datescomparepro(event, "start Date", "End Date") });
 $(".form-group #EndDate").on("change", function () { datescomparepro(event, "start Date", "End Date") });

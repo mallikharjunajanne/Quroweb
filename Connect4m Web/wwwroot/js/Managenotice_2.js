@@ -960,3 +960,9 @@ $('#Postnoticebtn').click(function () {
         }
     });
 });
+
+//===>>> Clear button 
+$('#SchedulerClearbtn').click(function () {
+    $('#SCHEDULESMSFORMID')[0].reset();
+    $('#Scheduleerrormessage').text('');
+});

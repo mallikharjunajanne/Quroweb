@@ -126,7 +126,15 @@ $(document).ready(function () {
 });
 
 
+$('#btnclear').click(function () {
+    debugger;
+    $('.text-danger.Validation').each(function () {
+        $(this).text(''); // Set the text content to an empty string
+    });
+    //$('#Ermsgsp').text('');
+    $('#DateCompareErrormessage').text('');
 
+});
 $('#btnBackToSearch').click(function () {
     debugger;
     $('#Message_spid').text('');
@@ -153,6 +161,7 @@ function GetDateFormat(date) {
 //-----**Date Compare function**-------
 function DatesCompare(Sdate, Edate) {
     try {
+        debugger;
         var StartdateInput = $("#Startdatetxt").val();
         var EnddateInput = $("#Exdatetxt").val();
 
@@ -165,13 +174,17 @@ function DatesCompare(Sdate, Edate) {
         var errorElement = $('.compare');
 
         if (formattedStartDate != formattedEndDate) {
-            if (Enddate <= Startdate) {
-                $('#Ermsgsp').text(Edate + " must be greater than " + Sdate + ".");
+            if (formattedEndDate <= formattedStartDate) {
+            //if (Enddate <= Startdate) {
+                //$('#Ermsgsp').text(Edate + " must be greater than " + Sdate + ".");
+                $('#DateCompareErrormessage').text(Edate + " must be greater than " + Sdate + ".");
             } else {
-                $('#Ermsgsp').text("");
+                //$('#Ermsgsp').text("");
+                $('#DateCompareErrormessage').text("");
             }
         } else {
-            $('#Ermsgsp').text("");
+            //$('#Ermsgsp').text("");
+            $('#DateCompareErrormessage').text("");
         }
     }
     catch (error) {

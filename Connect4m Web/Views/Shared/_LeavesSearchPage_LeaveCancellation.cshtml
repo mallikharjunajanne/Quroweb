@@ -24,7 +24,7 @@
                 <div class="col">
                     @*--------------------------*@
                     <div class="row mb-3 ">
-                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Department</label>
+                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Department</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
                                 <select id='DdlDepartment' class="select2 form-select select2-hidden-accessible" asp-for="InstanceClassificationId" name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee','0','selectname')" asp-items="@(new SelectList(""))">
@@ -36,7 +36,7 @@
                     </div>
                     @*--------------------------*@
                     <div class="row mb-3 ">
-                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Employee</label>
+                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Employee</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
                                 <select id='DdlEmployee' class="select2 form-select select2-hidden-accessible" asp-for="UserId" name="UserId" asp-items="@(new SelectList(""))" disabled>
@@ -49,18 +49,20 @@
                     </div>
                     @*--------------------------*@
                     <div class="row mb-3 ">
-                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">From Date</label>
+                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">From Date</label>
                         <div class="col-sm-4 ">
-                            <input type="date" class="form-control" id="TxtFromDate" name="Fromdate" oninput="Startdatescompare_Vs1(event,'TxtFromDate', 'TxtToDate',  'From Date', 'To Date', true)" />
-                            <span class="compare text-danger "></span>
+                            <input type="date" class="form-control"  id="TxtFromDate" name="Fromdate"/>
+                            @*<input type="date" class="form-control" id="TxtFromDate" name="Fromdate" oninput="Startdatescompare_Vs1(event,'TxtFromDate', 'TxtToDate',  'From Date', 'To Date', true)" />*@
+                            <span class="compare text-danger " id="DateErrormessage"></span>
                         </div>
                     </div>
                     @*--------------------------*@
                     <div class="row mb-3 ">
-                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">To Date</label>
+                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">To Date</label>
                         <div class="col-sm-4">
-                            <input type="date" class="form-control" id="TxtToDate" name="Todate" oninput="datescompare_Vs1(event, 'TxtFromDate', this.getAttribute('id'), 'From Date', 'To Date', true)" />
-                            <span class="compare text-danger "></span>
+                            <input type="date" class="form-control" id="TxtToDate"name="Todate" />
+                            @*<input type="date" class="form-control" id="TxtToDate" name="Todate" oninput="datescompare_Vs1(event, 'TxtFromDate', this.getAttribute('id'), 'From Date', 'To Date', true)" />*@
+                            <span class="compare text-danger "id="DateErrormessage_1"></span>
                         </div>
                     </div>
                     @*--------------------------*@

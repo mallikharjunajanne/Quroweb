@@ -525,9 +525,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
     public class ClasswisestudentattendanceReport : Instancess
     {
         [Required]
-        public List<string> ClassificationId { get; set; }        
+        public List<string> ClassificationId { get; set; }
         [Required]
-        public List<string> SubClassificationId { get; set; }        
+        public List<string> SubClassificationId { get; set; }
 
         [Required]
         public DateTime? StartDate { get; set; }
@@ -582,4 +582,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
     }
 
     #endregion
+
+
 }

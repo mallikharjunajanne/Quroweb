@@ -1,0 +1,78 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.AdmissionProcess
+
+@{
+    ViewData["Title"] = "Confirm Admissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+    <div class="col-md-8 col-lg-8 mb-1">
+        <div class="card card-body">
+            <form id="AdmissionsSearchform" enctype="multipart/form-data">
+                <div class="row col">
+                    <div class="row mb-3">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Department  </label>
+                            <div class="col-sm-6">
+                                <select class="form-select" id="ddlClassification"></select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Expected joining Date</label>
+                            <div class="col-sm-6">
+                                <input type="date" class="form-control" id="txtJoiningDate">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Class & Section</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" id="ddlInstanceSubclassification"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 mb-3">
+        <input type="checkbox" class="form-check-input" data-val="true" data-val-required="The ChangePwOnLogin field is required." id="ChangePwOnLogin" name="ChangePwOnLogin" value="true">
+        <label>Select All</label>
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0"><span>YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.</span></h5>
+            </div>
+            <div class="links table-responsive text-nowrap" id="Confirmadmissiontbldiv">
+                <table id="Confirmadmissiontbl" class="table-hover table-bordered no-footer dataTable">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Registration Date</th>
+                            <th>Reg No</th>
+                            <th>Name</th>
+                            <th>DOB</th>
+                            <th>Class Applied</th>
+                            <th>Father Name</th>
+                            <th>Mother name</th>
+                            <th>Mobile number</th>
+                            <th>Email Id</th>
+                            <th>Expected Joining Date</th>
+                            <th>Class & Section</th>
+                            <th>Admission Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

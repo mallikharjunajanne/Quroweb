@@ -100,6 +100,8 @@ function _TblAssignLeavesToStaffTblViewCalingFunction(event) {
             }
             if (PayrollSubCategoryId === "") {
                 $("#PayrollSubCategoryId_Span_Error").text('LMS Subcategory');
+            } else if (PayrollSubCategoryId == "Select LMS Sub Category") {     //else if is adding by arjun
+                $("#PayrollSubCategoryId_Span_Error").text('LMS Subcategory');
             }
             loaddingimg.css('display', 'none');
             return;
@@ -197,16 +199,17 @@ function DdlLmsCategory_Calingfunction() {
 };
 
 
-//function FN_ClearValues(Formid) {
-//    try {
-//      //  document.getElementById(Formid).reset(); // Reset the form
+function FN_ClearValues(Formid) {
+    try {
+      //  document.getElementById(Formid).reset(); // Reset the form
 
-//        $("#TBLAllocateLeavesSearchedTypePageView_id_Div").empty();
-//        $(".ErrorMessageSpan").empty();
-//    } catch (x) {
-//        $("#Main_Span_Error").text("Something Error");
-//    }
-//}
+        $("#TBLAllocateLeavesSearchedTypePageView_id_Div").empty();
+        $("#_TblAssignLeavesToStaffSearchedTypePageView_id_Div").empty();
+        $(".ErrorMessageSpan").empty();
+    } catch (x) {
+        $("#Main_Span_Error").text("Something Error"); 
+    }
+}
 
 //=====================clear a span
 function Spanclearfunction() {

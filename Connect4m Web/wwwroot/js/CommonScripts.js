@@ -111,6 +111,32 @@ function CommonDropdownAjaxFunction(id, type, url, data,successcalback,select) {
 
 };
 
+function CommonDropdownmultipleAjaxFunction(id, type, url, data, successcalback, select) {
+
+    var dropdown = $('#' + id);
+    dropdown.empty();
+    //if (select) {
+    //    dropdown.append($('<option></option>').val("").text("-------select-------"));
+    //}
+    CommonAjaxFunction(type, url, data, function (response) {
+
+        response.forEach(function (mentor) {
+            var option = $('<option></option>').val(mentor.value).text(mentor.text);
+            dropdown.append(option);
+        });
+        successcalback
+        loaddingimg.css('display', 'none');
+    }, function (status, error) {
+        loaddingimg.css('display', 'none');
+    }, false);
+
+
+
+
+};
+
+
+
 //------------------  Get Days In Month
 
 

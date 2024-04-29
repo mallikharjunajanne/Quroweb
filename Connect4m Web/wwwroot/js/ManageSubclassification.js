@@ -72,13 +72,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
-
-
-
-
 // DROPDOWN FUNCTION CODE START
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField,Responsevalues) {
     CallToAjax_Withoutdata('GET', url,
@@ -132,10 +125,6 @@ $('#btnsearch').click(function () {
     );
 
 });
-
-
-
-
 
 
 //-----------------DataTable Data Dinding Function
@@ -440,15 +429,6 @@ $('#exportToExcel').click(function () {
 });
 
 
-
-
-
-
-
-
-
-
-
 //-------------------------------------   Click For Update in the list(table)
 $(document).on('click', '#ManageSubclassificationtbl td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
@@ -657,9 +637,28 @@ $('#classificationDropdown').change(function () {
 
 //CLEAR FUCNTION
 function Clearcommonfunction(Formid, ErrorMessageSpanId) {
-    document.getElementById(Formid).reset(); // Reset the form 
-    if (ErrorMessageSpanId) {
-        document.getElementById(ErrorMessageSpanId).innerText = '';
+    debugger;
+    //document.getElementById(Formid).reset(); // Reset the form 
+    //if (ErrorMessageSpanId) {
+    //    document.getElementById(ErrorMessageSpanId).innerText = '';
+    //}
+
+    //var validationSpans = document.querySelectorAll('span[asp-validation-for]');
+    //validationSpans.forEach(function (span) {
+    //    span.innerText = '';
+    //});
+
+    debugger;
+    var form = document.getElementById(Formid);
+    if (form) {
+        if (ErrorMessageSpanId) {
+            document.getElementById(ErrorMessageSpanId).innerText = '';
+        }
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
     }
 }
 

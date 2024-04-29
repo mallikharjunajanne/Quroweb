@@ -18,11 +18,19 @@ function EditValuesGettingFunction(examid) {
         // $("#BtnSave").val("Update");
         $("#BtnSave").attr("value", "Update");
         $("#BtnSave").text("Update");
-
         $("#BtnClear").prop("disabled", true);
+        $('#BtnClear').hide();
+        $('#Deletebtn').show();
+
+        //this delete button adding by arjun
+        var examId = $("#TxtExamidCreatePage").val();
+        var onclickFunction = "DeleteExamsById('" + examId + "')"; 
+        $("#Deletebtn").attr("onclick", onclickFunction); 
     });
     // $("#loadingOverlay").hide();
 }
+
+
 
 function SaveExams(event, FormId) {
     try {
@@ -93,4 +101,13 @@ function DeleteExamsById(Examid) {
     CommonDeleteFunction_Vs1(Deletemsg, "POST", "/Examination/ManageExams?ButtonName=Delete&DeleteID=" + Examid, function (response) {
         TblDataTableWithColumns_CallingFunction(event, 'NOStop', "/Examination/TblExamListData", 'TblExamListData', 'Counts', 'FmExamsSearch', 'Div_TblExamListData', 'Exams', [0, 1, 2, 3]);
     });
+}
+
+
+function Clearfun(formid) {
+    $('#' + formid)[0].reset();
+    $('#Main_Span_Error').text('');
+    $('#DdlAcademicYearCreatePage').text('');
+    $('#TxtExamNameCreatePage').text('');
+    $('#RdoExamFor').text('');
 }

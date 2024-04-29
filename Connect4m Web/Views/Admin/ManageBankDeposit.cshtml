@@ -1,0 +1,99 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.SearchDeposit
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>AMOUNT DEPOSIT SCREEN</h4>
+        <div>
+            <span id="Commoneerrormessage" class="text-danger"></span>
+        </div>
+        <div class="row mb-2" id="Bankdipositdiv">
+            <div class="text-end">
+                <a href="javascript:void(0);" onclick="Newdiposit()">Enter New Deposit</a>
+            </div>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            SEARCH
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="BankdepositSearchForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="row mb-3">
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label space text-end" for="basic-default-name">Payment Mode</label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="PaymentModeId" id="PaymentModeSearchddl" class="form-select"></select>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                        <div class="col-sm-4"></div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-2 col-form-label space text-end" for="basic-default-name">Start Date</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" asp-for="StartDate" class="form-control" id="Startdatetxt" name="Startdate" />
+                                        </div>
+                                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">End Date</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" asp-for="EndDate" class="form-control" id="Enddatetxt" name="Enddate" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center text-center">
+                                    <div class="col-sm-12">
+                                        <button type="reset" class="btn btn-warning waves-effect waves-light" id="Clearbtn">Clear</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div id="Amountdepositdivexporttoexcel">
+                    <a href="javascript:void(0)" id="AmountdepositExportToExcel" onclick="Exporttoexcelfun();" class="text-end">Export to Excel</a>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">
+                            TOTAL NUMBER OF :<span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span>RECORDS
+                        </h6>
+                    </div>
+                    <div class="table-responsive text-wrap card-datatable " id="Bankdeposittbldivid">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Amountdepositdiv1">
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@*<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>*@
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/js/Bankdeposit.js"></script>
+<script src="~/js/CommonScripts.js"></script>
+@*<script src="~/Datatable/jquery.dataTables.min.js"></script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

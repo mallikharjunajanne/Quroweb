@@ -1,0 +1,358 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.SearchDeposit
+
+@{
+    ViewData["Title"] = "AMOUNT DEPOSIT REPORT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>AMOUNT DEPOSIT REPORT</h4>
+        <div class=" ">
+            <span id="CommonErrorMessage" class="text-danger"></span>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4" id="">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">SEARCH</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="Amountdepositreportform" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row mb-3">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-2 col-form-label space text-end" for="basic-default-name">Start Date</label>
+                                            <div class="col-sm-4">
+                                                <input type="date"asp-for="StartDate"class="form-control"id="Startdate_txtid">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">End Date</label>
+                                            <div class="col-sm-4">
+                                                <input type="date"asp-for="EndDate"class="form-control"id="Enddate_txtid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center text-center">
+                                        <div class="col-sm-12">
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Btnsearch">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="row">
+                    <div class="">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-11">
+                                    <a href="javascript:void(0)" id="Amountdepositreport_ExportToExcel" class="text-end">Export to Excel</a>
+                                </div>  <div class="col-1 text-end">
+                                    <a href="javascript:void(0)" id="Amountdepositreport_Print" class="">Print</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">
+                            YOUR SEARCH RESULTED  :<span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span>RECORDS
+                        </h6>
+                    </div>
+                    <div class="table-responsive text-wrap card-datatable " id="Bankdeposittbldivid">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function TblCallToAjax(method, url, data, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            // success: Datatablesbindingfun,
+            success: function (response) {
+                successCallback(response);
+            },
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+    $(document).ready(function () {
+        debugger;
+        //Date feilds showing function
+        setMonthStartEndDates();
+
+        //Table data binding function
+        Bankdeposittablebindingfun();
+    });
+
+    // TABLE DATA BINDING IN THIS FUNCTION
+    function Bankdeposittablebindingfun() {
+        var formData = $('#Amountdepositreportform').serialize();
+        debugger;
+        TblCallToAjax('GET', '/Reports/Depositreporttbl', formData,
+            function (response) {              
+                Tabledatabindingfun(response);
+            },
+            function (status, error) {
+                $('#Commoneerrormessage').text('Something went wrong  in table data binding function...!!!!');
+            }
+        );
+    }
+
+    //======>>>> TABLE DATA BINDING FUNCTION
+    function Tabledatabindingfun(response) {
+        debugger;
+       
+        $("#Recordscount").text(response.length);
+
+        // Clear the existing content of the table
+        $('#Bankdeposittbldivid').empty();
+        $('#Amountdepositreporttbl').empty();
+
+        // Create the table element
+        var table = document.createElement('table');
+        table.id = 'Amountdepositreporttbl';
+        table.classList.add('table', 'table-hover', 'table-bordered', 'no-footer');
+
+        // Create thead and append it to the table
+        var thead = document.createElement('thead');
+        thead.classList.add('table-dark');
+        var trHead = document.createElement('tr');
+        ['School Name', 'Deposit Date', 'Deposit Amount', 'Bank Name', 'Branch Name', 'Document Name', 'Payment Mode'].forEach(function (headingText) {
+            var th = document.createElement('th');
+            th.textContent = headingText;
+            trHead.appendChild(th);
+        });
+        thead.appendChild(trHead);
+        table.appendChild(thead);
+
+        // Create tbody and append it to the table
+        var tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+
+        // Append the table to the div with ID 'Bankdeposittbldivid'
+        document.getElementById('Bankdeposittbldivid').appendChild(table);
+
+        // Populate the table with data
+        response.forEach(function (row, index) {
+            var tr = document.createElement('tr');
+            tr.classList.add(index % 2 === 0 ? 'even' : 'odd');   
+            ['schoolName', 'depositdate', 'depositAmount', 'bankName', 'branchName', 'documentName', 'paymentMode'].forEach(function (propertyName) {
+                var td = document.createElement('td');
+                if (propertyName === 'documentName') {
+                    var span = document.createElement('span');
+                    var anchor = document.createElement('a');
+                    anchor.href = 'D:/GithubProjects2023/Connect4m/09th_Repository/Connect4m Web/wwwroot/Bankdepositdoc/' + row[propertyName];
+                    anchor.textContent = row[propertyName]; 
+                    anchor.download = row[propertyName]; 
+                    span.appendChild(anchor); 
+                    td.appendChild(span);
+                    anchor.addEventListener('click', function () {
+                        setTimeout(function () {
+                            // Check if the download hasn't started after a short delay
+                            if (!anchor.hasAttribute('download')) {
+                                alert('File not found. Please contact site administrator.');
+                            }
+                        }, 100);
+                    });
+                }
+                else {
+                    td.textContent = row[propertyName];
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+
+        var totalDepositAmount = response.reduce(function (acc, curr) {
+            return acc + parseFloat(curr.depositAmount);
+        }, 0);
+        // Create the tfoot element and its row
+        var tfoot = document.createElement('tfoot');
+        var tfootRow = document.createElement('tr');
+
+        // Create the first cell with colspan 2 and text 'Total'
+        var colspanCell = document.createElement('td');
+        colspanCell.setAttribute('colspan', 2);
+        colspanCell.textContent = 'Total';
+        tfootRow.appendChild(colspanCell);
+
+        // Create the cell for the total deposit amount
+        var totalDepositCell = document.createElement('td');
+        totalDepositCell.textContent = totalDepositAmount.toFixed(2); // Assuming depositAmount is in decimal format
+        tfootRow.appendChild(totalDepositCell);
+        // Append the tfoot row to the tfoot element
+        tfoot.appendChild(tfootRow);
+
+        // Append the tfoot to the table
+        table.appendChild(tfoot);
+
+    }
+
+
+    // Function to compare dates and show error message
+    function DatesCompare(Sdate, Edate) {
+        try {
+            debugger;
+            var StartdateInput = $("#Startdate_txtid").val();
+            var EnddateInput = $("#Enddate_txtid").val();
+
+            var Startdate = new Date(StartdateInput);
+            var Enddate = new Date(EnddateInput);
+
+            var errorElement = $('#CommonErrorMessage');
+            
+            errorElement.text("");
+
+            if (Enddate <= Startdate) {
+                errorElement.text(Sdate + " cannot be greater than " + Edate + ".");
+            } else {
+                errorElement.text("");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Dates input change Event
+    $("#Startdate_txtid").on("change", function () { DatesCompare("Start date", "end date"); });
+    $("#Enddate_txtid").on("change", function () { DatesCompare("Start date", "end date"); });
+
+    //SEARCH  FUNCTION
+    $('#Amountdepositreportform').on("submit", function () {
+        debugger;
+        event.preventDefault();
+        event.stopPropagation();
+        $('#Commoneerrormessage').text('');
+        var formData = $('#Amountdepositreportform').serialize();
+        TblCallToAjax('GET', '/Reports/Depositreporttbl', formData,
+            function (response) {          
+                Tabledatabindingfun(response);
+            },
+            function (status, error) {
+                $('#Commoneerrormessage').text('Error in table data binding function, please check.');
+            }
+        );
+    });
+
+    // Function to get the first day of the month
+    function getFirstDayOfMonth(date) {
+        debugger;
+        return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+
+    // Function to get the last day of the month
+    function getLastDayOfMonth(date) {
+        debugger;
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    }
+
+    // Function to set Start Date and End Date inputs to current month's first and last dates
+    function setMonthStartEndDates() {
+        debugger;
+        var today = new Date();
+        var firstDayOfMonth = getFirstDayOfMonth(today);
+        var lastDayOfMonth = getLastDayOfMonth(today);
+
+        $("#Startdate_txtid").val(DateFormate(firstDayOfMonth));
+        $("#Enddate_txtid").val(DateFormate(lastDayOfMonth));
+    }
+
+    // Function to format date as 'YYYY-MM-DD'
+    function DateFormate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + '-' + month + '-' + day;
+    }
+
+    //======>>>> EXPORT TO EXCEL FUNCTION CODE START
+    $('#Amountdepositreport_ExportToExcel').on('click', function () {
+
+        var today = new Date(); // Get the current date
+        var formattedDate = DateFormate(today);
+
+        debugger;
+        var startDate = $('#Startdate_txtid').val();
+        var endDate = $('#Enddate_txtid').val();
+
+        var headerContent = `
+                             <div style="display: grid; grid-template-columns: repeat(18, 1fr);">
+                                 <div style="grid-column: 1 / span 18;">
+                                      <h4 style="margin: 0; text-align: center;">Fee Amount Deposit </h4>
+                                      <h4 style="margin: 0; text-align: center;">Report On:${formattedDate}</h4>
+                                      <h4 style="margin: 0; text-align: center;">Start Date: ${startDate.replace('/', '-')}</h4>
+                                      <h4 style="margin: 0; text-align: center;">End Date: ${endDate.replace('/', '-')}</h4>
+                                 </div>
+                             </div>`;
+
+        var table1 = document.getElementById("Amountdepositreporttbl");
+        var table1Clone = table1.cloneNode(true);
+
+        table1Clone.style.border = "1px solid black";
+        table1Clone.style.color = "black";
+        table1Clone.style.backgroundColor = "white";
+
+        var cells = table1.getElementsByTagName("td");
+        for (var i = 0; i < cells.length; i++) {           
+            cells[i].style.border = "1px solid black";
+            cells[i].style.borderColor = "black";
+        }
+
+        var FooterContent = `<div style="grid-column: 1 / span 10; background-color: #e0e0e0; padding: 20px; border-radius: 5px;">
+                               <p style="margin: 0; text-align: center;font-size: 9px;">This report contains confidential information intended solely for the recipient. Unauthorized use, copying, or distribution is strictly prohibited.</p>
+                             </div>`;
+        document.body.appendChild(table1Clone);
+
+        var combinedHtml = headerContent + table1Clone.outerHTML + FooterContent;
+        //var combinedHtml = headerContent + table1Clone.outerHTML;
+
+        const blob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+        saveAs(blob, 'FeeAmountDepositReport.xls');
+
+        table1.parentNode.replaceChild(table1Clone, table1);
+    });
+
+    //=====>>>> PRINT 
+    $('#Amountdepositreport_Print').on('click', function () {
+        /*debugger;*/
+        var printContents = $('#Bankdeposittbldivid, #Amountdepositreporttbl').html();
+
+        // Create a new window to print the content
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('table, th,td { border: 1px solid black; }'); // Collapse borders
+        printWindow.document.write('</style></head><body>');
+        printWindow.document.write('<table>');
+        // Add table content here
+        printWindow.document.write('</table>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close(); // Close the document opened with document.write
+        printWindow.print();
+    });
+
+</script>

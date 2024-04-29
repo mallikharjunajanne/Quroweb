@@ -30,6 +30,7 @@ function EditValuesGettingFunction(subjectText) {
         $("#CreateNewSubjects").html(response);
 
         $("#Saveclassfication_MS").val("Update");
+        $("#Saveclassfication_MS").text("Update"); // Adding by Arjun
         $("#SpnCardHeaderName").text("UPDATE SUBJECT");
         loaddingimg.css('display', 'none');
     }, function (error) {
@@ -64,6 +65,7 @@ function CreateNewSubjects() {
             debugger;
             $("#DivSearchSubjectsPage").hide();
             $("#CreateNewSubjects").html(response);
+            $("#Saveclassfication_MS").text("Save"); //Adding by Arjun
         }, function (error) {
             $("#Main_Span_Error").text("Something Error");
             //console.error(error);

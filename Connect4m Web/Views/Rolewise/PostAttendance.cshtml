@@ -121,13 +121,18 @@
                                                    x => x.Mentors,
                                                     new SelectList(ViewBag.Mentors, "Value", "Text"),
                                                      new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Mentors_MA", @style = "color:black;", @required = "required", @multiple = "multiple" })
-                                                        <span asp-validation-for="Mentors" class="invalid-feedback"></span>
-
+                                                        <span asp-validation-for="Mentors" class="invalid-feedback" id="ddlspMentors"></span>
+                                                        @* Mentors span tag id adding by Arjun*@
                                                     </div>
-                                                    <label class="form-check-label" for="defaultCheck3">
-                                                        Clear Selection
-                                                    </label>
-                                                    <input class="form-check-input" type="checkbox" value="" id="Select_All">
+                                                    <div class="row mb-3">   @*Adding By Arjun*@
+                                                        <label class="form-check-label col-sm-6" for="defaultCheck3" id="ClearSelectionlbl">Clear Selection</label>
+                                                        <div class="col-sm-6">
+                                                            <input class="form-check-input" type="checkbox" value="" id="Select_All">
+                                                            <label class="col-sm-6">Select All</label>
+                                                        </div>
+                                                    </div>
+                                                    @*<label class="form-check-label" for="defaultCheck3">Clear Selection</label>
+                                                    <input class="form-check-input" type="checkbox" value="" id="Select_All">*@
                                                 </div>
                                                 <div class="col-sm-3">
                                                 </div>

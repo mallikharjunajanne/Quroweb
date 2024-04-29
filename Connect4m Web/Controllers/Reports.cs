@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Connect4m_Web.Models.LMSproperties;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -52,10 +53,10 @@ namespace Connect4m_Web.Controllers
             Roleid = _userService.Roleid;
             StudentUserid = _userService.StudentUserid;
         }
-
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         #region STUDENT REGISTER ///StudentAttendanceRegister
-        
+
         [HttpGet]
         public IActionResult StudentAttendanceRegister()
         {            
@@ -704,6 +705,25 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
+
+
+        #region Bank Deposit Details Report
+        public IActionResult BankDepositReport()
+        {
+            return View();
+        }
+
+        public IActionResult Depositreporttbl(UserScreen.SearchDeposit obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<UserScreen.Deposittbl> list = CommonMethodobj.CommonListMethod<UserScreen.SearchDeposit, UserScreen.Deposittbl>(obj, "/Bankdepositreporttbl", client);
+            return Json(list);
+        }
+
+        #endregion
+
+
         #region ADMISSION PROCESS REPORTS
 
         #region ADMISSIONS REPORT        
@@ -711,15 +731,107 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+        //Get Instances 
+        public IActionResult GetInstancenamesDropdown()
+        {           
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetInstanceNamesDropdown", parameter2, "InstanceName", "InstanceId");
+            return Json(lis);
+        }
+        //BindAcademicYearDropDown
+        public IActionResult GetAcademicYearDropdown()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetAcadamiyearsDropdown", parameter2, "Years", "AcademicYearId");
+            return Json(lis);
+        }
+        // Get All Class
+        public IActionResult GetAllClass() 
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetClassDropdown", parameter2, "ClassName", "ClassId");
+            return Json(lis);
+        }           
+        public IActionResult QuroAdmissionSummaryReporttbl(UserScreen.Admissionreport obj)
+        {
+            //stp_tblRegistrationUserDetails_GetAdmissionReport
+            UserScreen.Admissionreport model = new UserScreen.Admissionreport();
+            obj.InstanceId = InstanceId;
+
+            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
+            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
+            return Json(list);
+        }
         #endregion
 
         #region ADMISSION SUMMARY REPORT
         public IActionResult QuroAdmissionsReport()
-        {
+        {            
             return View();
         }
+
+        public IActionResult Quroadmissionreportscounttbl(UserScreen.Admissionreport obj)
+        {  
+            obj.InstanceId = InstanceId;
+
+            List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/GetRegistrationSummary", client);
+            return Json(list);
+        }
+
+        public IActionResult Registrations_Admissionstbl(UserScreen.Admissionreport obj)
+        {
+            obj.InstanceId = InstanceId;
+            List<UserScreen.Admissionsummaryreport> list  = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/Admissionsummaryreport", client);
+
+            var Userstatusvalues = obj.Userstatusvalue;
+            var filteredList = obj.Userstatusvalue == "1"? list.Where(item => item.UserStatus == "Registered").ToList(): obj.Userstatusvalue == "2"? list.Where(item => item.UserStatus =="Admission Confirmed").ToList(): list;
+
+            var result = new
+            {
+                FilteredList = filteredList,
+                UserStatusValue = Userstatusvalues
+            };
+
+            //return Json(result);
+            return new JsonResult(result);
+        }
+
+
+        public IActionResult Adsreporttbl(UserScreen.Admissionreport obj)
+        {
+            obj.InstanceId = InstanceId;
+            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
+            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
+            return Json(list);
+        }
+
+
         #endregion
 
         #endregion
+        [Authorize]
+        public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
+        {
+            List<SelectListItem> DropdownList = new List<SelectListItem>();
+            CommonDropdown obj = new CommonDropdown();
+            obj.procedurename = methodname;
+            obj.Parameters = Parameters;
+            obj.text = text;
+            obj.value = value;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+            //  HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/"+methodname+"?Parameters=" + Parameters + "&text=" + text + "&value=" + value).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return DropdownList;
+        }
+
     }
 }

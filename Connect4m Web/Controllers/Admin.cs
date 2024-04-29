@@ -1,4 +1,5 @@
 ﻿using Connect4m_Web.Models.LMSproperties;
+using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -13,6 +15,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
+
+
 
 namespace Connect4m_Web.Controllers
 {
@@ -51,7 +55,7 @@ namespace Connect4m_Web.Controllers
             Roleid = _userService.Roleid;
             StudentUserid = _userService.StudentUserid;
         }
-
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
 
         public string BuildSMSTextInXML(string username, string password)
@@ -246,7 +250,6 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
-        //public IActionResult ManageNotices_Create(NoticeTypes obj)
         public IActionResult ManageNotices_Create(ENoticeTypes obj)
         {
             obj.SMSTextInXML = BuildSMSTextInXML("ADS", "Prasad2$$9");
@@ -2057,41 +2060,392 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-        #region Bank Deposit
-
         #region Bank Deposit Details
         public IActionResult ManageBankDeposit()
         {
             return View();
         }
-        #endregion
 
-        #region Bank Deposit Details Report
-        public IActionResult BankDepositReport()
+        public IActionResult Paymentmodeddl()
         {
-            return View();
+            List<SelectListItem> li = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PaymentModeddl").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                li = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            var Fiterlist = li.Where(item => item.Text == "Cash" || item.Text == "UPI" || item.Text == "Google Pay" || item.Text == "Phonepe").ToList();
+            return Json(Fiterlist);
         }
-        #endregion
+
+        public IActionResult ManageBankDeposittbl(SearchDeposit obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<Deposittbl> list = CommonMethodobj.CommonListMethod<SearchDeposit, Deposittbl>(obj, "/BankDeposittbl", client);
+            return Json(list);
+        }
+
+        public IActionResult Insertmanagebankdeposit(int? ManageBankdepositid)
+        {
+            string[] parameter2 = null;
+            List<SelectListItem> li = new List<SelectListItem>();
+            li = CommonDropdownData("PaymentModeddl", parameter2, "Mode", "PaymentModeId");
+            ViewBag.PaymentModeddl = li.Where(item => item.Text == "Cash" || item.Text == "UPI" || item.Text == "Google Pay" || item.Text == "Phonepe").ToList();
+
+            if (ManageBankdepositid == null)
+            {
+                ViewBag.Returnmessage = "SaveMethod";
+                return View();
+            }
+            else
+            {
+                Bankdeposit obj = new Bankdeposit();
+                obj.InstanceId = InstanceId;
+                obj.FeeDepositId = ManageBankdepositid;
+                List<Bankdeposit> list = CommonMethodobj.CommonListMethod<Bankdeposit, Bankdeposit>(obj, "/Edit_Bankdeposit", client);
+
+                Bankdeposit model = new Bankdeposit();
+                ViewBag.Returnmessage = "UpdateMethod";
+                if (list != null && list.Any())
+                {
+                    model = list.First(); // Assuming you want the first item from the list
+                    //string datedeposit = model.Depositdate.Replace("/","-");
+                    //DateTime date = Convert.ToDateTime(datedeposit);
+                    //model.Depositdate = date.ToString();
+                    string formattedDate = DateTime.ParseExact(model.Depositdate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                    model.Depositdate = formattedDate;
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Insertmanagebankdeposit(Bankdeposit obj)
+        {
+            try
+            {
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+
+                var Documentattachement = obj.AttachedDocument;
+                Random random = new Random();
+                int randomNumber = random.Next(1000, 999999);
+
+                if (Documentattachement != null)
+                {
+                    string[] allowedExtensions = { ".doc", ".docx", ".pdf", ".jpeg", ".jpg", ".png", ".gif" };
+                    string extension = Path.GetExtension(Documentattachement.FileName).ToLower();
+
+                    if (allowedExtensions.Contains(extension))
+                    {
+                        obj.DocumentName = Documentattachement.FileName;
+
+                        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Bankdepositdoc");
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        string instanceFolderPath = Path.Combine(folderPath, "Instanceid" + InstanceId);
+
+                        if (!Directory.Exists(instanceFolderPath))
+                        {
+                            Directory.CreateDirectory(instanceFolderPath);
+                        }
+
+                        string output = Regex.Replace(Documentattachement.FileName, @"^\d+", "");
+                        var filenamedoc = output;
+                        //var filenamedoc = randomNumber + output;
+                        var fileNamedoc = Path.GetFileName(filenamedoc);
+                        var filePathdoc = Path.Combine(instanceFolderPath, fileNamedoc);
+                        string uploadsdoc = Path.Combine("wwwroot", "Bankdepositdoc", "Instanceid" + InstanceId, fileNamedoc);
+
+                        if (System.IO.File.Exists(filePathdoc))
+                        {
+                            return Json("FileExist");
+                            //File already exists
+                        }
+                        if (Documentattachement.Length > 1024 * 1024) // 1 MB = 1024 bytes * 1024 bytes
+                        {
+                            return Json("1MB");
+                            //Document size cannot be greater than 1 MB.
+                        }
+                        obj.DocumentSize = randomNumber.ToString();
+                        using (var fileSrteam = new FileStream(uploadsdoc, FileMode.Create))
+                        {
+                            Documentattachement.CopyTo(fileSrteam);
+                        }
+                    }
+                    else
+                    {
+                        return Json("FileNotExist");
+                    }
+                }
+                obj.AttachedDocument = null;
+                string Returnvalue;
+
+                if (obj.FeeDepositId == null || obj.FeeDepositId == 0)
+                {
+                    Returnvalue = CommonInsertingMethod(obj, "/Insert_Bankdeposite");
+                }
+                else
+                {
+                    Returnvalue = CommonInsertingMethod(obj, "/Update_Bankdeposit");
+                }
+                return Json(Returnvalue);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
 
         #endregion
+
+
 
         #region ADMISSION MODULE
+
         #region MANAGE ADMISSIONS
         public IActionResult QuroAdmissionProcess()
-        {
+        {           
             return View();
+        }
+ 
+        public IActionResult GetInstancenamesDropdown()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("BindInstancesDropdown", parameter2, "InstanceName", "InstanceId");
+            return Json(lis);
+        }           
+        public IActionResult GetAcademicYearDropdown()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("BindAcademicYearDropdown", parameter2, "Years", "AcademicYearId");
+            return Json(lis);
+        }      
+        public IActionResult GetAllClass()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("BindClassDropdown", parameter2, "ClassName", "ClassId");
+            return Json(lis);
+        }      
+        public IActionResult GetAllcountrys()
+        {         
+            List<SelectListItem> li = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BindcountryDropdown").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                li = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            //List<SelectListItem> lis= li.Where(item => item.Text.Contains("96") && item.Value == "96").ToList();
+            List<SelectListItem> lis= li.Where(item => item.Value == "96").ToList();
+            return Json(lis);
+        }
+        public IActionResult GetStatesddl(int CountryId)
+        {
+            string[] parameter2 = new string[] { CountryId.ToString() }; //InstanceId.ToString(),
+            List<SelectListItem> li = new List<SelectListItem>();
+            li = CommonDropdownData("BindStatesDropdown", parameter2, "StateName", "StateId");
+            return Json(li);
+        }
+        public IActionResult QuroAdmissionProcesstbl(AdmissionProcesstbl obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<AdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<AdmissionProcesstbl, AdmissionProcesstbl>(obj, "/BindAdmissiontbl", client);
+            return Json(list);
+        }
+      
+        public IActionResult QuroAdmissionProcess_New(int? RegistrationUserId)
+        {
+            AdmissionProcess obj = new AdmissionProcess();
+            string instanceIdString = InstanceId.ToString();
+            List<SelectListItem> Classli = CommonDropdownData("BindClassDropdown", new[] { instanceIdString }, "ClassName", "ClassId");
+
+            List<SelectListItem> countryList = GetFilteredCountryList("96");
+
+            List<SelectListItem> Statenamesli = CommonDropdownData("BindStatesDropdown", new[] { "96" }, "StateName", "StateId");
+
+            if (RegistrationUserId == null)
+            {
+                ViewBag.Returnmessage = "SaveMethod";
+                ViewBag.EditMode = false;
+                ViewBag.Classnames = Classli;
+                ViewBag.CountryNames = countryList;
+                ViewBag.StateNames = Statenamesli;
+                return View();
+            }
+            else
+            {
+                obj.InstanceId = InstanceId;
+                obj.RegistrationUserId = RegistrationUserId;
+                List<AdmissionProcess> list = CommonMethodobj.CommonListMethod<AdmissionProcess, AdmissionProcess>(obj, "/Edit_admission", client);
+                ViewBag.Returnmessage = "UpdateMethod";
+                obj = list.FirstOrDefault();
+                ViewBag.EditMode = true;
+                ViewBag.Classnames = Classli;
+                ViewBag.CountryNames = countryList;
+                ViewBag.StateNames = Statenamesli;
+                return View(obj);
+            }
+        }
+
+        private List<SelectListItem> GetFilteredCountryList(string filterValue)
+        {
+            List<SelectListItem> countryList = new List<SelectListItem>();
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BindcountryDropdown").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                countryList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+                countryList = countryList.Where(item => item.Value == filterValue).ToList();
+            }
+
+            return countryList;
+        }
+
+        [HttpPost]
+        public IActionResult QuroAdmissionProcess_New(AdmissionProcess obj)
+        {
+            try
+            {
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+                //if (obj.RegistrationUserId != null)
+                //{
+                    string Returnvalue = CommonInsertingMethod(obj, "/Insert_admission");
+                    return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
+                    //return Json(Returnvalue);
+                //}
+                //else
+                //{
+                //    string Returnvalue = CommonInsertingMethod(obj, "/Update_admission");
+                //    return Json(Returnvalue);
+                //}
+            }
+            catch (Exception ex)
+            {
+                string Errormessage = ex.Message;
+                return RedirectToAction("QuroAdmissionProcess");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult QuroAdmissionProcessUpdate(AdmissionProcess obj)
+        {
+            try
+            {
+                obj.InstanceId = InstanceId;
+                obj.CreatedBy = UserId;
+                string Returnvalue = CommonInsertingMethod(obj, "/Update_admission");
+
+                return Json(new { ReturnValue = Returnvalue, MethodName = "Update" });
+
+                //List<ExaminationModel> list = CommonMethodobj.CommonListMethod<ExaminationModel, ExaminationModel>(obj, "/TblExamListData", client);
+                //returnvalue = CommonSaveMethod(obj, "/BulkUploadSubjects");
+                //if (returnvalue != "0")
+                //{
+                //    return Json(new { success = true, message = returnvalue });
+                //    //return Json(returnvalue);
+                //}
+                //else
+                //{
+                //    return Json(new { success = false, message = "Something Error" });
+                //}
+                //return Json(Returnvalue);
+            }
+            catch (Exception ex)
+            {
+                string Errormessage = ex.Message;
+                return RedirectToAction("QuroAdmissionProcess");
+            }
         }
         #endregion
 
         #region CONFIRM ADMISSIONS
+        //Datescomparing validation pending
+        //Years dropdown dirrectly selected data that time from and to registrationdate feilds are disable
+
         public IActionResult ManageQuroAdmissions()
         {
             return View();
         }
-        #endregion
+
+        public IActionResult ConfirmAdmission()
+        {
+            return View();
+        }
+
+        public IActionResult ManageQuroAdmissionstbl(Confirmadmissions obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;            
+            List<ConfirmAdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<Confirmadmissions, ConfirmAdmissionProcesstbl>(obj, "/Confirmadmissionstbl", client);
+
+
+
+            string[] parameter2 = new string[] { InstanceId.ToString() }; //InstanceId.ToString(),
+            List<SelectListItem> li = new List<SelectListItem>();
+            li = CommonDropdownData("BindClassificationDropdown", parameter2, "ClassificationName", "InstanceClassificationId");
+            ViewBag.Classificationdropdown = li;
+
+            string[] parameter3 = new string[] { InstanceId.ToString(),obj.ClassId.ToString() }; //InstanceId.ToString(),
+            List<SelectListItem> Subclassli = new List<SelectListItem>();
+            li = CommonDropdownData("BindSubclassificationDropdown", parameter3, "ClassificationName", "InstanceClassificationId");
+            ViewBag.SubClassificationdropdown = Subclassli;
+
+            return View(list);
+        }
 
         #endregion
 
+        #endregion
+
+        public string CommonInsertingMethod<T>(T obj, string WebApiMethodname)
+        {
+            string returnval = "";           
+            string data = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + WebApiMethodname, content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return returnval = response.Content.ReadAsStringAsync().Result;
+            }
+            var returnval1 = response.Content.ReadAsStringAsync().Result;
+            return "0";
+        }
+
+
+   
+
+        [Authorize]
+        public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
+        {
+            List<SelectListItem> DropdownList = new List<SelectListItem>();
+            CommonDropdown obj = new CommonDropdown();
+            obj.procedurename = methodname;
+            obj.Parameters = Parameters;
+            obj.text = text;
+            obj.value = value;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+            //  HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/"+methodname+"?Parameters=" + Parameters + "&text=" + text + "&value=" + value).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return DropdownList;
+        }
     }
 }

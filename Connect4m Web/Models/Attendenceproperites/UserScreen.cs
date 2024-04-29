@@ -17,9 +17,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ReturnMessageMain { get; set; }
         }
 
-        public class Manageholidays: Insatnceids
-        {           
-  
+        public class Manageholidays : Insatnceids
+        {
+
             public int HolidayId { get; set; }
             [Required]
             public string HolidayName { get; set; }
@@ -51,7 +51,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string[] ClassificationIds { get; set; }
             public string[] SubClassificationIds { get; set; }
             public int ForAll { get; set; }
-            public string Methodname{ get; set; }
+            public string Methodname { get; set; }
 
         }
 
@@ -65,10 +65,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required(ErrorMessage = "Attendance Effective Date is required")]
             public DateTime? StartDate { get; set; }
             [Required(ErrorMessage = "Attendance End Date is required")]
-            public DateTime? EndDate { get; set; }          
+            public DateTime? EndDate { get; set; }
             public int ProgramTypeId { get; set; }
-            public int AllowedDialougeCount { get; set; }      
-           
+            public int AllowedDialougeCount { get; set; }
+
         }
 
         public class ManageSubClassification : Insatnceids
@@ -92,18 +92,18 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required(ErrorMessage = "CoClassTeacher is required")]
             public int CoClassTeacherId { get; set; }
             public string SubClassificationDescription { get; set; }
-            public string ClassificationName { get; set; }           
+            public string ClassificationName { get; set; }
             public string ClassTeacher { get; set; }
             public string ProgramType { get; set; }
             public string SubClassificationDescriptionWords { get; set; }
-            public string DisplayOrder { get; set; }                      
-            public string StartDate { get; set; }                      
+            public string DisplayOrder { get; set; }
+            public string StartDate { get; set; }
             public string EndDate { get; set; }
-                                 
+
             public string CoClassTeacher { get; set; }
-           
+
             public int IsActive { get; set; }
-           
+
             public List<ClassificationList> ClassificationList { get; set; }
             public List<Classteacher> ClassteacherList { get; set; }
             public List<CoClassteacher> CoClassteacherList { get; set; }
@@ -121,21 +121,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string CoClassteacheremail { get; set; }
             public string Coclassteachermobile { get; set; }
             public string Coclassteacherempcode { get; set; }
-            
+
             public string Classteacheremail { get; set; }
             public string Classteachermobile { get; set; }
             public string Classteacherempcode { get; set; }
         }
 
-       
+
 
         public class Categorytypes
         {
             public int CategoryId { get; set; }
             public string CategoryName { get; set; }
-            public string CategoryDescription { get; set; }         
+            public string CategoryDescription { get; set; }
             public int CategoryTypeId { get; set; }
-            public int AssetTypeId { get; set; }         
+            public int AssetTypeId { get; set; }
         }
 
         public class BestPerformer : Insatnceids
@@ -152,7 +152,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string InstanceUserCode { get; set; }
             public string ClassificationName { get; set; }
             public string ClassificationHeader { get; set; }
-            public string IsWelcomePage { get; set; }                     
+            public string IsWelcomePage { get; set; }
             public string Eventphotos { get; set; }
             public DateTime? DisplayUntill_ { get; set; }
 
@@ -162,12 +162,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string LastName { get; set; }
             public string InstanceClassificationId { get; set; }
             public string InstanceSubClassificationId { get; set; }
-        
+
             public string AdmissionNumber { get; set; }
-          
+
             public string TcTaken { get; set; }
             public string RouteId { get; set; }
-            public string StopId { get; set; }    
+            public string StopId { get; set; }
             public string UserName { get; set; }
             public string RoleName { get; set; }
             public string RoleID { get; set; }
@@ -201,7 +201,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int QuoteId { get; set; }
             [Required]
             public string Quote { get; set; }
-         
+
             public string DisplayDate { get; set; }
             [Required]
             public DateTime? DisplayDate_ { get; set; }
@@ -264,7 +264,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ClassificationName { get; set; }
             public string SubclassificationName { get; set; }
         }
-        public class EventsClander: Insatnceids
+        public class EventsClander : Insatnceids
         {
             public int EventId { get; set; }
             public string eventdate { get; set; }
@@ -296,20 +296,20 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string LinkName { get; set; }
             public string LinkURL { get; set; }
 
-            [Required(ErrorMessage = "Description")]            
+            [Required(ErrorMessage = "Description")]
             public string Description { get; set; }
 
         }
 
-        public class Worksheetsdata 
+        public class Worksheetsdata
         {
-            public string Subject{ get; set; }
-            public string ENoticeDescription{ get; set; }
-            public string CategoryName{ get; set; }
-            public string Createddate{ get; set; }
-            public string Noticedate{ get; set; }
-            public string Noticestartdate{ get; set; }
-            
+            public string Subject { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string CategoryName { get; set; }
+            public string Createddate { get; set; }
+            public string Noticedate { get; set; }
+            public string Noticestartdate { get; set; }
+
         }
 
 
@@ -340,7 +340,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CategoryTypeId { get; set; }
             public int AssetTypeId { get; set; }
 
-            public bool  IsSMSTemplate { get; set; }
+            public bool IsSMSTemplate { get; set; }
             public string Subject { get; set; }
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
@@ -349,8 +349,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int GetAll { get; set; }
 
         }
-        public class NoticeTypes:Insatnceids
-        {           
+        public class NoticeTypes : Insatnceids
+        {
             public int DisplayOrder { get; set; }
             public int ENoticeId { get; set; }
             [Required(ErrorMessage = "Notice Type")]
@@ -362,9 +362,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             public string CategoryName { get; set; }
             public string IsPostedv { get; set; }
-    
+
             public string ExpiryDate { get; set; }
-          
+
             public DateTime StartDate { get; set; }
             public string IsPosted { get; set; }
             public string DisplayIcon { get; set; }
@@ -399,8 +399,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ExpiryDate { get; set; }
         }
 
-        public class Homenoticeupdate: Insatnceids
-        {        
+        public class Homenoticeupdate : Insatnceids
+        {
             public int ENoticeId { get; set; }
             public int ENoticeTypeId { get; set; }
             public string Subject { get; set; }
@@ -417,9 +417,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
         }
 
 
-    
 
-        public class TemplateDetails_SMS:Insatnceids
+
+        public class TemplateDetails_SMS : Insatnceids
         {
             [Required]
             public DateTime ExDate { get; set; }
@@ -436,15 +436,15 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DisplayIcon { get; set; }
             public string ShowInLogin { get; set; }
             public int IsGlobalNotice { get; set; }
-            public int ENoticeTypeId { get; set; }       
-            public int ENoticeId { get; set; }       
+            public int ENoticeTypeId { get; set; }
+            public int ENoticeId { get; set; }
             public string createddate { get; set; }
             public string CategoryName { get; set; }
             public string IsPostedv { get; set; }
-            public string ExpiryDate { get; set; }     
-            public string IsPosted { get; set; }  
-            public bool IsSMSTemplate { get; set; }  
-            public int GetAll { get; set; }   
+            public string ExpiryDate { get; set; }
+            public string IsPosted { get; set; }
+            public bool IsSMSTemplate { get; set; }
+            public int GetAll { get; set; }
             public string UserName { get; set; }
             public int RoleId { get; set; }
             public string InstanceRoleId { get; set; }
@@ -457,7 +457,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string RouteId { get; set; }
             public int CollegeHostel { get; set; }
             public string MultiAdmissionNumber { get; set; }
-            public string ExcludeUserIds { get; set; }            
+            public string ExcludeUserIds { get; set; }
             public string DMLTYPE { get; set; }
             public int SendSMS { get; set; }
             public int SendEMail { get; set; }
@@ -491,10 +491,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
             public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
 
-     //====>> Api Properties and web properties  comparing           
+            //====>> Api Properties and web properties  comparing           
             //public string StartDate { get; set; }          
             //public IFormFile AttachedDocument { get; set; }
-         
+
 
         }
 
@@ -544,12 +544,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string UserName { get; set; }
         }
         public class CoClassteacher
-        {     
+        {
             public int UserId_CO { get; set; }
             public string UserName_CO { get; set; }
         }
         public class HolidaytargetTbl
-        {          
+        {
             public string HolidayTargetId { get; set; }
             public string HolidayId { get; set; }
             public string Value { get; set; }
@@ -573,7 +573,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Userids { get; set; }
         }
 
-        public class Postnoticetabledate :Insatnceids
+        public class Postnoticetabledate : Insatnceids
         {
             public string UserName { get; set; }
             public int RoleId { get; set; }
@@ -594,12 +594,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CollegeHostel { get; set; }
             public string MultiAdmissionNumber { get; set; }
             public string ExcludeUserIds { get; set; }
-          
+
         }
 
         public class BirthdaysByInstance
         {
-            public string DOB { get; set; }        
+            public string DOB { get; set; }
             public string Dateofbirth { get; set; }
             public string FirstName { get; set; }
             public string Photo { get; set; }
@@ -609,18 +609,18 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string RoleName { get; set; }
         }
 
-        public class Timetablecriteria 
+        public class Timetablecriteria
         {
             public string TimeTableTypeId { get; set; }
             public string Duration { get; set; }
             public string Errormessage { get; set; }
         }
-        public class Newadmissionstudents 
+        public class Newadmissionstudents
         {
-            public string FirstName{ get; set; }
-            public string ClassificationName{ get; set; }
-            public string SubclassificationName{ get; set; }
-            public string DateofJoining{ get; set; }
+            public string FirstName { get; set; }
+            public string ClassificationName { get; set; }
+            public string SubclassificationName { get; set; }
+            public string DateofJoining { get; set; }
         }
 
         #region CREATE SMS
@@ -643,7 +643,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         }
 
-        public class InsertTemplatesms: Insatnceids
+        public class InsertTemplatesms : Insatnceids
         {
             public int ENoticeTypeId { get; set; }
             public string Subject { get; set; }
@@ -685,17 +685,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         #region Create Notice
         public class ENoticeTypes : Insatnceids
-        {    
+        {
             [Required(ErrorMessage = "Notice Type is required")]
             public int ENoticeTypeId { get; set; }
 
             [Required(ErrorMessage = "Notice Subject is required")]
             public string Subject { get; set; }
 
-            [Required(ErrorMessage = "Start date can not be left blank.")]
+            [Required(ErrorMessage = "Start date can not be blank.")]
             public DateTime StartDate { get; set; }
 
-            [Required(ErrorMessage = "End date can not be left blank.")]
+            [Required(ErrorMessage = "End date can not be blank.")]
             public DateTime ExpiryDate { get; set; }
 
             public int DisplayOrder { get; set; }
@@ -715,13 +715,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             public string NoticeTypetext { get; set; }
             public string DMLTYPE { get; set; }
-            public int CountFlag { get; set; }   
+            public int CountFlag { get; set; }
         }
 
-        public class Enoticetemplates: Insatnceids
+        public class Enoticetemplates : Insatnceids
         {
-           
-            public int ENoticeId { get; set; }  
+
+            public int ENoticeId { get; set; }
             public string NotificationMessage { get; set; }
             public int NoticeTypeId { get; set; }
             public string NoticeTypeName { get; set; }
@@ -744,8 +744,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string SMSFromText { get; set; }
             public string Action { get; set; }
             public string Noticetypdedescription { get; set; }
-            public int SendEmailForstudents{ get; set; }
-            public int SendEmailForParents{ get; set; }
+            public int SendEmailForstudents { get; set; }
+            public int SendEmailForParents { get; set; }
 
             public int chkSMSAll { get; set; }
             public int chkIncludeParents { get; set; }
@@ -801,7 +801,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
             public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
         }
-        
+
 
         public class PostedNoticemessage
         {
@@ -826,5 +826,259 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string NoticeDocument { get; set; }
             public string createddate { get; set; }
         }
+
+
+        #region ADMISSION REPORT
+        public class Admissionreport: Insatnceids
+        {
+            public string Instancesnames { get; set; }
+            //public string Registrationnumber { get; set; }
+            public string InstanceUserCode { get; set; }
+            public string FirstName { get; set; }
+            public string MiddleName { get; set; }
+            public string LastName { get; set; }
+            public string Acadamicyearid { get; set; }
+            public string Acadamicyearname { get; set; }
+            public string Subclassificationid { get; set; }
+            public string Subclassificationname { get; set; }
+            public DateTime? FromRegistrationdate { get; set; }
+            public DateTime? ToRegistrationdate { get; set; }
+            public string ApplicationStatus { get; set; }
+
+
+            public string Registrationdate { get; set; }
+            public string Name { get; set; }
+            public string DOB { get; set; }
+            public string ClassApplied { get; set; }
+            public string FatherName { get; set; }
+            public string MotherName { get; set; }
+            public string Mobilenumber { get; set; }
+            public string EmailId { get; set; }
+            public string Status { get; set; }
+            public string Errormessage { get; set; }
+            public string Userstatusvalue { get; set; }
+            public string DOJ { get; set; }
+            public string UserStatus { get; set; }
+        }
+        public class Admissionsummaryreport: Admissionreport
+        {         
+            public string RegistrationCount { get; set; }
+            public string AdmissionCount { get; set; }
+        }
+        #endregion
+
+        #region Quro Admission Process
+        public class AdmissionProcess : Insatnceids
+        {
+            public int? RegistrationUserId { get; set; }
+
+            [Required(ErrorMessage = "FirstName is required")]
+            [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "FirstName should contain only alphabets")]
+            public string FirstName { get; set; }
+
+            [Required(ErrorMessage = "LastName is required")]
+            [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "LastName should contain only alphabets")]
+            public string LastName { get; set; }
+            public string MiddleName { get; set; }
+
+            [Required(ErrorMessage = "Date of Birth is required")]
+            public DateTime? DOB { get; set; }
+            public string Age { get; set; }
+
+            [Required(ErrorMessage = "Gender is required")]
+            public string Gender { get; set; }
+            public string Placeofbirth { get; set; }
+          
+            public int Subclassificationid { get; set; }
+            [Required(ErrorMessage = "Applying for Class is required")]
+            public string SubclassificationName { get; set; }
+            public string PreviousSchool { get; set; }
+            public string PreviousClass { get; set; }
+            //public string Classstudiedat { get; set; }
+
+            [Required(ErrorMessage = "FatherName is required")]
+            [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "FatherName should contain only alphabets")]
+            public string FatherName { get; set; }
+            public string FatherQualification { get; set; }
+            public string FatherOccupation { get; set; }
+            public string FatherDesignation { get; set; }
+            public string FatherServiceyears { get; set; }
+
+            [Required(ErrorMessage = "MotherName is required")]
+            [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "MotherName should contain only alphabets")]
+            public string MotherName { get; set; }
+            public string MotherQualification { get; set; }
+            public string MotherOccupation { get; set; }
+            public string MotherDesignation { get; set; }
+
+            public string AddressLine1 { get; set; }
+            public string AddressLine2 { get; set; }
+            public string City { get; set; }
+            public string Country { get; set; }
+            public string State { get; set; }
+            [RegularExpression(@"^\d{5,6}(?:[-\s]\d{4})?$", ErrorMessage = "Invalid zip code format.")]
+            public string Zip { get; set; }
+
+            [Required(ErrorMessage = "Contact Mobile No is required")]
+            [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Invalid phone number format.")]
+            public string ParentMobileNumber { get; set; }
+            [EmailAddress(ErrorMessage = "Invalid email format.")]
+            public string ParentEmail { get; set; }
+            public string InstanceUserCode { get; set; }
+            public int? AcademicYearId { get; set; }
+            public string AcademicYear { get; set; }
+            public string Paymentmode { get; set; }
+            public DateTime? Fromregistrationdate { get; set; }
+            public DateTime? Toregistrationdate { get; set; }
+            public string AdmissionForClass { get; set; }
+            public int? ClassId { get; set; }
+            public string CaptchaData { get; set; }
+            public string ApplicationNumber { get; set; }
+            public string RegistrationNumber { get; set; }
+            public string CountryId { get; set; }
+            public string CountryName { get; set; }
+            public string StateId { get; set; }
+            public string StateName { get; set; }
+            public string ClassName { get; set; }
+            public Boolean EditMode { get; set; }
+            
+        }
+
+        public class AdmissionProcesstbl: AdmissionProcess
+        {
+            //public int? RegistrationUserId { get; set; }
+            //public string FirstName{ get; set; }
+            //public string MiddleName{ get; set; }
+            //public string LastName{ get; set; }
+            //public string AcademicYearId { get; set; }
+            //public string ClassId { get; set; }
+            //public DateTime? Fromregistrationdate { get; set; }
+            //public DateTime? Toregistrationdate { get; set; }            
+            //public string InstanceUserCode { get; set; }
+            //public string DOB{ get; set; }
+            //public string FatherName { get; set; }
+            //public string MotherName { get; set; }
+            public string ClassAppliedFor { get; set; }
+            public string StudentName { get; set; }
+            public string RegistrationDate { get; set; }
+            public string MobileNumber { get; set; }
+            public string EmailId { get; set; }
+            //public string ClassName { get; set; }      
+            public string Errormessage { get; set; }
+        }
+
+
+        #endregion
+
+        #region CONFIRM ADMISSIONS
+        public class Confirmadmissions: Insatnceids
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string MiddleName { get; set; }
+
+            [Required(ErrorMessage = "For the Session is required")]
+            public int AcademicYearId { get; set; }
+            public string AcademicYear { get; set; }
+
+            [Required(ErrorMessage = "Class is required")]
+            public int ClassId { get; set; }
+            public string ClassName { get; set; }           
+            public DateTime? FromRegistrationdate { get; set; }
+            public DateTime? ToRegistrationdate { get; set; }
+        }
+        public class ConfirmAdmissionProcesstbl
+        {
+            //public int Classificationid { get; set; }
+            //public string ClassificationName { get; set; }
+            //public int Subclassificationid { get; set; }
+            //public string SubclassificationName { get; set; }
+            //public string Exportingjoiningdate { get; set; }
+
+            public int? RegistrationUserid { get; set; }
+            public string RegistrationNumber { get; set; }
+            public DateTime? RegistrationDate { get; set; }
+            public string StudentName{ get; set; }
+            public DateTime? DOB { get; set; }         
+            public string ClassApplied { get; set; }
+            public string FatherName { get; set; }
+            public string MotherName { get; set; }
+            public string Mobilenumber { get; set; }
+            public string EmailId { get; set; }
+            public string AdmNo { get; set; }
+            public string ClassificationId { get; set; }
+            public Boolean ChkEnabled{ get; set; }
+            public string UserName{ get; set; }
+        }
+        #endregion
+
+        #region ManageBankDeposit      
+
+        public class Bankdeposit: Insatnceids
+        {
+            public int? FeeDepositId { get; set; }
+
+            [Required(ErrorMessage = "Payment Mode is required")]
+            public string Paymentmodeid { get; set; }
+
+            public string Paymentmode { get; set; }
+
+            [Required(ErrorMessage = "Deposit Amount is required")]
+            [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Please enter a valid money amount")]
+            public string Depositamount { get; set; }
+
+            [Required(ErrorMessage = "Date of Deposit is  required")]
+            public string Depositdate { get; set; }
+
+            public string DocumentName { get; set; }
+            public string DocumentSize { get; set; }
+
+            [Required(ErrorMessage = "Bank Name is required")]
+            //[RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Bank Name can only contain letters")]
+            public string BankName { get; set; }
+
+            [Required(ErrorMessage = "Branch Name is required")]
+            public string Branchname { get; set; }
+
+            [Required(ErrorMessage = "Account Number is required")]
+            [RegularExpression(@"^\d+$", ErrorMessage = "Account Number can only contain digits")]
+            public string Accountnumber { get; set; }
+
+            public string Comments { get; set; }
+
+            public DateTime CollectedDate { get; set; }
+            public string SchoolName { get; set; }
+            public IFormFile AttachedDocument { get; set; }
+        }
+
+        public class SearchDeposit : Insatnceids
+        {
+            public string PaymentModeId { get; set; }
+            public string Mode { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+        }
+
+        public class Deposittbl
+        {
+            public int? FeeDepositId { get; set; }
+            public string SchoolName { get; set; }
+            public string DepositAmount { get; set; }
+            public string BankName { get; set; }
+            public string BranchName { get; set; }
+            public string AccountNumber { get; set; }            
+            public string Depositdate { get; set; }
+            public string CreatedDate { get; set; }
+            public string DocumentName { get; set; }
+            public string DocumentSize { get; set; }
+            public string Paymentmodeid { get; set; }
+            public string PaymentMode { get; set; }
+            //public DateTime DOB { get; set; }
+            //public string Depositamount { get; set; }                 
+            public string Comments { get; set; }
+            public DateTime CollectedDate { get; set; }
+            public string CollectingDate { get; set; }
+        }      
+        #endregion
     }
 }

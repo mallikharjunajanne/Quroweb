@@ -1,0 +1,118 @@
+﻿@*@model Connect4m_Web.Models.Attendenceproperites.Feedetails*@
+@{
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="col-md-8 col-lg-8 mb-1">
+        <div class="card card-body">
+            <form id="AdmissionsSearchform" enctype="multipart/form-data">
+                <div class="row col">
+                    <div class="row mb-3">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Department  </label>
+                            <div class="col-sm-6">
+                                <select class="form-select" id="ddlClassification" disabled>
+                                    <option value="">--Select--</option>
+                                    @foreach (var ddlvalues in ViewBag.Classificationdropdown)
+                                    {
+                                        <option value="@ddlvalues.Value">@ddlvalues.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Expected joining Date</label>
+                            <div class="col-sm-6">
+                                <input type="date" class="form-control" id="txtJoiningDate">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Class & Section</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" id="ddlInstanceSubclassification">
+                                <option value="">--Select--</option>
+                                @foreach (var ddlclass in ViewBag.SubClassificationdropdown) 
+                                {
+                                <option value="@ddlclass.Value">@ddlclass.Text</option>
+                                }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 mb-3">
+        <div class="table-responsive text-nowrap">
+            <input type="checkbox" class="form-check-input" id="chkCheckAll" name="chkCheckAll">
+            <label>Select All</label>
+            <div class="dataTables_wrapper no-footer">
+                <table id="Admissiontbl" class="datatables-basic table no-footer dtr-column dataTable">
+                    @*link*@
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Select</th>
+                            <th>Registration Date</th>
+                            <th>Reg No</th>
+                            <th>Name</th>
+                            <th>DOB</th>
+                            <th>Class Applied</th>
+                            <th>Father Name</th>
+                            <th>Mother name</th>
+                            <th>Mobile number</th>
+                            <th>Email Id</th>
+                            <th>Expected Joining Date</th>
+                            <th>Class & Section</th>
+                            <th>Admission Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+
+                                    <input type="checkbox" class="form-check-input" @(item.ChkEnabled ? "" : "disabled") />
+                                    @*@if (item.ChkEnabled == true)
+                                    {
+                                        <input type="checkbox" class="form-check-input" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="form-check-input" disabled />
+                                    }*@
+                                </td>
+                                <td>@item.RegistrationDate.ToString("dd-MM-yyyy").Replace("-", "/")</td>
+                                <td>@item.RegistrationNumber</td>
+                                <td>@item.StudentName</td>
+                                <td>@item.DOB.ToString("dd-MM-yyyy").Replace("-", "/")</td>
+                                <td>@item.ClassApplied</td>
+                                <td>@item.FatherName</td>
+                                <td>@item.MotherName</td>
+                                <td>@item.Mobilenumber</td>
+                                <td>@item.EmailId</td>
+                                <td><input type="date" class="form-control" /></td>
+                                <td><select id="ddlSubclassification" class="form-select"></select></td>
+                                <td><input type="text" id="txtAdmissionnumber" class="form-control" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="13" style="text-align:center;"><button class="btn btn-success waves-effect waves-light" id="Submitbtn">Confirm Admission</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Confirmadmissions_1.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

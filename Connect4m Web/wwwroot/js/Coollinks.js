@@ -268,8 +268,9 @@ $('#Backtoseach_savebtn').click(function () {
     $('#Coollinks_PartailConatiner').show();
     ManageCoollinksfun();
     //ManageCoollinks();
-    $('#SearchCoollinkView').show();
 
+    $('#SearchCoollinkView').show();
+    $('#savecoollink_btn, #Clear_savebtn').prop('disabled', false);
 });
 
 $('#Clear_savebtn').click(function () {

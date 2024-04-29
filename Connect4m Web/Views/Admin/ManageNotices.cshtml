@@ -38,8 +38,8 @@
                                 <div class="row mb-3">
                                     <label class="control-label col-sm-4 col-form-label text-end space">Notice Type</label>
                                     <div class="col-sm-4">
-                                        <select class="form-select select2 form-select select2-hidden-accessible" id="ENoticetypeid">
-                                        </select>
+                         <select class="form-select select2 form-select select2-hidden-accessible" id="ENoticetypeid">
+                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -48,17 +48,17 @@
                                         <input type="text" id="SubjectTXT" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-3" id="Startdateparent">
                                     <label class="control-label col-sm-4 col-form-label text-end space">Start Date</label>
                                     <div class="col-sm-4">
                                         <input type="date" id="StartDateTXT" class="form-control" />
-
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-3" id="Enddateparent">
                                     <label class="control-label col-sm-4 col-form-label text-end space">End Date</label>
                                     <div class="col-sm-4">
                                         <input type="date" id="EndDateTXT" class="form-control" />
+                                        <span id="Ermsgsp" class="text-danger Validation"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -125,7 +125,7 @@
                                 <div class="col-sm-4">
                                     <input type="hidden" asp-for="ENoticeId" id="ENoticeId_UTXT" />
                                     <select id="ENoticeTypeId_UTXT" asp-for="ENoticeTypeId" class="form-select">
-                                        <option value="">---Select----</option>
+                                        @*<option value="">---Select----</option>*@
                                     </select>
                                 </div>
                             </div>

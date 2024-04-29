@@ -30,9 +30,8 @@
                         <div class="col-sm-4">
                             <select id="ENoticeTypedd_Id" asp-for="ENoticeTypeId" asp-items="@ViewBag.NoticeTypedd" class="form-select select2 form-select select2-hidden-accessible">
                                 <option value="">--Select--</option>
-
                             </select>
-                            <span asp-validation-for="ENoticeTypeId" class="text-danger"></span>
+                            <span asp-validation-for="ENoticeTypeId" class="text-danger Validation"></span>
                         </div>
                     </div>
 
@@ -42,7 +41,7 @@
                             <textarea class="form-control" asp-for="Subject" id="Subjecttxtid" maxlength="1000" oninput="Letterscount()" onkeydown="return SpecialCharacters(event)"></textarea>
                             <span id="LtCounts" style="font-size: 12px;"></span>
                             <span id="Ltlengths" style="font-size: 12px;"></span>
-                            <span asp-validation-for="Subject" class="text-danger"></span>
+                            <span asp-validation-for="Subject" class="text-danger Validation"></span>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -65,7 +64,7 @@
                         <label class="control-label col-sm-4 col-form-label text-end required  space">Start Date</label>
                         <div class="col-sm-4">
                             <input type="date" id="StartDateid" asp-for="StartDate" class="form-control" />
-                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                            <span asp-validation-for="StartDate" class="text-danger Validation"></span>
                         </div>
                     </div>
 
@@ -73,9 +72,10 @@
                         <label class="control-label col-sm-4 col-form-label text-end required  space">End Date</label>
                         <div class="col-sm-4">
                             <input type="date" id="EndDateid" asp-for="ExpiryDate" class="form-control" />
-                            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                            <span asp-validation-for="ExpiryDate" class="text-danger Validation"></span>
                             <span class="text-danger compare"></span>
-                            <span id="Ermsgsp" class="text-danger"></span>
+                            @*<span id="Ermsgsp" class="text-danger"></span>*@
+                            <span id="DateCompareErrormessage" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row mb-3">

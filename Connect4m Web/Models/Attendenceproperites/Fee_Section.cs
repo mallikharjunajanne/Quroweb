@@ -8,6 +8,90 @@ using System.Threading.Tasks;
 namespace Connect4m_Web.Models.Attendenceproperites
 {
 
+    public class ConcedingTypes: Commonproperties
+    {
+        public int ConcedingTypeId { get; set; }
+        public string ConcedingTypeName { get; set; }
+        public decimal ConcedingAmount { get; set; }
+    }
+    public class Feetypesddl : Commonproperties
+    {
+        public string FeetypeId { get; set; }
+        public string Feetype { get; set; }
+        public decimal Amount { get; set; }
+    }
+    public class AcademicYearddl : Commonproperties
+    {
+        public int AcademicYearId { get; set; }
+        public string Years{ get; set; }
+    }
+
+    public class Feetypes : Commonproperties
+    {
+        public int Feetypeid { get; set; }
+
+        [Required(ErrorMessage ="Fee Type is required")]
+        public string FeeType { get; set; }
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = "Fee Type is for is required")]
+        public string Feetypestatus { get; set; }
+        public string Quantity { get; set; }
+        public decimal Amount { get; set; }
+        public string Concedingtypeid { get; set; }
+        public string Concedingtypename { get; set; }
+        public List<string> ConcedingtypeIds { get; set; }
+        public List<Feetypes> FilteredRows { get; set; }
+    }
+
+    public class Feeterms:Commonproperties
+    {
+        public int FeeTermId { get; set; }         
+
+        [Required(ErrorMessage = "Academic Year is required")]
+        public int? AcademicYearId { get; set; }
+
+        [Required(ErrorMessage = "Fee Term is required")]
+        public string TermName { get; set; }
+        public string Description { get; set; }
+        public string TermOrder { get; set; }
+        public string Years { get; set; }
+        [Required(ErrorMessage = "Fee Type is required")]
+        public string FeeTypeId { get; set; }
+        public string FeeType { get; set; }
+        public List<string> FeeTypeIds { get; set; }
+    }
+
+    //public class Manage_Fee_Terms
+    //{
+    //    public string FeeTermId { get; set; }
+    //    public string FeeTypeIds { get; set; }
+    //    public string InstanceId { get; set; }
+    //    public string AcademicYearId { get; set; }
+    //    public string TermName { get; set; }
+    //    public string Description { get; set; }
+    //    public string TermOrder { get; set; }
+    //    public string Years { get; set; }
+    //    public string FeeTypeId { get; set; }
+    //    public string FeeType { get; set; }
+    //}
+    //public class FeeTerms
+    //{
+    //    [Required(ErrorMessage = "Academic Year is required")]
+    //    public int AcademicYearId { get; set; }
+    //    [Required(ErrorMessage = "Fee Term is required")]
+    //    public int FeeTermId { get; set; }
+    //    public string FeeTypeIds { get; set; }
+    //    [Required(ErrorMessage = "Fee Type is required")]
+    //    public string FeeType { get; set; }
+    //    public string Description { get; set; }
+    //}
+
+
+
+
+
+
     public class ManageFeeTypesViewModel
     {
         public int LicenseCount { get; set; }
@@ -30,40 +114,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
     }
 
 
-    public class Cr_FT
-    {
+  
 
-        public int ConcedingTypeId { get; set; }
-        public string ConcedingTypeName { get; set; }
-
-        public decimal Amount { get; set; }
-        public string Description { get; set; }
-    }
-
-    public class Manage_Fee_Terms
-    {
-        public string FeeTermId { get; set; }
-        public string FeeTypeIds { get; set; }
-        public string InstanceId { get; set; }
-        public string AcademicYearId { get; set; }
-        public string TermName { get; set; }
-        public string Description { get; set; }
-        public string TermOrder { get; set; }
-        public string Years { get; set; }
-        public string FeeTypeId { get; set; }
-        public string FeeType { get; set; }
-    }
-    public class FeeTerms
-    {
-        [Required(ErrorMessage = "Academic Year is required")]
-        public int AcademicYearId { get; set; }
-        [Required(ErrorMessage = "Fee Term is required")]
-        public int FeeTermId { get; set; }
-        public string FeeTypeIds { get; set; }
-        [Required(ErrorMessage = "Fee Type is required")]
-        public string FeeType { get; set; }
-        public string Description { get; set; }
-    }
 
     public class Manage_Bank_accounts : Commonproperties
     {

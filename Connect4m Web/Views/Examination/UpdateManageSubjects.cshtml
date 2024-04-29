@@ -242,17 +242,25 @@
         debugger;
         const AllTextboxes = document.querySelectorAll('.' + EffectiveTxtClass);
         const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
-        //const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
-        if (checkbox.checked) {
-            AllTextboxes.forEach(textbox => {
-                //  const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked').value;
-                const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked');
-                debugger;
+                    //const FirstTxtValue = document.getElementById(FirstTextBoxId).value; 
+        
+        if (FirstTxtValue != "") { //if condition Adding By Arjun
+  
+            if (checkbox.checked) {
+                $('#Main_Span_Error').text('');
+                AllTextboxes.forEach(textbox => {
+                    //  const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked').value;
+                    const subjectOrderId = textbox.closest('tr').querySelector('input[type="checkbox"]:checked');
+                    debugger;
 
-                if (subjectOrderId) {
-                    textbox.value = FirstTxtValue;
-                }
-            });
+                    if (subjectOrderId) {
+                        textbox.value = FirstTxtValue;
+                    }
+                });
+            }
+        }
+        else {
+            $('#Main_Span_Error').text("Please Enter the Subjects Order to be displayed.");
         }
     }
 

@@ -22,7 +22,6 @@ function CallToAjax(method, url, successCallback, errorCallback) {
         }
     });
 }
-
 function FileCallToAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
     var ajaxOptions = {
         url: url,
@@ -41,7 +40,16 @@ function FileCallToAjax(method, url, data, successCallback, errorCallback, hasFi
 
     $.ajax(ajaxOptions);
 }
-
+function Editdropdowndata(method, url, successCallback, errorCallback) {
+    $.ajax({
+        url: url,
+        type: method,
+        success: successCallback,
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+}
 
 $(document).ready(function () {  
     
@@ -88,7 +96,7 @@ $(document).ready(function () {
 
 
 
-    // Call to retrieve data for holidays table
+  
     //Home Search Notices Dropdown use this method
     CallToAjax('GET', '/Admin/ManageNotices_TableData', null,
         function (response) {
@@ -100,6 +108,33 @@ $(document).ready(function () {
         }
     );
 });
+
+function Noticetypedropdown() {
+    Editdropdowndata('GET', '/Admin/MNNoticetype_dd',
+        function (response) {
+            Dropdownbindingfun(response); // Assuming response is an array of items
+        },
+        function (status, error) {
+            // Handle errors here
+        }
+    );
+}
+
+function Dropdownbindingfun(Noticedropdown) {
+    debugger;
+    var classificationDropdown = $('#ENoticeTypeId_UTXT');
+    classificationDropdown.append($('<option>', {
+        value: '',
+        text: '------Select------'
+    }));
+    $.each(Noticedropdown, function (index, item) {
+        classificationDropdown.append($('<option>', {
+            value: item.value,
+            text: item.text
+        }));
+    });
+}
+
 
 function HomeManageNoticetabledata() {
     CallToAjax('GET', '/Admin/ManageNotices_TableData', null,
@@ -318,8 +353,9 @@ function HomeENoticeedit(ENoticeId) {
             DataCallToAjax('GET', '/Admin/Edit_ENotices_ById', data,
             function (response) {
                 debugger;
-                //$("#InstanceId_UTXT").val(response[0].instanceId);
-                //$("#CreatedBy_UTXT").val(response[0].createdBy);
+                //==>> Noticetype dropdown function
+                Noticetypedropdown();
+
                 $("#ENoticeId_UTXT").val(response[0].eNoticeId);
 
                 var eNoticeTypeId = response[0].eNoticeTypeId;
@@ -1408,9 +1444,55 @@ function Selectalluserschkvalues() {
 
 
 
-//--------HOME DELETE ICON CLEAR BUTTON
+
 $('#Noticebtnclear').click(function () {
     debugger;
     $('#FmSubjectSearch')[0].reset();
     $('#ErrorMessage').text('');
+});
+
+//===>Date Compare function
+
+function DatesCompares(Sdate, Edate) {
+    try {
+        debugger;
+        var StartdateInput = $("#StartDateTXT").val();
+        var EnddateInput = $("#EndDateTXT").val();
+
+        var Startdate = new Date(StartdateInput);
+        var Enddate = new Date(EnddateInput);
+
+        var formattedStartDate = GetDateFormat(Startdate);
+        var formattedEndDate = GetDateFormat(Enddate);
+
+        var errorElement = $('.compare');
+
+        if (formattedStartDate != formattedEndDate) {
+            if (Enddate <= Startdate) {                
+                $('#Ermsgsp').text(Sdate + " can not be greater than " + Edate + ".");
+            } else {
+                $('#Ermsgsp').text("");
+            }         
+        } else {
+            $('#Ermsgsp').text("");
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
+//-------------------***Date Compare
+//$("#StartDateTXT").on("change", function () {
+
+
+$("#Startdateparent").on("change", "#StartDateTXT", function () {
+    debugger;
+    DatesCompares("Start Date", "End Date");
+});
+
+$("#Enddateparent").on("change", "#EndDateTXT", function () {
+    debugger;
+    DatesCompares("Start Date", "End Date");
 });

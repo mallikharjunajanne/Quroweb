@@ -21,7 +21,7 @@
                     <div class="col-sm-4">
                         <select id="ENoticeTypeId_STXT" asp-for="ENoticeTypeId" class="form-select select2 form-select select2-hidden-accessible">
                         </select>
-                        <span asp-validation-for="ENoticeTypeId" class="text-danger"></span>
+                        <span asp-validation-for="ENoticeTypeId" class="text-danger Validation"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -30,7 +30,7 @@
                         <textarea id="Subjecttxt" asp-for="Subject" class="form-control" maxlength="1000" oninput="CharCount()" onkeydown="return preventSpecialCharacters(event)"></textarea>
                         <span id="charCounts" style="font-size: 12px;"></span>
                         <span id="Characterslengths" style="font-size: 12px;"></span>
-                        <span asp-validation-for="Subject" class="text-danger"></span>
+                        <span asp-validation-for="Subject" class="text-danger Validation"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -43,7 +43,7 @@
                     <label class="control-label col-sm-4 col-form-label text-end  space">Description</label>
                     <div class="col-sm-4">
                         <textarea asp-for="ENoticeDescription" id="ENoticeDescription_STXT" class="form-control" maxlength="6500" oninput="Charactercount()"></textarea>
-                        <span asp-validation-for="ENoticeDescription" class="text-danger"></span>
+                        <span asp-validation-for="ENoticeDescription" class="text-danger Validation"></span>
                         <span id="DescriptionCharacters" style="font-size: 12px;"></span>
                         <span id="Characterlengths" style="font-size: 12px;"></span>
                     </div>
@@ -53,15 +53,16 @@
                     <label class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
                     <div class="col-sm-4">
                         <input type="date" asp-for="StartDate" id="Startdatetxt" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                        <span asp-validation-for="StartDate" class="text-danger Validation"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="control-label col-sm-4 col-form-label text-end required space">End Date(Expiry Date)</label>
                     <div class="col-sm-4">
                         <input type="date" asp-for="ExpiryDate" id="Exdatetxt" class="form-control" />
-                        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
-                        <span id="Ermsgsp" class="text-danger"></span>
+                        <span asp-validation-for="ExpiryDate" class="text-danger Validation"></span>
+                        @*<span id="Ermsgsp" class="text-danger"></span>*@
+                        <span id="DateCompareErrormessage" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">

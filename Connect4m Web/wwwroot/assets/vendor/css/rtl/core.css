@@ -26125,6 +26125,28 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
     color: black;
     font-weight: 900 !important;
 }
+.links tbody td:nth-child(4):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: lightblue;
+}
+.links tbody td:nth-child(4) {
+    color: black;
+    font-weight: 900 !important;
+}
+.lnks tbody td:nth-child(1):hover {
+    cursor: pointer !important;
+    color: #0762f6;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: lightblue;
+}
+.lnks tbody td:nth-child(1) {
+    color: black;
+    font-weight: 900 !important;
+}
 .compare, .ErrorMessageSpan {
     color: red;
     font-size: small;

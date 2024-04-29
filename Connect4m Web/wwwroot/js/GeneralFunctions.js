@@ -1,5 +1,9 @@
 ﻿
 
+
+
+
+
 //---------------------------   Close The Alert Message 
 $('.alert button').click(function (event) {
     event.preventDefault();
@@ -333,7 +337,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "Username",
                             render: function (data, type, row, meta) {
                                 if (row.leaveDetails == "No") {
-                                    return '<a id="UserName" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
+                                    return '<a id="UserName" style="cursor: pointer;font-weight: bold;color: black;" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
                                 } else
                                     return row.username
                             }
@@ -568,8 +572,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
                                 if (row.leaveCancelledFlag != "True") {
-                                    return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer; " class="badge bg-primary" title="Cancel Leave">Cancel</span>';
-                                }
+                                    return '<span id="BtnCancel" onclick="CommentopenPopup(\'DivCancelComment\',' + row.batchid + ',' + row.userId + ')" style="cursor: pointer;font-weight: bold;color: black; " class="badge bg-primary" title="Cancel Leave">Cancel</span>'; //Adding ny Arjun
+                                 }
                                 else {
                                     return ' Cancelled';
                                 }
@@ -593,7 +597,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                                     Value = '<a class="ti ti-edit ti-sm me-2" ></a>';
                                 }
                                 else {
-                                    Value = '<a class="ti ti-edit ti-sm me-2" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="cursor: pointer; "></a>';
+                                    Value = '<a class="ti ti-edit ti-sm me-2" title="Edit" onclick="EditLeavesCalingFunction.call(this,' + row.userId + ',' + row.leaveApplicationId + ', \'' + row.leaveStatus + '\',\'' + row.username + '\')" style="cursor: pointer;font-weight: bold;color: black;"></a>';
                                 }
                                 return Value
                             }
@@ -665,7 +669,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             title: ExelTitlename,
                             text: "Export to Excel",
                             exportOptions: {
-                                columns: ExcelDownloadColumnsNo
+                               columns: ExcelDownloadColumnsNo                               
                             },
                             customize: function (xlsx) {
                                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -823,7 +827,9 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             title: ExelTitlename,
                             text: "Export to Excel",
                             exportOptions: {
-                                columns: ExcelDownloadColumnsNo
+                                //columns: ExcelDownloadColumnsNo
+                                //columns: [0, 1, 2, 3, 4, 5], // Adding by Arjun
+                                columns: [1, 2, 3, 4, 5], // Adding by Arjun
                             },
                             customize: function (xlsx) {
                                 var sheet = xlsx.xl.worksheets['sheet1.xml'];

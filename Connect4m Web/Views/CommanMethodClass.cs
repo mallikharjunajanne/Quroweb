@@ -93,5 +93,20 @@ namespace Connect4m_Web.Views
             return new List<T>();
         }
 
+        public TOutput CommonEditMethod<TInput, TOutput>(TInput obj, string WebApiMethodname, HttpClient client)
+        {
+            string data = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + WebApiMethodname, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string responseData = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<TOutput>(responseData);
+            }
+            // Handle error or return default value based on your requirements
+            return default(TOutput);
+        }
+
     }
 }

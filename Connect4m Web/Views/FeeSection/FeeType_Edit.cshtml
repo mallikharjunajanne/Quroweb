@@ -1,109 +1,140 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.Fee_Section
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feetypes
 
 @{
-    ViewData["Title"] = "FeeType_Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Update Feetype";
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!DOCTYPE html>
-<html>
-<head>
-
-
-    <link href="~/css/maps/FeeScetion_Styles.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-</head>
-<body>
-    <div class="card">
-        <div class="card-header pb-0">
-            <div style=" font-size: 20px; text-align: center;">
-                <h1 style=" color: black; font-weight: 700; font-size: 20px; margin-top: -13px; ">MANAGE FEE TYPES</h1>
-            </div>
+<div class="col-md-12 col-lg-12 mb-3">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0"><span id="Heading_sptxt">UPDATE FEE TYPE</span></h5><small class="text-muted float-end">* INDICATES REQUIRED FIELDS</small>
         </div>
-        <div id="CreateFeeType_Divid">          
-            <div style="color:red; font-size:13px;">
-                <div id="validation2" style="color: red;"></div>
-                <div id="validationMessage" style="color: red;"></div>
-                <p id="MessageID"></p>
-            </div>
-            <div class="card-body">
-                <div class="default-according style-1" id="accordionoc">
-                    <div class="card">
-                        <div>
-                            <h5 class="mb-0">
-                                <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="height: 37px; background-color: pink; border-radius: 14px; filter: drop-shadow(1px 0px 3px black);">
-                                    UPDATE FEE TYPE
-                                </button>
-                            </h5>
+        <div class="card-body">
+            <form id="Updatefeetypeform" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="row mb-3">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label space text-end required" for="basic-default-name">Fee Type</label>
+                            <div class="col-sm-4">
+                                <input type="text" asp-for="FeeType" class="form-control" id="UFeetypetxt" value="@ViewBag.filteredRows?[0]?.FeeType" />
+                                <input type="hidden" asp-for="Feetypeid" class="form-control" id="FeetypeIdtxt" value="@ViewBag.filteredRows?[0]?.Feetypeid" />
+                                <span asp-validation-for="FeeType" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                            <div class="card-body">
-                                <form class="form theme-form" id="Create_New_FeeType">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="form-group row g-3">
-                                            <div class="row" style=" margin-top: 10px;">
-                                                <div style="display: flex; grid-gap: 16px;">
-                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Type :</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" asp-for="FeeType"  id="feeType" style="width: 48%; border: 1px solid #ccc; padding: 5px; box-sizing: border-box; height: 27px;" />
-                                                    </div>
-                                                </div>
-                                                <div style="display: flex; grid-gap: 16px; width: 161%; margin-left: 0px; ">
-                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;">*</font>Fee Type is for :</label>
-                                                    <span style="width: 30%; ">
-                                                        <input type="radio" asp-for="FeeTypeStatus" id="Fee_Typeis_for" value="0" name="FeeTypeStatus" checked />Current Academic Year Payments
-                                                    </span>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label space text-end required" for="basic-default-name">Fee Type is for</label>
+                            <div class="col-sm-4">
+                                @{
+                                    var Feetypestatusval = ViewBag.filteredRows?[0]?.Feetypestatus;
+                                }
 
-                                                    <span>
-                                                        <input type="radio" asp-for="FeeTypeStatus" id="Fee_Typeis_for" value="1" name="FeeTypeStatus" />Previous Academic Year Dues
-                                                    </span>
-                                                </div>
+                                <div class="form-check form-check-primary ">
+                                    <input class="form-check-input" name="Feetypestatus" type="radio" value="1" id="UrdolstFeeTypeStatus_0" @(Feetypestatusval == "1" ? "checked" : "")>
+                                    <label class="form-check-label">
+                                        Current Academic Year Payments
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-primary ">
+                                    <input class="form-check-input" name="Feetypestatus" type="radio" value="0" id="UrdolstFeeTypeStatus_1" @(Feetypestatusval != "0" ? "checked" : "" )>
+                                    <label class="form-check-label">
+                                        Previous Academic Year Dues
+                                    </label>
+                                </div>
+                                <span asp-validation-for="Feetypestatus" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Discount Types</label>
+                            <div class="col-sm-4">
+                                <select class="form-select" id="UlstConcedingtypes" multiple>
+                                    @foreach (var item in ViewBag.ConcedingTypes as SelectList)
+                                    {
+                                        bool isSelected = false;
+                                        @foreach (var itemss in ViewBag.UniqueConcedingTypeIds)
+                                        {
+                                            @if (item.Value == itemss.Item1.ToString())
+                                            {
+                                                isSelected = true;
+                                                break;
+                                            }
+                                        }
+                                        @if (isSelected == true)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Quantity </label>
+                            @{
+                                var Qunatityval = ViewBag.filteredRows?[0]?.Quantity;
+                            }
+                            <div class="col-sm-4">
+                                <div class="form-check form-check-primary ">
+                                    <input class="form-check-input" name="Qunatityamountradio" type="radio" value="0" id="UrbtnlQuantity_0"
+                                           @(ViewBag.filteredRows?[0]?.Quantity == "False" ? "checked" : "")>
+                                    <label class="form-check-label">
+                                        No
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-primary ">
+                                    <input class="form-check-input" name="Qunatityamountradio" type="radio" value="1" id="UrbtnlQuantity_1"
+                                           @(ViewBag.filteredRows?[0]?.Quantity == "True" ? "checked" : "")>
+                                    <label class="form-check-label">
+                                        Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-                                                <div style="display: flex; grid-gap: 16px;">
-                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Discount Types :</label>
-                                                    <select id="ddData" asp-for="ConcedingTypeId" asp-items="@ViewBag.Discount_Types_DDValues" multiple class="box form-select input-air-primary digits DD_Lb" style="width: 334px;">
-                                                    </select>
+                        <div class="row mb-3" id="EditAmounttxtdiv" style="display:@(Qunatityval == "True" ? " " : "none");">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Amount </label>
+                            <div class="col-sm-4">
+                                <input type="text" asp-for="Amount" class="form-control" id="Editamounttxt" value="@ViewBag.filteredRows?[0]?.Amount" />
+                                <span class="text-danger" id="AmountEditError"></span>
+                            </div>
+                        </div>
 
-
-                                                </div>
-
-                                                <div style="display: flex; grid-gap: 16px;">
-                                                    <span class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Quantity :</span>
-                                                    <span class="radio-style">
-                                                        <input type="radio" asp-for="Quantity" name="quantity" id="quantityNo" value="0" checked>
-                                                        No
-                                                    </span>
-                                                    <span class="radio-style">
-                                                        <input type="radio" asp-for="Quantity" name="quantity" id="quantityYes" value="1">
-                                                        Yes
-                                                    </span>
-                                                </div>
-                                                <div style="display: flex; grid-gap: 16px;" id="AmotID">
-                                                    <span class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Amount :</span>
-                                                    <input type="text" id="Amount" asp-for="Amount"/>
-                                                </div>
-
-                                                <div style="display: flex; grid-gap: 16px;">
-                                                    <label class="col-sm-3 col-form-label"><font style="color: red; font-size: 13px;"></font>Description :</label>
-                                                    <textarea class="DescriptionTA" id="description" asp-for="Description"></textarea>
-                                                </div>
-                                                <div style=" display: flex; grid-gap: 16px; margin-left: 87px; margin-top: 10px;">
-                                                    <input type="reset" value="Previous Page" style="height:27px;">
-                                                    <input type="submit" asp-action="Delete_FeeType" value="Delete" style="height: 27px; width: 13%; ">
-                                                    <input type="submit" asp-action="ManageFeeTypes" value="Back to Search" style="height:27px;">
-                                                    <input type="submit" id="Create_New_FeeType" value="Update" style="height:27px;">
-                                                    <input type="submit" value="Next Page" style="height:27px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Description  </label>
+                            <div class="col-sm-4">
+                                <textarea asp-for="Description" name="Description" class="form-control"
+                                          id="Udescriptiontxt">@ViewBag.filteredRows?[0]?.Description </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center text-center">
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeConcedingTypes',null)">Previous Page</button>
+                                <button type="button" class="btn btn-danger waves-effect waves-light" id="btnDelete" onclick="Confirmdltall('@ViewBag.filteredRows?[0]?.Feetypeid','@ViewBag.filteredRows?[0]?.FeeType')">Delete</button>
+                                <button type="button" class="btn btn-dark waves-effect waves-light" id="updbacktosearchbtn">Back To Search</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light" id="updatebtn">Update</button>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTerms',null)">Next Page</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>       
-</body>
-</html>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+
+<script src="~/js/Managefeetypes1.js"></script>

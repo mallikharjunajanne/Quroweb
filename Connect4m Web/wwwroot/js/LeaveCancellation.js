@@ -1,4 +1,58 @@
-﻿
+﻿////function DatesCompare(Sdate, Edate) {
+////    try {
+////        debugger;
+////        var StartdateInput = $("#TxtFromDate").val();
+////        var EnddateInput = $("#TxtToDate").val();
+
+////        var today = new Date();
+////        var Todaydate = GetDateFormat(today);
+        
+
+////        var formattedStartDate = GetDateFormat(new Date(StartdateInput));
+////        var formattedEndDate = GetDateFormat(new Date(EnddateInput));
+////        var errorElement = $('#DateErrormessage');
+////        var errorElement_1 = $('#DateErrormessage_1');
+
+////        debugger;
+
+////        errorElement.text("");
+////        if (StartdateInput !== "" && formattedStartDate > Todaydate) {
+////            errorElement.text("From Date Should not be greater than today's date.");
+////            errorElement_1.text("From Date Should not be greater than today's date.");
+////                             //From Date should be Greater than or equal to To date.
+////                             //From Date & To Date cannot be in previous & next year dates.
+////                            //From Date & To Date cannot be in previous & next year dates.
+////        }
+
+////        if (EnddateInput !== "" && formattedEndDate > Todaydate) {
+////            errorElement.text("To Date Should not be greater than today's date.");
+////            errorElement_1.text("To Date Should not be greater than today's date.");
+////        }
+
+////        if (StartdateInput !== "" && EnddateInput !== "" && formattedStartDate > formattedEndDate) {
+////            errorElement.text("From date should not be greater than To date.");
+////            errorElement_1.text("From date should not be greater than To date.");
+////        }        
+////    }
+////    catch (error) {
+////        console.log(error);
+////    }
+////}
+
+
+////$("#TxtFromDate").on("change", function () { DatesCompare("From date", "To date"); });
+////$("#TxtToDate").on("change", function () { DatesCompare("From Date", "To date"); });
+
+////function GetDateFormat(date) {
+////    debugger;
+////    var year = date.getFullYear();
+////    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+////    var day = date.getDate().toString().padStart(2, '0');
+
+////    return day + '-' + month + '-' + year;
+////}
+
+
 function FN_ClearValuesInLeavecancelllation(Formid) {
     try {
         debugger;
@@ -12,6 +66,11 @@ function FN_ClearValuesInLeavecancelllation(Formid) {
         $("#TblLeavesSearchedResultPage_Div").hide();
         $("#TblLeaveDeligationAuthorityList_SearchedRecords").empty();
         // $("#Fm_TblLeaveDeligationAuthorityList_SearchedRecords").hide();
+
+        $('#DateErrormessage').text("");
+        $('#DateErrormessage_1').text("");
+        //$(error).find('.compare').removeClass('error2').text('');
+
     } catch (x) {
         $("#Main_Span_Error").text("Something Error");
     }
@@ -543,6 +602,7 @@ function _LeavesSearchPage_PagePartialViewFunction() {
         // Make AJAX call to the controller action
         $.ajax({
             url: "/Attendance/_LeavesSearchPage_LeaveCancellation",
+            //url: "/Attendance/_LeavesSearchPage_LeaveCancellation",
             type: "GET",
             success: function (data) {
                 debugger;
@@ -588,6 +648,36 @@ function BackTOSearhUserLeavestypes(event) {
     }
 }
 
+
+//Dates Comparing  Function
+function DatesCompare(Sdate, Edate) {
+    try {
+        debugger;
+        var StartdateInput = $("#TxtFromDate").val();
+        var EnddateInput = $("#TxtToDate").val();
+
+        var Startdate = new Date(StartdateInput);
+        var Enddate = new Date(EnddateInput);
+
+        var errorElement = $('#DateErrormessage_1');
+
+        // Clear previous error message
+        errorElement.text("");
+
+        if (StartdateInput !== "" && EnddateInput !== "" && Enddate < Startdate) {
+        //if (Enddate <= Startdate) {
+            
+            errorElement.text(Sdate + " should be Greater than or equal to " + Edate + ".");
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+// Dates input change Event
+$("#TxtFromDate").on("change", function () { DatesCompare("From date", "To date"); });
+$("#TxtToDate").on("change", function () { DatesCompare("From date", "To date"); });
 
 
 //This is not Using

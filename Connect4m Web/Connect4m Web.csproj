@@ -1719,7 +1719,6 @@
     <None Include="wwwroot\js\ExcelDownloading.js" />
     <None Include="wwwroot\js\ExpensiveReport.js" />
     <None Include="wwwroot\js\FastAttendance.js" />
-    <None Include="wwwroot\js\Fee_Section_MFT.js" />
     <None Include="wwwroot\js\file-upload.js" />
     <None Include="wwwroot\js\GeneralFunctions.js" />
     <None Include="wwwroot\js\Get_ClassificationNames.js" />
@@ -1736,7 +1735,7 @@
     <None Include="wwwroot\js\Managesubjects.js" />
     <None Include="wwwroot\js\ManageUsers.js" />
     <None Include="wwwroot\js\Manage_fee_Conceding.js" />
-    <None Include="wwwroot\js\Manage_fee_terms.js" />
+    <None Include="wwwroot\js\Managefeeterms.js" />
     <None Include="wwwroot\js\Mentor_Attendance.js" />
     <None Include="wwwroot\js\Notice_sms.js" />
     <None Include="wwwroot\js\off-canvas.js" />
@@ -1923,6 +1922,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Managenoticesdocs\" />
     <Folder Include="wwwroot\Eventbestperformersdocs\" />
+    <Folder Include="wwwroot\Bankdepositdoc\" />
   </ItemGroup>
 
 </Project>

@@ -583,7 +583,6 @@ $('#Reporttblexporttoexcel, #_AttendancereportExportExcel').on('click', function
         if (cells[i].style.display === "none") { // Check if the td element has the hidden attribute       
             debugger;
             cells[i].remove();
-
         } else {          
          cells[i].style.borderTop = "1px solid black";       
         }

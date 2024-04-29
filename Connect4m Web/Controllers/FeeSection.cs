@@ -13,6 +13,7 @@ using static Connect4m_Web.Models.Attendenceproperites.PayFeeCorrection;
 using Connect4m_Web.Models.LMSproperties;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
@@ -55,175 +56,138 @@ namespace Connect4m_Web.Controllers
             Roleid = _userService.Roleid;
             StudentUserid = _userService.StudentUserid;
         }
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
-     
         #region  MANAGE FEE TYPES
-        
-        public IActionResult ManageFeeTypes(string FeeTypeSearchname)
+
+        public IActionResult ManageFeeTypes()
+        {  
+            return View();
+        }
+
+        public IActionResult Bindtblfeetype(string FeeType)
         {
-            //var InstanceId = Request.Cookies["INSTANCEID"];
+            Feetypes obj = new Feetypes();
+            obj.FeeType = FeeType;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<Feetypes> list = CommonMethodobj.CommonListMethod<Feetypes, Feetypes>(obj, "/GetFeetypstbldata", client);
+            return Json(list);
+        }
 
-            var ConcedingTypeName = " ";
+        public IActionResult Insert_feetype()
+        {
+            ConcedingTypes ddlobj = new ConcedingTypes();
 
-            List<Cr_FT> Dis_Typesli = new List<Cr_FT>();
-            HttpResponseMessage Dis_Types_Repsonse = client.GetAsync(client.BaseAddress + "/DiscountTypes_DD?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName).Result;
-            if (Dis_Types_Repsonse.IsSuccessStatusCode)
-            {
-                string DD_Data = Dis_Types_Repsonse.Content.ReadAsStringAsync().Result;
-                Dis_Typesli = JsonConvert.DeserializeObject<List<Cr_FT>>(DD_Data);
-            }
+            ddlobj.InstanceId = InstanceId;
+            List<ConcedingTypes> list = CommonMethodobj.CommonListMethod<ConcedingTypes, ConcedingTypes>(ddlobj, "/BindConcedingDropdown", client); 
 
             var discountItems = new List<SelectListItem>
             {
                 new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
             };
 
-            foreach (var item in Dis_Typesli)
+            foreach (var item in list)
             {
                 discountItems.Add(new SelectListItem { Value = item.ConcedingTypeId.ToString(), Text = item.ConcedingTypeName.ToString() });
             }
-            ViewBag.Discount_Types_DDValues = new SelectList(discountItems, "Value", "Text");
+            ViewBag.ConcedingTypes = new SelectList(discountItems, "Value", "Text");
+
             return View();
         }
-        public IActionResult Discounttypsdd()
-        {
-            var ConcedingTypeName = " ";
-
-            List<SelectListItem> Distypesli = new List<SelectListItem>();
-            HttpResponseMessage Repsonse = client.GetAsync(client.BaseAddress + "/DiscountTypes_DD?InstanceId=" + InstanceId + "&ConcedingTypeName=" + ConcedingTypeName).Result;
-            if (Repsonse.IsSuccessStatusCode)
-            {
-                string data = Repsonse.Content.ReadAsStringAsync().Result;
-                Distypesli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }
-
-            //var discountItems = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
-            //};
-
-            //foreach (var item in Dis_Typesli)
-            //{
-            //    discountItems.Add(new SelectListItem { Value = item.ConcedingTypeId.ToString(), Text = item.ConcedingTypeName.ToString() });
-            //}
-            //ViewBag.Discount_Types_DDValues = new SelectList(discountItems, "Value", "Text");
-
-            return Json(Distypesli);
-
-        }
 
         [HttpPost]
-        public IActionResult ManageFeeTypes(Fee_Section Obj)
+        public IActionResult Insert_feetype(Feetypes obj)
         {
-            int ReceiptNoFrom = 0;
-            string data1 = JsonConvert.SerializeObject(Obj);
+            decimal amount = Convert.ToDecimal(obj.Amount);
 
-            decimal amount = Convert.ToDecimal(Obj.Amount);
-            string concdingIds = string.Join(",", Obj.ConcedingtypeIds); // Convert the list to a comma-separated string
-
-            string url = $"{client.BaseAddress}/ManageFeeTypes_Post?InstanceId={InstanceId}&FeeType={Obj.FeeType}&FeeTypeStatus={Obj.FeeTypeStatus}&Description={Obj.Description}&Quantity={Obj.Quantity}&Amount={amount}&ConcedingtypeIds={concdingIds}&CreatedBy={UserId}&ReceiptNoFrom={ReceiptNoFrom}";
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(url, content).Result;
-
-            var data2 = "";
-            var items = "";
-
-            if (response.IsSuccessStatusCode)
+            string concdingIds = "";
+            if (obj.ConcedingtypeIds != null)
             {
-                data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
+                if (obj.ConcedingtypeIds.Count > 0)
+                {
+                    concdingIds = string.Join(",", obj.ConcedingtypeIds);
+                }    
             }
 
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Amount = amount;
+            obj.Concedingtypeid = concdingIds;
 
-
-            return Json(items);
+            string Returnvalue = CommonInsertingMethod(obj, "/Insertfeetypes");
+            return Json(Returnvalue);
         }
-
-        public IActionResult Tbl_FeeTypes(string FeeTypeSearchname)
-        {
-            //var InstanceId = Request.Cookies["INSTANCEID"];
-
-            List<Fee_Section> Feeli = new List<Fee_Section>();
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Fee_TypesTbl?InstanceId=" + InstanceId + "&FeeType=" + FeeTypeSearchname).Result;
-            if (Response.IsSuccessStatusCode)
-            {
-                string Cl_data = Response.Content.ReadAsStringAsync().Result;
-                Feeli = JsonConvert.DeserializeObject<List<Fee_Section>>(Cl_data);
-            }
-            ViewBag.Feeli = Feeli;
-
-            return new JsonResult(ViewBag.Feeli);
-        }
-
 
         [HttpGet]
-        public IActionResult FeeType_Edit(int FeeTypeId)
+        public IActionResult FeeType_Edit(int Feetypeid)
         {
-            //Fee_Section item = null;
-            List<Fee_Section> item = new List<Fee_Section>();
+            Feetypes editobj = new Feetypes();
+            ConcedingTypes ddlobj = new ConcedingTypes();
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Fee_Type_EditGet?FeeTypeId=" + FeeTypeId).Result;
+            editobj.Feetypeid = Feetypeid;
+            editobj.InstanceId = InstanceId;
+            ddlobj.InstanceId = InstanceId;
+            List<Feetypes> model = CommonMethodobj.CommonListMethod<Feetypes, Feetypes>(editobj, "/Editfeetypes", client);          
 
-            if (response.IsSuccessStatusCode)
+            var filteredRows = model.GroupBy(r => r.Feetypeid).SelectMany(g => g.GroupBy(r => r.Concedingtypeid)
+                                    .Select(grp => grp.First())).ToList();
+
+            // Extract unique Concedingtypeid values from the filtered rows
+            List<string> uniqueConcedingTypeIds = filteredRows.Select(r => r.Concedingtypeid).Distinct().ToList();
+            List<(string Id, string Name)> uniqueConcedingTypes = filteredRows.Select(r => (Id: r.Concedingtypeid, Name: r.Concedingtypename)).Distinct().ToList();
+
+
+            List<ConcedingTypes> list = new List<ConcedingTypes>();
+            list = CommonMethodobj.CommonListMethod<ConcedingTypes, ConcedingTypes>(ddlobj, "/BindConcedingDropdown", client);
+
+            var discountItems = new List<SelectListItem>
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                //item = JsonConvert.DeserializeObject<Fee_Section>(data);
-                item = JsonConvert.DeserializeObject<List<Fee_Section>>(data);
+                new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
+            };
+            foreach (var item in list)
+            {
+                discountItems.Add(new SelectListItem { Value = item.ConcedingTypeId.ToString(), Text = item.ConcedingTypeName.ToString() });
             }
 
-            return Json(item);
-        }
-
-        [HttpPost]
-        public IActionResult FeeType_Edit_To_Update(Fee_Section obj)
-        {
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
+            ViewBag.ConcedingTypes = new SelectList(discountItems, "Value", "Text");
+            ViewBag.filteredRows = filteredRows;
+            ViewBag.UniqueConcedingTypeIds = uniqueConcedingTypes;
           
-            decimal amount = Convert.ToDecimal(obj.Amount);
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/FeeType_Update?InstanceId=" + obj.InstanceId + "&FeeTypeId=" + obj.FeeTypeId + "&FeeType=" + obj.FeeType + "&FeeTypeStatus=" + obj.FeeTypeStatus + "&Description=" + obj.Description + "&Quantity=" + obj.Quantity + "&Amount=" + amount + "&ConcedingTypeId=" + obj.ConcedingTypeId + "&UpdatedBy=" + UpdatedBy, content).Result;
-
-            string items = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            return Json(items);
-
+            return View();
         }
 
-
-        [HttpPost]
-        public IActionResult Delete_FeeType(int InstanceId, int concedingTypeId, int FeeTypeId)
+        [HttpPost] //FeeType_Edit
+        public IActionResult FeeTypeUpdate(Feetypes obj)
         {
-            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/DeleteFeeType?InstanceId=" + InstanceId + "&ConcedingtypeId=" + concedingTypeId + "&FeeTypeId=" + FeeTypeId).Result;
-            string result = "";
-            if (response.IsSuccessStatusCode)
+            decimal amount = Convert.ToDecimal(obj.Amount);
+
+            string concdingIds = "";
+            if (obj.ConcedingtypeIds != null)
             {
-                string Data = response.Content.ReadAsStringAsync().Result;
-                result = JsonConvert.DeserializeObject<string>(Data);
+                if (obj.ConcedingtypeIds.Count > 0)
+                {
+                    concdingIds = string.Join(",", obj.ConcedingtypeIds);
+                }
             }
-            return Json(result);
+
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Amount = amount;
+            obj.Concedingtypeid = concdingIds;
+
+            string Returnvalue = CommonInsertingMethod(obj, "/Updatefeetype");
+            return Json(Returnvalue);
+        }
+
+        public IActionResult Deletefeetype(Feetypes obj)
+        {
+            obj.InstanceId=InstanceId;
+            string Returnvalue = CommonInsertingMethod(obj, "/Deletefeetype");
+            return Json(Returnvalue);
         }
 
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /*--------------------------------- MANAGE DISCOUNT FEE TYPES CODE START---------------------------------------*/
@@ -321,60 +285,11 @@ namespace Connect4m_Web.Controllers
         /*--------------------------------MANAGE DISCOUNT FEE TYPE ACTION METHODS END------------------------------*/
         #endregion
 
-
-
-
-
-
-
-
         #region MANAGE FEE TERMS        
 
         [HttpGet]
-        public IActionResult ManageFeeTerms(string TermName, string AcademicYearId)
-        {
-            //var InstanceId = Request.Cookies["INSTANCEID"];
-
-            /*AcademicYear DD Code start*/
-            //List<SelectListItem> AcYear = new List<SelectListItem>();
-            //HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId).Result;
-            //if (YearResponse.IsSuccessStatusCode)
-            //{
-            //    string Yearsdata = YearResponse.Content.ReadAsStringAsync().Result;
-            //    AcYear = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
-            //}
-            //ViewBag.AcadamicYearDD = AcYear;
-
-            /*AcademicYear DD Code End*/
-
-
-            /*Fee Type DD Code start*/
-            //List<SelectListItem> FeeTypeDD = new List<SelectListItem>();
-            //HttpResponseMessage FeeTyperesponse = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId).Result;
-            //if (FeeTyperesponse.IsSuccessStatusCode)
-            //{
-            //    string FTypes = FeeTyperesponse.Content.ReadAsStringAsync().Result;
-            //    FeeTypeDD = JsonConvert.DeserializeObject<List<SelectListItem>>(FTypes);
-            //}
-            //SelectListItem defaultOption = new SelectListItem
-            //{
-            //    Value = "",
-            //    Text = "--Select--"
-            //};
-            //FeeTypeDD.Insert(0, defaultOption);
-
-            //SelectList feeTypesSelectList = new SelectList(FeeTypeDD, "Value", "Text");
-
-            //ViewBag.Feetypesdd = feeTypesSelectList;
-
-            /*Fee Type DD Code End*/
-
-
-            /*FeeTerms_Tbl Code start*/
-
-
-            /*FeeTerms_Tbl Code End*/
-
+        public IActionResult ManageFeeTerms()
+        {            
             return View();
         }
         public IActionResult GetAcadamicyeardd()
@@ -398,97 +313,132 @@ namespace Connect4m_Web.Controllers
                 string Yearsdata = Response.Content.ReadAsStringAsync().Result;
                 feetypesli = JsonConvert.DeserializeObject<List<SelectListItem>>(Yearsdata);
             }
-            
+
             return Json(feetypesli);
         }
+
+        public IActionResult Bindtblfeeterm(Feeterms OBJS)
+        {
+            Feeterms obj = new Feeterms();
+            obj.TermName = OBJS.TermName;
+            obj.AcademicYearId = OBJS.AcademicYearId;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+
+            List<Feeterms> list = CommonMethodobj.CommonListMethod<Feeterms, Feeterms>(obj, "/GetFeetermstbldata", client);
+            return Json(list);
+        }
+        
+        public IActionResult Insert_feeterms()
+        {
+            return View();
+        }
         [HttpPost]
-        public IActionResult ManageFeeTerms(Manage_Fee_Terms Obj)
+        public IActionResult Insert_feeterms(Feeterms obj)
         {
-           
-            string data1 = JsonConvert.SerializeObject(Obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/New_ManageFeeTerms?InstanceId=" + InstanceId + "&AcademicYearId=" + Obj.AcademicYearId + "&FeeTypeIds=" + Obj.FeeTypeIds + "&TermName=" + Obj.TermName + "&Description=" + Obj.Description + "&CreatedBy=" + UserId, content).Result;
-            var data2 = "";
-            var items = "";
+            //decimal amount = Convert.ToDecimal(obj.Amount);
 
-            if (response.IsSuccessStatusCode)
+            string FeeTypeIds = "";
+            if (obj.FeeTypeIds != null)
             {
-                data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
+                if (obj.FeeTypeIds.Count > 0)
+                {
+                    FeeTypeIds = string.Join(",", obj.FeeTypeIds);
+                }
             }
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.FeeType = FeeTypeIds;
 
-            //return View();
-            return Json(items);
-        }
-
-
-        public IActionResult Fee_Terms_GetTable(string TermName, string AcademicYearId)
-        {
-
-            List<Manage_Fee_Terms> livallues = new List<Manage_Fee_Terms>();
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/ManageFeeTerms_Tbl?InstanceId=" + InstanceId + "&AcademicYearId=" + AcademicYearId + "&TermName=" + TermName).Result;
-            if (Response.IsSuccessStatusCode)
-            {
-                string data = Response.Content.ReadAsStringAsync().Result;
-                livallues = JsonConvert.DeserializeObject<List<Manage_Fee_Terms>>(data);
-            }
-
-            return Json(livallues);
-        }
-
-
-        public IActionResult Delete_FeeTerm(int FeeTermId, int FeeTypeId)
-        {          
-
-            HttpResponseMessage response = client.DeleteAsync(client.BaseAddress + "/Delete_FeeTerm?InstanceId=" + InstanceId + "&FeeTermId=" + FeeTermId + "&FeeTypeId=" + FeeTypeId).Result;
-            string result = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string Data = response.Content.ReadAsStringAsync().Result;
-                result = JsonConvert.DeserializeObject<string>(Data);
-            }
-            return Json(result);
+            string Returnvalue = CommonInsertingMethod(obj, "/Insertfeeterms");
+            return Json(Returnvalue);
         }
 
         [HttpGet]
-        public IActionResult Fee_Terms_EditGet(int FeeTermId)
+        public IActionResult FeeTerm_Edit(int FeeTermId)
         {
-            List<Manage_Fee_Terms> item = null;
+            Feeterms editobj = new Feeterms();
+            Feetypesddl ddlobj = new Feetypesddl();
+            AcademicYearddl AcademicYearddl = new AcademicYearddl();
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeeTermId_EditGet?FeeTermId=" + FeeTermId).Result;
+            editobj.FeeTermId = FeeTermId;
+            editobj.InstanceId = InstanceId;
+            ddlobj.InstanceId = InstanceId;
+            AcademicYearddl.InstanceId = InstanceId;
+            List<Feeterms> model = CommonMethodobj.CommonListMethod<Feeterms, Feeterms>(editobj, "/Editfeeterms", client);
 
-            if (response.IsSuccessStatusCode)
+            var filteredRows = model.GroupBy(r => r.FeeTermId).SelectMany(g => g.GroupBy(r => r.FeeTypeId)
+                                    .Select(grp => grp.First())).ToList();
+
+            var filteredRow = model.GroupBy(r => r.FeeTermId).SelectMany(g => g.GroupBy(r => r.FeeTypeId).Select(grp => grp.First())).ToList();
+            List<string> uniqueFeeTypeIds = filteredRow.Select(r => r.FeeTypeId).Distinct().ToList();
+            List<(string Id, string Name)> uniqueFeeTypes = filteredRows.Select(r => (Id: r.FeeTypeId, Name: r.FeeType)).Distinct().ToList();
+
+            
+            
+            List<Feetypesddl> list = new List<Feetypesddl>();
+            list = CommonMethodobj.CommonListMethod<Feetypesddl, Feetypesddl>(ddlobj, "/BindFeetypeDropdown", client);
+
+            var discountItems = new List<SelectListItem>
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<Manage_Fee_Terms>>(data);
+                new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
+            };
+            foreach (var item in list)
+            {
+                discountItems.Add(new SelectListItem { Value = item.FeetypeId.ToString(), Text = item.Feetype.ToString() });
             }
 
-            return Json(item);
-        }
+            List<AcademicYearddl> Acylist = new List<AcademicYearddl>();
+            Acylist = CommonMethodobj.CommonListMethod<AcademicYearddl, AcademicYearddl>(AcademicYearddl, "/BindacademicDropdown", client);
 
-        [HttpPost]
-        public IActionResult Fee_Terms_EditUpdate(Manage_Fee_Terms obj)
-        {
-
-            var UpdatedBy = Request.Cookies["LoginUserId"];
-
-            // exec stp_tblFeeTerms_UPDATE @FeeTermId=4616,@InstanceId=545,@AcademicYearId=2956,@TermName='test12345',@Description='sdsdf',@UpdatedBy=217606,@UpdatedDate='2023-07-15 10:58:58.960',@FeeTypeIds='1467'
-
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/FeeTermId_EditUpdate?FeeTermId=" + obj.FeeTermId + "&InstanceId=" + obj.InstanceId + "&AcademicYearId=" + obj.AcademicYearId + "&TermName=" + obj.TermName + "&Description=" + obj.Description + "&UpdatedBy=" + UpdatedBy + "&FeeTypeIds=" + obj.FeeTypeIds, content).Result;
-
-            string items = "";
-            if (response.IsSuccessStatusCode)
+            var AcademicyearItems = new List<SelectListItem>
             {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
+                new SelectListItem { Value = "", Text = "--Select--" } // Add the "--Select--" option as the default
+            };
+
+            foreach (var item in Acylist)
+            {
+                AcademicyearItems.Add(new SelectListItem { Value = item.AcademicYearId.ToString(), Text = item.Years.ToString() });
             }
 
-            return Json(items);
+
+
+
+            ViewBag.Feetype = new SelectList(discountItems, "Value", "Text");
+            ViewBag.filteredRows = filteredRows;
+            ViewBag.UniqueConcedingTypeIds = uniqueFeeTypes;
+            ViewBag.AcademicyearItems = AcademicyearItems;
+            ViewBag.modellist = model;
+
+            return View();
         }
 
+        [HttpPost] 
+        public IActionResult FeeTermUpdate(Feeterms obj)
+        {
+            string FeeTypeIds = "";
+            if (obj.FeeTypeIds != null)
+            {
+                if (obj.FeeTypeIds.Count > 0)
+                {
+                    FeeTypeIds = string.Join(",", obj.FeeTypeIds);
+                }
+            }
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.FeeType = FeeTypeIds;
+
+            string Returnvalue = CommonInsertingMethod(obj, "/Updatefeeterms");
+            return Json(Returnvalue);
+        }
+
+        public IActionResult Deletefeeterm(Feeterms obj)
+        {
+            obj.InstanceId = InstanceId;
+            string Returnvalue = CommonInsertingMethod(obj, "/Deletefeeterm");
+            return Json(Returnvalue);
+        }
+         
         #endregion
 
 
@@ -3024,6 +2974,41 @@ namespace Connect4m_Web.Controllers
 
 
 
+        //===>>> COMMON DROPDOWN METHOD
+        [Authorize]
+        public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
+        {
+            List<SelectListItem> DropdownList = new List<SelectListItem>();
+            CommonDropdown obj = new CommonDropdown();
+            obj.procedurename = methodname;
+            obj.Parameters = Parameters;
+            obj.text = text;
+            obj.value = value;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+            //  HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/"+methodname+"?Parameters=" + Parameters + "&text=" + text + "&value=" + value).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return DropdownList;
+        }
 
+        //===>>> COMMON INSERT METHOD
+        public string CommonInsertingMethod<T>(T obj, string WebApiMethodname)
+        {
+            string returnval = "";
+            string data = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + WebApiMethodname, content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return returnval = response.Content.ReadAsStringAsync().Result;
+            }
+            var returnval1 = response.Content.ReadAsStringAsync().Result;
+            return "0";
+        }
     }
 }

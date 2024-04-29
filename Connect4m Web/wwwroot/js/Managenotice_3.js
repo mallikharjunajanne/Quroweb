@@ -36,6 +36,16 @@ $(document).ready(function () {
 
 });
 
+//==>>Clear Button function
+$('#btnClear').click(function () {
+    debugger;
+    $('.text-danger.Validation').each(function () {
+        $(this).text(''); // Set the text content to an empty string
+    });
+    //$('#Ermsgsp').text('');
+    $('#DateCompareErrormessage').text('');
+});
+
 //==>>>BACK TO SEARCH CREATE SMS AND NOTICE TO NOTICE HOME PAGE 
 $('#btnBackToSearch').click(function () {
     debugger;
@@ -106,20 +116,17 @@ function DatesCompares(Sdate, Edate) {
         var errorElement = $('.compare');
 
         if (formattedStartDate != formattedEndDate) {
-            if (Enddate <= Startdate) {
-                $('#Ermsgsp').text(Edate + " must be greater than " + Sdate + ".");
-            } else {
-                $('#Ermsgsp').text("");
-            }
-
+            if (formattedEndDate <= formattedStartDate) {
             //if (Enddate <= Startdate) {
-            //    errorElement.addClass('error2');
-            //    errorElement.text(Edate + " must be greater than " + Sdate + ".");
-            //} else {
-            //    errorElement.text("");
-            //}
+                //$('#Ermsgsp').text(Edate + " must be greater than " + Sdate + ".");
+                $('#DateCompareErrormessage').text(Edate + " must be greater than " + Sdate + ".");
+            } else {
+                //$('#Ermsgsp').text("");
+                $('#DateCompareErrormessage').text("");
+            }
         } else {
-            $('#Ermsgsp').text("");
+            //$('#Ermsgsp').text("");
+            $('#DateCompareErrormessage').text("");
         }
     }
     catch (error) {
@@ -198,22 +205,6 @@ $('#Insert_Noticeandsms').submit(function (event) {
                                 $('#btnSave, #btnsaveandpost, #btnClear').prop('disabled', true);
                                 $("#Message_spid").text("Record inserted successfully.");
                             }
-
-
-                            //if (response != "000" && response != "-1") {
-                            //    $('#btnSave, #btnsaveandpost, #btnClear').prop('disabled', true);
-                            //    $('#btnSave, #btnsaveandpost, #btnClear').removeClass('.btn .btn-pill .btn-outline-warning .btn-air-warning,.btn-outline-success,.btn-outline-info .btn-air-info');
-                            //    $('#btnppostthisnotice').show();
-
-                            //    $('#Message_spid').text('Record inserted successfully.');
-                            //} else if (response == "000") {
-                            //    $('#Message_spid').text('Notice with subject' + '"' + subjectname + '"' + ' already exists.');
-                            //} else if (response == "File already exists") {
-                            //   /* $('#Errormessage').text('Already a file with the same name is attached to another notice. Please upload a new file.');*/
-                            //    $('#Message_spid').text('Already a file with the same name is attached to another notice. Please upload a new file.');
-                            //}
-
-
                         }, function (status, error) {
 
                         },
