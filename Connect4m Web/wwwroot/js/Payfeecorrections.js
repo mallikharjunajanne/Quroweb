@@ -29,8 +29,6 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 }
 
 var Studentspanuserid = $('#Studentuseridspid').val();
-
-
 $(document).ready(function () {
 
     $('#Searchuserfields_tabledatadiv1').show();
@@ -39,43 +37,34 @@ $(document).ready(function () {
     $('#Feedetailsupdateandedit_tablediv').hide();
 
     fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
-        '/FeeSection/Pfudepartmentdd',                      // URL for data fetching
+        '/FeeSection/Pfudepartmentddl',                      // URL for data fetching
         '#Ddldepartment',                                   // Dropdown selector
         'value',                                            // Field name for option text
         'text',                                             // Field name for option values
         'manageClassification'                              // Response value return class name
     );
     fetchDataAndPopulateDropdown(                           //==== << ** Studentquota Dropdown ** >>
-        '/FeeSection/PfuStudentquota',                      // URL for data fetching
+        '/FeeSection/PfuStudentquotaddl',                      // URL for data fetching
         '#ddlstudentquota',                                 // Dropdown selector
         'value',                                            // Field name for option text
         'text',                                             // Field name for option values
         null                                                // Response value return class name
     );
     fetchDataAndPopulateDropdown(                           //==== << ** Studentquota Dropdown ** >>
-        '/FeeSection/PfuPaymentdd',                      // URL for data fetching
+        '/FeeSection/PfuPaymentddl',                      // URL for data fetching
         '#paymentmodeddl',                                 // Dropdown selector
         'value',                                            // Field name for option text
         'text',                                             // Field name for option values
         null                                                // Response value return class name
     );
-
     fetchDataAndPopulateDropdown(                           //==== << ** Studentquota Dropdown ** >>
-        '/FeeSection/Pfubankaccountsdd',                      // URL for data fetching
+        '/FeeSection/Pfubankaccountsddl',                      // URL for data fetching
         '#bankaccountsddl',                                 // Dropdown selector
         'value',                                            // Field name for option text
         'text',                                             // Field name for option values
         null                                                // Response value return class name
     );
 
-
-    //fetchDataAndPopulateDropdown(                           //==== << ** Studentquota Dropdown ** >>
-    //    '/FeeSection/PFC_challanaddl',                      // URL for data fetching
-    //    '#Challan_DDId',                                 // Dropdown selector
-    //    'value',                                            // Field name for option text
-    //    'text',                                             // Field name for option values
-    //    null                                                // Response value return class name
-    //);
 
     $('.hideable').hide();
 
@@ -115,7 +104,6 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
         }
     );
 }
-
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
     /* debugger;*/
@@ -131,27 +119,21 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
         }));
     });
 }
-
-
 $('#Ddldepartment').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     Departmentbysubclassdd(ClassificationId);
 });
-
 function Departmentbysubclassdd(Departmentvalue) {
     fetchDataAndPopulateDropdown(                                                                //==== << ** Subclassification Dropdown ** >>
-        '/FeeSection/PfuSubClass?InstanceClassificationId=' + Departmentvalue,                      // URL for data fetching
+        '/FeeSection/PfuSubClassddl?InstanceClassificationId=' + Departmentvalue,                      // URL for data fetching
         '#DdlClass',                                                                             // Dropdown selector
         'value',                                                                                    // Field name for option text
         'text',                                                                                     // Field name for option values
         null                                                                                        // Response value return class name
     );
 }
-
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-        /*debugger;*/
-
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
             window.location.href = `/FeeSection/${url}`;
@@ -163,11 +145,8 @@ function nextpages(url, data) {
         }, false);
     });
 }
-
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
-        /* debugger;*/
-
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
             window.location.href = `/FeeSection/${url}`;
@@ -184,13 +163,12 @@ function previouspages(url, data) {
 $('button[type=submit]').click(function () {
     $('#clickedButton').val($(this).val());
 });
-/*----*/
+
 $('#Payfeebyuserssearchform').submit(function () {
     event.preventDefault();
     event.stopImmediatePropagation();
 
     setTimeout(function () {
-
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 
@@ -198,35 +176,24 @@ $('#Payfeebyuserssearchform').submit(function () {
 
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
             loaddingimg.css('display', 'block');
-            /* debugger;*/
+             debugger;
             $('#Studentdetailsid').text('');
             $('#Studentfeedetailsscheduledornotspanid').text('');
-
-
-
-
             var otherFormData = $('#Payfeebyuserssearchform').serialize();
             var submitButtonValue = $(document.activeElement).val();
             var formData = otherFormData + "&Actionbuttonname=" + submitButtonValue;
-            //CommonAjaxFunction('POST', '/FeeSection/Payfeeforuserssearchtbl', formData, function (response) {
 
-            handleAjax('POST', '/FeeSection/Payfeeforuserssearchtbl', formData,
+            handleAjax('POST', '/FeeSection/Payfeecorrectionssearchtbl', formData,
                 function (response) {
-                    /*debugger;*/
-
+                    debugger;
                     bindDatatable(response, submitButtonValue);
-                    //bindDatatables(response, submitButtonValue);
                     loaddingimg.css('display', 'none');
-
                 }, function (status, error) {
                     loaddingimg.css('display', 'none');
                 }, false);
         }
     }, 50);
 });
-/*----*/
-
-
 function bindDatatable(response, submitButtonValue) {
 
 
@@ -361,6 +328,10 @@ function bindDatatable(response, submitButtonValue) {
     loaddingimg.css('display', 'none');
 }
 
+
+
+
+
 $(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event) {
     event.stopImmediatePropagation();
 
@@ -381,27 +352,19 @@ $(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event
     Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass);
 
 })
-
-
 function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass) {
 
-
-    //handleAjax('GET', `/FeeSection/Getfeedetailsbyuser`, { UserId: StudentUserId },
-       // handleAjax('GET', `/FeeSection/PFC_GetFeeTermDetialsByUserId`, { UserId: StudentUserId },
-            handleAjax('GET', `/FeeSection/Pfcuserwisefeedetails`, { UserId: StudentUserId },
-            function (response) {
-                debugger;
-         
-
-
-                var Feetermsdropdownvalues = response.feetermsnames;
-                //var Feetermsdropdownvalues = response[0].feetermsnames;
-                var previousduestbl = response.Previousduesli;
-                var feedetialsbyuseridtbl = response.feedetialsli;//--
-                var totalpayedamounttbl = response.userpayedli;
-                var termsdd = response.termdetaisli;//--
-                var Managefeedetailsfeeterms = response.managefeedetailsfeeterms;//--
-                $('#Challan_DDId').empty();
+    handleAjax('GET', `/FeeSection/Pfcuserwisefeedetails`, { StudentUserId: StudentUserId },
+        function (response) {
+            debugger;
+            var Feetermsdropdownvalues = response.feetermsnames;
+            //var Feetermsdropdownvalues = response[0].feetermsnames;
+            var previousduestbl = response.Previousduesli;
+            var feedetialsbyuseridtbl = response.feedetialsli;//--
+            var totalpayedamounttbl = response.userpayedli;
+            var termsdd = response.termdetaisli;//--
+            var Managefeedetailsfeeterms = response.managefeedetailsfeeterms;//--
+            $('#Challan_DDId').empty();
 
             if (Feetermsdropdownvalues.length != 0) {
 
@@ -420,14 +383,10 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
                 }
                 $('#Studentdetailsid').text('Selected User :' + StudentName + '-' + Studentdepartment + "-" + Studentclass);
                 $('#Studentuseridspid').val(StudentUserId);
-                
-              
+
+
                 Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl);
                 $('#Feedetailsusernamespanid').text(StudentName);
-
-                //Dropdowns calling functions
-               // Bankaccountddfunction();
-                //Paymentddfunction();
 
                 $('#Searchuserfields_tabledatadiv1').hide();
                 $('#Userfeedetailsdiv2').show();
@@ -443,8 +402,6 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
                 $('#Feechallandiv').hide();
                 $('#Feedetailsupdateandedit_tablediv').hide();
             }
-
-
             loaddingimg.css('display', 'none');
         },
         function (status, error) {
@@ -453,8 +410,37 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
 }
 
 
+$('#searchbtnterms').on("click", function () {
+    debugger;
+    const SelectedFeeTermsids = $('#ddltermid').val();
+    var userId = $('#Studentuseridspid').val();
+
+    $('#Update_SubmitvalidationMessage').text('');
+
+    Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids);
+    //Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass)
 
 
+
+});
+function Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids) {
+
+    handleAjax('GET', `/FeeSection/Pfcfeedetailsbyfeetermstbl?Studentuserid=${userId}&FeeTermIds=${SelectedFeeTermsids}`, null,
+        function (response) {
+            debugger;
+            //var Feetermsdropdownvalues = response[0].feetermdetialsbyuserId;
+            //var previousduestbl = response[0].feedetialsbyuseridforpreviousdues;
+            var feedetialsbyuseridtbl = response.feedetialsli;//--
+            var totalpayedamounttbl = response.userpayedli;
+            //var termsdd = response[0].feetermsdd;
+
+            Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl);
+            loaddingimg.css('display', 'none');
+        },
+        function (status, error) {
+            loaddingimg.css('display', 'none');
+        }, false);
+}
 function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
     try {
         debugger;
@@ -472,34 +458,24 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
         var totalAmountPayed = 0;
         var payedamount = 0;
 
-
         var table = $('#Search_By_User_FeeTableData_Id');
         var tbody = table.find('tbody');
         var tfoot = table.find('tfoot');
-
         tbody.empty();
         tfoot.empty();
 
-
-
         $.each(feedetailtbl, function (index, UsersDueFeetbls) {
-
             //debugger;
-
             var SNO = index + 1;
             var SNOID = SNO + 1;
 
-
             var row = $('<tr></tr>').attr('id', 'row_' + (index + 1));
-
             var searchIcon = $('<span class="search-icon">&#128269;</span>');
-
             var cell0 = $('<td id="snoid0"></td>').css('text-align', 'center').text(SNO);
             var cell1 = $('<td id="termname1"></td>').css('text-align', 'center').text(UsersDueFeetbls.termName);
             var cell2 = $('<td id="feetype2"></td>').css('text-align', 'center').text(UsersDueFeetbls.feeType);
             var cell3 = $('<td id="feeamount3"></td>').css('text-align', 'center').text(UsersDueFeetbls.feeAmount);
             totalAmount += parseFloat(UsersDueFeetbls.feeAmount);
-
 
             //var cell4 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.discountName);
             //var cell4 = $('<td"></td>').css('text-align', 'center');
@@ -511,8 +487,6 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             var Discountnamespan = $('<span>').text(UsersDueFeetbls.discountName).attr('id', 'discountnamespid').hide();
             cell4.append(concedingTypeIdSpan).append(Quantityvalue).append(Discountnamespan);
 
-
-
             var cell5 = "";
             var concedingAmount = UsersDueFeetbls.concedingAmount;
             ChalanaAmount += parseFloat(UsersDueFeetbls.concedingAmount);
@@ -521,7 +495,6 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             } else {
                 cell5 = $('<td id="concedingamount5"></td>').css('text-align', 'center').text(UsersDueFeetbls.concedingAmount);
             }
-
 
             var cell16 = $('<td id="Edit16"></td>')
                 .css({
@@ -533,14 +506,10 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             var editSpan = $('<span id="Editfeeamountspanid">Edit</span>')
                 .attr('onclick', 'EditFeeAmount("' + UsersDueFeetbls.feeTermId + '", "' + UsersDueFeetbls.userfeeactivityId + '")');
             cell16.append(editSpan);
-
-
-
             var PayAmount = UsersDueFeetbls.payedAmount;
             var cell6 = "";
 
             if (PayAmount === "0.00") {
-
                 cell6 = $('<td id="payedAmount6"></td>').css('text-align', 'center').text("Nill");
                 searchIcon.hide();
                 //cell16.text('').hide();
@@ -548,10 +517,10 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
                 ////$('#Editfeeamountspanid').removeAttr('onclick').text('');
                 ///*$('#Editfeeamountspanid').text('');*/
                 cell16.text('');
-            } else {
+            }
+            else {
                 cell6 = $('<td id="payedAmount6"></td>').css('text-align', 'center').text(UsersDueFeetbls.payedAmount);
             }
-
 
             var cell7 = "";
             var dueAmount = UsersDueFeetbls.dueAmount;
@@ -560,17 +529,14 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
 
                 cell7 = $('<td id="dueAmount7"></td>').css('text-align', 'center').text("Nill");
 
-            } else {
+            }
+            else {
 
                 cell7 = $('<td id="dueAmount7"></td>').css('text-align', 'center').text(UsersDueFeetbls.dueAmount);
             }
 
             // var cell7 = $('<td></td>').css('text-align', 'center').text(UsersDueFeetbls.dueAmount);
             var cell8 = $('<td id="dueDate8"></td>').css('text-align', 'center').text(UsersDueFeetbls.dueDate);
-
-
-
-            /* debugger;*/
             var Amount_TXTId = 'AmountTextbox_' + SNOID;
             var cell9 = $('<td id="amounttextbox9"></td>').css({
                 'text-align': 'center',
@@ -590,30 +556,20 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             });
             cell9.append(textbox);
 
-
-
             var cell10 = $('<td id="Searchfeetermsicon10"></td>')
                 .css('text-align', 'center')
                 .attr('onclick', 'Searchfeetermsiconfun("' + UsersDueFeetbls.feeTermId + '", "' + UsersDueFeetbls.userfeeactivityId + '")')
                 .text('');
-
-
             cell10.append(searchIcon);
             var InstallmentName_TXTId = 'InstallmentName_' + SNOID
             var cell11 = $('<td id="textarea11"></td>').css('text-align', 'center');
             var textarea = $('<textarea></textarea>').attr('id', InstallmentName_TXTId).addClass('form-control');
             cell11.append(textarea);
 
-
-
-
-
             var cell12 = $('<td hidden id="academicYearId12"></td>').text(UsersDueFeetbls.academicYearId);
             var cell13 = $('<td hidden id="feeTypeId13"></td>').text(UsersDueFeetbls.feeTypeId);
             var cell14 = $('<td hidden id="feeTermId14"></td>').text(UsersDueFeetbls.feeTermId);
             var cell15 = $('<td hidden id="userfeeactivityId15"></td>').text(UsersDueFeetbls.userfeeactivityId);
-
-            /* debugger;*/
             var cell17 = $('<td hidden id="instanceUserCode17"></td>').text(UsersDueFeetbls.instanceUserCode);
             var cell_18 = $('<td hidden id="classificationName18"></td>').text(UsersDueFeetbls.classificationName);
             var cell_19 = $('<td hidden id="subClassificationName19"></td>').text(UsersDueFeetbls.subClassificationName);
@@ -623,8 +579,6 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             var displayIcon1Span = $('<span>').text(UsersDueFeetbls.displayIcon1).attr('id', 'displayIcon1SpanId');
             cell_20.append(firstNameSpan).append(displayIcon1Span);
             var cell21 = $('<td id="receiptNo"></td>').text(UsersDueFeetbls.receiptNo);
-
-
 
             row.append(cell0);
             row.append(cell1);
@@ -644,19 +598,12 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             row.append(cell15);
             row.append(cell16);
             row.append(cell17);
-
             row.append(cell_18);
             row.append(cell_19);
             row.append(cell_20);
             row.append(cell21);
-
-
-
             tbody.append(row);
-
         });
-
-
 
         $.each(feedetailtotalpayedamounttbl, function (index, UsersDueFeetblsfooter) {
             totalFee += parseFloat(UsersDueFeetblsfooter.totalFee);
@@ -680,17 +627,13 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             .append('<td></td>')
             .append('<td></td>')
         );
-
         loaddingimg.css('display', 'none');
     }
     catch {
         loaddingimg.css('display', 'none');
-        //$('#loadingSpinnerContainer').hide();
         $('#UserName_Classification_subclasification_ID').html('');
         $('#ErrorMessage').html('Something Went Wrong Please Try Again......!');
-
         $('#Search_Pay_For_UsersFileds_Divid').show();
-
         $('#SearchPayFor_UsersTbl_Divid').show();
         $('#TableDate_forUsers_DivId').show();
         $('#GetFeeTermDetialsByUser_DIVID').hide();
@@ -698,42 +641,6 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
         $('#FeePaid_ChallanaCreated_DivId').hide();
     }
 }
-
-
-
-$('#searchbtnterms').on("click", function () {
-    debugger;
-    const SelectedFeeTermsids = $('#ddltermid').val();
-    var userId = $('#Studentuseridspid').val();
-
-    $('#Update_SubmitvalidationMessage').text('');
-
-    Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids);
-    //Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass)
-
-
-
-});
-function Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids) {
-
-    handleAjax('GET', `/FeeSection/PFCfeedetails_byfeetermstableData?UserId=${userId}&FeeTermIds=${SelectedFeeTermsids}`, null,
-        function (response) {
-            debugger;
-            //var Feetermsdropdownvalues = response[0].feetermdetialsbyuserId;
-            //var previousduestbl = response[0].feedetialsbyuseridforpreviousdues;
-            var feedetialsbyuseridtbl = response.feedetialsli;//--
-            var totalpayedamounttbl = response.userpayedli;
-            //var termsdd = response[0].feetermsdd;
-
-            Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl);
-            loaddingimg.css('display', 'none');
-        },
-        function (status, error) {
-            loaddingimg.css('display', 'none');
-        }, false);
-}
-
-
 
 function Paymentddfunction() {
     fetchDataAndPopulateDropdown(                           //==== << ** Studentquota Dropdown ** >>
@@ -761,18 +668,11 @@ function Bankaccountddfunction() {
 
 /*========================= =====SEARCH ICON CLICK FIRE FUNCTION CODE START =================================*/
 
-
 function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
-
-
     debugger;
-    //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId UserId=80781,FeeTermId=4582,UserFeeId1=417163
-
     var UserId = $('#Studentuseridspid').val();
     var FeeTermId = feeTermId;
     var UserFeeId1 = userfeeactivityId;
-
-
     var Editformdata = {
         UserId: UserId,
         FeeTermId: FeeTermId,
@@ -782,7 +682,8 @@ function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
         //url: '/FeeSection/PFU_PaidAmount_Edit_User',
         //url: '/FeeSection/Pfusingleuserpaidamount_edit',
         //url: '/FeeSection/PfusingleuserpaidamountSearchicon',
-        url: '/FeeSection/PFUC_PaidAmount_Edit_User',
+        //url: '/FeeSection/PFUC_PaidAmount_Edit_User',
+        url: '/FeeSection/PfcPaidamountedituser',
         type: 'GET',
         data: Editformdata,
         success: function (response) {
@@ -954,14 +855,11 @@ function Payinstallmentsubbtn(event) {
         var tbllength = $('#Search_By_User_FeeTableData_Id tbody tr').length;
         var tableRows = $('#Search_By_User_FeeTableData_Id tbody tr');
 
-       
         var tble = tableRows.length;
 
         var TextboxIndex = 1;
         //var totalRowTextboxs = tableRows.length;
         var AllTextBoxesValues = [];
-
-
 
         tableRows.each(function () {
             debugger;
@@ -972,27 +870,15 @@ function Payinstallmentsubbtn(event) {
             TextboxIndex++;
         });
 
-
-
         var allEmpty = AllTextBoxesValues.every(function (value) {
             return $.trim(value) === ""; // Trim and check if empty
         });
-
 
         if (allEmpty) {
             $('#SubmitvalidationMessage').text('Please enter fee amount .');
             return false;
         }
         /* --------  All text boxes Empty Show Error Message Code Start -------- */
-
-
-
-      
-
-
-
-
-
 
         tableRows.each(function () {
             var formData = [];
@@ -1008,13 +894,10 @@ function Payinstallmentsubbtn(event) {
 
             var textboxValues = $('#AmountTextbox_' + index).val();
             var InstallmentNameValue = $('#InstallmentName_' + index).val();
-
             var feeamountcellvalue = parseFloat($(this).find('td:nth-child(4)').text().trim());//cell4Value
             var Discountamountcellvalue = parseFloat($(this).find('td:nth-child(6)').text().trim());//cell6Value
             var Paidamountcellvalue = parseFloat($(this).find('td:nth-child(7)').text().trim());//cell7Value
             var Dueamountcellvalue = $(this).find('td:nth-child(8)').text().trim();//cell8Text 
-
-
 
             debugger;
             var cell2Text = $(this).find('td:nth-child(2)').text().trim();
@@ -1033,19 +916,13 @@ function Payinstallmentsubbtn(event) {
             var feeTermId_cell15Text = $(this).find('td:nth-child(15)').html().trim();
             var userfeeactivityId_cell16Text = $(this).find('td:nth-child(16)').html().trim();
             var cell18Text = $(this).find('td:nth-child(18)').text().trim();
-
             //var cell19Text = $(this).find('td:nth-child(19)').text().trim();
             var Departmentcell19 = $(this).find('td:nth-child(19)').text().trim();
-
             //var cell20Text = $(this).find('td:nth-child(20)').text().trim();
             var Classnamecell20 = $(this).find('td:nth-child(20)').text().trim();
-
             //var cell21Text = $(this).find('td:nth-child(21)').text().trim();
             var Studentusernamecell21 = $(this).find('td:nth-child(21) #firstNameSpanId').text().trim();
-
-
-            //old code           
-
+  
             var BalanceDue = cell8Text - textboxValues;
             var PaidDueAmount = cell4Text - cell7Text;
             //var Totalfeeamounttominasediscountamount = cell4Value - cell6Value;
@@ -1062,13 +939,10 @@ function Payinstallmentsubbtn(event) {
             rowValues['AmountTextboxValue'] = textboxValues;
             rowValues['InstallmentNameTextareaValue'] = InstallmentNameValue;
             tableData.push(rowValues);
-
             debugger;
-
             formData.push({ name: "BankAccountId", value: Bankaccount });
             formData.push({ name: "PaymentModeId", value: PayementMode });
-            formData.push({ name: "Description", value: Description });
-            //formData.push({ name: "InstanceId", value: InstanceId });
+            formData.push({ name: "Description", value: Description });           
             formData.push({ name: "ReceiptNo", value: ReceiptNo });
             formData.push({ name: "ChequeDDNo", value: ChequeDDNo });
             formData.push({ name: "ChequeDDDate", value: ChequeDDDate });
@@ -1086,15 +960,12 @@ function Payinstallmentsubbtn(event) {
             var CCDDNo = new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
             formData.push({ name: "CCDDNo", value: CCDDNo });
-
             if (textboxValues != "") {
-
                 if (parseInt(cell8Text) <= 0) {
                     $('#SubmitvalidationMessage').text('No Due Amount for Term "' + cell2Text + '" and FeeType "' + cell3Text + '"');
                     validationFailed = true;
                     return false;
                 }
-
                 formData.push({ name: "AcademicYearId", value: academicYearId_cell13Text });
                 formData.push({ name: "FeeTermId", value: feeTermId_cell15Text });
                 formData.push({ name: "FeeTypeId", value: feeTypeId_cell14Text });
@@ -1115,128 +986,50 @@ function Payinstallmentsubbtn(event) {
                 formData.push({ name: "Challana_ClassificationName", value: Departmentcell19 });
                 formData.push({ name: "Challana_subclassificationName", value: Classnamecell20 });
                 formData.push({ name: "Challana_UserName", value: Studentusernamecell21 });
-
-
-                //testing Last Values 
-
+               
                 // var Amount = textboxValues;
                 formData.push({ name: "Amount", value: textboxValues });
 
                 debugger;
                 if (cell18Text != "") {
 
-
-                    $.ajax({
-                        url: '/FeeSection/PFUC_AmountPay_Recipt',
+                    $.ajax({               
+                        url: '/FeeSection/Pfcamountpayreceipt',
                         type: 'POST',
                         data: formData,
                         success: function (response) {
-
                             debugger;
-
                             $('#GetFeeTermDetialsByUser_DIVID').hide();
                             $('#PartailCOntainerViews').show();
                             $('#FeePaidMessage').text('Fee paid Successfully ');
                             $('#Errormessage').text('Fee paid Successfully ');
                             $('#Studentdetailsid').text('');
-
                             $('#btnsubmit').prop('disabled', true);
-
                             $('#ddltermid').empty();
                             $('#ddlFeetermid').empty();
                             $('#bankaccountsddl').prop('selectedIndex', 0);
                             $('#paymentmodeddl').prop('selectedIndex', 0);
-
                             $('#MANAGEFEEDETAILSFORM')[0].reset();
-
                             $('#Searchuserfields_tabledatadiv1').hide();
                             $('#Userfeedetailsdiv2').hide();
                             $('#Feechallandiv').show();
                             $('#Feedetailsupdateandedit_tablediv').hide();
                             $('#Feereceipt_partailcontaindiv').append(response);
-                            // $('#SingleUserEdit_PartailContainer').html(response);
-
-                            //if (response != 0) {
-
-                            //    var RECEIPTNO = response;
-
-                            //    $('#FeePaid_ChallanaCreated_DivId').show();
-                            //    $('#Search_Pay_For_UsersFileds_Divid').hide();
-                            //    $('#TableDate_forUsers_DivId').hide();
-
-                            //    $('#GetFeeTermDetialsByUser_DIVID').hide();
-                            //    $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').hide();
-
-                            //    $('#Description_TXTAId').val('');
-                            //    BankAccounts_dropdown_Function();
-                            //    Payment_Mode_dropdown_Function();
-
-                            //    $('#UserName_Classification_subclasification_ID').hide();
-                            //    $('#AMountPaidSubmit_Message').text('Fee paid Successfully ');
-
-                            //    var Challana_Data = {
-
-                            //        Challana_TermName: cell2Text,
-                            //        Challana_FeeType: cell3Text,
-                            //        Challana_FeeAmount: cell4Value,
-                            //        Challana_DiscountType: cell5Text,
-                            //        Challana_DiscountAmount: cell6Value,
-                            //        Challana_PaidAmount: cell7Value,
-                            //        Challana_PayingAmount: textboxValues,
-                            //        Challana_DueAmount: cell8Text,
-                            //        Challana_BalanceDue: BalanceDue,
-                            //        Challana_DueDate: cell9Text,
-                            //        Challana_UserRegId: cell18Text,
-                            //        Challana_ClassificationName: cell19Text,
-                            //        Challana_subclassificationName: cell20Text,
-                            //        Challana_UserName: cell21Text,
-                            //        Challana_RECEIPTNO: RECEIPTNO
-                            //    };
-
-                            //    //resetChallanaData();
-                            //    debugger;
-                            //    challana_Data_Users.push(Challana_Data);
-
-                            //    displayFormattedDateTime();
-                            //    ChallaFunctionNames(challana_Data_Users);
-
-
-                            //}
-
                         }
-
-
                     });
                 } else {
-
                     $("#SubmitvalidationMessage").text('Challan is not generated for ' + cell3Text + ' in ' + cell2Text + '.');
-
                     return false;
                 }
-
             }
-
             index++;
         });
-
-
-
         if (validationFailed) {
-            // Handle the case where validation failed
-            // For example, you can prevent form submission or perform other actions
             return;
         }
 
-
-
-
-
         var allTextboxesFilled = textboxValues.every(value => value !== '');
-
-
-
         console.log('Textbox Values:', textboxValues);
-
     }
 
 
@@ -1255,110 +1048,40 @@ function EditFeeAmount(feeTermId, userfeeactivityId) {
     var UserId = $('#Studentuseridspid').val();
     var FeeTermId = feeTermId;
     var UserFeeId1 = userfeeactivityId;
-
-
-
     var Editformdata = {
         UserId: UserId,
         FeeTermId: FeeTermId,
         UserFeeId1: UserFeeId1
     }
-
     $('#GetFeeTermDetialsByUser_DIVID').hide();
-
     $('#tblFeeInstallments_GetFeeDetialsByUserFeeId').show();
 
     $.ajax({
-        url: '/FeeSection/PFU_FC_PaidAmount_Edit_User',
+        url: '/FeeSection/Pfcfcpaidamountedituser',
+        //url: '/FeeSection/PFU_FC_PaidAmount_Edit_User',
         //url: '/FeeSection/PFUC_PaidAmount_Edit_User',
         type: 'GET',
         data: Editformdata,
         success: function (response) {
             debugger;
-          
             $('#ddltermid').prop('selectedIndex', 0);
             $('#ddlFeetermid').prop('selectedIndex', 0);
             $('#bankaccountsddl').prop('selectedIndex', 0);
             $('#paymentmodeddl').prop('selectedIndex', 0);
             $('#MANAGEFEEDETAILSFORM')[0].reset();
-
             $('#Searchuserfields_tabledatadiv1').hide();
             $('#Userfeedetailsdiv2').hide();
             $('#Feechallandiv').hide();
-            $('#Feedetailsupdateandedit_tablediv').show();
-            //
+            $('#Feedetailsupdateandedit_tablediv').show();//
             //$('#SingleUserEdit_PartailContainer').html(response);
             $('#Feedetailsupdateandedittablediv').html(response);
             loaddingimg.css('display', 'none');
-            //var responsecount = response.length;
-            //$('#RecordsCounts').text(responsecount);
-
-
-            //var table = $('#Search_FeeDetails_ByUserUpdate');
-            //var tbody = table.find('tbody');
-            //var RowNumber = 1;
-
-            //tbody.empty();
-
-
-            //$.each(response, function (index, item) {
-
-            //    var SNO = index + 1;
-            //    var SNOID = SNO + 1;
-
-            //    var row = $('<tr></tr>');
-            //    var cell1 = $('<td></td>').text(RowNumber);
-            //    var cell2 = $('<td></td>').text(item.termName);
-            //    var cell3 = $('<td></td>').text(item.feeType);
-
-
-            //    //var cell4 = $('<td></td>').text(item.amount);
-            //    var AmountUpdate_TXTId = 'AmountTextbox_' + SNOID;
-            //    var cell4 = $('<td></td>').css('text-align', 'center');
-            //    var textbox = $('<input type="text" />').css({
-            //        'height': '23px',
-            //        'width': '68%'
-            //    }).attr('id', AmountUpdate_TXTId).val(item.amount);
-            //    textbox.attr('maxlength', 8);
-            //    cell4.append(textbox);
-
-
-            //    //var cell5 = $('<td></td>').text(item.comments);
-            //    var Comments_TxtAId = 'Comments_TxtAId' + SNOID;
-            //    var cell5 = $('<td></td>').css('text-align', 'center');
-            //    var textarea = $('<textarea></textarea>').attr('id', Comments_TxtAId).val(item.installmentName);
-            //    cell5.append(textarea);
-
-            //    var cell6 = $('<td></td>').text(item.createdDate);
-            //    var cell7 = $('<td></td>').text(item.collectedBy);
-
-
-
-            //    row.append(cell1);
-            //    row.append(cell2);
-            //    row.append(cell3);
-            //    row.append(cell4);
-            //    row.append(cell5);
-            //    row.append(cell6);
-            //    row.append(cell7);
-
-
-
-            //    tbody.append(row);
-            //    RowNumber++;
-            //});
-
         },
         error: function () {
-            // Handle error if the AJAX request fails
-            // Hide the spinner in case of error as well
-          
-            alert('Error: Failed to fetch data.');
+           alert('Error: Failed to fetch data.');
         }
     });
 }
-
-
 function backToSearchfun(event) {
     event.preventDefault();
     debugger;
@@ -1393,16 +1116,11 @@ function backToSearchfun(event) {
     $('#SubmitvalidationMessages').text('');
 
 }
-
-
-
-
 $('#DDlTermid').change(function () {
     debugger;
     var FeetermId = $('#ddlFeetermid').val();
     Dropdwonfunction(FeetermId);
 });
-
 function Dropdwonfunction(FeetermId) {
     fetchDataAndPopulateDropdown(                                                                //==== << ** FeeType Dropdown ** >>
         '/FeeSection/PFUC_Termidbyfeetype?FeeTermId=' + FeetermId,                                 // URL for data fetching
@@ -1417,7 +1135,6 @@ function Dropdwonfunction(FeetermId) {
     $('#Quantitydivid').hide();
 }
 
-
 //$('#ddlfeetype').change(function () {
 $('#ddlfeetypedivid').change(function () {
     debugger;
@@ -1425,8 +1142,6 @@ $('#ddlfeetypedivid').change(function () {
     Feetypedropdwonfunction(FeetypeId);
 });
 function Feetypedropdwonfunction(FeetypeId) {
-    //PFUC_Feetypeby_Discounttype
-    
     debugger;
     handleAjax('GET', '/FeeSection/Pfucfeetypebydiscountdd', { FeetypeId: FeetypeId },
         function (response) {
@@ -1568,7 +1283,6 @@ function Feetypedropdwonfunction(FeetypeId) {
             loaddingimg.css('display', 'none');
         }, false);
 }
-
 $('#Discount_TypeDDId').change(function () {
     var ConcedingTypeId = $('#Discount_TypeDDId').val();
     //Feetypedropdwonfunction(ConcedingTypeId);
@@ -1583,7 +1297,6 @@ $('#Discount_TypeDDId').change(function () {
         }, false);
 });
 
-
 ///======>>> SET FEE AMOUNT
 function setFeeAmount(input) {
     debugger;
@@ -1596,7 +1309,6 @@ function setFeeAmount(input) {
     // Update the value of the Total Amount text box
     document.getElementById('FeeAmount_TxtID').value = totalAmount.toFixed(2); // Using toFixed to limit decimal places
 }
-
 function isNumber(event) {
    
     var inputValue = event.key;
@@ -1607,9 +1319,6 @@ function isNumber(event) {
         event.preventDefault();
     }
 }
-
-
-
 
 $('#Addfeeuserbtn').click(function () {
     if (AddFeeValidation()) {
@@ -1643,10 +1352,7 @@ $('#Addfeeuserbtn').click(function () {
             ChallanId: ChallanId//ChallanId
         };
         $.ajax({
-
-            //url: '/FeeSection/SaveFee_UpdateFee_ByTblUser',
-           // url: '/FeeSection/Pfuuserfee_BulkUpdate',
-            url: '/FeeSection/PFC_SaveFee_UpdateFee_ByTblUser',
+            url: '/FeeSection/PFC_FeetypetermsInsert_Update',
             type: 'POST',
             data: UpdateFee_SaveFeeData,
             success: function (response) {
@@ -1673,7 +1379,6 @@ $('#Addfeeuserbtn').click(function () {
 
     }
 });
-
 function AddFeeValidation() {
 
     debugger;
@@ -1790,9 +1495,6 @@ function AddFeeValidation() {
     }
 
 }
-
-
-
 function CommonClearfunction(Formid) {
     document.getElementById("Span_IconId_Quantity").style.display = "none";
     document.getElementById(Formid).reset(); // Reset the form   
@@ -1800,8 +1502,6 @@ function CommonClearfunction(Formid) {
     $('#validationMessage').text('');
     $('#validation').text('');
 }
-
-
 function Dltfunction() {
     $('#Update_SubmitvalidationMessage').text('');
     var StudentuserId = $("#Studentuseridspid").val();
@@ -1827,7 +1527,6 @@ function Dltfunction() {
         $('#Update_SubmitvalidationMessage').text('Challanid is required');
         return false;        
     }
-
     var UpdateFee_SaveFeeData = {
         StudentuserId: StudentuserId,
         FeeTermId: FeeTerm,  //FeeTermId
@@ -1842,39 +1541,20 @@ function Dltfunction() {
         //AcademicYearId: AcademicYearId,
         
     };
-  
-    handleAjax('POST', '/FeeSection/PFUC_Terms_Delte', { data: UpdateFee_SaveFeeData },
+    handleAjax('POST', '/FeeSection/PfcTermsdlt', { data: UpdateFee_SaveFeeData },
         function (response) {
-
             if (response == "1") {
-
                 $('#Update_SubmitvalidationMessage').text('Fee not set to user.');
             } else if (response == "2") {
-        
+
                 Searchfeetermsbtnclickfunction(StudentuserId, null);
                 $('#Update_SubmitvalidationMessage').text('Deleted succesfully.');
             }
             loaddingimg.css('display', 'none');
 
-        }, function (status, error) {
+        },
+        function (status, error) {
             loaddingimg.css('display', 'none');
-        }, false);
-
-    //$.ajax({
-    //        url: '/FeeSection/PFUC_Terms_Delte?InstanceId=' + InstanceId + "&UserId=" + UserId + "&TermId=" + TermId + "&TypeId=" + TypeId + "&ChallanId=" + ChallanId,
-    //        type: 'POST',         
-    //        success: function (response) {
-
-    //            if (response == "1") {
-
-    //                $('#Update_SubmitvalidationMessage').text('Fee not set to user.');
-    //            } else if (response == "2") {
-    //                var userId = $("#userIdTextBox").val();
-    //                table_SearchByUser_FeeDues(userId);
-    //                $('#Update_SubmitvalidationMessage').text('Deleted succesfully.');
-    //            }
-
-    //        }
-    //    });
-
+        },
+        false);
 }

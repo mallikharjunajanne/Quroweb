@@ -1,12 +1,11 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Summary
-
 @{
     ViewData["Title"] = "Summary";
 }
 
 <html>
 <head>
-    <link href="~/css/maps/Summary.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
@@ -67,11 +66,9 @@
                     </div>
                 </div>
             </div>
+            <div id="Attendance_Summary_Tbl">
 
-
-        </div>
-        <div id="Attendance_Summary_Tbl">
-
+            </div>
         </div>
     </div>
 </body>
@@ -87,117 +84,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-<script>
-    //$("#SDCFN10").change(fun1012);
-    //function fun1012() {
-    //    debugger;
-    //    var value = $('#CFNID1').val();
-
-    //    /*alert(value);*/
-    //    $.ajax({
-    //        url: "/Attendance/Get_SubClassificationNames_ByInstanceClassifications?InstanceClassificationId=" + value,
-    //        type: "GET",
-    //        success: fun10112
-    //    });
-    //    function fun10112(response) {
-    //        debugger;
-    //        $("#SCFNID1").html(response);
-    //    }
-
-    //}
-    //$("#SSCFNID2").change(fun1021);
-    //function fun1021() {
-    //    debugger;
-
-    //    var InstanceClassificationId = $('#CFNID1').val();
-    //    var InstanceSubClassificationId = $('#SCFNID1').val();
-    //    //alert(InstanceClassificationId);
-    //    //alert(InstanceSubClassificationId);
-    //    $.ajax({
-    //        url: "/Attendance/SlotidBy_Student_Names?InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId,
-    //        type: "GET",
-    //        success: fun10121
-    //    });
-    //    function fun10121(response) {
-    //        debugger;
-    //        $("#SN1").html(response);
-    //    }
-    //}
-</script>
-
-
-<script>
-    //$("#Get_atdsummary_btn").click(fun012);
-
-    //function fun012() {
-    //    /*debugger;*/
-    //    var InstanceClassificationId = $("#CFNID1").val();
-    //    var InstanceSubClassificationId = $("#SCFNID1").val();
-    //    var StudentName = $("#SN1").val();
-
-    //    /*debugger;*/
-    //    var validationMessage = "";
-    //    var validation2Message = "";
-    //    var hasError = false;
-
-    //    if (InstanceClassificationId === "") {
-
-    //        validationMessage += "Department is required.<br>";
-    //        hasError = true;
-    //    }
-
-    //    if (InstanceSubClassificationId === "") {
-
-    //        validationMessage += "Class is required.<br>";
-    //        hasError = true;
-    //    }
-
-    //    if (StudentName === "") {
-
-    //        validationMessage += "Student Name is required.<br>";
-    //        hasError = true;
-    //    }
-    //    if (hasError) {
-    //        validation2Message = "Following fields have invalid data:<br>";
-    //        $("#validationMessage").html(validationMessage);
-    //        $("#validation2").html(validation2Message);
-
-
-    //    } else {
-
-    //        $("#validationMessage").html("");
-    //        $("#validation2").html("");
-
-
-
-    //        $.ajax({
-    //            url: "/Attendance/Get_Attendance_Summary_Details?UserID=" + StudentName,
-    //            type: "GET",
-    //            success: function (response) {
-    //                $("#Attendance_Summary_Tbl").html(response);
-    //            }
-    //            //success: fun0123
-    //        });
-    //        //function fun0123(resp) {
-    //        //    /* debugger;*/
-    //        //    $("#Attendance_Summary_Tbl").html(resp);
-    //        //}
-    //    }
-    //}
-
-
-
-    ////button refresh code
-
-    //$("button[type='reset']").click(function () {
-    //    /* debugger;*/
-    //    // Clear the form fields
-    //    $("#CFNID1").val("");
-    //    $("#SCFNID1").val("");
-    //    $("#SN1").val("");
-
-    //    // Clear the content of Attendance_Summary_Tbl div
-    //    $("#Attendance_Summary_Tbl").html("");
-    //});
-</script>

@@ -1062,3 +1062,19 @@ function ExportExcelschoolwiseattendance(id, attendancedate) {
         document.body.removeChild(link);
     });
 };
+
+
+//Clear Button function adding by arjun
+function clearForm(formId) {
+    debugger;
+    var form = document.getElementById(formId);
+    if (form) {
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $('.compare').text('');
+        
+    }
+}

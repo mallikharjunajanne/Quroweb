@@ -229,6 +229,20 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
         // if (RoleName == "STUDENT") {
         // if ($("#" + Roleid +" option:selected").text().toUpperCase() == "STUDENT") {
         if ($("#DdlRoleIdInGeneralTab option:selected").text().toUpperCase() == "STUDENT") {
+            //$(".ClsSessionStudent").css("display", "block");
+            ////$(".ClsDivTeachers").css("display", "none");
+            //$(".ClsDivTeachers").empty();
+
+            //$("#LblSiblingsInSameCollege").text("Siblings in same School");
+            //$("#LblSiblingsOtherCollege").text("Siblings in Other School");
+            //$("#LblTcTakenGeneralTab").text("Tc Taken");
+            //$("#LblInstanceUserCodeGeneralTab").text("Roll No");
+            //$("#ParentDetailsTab").css("display", "");
+            //$("#BtnPreview").css('display', '');
+
+
+            $("#PayRoleinformation_divid").empty();
+
             $(".ClsSessionStudent").css("display", "block");
             $(".ClsDivTeachers").css("display", "none");
             $("#LblSiblingsInSameCollege").text("Siblings in same School");
@@ -237,16 +251,62 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
             $("#LblInstanceUserCodeGeneralTab").text("Roll No");
             $("#ParentDetailsTab").css("display", "");
             $("#BtnPreview").css('display', '');
+
+
         } else {
             $("#BtnPreview").css('display', 'none !important');
 
             $("#ParentDetailsTab").css("display", "none");
             $(".ClsSessionStudent").css("display", "none");
             $(".ClsDivTeachers").css("display", "block");
+
+            if (!IsEmpty) {
+                $("#PayRoleinformation_divid").empty();
+             CommonAjaxFunction('GET', '/Users/ManageUsersPayrole', null, function (response) {
+                debugger;
+                //$(".ClsDesignationId").html(response);
+                 $("#PayRoleinformation_divid").append(response);
+
+                loaddingimg.css('display', 'none');
+
+            }, function (status, error) {
+                loaddingimg.css('display', 'none');
+            }, false);
+            }
+
             $("#LblSiblingsInSameCollege").text("Child studying in same School");
             $("#LblSiblingsOtherCollege").text("Child studying in Other School ");
             $("#LblTcTakenGeneralTab").text("Hide in the portal");
             $("#LblInstanceUserCodeGeneralTab").text("Employee ID");
+
+            //$("#BtnPreview").css('display', 'none !important');
+
+            //$("#ParentDetailsTab").css("display", "none");
+            //$(".ClsSessionStudent").css("display", "none");
+            ////$(".ClsDivTeachers").css("display", "block");
+
+            //CommonAjaxFunction('GET', '/Users/ManageUsersPayrole', null, function (response) {
+            //    debugger;
+            //    //$(".ClsDesignationId").html(response);
+            //    $(".ClsDivTeachers").append(response);
+
+            //    //$('#DivappendCreateNewUsers').html(response);
+            //    ////  $("#BtnSaveFormInGeneralInfo").text("Update");
+            //    //$('#DivUsersSearchPage').css('display', 'none');
+            //    //$('#BtnBackToSearch').css('display', 'block');
+            //    //$("#ParentDetailsTab").css("display", " ");
+            //    // $("#BtnSaveFormInGeneralInfo").val("Update");
+            //    //$(".DdlCascadDropdowns").prop("disabled", false);
+            //    /* window.scrollTo(0, 0);*/
+            //    loaddingimg.css('display', 'none');
+
+            //}, function (status, error) {
+            //    loaddingimg.css('display', 'none');
+            //}, false);
+            //$("#LblSiblingsInSameCollege").text("Child studying in same School");
+            //$("#LblSiblingsOtherCollege").text("Child studying in Other School ");
+            //$("#LblTcTakenGeneralTab").text("Hide in the portal");
+            //$("#LblInstanceUserCodeGeneralTab").text("Employee ID");
         }
         if ($('#TcTakenYes').is(':checked')) {
             TcTakenChecking(1);
@@ -381,6 +441,33 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
         setTimeout(function () {
             var validationMessages = formElement.getElementsByClassName('field-validation-error');
             var validationMessages2 = formElement.getElementsByClassName('error2');
+            //var validationIds = [];
+            //var validationIds2 = [];
+
+            //Array.from(validationMessages).forEach(function (element) {
+            //    // Get the last child element of each span
+            //    var lastChild = element.lastElementChild;
+            //    // Check if the last child element exists and is a span
+            //    if (lastChild && lastChild.tagName === 'SPAN') {
+            //        // Get the ID of the last child span
+            //        var id = lastChild.id;
+            //        // Push the ID to the array
+            //        validationIds.push(id);
+            //    }
+            //});
+
+            /*var SelectedRolename = $('#DdlRoleIdInGeneralTab option:selected').text();*/
+            //var SelectedRoleId = $('#DdlRoleIdInGeneralTab').val();
+            //if (SelectedRolename.toUpperCase() == 'STUDENT') {
+            //    // DdlCategory == DdlSubCategory
+            //    //DdlLMSCategory == DdlLMSSubCategory
+
+
+
+            //}
+
+            //if(validationMessages.length == 0 && validationMessages2.length == 0 && SelectedRolename.toUpperCase() != 'STUDENT')
+            debugger;
             if (validationMessages.length == 0 && validationMessages2.length == 0) {
                 loaddingimg.css('display', 'block');
                 //  var formData = new FormData($("#FmGeneralInfoTab")[0]);
@@ -399,6 +486,7 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                     formData.append("Relationship", $("#DdlRelationship").val());
                     //    formData.append("AnnualIncome", $("#DdlLacs").val() + "." + $("#Ddlthousands").val());
                 } else if (formId == "FmShowProfile") {
+                    formData.append("RoleName", $("#DdlRoleIdInGeneralTab option:selected").text());
                     ControllerName = "ManageUsers";
                 }
                 //  else {
@@ -439,7 +527,8 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                         $("#ParentDetailsTab").prop("disabled", false);
                         $('.alert-success p').text(response.message);
                         $(".alert-success").show().delay(5000).fadeOut()
-                    } else {
+                    }
+                    else {
                         $('.alert-danger p').text(response.message);
                         $(".alert-danger").show().delay(5000).fadeOut()
                     }
@@ -453,15 +542,29 @@ $("#FmGeneralInfoTab,#FmParentDetailsTab,#FmShowProfile").submit(function (event
                     loaddingimg.css('display', 'none');
                     $("#Main_Span_Error").text("Something Error");
                 }, true);
-            } else {
+            }
+            //else if (SelectedRolename != "STUDENT") {
+            //    debugger;
+            //    var containsAdmissionError = validationIds.indexOf('AdmissionNumberNew-error') !== -1;
+            //    if (containsAdmissionError) {
+            //        alert('Admission number error found!');
+            //    } else {
+            //        alert('Admission number error not found.');
+            //    }
+            //}
+            else {
+                   //if (SelectedRolename.toUpperCase() == 'STUDENT') {
+                   // // DdlCategory == DdlSubCategory
+                   //    //DdlLMSCategory == DdlLMSSubCategory
+                   //}
+
                 loaddingimg.css('display', 'none');
                 $('.alert-danger p').text("Pleae Enter All Required Fields");
                 $(".alert-danger").show().delay(5000).fadeOut();
             }
         }, 50);
     } catch (e) {
-        // loaddingimg.css('display', 'none');
-        //   loaddingimg.css('display', 'none');
+      
         loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }

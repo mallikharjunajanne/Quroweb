@@ -3,9 +3,6 @@
     ViewData["Title"] = "BirthdaysByInstance";
     Layout = null;
 }
-
-
-
 <style>
     .Scrolling {
         white-space: initial;
@@ -46,9 +43,6 @@
         overflow-y: hidden;
     }
 </style>
-
-
-
 @{
     var listcounts = ViewBag.Usersbirthdays.Count;
 }
@@ -56,18 +50,21 @@
     <ul class="Scrolling">
         @if (listcounts != 0)
         {
-        @foreach (var item in ViewBag.Usersbirthdays)
-        {
-        <li class="text-primary" style="list-style-type: none;">
-            <span><img src="path_to_your_images/@item.Photo">  @item.FirstName <b>@item.Class</b></span>
-        </li>        
-        }
+            @foreach (var item in ViewBag.Usersbirthdays)
+            {
+                var Photopath = "/UserPhotos/" + ViewBag.instanceid + "/" + item.UserId + "/" + item.Photo;
+                <li class="text-primary" style="list-style-type: none;">
+                    @*<img src="/Managenoticesdocs/@ViewBag.Instanceidbyusephotodoc/@item.Photo" alt="" id="ImgPhotoDisplay" height="80" width="80">*@
+                    <img src="@Photopath" alt="" id="ImgPhotoDisplay" height="80" width="80">
+                    <span> @item.FirstName  <b>@item.Class</b></span>
+                </li>
+            }
         }
         else
         {
-        <span class="text-primary" style="color:black;">
-            No birthdays today.
-        </span>
+            <span class="text-primary" style="color:black;">
+                No birthdays today.
+            </span>
         }
     </ul>
 </div>

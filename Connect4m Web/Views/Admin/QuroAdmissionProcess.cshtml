@@ -1,5 +1,4 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.AdmissionProcess
-
 @{
     ViewData["Title"] = "Manage Admissions";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,8 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
@@ -126,15 +123,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="path/to/jquery.dataTables.min.js"></script>
-
+@*<script src="path/to/jquery.dataTables.min.js"></script>*@
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script src="~/js/CommonScripts.js"></script>
 <script src="~/js/Admissionprocess.js"></script>
 
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+

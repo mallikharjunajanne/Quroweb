@@ -3,91 +3,77 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .checkbox-clicked {
-            /* Styles for when checkbox is clicked (checked) */
-            /* Example styles */
-            background-color: #f00;
-            color: #fff;
-        }
 
-        .checkbox-unchecked {
-            /* Styles for when checkbox is unchecked */
-            /* Example styles */
-            background-color: #fff;
-            color: #000;
-        }
-        .S_btn {
-            width: 7%;
-            height: 28px;
-            margin-top: 16px;
-            margin-left: 26%;
-        }
 
-    </style>
-</head>
-<body>
-    <div id="Checkboxes">
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">SMS to Students</label>
-        </span>
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">SMS to Parents</label>
-        </span>
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">Send EMail to Students</label>
-        </span>
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">Send EMail to Parents</label>
-        </span>
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">Send SMS to On duty students</label>
-        </span>
-        <br />
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">Check All</label>
-        </span>
-        <span>
-            <input type="checkbox">
-            <label for="myCheckbox">Check All On duty</label>
-        </span>
+@if (ViewBag.AllValues["Returnvalues"].ToString() == "0")
+{
+    <span id="ErrorMessage" class="text-danger">
+    The Selected date "@ViewBag.AllValues["StartDate"]" is declared as "@ViewBag.AllValues["HolidayName"]" holiday.
+    </span>
+}
+else if (ViewBag.AllValues["Returnvalues"].ToString() == "-1")
+{
+<span id="ErrorMessage" class="text-danger">
+    You are allowed to post the attendance only for past "@ViewBag.AllValues["HolidayName"]" days . To post attendance for selected date"@ViewBag.AllValues["HolidayName"]" , please contact Quro 4M administrator.
+</span>  
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Stu_Checkboxid">
+            <label class="form-check-label " for="SmsToStudent" id="SMS_Stu_Checkboxid">SMS to Students</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Par_Checkboxid">
+            <label class="form-check-label " for="SmsToStudent" id="SMS_Par_Checkboxid">SMS to Parents</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Stu_Checkboxid">
+            <label class="form-check-label " for="SmsToStudent" id="Email_Stu_Checkboxid">Send Email To Students</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Par_Checkboxid">
+            <label class="form-check-label " for="SmsToStudent" id="Email_Par_Checkboxid">Send Email To Parents</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Par_Checkboxid">
+            <label class="form-check-label " for="SmsToStudent" id="Email_Par_Checkboxid">Send SMS to On duty students</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="selectAll">
+            <label class="form-check-label " for="SmsToStudent" id="selectAll">Check All</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input checkbox_animated" id="selectAll">
+            <label class="form-check-label " for="SmsToStudent" id="selectAll">Check All On duty</label>
+        </div>
     </div>
-
-
-    <div class="card-body">
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <div class="card-header bg-primary">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link text-white collapsed" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11" style="border-radius: 13px; "><i class="icofont icofont-student-alt"></i></button>
-                    </h5>
-                </div>
-                <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc" style="">
-                    <div class="card-body">
-
-
-                        
-                        
-                        
-                        <div class="S_btn" style="display: flex; grid-gap: 16px;">
-                            <input type="submit" value="Get Attendance Form" id="Get_atd_btn" />
-                        </div>
-
+    <div class="col-md-12 col-lg-12 mb-3">
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">@*YOUR SEARCH RESULTED*@ <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> @*RECORDS*@.</h5>
+            </div>
+            <div class="card-body">
+                @*<table id="Bankaccountstbl" class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>S NO</th>
+                                <th>Bank Name</th>
+                                <th>Account Number</th>
+                                <th>Description</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                    </table>*@
+                <div class="row justify-content text-center">
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-success waves-effect waves-light" id="btnsubmit">Get Attendance Form</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
-  
+}
+
 

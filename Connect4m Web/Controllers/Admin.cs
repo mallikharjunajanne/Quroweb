@@ -56,8 +56,7 @@ namespace Connect4m_Web.Controllers
             StudentUserid = _userService.StudentUserid;
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
-
-
+        
         public string BuildSMSTextInXML(string username, string password)
         {
             string xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
@@ -233,11 +232,7 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
-
-
-
-
-
+        
         #endregion
 
         #region Create Notice        
@@ -460,7 +455,6 @@ namespace Connect4m_Web.Controllers
         #endregion
 
         #region Create SMS
-
         public IActionResult ManageNotices_CreateSMS()
         {
             List<Templatesms> item = new List<Templatesms>();
@@ -552,8 +546,6 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         public IActionResult SaveandPostBtn_ManageNotices_CreateSMS(TemplateDetails_SMS obj)
         {
@@ -593,9 +585,6 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-
-
         //=====>> Old Method its showing reloading so creating new method Name:-SaveandPostBtn_ManageNotices_CreateSMS
         [HttpPost]
         //public IActionResult ENoticeMailSms_INSERT(TemplateDetails_SMS obj)
@@ -630,8 +619,6 @@ namespace Connect4m_Web.Controllers
             }
 
         }
-
-
         #endregion
 
         #region Create SMS and Notice      
@@ -896,8 +883,6 @@ namespace Connect4m_Web.Controllers
         #endregion
 
         #region Department and classification dropdowns
-
-
         public IActionResult ManageNotices_InstanceClassificationSearch()
         {
             List<ClassificationList> item = new List<ClassificationList>();
@@ -1031,15 +1016,8 @@ namespace Connect4m_Web.Controllers
 
             return View(item);
         }
-
-
-
-
         #endregion
-
-
-        //------Create Notice and SMS  Button click view to start action methods
-
+        
         private List<SelectListItem> GetNoticetypdedd()//int InstanceId
         {
             int CategoryTypeId = 5;
@@ -1055,18 +1033,12 @@ namespace Connect4m_Web.Controllers
             return li;
         }
 
-
-
-
-
         #region Cool Links ////=====
 
         public IActionResult ManageCoolLinks()
         {
             return View();
         }
-
-
         public IActionResult ManageCoolLinks_Tabledata(string LinkName, string LinkURL, string Description)
         {
             List<CoolLinks> item = new List<CoolLinks>();
@@ -1630,7 +1602,6 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
-
         public IActionResult ManageBestPerformerTabledata(BestPerformer obj)
         {
             List<BestPerformer> items = new List<BestPerformer>();
@@ -1663,15 +1634,11 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
-
-
         [HttpGet]
         public IActionResult Insert_ManageBestPerformer()
         {
             return View();
         }
-
         public IActionResult Adding_BestPerformer_dds()
         {
             BestPerformer model = new BestPerformer();
@@ -1687,8 +1654,6 @@ namespace Connect4m_Web.Controllers
             return Json(model);
             //return View();
         }
-
-
         public IActionResult Adding_BestPerformer_Subclassification_dd(int InstanceClassificationId)
         {
             BestPerformer model = new BestPerformer();
@@ -1848,8 +1813,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(items);
         }
-
-
         public IActionResult Delete_ManageBestPerformer(int PerformerId)
         {
             string items = "";
@@ -1893,8 +1856,6 @@ namespace Connect4m_Web.Controllers
                 return View();
             }
         }
-
-
         public IActionResult Subclassexporttoexcel(ManageSubClassification obj)
         {
             List<ManageSubClassification> items = new List<ManageSubClassification>();
@@ -1914,7 +1875,6 @@ namespace Connect4m_Web.Controllers
                 return View();
             }
         }
-
         public IActionResult InstanceClassification_DD()
         {
             ManageSubClassification model = new ManageSubClassification();
@@ -1950,9 +1910,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(model);
         }
-
-
-
         [HttpGet]
         public IActionResult Insert_ManageSubClassification()
         {
@@ -1975,10 +1932,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(items);
         }
-
-
-
-
         [HttpGet]
         public IActionResult Update_ManageSubClassification(int InstanceSubClassificationId)
         {
@@ -2009,7 +1962,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.Items = model;
             return View(model);
         }
-
         [HttpPost]
         public IActionResult Update_ManageSubClassification(ManageSubClassification obj)
         {
@@ -2027,8 +1979,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.List = items;
             return Json(items);
         }
-
-
         public IActionResult Delete_ManageSubClassification(int InstanceSubClassificationId)
         {
             string items = "";
@@ -2045,7 +1995,6 @@ namespace Connect4m_Web.Controllers
 
 
         #endregion
-
 
         public IActionResult CommonErrorpage(string Message, string ModuleName, string FunctionName)
         {
@@ -2206,15 +2155,13 @@ namespace Connect4m_Web.Controllers
         #endregion
 
 
-
         #region ADMISSION MODULE
 
         #region MANAGE ADMISSIONS
         public IActionResult QuroAdmissionProcess()
         {           
             return View();
-        }
- 
+        } 
         public IActionResult GetInstancenamesDropdown()
         {
             string[] parameter2 = new string[] { InstanceId.ToString() };
@@ -2262,19 +2209,15 @@ namespace Connect4m_Web.Controllers
             obj.CreatedBy = UserId;
             List<AdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<AdmissionProcesstbl, AdmissionProcesstbl>(obj, "/BindAdmissiontbl", client);
             return Json(list);
-        }
-      
+        }      
         public IActionResult QuroAdmissionProcess_New(int? RegistrationUserId)
         {
             AdmissionProcess obj = new AdmissionProcess();
             string instanceIdString = InstanceId.ToString();
             List<SelectListItem> Classli = CommonDropdownData("BindClassDropdown", new[] { instanceIdString }, "ClassName", "ClassId");
-
             List<SelectListItem> countryList = GetFilteredCountryList("96");
-
             List<SelectListItem> Statenamesli = CommonDropdownData("BindStatesDropdown", new[] { "96" }, "StateName", "StateId");
-
-            if (RegistrationUserId == null)
+            if(RegistrationUserId == null)
             {
                 ViewBag.Returnmessage = "SaveMethod";
                 ViewBag.EditMode = false;
@@ -2316,27 +2259,19 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult QuroAdmissionProcess_New(AdmissionProcess obj)
         {
-            try
-            {
+            //try
+            //{
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
-                //if (obj.RegistrationUserId != null)
-                //{
-                    string Returnvalue = CommonInsertingMethod(obj, "/Insert_admission");
-                    return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
-                    //return Json(Returnvalue);
-                //}
-                //else
-                //{
-                //    string Returnvalue = CommonInsertingMethod(obj, "/Update_admission");
-                //    return Json(Returnvalue);
-                //}
-            }
-            catch (Exception ex)
-            {
-                string Errormessage = ex.Message;
-                return RedirectToAction("QuroAdmissionProcess");
-            }
+                obj.AcademicYear = DateTime.Now.Date.Year.ToString();
+                string Returnvalue = CommonInsertingMethod(obj, "/Insert_admission");
+                return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
+            //}
+            //catch (Exception ex)
+            //{
+            //    string Errormessage = ex.Message;
+            //    return RedirectToAction("QuroAdmissionProcess");
+            //}
         }
 
         [HttpPost]
@@ -2346,6 +2281,7 @@ namespace Connect4m_Web.Controllers
             {
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
+                obj.AcademicYear = DateTime.Now.Year.ToString();
                 string Returnvalue = CommonInsertingMethod(obj, "/Update_admission");
 
                 return Json(new { ReturnValue = Returnvalue, MethodName = "Update" });
@@ -2423,9 +2359,6 @@ namespace Connect4m_Web.Controllers
             var returnval1 = response.Content.ReadAsStringAsync().Result;
             return "0";
         }
-
-
-   
 
         [Authorize]
         public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)

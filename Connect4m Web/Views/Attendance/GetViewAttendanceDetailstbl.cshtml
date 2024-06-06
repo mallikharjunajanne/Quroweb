@@ -1,154 +1,125 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Details
 @{
-   // ViewData["Title"] = "GetViewAttendanceDetailstbl";
+    // ViewData["Title"] = "GetViewAttendanceDetailstbl";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
     Layout = null;
 }
 
 
 
-
-<div id="StudentLgn_Attendance_Details">
-    @if (@ViewBag.NoRecordsFound == "0")
-    {
-        <span class="text-danger">No Records Found :@ViewBag.NoRecordsFound</span>@*No Attendance Details Found*@
-    }
-    else
-    {
-        <div class="row mb-2">
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                BRIEF DETAILS
-                            </span>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row mb-4">
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Department</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-6 col-form-label"> @ViewBag.departmentName</label>
-                                    </div>
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Class</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-6 col-form-label"> @ViewBag.className</label>
-                                    </div>
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Attendance Last Posted</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-6 col-form-label"> @ViewBag.AttendanceLastDate</label>
-                                    </div>
-
-
-
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Total Present</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-6 col-form-label">
-                                            @{
-                                                int Presentcount = 0;
-                                                int AbsentCounts = 0;
-                                            }
-
-                                            @foreach (var present in ViewBag.UserAttendance)
-                                            {
-                                                @if (present.Present == "1")
-                                                {
-                                                    Presentcount++;
-                                                }
-                                                else
-                                                {
-                                                    AbsentCounts++;
-                                                }
-                                            }
-                                            @Presentcount
-                                        </label>
-                                    </div>
-
-
-
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Conducted Classes</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-6 col-form-label">@ViewBag.Records</label>
-                                    </div>
-
-
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Attendance Percentage</label>
-                                    <div class="col-sm-6">
-                                        <label class="control-label col-sm-12 col-form-label">
-                                            @{
-                                                int totalRecords = (int)ViewBag.Records;
-                                                double percentage = (double)@Presentcount / totalRecords * 100;
-                                                string color = percentage >= 70 ? "green" : "red";
-                                            }
-
-                                            <span style="color: @color;">
-                                                @percentage.ToString("0.00")%
-                                            </span>
-
-                                            @if (percentage >= 70)
-                                            {
-                                                <span style="color: green;">(Required attendance is 70% or above)</span>
-                                            }
-                                            else
-                                            {
-                                                <span style="color: red;">(Required attendance is below 70%)</span>
-                                            }
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    TOTAL NUMBER OF RECORDS:@ViewBag.Records
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-datatable text-nowrap">
-                                <div class="table-responsive">
-                                    <div class="table-responsive text-nowrap" id="attendanceTableContainer">
-                                        <table class="table table-bordered" id="StudentDetailTblbody">
-                                            <thead class="table-dark">
-                                                <tr>
-                                                    <th align="left" scope="col">  Date</th>
-                                                    <th align="left" scope="col">  IsPresent</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @ViewBag.UserAttendance)
-                                                {
-                                                    <tr>
-                                                        <td align="left"> @item.CreatedDate</td>
-                                                        <td align="left">  @item.IsPresent</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                        <div id="pagination_numbers" style="text-align: center;">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            }
+<div class="col-md-12 col-lg-12 mb-3">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">BRIEF DETAILS</h5>
         </div>
-    }
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="row mb-4">
+                        <label class="control-label col-sm-4 col-form-label text-end space">Department</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-6 col-form-label"> @ViewBag.departmentName</label>
+                        </div>
+                        <label class="control-label col-sm-4 col-form-label text-end space">Class</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-6 col-form-label"> @ViewBag.className</label>
+                        </div>
+                        <label class="control-label col-sm-4 col-form-label text-end space">Attendance Last Posted</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-6 col-form-label"> @ViewBag.AttendanceLastDate</label>
+                        </div>
+                        <label class="control-label col-sm-4 col-form-label text-end space">Total Present</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-6 col-form-label">
+                                @{
+                                        int Presentcount = 0;
+                                        int AbsentCounts = 0;
+                                }
+
+                                @foreach (var present in ViewBag.UserAttendance)
+                                        {
+                                @if (present.Present == "1")
+                                        {
+                                        Presentcount++;
+                                        }
+                                        else
+                                        {
+                                        AbsentCounts++;
+                                        }
+                                        }
+                                @Presentcount
+                            </label>
+                        </div>
+                        <label class="control-label col-sm-4 col-form-label text-end space">Conducted Classes</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-6 col-form-label">@ViewBag.Records</label>
+                        </div>
+                        <label class="control-label col-sm-4 col-form-label text-end space">Attendance Percentage</label>
+                        <div class="col-sm-6">
+                            <label class="control-label col-sm-12 col-form-label">
+                                @{
+                                        int totalRecords = (int)ViewBag.Records;
+                                        double percentage = (double)@Presentcount / totalRecords * 100;
+                                        string color = percentage >= 70 ? "green" : "red";
+                                }
+
+                                <span style="color: @color;">
+                                    @percentage.ToString("0.00")%
+                                </span>
+
+                                @if (percentage >= 70)
+                                        {
+                                <span style="color: green;">(Required attendance is 70% or above)</span>
+                                        }
+                                        else
+                                        {
+                                <span style="color: red;">(Required attendance is below 70%)</span>
+                                        }
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="col-md-12 col-lg-12 mb-3">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">
+                TOTAL NUMBER OF RECORDS: <span class="badge badge-center rounded-pill bg-primary bg-glow">@ViewBag.Records</span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap" id="attendanceTableContainer">
+                <table class="table table-bordered" id="StudentDetailTblbody">
+                    <thead class="table-dark">
+                        <tr>
+                            <th align="left" scope="col">  Date</th>
+                            <th align="left" scope="col">  IsPresent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @ViewBag.UserAttendance)
+                                            {
+                        <tr>
+                            <td align="left"> @item.CreatedDate</td>
+                            <td align="left">  @item.IsPresent</td>
+                        </tr>
+                                            }
+                    </tbody>
+                </table>
+                <div id="pagination_numbers" style="text-align: center;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 

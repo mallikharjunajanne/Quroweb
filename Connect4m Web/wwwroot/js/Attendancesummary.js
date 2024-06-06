@@ -120,6 +120,7 @@ $('#DdlSubClass').change(function () {
 
 
 function Classwisestudentnames(Departmentvalue, SubClassificationId) {
+    debugger;
     $.ajax({
         url: '/Attendance/Classwisestudents?InstanceClassificationId=' + Departmentvalue + "&InstanceSubClassificationId=" + SubClassificationId,
         type: 'GET',
@@ -148,9 +149,6 @@ function Classwisestudentnames(Departmentvalue, SubClassificationId) {
         }
     });
 }
-
-
-
 
 $('#Summerydetails').on('submit', function () {
     event.preventDefault();

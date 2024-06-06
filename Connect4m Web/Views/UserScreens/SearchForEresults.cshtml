@@ -1,0 +1,320 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Studentresults
+@{
+    ViewData["Title"] = "MY RESULTS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="col-md-12 col-lg-12 mb-3">
+            <span id="Errormessages" class="text-danger"></span>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">SEARCH FOR RESULTS</h5><small>* INDICATES REQUIRED FIELDS</small>
+                </div>
+                <div class="card-body">
+                    <div class="row col">
+                        <form id="Searchform" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label required text-end space">Exam Name</label>
+                                <div class="col-sm-4">
+                                    <select asp-for="Examid" class="form-select" id="ddlExamName"></select>
+                                    <span asp-validation-for="Examid" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row justify-content text-center">
+                                <div class="col-sm-12">
+                                    <button type="button" onclick="Clearfun('#Searchform');" class="btn btn-warning waves-effect waves-light" id="Clearbtn">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 mb-3" id="Divcontainer1" style="display:none;">
+            <span class="text-danger">NOTE: * Indicates Subject Marks not included in Total</span>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">
+                        YOUR SEARCH RESULTED
+                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> </span> SUBJECTS.
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="Resultstbl">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>SNO</th>
+                                <th>Subject</th>
+                                <th>Conducted On</th>
+                                <th>Declared On</th>
+                                <th>Secured Marks</th>
+                                <th>Max Marks</th>
+                                <th>Pass Marks</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td><span id="Totalmarkspan"></span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function CallToAjax(method, url, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            success: successCallback,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+    function handleAjaxtabledata(method, url, data, successCallback, errorCallback) {
+        var ajaxOptions = {
+            url: url,
+            method: method,
+            data: data,
+            //contentType: false,
+            //processData: false,
+            success: Bindtable,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        };
+        $.ajax(ajaxOptions);
+    }
+
+    $(document).ready(function () {
+        debugger;
+        fetchDataAndPopulateDropdown(          //==== << ** Dropdown ** >>
+            '/UserScreens/Examnamesddl',       // URL for data fetching
+            '#ddlExamName',                    // Dropdown selector
+            'examid',                          // Field name for option text
+            'examName',                        // Field name for option values
+            ' '                                // Response value return class name
+        );
+    });
+
+    function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
+        debugger;
+        CallToAjax('GET', url,
+            function (response) {
+                var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
+                populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
+            },
+            function (status, error) {
+                // Handle errors here
+                console.error("Error fetching data:", error);
+            }
+        );
+    }
+    function populateDropdown(data, dropdownSelector, valueField, textField) {
+        var dropdown = $(dropdownSelector);
+        debugger;
+        dropdown.empty(); // Clear existing options
+        dropdown.append($('<option>', {
+            value: '',
+            text: '---Select---'
+        }));
+        $.each(data, function (index, item) {
+            dropdown.append($('<option>', {
+                value: item[valueField],
+                text: item[textField]
+            }));
+        });
+    }
+    $('#Searchform').on('submit', function (event) {
+        debugger;
+        event.preventDefault();
+        event.stopPropagation();
+        $('#Errormessages').text('');
+
+        setTimeout(function () {
+            $('#Commonerrormessage').text('');
+            var validationMessages = $('.field-validation-error');
+            var validationMessages2 = $('.error2');
+            var validationMessagesLength = validationMessages.length;
+
+            if (validationMessagesLength === 0 && validationMessages2.length === 0) {
+                loaddingimg.css('display', 'block');
+                debugger;
+                var formData = $('#Searchform').serialize();
+                handleAjaxtabledata('POST', "/UserScreens/Examsdetailstbl", formData,
+                    function (status, error) {
+                        loaddingimg.css('display', 'none');
+                    },
+                );
+            }
+        }, 50);
+    });
+    function Bindtable(response) {
+        debugger;
+        loaddingimg.css('display', 'none');
+        $('#Divcontainer1').show();
+
+        var Firsttbl = response.studentResultsList;
+        var Scdtbl = response.ratingNamesList;
+
+        $("#Recordscount").text(Firsttbl.length);
+
+        var table = $('#Resultstbl').DataTable();
+        table.destroy();
+        var newTable = $("#Resultstbl").DataTable({
+            dom: 'Bfrtip',
+            buttons: ['print'],
+            bProcessing: false,
+            bLengthChange: true,
+            /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+            //pageLength: 20,
+            //bfilter: false,
+            bSort: true,
+            searching: false,
+            scrollX: true,
+            scrollY: '400px',
+            //scrollCollapse: true,
+            paging: false,
+            //bPaginate: true,
+            //  stateSave:true,
+            data: Firsttbl,
+            //data: response,
+            columns: [
+                {
+                    targets: 0, // Assuming this is the column index where you want to display numbering
+                    render: function (data, type, row, meta) {
+                        var currentPage = table.page.info().page;
+                        var rowsPerPage = table.page.info().length;
+                        return (0 * rowsPerPage) + meta.row + 1;
+                    }
+                },
+                {
+                    data: "Subject",
+                    render: function (data, type, row, meta) {
+                        return row.subject
+                    }
+                },
+                {
+                    data: "ConductedOn",
+                    render: function (data, type, row, meta) {
+                        return row.conductedOn
+                    }
+                },
+                {
+                    data: "DeclaredOn",
+                    render: function (data, type, row, meta) {
+                        return row.declaredOn;
+                    }
+                },
+                {
+                    data: "SecuredMarks",
+                    render: function (data, type, row, meta) {
+                        if (row.status === "PASS") {
+                            return '<span style="color: green; font-weight: bold;">' + row.securedMarks + '</span>';
+                        } else if (row.status === null) {
+                            return ''; // Return an empty string if status is null
+                        }  else {
+                            return '<span style="color: red; font-weight: bold;">' + row.securedMarks + '</span>';
+                        }
+                        // return row.securedMarks
+                    }
+                },
+                {
+                    data: "MaxMarks",
+                    render: function (data, type, row, meta) {
+                        return row.maxMarks
+                    }
+                },
+                {
+                    data: "PassMarks",
+                    render: function (data, type, row, meta) {
+                        return row.passMarks
+                    }
+                },
+                {
+                    data: "Status",
+                    render: function (data, type, row, meta) {
+                        //return row.status
+                        if (row.status === "PASS") {
+                            return '<span style="color: red; font-weight: bold;">' + row.status + '</span>';
+                        } else if (row.status === null) {
+                            return ''; 
+                        }
+                        else {
+                            return '<span style="color: red; font-weight: bold;">' + row.status + '</span>';
+                        }
+                    }
+                }                
+            ],
+            initComplete: function () {
+                debugger;
+                var footerTable = this.api().table();
+                if (footerTable) {
+                    var footerRow = $(footerTable.footer()); // Convert to jQuery object
+                    if (footerRow && footerRow.length > 0) { // Check if footerRow exists and is a valid jQuery object
+                        var footerData = [];
+
+                        // Loop through Scdtbl and collect RatingName values
+                        Scdtbl.forEach(function (item) {
+                            footerData.push(item.ratingName);
+                        });
+
+                        // Clear existing content and append the collected RatingName values to the footer
+                        footerRow.empty().append('<tr><td colspan="8" style="text-align: center;">Total: ' + footerData.join(', ') + '</td></tr>');
+                    } else {
+                        console.error('Footer row not found or invalid.');
+                    }
+                } else {
+                    console.error('Footer table not found.');
+                }
+            },
+        });
+
+        $('#Totalmarkspan').text(Scdtbl);
+        loaddingimg.css('display', 'none');
+    }
+
+    function Clearfun(formSelector) {
+        debugger;
+        const form = document.querySelector(formSelector);
+        if (form) {
+            form.reset();
+            $('#Divcontainer1').hide();
+            // Clear any validation error messages
+            const validationMessages = form.querySelectorAll('.text-danger');
+            validationMessages.forEach(function (message) {
+                message.textContent = '';
+            });
+        }
+    }
+</script>

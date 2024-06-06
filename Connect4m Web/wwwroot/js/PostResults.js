@@ -158,7 +158,18 @@ $("#FmSubjectsSearch").submit(function (event) {
         $("#Main_Span_Error").text("Something Error");
     }
 })
-
+function clearForm(formId) {
+    debugger;
+    var form = document.getElementById(formId);
+    if (form) {
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        //$('#Errormessage').text('');
+    }
+}
 
 // ====================step2 table calling function
 function TblDataTableWithColumns_CallingFunction_new(event, val, Url, tablename, TableCountsId, FormId, DivId_Toshow, ExelTitlename, ExcelDownloadColumnsNo, paging) {

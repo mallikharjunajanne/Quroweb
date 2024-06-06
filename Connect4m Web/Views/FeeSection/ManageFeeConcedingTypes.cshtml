@@ -1,10 +1,8 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.FeeConcedingTypes
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feeconcedingtypes
 @{
-    //ViewData["Title"] = "ManageFeeConcedingTypes";
+    ViewData["Title"] = "MANAGE FEE CONCEDING TYPES";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 
 <!DOCTYPE html>
 <html>
@@ -14,14 +12,16 @@
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>MANAGE FEE CONCEDING(DISCOUNT) TYPES </h4>
-
         <div class="row justify-content">
-            <span id="Errormessage" class="text-danger"></span>
-            <div class="col-sm-12 text-end">
-                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " onclick="Create_NewFeeDiscountType(event);">Create Fee Discount Type</button>
+            <span id="Commonerrormessage" class="text-danger"></span>
+            <div class="text-end">
+                <a href="javascript:void(0);" id="Addnewfeetypelinkbtn" onclick="lnkAddNew(event)">Create Fee Discount Type</a>
             </div>
+            @*<div class="col-sm-12 text-end">
+                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " onclick="Create_NewFeeDiscountType(event);">Create Fee Discount Type</button>
+            </div>*@
         </div>
-        <div class="row mb-2" id="FeeTypesDiscountTbl_Divid">
+        <div class="row mb-2" id="SearchMaindiv">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -30,41 +30,44 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <form class="form theme-form" id="Searchfeedescounttypesform">@*SEARCH_FEE_TYPES_FORM*@
-                                    <div class="row mb-3">
-                                        <label class="control-label col-sm-4 col-form-label text-end  space">Fee Discount Type </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" asp-for="ConcedingTypeName" id="ConcedingTypeName" class="form-control">
-                                        </div>
+                        <div class="row col">
+                            <form class="form theme-form" id="Searchfeedescounttypesform">
+                                <div class="row mb-3">
+                                    <label class="control-label col-sm-4 col-form-label text-end  space">Fee Discount Type </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" asp-for="ConcedingTypeName" id="Concedingtypenametxt" class="form-control">
                                     </div>
-                                    <div class="row justify-content text-center">
-                                        <div class="col-sm-12">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Searchfeedescounttypesform')" id="BtnClear">Clear</button>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" id="Searchbtn" @*onclick="SearchBankAccountsData(event);"*@>Search</button>
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
-                                        </div>
+                                </div>
+                                <div class="row justify-content text-center">
+                                    <div class="col-sm-12">
+                                        <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
+                                        <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
+
+                                        @*<button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Searchfeedescounttypesform')" id="BtnClear">Clear</button>
+                                        <button type="button" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>*@
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
                             <span>
-                                YOUR SEARCH RESULTED :<span id="TableCount" class="TableCount_SpId"></span> RECORDS.
+                                YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
                             </span>
                         </h5>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered" id="FeeDiscountTable">
+                        <table class="table table-bordered" id="Discounttbl">
                             <thead class="table-dark">
                                 <tr>
+                                    <th>S.NO</th>
                                     <th>Fee Discount Type</th>
                                     <th>Amount</th>
                                     <th>Description</th>
@@ -72,120 +75,13 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div id="DiscountTbl_pagination"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="Addnew_div1">
 
-
-        @*Create New Fee type Code Start*@
-
-        <div class="row mb-2" id="CreateFeeDiscountType_Divid">
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            SAVE FEE DISCOUNT TYPE
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <form class="form" id="Newdiscountfeetypeform">
-                                    <div class="row mb-3">
-                                        <label asp-for="ConcedingTypeName" class="control-label col-sm-4 col-form-label text-end required space">Fee Discount Type </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" asp-for="ConcedingTypeName" id="txtConcedingTypeNameid" class="form-control">
-                                            <span asp-validation-for="ConcedingTypeName" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label asp-for="Amount" class="control-label col-sm-4 col-form-label text-end required space">Amount </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" asp-for="Amount" id="txtamountid" class="form-control">
-                                            <span asp-validation-for="Amount" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label asp-for="Description" class="control-label col-sm-4 col-form-label text-end  space">Description </label>
-                                        <div class="col-sm-4">
-                                            <textarea asp-for="Description" id="txtdescriptionid" class="form-control"></textarea>
-                                            <span asp-validation-for="Description" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content text-center">
-                                        <div class="col-sm-12">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Newdiscountfeetypeform')" id="BtnClear">Clear</button>
-                                            <button type="button" class="btn btn-dark waves-effect waves-light" id="backToSearchBtn" onclick="backtosearch('Newdiscountfeetypeform');">Back To Search</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light">Save</button>
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*Create New Fee type Code End*@
-
-
-
-        @*Discount Fee Type Update View Code Start*@
-
-        <div class="row mb-2" id="UpdateDiscountFeeType_Divid">
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            UPDATE FEE DISCOUNT TYPE
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <form class="form" id="Updatediscountfeetypeform">
-                                    <div class="row mb-3">
-                                        <label asp-for="ConcedingTypeName" class="control-label col-sm-4 col-form-label text-end required space">Fee Discount Type </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" asp-for="ConcedingTypeName" id="EdittxtConcedingTypeNameid" class="form-control">
-                                            <span asp-validation-for="ConcedingTypeName" class="text-danger"></span>
-                                            <input type="hidden" id="EdittxtConcedingTypeid" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label asp-for="Amount" class="control-label col-sm-4 col-form-label text-end required space">Amount </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" asp-for="Amount" id="Edittxtamountid" class="form-control">
-                                            <span asp-validation-for="Amount" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label asp-for="Description" class="control-label col-sm-4 col-form-label text-end  space">Description </label>
-                                        <div class="col-sm-4">
-                                            <textarea asp-for="Description" id="Edittxtdescriptionid" class="form-control"></textarea>
-                                            <span asp-validation-for="Description" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content text-center">
-                                        <div class="col-sm-12">
-                                            <button type="button" class="btn btn-warning waves-effect waves-light" onclick="deleteaccount(event);" id="Btndelete">Delete</button>
-                                            <button type="button" class="btn btn-dark waves-effect waves-light" onclick="backtosearch('Updatediscountfeetypeform');">Back To Search</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Btnupdate">Update</button>
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*Discount Fee Type Update View Code End*@
-
+        </div>  
     </div>
 </body>
 </html>
@@ -196,7 +92,7 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="~/js/Manage_fee_Conceding.js"></script>
+<script src="~/js/ManageFeeConcedingtypes.js"></script>
 
 
 @section Scripts {

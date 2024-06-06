@@ -523,15 +523,17 @@ namespace Connect4m_Web.Controllers
                    // string errorMSG = jsonResponse.SuccessMSG;
                     if (jsonResponse.successMSG == "Results Posted successfully.")
                     {
-                        string folderPath = Path.Combine("wwwroot/PostResults Images/PostResultsExcelFile");
-
-                        // Get all files in the folder
-                        string[] files = Directory.GetFiles(folderPath);
-
-                        // Iterate through each file and delete it
-                        foreach (var file in files)
+                        string folderPath = Path.Combine("wwwroot\\PostResults Images\\PostResultsExcelFile");
+                        if (Directory.Exists(folderPath))
                         {
-                            System.IO.File.Delete(file);
+                            // Get all files in the folder
+                            string[] files = Directory.GetFiles(folderPath);
+
+                            // Iterate through each file and delete it
+                            foreach (var file in files)
+                            {
+                                System.IO.File.Delete(file);
+                            }
                         }
                     }
                     return Json(new { success = true, message=  returnvalue });

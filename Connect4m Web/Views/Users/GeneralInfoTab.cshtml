@@ -11,7 +11,7 @@
 <input type="hidden" value="@UpdateIdentification" id="BtnUpdateIdentification" />
 @if (UpdateIdentification == "UpdateDetails")
 {
-        <button class="btn rounded-pill btn-outline-dark waves-effect float-end" style="display:none;" id="BtnPreview" onclick="Preview_CalingFunction('@Model.UserId', this)">
+        <button class="btn rounded-pill btn-outline-dark waves-effect float-end" style="display: none; margin: -39px 0px 0px 0px;" id="BtnPreview" onclick="Preview_CalingFunction('@Model.UserId', this)">
             Preview
         </button>
     
@@ -53,21 +53,22 @@
 
                                     @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
 
-                                    <div class="col-sm-6 ">
-                                        @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                        @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                        @if (UpdateIdentification == "UpdateDetails")
-                                        {
-                                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" />
-                                            @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                            @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                        }
-                                        @*else if (UpdateIdentification == "UpdateDetails")
-                                            {
-                                                <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
-                                                <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                                <div class="col-sm-6 " style="display: flex;">
+                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                    @if (UpdateIdentification == "UpdateDetails")
+                                    {
+                                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                    }
+                                    @*else if (UpdateIdentification == "UpdateDetails")
+        {
+            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
+            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
 
-                                            }*@
+        }*@
+                                    <div>
                                         @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
                                         {
                                             <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
@@ -77,6 +78,7 @@
                                             <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
                                         }
                                     </div>
+                                </div>
                                 </div>
                                 @*----------------------*@
 
@@ -183,9 +185,9 @@
                                     <div class="col-sm-4 ">
                                         <input type="text" asp-for="Nationality" class="form-control " placeholder="Nationality">
                                     </div>
-                                    <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end required ClsSessionStudent" for="basic-default-name"></label>
+                                    <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end required ClsSessionStudent" id="AdmissionNumberNewlblid" for="basic-default-name"></label>
                                     <div class="col-sm-4 ClsSessionStudent">
-                                        <input asp-for="AdmissionNumberNew" class="form-control ClsClear" placeholder="Admission Number" required />
+                                        <input asp-for="AdmissionNumberNew" class="form-control ClsClear " id="AdmissionNumberNewtxtid" placeholder="Admission Number" required />
                                         <span asp-validation-for="AdmissionNumberNew" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -286,7 +288,8 @@
                 </div>
 
                 @*--- PAY ROLE INFORMATION Card----*@
-                <div class="card mb-4 ClsDivTeachers">
+                @*<div class="card mb-4 ClsDivTeachers"  id="PayRoleinformation_divid">*@
+                <div class="card mb-4 "  id="PayRoleinformation_divid">
 
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="mb-0">
@@ -302,7 +305,9 @@
                                 @*----------------------*@
                                 <div class="mb-3 row">
                                     <label asp-for="Category" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
+                                    @*<label asp-for="Category" class="col-sm-2 col-form-label  text-end required " for="basic-default-name"></label>*@
                                     <div class="col-sm-4 ClsDivTeachers">
+                                    @*<div class="col-sm-4 ">*@
                                         <div class="position-relative">
                                             <select id='DdlCategory' asp-for="Category" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlPayRoleCategory_Calingfunction?Id=' + this.value, 'DdlSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryList , "Value", "Text"))" required>
                                                 <option value=''>------Select------</option>
@@ -311,7 +316,9 @@
                                         </div>
                                     </div>
                                     <label asp-for="SubCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
+                                    @*<label asp-for="SubCategory" class="col-sm-2 col-form-label  text-end required " for="basic-default-name"></label>*@
                                     <div class="col-sm-4 ClsDivTeachers">
+                                    @*<div class="col-sm-4 ">*@
                                         <div class="position-relative">
                                             <select id='DdlSubCategory' asp-for="SubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryIdList,"Value","Text"))" disabled required>
                                                 <option value=''>------Select------</option>
@@ -323,8 +330,10 @@
                                 @*----------------------*@
 
                                 <div class="mb-3 row">
-                                    <label asp-for="LMSCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
-                                    <div class="col-sm-4 ClsDivTeachers">
+                                    @*<label asp-for="LMSCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>*@
+                                    <label asp-for="LMSCategory" class="col-sm-2 col-form-label  text-end required " for="basic-default-name"></label>
+                                    @*<div class="col-sm-4 ClsDivTeachers">*@
+                                    <div class="col-sm-4 ">
                                         <div class="position-relative">
                                             <select id='DdlLMSCategory' asp-for="LMSCategory" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlLMSCategory_Calingfunction?Id=' + this.value, 'DdlLMSSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlLMSCategoryList, "Value", "Text"))" required>
                                                 <option value=''>------Select------</option>
@@ -332,8 +341,10 @@
                                             <span asp-validation-for="LMSCategory" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <label asp-for="LMSSubCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
-                                    <div class="col-sm-4 ClsDivTeachers">
+                                    @*<label asp-for="LMSSubCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>*@
+                                    <label asp-for="LMSSubCategory" class="col-sm-2 col-form-label  text-end required " for="basic-default-name"></label>
+                                    @*<div class="col-sm-4 ClsDivTeachers">*@
+                                    <div class="col-sm-4 ">
                                         <div class="position-relative">
                                             <select id='DdlLMSSubCategory' asp-for="LMSSubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlLMSSubCategoryIdList,"Value","Text"))" disabled required>
                                                 <option value=''>------Select------</option>
@@ -509,10 +520,10 @@
                                 </div>
                                 @*----------------------*@
                                 <div class=" row mb-3">
-                                    <label asp-for="InstanceSubClassificationId" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                    <label asp-for="InstanceSubClassificationId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
                                     <div class="col-sm-4 ">
                                         <div class="position-relative">
-                                            <select id='DdlClassGeneralTab' asp-for="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible  DdlCascadDropdowns" onchange="CommonDropdownFunction('POST', '/Users/DdlClassTeacher_Calingfunction?Id=' + this.value, 'DdlClassTeacherId', 'Please select ClassTeacher', true,'FmGeneralInfoTab')" asp-items="@(new SelectList(ViewBag.DdlInstanceSubClassificationIdList,"Value","Text"))" disabled>
+                                            <select id='DdlClassGeneralTab' asp-for="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible  DdlCascadDropdowns" onchange="CommonDropdownFunction('POST', '/Users/DdlClassTeacher_Calingfunction?Id=' + this.value, 'DdlClassTeacherId', 'Please select ClassTeacher', true,'FmGeneralInfoTab')" asp-items="@(new SelectList(ViewBag.DdlInstanceSubClassificationIdList,"Value","Text"))" disabled required>
                                                 <option value=''>Please select a Class</option>
                                             </select>
                                             <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
@@ -574,6 +585,7 @@
                                     <label asp-for="TCNumber" class="col-sm-4 col-form-label  text-end ClsDivTcTakesnYes" for="basic-default-name"></label>
                                     <div class="col-sm-4 ClsDivTcTakesnYes ">
                                         <input asp-for="TCNumber" class="form-control ClsTxtTcTakesnYes" placeholder="Tc Number" />
+                                        <span asp-validation-for="TCNumber" class="text-danger"></span>
                                     </div>
                                 </div>
                                 @*----------------------*@
@@ -583,6 +595,7 @@
                                         <input type="date" id="DtTCdate" asp-for="TCdate" class="form-control ClsTxtTcTakesnYes" />
                                         <span asp-for="TCdate" class=" text-danger"></span>
                                         <span class="compare text-danger"></span>
+                                        <span asp-validation-for="TCdate" class="text-danger"></span>
                                     </div>
                                 </div>
                                 @*----------------------*@

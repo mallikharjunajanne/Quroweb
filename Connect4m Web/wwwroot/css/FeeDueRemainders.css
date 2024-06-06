@@ -8,19 +8,6 @@
     border: 1px solid red;
 }
 
-.NextPageBtn {
-    border-radius: 8px;
-    cursor: pointer;
-    border: none !important;
-    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
-}
-
-.PreviousPageBtn {
-    border-radius: 8px;
-    cursor: pointer;
-    border: none !important;
-    box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
-}
 
 
 .Set_Fee_Users_Table {
@@ -62,19 +49,16 @@
 }
 
 .dropdown-options {
-    max-height: 95px;
+    max-height: 100px;
     overflow-y: auto;
     list-style: none;
     margin: 0;
     padding: 0;
     border: 1px solid black;
-    background-color: #fff;
-    z-index: 1;
-    position: unset;
     border-radius: 4px;
-    width: 90%;
     height: 100px;
-    font-family: none;
+    border: var(--bs-border-width) solid #dbdade;
+    border-radius: var(--bs-border-radius);
 }
 
     .dropdown-options li {
@@ -103,7 +87,7 @@
 }
 
 /*--List Box No options Message Show Css Code Start--*/
-.NoOptions_message {
+    .NoOptions_message {
     background-color: #1dcdbd;
     font-size: 18px;
     text-align: center;
@@ -120,38 +104,10 @@
 /*----List Box Type Dropdowns Css Code End-----*/
 
 /*----HEADER BTN NAMES AND STYLE CODE START----*/
-.Headers_Btn {
-    /* height: 30px;
-    background-color: tomato;
-    border-radius: 8px;
-    font-family: auto;
-    border-color: tomato;*/
-    background-color: black;
-    color: white;
-    border-radius: 6px;
-    margin-left: 3px;
-    font-family: emoji;
-    border: 2px solid black;
-    height: 29px;
-    font-size: 14px;
-    font-weight: bolder;
-    width: 99%;
-}
-
-.Header_text_span {
-    /*color: cornsilk;
-    font-size: 19px;
-    font-weight: bolder;*/
-    color: white;
-    font-size: 13px;
-    font-weight: bolder;
-}
 
 /*----HEADER BTN NAMES AND STYLE CODE END----*/
 
-.control-label {
-    font-family: none;
-}
+
 
 .Dropdown_Css {
     height: 24px;

@@ -155,7 +155,7 @@
                 }
             }
 
-            let cellStyle = 'width: 10%;';
+            let cellStyle = 'width: 10%;color: silver;';
             if (eventExists) {
                 cellClass += ' EventDateStyle';
                 cellStyle += 'background-color:lightgreen;color:black;height:20%;';
@@ -164,7 +164,7 @@
             if (isToday) {
                 cellStyle += 'width: 10%;background-color: #999999;';
             }
-
+         
            
 
             //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
@@ -198,6 +198,7 @@
 
 
     $(document).ready(function () {
+        debugger;
         let eventCalendar = @Html.Raw(eventCalendarJson);
         let currentMonth = new Date().getMonth() + 1;
         let currentYear = new Date().getFullYear();

@@ -3,7 +3,29 @@
 *@
 
 <style>
-    /* Adjust the following styles to your preference */
+    .hover-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .hover-text {
+        display: none;
+        position: absolute;
+        top: -319%;
+        left: -145%;
+        transform: translateX(-100%);
+        background-color: #a45a5a;
+        color: black;
+        padding: 21px 18px;
+        border-radius: 50px 70px 15px 40px;
+        font-size: 14px;
+    }
+
+    .hover-container:hover .hover-text {
+        display: block;
+    }
+
     .table-responsive {
         display: block;
         overflow-x: auto;
@@ -30,7 +52,6 @@
             width: 17.8%;
         }
 
-
     .Set_Fee_Users_Table {
         width: 99%;
     }
@@ -45,57 +66,9 @@
             border: 1px solid #1d1e2630;
         }
 
-
-
         .Set_Fee_Users_Table tr:hover {
             background-color: #f5f5f5;
         }
-
-    .RecordsCount_Span {
-        background-color: #fd761e;
-        color: white;
-        border-radius: 10px;
-        font-size: 15px;
-        padding: 5px;
-        font-weight: bold;
-    }
-
-    .order-label {
-        margin-left: 18px;
-        font-size: 14px;
-    }
-
-    .sort-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        position: relative;
-        text-decoration: underline;
-        color: green;
-    }
-
-        .sort-button::after {
-            content: "▼";
-            margin-left: 5px;
-        }
-
-        .sort-button.up::after {
-            content: "▲";
-        }
-
-        .sort-button.clicked::after {
-            content: " ";
-        }
-
-    .Amount_TxtSp {
-        margin-left: 6px;
-        font-weight: 400;
-        font-size: 13px;
-        color: black;
-        margin-top: 2px;
-    }
-
 
     .question-mark {
         color: white;
@@ -106,33 +79,22 @@
         cursor: pointer;
     }
 
-    /* Tooltip Styles */
-    .tooltip {
-        position: absolute;
-        display: none;
-        background-color: #333;
-        color: #fff;
-        padding: 5px;
-        border-radius: 5px;
-        white-space: nowrap;
-        z-index: 999; /* Ensure it appears above other elements */
-    }
-
-    input[type="text"] {
+    .Inputtext {
         padding: 4px;
         border: 1px solid #c5b9b9;
         border-radius: 2px;
         background-color: white;
         height: 25px;
         font: 14px Arial;
+        width: 60%;
     }
 
-        /* Style for the textbox when it's clicked (focused) */
-        input[type="text"]:focus {
+        .Inputtext:focus {
+            outline-color: rgba(0, 0, 0, 0);
             border: 1px solid black;
-            background-color: white;
-            font-weight: 600 !important;
-            filter: drop-shadow(2px 4px 6px black);
+            font-weight: 100 !important;
+            filter: drop-shadow(0px 0px 1px black);
+            border-radius: 4px;
         }
 
     .search-icon {
@@ -151,74 +113,75 @@
 }
 
 <div id="SetFee_ForUsers_table_DIVID">
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <div class="row mb-2">
-            <div id="DiscountAmount_users_ErrorsMessage" style=" color: red; margin-left: 10px; font-family: none;"></div>
-            <div style=" margin-left: 16px;">
-                <label class="DueDate"><font style="color: red; font-size: 13px;">*</font>Due Date:</label>
-                <input type="date" id="duedatedata" style=" outline: none;" />
+    <div class="row mb-0">
+        @*<span id="DiscountAmount_users_ErrorsMessage" class="text-danger"></span>*@
+        @*<span id="Commonerrormessage" class="text-danger"></span>*@
+        <div class="row mb-0">
+            <label class="col-sm-2 col-form-label space text-center required"> Due Date</label>
+            <div class="col-sm-2">
+                <input type="date" id="Duedatetxt" class="form-control">@*duedatedata*@
             </div>
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">
-                            <span>YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span>
-                            @*<span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span>*@
-                        </h6>
+        </div>
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h6 class="mb-0">YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.</h6>
+                </div>
+
+                <div class="row">
+                    <div class="row mb-2">
+                        <label class="col-sm-2 text-end form-label space">Enter Amount</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="Sameamounttxt" class="Inputtext form-control" maxlength="8" />
+                        </div>
+                        <label class="col-sm-4">
+                            <input type="checkbox" id="Sameamountchk" class="form-check-input" onclick="Sameamountchkonclick(this)">
+                            Set Same Amount for All STUDENT(s)
+                        </label>
+                        <div class="col-sm-2 hover-container">
+                            <spa class="question-mark">?</spa>
+                            <div class="hover-text">
+                                NOTE: Enter Amount in TextBox then Tick the CheckBox to Copy the Same Amount to All Users in Fee Column.
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
+                    <thead style="background-color:white;">
+                        <tr style=" background-color: #DDDEEE; text-align: center;">
+                            <th>S.No</th>
+                            <th data-sort-col="Name">Name</th>
+                            <th data-sort-col="RegNo"><b>Reg. No</b></th>
+                            <th class="hideable">Route Name</th>
+                            <th class="hideable">Stop Name</th>
+                            <th>Fee Amount</th>
+                            <th>Discount Type</th>
+                            <th>Discount Amount</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Usersdiscounttbl" style="background-color: whitesmoke;">
+                        @*Discount_Users_tbl*@
+                        @{
+                            int Sno = 1;
+                        }
+                        @foreach (var item in groupedUsers)
+                        {
+                            var DiscountUsers = item.First();
+                            <tr>
+                                <td>@Sno</td>
+                                <td>@DiscountUsers.FirstName</td>
+                                <td hidden id="UserId">@DiscountUsers.UserId</td>
+                                <td hidden id="FeeTypeid">@DiscountUsers.FeeTypeid</td>
+                                <td hidden id="ConcedingAmount">@DiscountUsers.ConcedingAmount</td>
+                                <td hidden id="DueDate">
+                                    @DiscountUsers.DueDate
 
-                    @*<div class="default-according style-1" id="accordionoc">
-                        <div class="card">
-                            <div>
-                                <h5 class="mb-0">
-                                    <button class="collapsed Headers_Btn" data-bs-toggle="collapse1" data-bs-target="#collapseicon1" aria-expanded="true" aria-controls="collapse11" style="width: 99.5%"> <span class="Header_text_span">YOUR SEARCH RESULTED : <span class="RecordsCount_Span">@totalGroups</span> RECORDS.</span> </button>
-                                </h5>
-                            </div>*@
-
-
-                    <span class="Amount_TxtSp">
-                        Enter Amount: <input type="text" id="amountInput" style="border: 1px solid #607D8B; outline:none;" maxlength="8">&nbsp;<input type="checkbox" id="checkbox" onclick="toggleSameAmount(this)">Set Same Amount for All STUDENT(s) <span class="question-mark" data-tippy-content="NOTE: Enter Amount in TextBox then Tick the CheckBox to Copy the Same Amount to All Users in Fee Column.">?</span>
-                    </span>
-
-
-
-
-                    @*<div style="width: 100%;">*@
-                    <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
-                        <thead style="background-color:white;">
-                            <tr style=" background-color: #DDDEEE; text-align: center;">
-                                <th>S.No</th>
-                                <th data-sort-col="Name">Name</th>
-                                <th data-sort-col="RegNo"><b>Reg. No</b></th>
-                                <th class="hideable">Route Name</th>
-                                <th class="hideable">Stop Name</th>
-                                <th>Fee Amount</th>
-                                <th>Discount Type</th>
-                                <th>Discount Amount</th>
-                                <th>Comments</th>
-                            </tr>
-                        </thead>
-                        <tbody id="Discount_Users_tbl" style="background-color: whitesmoke;">
-                            @{
-                                int Sno = 1;
-                            }
-                            @foreach (var item in groupedUsers)
-                            {
-                                var DiscountUsers = item.First();
-                                <tr>
-                                    <td>@Sno</td>
-                                    <td>@DiscountUsers.FirstName</td>
-                                    <td hidden id="UserId">@DiscountUsers.UserId</td>
-                                    <td hidden id="FeeTypeid">@DiscountUsers.FeeTypeid</td>
-                                    <td hidden id="ConcedingAmount">@DiscountUsers.ConcedingAmount</td>
-                                    <td hidden id="DueDate">
-                                        @DiscountUsers.DueDate
-
-                                        <script>
+                                    <script>
 
                                 $(document).ready(function () {
                                     var formattedDate = formatDate("@DiscountUsers.DueDate");
-                                    $('#duedatedata').val(formattedDate);
+                                    $('#Duedatetxt').val(formattedDate);
                                 });
 
                                 function formatDate(dateString) {
@@ -228,71 +191,69 @@
                                     }
                                     return "";
                                 }
-                                        </script>
-                                    </td>
-                                    <td>@DiscountUsers.InstanceUserCode</td>
+                                    </script>
+                                </td>
+                                <td>@DiscountUsers.InstanceUserCode</td>
 
+                                @if (!string.IsNullOrEmpty(DiscountUsers.RouteName))
+                                {
+                                    <td class="hideable">@DiscountUsers.RouteName</td>
+                                }
+                                else
+                                {
+                                    <td class="hideable" style="display: none;"></td>
+                                }
+                                @if (!string.IsNullOrEmpty(DiscountUsers.StopName))
+                                {
+                                    <td class="hideable">@DiscountUsers.StopName</td>
+                                }
+                                else
+                                {
+                                    <td class="hideable" style="display: none;"></td>
+                                }
 
-                                    @if (!string.IsNullOrEmpty(DiscountUsers.RouteName))
+                                <td align="center">
+                                    <input type="text" id="UserFeeAmount_TxtId" value="@DiscountUsers.FeeAmount" class="Inputtext" />
+                                    @if (DiscountUsers.DisplayIcon == "1")
                                     {
-                                        <td class="hideable">@DiscountUsers.RouteName</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="hideable" style="display: none;"></td>
-                                    }
-                                    @if (!string.IsNullOrEmpty(DiscountUsers.StopName))
-                                    {
-                                        <td class="hideable">@DiscountUsers.StopName</td>
-                                    }
-                                    else
-                                    {
-                                        <td class="hideable" style="display: none;"></td>
-                                    }
+                                        <span class="search-icon">🔍</span>
 
-                                    <td align="center">
-                                        <input type="text" id="UserFeeAmount_TxtId" value="@DiscountUsers.FeeAmount" style="width: 70%;" />
-                                        @if (DiscountUsers.DisplayIcon == "1")
+                                    }
+                                </td>
+                                <td align="center">
+                                    @*<select id="@DiscountUsers.UserId" onchange="ToggleChange(this)">*@
+                                    <select id="@DiscountUsers.UserId" onchange="handleSelectChange(this)">
+                                        @foreach (var DisocuntDD in DiscountUsers.Discount_Amount_DD)
                                         {
-                                            <span class="search-icon">🔍</span>
+                                            if (DisocuntDD.Value == DiscountUsers.ConcedingTypeId)
+                                            {
+                                                <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
+                                            }
 
                                         }
-
-
-                                    </td>
-                                    <td align="center">
-                                        <select id="@DiscountUsers.UserId" onchange="ToggleChange(this)">
-                                            @foreach (var DisocuntDD in DiscountUsers.Discount_Amount_DD)
-                                            {
-                                                if (DisocuntDD.Value == DiscountUsers.ConcedingTypeId)
-                                                {
-                                                    <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
-                                                }
-
-                                            }
-                                        </select>
-                                    </td>
-                                    <td align="center"><input type="text" id="DiscountAmount_TxtId_@DiscountUsers.UserId" class="DiscountAmount_TxtId" value="@DiscountUsers.ConcedingAmount" style="width: 70%;" /></td>
-                                    <td><textarea></textarea></td>
-                                </tr>
-                                Sno++;
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td align="center" colspan="9">
-                                    <button value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-success waves-effect waves-light">Submit</button>
-
-                                    @*<input type="Submit" value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-pill btn-outline-success-2x" style="width: 11%; letter-spacing: 3px; border-radius: 8px;" />*@
+                                    </select>
                                 </td>
+                                <td align="center">
+                                    <input type="text" id="DiscountAmount_TxtId_@DiscountUsers.UserId" class="Inputtext" value="@DiscountUsers.ConcedingAmount" style="width: 70%;" />
+                                </td>
+                                <td><textarea></textarea></td>
                             </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                            Sno++;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td align="center" colspan="9">
+                                @*<button value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-success waves-effect waves-light">Submit</button>*@
+                                <button value="Submit" onclick="Discountfeedetailsinserting()" id="Dssavebtn" class="btn btn-success waves-effect waves-light">Submit</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
@@ -302,197 +263,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
 
+<script src="~/js/Managefeedetails1.js"></script>
+
 <script>
-    function ToggleChange(selectElement) {
-        var userId = selectElement.id;
-        var selectedValue = selectElement.value;
-        debugger;
-        var dynamicTextBoxId = 'DiscountAmount_TxtId_' + userId;
-        $.ajax({
-            type: 'GET',
-            url: '/FeeSection/DiscountType_By_DiscountAmount_DD', // Replace with the actual URL
-            data: { ConcedingTypeId: selectedValue },
-            success: function (data) {
-                // alert(data);
-                console.log("Data received:", data); // Debugging: Check the data received
-                console.log("Dynamic TextBox ID:", dynamicTextBoxId);
-                //$('#DiscountAmount_TxtId').val(data);
-                $('#' + dynamicTextBoxId).val(data.amount);
-            },
-            error: function () {
-
-            }
-        });
-    }
-
-    function toggleSameAmount() {
-        debugger;
-        // Get the checkbox element
-        var checkbox = document.getElementById("checkbox");
-
-
-        var SameAmountTxt = $('#amountInput').val();
-
-
-        var tableBody = document.getElementById("Discount_Users_tbl");
-        var rows = tableBody.getElementsByTagName('tr');
-        for (var i = 0; i < rows.length; i++) {
-
-            var row = rows[i];
-            //var tdoftab = $(row).find('td:nth-child(8)');
-            //var tdoftab9 = $(row).find('td:nth-child(9)');
-            var tdoftab10 = $(row).find('td:nth-child(10)');
-            // $(tdoftab).find('input[type="text"]').val(SameAmountTxt);
-            // $(tdoftab9).find('input[type="text"]').val(SameAmountTxt);
-            $(tdoftab10).find('input[type="text"]').val(SameAmountTxt);
-        }
-
-    }
-
-
-
-    function DiscountAmount_InsertBtn() {
-        $('#DiscountAmount_users_ErrorsMessage').html('');
-        debugger;
-        var shouldMakeAjaxCall = true;
-        var tbody = document.getElementById("Discount_Users_tbl");
-
-
-        var rows = tbody.getElementsByTagName("tr");
-
-        var dataToSend = [];
-
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-
-            debugger;
-
-            var sno = row.cells[0].innerText;
-            var FirstName = row.cells[1].innerText;
-            var UserId = row.cells[2].innerText;
-            var FeeTypeid = $('#FeeTypeid_DD').val();
-            var AcademicYearId = $('#AcademicYearId_DD').val();
-            var FeeTermId = $('#FeeTermId_DD').val();
-            //var ConcedingTypeId = row.cells[8].querySelector("select").value;
-            //var discountAmount = row.cells[7].querySelector("input").value;
-            // var ConcedingAmount = row.cells[9].querySelector("input").value;
-            var ConcedingTypeId = row.cells[10].querySelector("select").value;
-
-            var discountAmount = row.cells[9].querySelector("input").value;
-
-            var ConcedingAmount = row.cells[11].querySelector("input").value;
-
-
-            var DueDate = $('#duedatedata').val();
-            //var comments = row.cells[10].querySelector("textarea").value;
-            var comments = row.cells[12].querySelector("textarea").value;
-
-            var updatedBy = $('#updatedBy_Txtid').val();
-
-
-
-            var InstanceUserCode = row.cells[6].innerText;
-
-
-
-
-
-
-
-            if (discountAmount == "") {
-                $('#DiscountAmount_users_ErrorsMessage').html("Enter Valid Fee Amount for " + '"' + FirstName + '"' + "");
-                shouldMakeAjaxCall = false;
-                break;
-            }
-            if (parseFloat(ConcedingAmount) > parseFloat(discountAmount)) {
-                $('#DiscountAmount_users_ErrorsMessage').html('Discount Amount Should not be Greater than Fee Amount for' + '"' + FirstName + '"');
-                shouldMakeAjaxCall = false;
-                break;
-            }
-            if (parseFloat(ConcedingAmount) == parseFloat(discountAmount)) {
-                $('#DiscountAmount_users_ErrorsMessage').html('"Ananya S.Kuduvalli" has paid Rs. 600 ,you cannot Update the Fee amount.The difference of Fee Amount,Discount Amount should be Greater than or Equal to Paid Amount.');
-
-                shouldMakeAjaxCall = false;
-                break;
-            }
-            if (DueDate == "") {
-                $('#DiscountAmount_users_ErrorsMessage').html("Please enter Due Date.");
-                shouldMakeAjaxCall = false;
-                break;
-            }
-
-
-            debugger;
-            if (ConcedingAmount == "") {
-                ConcedingAmount = "90142";
-            }
-
-            var rowData = {
-
-                UserId: UserId,
-                FeeTypeId: FeeTypeid,
-                AcademicYearId: AcademicYearId,
-                FeeTermId: FeeTermId,
-                ConcedingTypeId: ConcedingTypeId,
-                FeeAmount: discountAmount,
-                ConcedingAmount: ConcedingAmount,
-                DueDate: DueDate,
-                Comments: comments,
-                updatedBy: updatedBy
-
-            };
-
-            dataToSend.push(rowData);
-
-        }
-        if (shouldMakeAjaxCall) {
-            var jsonData = JSON.stringify(dataToSend);
-
-
-            $.ajax({
-                url: '/FeeSection/DiscountAMount_ManageFeeDetails',
-                type: 'POST',
-                data: { Discount_Amount_Users_Details: jsonData },
-                success: function (response) {
-                    /*alert(response);*/
-                    if (response == "2") {
-
-                        $('#DiscountAmount_users_ErrorsMessage').text('Record(s) Submitted Successfully.');
-
-                    } else if (response == "1") {
-
-                        $('#DiscountAmount_users_ErrorsMessage').text('Record(s) Submitted Successfully.');
-
-                    } else if (response == "-1") {
-
-                        $('#DiscountAmount_users_ErrorsMessage').text();
-
-                    } else {
-
-                        $('#validationMessage').text('Something Wrong........!');
-
-                    }
-                },
-                error: function () {
-
-                }
-            });
-        }
-    }
-
-
-
-
-
     $(document).ready(function () {
         $('.hideable').each(function () {
-
             debugger;
-
-            var isAnyVisible = $('#Discount_Users_tbl .hideable:visible').length > 0;
+            var isAnyVisible = $('#Usersdiscounttbl .hideable:visible').length > 0;
             if (!isAnyVisible) {
                 $(this).hide();
             }
         });
     });
 </script>
+

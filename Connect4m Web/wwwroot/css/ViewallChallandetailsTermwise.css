@@ -1,6 +1,4 @@
-﻿body {
-    width: 101%;
-}
+﻿
 /*---------- Loading Spinner CSS Code Start-------------*/
 
 .spinner-container {
@@ -27,9 +25,9 @@
 }
 
 .loading-text {
-    margin-top: 39px;
+    margin-top: 54px;
     font-size: 12px;
-    margin-left: 123px;
+    margin-left: 65px;
     color: #fd2d63;
     font-weight: bold;
 }
@@ -44,19 +42,19 @@
     z-index: 9998;
 }
 
-    .spinner:nth-child(1) {
+.spinner:nth-child(1) {
         border-bottom-width: 8px;
         border-color: #fd2d63;
         animation: rotate1 3s linear infinite;
     }
 
-    .spinner:nth-child(2) {
+.spinner:nth-child(2) {
         border-right-width: 8px;
         border-color: rgb(0, 162, 265);
         animation: rotate2 3s linear infinite;
     }
 
-    .spinner:nth-child(3) {
+.spinner:nth-child(3) {
         border-top-width: 8px;
         border-color: rgb(0, 247, 255);
         animation: rotate3 3s linear infinite;
@@ -95,71 +93,6 @@
 
 /*---------- Loading Spinner CSS Code End-------------*/
 
-
-/*----HEADER BTN NAMES AND STYLE CODE START----*/
-.Headers_Btn {
-    background-color: black;
-    color: white;
-    border-radius: 6px;
-    margin-left: 3px;
-    font-family: emoji;
-    border: 2px solid black;
-    height: 29px;
-    font-size: 14px;
-    font-weight: bolder;
-    width: 99%;
-}
-
-.Header_text_span {
-    color: white;
-    font-size: 13px;
-    font-weight: bolder;
-}
-
-/*----HEADER BTN NAMES AND STYLE CODE END----*/
-
-
-
-.form-group {
-    margin-bottom: 12px;
-}
-
-.label-normal {
-    height: 21px;
-    margin-top: 2px;
-}
-
-.label-modified {
-    height: 30px;
-    margin-top: 40px;
-}
-
-
-
-input[type="text"] {
-    outline: none;
-    border: 1px solid black;
-    border-radius: 3px;
-    font-size: 16px;
-}
-
-    input[type="text"]:focus {
-        border: 2px solid blue;
-        outline: none;
-    }
-
-select {
-    outline: none;
-    border: 1px solid black;
-    border-radius: 3px;
-    font-size: 13.5px;
-    height: 24px;
-}
-
-
-
-
-
 /*Table Data Css start*/
 .tabledata {
     width: 99%;
@@ -167,7 +100,7 @@ select {
     margin: 3px 0px 0px 8px;
 }
 
-    .tabledata thead th {
+.tabledata thead th {
         /*border-color: #CD4;
         padding: 7px;
         border: 1px solid;*/
@@ -181,13 +114,13 @@ select {
         text-align: left;
     }
 
-    .tabledata tbody td {
+.tabledata tbody td {
         border-color: #CD4;
         padding: 7px;
         border: 1px solid;
     }
 
-    .tabledata tr:hover {
+.tabledata tr:hover {
         background-color: snow;
     }
 

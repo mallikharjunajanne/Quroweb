@@ -1,14 +1,4 @@
 ﻿
-function CallToAjax(method, url, successCallback, errorCallback) {
-    $.ajax({
-        url: url,
-        type: method,
-        success: successCallback,
-        error: function (xhr, status, error) {
-            errorCallback(xhr.status, error);
-        }
-    });
-}
 
 function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
 
@@ -34,62 +24,62 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
 $(document).ready(function () {
 
-    fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
-        '/Attendance/attendancedetailsSlots',               // URL for data fetching
-        '#Slotddl',                                         // Dropdown selector
-        'value',                                            // Field name for option text
-        'text',                                             // Field name for option values
-        'manageClassification'                              // Response value return class name
-    );
+    //fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
+    //    '/Attendance/attendancedetailsSlots',               // URL for data fetching
+    //    '#Slotddl',                                         // Dropdown selector
+    //    'value',                                            // Field name for option text
+    //    'text',                                             // Field name for option values
+    //    'manageClassification'                              // Response value return class name
+    //);
 });
 
 
-function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
+//function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
     
-    CallToAjax('GET', url,
-        function (response) {
+//    CallToAjax('GET', url,
+//        function (response) {
 
             
-            var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
-            populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
-        },
-        function (status, error) {
-            // Handle errors here
-            console.error("Error fetching data:", error);
-        }
-    );
-}
+//            var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
+//            populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
+//        },
+//        function (status, error) {
+//            // Handle errors here
+//            console.error("Error fetching data:", error);
+//        }
+//    );
+//}
 
-function populateDropdown(data, dropdownSelector, valueField, textField) {
-    var dropdown = $(dropdownSelector);
+//function populateDropdown(data, dropdownSelector, valueField, textField) {
+//    var dropdown = $(dropdownSelector);
     
-    dropdown.empty(); // Clear existing options
-    dropdown.append($('<option>', {
-        value: '',
-        text: '---Select---'
-    }));
-    $.each(data, function (index, item) {
-        dropdown.append($('<option>', {
-            value: item[valueField],
-            text: item[textField]
-        }));
-    });
-}
+//    dropdown.empty(); // Clear existing options
+//    dropdown.append($('<option>', {
+//        value: '',
+//        text: '---Select---'
+//    }));
+//    $.each(data, function (index, item) {
+//        dropdown.append($('<option>', {
+//            value: item[valueField],
+//            text: item[textField]
+//        }));
+//    });
+//}
 
 
 
 
 $(document).ready(function () {
-    /* ---****  MONTH WISE AND DATE WISE FUNCTION ***----*/
-    ShowFields();
+
+
 });
 
 
 
 /* ---****  MONTH WISE AND DATE WISE FUNCTION ***----*/
 function ShowFields() {
-    var dateWiseDiv = document.getElementById("DateWise_Id_fields");
-    var monthWiseDiv = document.getElementById("MonthWise_Id_fields");
+    var dateWiseDiv = document.getElementById("Datewisecontent");
+    var monthWiseDiv = document.getElementById("Monthwisecontent");
     var dateRadioButton = document.getElementById("defaultRadio1");
 
     if (dateRadioButton.checked) {
@@ -147,96 +137,42 @@ function DatesCompare(Sdate, Edate) {
 $("#StartDateid").on("change", function () {DatesCompare("Start Date", "End Date");});
 $("#EndDateid").on("change", function () {DatesCompare("Start Date", "End Date");});
 
-//$("#detailsbtn").click(function () {
-
-//    debugger;
-//    var detailsformdata = $("#Studentattendancedetailsform").serialize();
-
-//    var selectedValue = $("input[name='RadioSearch']:checked").val();
-//    var StDate = $("#StartDateid").val();
-//    var EnDate = $("#EndDateid").val();
-//    var InstanceSubjectId = $("#Slotddl").val();
-//    var Subjectlength = InstanceSubjectId.length;
-//    var Ddlmonth = $("#Ddlmonth").val();
-//    var today = new Date();
-//    if (selectedValue === "0") {
-//        // "Dates" radio button is selected
-
-//        if (StDate === '' && EnDate === '') {
-//            $("#Validationmessage").text("Please Select Startdate and Enddate");
-
-//        } else if (StDate === '') {
-//            $("#Validationmessage").text("Please Select Startdate");
-
-//        } else if (EnDate === '') {
-//            $("#Validationmessage").text("Please Select Enddate");
-
-//        } else if (Subjectlength === 0) {
-//            $("#Validationmessage").text("Please Select Slot");
-
-//        }
-
-//    }
-//    else if (selectedValue === "1") {
-//        // "Months" radio button is selected    
-//        $("#Validationmessage").text('');
-//        if (Ddlmonth == '0') {
-//            $("#Validationmessage").text("Please Select Month");
-//        }
-//        else {
-//            debugger;
-//            var selectedMonth = document.getElementById('Ddlmonth').value;
-//            if (selectedMonth !== '0') {
-//                // Get the current year dynamically
-//                var currentYear = new Date().getFullYear();
-
-//                // Create a Date object with the selected year and month
-//                var selectedDate = new Date(currentYear, parseInt(selectedMonth) - 1, 1);
-
-//                // Get the first day of the month
-//                var startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-//                debugger;
-//                //var startDateString = startDate;
-//                var startDateString = dateformatchange(startDate);
-
-//                // Get the last day of the month
-//                var endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
-//                //var endDateString = endDate;
-//                var endDateString = dateformatchange(endDate);
-
-//                // Display or use the start and end dates as needed
-//                console.log('Start Date:', startDateString);
-//                console.log('End Date:', endDateString);
-//            }
-//            var StartDates = startDateString;
-//            var EndDates = endDateString;
 
 
-//            $.ajax({
-//                url: "/Attendance/GetViewAttendanceDetailstbl",
-//                type: "GET",
-//                data: detailsformdata,
-//                success: function (response) {
-//                    $("#Student_Attendance_Details_Tbl").html(response);
-//                }
-//            });
-//        }
-//    } else {
+//const feeType = document.getElementById("Feetypetxt").value;
+//const feeTypeStatus = document.querySelector('input[name="Feetypestatus"]:checked')?.value;
 
-//        $.ajax({
-//            url: "/Attendance/GetViewAttendanceDetailstbl",
-//            type: "GET",
-//            data: detailsformdata,
-//            success: function (response) {
-//                $("#Student_Attendance_Details_Tbl").html(response);
-//            }
-//        });
-//    }
-//});
+//const quantity = document.querySelector('input[name="Qunatityradio"]:checked')?.value;
+//const amount = document.getElementById("Amounttxt").value;
+//var description = document.getElementById("descriptiontxt").value;
 
+//var formData = {
+//    FeeType: feeType,
+//    Feetypestatus: feeTypeStatus,
+//    ConcedingtypeIds: concedingtypeIds,
+//    Quantity: quantity,
+//    Amount: amount,
+//    Description: description
+//};
 
+//CallToAjax('POST', "/FeeSection/Insert_feetype", formData,
+//    function (resp) {
+//        const errorMessages = {
+//            "0": 'Fee Type with Name ' + feeType + ' already exists.',
+//            "-2": 'One FeeType with Fee Backlog is Already set to Current Academic Year,You cannot Create Fee Type with Fee BackLog.',
+//            "-4": 'Fee Type with Receipt Code ' + 'Your Receipt Code' + ' already exists.'
+//        };
+//        $('#Commonerrormessage').text(errorMessages[resp] || 'Record inserted successfully');
+//        loaddingimg.css('display', 'none');
+//    },
+//    function (status, error) {
+//        loaddingimg.css('display', 'none');
+//    },
+//);
 $("#detailsbtn").click(function () {
     debugger;
+    $('#resultcountmessage').text('');
+    $('#Studentattendancedetailstbl').empty();
     var selectedValue = $("input[name='RadioSearch']:checked").val();
     var Ddlmonth = $("#Ddlmonth").val();
 
@@ -250,7 +186,12 @@ $("#detailsbtn").click(function () {
                 data: detailsformdata,
                 success: function (response) {
                     debugger;
-                    $("#Studentattendancedetailstbl").append(response);
+                    if (response != 0) {
+                        $("#Studentattendancedetailstbl").append(response);
+                    } else {
+                        $('#resultcountmessage').text('No Records Found 0');
+                    }
+                    
                 },
                 error: function (xhr, status, error) {
                     console.error("AJAX request failed:", status, error);
@@ -294,200 +235,25 @@ $("#detailsbtn").click(function () {
             var endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
             var endDateString = dateformatchange(endDate);
 
+        
 
+            var Slotselectedvalue = $('#Slotddl').val();
             var additionalData = {
                 StartDate: startDateString,
                 EndDate: endDateString,
-                SubjectSlotID: selectedMonth,
+                SubjectSlotID: Slotselectedvalue,
+                //SubjectSlotID: Slotid,
             };
             var additionalDataString = $.param(additionalData);
-            //detailsformdata += "&" + additionalDataString;
+   
 
 
-            //detailsformdata += "&StartDate=" + encodeURIComponent(startDateString);
-            //detailsformdata += "&EndDate=" + encodeURIComponent(endDateString);
-            //detailsformdata = removeDuplicateParams(detailsformdata, "StartDate");
-            //detailsformdata = removeDuplicateParams(detailsformdata, "EndDate");
             handleValidationAndAjax("", "/Attendance/GetViewAttendanceDetailstbl", additionalData);
         }
     }
-
-
-    //var detailsformdata = $("#Studentattendancedetailsform").serialize();
-    //    debugger;
-    //var detailsformdata = $("#Studentattendancedetailsform").serialize();
-
-    //var selectedValue = $("input[name='RadioSearch']:checked").val();
-    //var StDate = $("#StartDateid").val();
-    //var EnDate = $("#EndDateid").val();
-    //var InstanceSubjectId = $("#Slotddl").val();
-    //var Subjectlength = InstanceSubjectId.length;
-    //var Ddlmonth = $("#Ddlmonth").val();
-    //var today = new Date();
-    //if (selectedValue === "0") {
-    //    // "Dates" radio button is selected
-
-    //    if (StDate === '' && EnDate === '') {
-
-    //        $("#Validationmessage").text("Please Select Startdate and Enddate");
-
-    //    } else if (StDate === '') {
-
-    //        $("#Validationmessage").text("Please Select Startdate");
-
-    //    } else if (EnDate === '') {
-
-    //        $("#Validationmessage").text("Please Select Enddate");
-
-    //    } else if (Subjectlength === 0) {
-
-    //        $("#Validationmessage").text("Please Select Slot");
-    //    } else {
-
-    //        $.ajax({
-    //            url: "/Attendance/GetViewAttendanceDetailstbl",
-    //            type: "GET",
-    //            data: detailsformdata,
-    //            success: function (response) {
-    //                debugger;
-    //                $("#Studentattendancedetailstbl").html(response);
-    //            }
-    //        });
-
-    //    }
-    //} else if (selectedValue === "1") {
-    //    // "Months" radio button is selected
-
-    //    $("#Validationmessage").text('');
-
-    //    if (Ddlmonth == '0') {
-
-    //        $("#Validationmessage").text("Please Select Month");
-
-    //    } else {
-    //        debugger;
-    //        var selectedMonth = document.getElementById('Ddlmonth').value;
-    //       /* if (selectedMonth !== '0') {*/
-    //            // Get the current year dynamically
-    //            var currentYear = new Date().getFullYear();
-
-    //            // Create a Date object with the selected year and month
-    //            var selectedDate = new Date(currentYear, parseInt(selectedMonth) - 1, 1);
-
-    //            // Get the first day of the month
-    //            var startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-    //            debugger;
-    //            //var startDateString = startDate;
-    //            var startDateString = dateformatchange(startDate);
-
-    //            // Get the last day of the month
-    //            var endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
-    //            //var endDateString = endDate;
-    //            var endDateString = dateformatchange(endDate);
-
-    //            // Display or use the start and end dates as needed
-    //            console.log('Start Date:', startDateString);
-    //            console.log('End Date:', endDateString);
-    //        //}
-    //        debugger;
-    //        var StartDates = startDateString;
-    //        var EndDates = endDateString;
-    //        $.ajax({
-    //            url: "/Attendance/GetViewAttendanceDetailstbl",
-    //            type: "GET",
-    //            data: detailsformdata,
-    //            success: function (response) {
-    //                $("#Student_Attendance_Details_Tbl").html(response);
-    //            }
-    //        });
-
-    //    }
-    //}
-
 });
 
-//$('#Studentattendancedetailsform').on('submit', function () {
-//    debugger;
-//    var selectedValue = $("input[name='RadioSearch']:checked").val();
-//    var StDate = $("#StartDateid").val();
-//    var EnDate = $("#EndDateid").val();
-//    var InstanceSubjectId = $("#Slotddl").val();
-//    var Subjectlength = InstanceSubjectId.length;
-//    var Ddlmonth = $("#Ddlmonth").val();
-//    var today = new Date();
-//    if (selectedValue === "0") {
-//        // "Dates" radio button is selected
 
-//        if (StDate === '' && EnDate === '') {
-//            $("#Validationmessage").text("Please Select Startdate and Enddate");
-
-//        } else if (StDate === '') {
-//            $("#Validationmessage").text("Please Select Startdate");
-           
-//        } else if (EnDate === '') {
-//            $("#Validationmessage").text("Please Select Enddate");
-           
-//        } else if (Subjectlength === 0) {
-//            $("#Validationmessage").text("Please Select Slot");
-          
-//        }
-
-//    }
-//    else if (selectedValue === "1") {
-        
-//        $("#Validationmessage").text('');
-//        if (Ddlmonth == '0') {
-//            $("#Validationmessage").text("Please Select Month");
-        
-//        }
-//        else {
-//            debugger;
-//            var selectedMonth = document.getElementById('Ddlmonth').value;
-//            if (selectedMonth !== '0') {
-//                // Get the current year dynamically
-//                var currentYear = new Date().getFullYear();
-
-//                // Create a Date object with the selected year and month
-//                var selectedDate = new Date(currentYear, parseInt(selectedMonth) - 1, 1);
-
-//                // Get the first day of the month
-//                var startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-//                debugger;
-//               // var startDateString = startDate;
-//                var startDateString = dateformatchange(startDate);
-
-//                // Get the last day of the month
-//                var endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
-//                //var endDateString = endDate;
-//                var endDateString = dateformatchange(endDate);
-
-//                // Display or use the start and end dates as needed
-//                console.log('Start Date:', startDateString);
-//                console.log('End Date:', endDateString);
-//            }
-//        }
-
-
-//        var StartDates = startDateString;
-//        var EndDates = endDateString;
-//        debugger;
-//        var St_details_formdata = $("#Studentattendancedetailsform").serialize();
-//        debugger;
-//        debugger;
-//        $.ajax({
-
-//            url: "/Attendance/GetViewAttendanceDetailstbl_",
-//            type: "GET",
-//            data: St_details_formdata,
-//            success: fun2150
-//        });
-//        function fun2150(resptbl) {
-//            debugger;
-//            $("#Student_Attendance_Details_Tbl").html(resptbl);
-//        }
-//    }
-
-//});
 
 function dateformatchange(date) {
     var dd = String(date.getDate()).padStart(2, '0');

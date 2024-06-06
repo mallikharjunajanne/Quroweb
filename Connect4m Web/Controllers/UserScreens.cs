@@ -1,5 +1,6 @@
 ﻿using Connect4m_Web.Models;
 using Connect4m_Web.Models.LMSproperties;
+using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +51,7 @@ namespace Connect4m_Web.Controllers
             Roleid = _userService.Roleid;
             StudentUserid = _userService.StudentUserid;
         }
-
+        CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
         public IActionResult SchoolWelcomePage()
         {
@@ -58,7 +59,6 @@ namespace Connect4m_Web.Controllers
             {
                 string roleName = Request.Cookies["RoleName"];
                 ViewBag.LoginRoleName = roleName;
-                
 
                 if (roleName != null)
                 {
@@ -98,7 +98,6 @@ namespace Connect4m_Web.Controllers
                 throw;
             }
         }
-
         public IActionResult ParentLogin()
         {
             return View();
@@ -138,12 +137,7 @@ namespace Connect4m_Web.Controllers
             //return View();
         }
 
-
-        //----------------------------------------------------
-
-
-
-        //Created by rk
+        //ROLE MENU LIST GETING ACTION METHOD 
         public IActionResult RoleMenulist()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -235,7 +229,6 @@ namespace Connect4m_Web.Controllers
             return PartialView("_Achievements", item);
         }
 
-
         [HttpGet]
         public IActionResult Coollinks()
         {
@@ -254,8 +247,7 @@ namespace Connect4m_Web.Controllers
         }
         [HttpGet]
         public IActionResult FlashNews(string ENoticeType, int IsGlobalNotice)
-        {
-            //List<NoticeTypes> item = new List<NoticeTypes>();  
+        {           
             List<Flashnews> item = new List<Flashnews>();  
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_FlashNews?InstanceId=" + InstanceId + "&ENoticeType=" + ENoticeType + "&UserId=" + UserId+ "&IsGlobalNotice="+ IsGlobalNotice).Result;
 
@@ -265,7 +257,6 @@ namespace Connect4m_Web.Controllers
                 item = JsonConvert.DeserializeObject<List<Flashnews>>(data);
             }        
             return PartialView("_FlashNews", item);
-
         }
 
         [HttpGet]
@@ -278,10 +269,13 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<BirthdaysByInstance>>(data);
             }
+            ViewBag.Instanceidbyusephotodoc = "Instanceid" + InstanceId;
+            ViewBag.instanceid = InstanceId;
+            ViewBag.PhotoNameFullName = "/UserPhotos/" + InstanceId + "/" + item[0].Photo + "/" + item[0].Photo;
             ViewBag.Usersbirthdays = item;
-            return View();
-            //return PartialView("_BirthdaysByInstance", item);
+            return View();           
         }
+
 
         public IActionResult Timetablecriteria()
         {
@@ -407,6 +401,48 @@ namespace Connect4m_Web.Controllers
             ViewBag.EventCalendar = item;
             return View();
         }
+        #endregion
+
+        #region STUDENT RESULTS 
+
+        public IActionResult SearchForEresults()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Examnamesddl()
+        {
+            List<Studentresults> items = new List<Studentresults>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Examnamesddl?InstanceId=" + InstanceId+"&Userid="+UserId ).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<List<Studentresults>>(data);
+            }
+            return Json(items);
+        }
+        public IActionResult Examsdetailstbl(Studentresults studentresults)
+        {
+            ExamResults studentresultsobj = new ExamResults();
+            studentresults.InstanceId = InstanceId;
+            studentresults.CreatedBy = UserId;
+            studentresults.UserId = UserId;
+            studentresults.Examid = studentresults.Examid;
+            string data11 = JsonConvert.SerializeObject(studentresults);
+            StringContent content = new StringContent(data11, Encoding.UTF8, "application/json");
+            HttpResponseMessage response1 = client.PostAsync(client.BaseAddress + "/Examdetailstbl", content).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                string data1 = response1.Content.ReadAsStringAsync().Result;
+                studentresultsobj = JsonConvert.DeserializeObject<ExamResults> (data1);
+
+            }
+
+            //List<Studentresults> list = CommonMethodobj.CommonListMethod<Studentresults, Studentresults>(studentresults, "/Examdetailstbl", client);
+            return Json(studentresultsobj);
+        }
+
         #endregion
     }
 }

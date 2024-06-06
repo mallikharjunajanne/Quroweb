@@ -6,31 +6,19 @@
 
 
 
-
-<p id="ErrorMessage" style="font-size: 12px;color:red;"></p>
-<div class="row mb-2">
-    <div class="col-md-12 col-lg-12 mb-3">
-        <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span>
-                        NOTE
-                    </span>
-                </h5>
-            </div>
-            <div class="card-body">
-                <label>1) Please Enter Absent Students REG. NO.(s) in Mentioned formate (like 1,2,3,4 or o3c31a1201,03c31a1202,03c31a1203) only.</label>
-                <label>2) If all Students are present textbox should be Empty.</label><br />
-                <label>3) Only For Absenties SMS will Send.</label>
-            </div>
+<div class="col-md-12 col-lg-12 mb-3">
+    <div class="card mb-1">
+        <div class="card-header d-flex align-items-center justify-content-between"><h5 class="mb-0">NOTE</h5></div>
+        <div class="card-body">
+            <label class="control-label  col-form-label text-end ">1) Please Enter Absent Students REG. NO.(s) in Mentioned formate (like 1,2,3,4 or o3c31a1201,03c31a1202,03c31a1203) only.</label>
+            <label class="control-label  col-form-label text-end ">2) If all Students are present textbox should be Empty.</label><br />
+            <label class="control-label  col-form-label text-end ">3) Only For Absenties SMS will Send.</label>
         </div>
     </div>
 </div>
 
 
-
-
-<div class="row mb-3">
+<div class="row mb-1">
     <div class="col-sm-2">
         <input type="checkbox" class="form-check-input" id="Studentsmschk">
         <label class="form-check-label" for="Studentsmschk">SMS to Students</label>
@@ -41,55 +29,53 @@
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-md-12 col-lg-12 mb-3">
-        <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    YOUR SEARCH RESULTED <span class="TableCountSp_id"> @ViewBag.resultCount </span>  RECORDS.
-                </h5>
-            </div>
-            <div class="card-body">
-                <table class="FA_Table   table table-hover table-bordered">
-                    <tbody>
-                        <tr>
-                            <th class="table-dark">Sl. No</th>
-                            <th class="table-dark">
-                                Class
-                                <input type="hidden" id="Startdatetext" />
-                            </th>
-                            <th class="table-dark">
-                                <span id="Startdatetexttbltd"></span>
-                                @*<p id="startDateParagraph"></p>*@
 
-                            </th>
+<div class="col-md-12 col-lg-12 mb-3">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glows"> @ViewBag.resultCount </span>  RECORDS.</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th class="table-dark">Sl. No</th>
+                        <th class="table-dark">
+                            Class
+                            <input type="hidden" id="Startdatetext" />
+                        </th>
+                        <th class="table-dark">
+                            <span id="Startdatetexttbltd"></span>
+                            @*<p id="startDateParagraph"></p>*@
+
+                        </th>
+                    </tr>
+                    @{int Index = 1;}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td hidden>@item.InstanceSubClassificationId</td>
+                            <td>@Index</td>
+                            <td>
+                                @item.SubClassificationName
+                            </td>
+                            <td align="center">
+                                <textarea class="form-control txtArea" rows="2" cols="4" id="txtArea{@Index}"></textarea>
+                            </td>
                         </tr>
-                        @{int Index = 1;}
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td hidden>@item.InstanceSubClassificationId</td>
-                                <td>@Index</td>
-                                <td>
-                                    @item.SubClassificationName
-                                </td>
-                                <td align="center">
-                                    <textarea class="Fast_TextArea" id="Fast_TextArea_Id1"></textarea>
-                                </td>
-                            </tr>
-                            Index++;
-                        }
-                    </tbody>
-                </table>
-                <div class="row justify-content text-center">
-                    <div class="col-sm-12">
-                        <button type="submit" id="submitBtn" class="btn btn-success waves-effect waves-light"> Submit </button>
-                    </div>
+                        Index++;
+                    }
+                </tbody>
+            </table>
+            <div class="row justify-content text-center">
+                <div class="col-sm-12">
+                    <button type="submit" id="btnSubmit" class="btn btn-success waves-effect waves-light"> Submit </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 

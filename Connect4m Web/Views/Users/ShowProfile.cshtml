@@ -54,7 +54,7 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="RoleId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="RoleId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(x => x.RoleId,
@@ -71,21 +71,22 @@
 
                                                 @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
 
-                                                <div class="col-sm-6 ">
-                                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                                    @if (UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" />
-                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                    }
-                                                    @*else if (UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
-                                                            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                                            <div class="col-sm-6 " style="display: flex;">
+                                                @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                                @if (UpdateIdentification == "UpdateDetails")
+                                                {
+                                                    <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                }
+                                                @*else if (UpdateIdentification == "UpdateDetails")
+        {
+            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
+            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
 
-                                                        }*@
+        }*@
+                                                <div>
                                                     @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
                                                     {
                                                         <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
@@ -96,10 +97,11 @@
                                                     }
                                                 </div>
                                             </div>
+                                            </div>
 
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end  ClsDivTeachers" for="basic-default-name"></label>
+                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label space text-end  ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Designation">
                                                 </div>
@@ -109,19 +111,19 @@
                                             @*----------------------*@
 
                                             <div class="mb-1 row">
-                                                <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name"></label>
+                                                <label asp-for="Qualification" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Qualification">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row ">
-                                                <label asp-for="Batch" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
+                                                <label asp-for="Batch" class="col-sm-2 col-form-label space text-end ClsSessionStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsSessionStudent">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Batch">
                                                 </div>
 
-                                                <label asp-for="Photo" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="Photo" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                     {
@@ -144,7 +146,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-1 row">
-                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
+                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
                                                 <div class="col-sm-4 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.InstanceUserCode">
                                                 </div>
@@ -152,24 +154,24 @@
                                             @*----------------------*@
                                             <div class="mb-1 row">
 
-                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.FirstNameInGeneral">
                                                 </div>
 
-                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.MiddleName">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="LastName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.LastName">
                                                 </div>
 
-                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DateOfJoining != null ? Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)">
                                                 </div>
@@ -177,11 +179,11 @@
                                             @*----------------------*@
 
                                             <div class="mb-1 row">
-                                                <label asp-for="Nationality" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="Nationality" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Nationality">
                                                 </div>
-                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end  ClsSessionStudent" for="basic-default-name"></label>
+                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label space text-end  ClsSessionStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsSessionStudent">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.AdmissionNumberNew">
                                                 </div>
@@ -198,25 +200,25 @@
                                                         {<input type="text" readonly="" class="form-control-plaintext" value="No">
                                                         }
                                                     </div>*@
-                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.BloodGroupName">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PlaceOfBirth">
                                                 </div>
-                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.CollegeCode">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="Gender" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     @{ var Gender = "";}
                                                     @if (Model.Gender == "1")
@@ -233,7 +235,7 @@
                                                     }
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
                                                 </div>
-                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.ICNumber">
                                                 </div>
@@ -257,13 +259,13 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="DOB" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="DOB" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="date" Id="DOB" asp-for="DOB" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" />
                                                     <span asp-validation-for="DOB" class="text-danger"></span>
                                                     <span class="compare text-danger"></span>
                                                 </div>
-                                                <label asp-for="ReligionId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ReligionId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.ReligionName">
                                                 </div>
@@ -273,30 +275,30 @@
                                             @*----------------------*@
 
                                             <div class="mb-1 row">
-                                                <label asp-for="CommunityId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="CommunityId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.CommunityName">
                                                 </div>
-                                                <label asp-for="MotherTongueId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MotherTongueId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.MothorTongueName">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.MobilePhone">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PortalEmail">
                                                 </div>
 
-                                                <label asp-for="AlternateEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="AlternateEmail" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
 
                                                     <input type="email" asp-for="AlternateEmail" class="form-control " placeholder="Alternate Email Address">
@@ -306,23 +308,23 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress1">
                                                 </div>
 
-                                                <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress2">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="PCity" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PCity" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PCity">
                                                 </div>
-                                                <label asp-for="PCountryId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PCountryId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PCountryName">
                                                 </div>
@@ -330,11 +332,11 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="PStateId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PStateId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PStateName">
                                                 </div>
-                                                <label asp-for="PZip" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PZip" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PZip">
                                                 </div>
@@ -360,20 +362,20 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="InstanceClassificationId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="InstanceClassificationId" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.ClassificationName">
                                                 </div>
                                             </div>
                                             <div class="mb-1 row">
-                                                <label asp-for="InstanceSubClassificationId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="InstanceSubClassificationId" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.SubClassificationName">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-1 row">
-                                                <label asp-for="ClassTeacherId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ClassTeacherId" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.ClassTeacherName">
                                                 </div>
@@ -401,14 +403,14 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class="row mb-1 ">
-                                                <label asp-for="StudentIdentificationMarks" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="StudentIdentificationMarks" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.StudentIdentificationMarks">
                                                 </div>
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-1 ">
-                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     @if (Model.SiblingsInSameCollege == "1")
                                                     {
@@ -438,7 +440,7 @@
                                                 </div>*@
                                             @*----------------------*@
                                             <div class="row mb-1 ">
-                                                <label asp-for="PhysicallyChalenged" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PhysicallyChalenged" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PhysicallyChalenged">
                                                 </div>
@@ -446,7 +448,7 @@
 
                                             @*----------------------*@
                                             <div class="row mb-1 ">
-                                                <label asp-for="PhysicallyChallengedDetails" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PhysicallyChallengedDetails" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.PhysicallyChallengedDetails">
                                                 </div>
@@ -475,13 +477,13 @@
 
                                             @*----------------------*@
                                             <div class="row mb-1">
-                                                <label asp-for="UserName" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="UserName" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.UserName">
                                                 </div>
                                             </div> @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="Password" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="Password" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="Password" id="Password" class="form-control" placeholder="Password" required />
@@ -490,7 +492,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="ConfirmPassword" id="ConPassword" class="form-control" placeholder="Confirm Password" required />
                                                     <span asp-validation-for="ConfirmPassword" class="text-danger "></span>
@@ -498,7 +500,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlPickUpStop' asp-for="SecurityQuestionId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))" required>
@@ -510,7 +512,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="Answer" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="Answer" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="Answer" class="form-control" placeholder="Answer" required />
                                                     <span asp-validation-for="Answer" class="text-danger "></span>
@@ -552,7 +554,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="RoleId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="RoleId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(x => x.RoleId,
@@ -568,21 +570,22 @@
 
                                                 @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
 
-                                                <div class="col-sm-6 ">
-                                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                                    @if (UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <img src="@ViewBag.PhotoNameFullName" alt="Image Not Available" id="ImgPhotoDisplay" />
-                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                    }
-                                                    @*else if (UpdateIdentification == "UpdateDetails")
-                                                        {
-                                                            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
-                                                            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+                                            <div class="col-sm-6 " style="display: flex;">
+                                                @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                                @if (UpdateIdentification == "UpdateDetails")
+                                                {
+                                                    <img src="@ViewBag.PhotoNameFullName" alt="Image Not Available" id="ImgPhotoDisplay" height="100" width="100" />
+                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                }
+                                                @*else if (UpdateIdentification == "UpdateDetails")
+        {
+            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
+            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
 
-                                                        }*@
+        }*@
+                                                <div>
                                                     @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
                                                     {
                                                         <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
@@ -593,10 +596,11 @@
                                                     }
                                                 </div>
                                             </div>
+                                            </div>
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end  ClsDivTeachers" for="basic-default-name"></label>
+                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label space text-end  ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "select2 form-select select2-hidden-accessible ClsClear" })
@@ -611,7 +615,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name"></label>
+                                                <label asp-for="Qualification" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="Qualification" class="form-control ClsClear" placeholder="Qualification">
                                                     <span asp-validation-for="Qualification" class="text-danger"></span>
@@ -644,7 +648,7 @@
 
 
                                             <div class="mb-3 row">
-                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
+                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
                                                 <div class="col-sm-4 ClsDivTeachers HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="InstanceUserCode" class="form-control ClsClear" placeholder="Reg. No./Emp ID">
                                                     <span asp-validation-for="InstanceUserCode" class="text-danger"></span>
@@ -661,41 +665,41 @@
                                                         <input type="text" asp-for="FirstName" class="form-control" placeholder="Reg. No./Emp ID">
                                                         <span asp-validation-for="FirstName" class="text-danger"></span>
                                                     </div>*@
-                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="FirstNameInGeneral" class="form-control" placeholder="First Name" required>
                                                     <span asp-validation-for="FirstNameInGeneral" class="text-danger"></span>
                                                 </div>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.FirstNameInGeneral">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.FirstNameInGeneral" id="UserFirstnametxtid">
                                                 </div>
 
 
-                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="MiddleName" class="form-control " placeholder="Middle Name">
                                                     <span asp-validation-for="MiddleName" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.MiddleName">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.MiddleName" id="UserMiddlenametxtid">
                                                 </div>
                                             </div>
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
 
-                                                <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="LastName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name">
                                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                                 </div>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.LastName">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.LastName" id="UserLastnametxtid">
                                                 </div>
 
 
-                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="date" id="DtDateOfJoining" asp-for="DateOfJoining" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Joining')" placeholder="Date Of Joining" required />
                                                     <span asp-validation-for="DateOfJoining" class=" text-danger"></span>
@@ -703,21 +707,21 @@
                                                 </div>
 
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DateOfJoining != null ? Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DateOfJoining != null ? Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)" id="UserDateofjoiningtxtid">
                                                 </div>
                                             </div>
 
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="Nationality" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="Nationality" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="Nationality" class="form-control " placeholder="Nationality">
                                                 </div>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.Nationality">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.Nationality" id="Usernationalitytxtid">
                                                 </div>
-                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlPickUpRoute' asp-for="BloodGroup" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlBloodGroupList, "Value", "Text"))">
@@ -727,19 +731,19 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end required ClsSessionStudent" for="basic-default-name"></label>
+                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label space text-end required ClsSessionStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsSessionStudent HideFileds" style="display:none !important">
                                                     <input asp-for="AdmissionNumberNew" class="form-control ClsClear" placeholder="Admission Number" required />
                                                     <span asp-validation-for="AdmissionNumberNew" class="text-danger"></span>
                                                 </div>
                                                 <div class="col-sm-4 ClsSessionStudent">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.AdmissionNumberNew">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.AdmissionNumberNew" id="UserAdmissionNumbertxtid">
                                                 </div>
                                             </div>
 
                                             @*----------------------*@
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="IsUserJoined" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
+                                                <label asp-for="IsUserJoined" class="col-sm-2 col-form-label space text-end ClsSessionStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsSessionStudent HideFileds" style="display:none !important">
                                                     <input type="checkbox" asp-for="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" disabled />
                                                 </div>
@@ -749,12 +753,12 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" asp-for="PlaceOfBirth" class="form-control " placeholder="Place Of Birth">
                                                     <span asp-validation-for="PlaceOfBirth" class="text-danger"></span>
                                                 </div>
-                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" asp-for="CollegeCode" class="form-control " placeholder="School Code">
                                                     <span asp-validation-for="CollegeCode" class="text-danger"></span>
@@ -763,7 +767,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="Gender" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="col mt-2">
                                                         <div class="form-check form-check-inline">
@@ -797,7 +801,7 @@
                                                     }
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
                                                 </div>
-                                                <label asp-for="FeeConcedingTypeId" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name"></label>
+                                                <label asp-for="FeeConcedingTypeId" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers">
                                                     <div class="position-relative">
                                                         <select id='DdlPickUpStop' asp-for="FeeConcedingTypeId" class="select2 form-select select2-hidden-accessible ClsClear" asp-items="@(new SelectList(ViewBag.DdlFeeConcedingTypesList , "Value", "Text"))">
@@ -809,7 +813,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="ADMISSIONCATEGORY" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ADMISSIONCATEGORY" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         <select asp-for="ADMISSIONCATEGORY" multiple="multiple" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
@@ -828,7 +832,7 @@
                                             </div>
                                             <div class="mb-3 row">
 
-                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="ICNumber" class="form-control" placeholder="Aadhaar Number" />
                                                     <span asp-validation-for="ICNumber" class="text-danger"></span>
@@ -860,13 +864,13 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="DOB" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="DOB" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="date" Id="DOB" asp-for="DOB" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" />
                                                     <span asp-validation-for="DOB" class="text-danger"></span>
                                                     <span class="compare text-danger"></span>
                                                 </div>
-                                                <label asp-for="ReligionId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ReligionId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlClass' asp-for="ReligionId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlReligionList, "Value", "Text"))">
@@ -878,7 +882,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="CommunityId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="CommunityId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlClass' asp-for="CommunityId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlCommunityList, "Value", "Text"))">
@@ -886,7 +890,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <label asp-for="MotherTongueId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MotherTongueId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlClass' asp-for="MotherTongueId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlMotherTongueList, "Value", "Text"))">
@@ -899,7 +903,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="text" asp-for="MobilePhone" class="form-control " placeholder="Mobile Number">
                                                     <span asp-validation-for="MobilePhone" class="text-danger"></span>
@@ -908,7 +912,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="email" asp-for="PortalEmail" class="form-control " placeholder="Email Address">
                                                     <span asp-validation-for="PortalEmail" class="text-danger"></span>
@@ -919,7 +923,7 @@
 
 
 
-                                                <label asp-for="AlternateEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="AlternateEmail" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="email" asp-for="AlternateEmail" class="form-control " placeholder="Email Address">
                                                     <span asp-validation-for="AlternateEmail" class="text-danger"></span>
@@ -928,11 +932,11 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <textarea asp-for="PermanentAddress1" class="form-control" rows="3" placeholder="Address"></textarea>
                                                 </div>
-                                                <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <textarea asp-for="PermanentAddress2" class="form-control" rows="3" placeholder="Address"></textarea>
                                                 </div>
@@ -940,11 +944,11 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PCity" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PCity" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="PCity" class="form-control" placeholder="City" />
                                                 </div>
-                                                <label asp-for="PCountryId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PCountryId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlCountry' asp-for="PCountryId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Users/DdlStateByCountry_Calingfunction?CountryId=' + this.value, 'DdlState', 'Please select a State', true)" asp-items="@(new SelectList(ViewBag.DdlCountryList, "Value", "Text"))">
@@ -957,7 +961,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row">
-                                                <label asp-for="PStateId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PStateId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlState' asp-for="PStateId" class="select2 form-select select2-hidden-accessible DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlStateList,"Value","Text"))" disabled>
@@ -965,7 +969,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <label asp-for="PZip" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="PZip" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="PZip" class="form-control" placeholder="Pin Code" />
                                                     <span asp-validation-for="PZip" class="text-danger"></span>
@@ -994,7 +998,7 @@
                                         <div class="col">
                                             @*----------------------*@
                                             <div class=" row mb-3">
-                                                <label asp-for="InstanceClassificationId" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="InstanceClassificationId" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         <select id='DdlDepartmentGeneralTab' asp-for="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClassGeneralTab', 'Please select a Class', true)" asp-items="@(new SelectList(ViewBag.DdlInstanceClassificationList,"Value","Text"))" required>
@@ -1009,7 +1013,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class=" row mb-3">
-                                                <label asp-for="InstanceSubClassificationId" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="InstanceSubClassificationId" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         <select id='DdlClassGeneralTab' asp-for="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible  DdlCascadDropdowns" onchange="CommonDropdownFunction('POST', '/Users/DdlClassTeacher_Calingfunction?Id=' + this.value, 'DdlClassTeacherId', 'Please select ClassTeacher', true,'FmGeneralInfoTab')" asp-items="@(new SelectList(ViewBag.DdlInstanceSubClassificationIdList,"Value","Text"))" disabled>
@@ -1024,7 +1028,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class=" row mb-3">
-                                                <label asp-for="ClassTeacherId" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="ClassTeacherId" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         <select id="DdlClassTeacherId" asp-for="ClassTeacherId" class="select2 form-select select2-hidden-accessible  DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlClassTeacherIdList,"Value","Text"))" disabled>
@@ -1039,7 +1043,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="SendSMS" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="SendSMS" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <div class="form-check form-check-inline">
@@ -1056,7 +1060,7 @@
                                             @*----------------------*@
 
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="TcTaken" id="LblTcTakenGeneralTab" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="TcTaken" id="LblTcTakenGeneralTab" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <!--<div class="form-group col-4" style="display:flex">
@@ -1079,7 +1083,7 @@
 
                                             @*----------------------*@
                                             <div class=" row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="InstanceTransferDetails" id="LblInstanceTransferDetailsGeneralTab" class="col-sm-4 col-form-label  text-end ClsDivTransferDetails" for="basic-default-name"></label>
+                                                <label asp-for="InstanceTransferDetails" id="LblInstanceTransferDetailsGeneralTab" class="col-sm-4 col-form-label space text-end ClsDivTransferDetails" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTransferDetails ">
                                                     <textarea asp-for="InstanceTransferDetails" rows="3" class="form-control ClsTxtTcTakesnYes" placeholder=" Transfer Details"></textarea>
                                                 </div>
@@ -1109,7 +1113,7 @@
                                             @*----------------------*@
 
                                             <div class="row mb-3 ">
-                                                <label asp-for="StudentIdentificationMarks" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="StudentIdentificationMarks" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <textarea asp-for="StudentIdentificationMarks" rows="3" class="form-control" placeholder="Identification Marks"></textarea>
                                                     <span asp-validation-for="StudentIdentificationMarks" class="text-danger"></span>
@@ -1117,7 +1121,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <div class="form-check form-check-inline">
@@ -1133,7 +1137,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="SiblingsOtherCollege" id="LblSiblingsInSameCollege" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="SiblingsOtherCollege" id="LblSiblingsInSameCollege" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <div class="form-check form-check-inline">
@@ -1150,7 +1154,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PhysicallyChalenged" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
+                                                <label asp-for="PhysicallyChalenged" class="col-sm-4 col-form-label space text-end" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="position-relative">
                                                         <select id='DdlPickUpStop' asp-for="PhysicallyChalenged" class="select2 form-select select2-hidden-accessible" onchange="TAPhysicallyChallengedDetails_Calling()" asp-items="@(new SelectList(ViewBag.DdlDisabilityList, "Value", "Text"))">
@@ -1161,7 +1165,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="mb-3 row">
-                                                <label asp-for="PhysicallyChallengedDetails" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
+                                                <label asp-for="PhysicallyChallengedDetails" class="col-sm-4 col-form-label space text-end" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <textarea asp-for="PhysicallyChallengedDetails" id="TAPhysicallyChallengedDetails" rows="3" class="form-control" placeholder="Disability Details"></textarea>
                                                 </div>
@@ -1192,7 +1196,7 @@
 
                                             @*----------------------*@
                                             <div class="mb-3 row HideFileds" style="display:none !important">
-                                                <label asp-for="IsActive" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
+                                                <label asp-for="IsActive" class="col-sm-4 col-form-label space text-end" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <div class="form-check form-check-inline">
@@ -1209,7 +1213,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label asp-for="StudentStatus" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
+                                                <label asp-for="StudentStatus" class="col-sm-4 col-form-label space text-end" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlStudentStatus' asp-for="StudentStatus" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
@@ -1219,7 +1223,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 ">
-                                                <label asp-for="UserName" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label asp-for="UserName" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div style="display:none"> <input type="hidden" class="form-control" value="@ViewBag?.identityUserName" id="IdentityUserName" readonly /></div>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input asp-for="UserName" id="TxtUserName" class="form-control" placeholder="User Name" required />
@@ -1232,7 +1236,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 ">
-                                                <label asp-for="Password" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="Password" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="Password" id="Password" class="form-control" placeholder="Password" required />
@@ -1241,7 +1245,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 ">
-                                                <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="ConfirmPassword" id="ConPassword" class="form-control" placeholder="Confirm Password" required />
                                                     <span asp-validation-for="ConfirmPassword" class="text-danger "></span>
@@ -1249,7 +1253,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 ">
-                                                <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
                                                         <select id='DdlPickUpStop' asp-for="SecurityQuestionId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))" required>
@@ -1261,7 +1265,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 ">
-                                                <label asp-for="Answer" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                                                <label asp-for="Answer" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="Answer" class="form-control" placeholder="Answer" required />
                                                     <span asp-validation-for="Answer" class="text-danger "></span>
@@ -1269,7 +1273,7 @@
                                             </div>
                                             @*----------------------*@
                                             <div class="row mb-3 HideFileds" style="display:none !important">
-                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                                                <label class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" />
                                                     <label>Need to change password on login</label>
@@ -1280,11 +1284,11 @@
 
 
                                             @*================================= Buttons ==================  *@
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-8">
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
-                                                </div>
+                                        <div class="row justify-content-end">
+                                            <div class="col-sm-8">
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
                                             </div>
+                                        </div>
 
                                         </div>
                                     </div>

@@ -18,12 +18,10 @@
 
   <ItemGroup>
     <None Remove="Views\Attendance\GetViewAttendanceDetailstbl" />
-    <None Remove="Views\FeeSection\ManageBankAccounts" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Views\Attendance\GetViewAttendanceDetailstbl" />
-    <Content Include="Views\FeeSection\ManageBankAccounts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1734,7 +1732,7 @@
     <None Include="wwwroot\js\ManageNotices.js" />
     <None Include="wwwroot\js\Managesubjects.js" />
     <None Include="wwwroot\js\ManageUsers.js" />
-    <None Include="wwwroot\js\Manage_fee_Conceding.js" />
+    <None Include="wwwroot\js\Managefeeconcedingtypes.js" />
     <None Include="wwwroot\js\Managefeeterms.js" />
     <None Include="wwwroot\js\Mentor_Attendance.js" />
     <None Include="wwwroot\js\Notice_sms.js" />

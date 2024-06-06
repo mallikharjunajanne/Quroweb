@@ -14,6 +14,7 @@
         .form-group {
             margin-bottom: 0px;
         }
+
         .label-normal {
             height: 21px;
             margin-top: 2px;
@@ -23,250 +24,162 @@
             height: 30px;
             margin-top: 40px;
         }
-        .NextPageBtn {
-            border-radius: 8px;
-            cursor: pointer;
-            border: none !important;
-            box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
-        }
-        .PreviousPageBtn {
-            border-radius: 8px;
-            cursor: pointer;
-            border: none !important;
-            box-shadow: 0 5px 10px 2px rgba(88, 103, 221,0.19);
-        }
-
     </style>
-    <link href="~/css/ManageFeeDetails.css" rel="stylesheet" />
-   
+    <link href="~/css/ManageFeeDetails.css" rel="stylesheet" />  
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>SET FEE FOR USERS </h4>
-        <div id="validation2" style=" color: red; margin-left: 10px; font-family: none;"></div>
-        <div id="validationMessage" style=" color: red; margin-left: 5px; font-family: none;"></div>
+        <span id="Commonerrormessage" class="text-danger"></span>
+        <span id="Commonerrormessage1" class="text-danger"></span>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                SEARCH USERS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                        <h5 class="mb-0">SEARCH USERS </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="card-body" id="Search_Pay_For_UsersFileds_Divid">
-                        <div id="searchFormContainer">
-                            <form id="searchForm">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="row mb-3">
-                                            @*asp-action="Fee_Set_Users_GetFormBtn_click_TblData"*@
-
-                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Role</label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <input type="hidden" asp-for="InstanceId" value="@ViewBag.InstanceId" />
-                                                    <input type="hidden" id="updatedBy_Txtid" value="@ViewBag.Updatedby" />
-                                                    <select id="InstanceRole_Id" asp-for="InstanceRoleId" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                    <div class="card-body">
+                        <form id="searchForm">
+                            <div class="row">
+                                <div class="row mb-3">
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end required"> Role</label>
+                                        <div class="col-sm-4">
+                                            <select id="ddlRole" asp-for="InstanceRoleId" class="form-select"></select>
+                                            <span asp-validation-for="InstanceRoleId" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space">Department: </label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="InstanceClassificationId" id="InstanceClassificationId_DD" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-4 col-form-label space text-end required">Department</label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="InstanceClassificationId" id="ddlInstanceClassification" class="form-select" onchange="CommonDropdownFunction('GET', '/FeeSection/ClassddlBind?InstanceClassificationId=' + this.value, 'ddlInstanceSubClassification', '------Select------', true)"></select>
+                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space" style=" height: 30px;"> Class </label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="InstanceSubClassificationId" id="InstanceSubClassificationId_DD" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end required"> Class </label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="InstanceSubClassificationId" id="ddlInstanceSubClassification" class="form-select">
+                                            </select>@*InstanceSubClassificationId_DD*@
+                                            <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space" style=" height: 30px;"> Referral: </label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="StudentQuotaId" id="StudentQuotaId_DD" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end"> Referral</label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="StudentQuotaId" id="ddlStudentQuota" class="form-select"></select>@*StudentQuotaId_DD*@
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end space"> Gender  : </label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="Gender" id="Gender" class="select2 form-select select2-hidden-accessible">
-                                                        <option selected="selected" value="0142">Select Gender</option>
-                                                        <option value="1">Male</option>
-                                                        <option value="0">Female</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end"> Gender  </label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="Gender" id="Gender" class="form-select">
+                                                <option selected="selected" value="0142">Select Gender</option>
+                                                <option value="1">Male</option>
+                                                <option value="0">Female</option>
+                                            </select>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Academic Year  </label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="AcademicYearId" id="AcademicYearId_DD" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end required"> Academic Year  </label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="AcademicYearId" id="ddlYears" class="form-select" onchange="CommonDropdownFunction('GET', '/FeeSection/TermsddlBind?AcademicYearId=' + this.value, 'ddlTerms', '------Select------', true)"></select>@*AcademicYearId_DD*@
+                                            <span asp-validation-for="AcademicYearId" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space">Fee Term  </label>
-
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select asp-for="FeeTermId" id="FeeTermId_DD" class="select2 form-select select2-hidden-accessible">
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end required">Fee Term  </label>
+                                        <div class="col-sm-4">
+                                            <select asp-for="FeeTermId" id="ddlTerms" class="form-select"></select>@*FeeTermId_DD*@
+                                            <span asp-validation-for="FeeTermId" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3" @*class="form-group col-5"*@>
-                                            <label class="control-label col-sm-4 col-form-label text-end space" style="height: 30px;"> Discount: </label>
-
-                                            <div class="form-group col-sm-4">
-                                                <input type="checkbox" id="Discount_Checkbox_ID" style="height: 25px;" onchange="toggleDropdownSelection()" />
-                                            </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end" style="height: 30px;"> Discount </label>
+                                        <div class="form-group col-sm-4">
+                                            <input type="checkbox" class="form-check-input checkbox_animated" id="Discount_Checkbox_ID" onchange="Disocuntchkfun()">
                                         </div>
 
-                                        <div class="form-group row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end required space" id="FeetypeLbl_ID"> Fee Type </label>
-
-                                            <div class="form-group col-4">
-
-                                                <div class="custom-dropdown" id="checkboxListFeeType_Container">
-                                                    <ul class="dropdown-options" id="FeeType_checkboxListFeeType">
-                                                        <li>
-                                                            <p id="noOptionsMessage" class="NoOptions_message" style="display: none;">No Fee Types available.</p>
-                                                        </li>
-                                                    </ul>
-                                                    <input type="checkbox" id="selectAllFeeTypes" /> Select All Fee Types
-                                                </div>
-
-
-
-                                                <select asp-for="FeeTypeid" id="FeeTypeid_DD" class="select2 form-select select2-hidden-accessible" style="display: none;">
-                                                </select>
-
+                                        <!--<div class="form-group col-sm-4">
+                                        <input type="checkbox" id="Discount_Checkbox_ID" onchange="Disocuntchkfun()" />-->
+                                        @*toggleDropdownSelection*@
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group row mb-2">
+                                        <label class="control-label col-sm-4 col-form-label text-end required space" id="FeetypeLbl_ID"> Fee Type </label>
+                                        <div class="form-group col-4">
+                                            <div class="custom-dropdown" id="checkboxListFeeType_Container">
+                                                <ul class="dropdown-options" id="FeeType_checkboxListFeeType">
+                                                    <li>
+                                                        <p id="noOptionsMessage" class="NoOptions_message" style="display: none;">No Fee Types available.</p>
+                                                    </li>
+                                                </ul>
+                                                <input type="checkbox" class="form-check-input" id="selectAllFeeTypes" /> Select All Fee Types
                                             </div>
+                                            <select asp-for="FeeTypeid" id="ddlFeeTypes" class="select2 form-select select2-hidden-accessible" style="display: none;">
+                                            </select>@*FeeTypeid_DD*@
                                         </div>
+                                    </div>
+                                    <div class="form-group col-5">
 
-                                        <div class="form-group col-5">
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="control-label col-sm-4 col-form-label text-end">  </label>
+                                        <div class="form-group col-sm-4">
+                                            <input type="checkbox" id="checkbox1" class="form-check-input" onclick="Hostlers();" />Hostlers
+                                            <input type="checkbox" id="checkbox2" class="form-check-input" onclick="NonHostlers();" />Non Hostlers
 
                                         </div>
-
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end">  </label>
-                                            <div class="form-group col-sm-4">
-                                                <input type="checkbox" id="checkbox1" onclick="Hostlers('checkbox1','checkbox2','True');" />Hostlers
-                                                <input type="checkbox" id="checkbox2" onclick="NonHostlers('checkbox2','checkbox1','False');" />Non Hostlers
-
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label space text-end required"> Users  </label>
+                                        <div class="col-sm-4">
+                                            <div class="custom-dropdown" id="checkboxListUsers_Container">
+                                                <ul class="dropdown-options" id="Users_checkboxList">
+                                                    <li>
+                                                        <p id="noUsers_OptionsMessage" class="NoOptions_message" style="display: none;">Users Not available.</p>
+                                                    </li>
+                                                </ul>
                                             </div>
+                                            <input type="checkbox" class="form-check-input" id="selectAllUser_Checkboxs" />Select All STUDENT(s)
                                         </div>
-                                        <div class="row mb-3" @*class="form-group col-5"*@>
-                                            <label class="control-label col-sm-4 col-form-label text-end required space"> Users  </label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <div class="custom-dropdown" id="checkboxListUsers_Container">
-                                                        <ul class="dropdown-options" id="Users_checkboxList">
-                                                            <li>
-                                                                <p id="noUsers_OptionsMessage" class="NoOptions_message" style="display: none;">Users Not available.</p>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <input type="checkbox" id="selectAllUser_Checkboxs" />Select All STUDENT(s)
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
-                                                <a href="/FeeSection/ManageBankAccounts" class="btn btn-pill btn-outline-primary-2x PreviousPageBtn">Previous Page</a>
-                                                <input type="submit" value="Clear" class="btn btn-pill btn-outline-danger-2x" style=" border-radius: 8px;" />
-                                                <button class="btn btn-success waves-effect waves-light" onclick="SetPay_Fee_Users_GetForm_Btn(event)">Get Form</button>
-                                                @*<input type="submit" value="Get Form" class="btn btn-pill btn-outline-success-2x" style=" border-radius: 8px;" onclick="SetPay_Fee_Users_GetForm_Btn(event)" />*@
-                                                <a href="/FeeSection/PayFeeForUser" class="btn btn-pill btn-outline-info-2x NextPageBtn">Next Page</a>
-                                            </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <a href="/FeeSection/ManageBankAccounts" id="btnSearchPrevious" class="btn btn-info waves-effect waves-light">Previous Page</a>
+                                            <button type="reset" id="searbtnclear" class="btn btn-warning waves-effect waves-light" onclick="clearForm('searchForm')">Clear</button>
+                                            @*<button id="btnSearch" class="btn btn-success waves-effect waves-light" onclick="SetPay_Fee_Users_GetForm_Btn(event)">Get Form</button>*@
+                                            <button id="btnSearch" class="btn btn-success waves-effect waves-light" onclick="PayfeeforusersGetform(event)">Get Form</button>
+                                            <a href="/FeeSection/PayFeeForUsers" id="btnSearchNext" class="btn btn-primary waves-effect waves-light">Next Page</a>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div id="partialViewContainer">
 
-
-
-    <div id="partialViewContainer"></div>
-    @*//------------------*@
-    
-
-
-    @*//----------*@
-
-    <div id="Set_Fee_Users_Divid" class="card-body">
-        <div class="default-according style-1" id="accordionoc">
-            <div class="card">
-                <div class="collapse1 show" id="collapseicon1" aria-labelledby="collapseicon1" data-bs-parent="#accordionoc" style="">
-                    <div class="card">
-                        <table class="Set_Fee_Users_Table" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id=" FeeSet_Users_TableData">
-                            <thead style="background-color:white;">
-
-                            </thead>
-                            <tbody id="FeeSet_Users_TableData_tbody">
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
 
-
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Managefeedetails.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
 
 <script>
-
-
-    $(document).ready(function () {
-       
-        loaddingimg.css('display', 'none');
-
-    });
-
-
-
-    /*----****List Box Without options click SelectAll Checkbox Show Error Message Show Code Start****-----*/
-
-
+   
     document.getElementById("selectAllFeeTypes").addEventListener("change", function () {
         var checkboxes = document.querySelectorAll("#FeeType_checkboxListFeeType input[type='checkbox']");
 
@@ -286,10 +199,6 @@
             noOptionsMessage.style.display = "none";
         }
     });
-
-
-
-
     document.getElementById("selectAllUser_Checkboxs").addEventListener("change", function () {
         //var Users_checkboxes = document.querySelectorAll("#Users_checkboxList input[type='checkbox']");
 
@@ -310,529 +219,17 @@
             noUsers_OptionsMessage.style.display = "none";
         }
     });
-
-
-    /*----****List Box Without options click SelectAll Checkbox Show Error Message Show Code End****-----*/
-
-
-
-
-    function toggleDropdownSelection() {
-        debugger;
-        var checkboxListFeeType_Container = document.getElementById("checkboxListFeeType_Container");
-        var FeeType_checkboxListFeeType = document.getElementById("FeeType_checkboxListFeeType");
-       
-        var checkboxItems = FeeType_checkboxListFeeType.querySelectorAll("li input[type='checkbox']");
-
-        
-
-        var feeTypeidSelect = document.getElementById("FeeTypeid_DD");
-        var checkbox = document.querySelector(".form-group input[type='checkbox']");
-        var label = document.getElementById("FeetypeLbl_ID");
-
-        label.classList.remove("label-modified");
-        label.classList.add("label-normal");
-        if (checkbox.checked) {
-            debugger;
-            sendFEETYPE_BY_FeeTermIdSelectedValue();
-            checkboxListFeeType_Container.style.display = "none";
-            feeTypeidSelect.style.display = "block";
-            label.classList.remove("label-modified");
-            label.classList.add("label-normal");
-            for (var i = 0; i < checkboxItems.length; i++) {
-                checkboxItems[i].checked = false;
-            }
-        } else {
-            debugger;
-            sendFEETYPE_BY_FeeTermIdSelectedValue();
-            checkboxListFeeType_Container.style.display = "block";
-            feeTypeidSelect.style.display = "none";
-            label.classList.remove("label-normal");
-            label.classList.add("label-modified");
-        }
-    }
-
-
-
-
-
-
-
-
-    /*----ROLE DROPDOWN FUNCTION CODE START---*/
-
-    function Role_dropdown_Function() {
-
-        /*  debugger;*/
-        var dropdown = document.getElementById("InstanceRole_Id");
-
-        // Clear existing options
-        dropdown.innerHTML = "";
-
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId").value;
-
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/Role_DD?InstanceId=${instanceId}`;
-
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                data.sort((a, b) => a.text.localeCompare(b.text));
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("InstanceRole_Id");
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    window.addEventListener('load', Role_dropdown_Function);
-
-    /*----ROLE DROPDOWN FUNCTION CODE END---*/
-
-
-    /*----Department DROPDOWN FUNCTION CODE START---*/
-
-    function Department_dropdown_Function() {
-
-        /*  debugger;*/
-        var dropdown = document.getElementById("InstanceClassificationId_DD");
-
-        // Clear existing options
-        dropdown.innerHTML = "";
-
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId").value;
-
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/Department_DD?InstanceId=${instanceId}`;
-
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("InstanceClassificationId_DD");
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    window.addEventListener('load', Department_dropdown_Function);
-
-    /*----Department DROPDOWN FUNCTION CODE END---*/
-
-
-
-
-    /*--------Department DROPDOWN GET BY Class dropdown CODE START -----------*/
-
-    function sendDepartment_BY_ClassSelectedValue() {
-        /* debugger;*/
-        var InstanceClassificationdropdownValue = document.getElementById("InstanceClassificationId_DD");
-        var INCselectedValue = InstanceClassificationdropdownValue.value;
-        const instanceId = document.getElementById("InstanceId").value;
-
-        fetch("/FeeSection/Class_DD?InstanceClassificationId=" + INCselectedValue + "&instanceId=" + instanceId)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /*  debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("InstanceSubClassificationId_DD");
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the  option
-                const selectOption = document.createElement("option");
-                selectOption.value = "";
-                selectOption.textContent = "---------Select-----------";
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    // Attach the event listener to the dropdown
-    var dropdown = document.getElementById("InstanceClassificationId_DD");
-    dropdown.addEventListener("change", sendDepartment_BY_ClassSelectedValue);
-
-    /*--------Department DROPDOWN GET BY Class dropdown  CODE  END-----------*/
-
-
-
-    /*----Referral_DD DROPDOWN FUNCTION CODE START---*/
-
-    function Referral_dropdown_Function() {
-
-        /* debugger;*/
-        //var dropdown = document.getElementById("InstanceClassificationId_DD");
-
-        //// Clear existing options
-        //dropdown.innerHTML = "";
-
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId").value;
-
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/Referral_DD?InstanceId=${instanceId}`;
-
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("StudentQuotaId_DD");
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    window.addEventListener('load', Referral_dropdown_Function);
-
-    /*----Referral_DD DROPDOWN FUNCTION CODE END---*/
-
-
-    /*----AcademicYear DROPDOWN FUNCTION CODE START---*/
-
-    function AcademicYear_dropdown_Function() {
-
-        /*  debugger;*/
-
-        // Get the InstanceId value from the hidden input field
-        const instanceId = document.getElementById("InstanceId").value;
-
-        // Construct the fetch URL with the InstanceId as a query parameter
-        const fetchURL = `/FeeSection/AcademicYear_DD?InstanceId=${instanceId}`;
-
-        fetch(fetchURL)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /* debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("AcademicYearId_DD");
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the "--select--" option
-                const selectOption = document.createElement("option");
-                selectOption.value = ""; // Set the value to an empty string or any other appropriate value
-                selectOption.textContent = "-----Select------"; // Set the display text for the option
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    window.addEventListener('load', AcademicYear_dropdown_Function);
-
-    /*----AcademicYear DROPDOWN FUNCTION CODE END---*/
-
-
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown CODE START -----------*/
-
-    function sendFeeTerm_BY_AcademicYearIdSelectedValue() {
-        /* debugger;*/
-        var AcademicYearIddropdownValue = document.getElementById("AcademicYearId_DD");
-        var AcademicYearselectedValue = AcademicYearIddropdownValue.value;
-        const instanceId = document.getElementById("InstanceId").value;
-
-        fetch("/FeeSection/FeeTerm_DD?AcademicYearId=" + AcademicYearselectedValue + "&instanceId=" + instanceId)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                /*debugger;*/
-                const data = JSON.parse(responseText); // Parse the response
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("FeeTermId_DD");
-
-                data.sort((a, b) => a.text.localeCompare(b.text));
-
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the  option
-                const selectOption = document.createElement("option");
-                selectOption.value = "";
-                selectOption.textContent = "---------Select-----------";
-                dropdown.appendChild(selectOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-                    dropdown.appendChild(option);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-    // Attach the event listener to the dropdown
-    var dropdown = document.getElementById("AcademicYearId_DD");
-    dropdown.addEventListener("change", sendFeeTerm_BY_AcademicYearIdSelectedValue);
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown  CODE  END-----------*/
-
-
-
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown CODE START -----------*/
-
-
-
-    function sendFEETYPE_BY_FeeTermIdSelectedValue() {
-        var AcademicYearIddropdownValue = document.getElementById("AcademicYearId_DD");
-        var AcademicYearselectedValue = AcademicYearIddropdownValue.value;
-
-        var FeeTermIdVALUE = document.getElementById("FeeTermId_DD");
-        var FeeTermId = FeeTermIdVALUE.value;
-
-        const instanceId = document.getElementById("InstanceId").value;
-
-        fetch("/FeeSection/FeeType_DD?AcademicYearId=" + AcademicYearselectedValue + "&instanceId=" + instanceId + "&FeeTermId=" + FeeTermId)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Request failed with status " + response.status);
-                }
-                return response.text();
-            })
-            .then(responseText => {
-                const data = JSON.parse(responseText); // Parse the response
-                const data1 = JSON.parse(responseText); // Parse the response
-
-                data.sort((a, b) => a.text.localeCompare(b.text));
-                data1.sort((a, b) => a.text.localeCompare(b.text));
-
-                // Get the dropdown element
-                const dropdown = document.getElementById("FeeTypeid_DD");
-
-
-
-                const FeeType_checkboxListFeeType = document.getElementById("FeeType_checkboxListFeeType");
-                // Clear existing options
-                dropdown.innerHTML = "";
-
-                // Create the default option
-                const defaultOption = document.createElement("option");
-                defaultOption.value = "";
-                defaultOption.textContent = "---------Select-----------";
-                dropdown.appendChild(defaultOption);
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data.length; i++) {
-                    const item = data[i];
-
-                    // Create the option element
-                    const option = document.createElement("option");
-                    option.value = item.value;
-                    option.textContent = item.text;
-
-                    // Create the checkbox element
-                    const checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.className = "option-checkbox";
-                    checkbox.value = item.value;
-
-                    // Append the checkbox to the option
-                    option.appendChild(checkbox);
-
-                    // Append the option to the dropdown
-                    dropdown.appendChild(option);
-                }
-
-
-
-                FeeType_checkboxListFeeType.innerHTML = '';
-
-                // Iterate through each item in the data
-                for (let i = 0; i < data1.length; i++) {
-                    const item = data1[i];
-
-                    // Create the list item element
-                    const listItem = document.createElement("li");
-
-                    // Create the checkbox element
-                    const checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.id = item.value;
-                    checkbox.value = item.value;
-
-                    // Create the label element
-                    const label = document.createElement("label");
-                    label.htmlFor = item.value;
-                    label.textContent = item.text;
-
-                    // Append the checkbox and label to the list item
-                    listItem.appendChild(checkbox);
-                    listItem.appendChild(label);
-
-                    // Append the list item to the checkbox list
-                    FeeType_checkboxListFeeType.appendChild(listItem);
-                }
-
-                // Attach the event listener to the dropdown
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
-
-
-    var dropdown = document.getElementById("FeeTermId_DD");
-    dropdown.addEventListener("change", sendFEETYPE_BY_FeeTermIdSelectedValue);
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown  CODE  END-----------*/
-
-
-
-
-
-
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown CODE START -----------*/
-
-
-
     function send_USERS_DD_SelectedValue() {
 
-        var InstanceClassificationdropdownValue = document.getElementById("InstanceClassificationId_DD");
+        var InstanceClassificationdropdownValue = document.getElementById("ddlInstanceClassification");
         var InstanceClassificationId = InstanceClassificationdropdownValue.value;
 
 
-        var InstanceSubClassificationdropdownValue = document.getElementById("InstanceSubClassificationId_DD");
+        var InstanceSubClassificationdropdownValue = document.getElementById("ddlInstanceSubClassification");
         var InstanceSubClassificationId = InstanceSubClassificationdropdownValue.value;
 
 
-        var InstanceRoledropdownValuedropdownValue = document.getElementById("InstanceRole_Id");
+        var InstanceRoledropdownValuedropdownValue = document.getElementById("ddlRole");
         var RoleId = InstanceRoledropdownValuedropdownValue.value;
 
 
@@ -846,19 +243,19 @@
                 return response.text();
             })
             .then(responseText => {
-              
+
                 const data = JSON.parse(responseText); // Parse the response
 
                 data.sort((a, b) => a.firstName.localeCompare(b.firstName));
 
                 const dropdown = document.getElementById("UserId_DD");
 
-               
+
                 const Users_checkboxList = document.getElementById("Users_checkboxList");
 
                 Users_checkboxList.innerHTML = '';
 
-               
+
                 for (let i = 0; i < data.length; i++) {
                     const item = data[i];
 
@@ -895,494 +292,39 @@
             });
 
     }
-
-
-
-
-    /*<------------ GENDER DROPDOWN CHANGE USERS CODE START ----------> */
-
-    const selectElement = document.getElementById("Gender"); 
-    const listItemContainer = document.getElementById("Users_checkboxList"); 
-
-    const inputValues = {};
-
-    selectElement.addEventListener("change", function () {
+    const selectElement = document.getElementById("Gender");
+    const listItemContainer = document.getElementById("Users_checkboxList");
+    selectElement.addEventListener("change_", function () {
         const selectedValue = selectElement.value;
-       /* debugger;*/
+        debugger;
 
         for (const listItem of listItemContainer.children) {
             const genderValue = listItem.querySelector("input").name;
             const input_Checkbox_Element = listItem.querySelector("input").value;
             const inputElement = listItem.querySelector("input");
-            
+
             if (selectedValue === genderValue) {
 
                 listItem.style.display = "flex";
-               listItem.querySelector("input").style.display = "block";
-               listItem.querySelector("label").style.display = "block";
-               
+                listItem.querySelector("input").style.display = "block";
+                listItem.querySelector("label").style.display = "block";
 
-            } else if (selectedValue == "0142") {
+
+            }
+            else if (selectedValue == "0142") {
 
                 send_USERS_DD_SelectedValue();
-            } else {
+            }
+            else {
                 listItem.style.display = "none";
                 listItem.querySelector("input").style.display = "none";
                 listItem.querySelector("label").style.display = "none";
                 inputElement.checked = false;
-                
+
             }
         }
-       
+
     });
-
-    /*<------------ GENDER DROPDOWN CHANGE USERS CODE END ----------> */
-   
-   
-  
-
-    /*<----------- Hostlers && NonHostlers CHECKBOX CLICK CHANGE USERS CODE START------------>*/
-
-    function Hostlers(CheckboxValue, OtherCheckbox, NameValue) {         
-
-        const checkbox = document.getElementById("checkbox1");
-        const Users_checkboxList = document.getElementById("Users_checkboxList");
-
-        if (checkbox.checked) {
-            const collegeHostlersList = Users_checkboxList.querySelectorAll("li input[id='False']");
-
-            Users_checkboxList.innerHTML = '';
-
-            for (let i = 0; i < collegeHostlersList.length; i++) {
-                const listItem = document.createElement("li");
-                const checkbox = collegeHostlersList[i].cloneNode(true);
-                const label = collegeHostlersList[i].parentNode.querySelector("label").cloneNode(true);
-
-                listItem.appendChild(checkbox);
-                listItem.appendChild(label);
-
-                Users_checkboxList.appendChild(listItem);
-            }
-        } else {
-            send_USERS_DD_SelectedValue(); // Reset to the original list
-        }
-    }
-
-    function NonHostlers(CheckboxValue,OtherCheckbox,NameValue) {
-        
-       /* debugger;*/
-        const checkbox = document.getElementById("checkbox2");
-        const Users_checkboxList = document.getElementById("Users_checkboxList");
-
-        if (checkbox.checked) {
-            const collegeHostlersList = Users_checkboxList.querySelectorAll("li input[id='True']");
-
-            Users_checkboxList.innerHTML = '';
-
-            for (let i = 0; i < collegeHostlersList.length; i++) {
-                const listItem = document.createElement("li");
-                const checkbox = collegeHostlersList[i].cloneNode(true);
-                const label = collegeHostlersList[i].parentNode.querySelector("label").cloneNode(true);
-
-                listItem.appendChild(checkbox);
-                listItem.appendChild(label);
-
-                Users_checkboxList.appendChild(listItem);
-            }
-        } else {
-            send_USERS_DD_SelectedValue(); // Reset to the original list
-        }
-    }
-
-    /*<----------- Hostlers && NonHostlers CHECKBOX CLICK CHANGE USERS CODE END------------>*/
-
-
-    // Attach the event listener to the dropdown
-    var dropdown = document.getElementById("InstanceSubClassificationId_DD");
-    dropdown.addEventListener("change", send_USERS_DD_SelectedValue);
-
-    /*--------FEETERM DROPDOWN GET BY Class dropdown  CODE  END-----------*/
-
-
-
-
-
-    /*-------------------============SET FEE FOR USERS Get Form Button click fire this function Code Start=============---------------------------*/
-
-    function ValidationSetFeeUsers() {
-
-      
-        var Role = $('#InstanceRole_Id').val();
-        var Department = $('#InstanceClassificationId_DD').val();
-        var Class = $('#InstanceSubClassificationId_DD').val();
-        var AcademicYear = $('#AcademicYearId_DD').val();
-        var FeeTerm = $('#FeeTermId_DD').val();
-        
-
-        var validationMessage = "";
-        var hasError = false;
-
-        if (Role === "") {
-
-            validationMessage += "Role <br>";
-            hasError = true;
-
-        }
-        if (Department === "") {
-
-            validationMessage += "Department <br>";
-            hasError = true;
-
-        }
-        if (Class === "") {
-
-            validationMessage += "Class <br>"; 
-            hasError = true;
-
-        }
-        if (AcademicYear === "") {
-
-            validationMessage += "AcademicYear <br>";
-            hasError = true;
-
-        }
-        if (FeeTerm === "") {
-
-            validationMessage += "FeeTerm <br>";
-            hasError = true;
-
-        }
-        
-
-
-
-        if (hasError) {
-            $('#validation2').html("Following fields have invalid data :");
-            $("#validationMessage").html(validationMessage);
-            return false; 
-        } else {
-            $("#validationMessageGFCS").html("");
-            return true; 
-        }
-
-    }
-
-
-
-    function SetPay_Fee_Users_GetForm_Btn(event) {
-
-        debugger;
-
-        loaddingimg.css('display', 'block');
-
-        event.preventDefault();
-
-        /* debugger;*/
-        var FeeType_checkboxList = document.getElementById("FeeType_checkboxListFeeType");
-        var checkboxes = FeeType_checkboxList.querySelectorAll("input[type='checkbox']");
-        var FeeType_checkedValues = [];
-
-        var FeeType_CheckedTextNames = [];
-
-        checkboxes.forEach(function (checkbox) {
-           /* debugger;*/
-            if (checkbox.checked) {
-                FeeType_checkedValues.push(checkbox.value);
-
-                var parentLabel = checkbox.parentNode; 
-                var labelText = parentLabel.textContent.trim(); // Get the text content and remove any extra whitespace
-                FeeType_CheckedTextNames.push(labelText);
-            }
-        });
-
-        debugger;
-     
-            if (FeeType_CheckedTextNames.length <= 10) {
-
-
-                console.log("Checked values:", FeeType_checkedValues);
-
-                var Users_checkboxList = document.getElementById("Users_checkboxList");
-                var Users_checkboxes = Users_checkboxList.querySelectorAll("input[type='checkbox']");
-                var Users_checkedValues = [];
-
-
-                Users_checkboxes.forEach(function (checkbox) {
-                    /*  debugger;*/
-                    if (checkbox.checked) {
-                        Users_checkedValues.push(checkbox.value);
-                    }
-                });
-
-                console.log("Checked values:", Users_checkboxList);
-
-
-                if (ValidationSetFeeUsers()) {
-                    if (Users_checkedValues.length <= 0) {
-
-                        $('#validation2').text('Following fields have invalid data ');
-                        $('#validationMessage').text('Select Users');
-                        $('#noUsers_OptionsMessage').text('Please Select Users').show();
-                        loaddingimg.css('display', 'none');
-
-                        return false;
-                    }
-                    $('#validation2').text('');
-                    $('#validationMessage').text('');
-
-
-                    var formData = new FormData();
-                    debugger;
-                    var FeeTermId = $('#FeeTermId_DD').val();
-                    var AcademicYearId = $('#AcademicYearId_DD').val();
-                    // var FeeTypeid = $('#FeeTypeid_DD').val();
-                    var FeeTypeid = $('#FeeTypeid_DD').val();
-                    var FeeTypeText = $('#FeeTypeid_DD option:selected').text();
-
-                    const InstanceId = document.getElementById("InstanceId").value;
-                    var InstanceRoleId = $('#InstanceRole_Id').val();
-                    var InstanceSubClassificationId = $('#InstanceSubClassificationId_DD').val();
-                    var InstanceClassificationId = $('#InstanceClassificationId_DD').val();
-                    debugger;
-
-
-                    if (FeeType_checkedValues.length > 0) {
-                        /*alert("Values is Non Zero Discount_CheckBoxValue" + "2332423");*/
-
-
-                        debugger;
-                        formData.append('FeeTypeids', FeeType_checkedValues);
-                        formData.append('FeeTypeCheckedFeetypeids', JSON.stringify(FeeType_checkedValues))
-
-                    } else {
-
-                        var discountCheckbox = document.getElementById("Discount_Checkbox_ID");
-
-                        if (discountCheckbox.checked) {
-                            var Discount_CheckboxValue = "1432_Arjun"
-                            formData.append('Discount_CheckBoxValue', Discount_CheckboxValue);
-
-                        }
-                        debugger;
-                        /*alert("Values is Zero Discount_CheckBoxValue"+"2332423");*/
-                        if (FeeTypeid != "") {
-
-
-                            FeeType_CheckedTextNames.push(FeeTypeText);
-
-                            FeeType_checkedValues.push(FeeTypeid);
-                            formData.append('FeeTypeids', FeeTypeid);
-                            formData.append('FeeTypeCheckedFeetypeids', JSON.stringify(FeeType_checkedValues))
-
-                        } else {
-                            $('#partialViewContainer').empty();
-                            $('#validation2').text('Following fields have invalid data:');
-                            $('#validationMessage').text('Please Select FeeType');
-                            loaddingimg.css('display', 'none');
-                            return false;
-                        }
-                    }
-
-                    formData.append('UserIds', Users_checkedValues);
-                    formData.append('FeeTermId', FeeTermId);
-                    formData.append('AcademicYearId', AcademicYearId);
-                    formData.append('InstanceRoleId', InstanceRoleId);
-                    formData.append('InstanceSubClassificationId', InstanceSubClassificationId);
-                    formData.append('InstanceClassificationId', InstanceClassificationId);
-                    formData.append('InstanceId', InstanceId);
-
-                    formData.append('FeeType_CheckedTextNames', JSON.stringify(FeeType_CheckedTextNames));
-                                     
-                    var url = '/FeeSection/Fee_Set_Users_GetFormBtn_click_TblDt';
-                    $.ajax({
-
-                        url: url,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-
-
-                        success: function (response) {
-                             debugger;
-                            console.log(response);
-
-                            loaddingimg.css('display', 'none');
-                            $('#partialViewContainer').empty();
-
-                            $('#partialViewContainer').append(response);
-                            /* debugger;*/
-
-                        },
-                        error: function (xhr, textStatus, error) {
-                            loaddingimg.css('display', 'block');
-                            // Handle the error in case of AJAX request failure
-                            console.log(xhr.responseText);
-                        }
-                    })
-
-                } else {
-                    loaddingimg.css('display', 'none');
-                }
-
-            } else {
-
-                loaddingimg.css('display', 'none');
-                $('#partialViewContainer').empty();
-               
-                $('#validationMessage').text('Please select exactly 10 Fee Types.');
-            }
-       
-    }
-
-
-    /*-------------------============SET FEE FOR USERS Get Form Button click fire this function Code End=============---------------------------*/
-
-
-    /*-------###### SET FEE AFTER CLICK SUBMIT BUTTON FIRE FUNCTIONS CODE START ######---------*/
-
-    function InsertFeeDetails() {
-       
-        var rowDataList = [];
-        var ConditionNet = false;
-
-        var rowConditionMet = 0;
-
-        $('#SetFeeForUser_tbody tr').each(function () {
-
-            debugger;
-            var row = $(this);
-            var userId = row.find('td:nth-child(3)').text().trim();
-            var feeTermId = $('#FeeTermId_DD').val();
-            var updatedBy = $('#updatedBy_Txtid').val();
-            var academicYearId = $('#AcademicYearId_DD').val();
-
-            var rowData = {
-                UserId: userId,
-                FeeTermId: feeTermId,
-                UpdatedBy: updatedBy,
-                AcademicYearId: academicYearId,
-                FeeDetails: []
-            };
-
-            debugger;
-            //var columns = row.find('td:gt(6)');
-            var columns = row.find('td:gt(8)');
-            if (columns.length > 0) {
-                debugger;
-                columns.each(function () {
-                    var $td = $(this);
-                    var FeeTypeIds = $td.find('.FeeTypeid_Input').val();
-                    var PaidAmounts = parseFloat($td.find('.PaidAmount_Input').val());
-                    var feeAmountInput = $td.find('input[type="text"]');
-                    var feeAmountValues = parseFloat($td.find('input[type="text"]').val());
-                    var textareas = $td.find('input[type="text"]').closest('td').find('textarea');
-                    //var commentss = textareas.val();
-                    var commentss = textareas.val() ?? "";
-                    var DueDate = row.find('td:nth-child(6)').text().trim();
-                    var DueDates = $('#duedatedata').val();
-
-                    if (isNaN(feeAmountValues)) {
-                        $('#validationMessage').text('Please enter valid fee amount for the following Users where red color is indicated:');
-                        feeAmountInput.css({
-                            'border': '1px solid red',
-                            'background-color': 'rgb(255, 238, 238)'
-                        });
-
-                        rowConditionMet = rowConditionMet + 1;
-                        return false;
-                    } else if (feeAmountValues < PaidAmounts) {
-                        $('#validationMessage').text('The Amount should be Greater than or Equal to Paid Amount / Challan Generated Amount, for the following Users where red color is indicated:');
-                        feeAmountInput.css({
-                            'border': '1px solid red',
-                            'background-color': 'rgb(255, 238, 238)'
-                        });
-                        rowConditionMet = rowConditionMet + 1;
-                        return false;
-                    } else {
-                        feeAmountInput.css({
-                            'border': '1px solid black',
-                            'background-color': 'white'
-                        });
-                    }
-
-
-                    feeAmountInput.css({
-
-                    });
-
-                    var Details = {
-                        FeeTypeId: FeeTypeIds,
-                        PaidAmounts: PaidAmounts,
-                        FeeAmount: feeAmountValues,
-                        textareas: textareas,
-                        DueDates: DueDates,
-                        comment: commentss
-                    };
-                    rowData.FeeDetails.push(Details);
-                });
-            }
-
-            if (rowConditionMet) {
-
-                return;
-            }
-            rowDataList.push(rowData);
-        });
-
-
-       
-
-        if (ConditionNet) {
-            alert("Its Working alert....!");
-        }
-       /* debugger;*/
-        var DueDatess = $('#duedatedata').val();
-        if (DueDatess != "") {
-
-            if (rowConditionMet == 0) {
-
-                $('#validation2').text('');
-                $('#validationMessage').text('');
-
-                $.ajax({
-                    url: '/FeeSection/ManageFeeDetails',
-                    type: 'POST',
-                    data: { datalists: JSON.stringify(rowDataList) },
-                    success: function (result) {
-                        if (result == "2") {
-
-                            $('#validationMessage').text('Fee details assigned successfully for the selected users.');
-
-                        } else if (result == "1") {
-
-                            $('#validationMessage').text("Fee details assigned successfully for the selected users.");
-
-                        } else if (result == "-1") {
-
-                            $('#validationMessage').text("Not Inserted");
-
-                        } else {
-
-                            $('#validationMessage').text('Something Wrong........!');
-
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-
-                    }
-                });
-            }
-        } else {
-            $('#validationMessage').html('Please enter due date.');
-        }
-    }
-    
-
-    /*-------###### SET FEE AFTER CLICK SUBMIT BUTTON FIRE FUNCTIONS CODE END ######---------*/
-
-
-
 
 </script>
 

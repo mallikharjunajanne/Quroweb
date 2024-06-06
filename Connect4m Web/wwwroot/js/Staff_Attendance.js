@@ -78,8 +78,8 @@ function searchManageStaffRegister(data) {
 
         $("#totalrecords_Tranctions_StaffA").text(response.length);
         if (response.length != 0) {
-            $("#_staffattendancePrint").css('display', 'block');
-            $("#_staffattendanceExportExcel").css('display', 'block');
+            //$("#_staffattendancePrint").css('display', 'block');           
+            //$("#_staffattendanceExportExcel").css('display', 'block');
             $("#totalrecords_Tranctions_StaffA").text(response.length);
          var   newTableMA = $("#tblStaffattendancesearchresults").DataTable({
                 dom: 'Bfrtip',
@@ -406,8 +406,34 @@ $(document).on('click', '#_staffattendancePrint', function (event) {
 
 
 
+//Clear Button function adding by arjun
+function clearForm(formId) {
+    debugger;
+    var form = document.getElementById(formId);
+    if (form) {
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $('#dropdown_staff_month-error').text('');
+        $('#dropdown_staff_Year-error').text('');
+        $('#appendstaffsearchatendance').empty();
+        $('#dropdown_staff_PayRollSubCategory').empty();
+        $('#dropdown_staff_LMSSubCategory').empty();
 
+    }
+}
 
+$('#dropdown_staff_PayRollSubCategory_Clearselection').click(function () {
+    // Reset the dropdown selection to its default value (e.g., "-------select-------")
+    $('#dropdown_staff_PayRollSubCategory').val('').trigger('change');
+});
+
+$('#dropdown_staff_LMSSubCategory_clearselection').click(function () {
+    // Reset the dropdown selection to its default value (e.g., "-------select-------")
+    $('#dropdown_staff_LMSSubCategory').val('').trigger('change');
+});
 
 
 

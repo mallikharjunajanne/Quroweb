@@ -76,9 +76,7 @@
                                         <label class="col-sm-4 col-form-label text-end required space" asp-for="ClassificationId" for="basic-default-name">Department </label>
                                         <div class="col-sm-4">
                                             <div class="position-relative">
-                                                <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="ClassificationId">
-                                                    @*onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)"*@
-                                                </select>
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="ClassificationId"></select>
                                                 <span asp-validation-for="ClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>

@@ -239,10 +239,13 @@ namespace Connect4m_Web.Models
         public string TeachingExperience { get; set; }
         [Display(Name = "Community")]
         public int CommunityId { get; set; }
+
+        [Required(ErrorMessage = "Tc Number is required")]
         [Display(Name = "TC Number")]
         public string TCNumber { get; set; }
         [DataType(DataType.Date)]
         //  [DateComparison("DateOfJoining", "TC Date should be greater than Date Of Join.")]
+        [Required(ErrorMessage ="Tc Date is required")]
         [Display(Name = "Tc Date")]
         public string TCdate { get; set; }
         [Display(Name = "Tc Comments")]

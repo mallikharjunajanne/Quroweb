@@ -16,10 +16,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CreatedBy { get; set; }
             public string ReturnMessageMain { get; set; }
         }
-
         public class Manageholidays : Insatnceids
         {
-
             public int HolidayId { get; set; }
             [Required]
             public string HolidayName { get; set; }
@@ -32,29 +30,23 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string dateorder { get; set; }
             [Required]
             public string HolidayType { get; set; }
-
             [Required(ErrorMessage = "Please enter a valid date")]
             public DateTime? Sdate { get; set; }
             [Required(ErrorMessage = "Please enter a valid date")]
             public DateTime? Edate { get; set; }
             public int HType { get; set; }
-
             public int Year { get; set; }
             public string Month { get; set; }
             public int Monthid { get; set; }
             public int Type { get; set; }
             public int CountFlag { get; set; }
-
-
             public string[] RoleIds { get; set; }
             public string[] GroupIds { get; set; }
             public string[] ClassificationIds { get; set; }
             public string[] SubClassificationIds { get; set; }
             public int ForAll { get; set; }
             public string Methodname { get; set; }
-
         }
-
         public class ManageClassification : Insatnceids
         {
             public int InstanceClassificationId { get; set; }
@@ -68,9 +60,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime? EndDate { get; set; }
             public int ProgramTypeId { get; set; }
             public int AllowedDialougeCount { get; set; }
-
         }
-
         public class ManageSubClassification : Insatnceids
         {
             [Required(ErrorMessage = "Class is required")]
@@ -99,36 +89,23 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DisplayOrder { get; set; }
             public string StartDate { get; set; }
             public string EndDate { get; set; }
-
             public string CoClassTeacher { get; set; }
-
             public int IsActive { get; set; }
-
-            public List<ClassificationList> ClassificationList { get; set; }
-            public List<Classteacher> ClassteacherList { get; set; }
-            public List<CoClassteacher> CoClassteacherList { get; set; }
-
-
             public string ClsTeacherId { get; set; }
             public string CoClsTeacherId { get; set; }
             public string ISACTIVE_ { get; set; }
             public string InstanceClassificationIdCT { get; set; }
             public string InstanceClassificationIdCoCT { get; set; }
-
-
-
-
             public string CoClassteacheremail { get; set; }
             public string Coclassteachermobile { get; set; }
             public string Coclassteacherempcode { get; set; }
-
             public string Classteacheremail { get; set; }
             public string Classteachermobile { get; set; }
             public string Classteacherempcode { get; set; }
+            public List<ClassificationList> ClassificationList { get; set; }
+            public List<Classteacher> ClassteacherList { get; set; }
+            public List<CoClassteacher> CoClassteacherList { get; set; }
         }
-
-
-
         public class Categorytypes
         {
             public int CategoryId { get; set; }
@@ -137,7 +114,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CategoryTypeId { get; set; }
             public int AssetTypeId { get; set; }
         }
-
         public class BestPerformer : Insatnceids
         {
             public int PerformerId { get; set; }
@@ -155,23 +131,16 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string IsWelcomePage { get; set; }
             public string Eventphotos { get; set; }
             public DateTime? DisplayUntill_ { get; set; }
-
-            public List<ClassificationList> ClassificationList { get; set; }
-            public List<SubclassificationList> SubclassificationList { get; set; }
-            public List<RoleList> RoleList { get; set; }
             public string LastName { get; set; }
             public string InstanceClassificationId { get; set; }
             public string InstanceSubClassificationId { get; set; }
-
             public string AdmissionNumber { get; set; }
-
             public string TcTaken { get; set; }
             public string RouteId { get; set; }
             public string StopId { get; set; }
             public string UserName { get; set; }
             public string RoleName { get; set; }
             public string RoleID { get; set; }
-
             public string LabBatchId { get; set; }
             public string PortalEmail { get; set; }
             public string MobilePhone { get; set; }
@@ -189,24 +158,21 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Gender { get; set; }
             public string StudentQuota { get; set; }
             public string CollegeCode { get; set; }
-
             public IFormFile EventPhoto { get; set; }
-
             public string BestperformerUserId { get; set; }
-
+            public List<ClassificationList> ClassificationList { get; set; }
+            public List<SubclassificationList> SubclassificationList { get; set; }
+            public List<RoleList> RoleList { get; set; }
         }
-
         public class Managequote : Insatnceids
         {
             public int QuoteId { get; set; }
             [Required]
             public string Quote { get; set; }
-
             public string DisplayDate { get; set; }
             [Required]
             public DateTime? DisplayDate_ { get; set; }
         }
-
         public class studentstaffleaves
         {
             public List<StudentleaveName> StudentleaveName { get; set; }
@@ -226,7 +192,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string StaffLeave { get; set; }
             public string StudentLeave { get; set; }
         }
-
         public class leavestatus
         {
             public string LeaveType { get; set; }
@@ -239,7 +204,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         {
             public string Studentleaves { get; set; }
             public string Staffleaves { get; set; }
-
         }
         public class leavetypes
         {
@@ -254,7 +218,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Available { get; set; }
             public string AvailableLink { get; set; }
         }
-
         public class studentwithdrawal
         {
             public string UserId { get; set; }
@@ -279,7 +242,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime dateofevent { get; set; }
             public int MonthId { get; set; }
         }
-
         public class Posted_Questions : StudentleaveName
         {
             public string AssignedTold { get; set; }
@@ -289,7 +251,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Question { get; set; }
             public string CreatedDate { get; set; }
         }
-
         public class CoolLinks : Insatnceids
         {
             public int CoollinkId { get; set; }
@@ -300,7 +261,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Description { get; set; }
 
         }
-
         public class Worksheetsdata
         {
             public string Subject { get; set; }
@@ -311,9 +271,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Noticestartdate { get; set; }
 
         }
-
-
-
         public class manageenotice
         {
             public int ENoticeId { get; set; }
@@ -328,9 +285,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string IncludeParents { get; set; }
             public string SendSMS { get; set; }
         }
-
-
-
         public class ENoticeByNoticeType : Insatnceids
         {
             public int CategoryId { get; set; }
@@ -359,17 +313,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string NoticeDocument { get; set; }
             public string ShowInLogin { get; set; }
             public string createddate { get; set; }
-
             public string CategoryName { get; set; }
             public string IsPostedv { get; set; }
-
             public string ExpiryDate { get; set; }
-
             public DateTime StartDate { get; set; }
             public string IsPosted { get; set; }
             public string DisplayIcon { get; set; }
-
-
             public bool IsSMSTemplate { get; set; }
             public DateTime EndDate { get; set; }
             [Required]
@@ -391,14 +340,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required]
             public DateTime SDate { get; set; }
         }
-
         public class ManagenoticeExporttoexcel
         {
             public string Subject { get; set; }
             public string IsPosted { get; set; }
             public string ExpiryDate { get; set; }
         }
-
         public class Homenoticeupdate : Insatnceids
         {
             public int ENoticeId { get; set; }
@@ -412,13 +359,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int DisplayOrder { get; set; }
             public string DisplayIcon { get; set; }
             public string ShowInLogin { get; set; }
-
             public IFormFile AttachedDocument { get; set; }
         }
-
-
-
-
         public class TemplateDetails_SMS : Insatnceids
         {
             [Required]
@@ -497,7 +439,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
 
         }
-
         public class SmsSendingResult
         {
             public List<TemplateDetails_SMS> PushNotifications_Notices { get; set; }
@@ -567,12 +508,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string AuthTypeId { get; set; }
 
         }
-
         public class Multipuleusers
         {
             public string Userids { get; set; }
         }
-
         public class Postnoticetabledate : Insatnceids
         {
             public string UserName { get; set; }
@@ -596,7 +535,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ExcludeUserIds { get; set; }
 
         }
-
         public class BirthdaysByInstance
         {
             public string DOB { get; set; }
@@ -608,7 +546,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string InstanceId { get; set; }
             public string RoleName { get; set; }
         }
-
         public class Timetablecriteria
         {
             public string TimeTableTypeId { get; set; }
@@ -621,6 +558,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ClassificationName { get; set; }
             public string SubclassificationName { get; set; }
             public string DateofJoining { get; set; }
+        }
+        public class Flashnews
+        {
+            public int ENoticeType { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public string DisplayOrder { get; set; }
+            public int ENoticeId { get; set; }
+            public string Subject { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string createddate { get; set; }
         }
 
         #region CREATE SMS
@@ -642,7 +590,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime ExDate { get; set; }
 
         }
-
         public class InsertTemplatesms : Insatnceids
         {
             public int ENoticeTypeId { get; set; }
@@ -717,10 +664,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DMLTYPE { get; set; }
             public int CountFlag { get; set; }
         }
-
         public class Enoticetemplates : Insatnceids
         {
-
             public int ENoticeId { get; set; }
             public string NotificationMessage { get; set; }
             public int NoticeTypeId { get; set; }
@@ -801,8 +746,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
             public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
         }
-
-
         public class PostedNoticemessage
         {
             public List<string> Parentsmsfalse { get; set; }
@@ -814,23 +757,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
         }
         #endregion
 
-
-        public class Flashnews
-        {
-            public int ENoticeType { get; set; }
-            public int IsGlobalNotice { get; set; }
-            public string DisplayOrder { get; set; }
-            public int ENoticeId { get; set; }
-            public string Subject { get; set; }
-            public string ENoticeDescription { get; set; }
-            public string NoticeDocument { get; set; }
-            public string createddate { get; set; }
-        }
-
-
         #region ADMISSION REPORT
-        public class Admissionreport: Insatnceids
-        {
+        public class Admissionreport:Insatnceids
+        {           
             public string Instancesnames { get; set; }
             //public string Registrationnumber { get; set; }
             public string InstanceUserCode { get; set; }
@@ -844,8 +773,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime? FromRegistrationdate { get; set; }
             public DateTime? ToRegistrationdate { get; set; }
             public string ApplicationStatus { get; set; }
-
-
             public string Registrationdate { get; set; }
             public string Name { get; set; }
             public string DOB { get; set; }
@@ -860,8 +787,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DOJ { get; set; }
             public string UserStatus { get; set; }
         }
-        public class Admissionsummaryreport: Admissionreport
-        {         
+        public class Admissionsummaryreport : Admissionreport
+        {
             public string RegistrationCount { get; set; }
             public string AdmissionCount { get; set; }
         }
@@ -888,7 +815,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required(ErrorMessage = "Gender is required")]
             public string Gender { get; set; }
             public string Placeofbirth { get; set; }
-          
+
             public int Subclassificationid { get; set; }
             [Required(ErrorMessage = "Applying for Class is required")]
             public string SubclassificationName { get; set; }
@@ -941,23 +868,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string StateName { get; set; }
             public string ClassName { get; set; }
             public Boolean EditMode { get; set; }
-            
-        }
 
-        public class AdmissionProcesstbl: AdmissionProcess
+        }
+        public class AdmissionProcesstbl : AdmissionProcess
         {
-            //public int? RegistrationUserId { get; set; }
-            //public string FirstName{ get; set; }
-            //public string MiddleName{ get; set; }
-            //public string LastName{ get; set; }
-            //public string AcademicYearId { get; set; }
-            //public string ClassId { get; set; }
-            //public DateTime? Fromregistrationdate { get; set; }
-            //public DateTime? Toregistrationdate { get; set; }            
-            //public string InstanceUserCode { get; set; }
-            //public string DOB{ get; set; }
-            //public string FatherName { get; set; }
-            //public string MotherName { get; set; }
             public string ClassAppliedFor { get; set; }
             public string StudentName { get; set; }
             public string RegistrationDate { get; set; }
@@ -967,11 +881,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Errormessage { get; set; }
         }
 
-
         #endregion
 
         #region CONFIRM ADMISSIONS
-        public class Confirmadmissions: Insatnceids
+        public class Confirmadmissions : Insatnceids
         {
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -983,23 +896,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             [Required(ErrorMessage = "Class is required")]
             public int ClassId { get; set; }
-            public string ClassName { get; set; }           
+            public string ClassName { get; set; }
             public DateTime? FromRegistrationdate { get; set; }
             public DateTime? ToRegistrationdate { get; set; }
         }
         public class ConfirmAdmissionProcesstbl
         {
-            //public int Classificationid { get; set; }
-            //public string ClassificationName { get; set; }
-            //public int Subclassificationid { get; set; }
-            //public string SubclassificationName { get; set; }
-            //public string Exportingjoiningdate { get; set; }
-
             public int? RegistrationUserid { get; set; }
             public string RegistrationNumber { get; set; }
             public DateTime? RegistrationDate { get; set; }
-            public string StudentName{ get; set; }
-            public DateTime? DOB { get; set; }         
+            public string StudentName { get; set; }
+            public DateTime? DOB { get; set; }
             public string ClassApplied { get; set; }
             public string FatherName { get; set; }
             public string MotherName { get; set; }
@@ -1007,14 +914,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string EmailId { get; set; }
             public string AdmNo { get; set; }
             public string ClassificationId { get; set; }
-            public Boolean ChkEnabled{ get; set; }
-            public string UserName{ get; set; }
+            public Boolean ChkEnabled { get; set; }
+            public string UserName { get; set; }
         }
         #endregion
 
-        #region ManageBankDeposit      
-
-        public class Bankdeposit: Insatnceids
+        #region ManageBankDeposit
+        public class Bankdeposit : Insatnceids
         {
             public int? FeeDepositId { get; set; }
 
@@ -1050,7 +956,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string SchoolName { get; set; }
             public IFormFile AttachedDocument { get; set; }
         }
-
         public class SearchDeposit : Insatnceids
         {
             public string PaymentModeId { get; set; }
@@ -1058,7 +963,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
         }
-
         public class Deposittbl
         {
             public int? FeeDepositId { get; set; }
@@ -1066,7 +970,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string DepositAmount { get; set; }
             public string BankName { get; set; }
             public string BranchName { get; set; }
-            public string AccountNumber { get; set; }            
+            public string AccountNumber { get; set; }
             public string Depositdate { get; set; }
             public string CreatedDate { get; set; }
             public string DocumentName { get; set; }
@@ -1078,7 +982,36 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Comments { get; set; }
             public DateTime CollectedDate { get; set; }
             public string CollectingDate { get; set; }
-        }      
+        }
+        #endregion
+
+        #region SEARCH FOR STUDENT ERESULTS
+        public class Studentresults:Commonproperties
+        {
+            [Required(ErrorMessage = "Please Select Any One Exam.")]
+            public int Examid{ get; set; }
+            public string ExamName{ get; set; }
+            public int Displayorder{ get; set; }
+            public string Subject { get; set; }
+            public string ConductedOn { get; set; }
+            public string DeclaredOn { get; set; }
+            public string SecuredMarks { get; set; }
+            public string MaxMarks { get; set; }
+            public string PassMarks { get; set; }
+            public string Status { get; set; }
+            public string IncludeInTotal { get; set; }
+            public string Year { get; set; }
+            public string CreatedDate { get; set; }           
+        }
+        public class Ratingnames
+        {
+            public string RatingName { get; set; }
+        }
+        public class ExamResults
+        {
+            public List<Studentresults> StudentResultsList { get; set; }
+            public List<Ratingnames> RatingNamesList { get; set; }
+        }
         #endregion
     }
 }

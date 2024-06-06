@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    <div class="text-right">      
+    <div class="text-right">
         <span data-value="@ViewBag.Returnmessage" id="Insert_Updatespanid" style="display:block;"></span>
         <a href="" id="Backtosearchlnk">Back to Search</a>
     </div>
@@ -40,7 +40,7 @@
                                         <div class="col-sm-2">
                                             <input type="text" asp-for="FirstName" class="col-sm-3 form-control" id="txtFirstName" placeholder="FirstName" autocomplete="off" />
                                             <span asp-validation-for="FirstName" class="text-danger"></span>
-                                            <input type="hidden" asp-for="RegistrationUserId" class="col-sm-3 form-control" id="txtRegistrationUserId"/>
+                                            <input type="hidden" asp-for="RegistrationUserId" class="col-sm-3 form-control" id="txtRegistrationUserId" />
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="text" asp-for="MiddleName" class="col-sm-3 form-control" id="txtMiddleName" placeholder="MiddleName" autocomplete="off" />
@@ -53,7 +53,7 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-4 col-form-label space required text-end">Date of Birth</label>
                                         <div class="col-sm-4">
-                                            <input type="date" asp-for="DOB" class="form-control" id="txtDOB" autocomplete="off" />
+                                            <input type="date" asp-for="DOB" class="form-control" id="txtDOB" autocomplete="off" onchange="validateDate()" />
                                             <span asp-validation-for="DOB" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -88,10 +88,10 @@
                                     <div class="mb-3 row">
                                         <label class="col-sm-4 col-form-label space required text-end">Applying for Class </label>
                                         <div class="col-sm-4">
-                                     
+
                                             @Html.DropDownListFor(x => x.ClassId, new SelectList(ViewBag.Classnames, "Value", "Text"), "-------select-------",
                                            new { @class = "select2 form-select select2-hidden-accessible", @id = "ddlAdminssionForClass", @style = "color:black;", required = "required" })
-                                    
+
                                             @*<select asp-for="SubclassificationName" class="form-select" id="ddlAdminssionForClass"></select>*@
                                             <span asp-validation-for="ClassId" class="text-danger"></span>
                                         </div>
@@ -246,27 +246,27 @@
                                                 <option value="">-------select-------</option>
                                                 @foreach (var country in ViewBag.CountryNames)
                                                 {
-                                                    @if (ViewBag.EditMode)
+                                                @if (ViewBag.EditMode)
                                                     {
-                                                        @if (Model.CountryName != null)
+                                                @if (Model.CountryName != null)
                                                         {
                                                             if (country.Text == Model.CountryName)
                                                             {
-                                                                <option value="@country.Value" selected="selected">@country.Text</option>
+                                                <option value="@country.Value" selected="selected">@country.Text</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@country.Value">@country.Text</option>
+                                                <option value="@country.Value">@country.Text</option>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            <option value="@country.Value">@country.Text</option>
+                                                <option value="@country.Value">@country.Text</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <option value="@country.Value">@country.Text</option>
+                                                <option value="@country.Value">@country.Text</option>
                                                     }
                                                 }
                                             </select>
@@ -279,27 +279,27 @@
                                                 <option value="">-------select-------</option>
                                                 @foreach (var State in ViewBag.StateNames)
                                                 {
-                                                    @if (ViewBag.EditMode)
+                                                @if (ViewBag.EditMode)
                                                     {
-                                                        @if (Model.StateName != null)
+                                                @if (Model.StateName != null)
                                                         {
                                                             if (State.Text == Model.StateName)
                                                             {
-                                                                <option value="@State.Value" selected="selected">@State.Text</option>
+                                                <option value="@State.Value" selected="selected">@State.Text</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@State.Value">@State.Text</option>
+                                                <option value="@State.Value">@State.Text</option>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            <option value="@State.Value">@State.Text</option>
+                                                <option value="@State.Value">@State.Text</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <option value="@State.Value">@State.Text</option>
+                                                <option value="@State.Value">@State.Text</option>
                                                     }
                                                 }
                                             </select>
@@ -355,7 +355,7 @@
         </div>
         <div class="row justify-content-center text-center">
             <div class="col-sm-12">
-                <button type="submit"  class="btn btn-success waves-effect waves-light" id="Savebtn" value="Submit">Submit</button>
+                <button type="submit" class="btn btn-success waves-effect waves-light" id="Savebtn" value="Submit">Submit</button>
             </div>
         </div>
     </form>

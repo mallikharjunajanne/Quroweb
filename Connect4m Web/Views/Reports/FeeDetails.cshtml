@@ -1,4 +1,4 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.Feedetails
+﻿@model Connect4m_Web.Models.Attendenceproperites.ReportFeedetails
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,64 +6,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
+    
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>FEE DETAILS</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4" id="PayementdetailsSearchpagemaindiv">
+                <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                SEARCH FEE DETAILS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                        <h5 class="mb-0">SEARCH FEE DETAILS</h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="card-body" id="CreateNewSubjectsDiv">
+                    <div class="card-body">
                         <form id="Feedetailform" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row mb-3">
-                                        <div class="mb-3">
-                                            <label for="Termnamedd" class="form-label space">Terms</label>
-                                            <select multiple="" class="form-select" id="Termnamedd" aria-label="Multiple select example" asp-for="FeeTermId">
-                                            </select>
-                                            <span asp-validation-for="FeeTermId" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="col-sm-12">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear">Clear</button>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" id="Btnsearch">Search</button>
-                                        </div>
-                                    </div>
+                            <div class="row mb-3">
+                                <label for="lstTerms" class="control-label col-sm-4 col-form-label text-end  space">Terms</label>
+                                <div class="col-sm-4">
+                                    <select multiple="" class="form-select" id="lstTerms" aria-label="Multiple select example" asp-for="FeeTermId">
+                                    </select>
+                                    <span asp-validation-for="FeeTermId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row justify-content text-center">
+                                <div class="col-sm-12">
+                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light" id="Btnsearch">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    <div class="col-md-12 col-lg-12 mb-3">
-        <div class="card mb-4" id="PayementdetailsSearchpagemaindiv">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span id="AddNewText_Span_CreatePage">
-                        FEE SUMMARY
-                    </span>
-                </h5>
-            </div>
-            <div class="card-body">
-                <div id="Feesummarytbls">
-
+            <div class="col-md-12 col-lg-12 mb-3" id="Paymentoptionchangediv" style="display:block;">
+                <div class="text-right">
+                    <a href="javascript:void(0)" id="Exporttoexcellnk">Export To Excel</a>
                 </div>
-                <span id="Feesummarytblamountcountspid"></span>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">FEE SUMMARY</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="Feesummarytbls">
+
+                        </div>
+                        <span id="Feesummarytblamountcountspid" style="color:green;"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -73,3 +61,8 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/Feedetails.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+
+

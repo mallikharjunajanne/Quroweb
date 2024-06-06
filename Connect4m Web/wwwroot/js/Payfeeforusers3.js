@@ -1,8 +1,4 @@
-﻿
-
-
-
-$("#PFUtermsupdatbtnid").click(function () {
+﻿$("#PFUtermsupdatbtnid").click(function () {
     //$('#ErrorMessages_EditUsers').text('');
     //$('#PFU_TermsFeeTable_IN_Update').text('');
     var UpdateData = [];
@@ -122,10 +118,7 @@ $("#PFUtermsupdatbtnid").click(function () {
 
     $.ajax({
         type: 'POST',
-        url: '/FeeSection/PFUC_FeeInstallments_BulkFeeUPDATE?UpdateData=' + JSON.stringify(UpdateData) + "&ChallanDetails=" + JSON.stringify(ChallanDetails), // Update with your actual controller and action names
-
-        // url: '/FeeSection/PFU_FeeInstallments_BulkFeeUPDATE?UpdateData=' + JSON.stringify(UpdateData) + "&ChallanDetails=" + JSON.stringify(ChallanDetails), // Update with your actual controller and action names
-
+        url: '/FeeSection/PFUC_FeeInstallments_BulkFeeUPDATE?UpdateData=' + JSON.stringify(UpdateData) + "&ChallanDetails=" + JSON.stringify(ChallanDetails), 
         success: function (result) {
             debugger;
             $('#PFUtermsupdatbtnid').prop('disabled', true);
@@ -144,8 +137,6 @@ $("#PFUtermsupdatbtnid").click(function () {
         }
     });
 });
-
-
 $('#Pfuchallanbacktosearch_btn').click(function () {
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
@@ -175,10 +166,6 @@ $('#Pfuchallanbacktosearch_btn').click(function () {
     $('#SubmitvalidationMessages').text('');
 
 });
-
-
-
-
 $('#Pfuchallanbacktopayfee_btn').click(function () {
 
     debugger;

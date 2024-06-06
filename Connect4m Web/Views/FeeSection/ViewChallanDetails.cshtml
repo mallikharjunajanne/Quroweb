@@ -1,0 +1,263 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.ViewChallanDetails
+@{
+    ViewData["Title"] = "View Challan Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="col-md-12 col-lg-12 mb-3">
+            <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>FEE DETAILS</h4>
+            <span id="Errormessages" class="text-danger">Note: Please Click on Challan Id to View & Print the Challan.</span>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow">  </span> RECORD.</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="Feedetailstbl">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Challan Id</th>
+                                <th>Term</th>
+                                <th>Challan Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                                <th>Fine/Excess Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function handleAjaxtabledata(method, url, data, successCallback, errorCallback) {
+        var ajaxOptions = {
+            url: url,
+            method: method,
+            data: data,
+            //contentType: false,
+            //processData: false,
+            success: Bindtable,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        };
+        $.ajax(ajaxOptions);
+    }
+    function CallToAjax(method, url, data, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function (response) {
+                successCallback(response);
+            },
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+    $(document).ready(function () {
+        debugger;
+        Pageload();
+    });
+    function Pageload() {
+        debugger;
+        //var Terms = $('#lstTerms').val();
+        //var data = { FeeTermId: Terms };
+        handleAjaxtabledata('GET', "/FeeSection/BindtblViewfeedetails", null,
+            function (status, error) {
+                loaddingimg.css('display', 'none');
+            }
+        );
+    }
+    function Bindtable(response) {
+        debugger;
+        $("#Recordscount").text(response.length);
+        var table = $('#Feedetailstbl').DataTable();
+        table.destroy();
+        var newTable = $("#Feedetailstbl").DataTable({
+            dom: 'Bfrtip',
+            buttons: [],
+            bProcessing: false,
+            bLengthChange: true,
+            /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+            //pageLength: 20,
+            //bfilter: false,
+            bSort: true,
+            searching: false,
+            scrollX: true,
+            scrollY: '400px',
+            //scrollCollapse: true,
+            paging: false,
+            //bPaginate: true,
+            //  stateSave:true,
+            data: response,
+            columns: [
+                {
+                    targets: 0, // Assuming this is the column index where you want to display numbering
+                    render: function (data, type, row, meta) {
+                        var currentPage = table.page.info().page;
+                        var rowsPerPage = table.page.info().length;
+                        return (0 * rowsPerPage) + meta.row + 1;
+                    }
+                },
+                {
+                    data: "UserReceiptGenerationid",
+                    render: function (data, type, row, meta) {
+                        //return row.userReceiptGenerationid
+                          return row.userReceiptGenerationid + '<input type="text" title="' + row.userId + '" value="' + row.userReceiptGenerationid + '" hidden/>';
+                    }
+                },
+                {
+                    data: "TermName",
+                    render: function (data, type, row, meta) {
+                        return row.termName
+                    }
+                },
+                //{
+                //    data: "ConcedingtypeAmount",
+                //    render: function (data, type, row, meta) {
+                //        if (!row.concedingtypeAmount === '0.00') {
+                //            return 'Nill';
+                //        }
+                //        return row.concedingtypeAmount;
+                //    }
+                //},
+                {
+                    data: "Amount",
+                    render: function (data, type, row, meta) {
+                        if (row.amount === '0.00') {//|| row.concedingtypeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.amount
+                    }
+                },
+                {
+                    data: "LastPayedAmount",
+                    render: function (data, type, row, meta) {
+                        if (row.lastPayedAmount === '0') {//|| row.concedingtypeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.lastPayedAmount
+                    }
+                },
+                {
+                    data: "FeeAmount",
+                    render: function (data, type, row, meta) {
+                        if (row.feeAmount === '0.00') {//|| row.feeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.feeAmount
+                    }
+                },
+                {
+                    data: "Fine",
+                    render: function (data, type, row, meta) {
+                        if (row.fine === '0.00') {//|| row.due === 0.00
+                            return 'Nill';
+                        }
+                        return row.fine
+                    }
+                }
+            ]
+
+        });
+        table.on('draw', function () {
+            $('#Feedetailstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
+                color: 'black',
+                'text-decoration': 'underline',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+            });
+        });
+        $('#Feedetailstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
+            color: 'black',
+            'text-decoration': 'underline',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+        });
+    }
+
+
+    $(document).on('click', '#Feedetailstbl td:nth-child(2)', function (event) {
+        try {
+            loaddingimg.css('display', 'block');
+            debugger;
+            event.stopImmediatePropagation();
+
+            var parent = $(event.target).closest('tr');
+            var Challanid = $(parent).find('td').find('input[type="text"]').val();
+            var StudentUserId = $(parent).find('td').find('input[type="text"]').attr('title');
+            var table = $('#Feedetailstbl').DataTable();
+            debugger;
+            const baseUrl = "/FeeSection/ChallanDetailsView";
+            const params = {
+                Challanid: Challanid,
+                StudentUserId: StudentUserId,
+            };
+            const constructedUrl = constructUrl(baseUrl, params);
+
+            // Open the new window with the constructed URL
+            var newWindow = window.open(constructedUrl, "_blank");
+
+            if (!newWindow) {
+                alert("Popup blocked. Please allow popups for this website.");
+            }
+            loaddingimg.css('display', 'none');
+
+            //CallToAjax('GET', "/FeeSection/ChallanDetailsView?Challanid=" + Challanid + "&StudentUserId=" + StudentUserId, null,
+            //    function (resp) {
+            //        debugger;
+            //        loaddingimg.css('display', 'none');
+            //        const baseUrl = "/FeeSection/ChallanDetailsView";
+            //        const params = {
+            //            Challanid: Challanid,
+            //            StudentUserId: StudentUserId,
+            //        };
+                   
+            //        const constructedUrl = constructUrl(baseUrl, params);
+
+            //        debugger;                   
+            //        var newWindow = window.open(constructedUrl, "_blank")
+
+            //        //var newWindow = window.open("", "_blank");
+            //        if (!newWindow) {
+            //            alert("Popup blocked. Please allow popups for this website.");
+            //        }
+                  
+            //    },
+            //    function (status, error) {
+            //        loaddingimg.css('display', 'none');
+            //    }
+            //);
+
+        }
+        catch (e) {
+
+        }
+    })
+    function constructUrl(baseUrl, params) {
+        const url = new URL(baseUrl, window.location.origin);
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+        return url.toString();
+    }
+
+</script>

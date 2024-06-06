@@ -1,8 +1,6 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.AttendancePosting
-
-
+﻿@model Connect4m_Web.Models.Attendenceproperites.AttendancePost
 @{
-    // ViewData["Title"] = "AttendancePosting";
+    ViewData["Title"] = "AttendancePosting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,54 +8,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @*<style>
-            span.validation {
-                display: block;
-                color: red;
-            }
-            .radio-style1 {
-                /* Define your styles for the first radio button here */
-                /* Example styles */
-                border: 2px solid #f00;
-                padding: 5px;
-            }
-
-            .radio-style2 {
-                /* Define your styles for the second radio button here */
-                /* Example styles */
-                background-color: #f00;
-                color: #fff;
-                padding: 10px;
-            }
-            .Dropdownbox {
-                width: 242px;
-                height: 23px;
-                border: 2px solid #999;
-                font-size: 13px;
-                color: tomato;
-                background-color: azure;
-                border-radius: 5px;
-            }
-            .textbox {
-                width: 242px;
-                height: 23px;
-                border: 2px solid #999;
-                font-size: 13px;
-                color: tomato;
-                background-color: azure;
-                border-radius: 5px;
-            }
-            .S_btn {
-                width: 7%;
-                height: 28px;
-                margin-top: 16px;
-                margin-left: 26%;
-            }
-        </style>
-        <link href="~/css/PostAttendance.css" rel="stylesheet" />*@
+    @*<link href="~/css/PostAttendance.css" rel="stylesheet" />*@
 </head>
 <body>
-    @*-----*** REPLACE OLD TO NEW CODE START ***------*@
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE POSTING </h4>
         <div class="row mb-2">
@@ -71,7 +24,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <form class="form" id="Attendancepostingform">
+                                <form id="Attendancepostingform">
                                     <div class="row mb-3">
                                         <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
                                         <div class="col-sm-4">
@@ -122,12 +75,12 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label asp-for="Faculty" class="control-label col-sm-4 col-form-label text-end required space">Faculty </label>
+                                        <label asp-for="MentorUserid" class="control-label col-sm-4 col-form-label text-end required space">Faculty </label>
                                         <div class="col-sm-4">
                                             <div class="position-relative">
-                                                <select class="select2 form-select select2-hidden-accessible" id="Ddfaculty" asp-for="Faculty">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddfaculty" asp-for="MentorUserid">
                                                 </select>
-                                                <span asp-validation-for="Faculty" class="text-danger"></span>
+                                                <span asp-validation-for="MentorUserid" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -138,25 +91,24 @@
                                                 <select class="select2 form-select select2-hidden-accessible" id="Ddslotsid" asp-for="SubjectSlotID">
                                                 </select>
                                                 <span asp-validation-for="SubjectSlotID" class="text-danger"></span>
-                                                @*@Html.DropDownListFor(Model => Model.SubjectName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "form-select Dropdown", @id = "SubjectName" })*@
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="control-label col-sm-4 col-form-label text-end  space">Sort By</label>
                                         <div class="col-1 form-check">
-                                            <input type="radio" value="0" name="RadioSearch" class="form-check-input" id="defaultRadio1">
+                                            <input type="radio" asp-for="Radiovalue" value="0" name="RadioSearch" class="form-check-input" id="defaultRadio1">
                                             <label class="form-check-label" for="defaultRadio1">Name</label>
                                         </div>
-                                        <div class="col-1 form-check">
-                                            <input type="radio" value="1" name="RadioSearch" class="form-check-input" id="defaultRadio2">
+                                        <div class="col-2 form-check">
+                                            <input type="radio" asp-for="Radiovalue" value="1" name="RadioSearch" class="form-check-input" id="defaultRadio2">
                                             <label class="form-check-label" for="defaultRadio2">Register No</label>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="control-label col-sm-4 col-form-label text-end"></label>
                                         <div class="col-sm-4">
-                                            <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                            <input type="checkbox" asp-for="Checkboxvalue" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
                                             <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show On Duty</label>
                                         </div>
                                     </div>
@@ -172,16 +124,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div id="Appendingdivcontainer">
 
-        <div id="Get_Admin_Attendance_Table">
-
+            </div>
         </div>
     </div>
-    @*-----*** REPLACE OLD TO NEW CODE START ***------*@
-
-
-
 </body>
 </html>
 
@@ -195,132 +142,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script>
-    //$("#F_IN_Class").change(fun01);
-    function fun01() {
-        debugger;
-        var value = $('#F_IC_Id').val();
-
-        $.ajax({
-            url: "/Attendance/F_Get_Inc_By_Subclass?InstanceClassificationId=" + value,
-            type: "GET",
-            success: fun02
-        });
-        function fun02(response) {
-            /*debugger;*/
-            $("#F_IC_Sub_Id").html(response);
-        }
-    }
-
-
-    /*  $("#F_IN_SubId").change(fun03);*/
-    function fun03() {
-        debugger;
-        var SubClassificationId = $('#F_IC_Sub_Id').val();
-
-        $.ajax({
-            url: "/Attendance/Slot_by_subclassification?SubClassificationId=" + SubClassificationId,
-            type: "GET",
-            success: fun04
-        });
-        function fun04(response) {
-            /*  debugger;*/
-            $("#SubjectName").html(response);
-        }
-    }
-
-
-
-
-    $(document).ready(function () {
-        debugger;
-        $("#myform").submit(function (event) {
-            event.preventDefault(); // Prevent form submission
-
-            // Perform form validation
-            var StartDateid = $("#StartDateid").val();
-            var department = $("#F_IC_Id").val();
-            var classID = $("#F_IC_Sub_Id").val();
-            var period = $("#PeriodId").val();
-            var faculty = $("#Faculty_Id").val();
-            var Slot = $("#SubjectName").val();
-            var sortBy = $('input[name="radio1"]:checked');
-            var showOnDuty = $(".checkbox_animated").is(":checked");
-
-            var validationMessage = "";
-            var validation2Message = "";
-            var hasError = false;
-
-            if (StartDateid === "") {
-
-                validationMessage += "StartDateid is required.<br>";
-                hasError = true;
-            }
-
-            if (department === "") {
-
-                validationMessage += "Department is required.<br>";
-                hasError = true;
-            }
-
-            if (classID === "") {
-
-                validationMessage += "Class is required.<br>";
-                hasError = true;
-            }
-
-            if (period === "") {
-
-                validationMessage += "Period is required.<br>";
-                hasError = true;
-            }
-
-            if (faculty === "") {
-
-                validationMessage += "Teacher/Mentor is required.<br>";
-                hasError = true;
-            }
-
-            if (Slot === "") {
-
-                validationMessage += "Slot is required.<br>";
-                hasError = true;
-            }
-
-            if (hasError) {
-                validation2Message = "Following fields have invalid data:<br>";
-                $("#validationMessage").html(validationMessage);
-                $("#validation2").html(validation2Message);
-
-
-            }
-            else {
-
-                $("#validationMessage").html("");
-                $("#validation2").html("");
-
-
-                debugger;
-                // Serialize the form data
-                var formData = $(this).serialize();
-
-
-
-                // AJAX request to submit the form data
-                $.ajax({
-                    url: "/Attendance/AttendancePosting_Tbl",
-                    type: "GET",
-                    data: formData,
-                    success: function (response) {
-                        $("#Get_Admin_Attendance_Table").html(response);
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        // Handle the error response
-                    }
-                });
-            }
-        });
-
-    });
-
-</script>

@@ -3,19 +3,18 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model List<Fee_Due_Remainders_FeeStatus_ByIndividual>
-    <link href="~/css/FeeDueRemainders.css" rel="stylesheet" />
+@model List<FeestatusIndividual>
+    @*<link href="~/css/FeeDueRemainders.css" rel="stylesheet" />*@
 <div>
-
-    <table class="UsersTableByIndividual">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="table-dark">
             <tr>
-                <th>      Fee Type      </th>
-                <th>      Fee Amount      </th>
-                <th>      Discount Amount      </th>
-                <th>      Discount Type</th>
-                <th>      Fee Paid</th>
-                <th>      Due Amount</th>
+                <th>Fee Type</th>
+                <th>Fee Amount</th>
+                <th>Discount Amount</th>
+                <th>Discount Type</th>
+                <th>Fee Paid</th>
+                <th>Due Amount</th>
             </tr>
         </thead>
         <tbody>

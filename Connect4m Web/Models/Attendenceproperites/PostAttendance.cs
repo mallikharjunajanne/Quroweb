@@ -29,11 +29,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         [Required(ErrorMessage = "Class is required")]
         public int InstanceSubclassificaitionId { get; set; }
+
         public string SubClassificationName { get; set; }
 
         [Required(ErrorMessage = "Subject is required")]
         public int InstancesubjectId { get; set; }
         public string SubjectName { get; set; }
+        public int FilterTeachingSubjects { get; set; }
         public string FirstName { get; set; }
         public string AdmissionNumber { get; set; }
         public string StudentSMS { get; set; }
@@ -151,7 +153,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
     #endregion
 
-    public class Attendancepost : Commonproperties
+    public class Attendancepost:Commonproperties
     {
         [Required(ErrorMessage = "Start date is required")]
         public DateTime StartDate { get; set; }
@@ -177,8 +179,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public int SatHolidy { get; set; }
         public bool ShowChangeActivity { get; set; }
     }
-
-
     public class GetAttendancelist
     {
         public string AttendanceValidateornotretunmessage { get; set; }
@@ -190,7 +190,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             Dates = new List<DateTime>();
         }
     }
-
     public class Getattendancedetails
     {
 
@@ -336,7 +335,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         //public string SplAttenanceComments7 { get; set; }
         //public string LastDateofAttendance7 { get; set; }
     }
-
     public class Teacherportalattendanceclassification //T_PostAttendance
     {
         public int INSTANCECLASSIFICATIONID { get; set; }
@@ -349,7 +347,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string HolidayName { get; set; }
         public DateTime HolidayDate { get; set; }
     }
-
     public class Changeactivity
     {
         public string AuditKey { get; set; }
@@ -367,4 +364,73 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string CurrentValuecreateddate { get; set; }
         public string Errormessage { get; set; }
     }
+
+
+    #region   ATTENDANCE DETAILS 
+    public class detailsattendance:Commonproperties
+    {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
+        public string ClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubclassificaitionId { get; set; }
+        public string SubClassificationName { get; set; }
+        [Required(ErrorMessage = "Student is required")]
+        public int Studentuserid { get; set; }
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Slots is required")]
+        public int SubjectSlotID { get; set; }
+        public string SubjectName { get; set; }
+        [Required(ErrorMessage = "Display only for is required")]
+        public int bFlagForDisplay { get; set; }
+    }
+    public class Detailsforattedance:Commonproperties
+    {
+        public string[] SlotSubjectsNames { get; set; }
+        public string SubjectSlotName { get; set; }
+        public string Mentors { get; set; }
+        public string IsPresent { get; set; }
+        public string CreatedDate { get; set; }
+        public string Present { get; set; }
+        public string AttendanceRequired { get; set; }
+        public string PeriodId { get; set; }
+    }
+    #endregion
+
+    #region ATTENDANCE SUMMARY
+    public class Attendance_Summary:Commonproperties
+    {
+        [Required(ErrorMessage = "Department is required")]
+        public int InstanceClassificationId { get; set; }
+        public string ClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Class is required")]
+        public int InstanceSubclassificaitionId { get; set; }
+        public string SubClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Student is required")]
+        public int Studentuserid { get; set; }
+        public string FirstName { get; set; }
+        public string InstanceUserCode { get; set; }
+        public DateTime AttendanceEffectiveDate { get; set; }
+        public DateTime DateofJoining { get; set; }
+        public string UserJoined { get; set; }
+        public string AdmissionNumber { get; set; }
+        public string SubjectSlotName { get; set; }
+        public string Mentors { get; set; }
+        public string TotalClasses { get; set; }
+        public string TotalPresent { get; set; }
+        public string AttendancePercentage { get; set; }
+        public string AttendanceRequiredPercent { get; set; }
+        public string TotalAbsent { get; set; }
+        public string OnDuty { get; set; }
+        public string LastName { get; set; }
+    }
+    #endregion
+
 }

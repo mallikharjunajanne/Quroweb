@@ -1,5 +1,4 @@
-﻿
-function CallToAjax(method, url,data, successCallback, errorCallback) {
+﻿function CallToAjax(method, url,data, successCallback, errorCallback) {
     $.ajax({
         url: url,
         type: method,

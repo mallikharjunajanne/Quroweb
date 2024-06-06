@@ -34,9 +34,9 @@ var Studentspanuserid = $('#Studentuseridspid').val();
 $(document).ready(function () {
 
     $('#Searchuserfields_tabledatadiv1').show();
-    $('#Userfeedetailsdiv2').hide();
-    $('#Feechallandiv').hide();
-    $('#Feedetailsupdateandedit_tablediv').hide();
+    //$('#Userfeedetailsdiv2').hide();
+    //$('#Feechallandiv').hide();
+    //$('#Feedetailsupdateandedit_tablediv').hide();
 
     fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
         '/FeeSection/Pfudepartmentdd',                      // URL for data fetching
@@ -90,9 +90,8 @@ $(document).ready(function () {
     });
 
 });
-
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    /*debugger;*/
+    debugger;
     CallToAjax('GET', url,
         function (response) {
 
@@ -106,10 +105,9 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
         }
     );
 }
-
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    /* debugger;*/
+     debugger;
     dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -122,13 +120,10 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
         }));
     });
 }
-
-
 $('#Ddldepartment').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     Departmentbysubclassdd(ClassificationId);
 });
-
 function Departmentbysubclassdd(Departmentvalue) {
     fetchDataAndPopulateDropdown(                                                                //==== << ** Subclassification Dropdown ** >>
         '/FeeSection/PfuSubClass?InstanceClassificationId=' + Departmentvalue,                      // URL for data fetching
@@ -138,7 +133,6 @@ function Departmentbysubclassdd(Departmentvalue) {
         null                                                                                        // Response value return class name
     );
 }
-
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
         /*debugger;*/
@@ -154,7 +148,6 @@ function nextpages(url, data) {
         }, false);
     });
 }
-
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
         /* debugger;*/
@@ -170,8 +163,6 @@ function previouspages(url, data) {
         }, false);
     });
 }
-
-
 
 $('button[type=submit]').click(function () {
     $('#clickedButton').val($(this).val());
@@ -216,8 +207,6 @@ $('#Payfeebyuserssearchform').submit(function () {
     }, 50);
 });
 /*----*/
-
-
 function bindDatatable(response, submitButtonValue) {
 
 
@@ -357,9 +346,6 @@ function bindDatatable(response, submitButtonValue) {
 
     loaddingimg.css('display', 'none');
 }
-
-
-
 $(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event) {
     event.stopImmediatePropagation();
 
@@ -383,7 +369,7 @@ $(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event
 function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass) {
 
 
-    handleAjax('GET', `/FeeSection/Getfeedetailsbyuser`, { UserId: StudentUserId },
+    handleAjax('GET', `/FeeSection/Getfeedetailsbyuser`, { StudentUserId: StudentUserId },
         function (response) {
 
             var Feetermsdropdownvalues = response[0].feetermdetialsbyuserId;
@@ -679,14 +665,11 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
         $('#FeePaid_ChallanaCreated_DivId').hide();
     }
 }
-
-
 $('#DDlTermid').change(function () {
 
     var FeetermId = $('#ddlFeetermid').val();
     Dropdwonfunction(FeetermId);
 });
-
 function Dropdwonfunction(FeetermId) {
     fetchDataAndPopulateDropdown(                                                                //==== << ** FeeType Dropdown ** >>
         '/FeeSection/Pfufeetermbyfeetype?FeeTermId=' + FeetermId,                                 // URL for data fetching
@@ -700,10 +683,6 @@ function Dropdwonfunction(FeetermId) {
     //document.getElementById("Quantitydivid").style.display = "none";
     $('#Quantitydivid').hide();
 }
-
-
-
-
 $('#ddlfeetype').change(function () {
 
     var FeetypeId = $('#ddlfeetype').val();
@@ -841,7 +820,6 @@ function Feetypedropdwonfunction(FeetypeId) {
             loaddingimg.css('display', 'none');
         }, false);
 }
-
 $('#Discount_TypeDDId').change(function () {
     var ConcedingTypeId = $('#Discount_TypeDDId').val();
     //Feetypedropdwonfunction(ConcedingTypeId);
@@ -873,7 +851,7 @@ $('#searchbtnterms').on("click", function () {
 });
 function Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids) {
 
-    handleAjax('GET', `/FeeSection/Getfeedetailsbyfeeterms?UserId=${userId}&FeeTermIds=${SelectedFeeTermsids}`, null,
+    handleAjax('GET', `/FeeSection/Getfeedetailsbyfeeterms?StudentUserId=${userId}&FeeTermIds=${SelectedFeeTermsids}`, null,
         function (response) {
             debugger;
             //var Feetermsdropdownvalues = response[0].feetermdetialsbyuserId;
@@ -900,9 +878,6 @@ function CommonClearfun(Formid) {
     $('#Update_SubmitvalidationMessage').text('');
 }
 
-
-
-
 //=========
 function isNumber(event) {
     var inputValue = event.key;
@@ -923,9 +898,6 @@ function setFeeAmount(input) {
     // Update the value of the Total Amount text box
     document.getElementById('FeeAmount_TxtID').value = totalAmount.toFixed(2); // Using toFixed to limit decimal places
 }
-
-
-
 function backToSearch(event) {
     event.preventDefault();
     debugger;
@@ -956,8 +928,6 @@ function backToSearch(event) {
     $('#SubmitvalidationMessages').text('');
 
 }
-
-
 $('#Addfeeuserbtn').click(function () {
     if (AddFeeValidation()) {
         debugger;
@@ -1012,7 +982,6 @@ $('#Addfeeuserbtn').click(function () {
 
     }
 });
-
 function AddFeeValidation() {
 
     debugger;  
@@ -1126,9 +1095,6 @@ function AddFeeValidation() {
     }
 
 }
-
-
-
 function Payinstallmentsubbtn(event) {
     if (Validationchecking()) {
         debugger;
@@ -1163,13 +1129,10 @@ function Payinstallmentsubbtn(event) {
         var tbllength = $('#Studentfeedetailstbl tbody tr').length;
         var tableRows = $('#Studentfeedetailstbl tbody tr');
 
-        /* --------  All text boxes Empty Show Error Message Code Start -------- */
-       
+        /* --------  All text boxes Empty Show Error Message Code Start -------- */       
         var TextboxIndex = 1;
         //var totalRowTextboxs = tableRows.length;
         var AllTextBoxesValues = [];
-
-       
 
         tableRows.each(function () {
             debugger;
@@ -1179,21 +1142,16 @@ function Payinstallmentsubbtn(event) {
             var InstallmentNameValue = $('#InstallmentName_' + rowIds).val();
             TextboxIndex++;
         });
-
-
         
         var allEmpty = AllTextBoxesValues.every(function (value) {
             return $.trim(value) === ""; // Trim and check if empty
         });
-
-      
+              
         if (allEmpty) {
             $('#SubmitvalidationMessage').text('Please enter fee amount .');
             return false;
         }
         /* --------  All text boxes Empty Show Error Message Code Start -------- */
-
-
         tableRows.each(function () {
             var formData = [];
             var rowValues = {};
@@ -1316,7 +1274,6 @@ function Payinstallmentsubbtn(event) {
                 formData.push({ name: "Challana_subclassificationName", value: Classnamecell20 });
                 formData.push({ name: "Challana_UserName", value: Studentusernamecell21 });
 
-
                 //testing Last Values 
 
                // var Amount = textboxValues;
@@ -1347,27 +1304,15 @@ function Payinstallmentsubbtn(event) {
                         $('#Feechallandiv').show();
                         $('#Feedetailsupdateandedit_tablediv').hide();
                         
-                        $('#Feereceipt_partailcontaindiv').append(response);
-                      
+                        $('#Feereceipt_partailcontaindiv').append(response);                      
                     }
                 });
-
-
             }
-
             index++;
         });
 
     }
 }
-
-//Cheque_DD_TxtId == Chequetxtid
-//Chequeddno lablename
-//Cheque_DD_DateTxtId==Chequedatedttxtid 
-//Chequedddate lablename
-//Chequebanknametxtid==Cheque_DD_BankName_TxtId
-//Chequenamlname lablename
-
 function Validationchecking() {
    
 
@@ -1419,9 +1364,7 @@ function Validationchecking() {
     return isValid;
 }
 
-
 //=== Partail view releated code
-
 $('#Pfuchallanbacktosearchbtn').click(function () {
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
@@ -1451,10 +1394,6 @@ $('#Pfuchallanbacktosearchbtn').click(function () {
     $('#SubmitvalidationMessages').text('');
 
 });
-
-
-
-
 $('#Pfuchallanbacktopayfeebtn').click(function () {
 
     debugger;
@@ -1462,6 +1401,7 @@ $('#Pfuchallanbacktopayfeebtn').click(function () {
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');    
     $('#Errormessage').text('');
+    $('#Update_SubmitvalidationMessage').text('');
     $('#ddltermid').empty();
     $('#ddlFeetermid').empty();
 
@@ -1488,10 +1428,7 @@ $('#Pfuchallanbacktopayfeebtn').click(function () {
     $('#SubmitvalidationMessages').text('');
 
 });
-
-
 //==Fee Edit && Update Code Start
-
 
 function EditFeeAmount(feeTermId, userfeeactivityId) {
     debugger;
@@ -1549,9 +1486,6 @@ function EditFeeAmount(feeTermId, userfeeactivityId) {
         }
     });
 }
-
-
-
 function PFU_TermsFeeTable_IN_Update(event) {
 
     $('#ErrorMessages_EditUsers').text('');
@@ -1697,8 +1631,6 @@ function PFU_TermsFeeTable_IN_Update(event) {
 //==Fee Edit && Update Code End
 
 /*========================= =====SEARCH ICON CLICK FIRE FUNCTION CODE START =================================*/
-
-
 function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
 
 
@@ -1794,8 +1726,35 @@ function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
 
 
 }
-
 /*========================= =====SEARCH ICON CLICK FIRE FUNCTION CODE END =================================*/
 
+function nextpages(url, data) {
+    return new Promise((resolve, reject) => {
+        /*debugger;*/
 
+        loaddingimg.css('display', 'block');
+        handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
+            window.location.href = `/FeeSection/${url}`;
+            loaddingimg.css('display', 'none');
+            resolve();
+        }, (status, error) => {
+            loaddingimg.css('display', 'none');
+            reject();
+        }, false);
+    });
+}
+function previouspages(url, data) {
+    return new Promise((resolve, reject) => {
+        /* debugger;*/
 
+        loaddingimg.css('display', 'block');
+        handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
+            window.location.href = `/FeeSection/${url}`;
+            loaddingimg.css('display', 'none');
+            resolve();
+        }, (status, error) => {
+            loaddingimg.css('display', 'none');
+            reject();
+        }, false);
+    });
+}

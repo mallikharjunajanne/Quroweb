@@ -1,6 +1,4 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
 
     updateDateTime();
@@ -10,8 +8,6 @@ $(document).ready(function () {
 
 
 });
-
-
 $('#Pfuchallanbacktosearchbtn').click(function () {
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
@@ -41,10 +37,6 @@ $('#Pfuchallanbacktosearchbtn').click(function () {
     $('#SubmitvalidationMessages').text('');
 
 });
-
-
-
-
 $('#Pfuchallanbacktopayfeebtn').click(function () {
 
     debugger;
@@ -78,8 +70,6 @@ $('#Pfuchallanbacktopayfeebtn').click(function () {
     $('#SubmitvalidationMessages').text('');
 
 });
-
-
 function updateDateTime() {
     const currentDate = new Date();
     const months = [
@@ -102,7 +92,6 @@ function updateDateTime() {
     document.getElementById("dateSpan").textContent = formattedDate;
     document.getElementById("timeSpan").textContent = formattedTime;
 }
-
 document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
     // Get the content of the div with id 'MatricChallanaPrint'
     const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
@@ -122,9 +111,6 @@ document.getElementById("Print_Matrix_Button").addEventListener("click", functio
     printWindow.print();
     printWindow.close();
 });
-
-
-
 document.getElementById("Print_Button").addEventListener("click", function () {
     //const printContent = document.getElementById("Fee_DetailsPrintdiv").innerHTML;
     const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
@@ -137,5 +123,3 @@ document.getElementById("Print_Button").addEventListener("click", function () {
     printWindow.print();
     printWindow.close();
 });
-
-

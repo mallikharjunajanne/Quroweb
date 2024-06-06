@@ -1,4 +1,4 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.Fee_Section
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feetypes
 @{
     ViewData["Tittle"] = "MANAGE FEE TYPES";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,10 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    @*<link href="~/css/maps/FeeScetion_Styles.css" rel="stylesheet" />
+@*<link href="~/css/maps/FeeScetion_Styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />*@
-
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
@@ -87,12 +85,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/Datatable/jquery.dataTables.min.js"></script>
-
-
-
 <script src="~/js/Managefeetypes.js"></script>
 
 

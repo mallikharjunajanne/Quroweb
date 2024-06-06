@@ -2,51 +2,42 @@
 function CallToAjax(method, url, successCallback, errorCallback) {
     $.ajax({
         url: url,
-        type: method,
+        type: method,      
         success: successCallback,
         error: function (xhr, status, error) {
             errorCallback(xhr.status, error);
         }
     });
 }
-
-function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
-
+function handleAjax(method, url, data, successCallback, errorCallback) {
     var ajaxOptions = {
         url: url,
         method: method,
         data: data,
-        contentType: false,
-        processData: false,
+        //contentType: false,
+        //processData: false,
         success: successCallback,
         error: function (xhr, status, error) {
             errorCallback(xhr.status, error);
         }
     };
-
-    if (hasFileUpload) {
-        ajaxOptions.processData = false;
-        ajaxOptions.contentType = false;
-    }
-
     $.ajax(ajaxOptions);
 }
-
 $(document).ready(function () {
-
+    debugger;
     fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
         '/Attendance/Attendancepostingdepartment',          // URL for data fetching
         '#Ddldepartment',                                   // Dropdown selector
         'value',                                            // Field name for option text
         'text',                                             // Field name for option values
-        'manageClassification'                              // Response value return class name
+        ' '                              // Response value return class name
     );
     fetchDataAndPopulateDropdown(                           //==== << ** Faculty Dropdown ** >>
         '/Attendance/Facultynamesdd',                        // URL for data fetching
         '#Ddfaculty',                                        // Dropdown selector
         'mentorUserid',                                      // Field name for option text
         'mentorName',                                        // Field name for option values
-        'manageClassification'                               // Response value return class name
+        ' '                               // Response value return class name
     );
 });
 
@@ -80,6 +71,7 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
         }));
     });
 }
+
 $('#Ddldepartment').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     //var SubClassificationId = $('#DdlSubClass').val();
@@ -116,6 +108,7 @@ function Departmentbysubclassdd(Departmentvalue) {
         }
     });
 }
+
 $('#DdlSubClass').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     var SubClassificationId = $('#DdlSubClass').val();
@@ -156,34 +149,27 @@ function Classwiseslots(Departmentvalue, SubClassificationId) {
 $('#Attendancepostingform').on('submit', function () {
     event.preventDefault();
     event.stopImmediatePropagation();
+
+    $('#ErrorMessage').text('');
     setTimeout(function () {
         debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationMessagesLength = validationMessages.length;
-
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
-
             loaddingimg.css('display', 'block');
-
             var formData = $('#Attendancepostingform').serialize();
-
-            var url = "/Attendance/AttendancePosting";
-
-            handleAjax('POST', url, formData,
+            handleAjax('POST', '/Attendance/AttendancePosting_Tbl', formData,
                 function (response) {
                     debugger;
-                    $("#Attendance_Summary_Tbl").html(response);
+                    $("#Appendingdivcontainer").html(response);
                     loaddingimg.css('display', 'none');
-
                 },
                 function (status, error) {
                     debugger;
                     console.error("Error fetching data:", error);
                     loaddingimg.css('display', 'none');
-                },
-                true
+                }
             );
         }
     }, 50);

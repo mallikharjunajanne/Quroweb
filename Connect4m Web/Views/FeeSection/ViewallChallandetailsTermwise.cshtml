@@ -48,7 +48,7 @@
                                     <div class="row">
                                         <div class="form-grop  col-2"><label class="form-group controle-label space">Class </label></div>
                                         <div class="form-grop  col-4">
-                                            <input type="hidden" id="Instanceid" asp-for="InstanceId" value="@ViewBag.Instance" />
+                                            @*<input type="hidden" id="Instanceid" asp-for="InstanceId" value="@ViewBag.Instance" />*@
                                             <select class="form-select" asp-for="InstanceSubClassificationId" id="Classification_Vacdt">
                                                 <option>--Select Class--</option>
                                             </select>
@@ -128,11 +128,9 @@
 
     });
 
-    function Classdrodown_ViewallChallandetailsTermwise() {
-
-        var Instanceid = $('#Instanceid').val();
+    function Classdrodown_ViewallChallandetailsTermwise() {        
         $.ajax({
-            url: "/FeeSection/Classdropdown_VaCdT?Instanceid=" + Instanceid, // Replace with your actual controller and action method URL
+            url: "/FeeSection/Vacdt_Departmentddl", // Replace with your actual controller and action method URL
             type: "GET",
             dataType: "json",
             success: function (data) {
@@ -151,7 +149,7 @@
     function FeeInstallments_getFeeDetailsByUserID(UserId) {
 
         $.ajax({
-            url: "/FeeSection/Userwise_FeeInstallments?UserId=" + UserId,
+            url: "/FeeSection/Userwise_FeeInstallments?StudentUserId=" + UserId,
             type: "GET",
             success: function (response) {
                 $("#UserWise_FeeInstallments_detailstable_" + UserId).html(response);
@@ -163,7 +161,7 @@
 
         debugger;
 
-        var Instanceid = $('#Instanceid').val();
+       
 
         var parts = Createdate.split('/');
         var formattedDate = new Date(parts[2], parts[1] - 1, parts[0]);
@@ -175,7 +173,7 @@
         var StartDate = year + '-' + month + '-' + day;
 
         $.ajax({
-            url: "/FeeSection/Userwise_FeeInstallmentsReport?UserId=" + UserId + "&InstanceId=" + Instanceid + "&ChallanId=" + UserReceiptGenerationID + "&StartDate=" + StartDate,
+            url: "/FeeSection/Userwise_FeeInstallmentsReport?UserId=" + UserId  + "&ChallanId=" + UserReceiptGenerationID + "&StartDate=" + StartDate,
             type: "GET",
             success: function (response) {
 

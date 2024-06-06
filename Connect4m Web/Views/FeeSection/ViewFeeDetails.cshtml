@@ -1,0 +1,312 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.ViewFeeDetails
+@{
+    ViewData["Title"] = "View Fee Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>FEE DETAILS</h4>
+        <span id="Errormessages" class="text-danger"></span>
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">SEARCH FEE DETAILS</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row col">
+                        <form id="" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Select Terms</label>
+                                <div class="col-sm-4">
+                                    <select multiple="" class="form-select" id="lstTerms" aria-label="Multiple select example"></select>
+                                </div>
+                            </div>
+                            <div class="row justify-content text-center">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">YOUR SEARCH RESULTS <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="FeeDetailstbl">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Term</th>
+                                <th>Fee Type</th>
+                                <th>Fee Amt</th>
+                                <th>Discount Type</th>
+                                <th>Discount Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>    
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@*<script src="~/js/Viewfeedetails.js"></script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    function CallToAjax(method, url, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            success: successCallback,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+    function handleAjaxtabledata(method, url, data, successCallback, errorCallback) {
+        var ajaxOptions = {
+            url: url,
+            method: method,
+            data: data,
+            //contentType: false,
+            //processData: false,
+            success: Bindtable,
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        };
+        $.ajax(ajaxOptions);
+    }
+
+    $(document).ready(function () {
+        debugger;
+        fetchDataAndPopulateDropdown(            //==== << ** Classification Dropdown ** >>
+            '/FeeSection/Viewfeetermsddl',       // URL for data fetching
+            '#lstTerms',                         // Dropdown selector
+            'value',                             // Field name for option text
+            'text',                              // Field name for option values
+            ' '                                  // Response value return class name
+        );
+        Pageload();
+    });
+    function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
+        debugger;
+        CallToAjax('GET', url,
+            function (response) {
+
+                /*debugger;*/
+                var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
+                populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
+            },
+            function (status, error) {
+                // Handle errors here
+                console.error("Error fetching data:", error);
+            }
+        );
+    }
+    function populateDropdown(data, dropdownSelector, valueField, textField) {
+        var dropdown = $(dropdownSelector);
+        debugger;
+        dropdown.empty(); // Clear existing options
+        dropdown.append($('<option>', {
+            value: '',
+            text: '---Select---'
+        }));
+        $.each(data, function (index, item) {
+            dropdown.append($('<option>', {
+                value: item[valueField],
+                text: item[textField]
+            }));
+        });
+    }
+
+    function Pageload() {
+        debugger;
+        var Terms = $('#lstTerms').val();
+        var data = { FeeTermId: Terms };
+        handleAjaxtabledata('GET', "/FeeSection/BindtblViewfeeterms", data,
+            function (status, error) {
+                loaddingimg.css('display', 'none');
+            }
+        );
+    }
+    function Bindtable(response) {
+        debugger;
+        var totalFeeAmount = 0;
+        var totalconcedingtypeAmountInt = 0;
+        var totalpaidAmountInt = 0;
+        var totaldueAmountInt = 0;
+
+        response.forEach(function (row) {
+            var feeInt = parseFloat(row.feeAmount);
+            if (!isNaN(feeInt)) {
+                totalFeeAmount += feeInt;
+            }
+
+            var concedingtypeAmountInt = parseFloat(row.concedingtypeAmount);
+            if (!isNaN(concedingtypeAmountInt)) {
+                totalconcedingtypeAmountInt += concedingtypeAmountInt;
+            }
+
+            var paidInt = parseFloat(row.paid);
+            if (!isNaN(paidInt)) {
+                totalpaidAmountInt += paidInt;
+            }
+
+            var dueInt = parseFloat(row.due);
+            if (!isNaN(dueInt)) {
+                totaldueAmountInt += dueInt;
+            }
+        });
+
+
+        $("#Recordscount").text(response.length);
+        var table = $('#FeeDetailstbl').DataTable();
+        table.destroy();
+        var newTable = $("#FeeDetailstbl").DataTable({
+            dom: 'Bfrtip',
+            buttons: [],
+            bProcessing: false,
+            bLengthChange: true,
+            /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+            //pageLength: 20,
+            //bfilter: false,
+            bSort: true,
+            searching: false,
+            scrollX: true,
+            scrollY: '400px',
+            //scrollCollapse: true,
+            paging: false,
+            //bPaginate: true,
+            //  stateSave:true,
+            data: response,
+            columns: [
+                {
+                    targets: 0, // Assuming this is the column index where you want to display numbering
+                    render: function (data, type, row, meta) {
+                        var currentPage = table.page.info().page;
+                        var rowsPerPage = table.page.info().length;
+                        return (0 * rowsPerPage) + meta.row + 1;
+                    }
+                },
+                {
+                    data: "FeetermName",
+                    render: function (data, type, row, meta) {
+                        return row.feetermName
+                    }
+                },
+                {
+                    data: "FeeTypeName",
+                    render: function (data, type, row, meta) {
+                        return row.feeTypeName
+                        //return `${row.feeTypeName}<input type="text" title="${row.feeTypeName}" value="${row.feeTypeName}" hidden/>`;
+                        //return row.concedingtypename + '<input type="text" title='"' + row.concedingtypeid +'"'  value=' + row.feetypeid + ' hidden/>'
+                    }
+                },
+                {
+                    data: "FeeAmount",
+                    render: function (data, type, row, meta) {
+                        if (row.feeAmount === '0.00') {//|| row.feeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.feeAmount
+                    }
+                },
+                {
+                    data: "Concedingtypename",
+                    render: function (data, type, row, meta) {
+                        if (!row.concedingtypename) {
+                            return 'NA';
+                        }
+                        return row.concedingtypename;
+                    }
+                },
+                {
+                    data: "ConcedingtypeAmount",
+                    render: function (data, type, row, meta) {
+                        if (row.concedingtypeAmount === '0.00') {//|| row.concedingtypeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.concedingtypeAmount
+                    }
+                },
+                {
+                    data: "Paid",
+                    render: function (data, type, row, meta) {
+                        if (row.paid === '0') {//|| row.concedingtypeAmount === 0.00
+                            return 'Nill';
+                        }
+                        return row.paid
+                    }
+                },
+                {
+                    data: "Due",
+                    render: function (data, type, row, meta) {
+                        if (row.due === '0.00') {//|| row.due === 0.00
+                            return 'Nill';
+                        }
+                      return row.due
+                    }
+                },
+                {
+                    data: "DueDate",
+                    render: function (data, type, row, meta) {
+                        return row.dueDate
+                    }
+                }
+            ],
+            drawCallback: function (settings) {
+                // Append a new row with total amounts
+                $('#FeeDetailstbl tbody').find('.total-row').remove();
+                var totalRow = `
+                <tr class="total-row">
+                    <td></td>
+                    <td></td>
+                    <td style="color: green;font-weight: bold;">Total</td>
+                    <td style="color: green;font-weight: bold;">${totalFeeAmount.toFixed(2)}</td>
+                    <td></td>
+                    <td style="color: green;font-weight: bold;">${totalconcedingtypeAmountInt.toFixed(2)}</td>
+                    <td style="color: green;font-weight: bold;">${totalpaidAmountInt.toFixed(2)}</td>
+                    <td style="color: green;font-weight: bold;">${totaldueAmountInt.toFixed(2)}</td>
+                    <td></td>
+                </tr>
+            `;
+                $("#FeeDetailstbl tbody").append(totalRow);
+            }
+        });
+    }
+
+    $('#btnsearch').click(function () {
+        debugger;
+        var Terms = $('#lstTerms').val();
+        var data = { FeeTermId: Terms };
+        handleAjaxtabledata('GET', "/FeeSection/BindtblViewfeeterms", data,
+            function (status, error) {
+                loaddingimg.css('display', 'none');
+            }
+        );
+    });
+</script>

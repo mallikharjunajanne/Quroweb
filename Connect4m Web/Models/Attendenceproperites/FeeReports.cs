@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models.Attendenceproperites
 {
-
-    public class Instancess
-    {
-        public int InstanceId { get; set; }
-    }
     public class FeeReports
     {
         public string InstanceSubClassificationId { get; set; }
@@ -19,17 +14,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string SubClassificationName { get; set; }
         public string ClassificationName { get; set; }
         public string DisplayOrder { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ErrorMessage { get; set; }
         public int InstanceId { get; set; }
         public int UserId { get; set; }
-
         public string UserReceiptGenerationID { get; set; }
         public string InvoiceNo { get; set; }
-
-
         public string FeeTypeId { get; set; }
         public string FeeType { get; set; }
         public string InstanceUserCode { get; set; }
@@ -42,10 +33,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string BeforeDiscount { get; set; }
         public string DiscountAmt { get; set; }
     }
-
-
-    //ViewallChallandetailsTermwise
-    public class ChallandetailsTermwise : Instancess
+    public class ChallandetailsTermwise : Commonproperties
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -54,9 +42,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string SubClassificationName { get; set; }
         public string ClassificationName { get; set; }
         public string Due { get; set; }
-
-
-        public int UserId { get; set; }
+        public int StudentUserId { get; set; }
         public string Name { get; set; }
         public string StudentAmountSet { get; set; }
         public string StudentDiscountAmount { get; set; }
@@ -64,8 +50,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string StudentBalance { get; set; }
         public string totalAmountSet { get; set; }
         public string hallticket { get; set; }
-
-
         public string PaymentDate { get; set; }
         public int ROWIDCOL { get; set; }
         public string UserReceiptGenerationID { get; set; }
@@ -75,88 +59,13 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string typename { get; set; }
         public string balance { get; set; }
         public string InvoiceNo { get; set; }
-
         public string FeeTermId { get; set; }
         public string TermName { get; set; }
         public string Concedingamount { get; set; }
         public string FeeType { get; set; }
         public string FeeTypeId { get; set; }
         public string feeAmount { get; set; }
-
     }
-
-
-    public class TermWiseFeeDetails : Instancess
-    {
-
-        public string Due { get; set; }
-        public string FeeTermId { get; set; }
-        // public List<string> TermIds { get; set; }
-        public string TermIds { get; set; }
-        public string TermName { get; set; }
-        public string FeeAmount { get; set; }
-        public string PayedAmount { get; set; }
-        public string Amount { get; set; }
-        public string Fine { get; set; }
-        public string CountFee { get; set; }
-        public string TermOrder { get; set; }
-        public string FirstName { get; set; }
-        public string hallticket { get; set; }
-        public string ClassificationName { get; set; }
-        public string SubClassificationName { get; set; }
-        public int UserId { get; set; }
-        public int ConcedingAmount { get; set; }
-        public string LastName { get; set; }
-        public string UserReceiptGenerationID { get; set; }
-        public List<FeeDetailsReport_TermWiseFeeDetails1> Table0 { get; set; }
-        public List<FeeDetailsReport_termwisefedailstable2> Table1 { get; set; }
-
-    }
-
-    public class FeeDetailsReport_TermWiseFeeDetails1
-    {
-        public string FeeTermId { get; set; }
-        public string TermName { get; set; }
-        public string FeeAmount { get; set; }
-        public string PayedAmount { get; set; }
-        public string Amount { get; set; }
-        public string Fine { get; set; }
-        public string CountFee { get; set; }
-        public string TermOrder { get; set; }
-        public string FirstName { get; set; }
-        public string hallticket { get; set; }
-        public string ClassificationName { get; set; }
-        public string SubClassificationName { get; set; }
-        public int UserId { get; set; }
-        public int ConcedingAmount { get; set; }
-        public string LastName { get; set; }
-        public string UserReceiptGenerationID { get; set; }
-    }
-
-    public class FeeDetailsReport_termwisefedailstable2
-    {
-        public string Due { get; set; }
-        public string FeeTermId { get; set; }
-        public List<string> TermIds { get; set; }
-        public string TermName { get; set; }
-        public string FeeAmount { get; set; }
-        public string PayedAmount { get; set; }
-        public string Amount { get; set; }
-        public string Fine { get; set; }
-        public string CountFee { get; set; }
-        public string TermOrder { get; set; }
-        public string FirstName { get; set; }
-        public string hallticket { get; set; }
-        public string ClassificationName { get; set; }
-        public string SubClassificationName { get; set; }
-        public int UserId { get; set; }
-        public int ConcedingAmount { get; set; }
-        public string LastName { get; set; }
-        public string UserReceiptGenerationID { get; set; }
-
-    }
-
-
 
     //---**** FEE REPORTS ****---//
 
@@ -213,9 +122,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
     {
         public string TermName { get; set; }
     }
-
-
-
     public class Userwisepayment
     {
         public int UserId { get; set; }
@@ -244,7 +150,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public decimal balance { get; set; }
         public string InvoiceNo { get; set; }
     }
-
     public class Termwisechallandetails
     {
         public int UserId { get; set; }
@@ -272,13 +177,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public decimal balance { get; set; }
         public string InvoiceNo { get; set; }
     }
-
-
-
-
-
-
-
     public class Paymentmodedd
     {
         public int PaymentModeId { get; set; }
@@ -290,7 +188,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string ClassificationName { get; set; }
         public string ClassificationDescription { get; set; }
     }
-
     public class ManageSubClassification
     {
         public int InstanceSubclassificaitionId { get; set; }
@@ -299,14 +196,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string SubClassificationDescription { get; set; }
         public string DisplayOrder { get; set; }
     }
-
     public class ManageSlots
     {
         public int InstancesubjectId { get; set; }
         public string SubjectName { get; set; }
     }
-
-    public class MonthlyAndWeeklyAttendanceReport : Instancess
+    public class MonthlyAndWeeklyAttendanceReport : Commonproperties
     {
         public List<ManageClassification> classificationlist { get; set; }
         public List<ManageSubClassification> subclassificationlist { get; set; }
@@ -324,22 +219,37 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
-
-
-    public class TermNames
+    public class Feereportdetails : Commonproperties
     {
-        public int FeeTermId { get; set; }
-        public int AcademicYearId { get; set; }
-        public string TermName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string StudentId { get; set; }
+        public string InstanceSubClassificationId { get; set; }
+        public string SubClassificationName { get; set; }
+        public string ClassificationName { get; set; }
     }
 
-    public class Feedetails
+
+
+
+    #region  FEE DETAILS
+    public class ReportFeedetails : Commonproperties
     {
-        public List<TermNames> termnames { get; set; }
         [Required]
         public List<string> FeeTermId { get; set; }
+        public List<TermNames> termnames { get; set; }
         public int SubClassificationId { get; set; }
-        public int UserId { get; set; }
+        public string Feetermids { get; set; }
+        public int AcademicYearId { get; set; }
+        public string TermName { get; set; }
+        public int StudentUserid { get; set; }
+        public string UserFeeId1 { get; set; }
+    }
+    public class TermNames
+    {
+        public int TermId { get; set; }
+        public int AcademicYearId { get; set; }
+        public string TermName { get; set; }
     }
     public class ClassificationWiseFeedetails
     {
@@ -371,12 +281,10 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public decimal StudentDiscountAmount { get; set; }
         public decimal StudentBalance { get; set; }
     }
-
     public class FeedetailsChallanGeneratedDetails
     {
         public List<ChallanGeneratedDetailstbl1> challangenerateddetailstbl1 { get; set; }
         public List<ChallanGeneratedDetailstbl2> challangenerateddetailstbl2 { get; set; }
-
     }
     public class ChallanGeneratedDetailstbl1
     {
@@ -390,13 +298,23 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string FirstName { get; set; }
         public string userfeeid { get; set; }
         public string TermName { get; set; }
-        public int FeeTermId { get; set; }
+        public string FeeTermId { get; set; }
         public string FeeType { get; set; }
         public int FeeTypeId { get; set; }
         public decimal DueAmount { get; set; }
         public decimal ConcedingAmount { get; set; }
         public decimal FeeAmount { get; set; }
-        public decimal PayedAmoount { get; set; }
+        public decimal PayedAmount { get; set; }
+        public string DisplayIcon { get; set; }
+        public string DisplayIcon1 { get; set; }
+        public string InstallmentId { get; set; }
+        public string Paymentdate { get; set; }
+        public string Collectedby { get; set; }
+        public string Paymentmode { get; set; }
+        public string AccountNumber { get; set; }
+        public string BankName { get; set; }
+        public string Comments { get; set; }
+        public string Descriptoin { get; set; }
     }
     public class ChallanGeneratedDetailstbl2
     {
@@ -407,24 +325,117 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public decimal discountamount { get; set; }
         public decimal Payedamount { get; set; }
     }
+    #endregion
 
+    #region VIEW CHALLAN DETAILS
+    public class ViewFeeDetails: Commonproperties
+    {
+        public int SubClassificationId { get; set; }
+        public string Feetermids { get; set; }
+        public int AcademicYearId { get; set; }
+        public string TermName { get; set; }
+        public int StudentUserid { get; set; }
+        public string UserFeeId1 { get; set; }
+        public string FeetermName { get; set; }
+        public string FeeTypeName { get; set; }
+        public string FeeAmount { get; set; }
+        public string Concedingtypename { get; set; }
+        public string ConcedingtypeAmount { get; set; }
+        public string Paid { get; set; }
+        public string Due { get; set; }
+        public string DueDate { get; set; }
+        public int Challanid { get; set; }
+    }
+    public class ViewChallanDetails:Commonproperties
+    {
+        public string TermName { get; set; }
+        public string Paid { get; set; }
+        public string FeeAmount { get; set; }
+        public string ConcedingtypeAmount { get; set; }
+        public string Amount { get; set; }
+        public string LastPayedAmount { get; set; }
+        public string Fine { get; set; }
+        public string UserReceiptGenerationid { get; set; }
+    }
+    public class StudentChallanadetails:Commonproperties
+    {
+        public int Studentuserid { get; set; }
+        public int Feetypeid { get; set; }
+        public string Feetype { get; set; }
+        public string Firstname { get; set; }
+        public string Instanceusercode { get; set; }
+        public string ClassificationName { get; set; }
+        public string Subclassificationname { get; set; }
+        public string Admissionnumber { get; set; }
+        public string Paidamount { get; set; }
+        public decimal Amount { get; set; }
+        public string Userreceiptgenerationid { get; set; }
+        public string ChallanGenerationDate { get; set; }
+        public string Duedate { get; set; }
+        public string Datenow { get; set; }
+        public string Beforediscount { get; set; }
+        public string Discountamount { get; set; }
+        public string InvoiceNo { get; set; }
+        public string TermName { get; set; }
+    }
+
+    #endregion
+
+    #region VIEW TERM WISE FEE DETAILS
+    public class TermWiseFeeDetails:Commonproperties
+    {
+        [Required(ErrorMessage = "Please select atleast one Term.")]
+        public string TermIds { get; set; }
+        public string Due { get; set; }
+
+        public List<TermWisefeedetailsTable1> Table1 { get; set; }
+        public List<TermWisefeedetailsTable2> Table2 { get; set; }
+
+    }
+    public class TermWisefeedetailsTable1
+    {
+        public string FeeTermId { get; set; }
+        public string TermName { get; set; }
+        public string FeeAmount { get; set; }
+        public string PayedAmount { get; set; }
+        public string Amount { get; set; }
+        public string FirstName { get; set; }
+        public string hallticket { get; set; }
+        public string ClassificationName { get; set; }
+        public string SubClassificationName { get; set; }
+        public int UserId { get; set; }
+        public string LastName { get; set; }
+        public string UserReceiptGenerationID { get; set; }
+
+    }
+    public class TermWisefeedetailsTable2
+    {
+        public string FeeTermId { get; set; }
+        public string TermName { get; set; }
+        public string FeeAmount { get; set; }
+        public string PayedAmount { get; set; }
+        public string Amount { get; set; }
+        public string CountFee { get; set; }
+        public string TermOrder { get; set; }
+    }
+    #endregion
 
     #region MONTHLY ATTENDANCE REPORT
-    public class MonthWiseclassattendancereport : Instancess
+    public class MonthWiseclassattendancereport : Commonproperties
     {
         [Required]
         public int ClassificationId { get; set; }
-        public string ClassificationName { get; set; }
+
         [Required]
         public int SubClassificationId { get; set; }
-        public string SubClassificationName { get; set; }
 
         [Required]
         public int Month { get; set; }
+
         [Required]
         public int Year { get; set; }
-
-
+        public string ClassificationName { get; set; }
+        public string SubClassificationName { get; set; }
     }
     public class Classmonthattendancereport
     {
@@ -520,9 +531,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
     #endregion
 
-
     #region CLASS WISE & STUDENT WISE ATTENDANCE REPORT
-    public class ClasswisestudentattendanceReport : Instancess
+    public class ClasswisestudentattendanceReport : Commonproperties
     {
         [Required]
         public List<string> ClassificationId { get; set; }
@@ -582,6 +592,4 @@ namespace Connect4m_Web.Models.Attendenceproperites
     }
 
     #endregion
-
-
 }

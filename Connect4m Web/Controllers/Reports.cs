@@ -51,75 +51,101 @@ namespace Connect4m_Web.Controllers
             UserId = _userService.LoginUserId;
             InstanceClassificationId = _userService.InstanceClassificationId;
             Roleid = _userService.Roleid;
+
             StudentUserid = _userService.StudentUserid;
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
-        #region STUDENT REGISTER ///StudentAttendanceRegister
-
-        [HttpGet]
-        public IActionResult StudentAttendanceRegister()
-        {            
+        #region FeeDetails
+        public IActionResult FeeDetails()
+        {
             return View();
         }
-        public IActionResult Reportdepartment()
+        public IActionResult Gettermnamesdd()
         {
-            List<SelectListItem> Departmentlist = new List<SelectListItem>();
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Str_Classification_DD?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
-            if (Response.IsSuccessStatusCode)
-            {
-                string data1 = Response.Content.ReadAsStringAsync().Result;
-                Departmentlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data1);
-            }
-            //ViewBag.Slot_Subjectnames = Departmentlist;
-            return Json(Departmentlist);
-        }
-        public IActionResult GetSubclassbydepartment(int InstanceClassificationId)
-        {        
-            List<SelectListItem> Classlist = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            List<TermNames> model = new List<TermNames>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetFeeTerms?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                Classlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+                model = JsonConvert.DeserializeObject<List<TermNames>>(data);
             }
-            ViewBag.SubClassificationNames = Classlist;
-            return Json(Classlist);
+            return Json(model);
         }
+        public IActionResult ClassificationWiseFeeDetails(ReportFeedetails obj)
+        {
+            string termIds = string.Join(",", obj.FeeTermId?.Count > 0 ? obj.FeeTermId : new List<string> { "" });
 
-        [HttpPost]
-        //public IActionResult StudentAttendanceRegister(Attendanceregisterreport obj)
-        public IActionResult StudentAttendanceRegister(int Month, int Year, int InstanceClassificationId,int InstanceSubClassificationId)
-        {          
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Feetermids = termIds;
 
-            //string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/St_At_Reports?InstanceID=" + InstanceId + "&Month=" + Month + "&Year=" + Year + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId, content).Result;
-            AttendanceReportData reportData = new AttendanceReportData();
-            if (response.IsSuccessStatusCode)
+            List<ClassificationWiseFeedetails> model = CommonMethodobj.CommonListMethod<ReportFeedetails, ClassificationWiseFeedetails>(obj, "/FeedetailsclsWise", client);
+
+            decimal AmountSet = model.Sum(item => item.AmountSet);
+            decimal TotalAmountSet = model.Sum(item => item.totalAmountSet);
+            decimal AmountPaid = model.Sum(item => item.AmountPaid);
+            decimal Discount = model.Sum(item => item.discount);
+            decimal Balance = model.Sum(item => item.Balance);
+
+            var result = new
             {
-                var data2 = response.Content.ReadAsStringAsync().Result;
-                reportData = JsonConvert.DeserializeObject<AttendanceReportData>(data2);
-            }
-            return Json(reportData);
+                Mainlist = model,
+                FeeAmount = TotalAmountSet,
+                FeeCollected = AmountPaid,
+                Discount = Discount,
+                Due = Balance
+            };
+            return Json(result);
+        }
+        public IActionResult SubclassificaitionWiseFeeDetails(ReportFeedetails obj)
+        {
+            string termIds = string.Join(",", obj.FeeTermId);
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Feetermids = termIds;
+
+            List<SubclassificationWiseFeedetails> model = CommonMethodobj.CommonListMethod<ReportFeedetails, SubclassificationWiseFeedetails>(obj, "/FeedetailssubclsWise", client);
+            return Json(model);
+        }
+        public IActionResult GetUserWiseFeeDetails(ReportFeedetails obj)
+        {
+            string termIds = string.Join(",", obj.FeeTermId);
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Feetermids = termIds;
+            List<FeedetailsGetuserwiseFeeDetails> model = CommonMethodobj.CommonListMethod<ReportFeedetails, FeedetailsGetuserwiseFeeDetails>(obj, "/GetUserWiseFeeDetails", client);
+            return Json(model);
+        }
+        public IActionResult GetChallangenerateddetails(ReportFeedetails obj)
+        {
+            string termIds = string.Join(",", obj.FeeTermId);
+            obj.InstanceId = InstanceId;
+            obj.StudentUserid = obj.StudentUserid;
+            obj.CreatedBy = UserId;
+            obj.Feetermids = termIds;
+            List<FeedetailsChallanGeneratedDetails> model = CommonMethodobj.CommonListMethod<ReportFeedetails, FeedetailsChallanGeneratedDetails>(obj, "/GetFeedetialsbyuseridchallangenerateddetails", client);
+            return Json(model);
+        }
+        public IActionResult GetFeeDetialsByUserFeeId(ReportFeedetails obj)
+        {
+            string termIds = string.Join(",", obj.FeeTermId);
+            obj.InstanceId = InstanceId;
+            obj.StudentUserid = obj.StudentUserid;
+            obj.CreatedBy = UserId;
+            obj.Feetermids = termIds;
+            obj.UserFeeId1 = obj.UserFeeId1;
+            List<ChallanGeneratedDetailstbl1> model = CommonMethodobj.CommonListMethod<ReportFeedetails, ChallanGeneratedDetailstbl1>(obj, "/Getfeedetailsbyuserfeedetails", client);
+            return Json(model);
         }
 
         #endregion
-        
-
-
-        /*==========******** FEE CHALLANA REPORTS ********==========*/
-
-
 
         #region Fee Recipt New    
-        //----Deleting code Feesection controler 1995 this method total code
-
         public IActionResult FeeReceiptNew()
         {
             return View();
         }
-
         public IActionResult InstanceClassification_DD()
         {
             Feechallanareport model = new Feechallanareport();
@@ -131,7 +157,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(model);
         }
-
         public IActionResult FeeReceiptNew_tbldata(int SubClassificationId, string FirstName, string LastName)
         {
             List<Feechallanareport> model = new List<Feechallanareport>();
@@ -143,7 +168,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(model);
         }
-
         public IActionResult Get_FeeReceiptdetails(int FUserid)
         {
             List<Feechallanareport> model = new List<Feechallanareport>();
@@ -155,7 +179,6 @@ namespace Connect4m_Web.Controllers
             }
             return View(model);
         }
-
         public IActionResult GetFeeReceiptdetailsByUserIdChallanId(int FUserId, int ChallanId)
         {
             List<FeeReceiptdetails> model1 = new List<FeeReceiptdetails>();
@@ -204,7 +227,6 @@ namespace Connect4m_Web.Controllers
 
             return View(viewModel);
         }
-
         public static string ConvertAmountToWords(decimal amount)
         {
             if (amount == 0)
@@ -262,9 +284,6 @@ namespace Connect4m_Web.Controllers
 
             return result.Trim() + " Rupees Only";
         }
-
-
-
         public IActionResult DeleteUserChallana(int UserReceiptGenerationId)
         {
             string message = "";
@@ -279,14 +298,289 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
+        #region ADMISSION PROCESS REPORTS
 
+        #region ADMISSIONS REPORT        
+        public IActionResult QuroAdmissionSummaryReport()
+        {
+            return View();
+        }      
+        public IActionResult GetInstancenamesDropdown()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetInstanceNamesDropdown", parameter2, "InstanceName", "InstanceId");
+            return Json(lis);
+        }
+        public IActionResult GetAcademicYearDropdown()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetAcadamiyearsDropdown", parameter2, "Years", "AcademicYearId");
+            return Json(lis);
+        }
+        public IActionResult GetAllClass()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetClassDropdown", parameter2, "ClassName", "ClassId");
+            return Json(lis);
+        }
+        public IActionResult QuroAdmissionSummaryReporttbl(UserScreen.Admissionreport obj)
+        {
+            //stp_tblRegistrationUserDetails_GetAdmissionReport
+            UserScreen.Admissionreport model = new UserScreen.Admissionreport();
+            obj.InstanceId = InstanceId;
 
-        #region             USERWISE FEE PAYMENT         PaymentAutomationuserwise
+            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
+            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
+            return Json(list);
+        }
+        #endregion
+
+        #region ADMISSION SUMMARY REPORT
+        public IActionResult QuroAdmissionsReport()
+        {
+            return View();
+        }
+        public IActionResult Quroadmissionreportscounttbl(UserScreen.Admissionreport obj)
+        {
+            obj.InstanceId = InstanceId;
+            List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/GetRegistrationSummary", client);
+            return Json(list);
+        }
+        public IActionResult Registrations_Admissionstbl(UserScreen.Admissionreport obj)
+        {
+            obj.InstanceId = InstanceId;
+            List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/Admissionsummaryreport", client);
+
+            var Userstatusvalues = obj.Userstatusvalue;
+            var filteredList = obj.Userstatusvalue == "1" ? list.Where(item => item.UserStatus == "Registered").ToList() : obj.Userstatusvalue == "2" ? list.Where(item => item.UserStatus == "Admission Confirmed").ToList() : list;
+
+            var result = new
+            {
+                FilteredList = filteredList,
+                UserStatusValue = Userstatusvalues
+            };
+
+            //return Json(result);
+            return new JsonResult(result);
+        }
+        public IActionResult Adsreporttbl(UserScreen.Admissionreport obj)
+        {
+            obj.InstanceId = InstanceId;
+            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
+            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
+            return Json(list);
+        }
+        #endregion
+
+        #endregion
+
+        #region MONTHLY ATTENDANCE REPORT 
+        public IActionResult MonthWiseClassAttendanceReport()
+        {
+            return View();
+        }
+        public IActionResult MonthWisedepartmentdd()
+        {
+            List<ManageClassification> model = new List<ManageClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/MonthwiseDepartmentdd?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult MonthWisesubclassificationdd(string[] InstanceClassificationId)
+        {
+            string ClassificationIds = string.Join(",", InstanceClassificationId?.Where(x => !string.IsNullOrEmpty(x)) ?? new List<string>());
+
+            List<ManageSubClassification> model = new List<ManageSubClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/MonthwiseSubclassdd?InstanceId=" + InstanceId + "&ClassificationId=" + ClassificationIds+"&Createdby="+UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult GetMonthWiseFullStatusofClassAttendanceReporttbldata()
+        {
+            return View();
+        }
+        public IActionResult MonthandClassattendancereport(MonthWiseclassattendancereport obj)
+        {
+            Classmonthattendancereport model = new Classmonthattendancereport();
+            obj.InstanceId = InstanceId;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SearchStaffMonthlyReport", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<Classmonthattendancereport>(data);
+            }
+            return Json(model);
+        }
+        #endregion
+
+        #region Bank Deposit Details Report
+        public IActionResult BankDepositReport()
+        {
+            return View();
+        }
+        public IActionResult Depositreporttbl(UserScreen.SearchDeposit obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<UserScreen.Deposittbl> list = CommonMethodobj.CommonListMethod<UserScreen.SearchDeposit, UserScreen.Deposittbl>(obj, "/Bankdepositreporttbl", client);
+            return Json(list);
+        }
+
+        #endregion
+
+        #region ATTENDANCE REPORT BY WEEKLY AND MONTHLY
+        public IActionResult AttendanceReportByMonthlyAndWeekly()
+        {
+            return View();
+        }
+        public IActionResult Classificationdd()
+        {
+            List<ManageClassification> model = new List<ManageClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Classificationdd?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult Subclassificationdd(int InstanceClassificationId)
+        {
+            List<ManageSubClassification> model = new List<ManageSubClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Subclassificationdd?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
+            }
+            return Json(model);
+        }
+        #endregion
+
+        #region STUDENT REGISTER StudentAttendanceRegister
+
+        [HttpGet]
+        public IActionResult StudentAttendanceRegister()
+        {
+            return View();
+        }
+        public IActionResult Reportdepartment()
+        {
+            List<SelectListItem> Departmentlist = new List<SelectListItem>();
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Str_Classification_DD?InstanceId=" + InstanceId + "&UserId=" + UserId).Result;
+            if (Response.IsSuccessStatusCode)
+            {
+                string data1 = Response.Content.ReadAsStringAsync().Result;
+                Departmentlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data1);
+            }
+            //ViewBag.Slot_Subjectnames = Departmentlist;
+            return Json(Departmentlist);
+        }
+        public IActionResult GetSubclassbydepartment(int InstanceClassificationId)
+        {
+            List<SelectListItem> Classlist = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_SubClassificationNames_ByclassificationId?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                Classlist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            ViewBag.SubClassificationNames = Classlist;
+            return Json(Classlist);
+        }
+
+        [HttpPost]
+        //public IActionResult StudentAttendanceRegister(Attendanceregisterreport obj)
+        public IActionResult StudentAttendanceRegister(int Month, int Year, int InstanceClassificationId, int InstanceSubClassificationId)
+        {
+
+            //string data1 = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/St_At_Reports?InstanceID=" + InstanceId + "&Month=" + Month + "&Year=" + Year + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId, content).Result;
+            AttendanceReportData reportData = new AttendanceReportData();
+            if (response.IsSuccessStatusCode)
+            {
+                var data2 = response.Content.ReadAsStringAsync().Result;
+                reportData = JsonConvert.DeserializeObject<AttendanceReportData>(data2);
+            }
+            return Json(reportData);
+        }
+
+        #endregion
+
+        #region  CLASS WISE & STUDENT WISE ATTENDANCE REPORT
+        public IActionResult SectionwiseAttendanceReport()
+        {
+            return View();
+        }
+        public IActionResult Sectionwisedepartment()
+        {
+            List<ManageClassification> model = new List<ManageClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SectionwiseDepartmentdd?InstanceId=" + InstanceId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult Sectionwisesubclassificationdd(string[] InstanceClassificationId)
+        {
+            string ClassificationIds = string.Join(",", InstanceClassificationId?.Where(x => !string.IsNullOrEmpty(x)) ?? new List<string>());
+
+            List<ManageSubClassification> model = new List<ManageSubClassification>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SectionwiseSubclassdd?InstanceId=" + InstanceId + "&ClassificationId=" + ClassificationIds).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
+            }
+            return Json(model);
+        }
+        public IActionResult SectionwiseAttendanceReporttbldata()
+        {
+            return View();
+        }
+        public IActionResult SearchsectionwiseAttendanceReporttbldata(ClasswisestudentattendanceReport obj)
+        {
+            obj.ClassificationIds = string.Join(",", obj.ClassificationId);
+            obj.SubclassificationIds = string.Join(",", obj.SubClassificationId);
+
+            // string termIds = string.Join(",", obj.FeeTermId?.Count > 0 ? obj.FeeTermId : new List<string> { "" });
+
+            AttendancereportClasswisestudentwise model = new AttendancereportClasswisestudentwise();
+            obj.InstanceId = InstanceId;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SearchSectionwiseAttendanceReport", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<AttendancereportClasswisestudentwise>(data);
+            }
+            return Json(model);
+        }
+
+        #endregion
+
+        #region USERWISE FEE PAYMENT ///PaymentAutomationuserwise
         public IActionResult PaymentAutomationuserwise()
         {
             return View();
         }
-
         public IActionResult userwisepayment_tbldata(int SubClassificationId, string FirstName, string LastName, string StudentId, int Due)
         {
             List<Userwisepayment> model = new List<Userwisepayment>();
@@ -299,7 +593,6 @@ namespace Connect4m_Web.Controllers
             return View(model);
             //return Json(model);
         }
-
         public IActionResult userwisepaymentdetailstbldata(int FUserid, string StudentUserName)
         {
             List<Userwisepayment> model = new List<Userwisepayment>();
@@ -322,7 +615,6 @@ namespace Connect4m_Web.Controllers
             }
 
         }
-
         public IActionResult Deletepaymentdatewise(int PaymentUserid, string paymentdate)
         {
             string value = "";
@@ -345,7 +637,6 @@ namespace Connect4m_Web.Controllers
             }
             return Json(model);
         }
-
         public IActionResult Paymenttype_DD()
         {
             Userwisepayment model = new Userwisepayment();
@@ -375,7 +666,6 @@ namespace Connect4m_Web.Controllers
             }
             return View(model);
         }
-
         public IActionResult Getstatement_Termwisedetails(int TfUserId)
         {
             List<Termwisechallandetails> model = new List<Termwisechallandetails>();
@@ -396,7 +686,6 @@ namespace Connect4m_Web.Controllers
                 return Json(count);
             }
         }
-
         public IActionResult ViewReceiptInvoiceTermwise(int FUserId, int ChallanId)
         {
             List<FeeReceiptdetails> model1 = new List<FeeReceiptdetails>();
@@ -458,360 +747,6 @@ namespace Connect4m_Web.Controllers
             return View(viewModel);
         }
 
-        #region FeeDetails
-        public IActionResult FeeDetails()
-        {
-            return View();
-        }
-
-
-        public IActionResult Gettermnamesdd()
-        {
-            List<TermNames> model = new List<TermNames>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetFeeTerms?InstanceId=" + InstanceId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<TermNames>>(data);
-            }
-            return Json(model);
-        }
-
-
-        public IActionResult ClassificationWiseFeeDetails(Feedetails obj)
-        {
-            List<ClassificationWiseFeedetails> model = new List<ClassificationWiseFeedetails>();
-            //string termIds = string.Join(",", obj.FeeTermId);           
-
-            string termIds = string.Join(",", obj.FeeTermId?.Count > 0 ? obj.FeeTermId : new List<string> { "" });
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeedetailsclsWise?InstanceId=" + InstanceId + "&TermIds=" + termIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ClassificationWiseFeedetails>>(data);
-            }
-            decimal AmountSet = model.Sum(item => item.AmountSet);
-            decimal TotalAmountSet = model.Sum(item => item.totalAmountSet);
-            decimal AmountPaid = model.Sum(item => item.AmountPaid);
-            decimal Discount = model.Sum(item => item.discount);
-            decimal Balance = model.Sum(item => item.Balance);
-
-            var result = new
-            {
-                Mainlist = model,
-                FeeAmount = TotalAmountSet,
-                FeeCollected = AmountPaid,
-                Discount = Discount,
-                Due = Balance
-            };
-
-            return Json(result);
-        }
-        public IActionResult SubclassificaitionWiseFeeDetails(Feedetails obj)
-        {
-            List<SubclassificationWiseFeedetails> model = new List<SubclassificationWiseFeedetails>();
-            string termIds = string.Join(",", obj.FeeTermId);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeedetailssubclsWise?InstanceId=" + InstanceId + "&SubClassificationId=" + obj.SubClassificationId + "&TermIds=" + termIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<SubclassificationWiseFeedetails>>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult GetUserWiseFeeDetails(Feedetails obj)
-        {
-            List<FeedetailsGetuserwiseFeeDetails> model = new List<FeedetailsGetuserwiseFeeDetails>();
-            string termIds = string.Join(",", obj.FeeTermId);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetUserWiseFeeDetails?InstanceId=" + InstanceId + "&SubClassificationId=" + obj.SubClassificationId + "&TermIds=" + termIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<FeedetailsGetuserwiseFeeDetails>>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult GetChallangenerateddetails(Feedetails obj)
-        {
-            List<FeedetailsChallanGeneratedDetails> model = new List<FeedetailsChallanGeneratedDetails>();
-            string termIds = string.Join(",", obj.FeeTermId);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetFeedetialsbyuseridchallangenerateddetails?InstanceId=" + InstanceId + "&UserId=" + obj.UserId + "&TermIds=" + termIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<FeedetailsChallanGeneratedDetails>>(data);
-            }
-            return Json(model);
-        }
-
-
-        #endregion
-
-
-
-
-        #region ATTENDANCE REPORT BY WEEKLY AND MONTHLY
-
-        public IActionResult AttendanceReportByMonthlyAndWeekly()
-        {
-            return View();
-        }
-
-
-        public IActionResult Classificationdd()
-        {
-            List<ManageClassification> model = new List<ManageClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Classificationdd?InstanceId=" + InstanceId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult Subclassificationdd(int InstanceClassificationId)
-        {
-            List<ManageSubClassification> model = new List<ManageSubClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Subclassificationdd?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
-            }
-            return Json(model);
-        }
-        #endregion
-
-
-
-        #region MONTHLY ATTENDANCE REPORT 
-
-
-        //MonthWiseFullStatusofClassAttendanceReport  This name change to MonthWiseClassAttendanceReport
-        //public IActionResult MonthWiseFullStatusofClassAttendanceReport()
-        public IActionResult MonthWiseClassAttendanceReport()
-        {
-            return View();
-        }
-        public IActionResult MonthWisedepartmentdd()
-        {            
-            List<ManageClassification> model = new List<ManageClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/MonthwiseDepartmentdd?InstanceId=" + InstanceId+ "&UserId="+ UserId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult MonthWisesubclassificationdd(string[] InstanceClassificationId)
-        {
-            string ClassificationIds = string.Join(",", InstanceClassificationId?.Where(x => !string.IsNullOrEmpty(x)) ?? new List<string>());
-
-            List<ManageSubClassification> model = new List<ManageSubClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/MonthwiseSubclassdd?InstanceId=" + InstanceId + "&ClassificationId=" + ClassificationIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
-            }
-            return Json(model);
-        }
-
-
-        public IActionResult GetMonthWiseFullStatusofClassAttendanceReporttbldata()
-        {
-            return View();
-        }
-        public IActionResult MonthandClassattendancereport(MonthWiseclassattendancereport obj)
-        {
-            Classmonthattendancereport model = new Classmonthattendancereport();
-            obj.InstanceId = InstanceId;
-            string jsonData = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SearchStaffMonthlyReport", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<Classmonthattendancereport>(data);
-            }
-            return Json(model);
-        }
-        #endregion
-
-
-
-
-        #region  CLASS WISE & STUDENT WISE ATTENDANCE REPORT
-
-        public IActionResult SectionwiseAttendanceReport()
-        {
-            return View();
-        }
-        public IActionResult Sectionwisedepartment()
-        {
-            List<ManageClassification> model = new List<ManageClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SectionwiseDepartmentdd?InstanceId=" + InstanceId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
-            }
-            return Json(model);
-        }
-        public IActionResult Sectionwisesubclassificationdd(string[] InstanceClassificationId)
-        {
-            string ClassificationIds = string.Join(",", InstanceClassificationId?.Where(x => !string.IsNullOrEmpty(x)) ?? new List<string>());
-
-            List<ManageSubClassification> model = new List<ManageSubClassification>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SectionwiseSubclassdd?InstanceId=" + InstanceId+ "&ClassificationId="+ ClassificationIds).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
-            }
-            return Json(model);
-        }
-
-        public IActionResult SectionwiseAttendanceReporttbldata()
-        {
-            return View();
-        }
-
-        public IActionResult SearchsectionwiseAttendanceReporttbldata(ClasswisestudentattendanceReport obj)
-        {
-            obj.ClassificationIds = string.Join(",", obj.ClassificationId);
-            obj.SubclassificationIds = string.Join(",", obj.SubClassificationId);
-
-           // string termIds = string.Join(",", obj.FeeTermId?.Count > 0 ? obj.FeeTermId : new List<string> { "" });
-
-            AttendancereportClasswisestudentwise model = new AttendancereportClasswisestudentwise();
-            obj.InstanceId = InstanceId;
-            string jsonData = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SearchSectionwiseAttendanceReport", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                model = JsonConvert.DeserializeObject<AttendancereportClasswisestudentwise>(data);
-            }
-            return Json(model);
-        }
-
-        #endregion
-
-
-
-        #region Bank Deposit Details Report
-        public IActionResult BankDepositReport()
-        {
-            return View();
-        }
-
-        public IActionResult Depositreporttbl(UserScreen.SearchDeposit obj)
-        {
-            obj.InstanceId = InstanceId;
-            obj.CreatedBy = UserId;
-            List<UserScreen.Deposittbl> list = CommonMethodobj.CommonListMethod<UserScreen.SearchDeposit, UserScreen.Deposittbl>(obj, "/Bankdepositreporttbl", client);
-            return Json(list);
-        }
-
-        #endregion
-
-
-        #region ADMISSION PROCESS REPORTS
-
-        #region ADMISSIONS REPORT        
-        public IActionResult QuroAdmissionSummaryReport()
-        {
-            return View();
-        }
-        //Get Instances 
-        public IActionResult GetInstancenamesDropdown()
-        {           
-            string[] parameter2 = new string[] { InstanceId.ToString() };
-            List<SelectListItem> lis = new List<SelectListItem>();
-            lis = CommonDropdownData("GetInstanceNamesDropdown", parameter2, "InstanceName", "InstanceId");
-            return Json(lis);
-        }
-        //BindAcademicYearDropDown
-        public IActionResult GetAcademicYearDropdown()
-        {
-            string[] parameter2 = new string[] { InstanceId.ToString() };
-            List<SelectListItem> lis = new List<SelectListItem>();
-            lis = CommonDropdownData("GetAcadamiyearsDropdown", parameter2, "Years", "AcademicYearId");
-            return Json(lis);
-        }
-        // Get All Class
-        public IActionResult GetAllClass() 
-        {
-            string[] parameter2 = new string[] { InstanceId.ToString() };
-            List<SelectListItem> lis = new List<SelectListItem>();
-            lis = CommonDropdownData("GetClassDropdown", parameter2, "ClassName", "ClassId");
-            return Json(lis);
-        }           
-        public IActionResult QuroAdmissionSummaryReporttbl(UserScreen.Admissionreport obj)
-        {
-            //stp_tblRegistrationUserDetails_GetAdmissionReport
-            UserScreen.Admissionreport model = new UserScreen.Admissionreport();
-            obj.InstanceId = InstanceId;
-
-            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
-            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
-            return Json(list);
-        }
-        #endregion
-
-        #region ADMISSION SUMMARY REPORT
-        public IActionResult QuroAdmissionsReport()
-        {            
-            return View();
-        }
-
-        public IActionResult Quroadmissionreportscounttbl(UserScreen.Admissionreport obj)
-        {  
-            obj.InstanceId = InstanceId;
-
-            List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/GetRegistrationSummary", client);
-            return Json(list);
-        }
-
-        public IActionResult Registrations_Admissionstbl(UserScreen.Admissionreport obj)
-        {
-            obj.InstanceId = InstanceId;
-            List<UserScreen.Admissionsummaryreport> list  = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/Admissionsummaryreport", client);
-
-            var Userstatusvalues = obj.Userstatusvalue;
-            var filteredList = obj.Userstatusvalue == "1"? list.Where(item => item.UserStatus == "Registered").ToList(): obj.Userstatusvalue == "2"? list.Where(item => item.UserStatus =="Admission Confirmed").ToList(): list;
-
-            var result = new
-            {
-                FilteredList = filteredList,
-                UserStatusValue = Userstatusvalues
-            };
-
-            //return Json(result);
-            return new JsonResult(result);
-        }
-
-
-        public IActionResult Adsreporttbl(UserScreen.Admissionreport obj)
-        {
-            obj.InstanceId = InstanceId;
-            List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
-            list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
-            return Json(list);
-        }
-
-
-        #endregion
-
-        #endregion
         [Authorize]
         public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
         {

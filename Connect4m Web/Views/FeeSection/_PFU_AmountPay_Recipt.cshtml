@@ -3,402 +3,785 @@
 *@
 
 
-@model List<ChallanaDetails>
+@*@model List<ChallanaDetails>*@
+@model List<StudentChallanadetails>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Deposit Challan</title>
+    <style>
+        .body-container {
+            font-family: Calibri;
+        }
 
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+        }
 
-@*<style>
-    .SchoolName_SPId {
-        letter-spacing: 2px;
-        font-family: Times New Roman;
-        font-size: 14px;
-        font-weight: bold;
-    }
+        .challan {
+            width: 50%;
+            border: 1px solid #000;
+            padding: 10px;
+        }
 
-    .SchoolAddress_SPId {
-        letter-spacing: 3px;
-        font-size: 11px;
-        font: 11px arial;
-        color: #333333;
-    }
+        .header, .content, .footer {
+            margin-bottom: 5px;
+        }
 
-    .lbl {
-        font: 13px arial;
-        color: #333333;
-        letter-spacing: 3px;
-    }
+        .header {
+            text-align: center;
+        }
 
-    .Stamp {
-        margin-left: 5%;
-        height: 40px;
-        font-size: 14px;
-        font-weight: bold;
-    }
+        .footer {
+            text-align: left;
+        }
 
-    .S_of_Accountant {
-        margin-left: 30%;
-        height: 40px;
-        font-size: 14px;
-        font-weight: bold;
-    }
+        .title {
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+        }
 
-    .S_Of_Payee {
-        margin-left: 23%;
-        height: 40px;
-        font-size: 14px;
-        font-weight: bold;
-    }
+        .subtitle {
+            font-family: 'Times New Roman', serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 25px;
+        }
 
-    .SchoolTittle {
-        font-family: Times New Roman;
-        font-size: 9px;
-        color: #555555;
-        letter-spacing: 4px;
-        text-align: center;
-        line-height: 20px;
-    }
+        .details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
 
-    .Signaturelbl {
-        font-family: Times New Roman;
-        font-size: 9px;
-        color: #555555;
-        letter-spacing: 4px;
-        line-height: 20px;
-        margin-right: 36px;
-    }
+            .details .left, .details .right {
+                width: 48%;
+            }
 
-    .Inslbl {
-        font-family: Times New Roman;
-        font-size: 11px;
-        color: #555555;
-        letter-spacing: 4px;
-        text-align: center;
-        line-height: 20px;
-        font-weight: 500;
-    }
+            .details .right {
+                text-align: right;
+            }
 
-    .Receiptlbl {
-        font-family: Times New Roman;
-        font-size: 11px;
-        color: #555555;
-        letter-spacing: 4px;
-        text-align: center;
-        line-height: 20px;
-        font-weight: 500;
-    }
+        .amount {
+            border: 1px solid #000;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
 
-    .DateAndTimeHeading {
-        text-align: right;
-        font: 13px arial;
-        color: #333333;
-        letter-spacing: 3px;
-        margin-right: 33px;
-        margin-top: 15px;
-    }
+        .amount-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #000;
+            padding: 5px;
+        }
 
-    .PrintBtns {
-        margin-left: 78%;
-        display: flex;
-    }
+            .amount-row:last-child {
+                border-bottom: none;
+            }
 
-    input[type="submit"] {
-        border: none;
-    }
-</style>*@
+        .amount .left,
+        .amount .right {
+            flex: 1;
+            text-align: center;
+        }
 
+        .amount .left {
+            border-right: 1px solid #000;
+        }
 
+        .amount .right {
+            padding-left: 10px;
+        }
 
+        .total .right {
+            font-weight: bold;
+        }
 
+        .amount-in-words {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-<div>
-    @foreach (var item in Model)
-    {
-       
+        .notes {
+            margin-bottom: 10px;
+        }
 
+        .footer .note {
+            font-weight: bold;
+        }
 
+        /*-----*/
 
-        <div  class="card" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
-          
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" id="Fee_DetailsPrint" style=" margin-top: 0px;">
-                <tr style=" line-height: 2;">
-                    <td align="center">
-                        <div class="DateAndTimeHeading" style=" text-align: right; font: 13px arial; color: #333333; letter-spacing: 3px; margin-right: 33px; margin-top: 15px;">
-                            <span id="dateSpan"></span><br />
-                            <span id="timeSpan"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr style=" line-height: 2;">
-                    <td>
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr style=" line-height: 2;">
-                                <td width="15%" style="text-align: center;">
-                                    <img src="~/Images/Jnanadeeplogo.png" style="height: 65px;" />
-                                </td>
-                                <td width="45%">
-                                    <span class="SchoolName_SPId" style=" letter-spacing: 2px; font-family: Times New Roman; font-size: 14px; font-weight: bold;"><b>JNANADEEPA VIDYA SAMSTE</b></span><br />
-                                    <span class="SchoolAddress_SPId" style="letter-spacing: 3px; font-size: 11px; font: 11px arial; color: #333333;">Raghav Nagar, Hyderabad, Telangana - 500003</span>
-                                </td>
+        .tblcontainer {
+            width: 97%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
 
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-               
-                <tr style=" line-height: 2;">
-                   <td colspan="12">
-                       <div style=" margin: 41px 0px 0px 65px;"></div>
-                   </td>
-                </tr>
-               
-                <tr style=" line-height: 2;">
-                    <td>
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="Details">
+        .left-section, .right-section {
+            width: 48%;
+        }
 
-                            <tr style=" line-height: 2;">
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Name:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; ">@item.Challana_UserName</label></td>
-                                <td width="20%" style="text-align: right; height: 10%;"><label  style="font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600; ">Fee Amount:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeAmount</label></td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+        .left-section {
+            border: 1px solid #000;
+            border-bottom: 0px solid #000;
+        }
 
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Registration Number:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_UserRegId</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Type:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@(string.IsNullOrEmpty(item.Challana_DiscountType) ? "NA" : item.Challana_DiscountType)</label>
-                                </td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+        .right-section {
+            border: 1px solid #000;
+            padding: 10px;
+        }
 
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Department:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_ClassificationName</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Amount:</label></td>
-                                <td width="30%">
-                                    <label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">
-                                        @(item.Challana_DiscountAmount == null ? "NILL" : item.Challana_DiscountAmount.ToString())
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+        .denomination-header, .denomination-row {
+            display: flex;
+            border-bottom: 1px solid #000;
+        }
 
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Semester:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_subclassificationName</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paid Amount:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_PaidAmount</label></td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+        .denomination-header {
+            background-color: #000;
+            color: #fff;
+            font-weight: bold;
+        }
 
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Term:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_TermName</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Amount:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueAmount</label></td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+            .denomination-header div, .denomination-row div {
+                padding: 5px;
+                text-align: center;
+                border-right: 1px solid #000;
+            }
 
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Date:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueDate</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paying Amount:</label></td>
-                                <td width="30%"><label>@item.Challana_PayingAmount</label></td>
-                            </tr>
-                            <tr style=" line-height: 2;">
+                .denomination-header div:last-child, .denomination-row div:last-child {
+                    border-right: none;
+                }
 
-                                <td width="20%" style="text-align: right; height: 10%;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Fee type:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeType</label></td>
-                                <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Balance Due:</label></td>
-                                <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_BalanceDue</label></td>
-                            </tr>
-                            <tr style=" line-height: 2;">
-                                <td colspan="12">
-                                    <div style="display:flex;">
-                                        <div style="height: 60px; text-align: center; margin: 41px 0px 0px 65px; color: black; font-weight: bold; font-size: 16px; ">Stamp</div>
-                                        <div style="height: 60px; text-align: center; margin: 41px 77px 27px 29%; color: black; font-weight: bold; font-size: 16px; ">Signature Of Accountant</div>
-                                        <div style="height: 60px; text-align: center; margin: 41px 0px 0px 0px; color: black; font-weight: bold; font-size: 16px; ">Signature Of Payee</div>
+        .denomination-row {
+            height: 31px;
+        }
+
+            .denomination-row div {
+                padding: 2px;
+            }
+
+                .denomination-row div:first-child {
+                    text-align: left;
+                    padding-left: 2px;
+                }
+
+                .denomination-row div:last-child {
+                    text-align: center;
+                }
+
+        .right-section div {
+            margin-bottom: 7px;
+        }
+
+            .right-section div:last-child {
+                margin-bottom: 0;
+            }
+
+        .dotted-line {
+            border-bottom: 1px dotted #000;
+            height: 20px;
+        }
+    </style>
+</head>
+<body class="">
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="row mb-2" id="SearchFeeterm_tbldiv">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="text-right">
+                    <a href="javascript:void(0);" id="ChallanPrint">Print</a>
+                </div>
+                <div class="card mb-4" id="ChallanPrintDiv">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">FEE CHALLAN</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="body-container">
+                            <div class="container">
+
+                                <!-- PARENT COPY -->
+                                <div class="challan">
+                                    <div class="header">
+                                        <div class="title">ADS Student Fee Deposit Challan - Parent Copy</div>
+                                        <div class="subtitle">Quro School</div>
+                                        <div class="subtitle">Hyderabad Branch</div>
+                                        <div class="subtitle">A/C No. 588010100028839</div>
+                                        <div class="subtitle">Bank Branch: ..........................................</div>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                                    <div class="content">
+                                        <div class="details">
+                                            <div class="left">
+                                                <div><strong>Challan No.: </strong>@Model[0].Userreceiptgenerationid</div>
+                                                <div><strong>Student I.D. No.: </strong>@Model[0].Admissionnumber</div>
+                                                <div><strong>Student Name: </strong>@Model[0].Firstname</div>
+                                            </div>
+                                            <div class="right">
+                                                <div>Date: @Model[0].ChallanGenerationDate</div>
+                                                <div><strong>Class & Sec: </strong>@Model[0].Subclassificationname</div>
+                                            </div>
+                                        </div>
+                                        <div class="amount">
+                                            <div class="amount-row">
+                                                <div class="left"><strong>Particulars (@Model[1].TermName)</strong></div>
+                                                <div class="right"><strong>Amount</strong></div>
+                                            </div>
+                                            <div class="amount-row">
+                                                <div class="left">@Model[0].Feetype</div>
+                                                <div class="right">@Model[0].Amount.ToString("0.00")</div>
+                                            </div>
+                                            <div class="amount-row">
+                                                <div class="left"><strong>Total</strong></div>
+                                                <div class="right"><strong>@Model[0].Amount.ToString("0.00")</strong></div>
+                                            </div>
+                                        </div>
+                                        <div class="amount-in-words">
+                                            <strong>Amount in words:</strong> @ViewBag.Wordtext
+                                        </div>
+                                        <div class="notes">
+                                            <div><strong>NOTE 1: </strong>If fee is deposited through CHEQUE or DD then it will be considered as deposited only after the clearance of the instrument.</div>
+                                        </div>
+                                        <div class="container">
+                                            <div class="left-section">
+                                                <div class="denomination-header">
+                                                    <div style="width: 35%;">Denomination</div>
+                                                    <div style="width: 40%;">No</div>
+                                                    <div style="width: 45%;">Amount</div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.1,000 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.500 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.100 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.50 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.20 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.10 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;"></div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Total</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                            </div>
 
-            <hr style="margin-top: 8%;  padding: 0px; background-color: cornflowerblue;" />
-            <div id="MatricChallanaPrint" style="margin-top:14px;">
-                <table>
-                    <tr>
-                        <td colspan="12" class="SchoolTittle" style="text-align:center;">
-                            ADS SCHOOL - HYDERABAD, H.S - 2, Sector - 23, Opposite Pkt. - 3
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="12" class="SchoolTittle" style="text-align:center;">
-                            ***** FEE RECEIPT *****
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="12">
-                            <hr />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT NO :</td>
-                        <td colspan="2" class="lbl">@item.ReturnStringValue</td>
+                                            <div class="right-section">
+                                                <div>Cheque/DD No :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Bank Name :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Dated :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Depositor Phone Number :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Name & Sign. of Depositor :</div>
+                                                <div class="dotted-line"></div>
+                                            </div>
+                                        </div>
 
-                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT DATE :</td>
-                        <td colspan="1" class="lbl">@item.Challana_UserName</td>
-                    </tr>
-                    <tr>
-                       
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="Receiptlbl" style=" text-align: right;">Name :</td>
-                        <td colspan="1" class="lbl">@item.Challana_UserName</td>
-                        <td  class="Receiptlbl" style=" text-align: right;">CLASS :</td>
-                        <td colspan="1" class="lbl">@item.Challana_subclassificationName</td>
-                        <td colspan="1" class="Receiptlbl" style=" text-align: right;">ADM.NO :</td>
-                        <td colspan="2" class="lbl">@item.Challana_UserRegId</td>
-                    </tr>
-                    <tr>
-                     
-                    </tr>
-                    
-                    <tr>
-                        <td colspan="12">
-                            <hr />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="Inslbl" style="text-align: right;">Instalment Number **** </td>
-                        <td class="Inslbl">@item.Challana_TermName</td>
-                       
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="Inslbl" style="text-align: right;">Amount ****</td>
-                        <td class="Inslbl">@item.Challana_PayingAmount</td>
-                    </tr>
-                    <tr>
-                       
-                        <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
-                        <td class="lbl"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="Inslbl" style="text-align: right;">TOTAL FEE      ****           </td>
-                        <td colspan="5" class="Inslbl">@item.Challana_PayingAmount</td>
-                    </tr>
-                    <tr>
+                                        <div class="footer">
+                                            <div class="receipt">
+                                                <div>Received fee Rupees: ...........................................................................................................</div>
+                                            </div>
+                                            <div class="signature">
+                                                <div>Bank Stamp & Signature: ...........................................................................................................</div>
+                                            </div>
+                                            <div class="note">
+                                                <strong>NOTE 2: </strong>This fee challan is mandatory for depositing fees.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
-                        <td class="lbl"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            @if (item.Description == "NULL" || item.Description == null)
-                            {
-                                <b></b>
-                            }
-                            else
-                            {
-                                <b style="margin: 0px 0px 0px 43px;">@item.Description</b>
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="12" style="text-align: right;">
-                            <label class="Signaturelbl">SIGNATURE</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="12">
-                            <hr />
-                        </td>
-                    </tr>
-                </table>                
+
+                                <!-- BANK COPY -->
+                                <div class="challan">
+                                    <div class="header">
+                                        <div class="title">ADS Student Fee Deposit Challan - BANK COPY</div>
+                                        <div class="subtitle">ADS School</div>
+                                        <div class="subtitle">Hyderabad Branch</div>
+                                        <div class="subtitle">A/C No. 588010100028839</div>
+                                        <div class="subtitle">Bank Branch: ..........................................</div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="details">
+                                            <div class="left">
+                                                <div><strong>Challan No.: </strong>@Model[0].Userreceiptgenerationid</div>
+                                                <div><strong>Student I.D. No.: </strong>@Model[0].Admissionnumber</div>
+                                                <div><strong>Student Name: </strong>@Model[0].Firstname</div>
+                                            </div>
+                                            <div class="right">
+                                                <div>Date: @Model[0].ChallanGenerationDate</div>
+                                                <div><strong>Class & Sec: </strong>@Model[0].Subclassificationname</div>
+                                            </div>
+                                        </div>
+                                        <div class="amount">
+                                            <div class="amount-row">
+                                                <div class="left"><strong>Particulars (@Model[1].TermName)</strong></div>
+                                                <div class="right"><strong>Amount</strong></div>
+                                            </div>
+                                            <div class="amount-row">
+                                                <div class="left">@Model[0].Feetype</div>
+                                                <div class="right">@Model[0].Amount.ToString("0.00")</div>
+                                            </div>
+                                            <div class="amount-row">
+                                                <div class="left"><strong>Total</strong></div>
+                                                <div class="right"><strong>@Model[0].Amount.ToString("0.00")</strong></div>
+                                            </div>
+                                        </div>
+                                        <div class="amount-in-words">
+                                            <strong>Amount in words:</strong> @ViewBag.Wordtext
+                                        </div>
+                                        <div class="notes">
+                                            <div><strong>NOTE 1: </strong>If fee is deposited through CHEQUE or DD then it will be considered as deposited only after the clearance of the instrument.</div>
+                                        </div>
+                                        <div class="container">
+                                            <div class="left-section">
+                                                <div class="denomination-header">
+                                                    <div style="width: 35%;">Denomination</div>
+                                                    <div style="width: 40%;">No</div>
+                                                    <div style="width: 45%;">Amount</div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.1,000 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.500 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.100 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.50 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.20 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Rs.10 X</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;"></div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                                <div class="denomination-row">
+                                                    <div style="width: 55%;">Total</div>
+                                                    <div style="width: 30%;"></div>
+                                                    <div style="width: 44%;"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="right-section">
+                                                <div>Cheque/DD No :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Bank Name :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Dated :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Depositor Phone Number :</div>
+                                                <div class="dotted-line"></div>
+                                                <div>Name & Sign. of Depositor :</div>
+                                                <div class="dotted-line"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="footer">
+                                            <div class="receipt">
+                                                <div>Received fee Rupees: ...........................................................................................................</div>
+                                            </div>
+                                            <div class="signature">
+                                                <div>Bank Stamp & Signature: ...........................................................................................................</div>
+                                            </div>
+                                            <div class="note">
+                                                <strong>NOTE 2: </strong>This fee challan is mandatory for depositing fees.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    }
-
-
-
-
-</div>
-
-
+    </div>
+</body>
+</html>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 <script>
-    $(document).ready(function () {
-
-     
-        updateDateTime();
-
-    
-        setInterval(updateDateTime, 1000);
-
-
+    document.getElementById("ChallanPrint").addEventListener("click", function () {
+        var printContent = document.getElementById("ChallanPrintDiv").outerHTML;
+        var newWindow = window.open("", "_blank");
+        newWindow.document.write('<html><head><title>Print Content</title><style>');
+        newWindow.document.write('.body-container { font-family: Calibri; }');
+        newWindow.document.write('.container { display: flex; justify-content: space-between; gap: 20px; padding: 20px; }');
+        newWindow.document.write('.challan { width: 50%; border: 1px solid #000; padding: 10px; }');
+        newWindow.document.write('.header, .content, .footer { margin-bottom: 5px; }');
+        newWindow.document.write('.header { text-align: center; }');
+        newWindow.document.write('.footer { text-align: left; }');
+        newWindow.document.write('.title { text-transform: uppercase; font-weight: bold; text-align: center; }');
+        newWindow.document.write('.subtitle { font-family: "Times New Roman", serif; font-size: 16px; font-weight: bold; text-transform: uppercase; text-align: center; line-height: 25px; }');
+        newWindow.document.write('.details { display: flex; justify-content: space-between; margin-bottom: 10px; }');
+        newWindow.document.write('.details .left, .details .right { width: 48%; }');
+        newWindow.document.write('.details .right { text-align: right; }');
+        newWindow.document.write('.amount { border: 1px solid #000; margin-bottom: 10px; padding: 5px; }');
+        newWindow.document.write('.amount-row { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding: 5px; }');
+        newWindow.document.write('.amount-row:last-child { border-bottom: none; }');
+        newWindow.document.write('.amount .left, .amount .right { flex: 1; text-align: center; }');
+        newWindow.document.write('.amount .left { border-right: 1px solid #000; }');
+        newWindow.document.write('.amount .right { padding-left: 10px; }');
+        newWindow.document.write('.total .right { font-weight: bold; }');
+        newWindow.document.write('.amount-in-words { font-weight: bold; margin-bottom: 10px; }');
+        newWindow.document.write('.notes { margin-bottom: 10px; }');
+        newWindow.document.write('.footer .note { font-weight: bold; }');
+        newWindow.document.write('.tblcontainer { width: 97%; margin: 0 auto; display: flex; justify-content: space-between; padding: 20px 0; }');
+        newWindow.document.write('.left-section, .right-section { width: 48%; }');
+        newWindow.document.write('.left-section { border: 1px solid #000; border-bottom: 0px solid #000; }');
+        newWindow.document.write('.right-section { border: 1px solid #000; padding: 10px; }');
+        newWindow.document.write('.denomination-header, .denomination-row { display: flex; border-bottom: 1px solid #000; }');
+        newWindow.document.write('.denomination-header { background-color: #000; color: #fff; font-weight: bold; }');
+        newWindow.document.write('.denomination-header div, .denomination-row div { padding: 5px; text-align: center; border-right: 1px solid #000; }');
+        newWindow.document.write('.denomination-header div:last-child, .denomination-row div:last-child { border-right: none; }');
+        newWindow.document.write('.denomination-row { height: 31px; }');
+        newWindow.document.write('.denomination-row div { padding: 2px; }');
+        newWindow.document.write('.denomination-row div:first-child { text-align: left; padding-left: 2px; }');
+        newWindow.document.write('.denomination-row div:last-child { text-align: center; }');
+        newWindow.document.write('.right-section div { margin-bottom: 7px; }');
+        newWindow.document.write('.right-section div:last-child { margin-bottom: 0; }');
+        newWindow.document.write('.dotted-line { border-bottom: 1px dotted #000; height: 20px; }');
+        newWindow.document.write('</style></head><body>');
+        newWindow.document.write(printContent);
+        newWindow.document.write('</body></html>');
+        newWindow.document.close(); // Close the document to avoid potential issues
+        newWindow.print(); // Print the content in the new window
     });
-
-    function updateDateTime() {
-        const currentDate = new Date();
-        const months = [
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-
-        const month = months[currentDate.getMonth()];
-        const day = currentDate.getDate();
-        const year = currentDate.getFullYear();
-        const hours = currentDate.getHours();
-        const minutes = currentDate.getMinutes();
-        const amOrPm = hours >= 12 ? "PM" : "AM";
-        const formattedHours = hours % 12 || 12;
-
-        const formattedDate = `${month} ${day} ${year}`;
-        const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
-
-        // Update the <span> elements with the formatted date and time
-        document.getElementById("dateSpan").textContent = formattedDate;
-        document.getElementById("timeSpan").textContent = formattedTime;
-    }
-
-    document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
-        // Get the content of the div with id 'MatricChallanaPrint'
-        const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
-
-        // Create a new window for printing
-        const printWindow = window.open('', '', 'width=800,height=600');
-        printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print</title></head><body>');
-
-        // Write the content to the new window
-        printWindow.document.write(printContent);
-
-        // Close the new window after printing
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
-    });
-
-
-
-    document.getElementById("Print_Button").addEventListener("click", function () {
-        const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
-        const printWindow = window.open('', '', 'width=800,height=600');
-        printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
-        printWindow.document.write(printContent);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
-    });
-
 
 </script>
+
+
+
+
+
+@*<div>
+        @foreach (var item in Model)
+        {
+            <div  class="card" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="Fee_DetailsPrint" style=" margin-top: 0px;">
+                    <tr style=" line-height: 2;">
+                        <td align="center">
+                            <div class="DateAndTimeHeading" style=" text-align: right; font: 13px arial; color: #333333; letter-spacing: 3px; margin-right: 33px; margin-top: 15px;">
+                                <span id="dateSpan"></span><br />
+                                <span id="timeSpan"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style=" line-height: 2;">
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr style=" line-height: 2;">
+                                    <td width="15%" style="text-align: center;">
+                                        <img src="~/Images/Jnanadeeplogo.png" style="height: 65px;" />
+                                    </td>
+                                    <td width="45%">
+                                        <span class="SchoolName_SPId" style=" letter-spacing: 2px; font-family: Times New Roman; font-size: 14px; font-weight: bold;"><b>JNANADEEPA VIDYA SAMSTE</b></span><br />
+                                        <span class="SchoolAddress_SPId" style="letter-spacing: 3px; font-size: 11px; font: 11px arial; color: #333333;">Raghav Nagar, Hyderabad, Telangana - 500003</span>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style=" line-height: 2;">
+                       <td colspan="12">
+                           <div style=" margin: 41px 0px 0px 65px;"></div>
+                       </td>
+                    </tr>
+
+                    <tr style=" line-height: 2;">
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="Details">
+
+                                <tr style=" line-height: 2;">
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Name:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; ">@item.Challana_UserName</label></td>
+                                    <td width="20%" style="text-align: right; height: 10%;"><label  style="font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600; ">Fee Amount:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeAmount</label></td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Registration Number:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_UserRegId</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Type:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@(string.IsNullOrEmpty(item.Challana_DiscountType) ? "NA" : item.Challana_DiscountType)</label>
+                                    </td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Department:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_ClassificationName</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Discount Amount:</label></td>
+                                    <td width="30%">
+                                        <label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">
+                                            @(item.Challana_DiscountAmount == null ? "NILL" : item.Challana_DiscountAmount.ToString())
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Semester:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_subclassificationName</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paid Amount:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_PaidAmount</label></td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Term:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_TermName</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Amount:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueAmount</label></td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Due Date:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_DueDate</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Paying Amount:</label></td>
+                                    <td width="30%"><label>@item.Challana_PayingAmount</label></td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+
+                                    <td width="20%" style="text-align: right; height: 10%;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Fee type:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_FeeType</label></td>
+                                    <td width="20%" style="text-align: right;"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px; font-weight: 600;">Balance Due:</label></td>
+                                    <td width="30%"><label  style=" font: 13px arial; color: #333333; letter-spacing: 3px;">@item.Challana_BalanceDue</label></td>
+                                </tr>
+                                <tr style=" line-height: 2;">
+                                    <td colspan="12">
+                                        <div style="display:flex;">
+                                            <div style="height: 60px; text-align: center; margin: 41px 0px 0px 65px; color: black; font-weight: bold; font-size: 16px; ">Stamp</div>
+                                            <div style="height: 60px; text-align: center; margin: 41px 77px 27px 29%; color: black; font-weight: bold; font-size: 16px; ">Signature Of Accountant</div>
+                                            <div style="height: 60px; text-align: center; margin: 41px 0px 0px 0px; color: black; font-weight: bold; font-size: 16px; ">Signature Of Payee</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <hr style="margin-top: 8%;  padding: 0px; background-color: cornflowerblue;" />
+                <div id="MatricChallanaPrint" style="margin-top:14px;">
+                    <table>
+                        <tr>
+                            <td colspan="12" class="SchoolTittle" style="text-align:center;">
+                                ADS SCHOOL - HYDERABAD, H.S - 2, Sector - 23, Opposite Pkt. - 3
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" class="SchoolTittle" style="text-align:center;">
+                                ***** FEE RECEIPT *****
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <hr />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT NO :</td>
+                            <td colspan="2" class="lbl">@item.ReturnStringValue</td>
+
+                            <td colspan="2" class="Receiptlbl" style=" text-align: right;">RECEIPT DATE :</td>
+                            <td colspan="1" class="lbl">@item.Challana_UserName</td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="Receiptlbl" style=" text-align: right;">Name :</td>
+                            <td colspan="1" class="lbl">@item.Challana_UserName</td>
+                            <td  class="Receiptlbl" style=" text-align: right;">CLASS :</td>
+                            <td colspan="1" class="lbl">@item.Challana_subclassificationName</td>
+                            <td colspan="1" class="Receiptlbl" style=" text-align: right;">ADM.NO :</td>
+                            <td colspan="2" class="lbl">@item.Challana_UserRegId</td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="12">
+                                <hr />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="Inslbl" style="text-align: right;">Instalment Number **** </td>
+                            <td class="Inslbl">@item.Challana_TermName</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="Inslbl" style="text-align: right;">Amount ****</td>
+                            <td class="Inslbl">@item.Challana_PayingAmount</td>
+                        </tr>
+                        <tr>
+
+                            <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
+                            <td class="lbl"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="Inslbl" style="text-align: right;">TOTAL FEE      ****           </td>
+                            <td colspan="5" class="Inslbl">@item.Challana_PayingAmount</td>
+                        </tr>
+                        <tr>
+
+                            <td class="lbl" style="text-align: right;" colspan="5">---------------------------</td>
+                            <td class="lbl"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                @if (item.Description == "NULL" || item.Description == null)
+                                {
+                                    <b></b>
+                                }
+                                else
+                                {
+                                    <b style="margin: 0px 0px 0px 43px;">@item.Description</b>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" style="text-align: right;">
+                                <label class="Signaturelbl">SIGNATURE</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <hr />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            updateDateTime();
+
+
+            setInterval(updateDateTime, 1000);
+
+
+        });
+        function updateDateTime() {
+            const currentDate = new Date();
+            const months = [
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+
+            const month = months[currentDate.getMonth()];
+            const day = currentDate.getDate();
+            const year = currentDate.getFullYear();
+            const hours = currentDate.getHours();
+            const minutes = currentDate.getMinutes();
+            const amOrPm = hours >= 12 ? "PM" : "AM";
+            const formattedHours = hours % 12 || 12;
+
+            const formattedDate = `${month} ${day} ${year}`;
+            const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
+
+            // Update the <span> elements with the formatted date and time
+            document.getElementById("dateSpan").textContent = formattedDate;
+            document.getElementById("timeSpan").textContent = formattedTime;
+        }
+        document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
+            // Get the content of the div with id 'MatricChallanaPrint'
+            const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
+
+            // Create a new window for printing
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+
+            // Write the content to the new window
+            printWindow.document.write(printContent);
+
+            // Close the new window after printing
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+        });
+        document.getElementById("Print_Button").addEventListener("click", function () {
+            const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
+            printWindow.document.write(printContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+        });
+    </script>*@
 
 
 

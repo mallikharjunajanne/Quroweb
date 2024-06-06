@@ -19,7 +19,7 @@
             <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE USERS</h4>
 
             <div class="row mb-2">
-                <div class="col-md-12 col-lg-12 mb-3">
+                @*<div class="col-md-12 col-lg-12 mb-3">*@  @*This line comment in this area and adding 37 line*@
 
                     <div class="demo-inline-spacing">
                         <button class="btn rounded-pill btn-outline-info waves-effect" style="display:none !important;" id="BtnBackToSearch">
@@ -27,331 +27,333 @@
                         </button>
 
                         @*</div>
-                            <div class="demo-inline-spacing">*@
+            <div class="demo-inline-spacing">*@
 
                         <button class="btn rounded-pill btn-outline-primary waves-effect float-end" id="BtnCreateUsers">
                             Create User
                         </button>
                     </div>
 
-                    <div id="DivUsersSearchPage">
-                        @*==========================search Users Card====================*@
-                        <div class="card mb-4">
+                    <div class="col-md-12 col-lg-12 mb-3">
 
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        SEARCH USERS
-                                    </span>
-                                </h5>
-                            </div>
-                            <div class="card-body">
+                        <div id="DivUsersSearchPage">
+                            @*==========================search Users Card====================*@
+                            <div class="card mb-4">
 
-                                <form id="FmUsersSearch" class="needs-validation was-validated" novalidate>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="card-header d-flex align-items-center justify-content-between">
+                                    <h5 class="mb-0">
+                                        <span>
+                                            SEARCH USERS
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
 
-                                            @*<div class="form-group col-12 passwordfor"><span class="compare text-danger"></span></div>*@
+                                    <form id="FmUsersSearch" class="needs-validation was-validated" novalidate>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                            <div class="mb-3 row">
-                                                <label class="col-sm-2 col-form-label  text-end" asp-for="UserName" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    @*<input asp-for="UserName" class="form-control" id="AdmissionNumber_ME" placeholder="User Name" />*@
-                                                    <input type="search" asp-for="Name" class="form-control" placeholder="User Name" />
-                                                </div>
-                                                <label class="col-sm-2 col-form-label  text-end" asp-for="InstanceUserCode" for="basic-default-name">Reg. No./Emp ID</label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="InstanceUserCode" class="form-control" placeholder="Reg. No./Emp ID" />
-                                                </div>
-                                            </div>
+                                                @*<div class="form-group col-12 passwordfor"><span class="compare text-danger"></span></div>*@
 
-
-                                            @*----------------------*@
-
-
-                                            <div class="mb-3 row">
-                                                <label class="col-sm-2 col-form-label  text-end" asp-for="RoleId" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        @Html.DropDownListFor(x => x.RoleId, new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
-                                                new { @class = "select2 form-select select2-hidden-accessible", @onchange = "RoleOnChangeFunction(this.value)", @Id = "DdlRoleId" })
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-2 col-form-label  text-end" asp-for="UserName" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        @*<input asp-for="UserName" class="form-control" id="AdmissionNumber_ME" placeholder="User Name" />*@
+                                                        <input type="search" asp-for="Name" class="form-control" placeholder="User Name" />
                                                     </div>
-                                                </div>
-                                                <label class="col-sm-2 col-form-label  text-end" asp-for="AdmissionNumber" for="basic-default-name">Reg. No./Emp ID</label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="AdmissionNumber" class="form-control" placeholder="Admission Number" />
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="FirstName" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" />
-                                                </div>
-                                                <label asp-for="LastName" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" />
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="InstanceClassificationId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
-                                                            <option value=''>Select a Department</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <label asp-for="InstanceSubClassificationId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        @*@Html.DropDownListFor(x => x.InstanceSubClassificationId, new SelectList(ViewBag.SalaryAttributeType, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;" })*@
-                                                        <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Please select a Class</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-                                            <div class="mb-3 row">
-                                                <label asp-for="RouteId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select id='DdlPickUpRoute' asp-for="RouteId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Users/DdlPickUpStop_Calingfunction?RouteId=' + this.value, 'DdlPickUpStop', 'Please select a Stop', true)" asp-items="@(new SelectList(ViewBag.DdlPickUpRoute, "Value", "Text"))">
-                                                            <option value=''>Select a Route</option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                                <label asp-for="StopId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select id='DdlPickUpStop' asp-for="StopId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Please select a Stop</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="CollegeCode" class="form-control" placeholder="School Code" />
-                                                </div>
-                                                <label asp-for="Gender" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select asp-for="Gender" id="DdlGender" class="select2 form-select select2-hidden-accessible">
-                                                            <option value="" title="---------Select---------">---------Select---------</option>
-                                                            <option value="1" title="Male">Male</option>
-                                                            <option value="0" title="Female">Female</option>
-                                                            <option value="2" title="Others">Others</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-3 row">
-
-                                                <label asp-for="Transport" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select asp-for="Transport" class="select2 form-select select2-hidden-accessible">
-                                                            <option value="" title="---------Select---------">---------Select---------</option>
-                                                            <option value="1" title="Own">Own</option>
-                                                            <option value="2" title="School">School</option>
-                                                            <option value="3" title="Parent Hired Cab">Parent Hired Cab</option>
-                                                            <option value="4" title="Walker">Walker</option>
-                                                        </select>
+                                                    <label class="col-sm-2 col-form-label  text-end" asp-for="InstanceUserCode" for="basic-default-name">Reg. No./Emp ID</label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="InstanceUserCode" class="form-control" placeholder="Reg. No./Emp ID" />
                                                     </div>
                                                 </div>
 
-                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input type="email" asp-for="PortalEmail" class="form-control" placeholder="Email Address" />
 
-                                                    <span asp-validation-for="PortalEmail" class="text-danger"></span>
-                                                </div>
-                                            </div>
+                                                @*----------------------*@
 
-                                            @*----------------------*@
-                                            <div class="mb-3 row">
 
-                                                <label asp-for="IsActive" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="col mt-2">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input " asp-for="IsActive" id="Yes" type="radio" checked="checked" name="IsActive" value="1" />
-                                                            <label class="form-check-label" for="Yes">Yes</label>
+                                                <div class="mb-3 row">
+                                                    <label class="col-sm-2 col-form-label  text-end" asp-for="RoleId" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            @Html.DropDownListFor(x => x.RoleId, new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
+                                                    new { @class = "select2 form-select select2-hidden-accessible", @onchange = "RoleOnChangeFunction(this.value)", @Id = "DdlRoleId" })
                                                         </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input " asp-for="IsActive" id="No" type="radio" name="IsActive" value="0" />
+                                                    </div>
+                                                    <label class="col-sm-2 col-form-label  text-end" asp-for="AdmissionNumber" for="basic-default-name">Reg. No./Emp ID</label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="AdmissionNumber" class="form-control" placeholder="Admission Number" />
+                                                    </div>
+                                                </div>
+                                                @*----------------------*@
 
-                                                            <label class="form-check-label" for="No"> No</label>
+                                                <div class="mb-3 row">
+                                                    <label asp-for="FirstName" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                                                    </div>
+                                                    <label asp-for="LastName" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                                                    </div>
+                                                </div>
+                                                @*----------------------*@
+
+
+                                                <div class="mb-3 row">
+                                                    <label asp-for="InstanceClassificationId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            <select id='DdlDepartment' asp-for="InstanceClassificationId" name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
+                                                                <option value=''>Select a Department</option>
+                                                            </select>
                                                         </div>
-
+                                                    </div>
+                                                    <label asp-for="InstanceSubClassificationId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            @*@Html.DropDownListFor(x => x.InstanceSubClassificationId, new SelectList(ViewBag.SalaryAttributeType, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "dropdown_SalaryAttributeType_CSA", @style = "color:black;" })*@
+                                                            <select id='DdlClass' asp-for="InstanceSubClassificationId" name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                                <option value=''>Please select a Class</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end ClsDesignationId" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDesignationId">
-                                                    <div class="position-relative ">
-                                                        @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "DdlDesignationId", @style = "color:black;" })
+                                                @*----------------------*@
+                                                <div class="mb-3 row">
+                                                    <label asp-for="RouteId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            <select id='DdlPickUpRoute' asp-for="RouteId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Users/DdlPickUpStop_Calingfunction?RouteId=' + this.value, 'DdlPickUpStop', 'Please select a Stop', true)" asp-items="@(new SelectList(ViewBag.DdlPickUpRoute, "Value", "Text"))">
+                                                                <option value=''>Select a Route</option>
+                                                            </select>
+
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input asp-for="MobilePhone" class="form-control" placeholder="Mobile Number" />
-
-                                                    <span asp-validation-for="MobilePhone" class="text-danger"></span>
-                                                </div>
-                                                <label id="LblTcTaken" class="col-sm-2 col-form-label  text-end ClsTcTaken" style="display:none" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsTcTaken" style="display:none">
-
-                                                    <div class="position-relative">
-                                                        <select asp-for="TcTaken" id="DdlTcTaken" class="select2 form-select select2-hidden-accessible">
-                                                            <option value="">---------Select---------</option>
-                                                            @*<option selected="selected" value="1">Yes</option>*@
-                                                            <option value="1">Yes</option>
-                                                            <option value="0">No</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="FatherFirstName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsParentNameForStudent">
-                                                    <input asp-for="FatherFirstName" class="form-control ClsTxtParent" placeholder="Father First Name" />
-                                                </div>
-                                                <label asp-for="FatherLastName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsParentNameForStudent">
-                                                    <input asp-for="FatherLastName" class="form-control ClsTxtParent" placeholder="Father Last Name" />
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-3 row">
-                                                <label asp-for="MotherFirstName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsParentNameForStudent">
-                                                    <input asp-for="MotherFirstName" class="form-control ClsTxtParent" placeholder="Mother First Name" />
-                                                </div>
-                                                <label asp-for="MotherLastName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsParentNameForStudent">
-                                                    <input asp-for="MotherLastName" class="form-control ClsTxtParent" placeholder="Mother Last Name" />
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            @*----------------------*@
-                                            <div class="mb-3 row">
-
-                                                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-6">
-                                                    <div class="col mt-2">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input " asp-for="SearchDateType" id="Withdrawal" type="radio" name="SearchDateType" value="1" onchange="dateWisesearching()" />
-                                                            <label class="form-check-label" for="Withdrawal">Withdrawal date</label>
+                                                    <label asp-for="StopId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            <select id='DdlPickUpStop' asp-for="StopId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                                <option value=''>Please select a Stop</option>
+                                                            </select>
                                                         </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input " asp-for="SearchDateType" id="Admission" type="radio" name="SearchDateType" value="2" onchange="dateWisesearching()" />
-                                                            <label class="form-check-label" for="Admission"> Admission date</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input " asp-for="SearchDateType" id="Joining" type="radio" name="SearchDateType" value="3" onchange="dateWisesearching()" />
-                                                            <label class="form-check-label" for="Joining"> Joining date</label>
-                                                        </div>
-
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                                @*----------------------*@
 
-                                            @*----------------------*@
-                                            <div class="mb-3 row">
-                                                <label asp-for="SearchStartDate" class="col-sm-2 col-form-label  text-end ClsDates required" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDates">
-                                                    <input type="date" asp-for="SearchStartDate" id="DtSearchStartDate" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Search Start Date')" required />
-                                                    <span asp-validation-for="SearchStartDate" class="text-danger "></span>
-                                                    <span class="compare text-danger "></span>
+                                                <div class="mb-3 row">
+                                                    <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="CollegeCode" class="form-control" placeholder="School Code" />
+                                                    </div>
+                                                    <label asp-for="Gender" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            <select asp-for="Gender" id="DdlGender" class="select2 form-select select2-hidden-accessible">
+                                                                <option value="" title="---------Select---------">---------Select---------</option>
+                                                                <option value="1" title="Male">Male</option>
+                                                                <option value="0" title="Female">Female</option>
+                                                                <option value="2" title="Others">Others</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <label asp-for="SearchEndDate" class="col-sm-2 col-form-label  text-end ClsDates required" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDates">
-                                                    <input type="date" asp-for="SearchEndDate" id="DtSearchEndDate" class="form-control" oninput="datescompare_Vs1(event,'DtSearchStartDate',this.getAttribute('id'), 'Search Start Date','Search End Date')" required />
-                                                    <span asp-validation-for="SearchEndDate" class="text-danger "></span>
-                                                    <span class="compare text-danger "></span>
+                                                @*----------------------*@
+                                                <div class="mb-3 row">
+
+                                                    <label asp-for="Transport" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="position-relative">
+                                                            <select asp-for="Transport" class="select2 form-select select2-hidden-accessible">
+                                                                <option value="" title="---------Select---------">---------Select---------</option>
+                                                                <option value="1" title="Own">Own</option>
+                                                                <option value="2" title="School">School</option>
+                                                                <option value="3" title="Parent Hired Cab">Parent Hired Cab</option>
+                                                                <option value="4" title="Walker">Walker</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <input type="email" asp-for="PortalEmail" class="form-control" placeholder="Email Address" />
+
+                                                        <span asp-validation-for="PortalEmail" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                @*----------------------*@
+                                                <div class="mb-3 row">
+
+                                                    <label asp-for="IsActive" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <div class="col mt-2">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input " asp-for="IsActive" id="Yes" type="radio" checked="checked" name="IsActive" value="1" />
+                                                                <label class="form-check-label" for="Yes">Yes</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input " asp-for="IsActive" id="No" type="radio" name="IsActive" value="0" />
+
+                                                                <label class="form-check-label" for="No"> No</label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end ClsDesignationId" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsDesignationId">
+                                                        <div class="position-relative ">
+                                                            @Html.DropDownListFor(x => x.DesignationId, new SelectList(ViewBag.DdlDesignation, "Value", "Text"), "-------select-------", new { @class = "form-select readonly", @id = "DdlDesignationId", @style = "color:black;" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*----------------------*@
+
+                                                <div class="mb-3 row">
+                                                    <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-4">
+                                                        <input asp-for="MobilePhone" class="form-control" placeholder="Mobile Number" />
+
+                                                        <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                                                    </div>
+                                                    <label id="LblTcTaken" class="col-sm-2 col-form-label  text-end ClsTcTaken" style="display:none" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsTcTaken" style="display:none">
+
+                                                        <div class="position-relative">
+                                                            <select asp-for="TcTaken" id="DdlTcTaken" class="select2 form-select select2-hidden-accessible">
+                                                                <option value="">---------Select---------</option>
+                                                                @*<option selected="selected" value="1">Yes</option>*@
+                                                                <option value="1">Yes</option>
+                                                                <option value="0">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*----------------------*@
+
+
+                                                <div class="mb-3 row">
+                                                    <label asp-for="FatherFirstName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsParentNameForStudent">
+                                                        <input asp-for="FatherFirstName" class="form-control ClsTxtParent" placeholder="Father First Name" />
+                                                    </div>
+                                                    <label asp-for="FatherLastName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsParentNameForStudent">
+                                                        <input asp-for="FatherLastName" class="form-control ClsTxtParent" placeholder="Father Last Name" />
+                                                    </div>
+                                                </div>
+                                                @*----------------------*@
+
+                                                <div class="mb-3 row">
+                                                    <label asp-for="MotherFirstName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsParentNameForStudent">
+                                                        <input asp-for="MotherFirstName" class="form-control ClsTxtParent" placeholder="Mother First Name" />
+                                                    </div>
+                                                    <label asp-for="MotherLastName" class="col-sm-2 col-form-label  text-end ClsParentNameForStudent" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsParentNameForStudent">
+                                                        <input asp-for="MotherLastName" class="form-control ClsTxtParent" placeholder="Mother Last Name" />
+                                                    </div>
+                                                </div>
+                                                @*----------------------*@
+
+                                                @*----------------------*@
+                                                <div class="mb-3 row">
+
+                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                    <div class="col-sm-6">
+                                                        <div class="col mt-2">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input " asp-for="SearchDateType" id="Withdrawal" type="radio" name="SearchDateType" value="1" onchange="dateWisesearching()" />
+                                                                <label class="form-check-label" for="Withdrawal">Withdrawal date</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input " asp-for="SearchDateType" id="Admission" type="radio" name="SearchDateType" value="2" onchange="dateWisesearching()" />
+                                                                <label class="form-check-label" for="Admission"> Admission date</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input " asp-for="SearchDateType" id="Joining" type="radio" name="SearchDateType" value="3" onchange="dateWisesearching()" />
+                                                                <label class="form-check-label" for="Joining"> Joining date</label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                @*----------------------*@
+                                                <div class="mb-3 row">
+                                                    <label asp-for="SearchStartDate" class="col-sm-2 col-form-label  text-end ClsDates required" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsDates">
+                                                        <input type="date" asp-for="SearchStartDate" id="DtSearchStartDate" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Search Start Date')" required />
+                                                        <span asp-validation-for="SearchStartDate" class="text-danger "></span>
+                                                        <span class="compare text-danger "></span>
+                                                    </div>
+                                                    <label asp-for="SearchEndDate" class="col-sm-2 col-form-label  text-end ClsDates required" for="basic-default-name"></label>
+                                                    <div class="col-sm-4 ClsDates">
+                                                        <input type="date" asp-for="SearchEndDate" id="DtSearchEndDate" class="form-control" oninput="datescompare_Vs1(event,'DtSearchStartDate',this.getAttribute('id'), 'Search Start Date','Search End Date')" required />
+                                                        <span asp-validation-for="SearchEndDate" class="text-danger "></span>
+                                                        <span class="compare text-danger "></span>
+                                                    </div>
+
+                                                </div>
+                                                @*----------------------*@
+                                                <div class="row justify-content-end">
+                                                    <div class="col-sm-10">
+                                                        <button type="reset" id="clearform" value="Clear" class="btn btn-warning waves-effect waves-light">Clear</button>
+                                                        <button type="submit" id="BtnSearch" value="Search" class="btn btn-success waves-effect waves-light">Search</button>
+                                                    </div>
                                                 </div>
 
                                             </div>
-                                            @*----------------------*@
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-10">
-                                                    <button type="reset" id="clearform" value="Clear" class="btn btn-warning waves-effect waves-light">Clear</button>
-                                                    <button type="submit" id="BtnSearch" value="Search" class="btn btn-success waves-effect waves-light">Search</button>
-                                                </div>
-                                            </div>
-
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
 
+
+                                </div>
+                            </div>
+
+
+                            @*========================== Searched Users table Card====================*@
+                            <div class="card" id="DivTblUserSearchresults" style="display:none">
+                                <div class="card-header flex-column flex-md-row">
+                                    <div class="head-label text-center">
+                                        <h5 class="card-title mb-0">
+                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="table-responsive text-nowrap">
+                                    <table id="TblUserSearchresults" class="datatables-basic table dataTable no-footer dtr-column link">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>S.No </th>
+                                                <th> Name </th>
+                                                <th>   Role </th>
+                                                <th>  Class </th>
+                                                <th> Admission Number </th>
+                                                <th> Reg.No./Emp ID </th>
+                                                <th>   MobileNumber</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
 
                             </div>
                         </div>
 
 
-                        @*========================== Searched Users table Card====================*@
-                        <div class="card" id="DivTblUserSearchresults" style="display:none">
-                              <div class="card-header flex-column flex-md-row">
-                                        <div class="head-label text-center">
-                                            <h5 class="card-title mb-0">
-                                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                            </h5>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive text-nowrap">
-                                        <table id="TblUserSearchresults" class="datatables-basic table dataTable no-footer dtr-column link">
-                                            <thead class="table-dark">
-                                                <tr>
-                                                    <th>S.No </th>
-                                                    <th> Name </th>
-                                                    <th>   Role </th>
-                                                    <th>  Class </th>
-                                                    <th> Admission Number </th>
-                                                    <th> Reg.No./Emp ID </th>
-                                                    <th>   MobileNumber</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+
+                        @*==========================Append General Tab, Parent Details Tab  Card====================*@
+                        <div id="DivappendCreateNewUsers">
 
                         </div>
-                    </div>
-
-
-
-                    @*==========================Append General Tab, Parent Details Tab  Card====================*@
-                    <div id="DivappendCreateNewUsers">
 
                     </div>
-
                 </div>
-            </div>
         </div>
     </body>
 </html>

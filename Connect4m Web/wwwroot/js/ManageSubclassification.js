@@ -475,38 +475,42 @@ $(document).on('click', '#ManageSubclassificationtbl .fa-trash-o', function (eve
 /////------*** CREATE NEW SUBCLASSIFICATION ***-------
 $('#addnewsubclass').click(function () {
     debugger;
-     //----Classification dropdown
-    fetchDataAndPopulateDropdown(
-        '/Admin/InstanceClassification_DD',   // URL for data fetching
-        '#In_Subclassificationdd',    // Dropdown selector
-        'instanceClassificationId',   // Field name for option values
-        'classificationName',         // Field name for option text
-        'classificationList'          // Response value return class name
-    );
+    ////----Classification dropdown
+    //fetchDataAndPopulateDropdown(
+    //    '/Admin/InstanceClassification_DD',   // URL for data fetching
+    //    '#In_Subclassificationdd',    // Dropdown selector
+    //    'instanceClassificationId',   // Field name for option values
+    //    'classificationName',         // Field name for option text
+    //    'classificationList'          // Response value return class name
+    //);
      
-    //----ClassTeacher dropdown
-    fetchDataAndPopulateDropdown(
-        '/Admin/Subclass_Classteacher_DD',  // URL for data fetching
-        '#In_ClassTeacherdd',     // Dropdown selector
-        'userId',                 // Field name for option values
-        'userName',               // Field name for option text
-        'classteacherList'        // Response value return class name
-    );
+    ////----ClassTeacher dropdown
+    //fetchDataAndPopulateDropdown(
+    //    '/Admin/Subclass_Classteacher_DD',  // URL for data fetching
+    //    '#In_ClassTeacherdd',     // Dropdown selector
+    //    'userId',                 // Field name for option values
+    //    'userName',               // Field name for option text
+    //    'classteacherList'        // Response value return class name
+    //);
   
-    //----Co-Class Teacher
-    fetchDataAndPopulateDropdown(
-        '/Admin/Subclass_CoClassteacher_DD',  // URL for data fetching
-        '#In_CoClassTeacherdd',     // Dropdown selector
-        'userId_CO',                   // Field name for option values
-        'userName_CO',                 // Field name for option text
-        'coClassteacherList'          // Response value return class name
-    );
+    ////----Co-Class Teacher
+    //fetchDataAndPopulateDropdown(
+    //    '/Admin/Subclass_CoClassteacher_DD',  // URL for data fetching
+    //    '#In_CoClassTeacherdd',     // Dropdown selector
+    //    'userId_CO',                   // Field name for option values
+    //    'userName_CO',                 // Field name for option text
+    //    'coClassteacherList'          // Response value return class name
+    //);
 
     CallToAjax_Withoutdata('GET', '/Admin/Insert_ManageSubClassification',
         function (response) {
             debugger;
             $('#ManageSubclassification_Containermaindiv').hide();        
             $('#ManagesubclassificationInsertUpdatediv').html(response);
+
+            Subclassification();
+            Subclass_Classteacher();
+            Subclass_CoClassteacher();
         },
         function (status, error) {
             // Handle error if needed
@@ -514,7 +518,33 @@ $('#addnewsubclass').click(function () {
     );
 });
 
-
+function Subclassification() {
+    fetchDataAndPopulateDropdown(
+        '/Admin/InstanceClassification_DD',   // URL for data fetching
+        '#In_Subclassificationdd',    // Dropdown selector
+        'instanceClassificationId',   // Field name for option values
+        'classificationName',         // Field name for option text
+        'classificationList'          // Response value return class name
+    );
+}
+function Subclass_Classteacher() {
+    fetchDataAndPopulateDropdown(
+        '/Admin/Subclass_Classteacher_DD',  // URL for data fetching
+        '#In_ClassTeacherdd',     // Dropdown selector
+        'userId',                 // Field name for option values
+        'userName',               // Field name for option text
+        'classteacherList'        // Response value return class name
+    );
+}
+function Subclass_CoClassteacher() {
+    fetchDataAndPopulateDropdown(
+        '/Admin/Subclass_CoClassteacher_DD',  // URL for data fetching
+        '#In_CoClassTeacherdd',               // Dropdown selector
+        'userId_CO',                              // Field name for option values
+        'userName_CO',                 // Field name for option text
+        'coClassteacherList'          // Response value return class name
+    );
+}
 
 
 
@@ -637,16 +667,6 @@ $('#classificationDropdown').change(function () {
 
 //CLEAR FUCNTION
 function Clearcommonfunction(Formid, ErrorMessageSpanId) {
-    debugger;
-    //document.getElementById(Formid).reset(); // Reset the form 
-    //if (ErrorMessageSpanId) {
-    //    document.getElementById(ErrorMessageSpanId).innerText = '';
-    //}
-
-    //var validationSpans = document.querySelectorAll('span[asp-validation-for]');
-    //validationSpans.forEach(function (span) {
-    //    span.innerText = '';
-    //});
 
     debugger;
     var form = document.getElementById(Formid);
@@ -660,6 +680,7 @@ function Clearcommonfunction(Formid, ErrorMessageSpanId) {
             span.textContent = ''; // Clear validation messages
         });
     }
+    Subclasstabledatabinding();
 }
 
 

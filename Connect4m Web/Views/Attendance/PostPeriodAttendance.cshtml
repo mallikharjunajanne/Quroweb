@@ -1,6 +1,5 @@
-﻿@model Connect4m_Web.Models.Attendenceproperites.AttendancePosting
-
-
+﻿@*@model Connect4m_Web.Models.Attendenceproperites.AttendancePosting*@
+@model Connect4m_Web.Models.Attendenceproperites.PostPeriodattendance
 @{
     ViewData["Title"] = "PostPeriodAttendance";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,90 +9,92 @@
 <html>
 <head>
 
-    <style>
-        .underlined {
-            text-decoration: underline;
-        }
-
-        .S_btn {
-            width: 7%;
-            height: 28px;
-            margin-top: 16px;
-            margin-left: 26%;
-        }
-    </style>
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE POSTING </h4>
+        <span id="Commonerrormessage"class="text-danger"></span>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card-header pb-0" id="Manageholidays_Heaingmaindiv0">
-                    <button class="btn btn-pill btn-outline-primary btn-aprimary" id="Post_Previous_Attendance_Link" style=" border-radius: 15px; height: 35px; margin-bottom: 3px;">
-                        Click to Post Previous Attendance
-                    </button>
+                <div class="card-header pb-0 text-right" id="Manageholidays_Heaingmaindiv0">
+                    <a href="javascript:void()" id="Postprivousattendancelink">  Click to Post Previous Attendance </a>
                 </div>
-                <div id="Posting_Attendance_DateId">
+                <div id="Postingattendancedatedivid" style="display:none;">
                     <div class="row mb-3">
-                        <label asp-for="StartDate" id="RlStartdate" class="control-label col-1 col-form-label space">StartDate</label>
-                        <div class="col-sm-4">
-                            <input type="date" class="form-control" /><input type="submit" value="Shiow Periods" />
+                        <label asp-for="StartDate" id="RlStartdate" class="control-label col-2 col-form-label text-end space">StartDate</label>
+                        <div class="col-sm-2">
+                            <input type="date" asp-for="StartDate" id="Startdatetxt" class="form-control" />
+                        </div>
+                        <label class="col-1"></label>
+                        <div class="col-sm-2">
+                            <button id="Showperiodsbtn" class="btn btn-success waves-effect waves-light" >Show Periods</button>
                         </div>
                     </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            SEARCH FOR STUDENTS
+                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
                     </div>
-                    <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                SEARCH FOR STUDENTS
-                            </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col" id="PostPeriodAttendanceMaindiv">
-                                    <form class="form" id="myform">
-                                        <div class="row mb-3">
-                                            <label asp-for="Faculty" class="control-label col-sm-4 col-form-label text-end required space">Faculty </label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    @{
-                                                        var MentorNames = ViewBag.TcNames as List<AttendancePosting>;
-                                                        var dropdownList = new SelectList(MentorNames, "UserId", "MentorName");
-                                                    }
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col" id="PostPeriodAttendanceMaindiv">
+                                <form class="form" id="myform">
+                                    <div class="row mb-3">
+                                        <label asp-for="Mentors" class="control-label col-sm-4 col-form-label text-end required space"> </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select asp-for="MentorUserid" id="Ddlfaculty" class="select2 form-select select2-hidden-accessible">
+                                                </select>
+                                                <span asp-validation-for="MentorUserid" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Periods" class="control-label col-sm-4 col-form-label text-end required space"> </label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select class="select2 form-select select2-hidden-accessible" id="Ddlperiods" asp-for="Periods">
+                                                    <option value="">---------Select---------</option>
 
-                                                    @Html.DropDownListFor(model => model.UserId, dropdownList, "---------Select---------", new { id = "Faculty_Id", @class = "form-select" })
-                                                </div>
+                                                </select>
+                                                <span asp-validation-for="Periods" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="Period" class="control-label col-sm-4 col-form-label text-end required space">Period </label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="Period">
-                                                        <option value="">---------Select---------</option>
-                                                       
-                                                    </select>
-                                                    <span asp-validation-for="Period" class="text-danger"></span>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3 Departmentclassdata" style="display:none;">
+                                        <label class="control-label col-sm-4 col-form-label text-end required space">Subject Name</label>
+                                        <div class="col-sm-4">
+                                            <label class="control-label col-sm-4 col-form-label" id="Subjectlbl"></label>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end"></label>
-                                            <div class="col-sm-4">
-                                                <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
-                                                <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show On Duty</label>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3 Departmentclassdata" style="display:none;">
+                                        <label class="control-label col-sm-4 col-form-label text-end required space">Department Name</label>
+                                        <div class="col-sm-4">
+                                            <label  class="control-label col-sm-10 col-form-label" id="Departmentlbl"></label>
                                         </div>
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
-                                            </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label class="control-label col-sm-4 col-form-label text-end"></label>
+                                        <div class="col-sm-4">
+                                            <input type="checkbox" class="form-check-input checkbox_animated" id="chk_seacrh_icon">
+                                            <label class="form-check-label " for="showallsubjects" id="chk_seacrh_icon">Show On Duty</label>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <div class="row justify-content text-center">
+                                        <div class="col-sm-12">
+                                            <button type="button" class="btn btn-success waves-effect waves-light" id="Searchbtn">Get Attendance Form</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -105,17 +106,28 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/Postperiodattendance.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
 
 <script>
-    $(document).ready(function () {
-        $("#Posting_Attendance_DateId").hide();
+    //$(document).ready(function () {
+    //    //$("#Posting_Attendance_DateId").hide();
 
-        $("#Post_Previous_Attendance_Link").click(function (e) {
-            e.preventDefault();
+    //    $("#Post_Previous_Attendance_Link").click(function (e) {
+    //        e.preventDefault();
 
 
-            $("#Posting_Attendance_DateId").toggle();
-        });
-    });
+    //        $("#Posting_Attendance_DateId").toggle();
+    //    });
+    //});
 
 </script>

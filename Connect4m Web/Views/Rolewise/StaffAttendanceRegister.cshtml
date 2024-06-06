@@ -198,7 +198,7 @@
                                                    x => x.PayrollSubCategory,
                                                     new SelectList(ViewBag.PayRollSubCategory, "Value", "Text"),
                                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_PayRollSubCategory", @style = "color:black;", @multiple = "multiple" })
-
+                                                        <span id="dropdown_staff_PayRollSubCategory_Clearselection" style="cursor: pointer; color: blue;"> Clear Selection</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -213,7 +213,7 @@
                                                    x => x.LMSCategory,
                                                     new SelectList(ViewBag.LMSCategory, "Value", "Text"),
                                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_LMSCategory", @style = "color:black;" })
-
+                                                     
                                                     </div>
                                                 </div>
 
@@ -224,7 +224,7 @@
                                                    x => x.LMSSubCategory,
                                                     new SelectList(ViewBag.LMSSubCategory, "Value", "Text"),
                                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_LMSSubCategory", @style = "color:black;", @multiple = "multiple" })
-
+                                                        <span id="dropdown_staff_LMSSubCategory_clearselection" style="cursor: pointer; color: blue;"> Clear Selection</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,8 +235,8 @@
                                                 <div class="col-sm-5">
                                                 </div>
 
-                                                <div class="col-sm-7">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                                <div class="col-sm-7">                                                
+                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="clearForm('Serach_Staffregister')" id="clearform">Clear</button>
                                                     <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblPGE">Search</button>
 
                                                 </div>

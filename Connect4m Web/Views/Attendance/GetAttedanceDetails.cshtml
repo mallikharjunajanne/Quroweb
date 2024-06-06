@@ -24,505 +24,500 @@
 else
 {
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+            }
 
-        /* The Modal (background) */
-        .modal {
-            display: none;
-            z-index: 1;
-            padding-top: 93px;
-            background-color: rgb(0,0,0,0);
-        }
+            /* The Modal (background) */
+            .modal {
+                display: none;
+                z-index: 1;
+                padding-top: 93px;
+                background-color: rgb(0,0,0,0);
+            }
 
-        /* Modal Content */
-        .modal-content {
-            background-color: pink;
-            border: 0px solid #888;
-            width: 26%;
-            margin-left: 38%;
-            font-weight: 800;
-            height: auto;
-        }
+            /* Modal Content */
+            .modal-content {
+                background-color: pink;
+                border: 0px solid #888;
+                width: 26%;
+                margin-left: 38%;
+                font-weight: 800;
+                height: auto;
+            }
 
-        /* The Close Button */
-        .close {
-            color: #AAABE7;
-            font-weight: bolder;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            text-align: right;
-            cursor: pointer;
-        }
+            /* The Close Button */
+            .close {
+                color: #AAABE7;
+                font-weight: bolder;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                text-align: right;
+                cursor: pointer;
+            }
 
-        .Dropdown {
-            border-right: #b4b4b4 1px solid;
-            border-top: #b4b4b4 1px solid;
-            font-weight: normal;
-            font-size: 10px;
-            border-left: #b4b4b4 1px solid;
-            color: #000000;
-            border-bottom: #b4b4b4 1px solid;
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-        }
+            .Dropdown {
+                border-right: #b4b4b4 1px solid;
+                border-top: #b4b4b4 1px solid;
+                font-weight: normal;
+                font-size: 10px;
+                border-left: #b4b4b4 1px solid;
+                color: #000000;
+                border-bottom: #b4b4b4 1px solid;
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+            }
 
-        .box {
-            width: 191px;
-            height: 26px;
-            font-size: 11px;
-            color: brown;
-            background-color: azure;
-            border-radius: 15px
-        }
+            .box {
+                width: 191px;
+                height: 26px;
+                font-size: 11px;
+                color: brown;
+                background-color: azure;
+                border-radius: 15px
+            }
 
-        .Box_Btn {
-            width: 89px;
-            height: 20px;
-            font-size: 10px;
-            color: brown;
-            background-color: aliceblue;
-            border-radius: 9px;
-        }
+            .Box_Btn {
+                width: 89px;
+                height: 20px;
+                font-size: 10px;
+                color: brown;
+                background-color: aliceblue;
+                border-radius: 9px;
+            }
 
-        .span_text {
-            font-size: 10pt;
-            font-weight: bold;
-            font-style: normal;
-        }
-    </style>
-</head>
-<body>
-    <div class="row mb-2">
-        <div class="col-md-12 col-lg-12 mb-3">
-            <div class="card">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">
-                        <span>
-                            NOTE
-                        </span>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;color:green;">
-                                        <li><b>Green Date--Indicates attendance already posted.</b></li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li><img src="~/Images_IMP/tick_16.png" /><b>--Indicates Send Sms is true.</b></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6">
-                                    <ul style="list-style-type: none; color:red;">
-                                        <li>
-                                            <b>Red Date--Indicates attendance not yet posted (if any withdrawal applied students are there in a class).</b>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li>
-                                            <img src="~/Images_IMP/cross.png" /><b>--Indicates Send Sms is false.</b>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li><img src="~/Images_IMP/AuditIcon.png" /><b>--Indicates Attendance modified.</b></li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li>
-                                            <img src="~/Images_IMP/exclaim.png" /><b>--Indicates Parent Data is not available.</b>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li><img src="~/Images_IMP/details_open.png" /><b>--To post Special Attendance click on this icon, a dropdown will display.</b></li>
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <ul style="list-style-type: none;">
-                                        <li>
-                                            <b style="color:red;">Red Color</b>--  <b>Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance.</b>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+            .span_text {
+                font-size: 10pt;
+                font-weight: bold;
+                font-style: normal;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <span>
+                                NOTE
+                            </span>
+                        </h5>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Stu_Checkboxid">
-            <label class="form-check-label " for="SmsToStudent" id="SMS_Stu_Checkboxid">Sms To Student</label>
-        </div>
-        <div class="col-sm-3">
-            <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Par_Checkboxid">
-            <label class="form-check-label " for="SmsToStudent" id="SMS_Par_Checkboxid">Sms To Parent</label>
-        </div>
-        <div class="col-sm-3">
-            <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Stu_Checkboxid">
-            <label class="form-check-label " for="SmsToStudent" id="Email_Stu_Checkboxid">Send Email To Students</label>
-        </div>
-        <div class="col-sm-3">
-            <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Par_Checkboxid">
-            <label class="form-check-label " for="SmsToStudent" id="Email_Par_Checkboxid">Send Email To Parents</label>
-        </div>
-        <div class="col-sm-3">
-            <input type="checkbox" class="form-check-input checkbox_animated" id="selectAll">
-            <label class="form-check-label " for="SmsToStudent" id="selectAll">Check All</label>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12 col-lg-12 mb-3">
-            <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">
-                        <span>
-                            YOUR SEARCH RESULTED <span class="AttendanceCount">@flattenedDetailsList.Count</span> RECORDS.
-                        </span>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="card-datatable text-nowrap">
-                        <div class="table-responsive">
-                            <div class="table-responsive text-nowrap" id="Printattendancereport">
-                                <div class="row mb-3">
-                                    <div class="row mb-3 col-sm-12 text-center">
-                                        <label class="control-label col-sm-6 col-form-label text-end space">  Department Class </label>
-                                        <div class="col-sm-4 text-center">
-                                            <label id="Selecteddepartmentclassnamesdiv" class="control-label col-sm-6 col-form-label">
-
-                                            </label>
-                                        </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;color:green;">
+                                            <li><b>Green Date--Indicates attendance already posted.</b></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li><img src="~/Images_IMP/tick_16.png" /><b>--Indicates Send Sms is true.</b></li>
+                                        </ul>
                                     </div>
                                 </div>
-
-                                <table class="table table-bordered" id="TableData">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>SNO</th>
-                                            <th>Name</th>
-                                            <th>Reg.No</th>
-                                            <th>Student Sms Status</th>
-                                            <th>Parent Sms Status</th>
-
-                                            @{
-
-                                            }
-                                            @if (ViewBag.DateList != null && ViewBag.DateList.Count > 0)
-                                            {
-
-                                                var datecount = 1;
-                                                bool allEmpty1 = Attendanceid1.All(string.IsNullOrEmpty);
-                                                bool allEmpty2 = Attendanceid2.All(string.IsNullOrEmpty);
-                                                bool allEmpty3 = Attendanceid3.All(string.IsNullOrEmpty);
-                                                bool allEmpty4 = Attendanceid4.All(string.IsNullOrEmpty);
-                                                bool allEmpty5 = Attendanceid5.All(string.IsNullOrEmpty);
-                                                bool allEmpty6 = Attendanceid6.All(string.IsNullOrEmpty);
-                                                bool allEmpty7 = Attendanceid7.All(string.IsNullOrEmpty);
-
-                                                foreach (var date in ViewBag.DateList)
-                                                {
-                                                    bool[] allEmptyArray = { allEmpty1, allEmpty2, allEmpty3, allEmpty4, allEmpty5, allEmpty6, allEmpty7 };
-                                                    var thclass = "thClass_" + datecount;
-                                                    bool colorRelated = allEmptyArray[datecount - 1]; // Subtract 1 because arrays are zero-indexed
-                                                    thclass = colorRelated ? "red" : "green";
-
-                                                    <th id="Attendancedate_@datecount" title="attendancedatechangecolorchange" style="color:@thclass">@date</th>
-                                                    //A_PostingDate_ @date.Replace("/", "")
-                                                    datecount++;
-
-                                                }
-                                            }
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{int index = 1; int i = 2; int m = 1; int j = 1; int l = 1;}
-
-                                        @*//Row value*@
-                                        @foreach (var item in flattenedDetailsList)
-                                        {
-                                            m = 1;
-                                            j = 1;
-                                            l = 1;
-
-                                            <tr id="trday_@index">
-
-                                                <td scope="row"> @index</td>
-                                                <td hidden>@item.Studentuserid</td>
-                                                <td hidden>@item.ParentPhNo</td>
-                                                @*<td style="color: @(item.LastDateofAttendance == "" ? "black" : "red"); font-weight: @(item.LastDateofAttendance == "" ? 200 : "normal");">@item.FirstName</td>*@
-
-                                                @if (item.LastDateofAttendance == "")
-                                                {
-                                                    <td style="color:black;font-weight:200;"> @item.FirstName</td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="color:red;">@item.FirstName</td>
-                                                }
-
-
-                                                <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
-                                                @if (item.StudentSMS == "True")
-                                                {
-                                                    <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
-                                                }
-                                                @if (item.ParentSMS == "True")
-                                                {
-                                                    <td style="text-align: center;">
-                                                        <img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" />
-                                                        <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align: center;" title="@item.ParentPhNo">
-                                                        <img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" />
-                                                        <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
-                                                    </td>
-                                                }
-                                                <td hidden id="Stu_Email">@item.StudEmail</td>
-                                                <td hidden id="Pa_Email">@item.ParentEmail</td>
-                                                <td hidden id="AttendanceId1_Color_Chainge">
-                                                    @for (l = 1; l <= ViewBag.DateList.Count; l++)
-                                                    {
-                                                        var AttendaceId = "AttendanceId" + l;
-                                                        <label id="Attendancecolorchange_@l">
-                                                            @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
-                                                        </label>
-                                                    }
-                                                </td>
-
-
-                                                @if (item.LastDateofAttendance == "")
-                                                {
-                                                    //COLUMN VALUE
-                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
-                                                    {
-
-                                                        string columnName = "column" + k;
-                                                        string tdcolums = "tdDay" + k;
-                                                        string checkboxdayid = "ckDay" + k;
-                                                        string ddDataattTypes = "ddDataattType" + k;
-                                                        var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
-                                                        var Commnetspropertyvalue = "SplAttenanceComments" + j;
-                                                        var AttendaceId = "AttendanceId" + k;
-                                                        var DisplayIcons = "DisplayIcon" + k;
-                                                        var DisplayIconsalue = item.GetType().GetProperty(DisplayIcons).GetValue(item, null);
-
-                                                        //string columnName = "column" + (i + 1);
-                                                        //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
-
-
-
-                                            <td align="center" id="tdDay_@k">
-                                                @if (columnValue != null && columnValue.ToString() == "1")
-                                                {
-
-                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
-                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
-                                                    <div class="eye-icon">
-                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
-                                                    </div>
-
-                                                    <div id="Divcontent" class="content" style="display:none">
-                                                        <div class="dropdown">
-                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))">
-                                                                <option value="">--Select--</option>
-
-                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                                {
-
-
-                                                                    //if (@items.Value == item.column+m.ToString())
-                                                                    var columnName1 = "column" + m;
-
-                                                                    if (items.Value == item.GetType().GetProperty(columnName1)?.GetValue(item, null)?.ToString())
-                                                                    {
-
-
-                                                                        <option value="@items.Value" selected>@items.Text</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@items.Value">@items.Text</option>
-                                                                    }
-                                                                    //m++;
-                                                                }
-                                                            </select>
-                                                        </div>
-                                                        <div id="CMT_BTN">
-
-                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
-
-                                                            <div id="popupid" class="popup arrow-top" style="display:none">
-                                                                <div class="popup-wrapper">
-                                                                    <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
-
-                                                                    <textarea id="commentTextArea" class="form-control" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
-                                                                    <span id="charCount"></span>
-
-                                                                    <button type="button" id="Btnsubmitcomments" class="">OK</button>
-                                                                </div>
-                                                            </div>
-                                                            @*<input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />*@
-                                                        </div>
-
-                                                    </div>
-
-                                                    @*if (DisplayIconsalue.ToString() == "1")
-                                                    {
-                                                        <span class="search-icon" style="display: none;" onclick="Showchangeactivity('IsPresent',AttendaceId,'tblAttendance');">🔍</span>
-                                                    }*@
-                                                    <label id="Attendancecolorchange_@k" hidden>
-                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" />
-                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
-                                                    <div class="eye-icon">
-                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
-                                                    </div>
-
-                                                    <div id="Divcontent" class="content" style="display:none">
-                                                        <div class="dropdown">
-                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))" class="">
-                                                                <option value="">--Select--</option>
-                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
-                                                                {
-                                                                    var columnNamesOfDdl = "column" + m;
-
-                                                                    if (items.Value == item.GetType().GetProperty(columnNamesOfDdl)?.GetValue(item, null)?.ToString())
-                                                                    {
-                                                                        <option value="@items.Value" selected>@items.Text</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@items.Value">@items.Text</option>
-                                                                    }
-
-                                                                }
-                                                            </select>
-                                                        </div>
-                                                        <div id="CMT_BTN">
-                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
-
-                                                        </div>
-                                                        <div id="popupid" class="popup arrow-top" style="display:none">
-                                                            <div class="popup-wrapper">
-                                                                <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
-                                                                <textarea id="commentTextArea" class="form-control" maxlength="500" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
-                                                                <span id="charCount"></span>
-                                                                <button type="button" id="Btnsubmitcomments">OK</button>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    if (DisplayIconsalue.ToString() == "1")
-                                                    {
-                                                        <span class="search-icon" id="Showchangactivity" style=" cursor: pointer;" onclick="Showchangeactivity('IsPresent', @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString(),'tblAttendance');">🔍</span>
-                                                    }
-                                                    <label id="Attendancecolorchange_@k" hidden>
-                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
-                                                    </label>
-                                                }
-                                            </td>
-
-                                                        m++;
-                                                        j++;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    @for (int k = 1; k <= ViewBag.DateList.Count; k++)
-                                                    {
-
-
-                                                        <td align="center" id="tdDay_@k">
-                                                            <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
-                                                            <input type="hidden" id="Lastdayofattendacetxtid_@k" value="@item.LastDateofAttendance" />
-
-                                                        </td>
-                                                    }
-                                                }
-
-
-                                            </tr>
-                                            index++;
-                                            i++;
-                                        }
-
-                                    </tbody>
-                                </table>
-                                <div id="AttendanceSignaturesdiv">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none; color:red;">
+                                            <li>
+                                                <b>Red Date--Indicates attendance not yet posted (if any withdrawal applied students are there in a class).</b>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li>
+                                                <img src="~/Images_IMP/cross.png" /><b>--Indicates Send Sms is false.</b>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content text-center">
-                        <div class="col-sm-12">
-                            <button class="btn btn-secondary waves-effect waves-light" type="submit">Preview</button>
-                            <button class="btn btn-success waves-effect waves-light" type="button" id="submitbtn" onclick="Attendanceposting();">Submit</button>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li><img src="~/Images_IMP/AuditIcon.png" /><b>--Indicates Attendance modified.</b></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li>
+                                                <img src="~/Images_IMP/exclaim.png" /><b>--Indicates Parent Data is not available.</b>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li><img src="~/Images_IMP/details_open.png" /><b>--To post Special Attendance click on this icon, a dropdown will display.</b></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul style="list-style-type: none;">
+                                            <li>
+                                                <b style="color:red;">Red Color</b>--  <b>Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance.</b>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div id="myModal">
-
-        <div id="CH-Comments" style=" text-align: center; position: absolute; top: 75%;">
-
+        <div class="row">
+            <div class="col-sm-3">
+                <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Stu_Checkboxid">
+                <label class="form-check-label " for="SmsToStudent" id="SMS_Stu_Checkboxid">Sms To Student</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="checkbox" class="form-check-input checkbox_animated" id="SMS_Par_Checkboxid">
+                <label class="form-check-label " for="SmsToStudent" id="SMS_Par_Checkboxid">Sms To Parent</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Stu_Checkboxid">
+                <label class="form-check-label " for="SmsToStudent" id="Email_Stu_Checkboxid">Send Email To Students</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="checkbox" class="form-check-input checkbox_animated" id="Email_Par_Checkboxid">
+                <label class="form-check-label " for="SmsToStudent" id="Email_Par_Checkboxid">Send Email To Parents</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="checkbox" class="form-check-input checkbox_animated" id="selectAll">
+                <label class="form-check-label " for="SmsToStudent" id="selectAll">Check All</label>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <span id="Errormessage" style="color: red; font-size: 14px;"></span>
-    </div>
-</body>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">YOUR SEARCH RESULTED  <span class="badge badge-center rounded-pill bg-primary bg-glows">@flattenedDetailsList.Count</span> RECORDS.</h5>
+                        @*AttendanceCount*@
+                    </div>
+                    <div class="card-body">
+                        <div class="card-datatable text-nowrap">
+                            <div class="table-responsive">
+                                <div class="table-responsive text-nowrap" id="Printattendancereport">
+                                    <div class="row mb-3">
+                                        <div class="row mb-3 col-sm-12 text-right">
+                                            <label class="control-label col-sm-6 col-form-label text-end space">  Department Class </label>
+                                            <div class="col-sm-4 text-right">
+                                                <label id="Selecteddepartmentclassnamesdiv" class="control-label col-sm-6 col-form-label">
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-bordered" id="TableData">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>SNO</th>
+                                                <th>Name</th>
+                                                <th>Reg.No</th>
+                                                <th>Student Sms Status</th>
+                                                <th>Parent Sms Status</th>
+
+                                                @{
+
+                                                }
+                                                @if (ViewBag.DateList != null && ViewBag.DateList.Count > 0)
+                                                {
+
+                                                    var datecount = 1;
+                                                    bool allEmpty1 = Attendanceid1.All(string.IsNullOrEmpty);
+                                                    bool allEmpty2 = Attendanceid2.All(string.IsNullOrEmpty);
+                                                    bool allEmpty3 = Attendanceid3.All(string.IsNullOrEmpty);
+                                                    bool allEmpty4 = Attendanceid4.All(string.IsNullOrEmpty);
+                                                    bool allEmpty5 = Attendanceid5.All(string.IsNullOrEmpty);
+                                                    bool allEmpty6 = Attendanceid6.All(string.IsNullOrEmpty);
+                                                    bool allEmpty7 = Attendanceid7.All(string.IsNullOrEmpty);
+
+                                                    foreach (var date in ViewBag.DateList)
+                                                    {
+                                                        bool[] allEmptyArray = { allEmpty1, allEmpty2, allEmpty3, allEmpty4, allEmpty5, allEmpty6, allEmpty7 };
+                                                        var thclass = "thClass_" + datecount;
+                                                        bool colorRelated = allEmptyArray[datecount - 1]; // Subtract 1 because arrays are zero-indexed
+                                                        thclass = colorRelated ? "red" : "green";
+
+                                                        <th id="Attendancedate_@datecount" title="attendancedatechangecolorchange" style="color:@thclass">@date</th>
+                                                        //A_PostingDate_ @date.Replace("/", "")
+                                                        datecount++;
+
+                                                    }
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int index = 1; int i = 2; int m = 1; int j = 1; int l = 1;}
+
+                                            @*//Row value*@
+                                            @foreach (var item in flattenedDetailsList)
+                                            {
+                                                m = 1;
+                                                j = 1;
+                                                l = 1;
+
+                                                <tr id="trday_@index">
+
+                                                    <td scope="row"> @index</td>
+                                                    <td hidden>@item.Studentuserid</td>
+                                                    <td hidden>@item.ParentPhNo</td>
+                                                    @*<td style="color: @(item.LastDateofAttendance == "" ? "black" : "red"); font-weight: @(item.LastDateofAttendance == "" ? 200 : "normal");">@item.FirstName</td>*@
+
+                                                    @if (item.LastDateofAttendance == "")
+                                                    {
+                                                        <td style="color:black;font-weight:200;"> @item.FirstName</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="color:red;">@item.FirstName</td>
+                                                    }
+
+
+                                                    <td align="center" width="32px">@*@item.AdmissionNumber*@    @item.InstanceUserCode</td>
+                                                    @if (item.StudentSMS == "True")
+                                                    {
+                                                        <td style="text-align: center;"><img src="~/Images_IMP/tick_16.png" alt="Trulli" width="26" height="28" style="width: 26px;height: 28px;" /></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;"><img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 26px;height: 28px;" /></td>
+                                                    }
+                                                    @if (item.ParentSMS == "True")
+                                                    {
+                                                        <td style="text-align: center;">
+                                                            <img src="~/Images_IMP/tick_16.png" alt="Trulli" width="50" height="33" style="width: 26px;height: 28px;" />
+                                                            <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center;" title="@item.ParentPhNo">
+                                                            <img src="~/Images_IMP/cross.png" width="50" height="33" style="width: 30px; height: 31px;" />
+                                                            <input type="hidden" value="@item.ParentId" name="@item.ParentName" id="Parentdetailstxt" />
+                                                        </td>
+                                                    }
+                                                    <td hidden id="Stu_Email">@item.StudEmail</td>
+                                                    <td hidden id="Pa_Email">@item.ParentEmail</td>
+                                                    <td hidden id="AttendanceId1_Color_Chainge">
+                                                        @for (l = 1; l <= ViewBag.DateList.Count; l++)
+                                                        {
+                                                            var AttendaceId = "AttendanceId" + l;
+                                                            <label id="Attendancecolorchange_@l">
+                                                                @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                            </label>
+                                                        }
+                                                    </td>
+
+
+                                                    @if (item.LastDateofAttendance == "")
+                                                    {
+                                                        //COLUMN VALUE
+                                                        @for (int k = 1; k <= ViewBag.DateList.Count; k++)
+                                                        {
+
+                                                            string columnName = "column" + k;
+                                                            string tdcolums = "tdDay" + k;
+                                                            string checkboxdayid = "ckDay" + k;
+                                                            string ddDataattTypes = "ddDataattType" + k;
+                                                            var columnValue = item.GetType().GetProperty(columnName).GetValue(item, null);
+                                                            var Commnetspropertyvalue = "SplAttenanceComments" + j;
+                                                            var AttendaceId = "AttendanceId" + k;
+                                                            var DisplayIcons = "DisplayIcon" + k;
+                                                            var DisplayIconsalue = item.GetType().GetProperty(DisplayIcons).GetValue(item, null);
+
+                                                            //string columnName = "column" + (i + 1);
+                                                            //var columnValue = item.GetType().GetProperty(columnName)?.GetValue(item, null);
+
+
+
+                                                            <td align="center" id="tdDay_@k">
+                                                                @if (columnValue != null && columnValue.ToString() == "1")
+                                                                {
+
+                                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" checked="checked" />
+                                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                                    <div class="eye-icon">
+                                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                                    </div>
+
+                                                                    <div id="Divcontent" class="content" style="display:none">
+                                                                        <div class="dropdown">
+                                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))">
+                                                                                <option value="">--Select--</option>
+
+                                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                                {
+
+
+                                                                                    //if (@items.Value == item.column+m.ToString())
+                                                                                    var columnName1 = "column" + m;
+
+                                                                                    if (items.Value == item.GetType().GetProperty(columnName1)?.GetValue(item, null)?.ToString())
+                                                                                    {
+
+
+                                                                                        <option value="@items.Value" selected>@items.Text</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option value="@items.Value">@items.Text</option>
+                                                                                    }
+                                                                                    //m++;
+                                                                                }
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="CMT_BTN">
+
+                                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                                            <div id="popupid" class="popup arrow-top" style="display:none">
+                                                                                <div class="popup-wrapper">
+                                                                                    <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
+
+                                                                                    <textarea id="commentTextArea" class="form-control" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                                    <span id="charCount"></span>
+
+                                                                                    <button type="button" id="Btnsubmitcomments" class="">OK</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            @*<input type="button" class="add-comments-btn  Box_Btn btn btn-primary waves-effect waves-light" value="Add comments" style="display: none;" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" />*@
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    @*if (DisplayIconsalue.ToString() == "1")
+                                                                        {
+                                                                            <span class="search-icon" style="display: none;" onclick="Showchangeactivity('IsPresent',AttendaceId,'tblAttendance');">🔍</span>
+                                                                        }*@
+                                                                    <label id="Attendancecolorchange_@k" hidden>
+                                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                                    </label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" />
+                                                                    <input type="hidden" id="Lastdayofattendacetxtid" value=" " />
+                                                                    <div class="eye-icon">
+                                                                        <img src="~/Images_IMP/details_open.png" id="Leave_Img_Comment" />
+                                                                    </div>
+
+                                                                    <div id="Divcontent" class="content" style="display:none">
+                                                                        <div class="dropdown">
+                                                                            <select id="ddDataattType" asp-items="@( new SelectList(""))" class="">
+                                                                                <option value="">--Select--</option>
+                                                                                @foreach (var items in ViewBag.AttendanceLeave_Types)
+                                                                                {
+                                                                                    var columnNamesOfDdl = "column" + m;
+
+                                                                                    if (items.Value == item.GetType().GetProperty(columnNamesOfDdl)?.GetValue(item, null)?.ToString())
+                                                                                    {
+                                                                                        <option value="@items.Value" selected>@items.Text</option>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <option value="@items.Value">@items.Text</option>
+                                                                                    }
+
+                                                                                }
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="CMT_BTN">
+                                                                            <button type="button" id="Btncomments" title="@item.FirstName" data-toggle="modal" data-target="#commentModal" style="text-decoration: underline;"></button>
+
+                                                                        </div>
+                                                                        <div id="popupid" class="popup arrow-top" style="display:none">
+                                                                            <div class="popup-wrapper">
+                                                                                <span id="Popuptextspanid" class="text-dark" style="text-wrap:initial;"></span>
+                                                                                <textarea id="commentTextArea" class="form-control" maxlength="500" required>@item.GetType().GetProperty(Commnetspropertyvalue)?.GetValue(item, null)?.ToString()</textarea>
+                                                                                <span id="charCount"></span>
+                                                                                <button type="button" id="Btnsubmitcomments">OK</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    if (DisplayIconsalue.ToString() == "1")
+                                                                    {
+                                                                        <span class="search-icon" id="Showchangactivity" style=" cursor: pointer;" onclick="Showchangeactivity('IsPresent', @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString(),'tblAttendance');">🔍</span>
+                                                                    }
+                                                                    <label id="Attendancecolorchange_@k" hidden>
+                                                                        @item.GetType().GetProperty(AttendaceId)?.GetValue(item, null)?.ToString()
+                                                                    </label>
+                                                                }
+                                                            </td>
+
+                                                            m++;
+                                                            j++;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @for (int k = 1; k <= ViewBag.DateList.Count; k++)
+                                                        {
+
+
+                                                            <td align="center" id="tdDay_@k">
+                                                                <input type="checkbox" class="checkbox" id="ckDay" title="@item.FirstName" name="@item.Studentuserid" disabled="disabled" />
+                                                                <input type="hidden" id="Lastdayofattendacetxtid_@k" value="@item.LastDateofAttendance" />
+
+                                                            </td>
+                                                        }
+                                                    }
+
+
+                                                </tr>
+                                                index++;
+                                                i++;
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                    <div id="AttendanceSignaturesdiv">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content text-center">
+                            <div class="col-sm-12">
+                                <button class="btn btn-secondary waves-effect waves-light" type="submit">Preview</button>
+                                <button class="btn btn-success waves-effect waves-light" type="button" id="submitbtn" onclick="Attendanceposting();">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal">
+
+            <div id="CH-Comments" style=" text-align: center; position: absolute; top: 75%;">
+
+            </div>
+        </div>
+
+        <div>
+            <span id="Errormessage" style="color: red; font-size: 14px;"></span>
+        </div>
+    </body>
 </html>
 
 
