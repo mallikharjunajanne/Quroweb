@@ -758,8 +758,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
         #endregion
 
         #region ADMISSION REPORT
-        public class Admissionreport:Insatnceids
-        {           
+        public class Admissionreport : Insatnceids
+        {
             public string Instancesnames { get; set; }
             //public string Registrationnumber { get; set; }
             public string InstanceUserCode { get; set; }
@@ -986,12 +986,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
         #endregion
 
         #region SEARCH FOR STUDENT ERESULTS
-        public class Studentresults:Commonproperties
+        public class Studentresults : Commonproperties
         {
             [Required(ErrorMessage = "Please Select Any One Exam.")]
-            public int Examid{ get; set; }
-            public string ExamName{ get; set; }
-            public int Displayorder{ get; set; }
+            public int Examid { get; set; }
+            public string ExamName { get; set; }
+            public int Displayorder { get; set; }
             public string Subject { get; set; }
             public string ConductedOn { get; set; }
             public string DeclaredOn { get; set; }
@@ -1001,7 +1001,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Status { get; set; }
             public string IncludeInTotal { get; set; }
             public string Year { get; set; }
-            public string CreatedDate { get; set; }           
+            public string CreatedDate { get; set; }
         }
         public class Ratingnames
         {
@@ -1013,5 +1013,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<Ratingnames> RatingNamesList { get; set; }
         }
         #endregion
+
+        #region MANAGE NOTICE
+
+        #endregion
+
+
+
     }
 }

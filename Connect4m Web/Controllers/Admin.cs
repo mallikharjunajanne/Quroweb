@@ -67,6 +67,69 @@ namespace Connect4m_Web.Controllers
             return xml;
         }
 
+        //NEW MANAGE NOTICES START HERE
+
+        #region MANAGE NOTICE HOME 
+
+        public IActionResult Managenotice()
+        {
+            return View();
+        }
+        public IActionResult BindInstanceCategoryddl()
+        {
+            List<Studentresults> items = new List<Studentresults>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Categoryddl?InstanceId=" + InstanceId + "&Userid=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<List<Studentresults>>(data);
+            }
+            return Json(items);
+        }
+        public IActionResult Managenoticetbl(string Subject, string StartDate, string ExpiryDate, int ENoticeTypeId, int IsSMSTemplate)
+        {
+            //obj.InstanceId = InstanceId;
+            //obj.CreatedBy = UserId;
+            //List<AdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<AdmissionProcesstbl, AdmissionProcesstbl>(obj, "/BindAdmissiontbl", client);
+            //return Json(list);
+
+
+
+
+            List<NoticeTypes> item = new List<NoticeTypes>();
+
+            string SMSTextInXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                  "<!DOCTYPE REQUESTCREDIT SYSTEM \"http://127.0.0.1/psms/dtd/requestcredit.dtd\">" +
+                  "<REQUESTCREDIT USERNAME=\"ADS\" PASSWORD=\"Prasad2$$9\">" +
+                  "</REQUESTCREDIT>";
+            string SMSFromText = "ADSTEK";
+            string Action = "credits";
+            int CreatedBy = UserId;
+            int GetAll = 0;
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_Noticestabledata?InstanceId=" + InstanceId + "&Subject=" + Subject + "&StartDate=" + StartDate + "&ExpiryDate=" + ExpiryDate + "&ENoticeTypeId=" + ENoticeTypeId + "&IsSMSTemplate=" + IsSMSTemplate + "&GetAll=" + GetAll + "&SMSTextInXML=" + SMSTextInXML + "&SMSFromText=" + SMSFromText + "&Action=" + Action + "&CreatedBy=" + CreatedBy).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                item = JsonConvert.DeserializeObject<List<NoticeTypes>>(data);
+            }
+
+            ViewBag.NoticeCount = item.Count();
+            return Json(item);
+
+            //return PartialView("_ManageNotices_TableData", item);
+        }
+
+
+        #endregion
+
+        //NEW MANAGE NOTICES END HERE
+
+
+
+
+
+
         #region Manage Notice 
 
         #region Home manage notice search screen
