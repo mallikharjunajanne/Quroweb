@@ -19,7 +19,9 @@
     }
 
     .Weekdays {
-        border-width: 2px;
+        border-width: 3px;
+        border-color: blanchedalmond;
+        border-style: ridge;
     }
 
     .BlurredDay {
@@ -34,6 +36,9 @@
 
     .OtherMonth {
         color: gray; /* Change color for the dates of the previous and next months */
+        border-width: 3px;
+        border-color: blanchedalmond;
+        border-style: ridge;
     }
 </style>
 <div class="row mb-3">
@@ -144,6 +149,10 @@
             //EVERY MONTH TODAY DATE BACKGROUND COLOR BLACK
             let isToday = i === today.getDate();
 
+            debugger;
+            ///
+            let isPastDate = date < today;
+            ///
             let eventExists = false;
             for (let j = 0; j < eventCalendar.length; j++) {
                 let eventDate = new Date(eventCalendar[j].eventdate);
@@ -155,7 +164,7 @@
                 }
             }
 
-            let cellStyle = 'width: 10%;color: silver;';
+            let cellStyle = 'width: 10%;';
             if (eventExists) {
                 cellClass += ' EventDateStyle';
                 cellStyle += 'background-color:lightgreen;color:black;height:20%;';
@@ -164,10 +173,14 @@
             if (isToday) {
                 cellStyle += 'width: 10%;background-color: #999999;';
             }
-         
-           
 
-            //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
+            ///
+            if (isPastDate) {
+                cellStyle += ' background-color: lightgray;'; // Change background color for past dates
+            }
+            ///
+
+           //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
             table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="${cellStyle}">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
             date.setDate(date.getDate() + 1);
 

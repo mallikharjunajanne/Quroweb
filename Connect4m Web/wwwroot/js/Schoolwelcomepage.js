@@ -388,7 +388,7 @@ function PostedQuestions() {
     var url = '/UserScreens/PostedQuestions';
     CallToAjax('GET', url,null,
         function (response) {
-            $('#Tenth_PartailConatiner').html(response);
+            //$('#Tenth_PartailConatiner').html(response);
         },
         function (status, error) {
             // Handle error if needed
@@ -416,10 +416,10 @@ function Timetablefun() {
     CallToAjax('GET', '/UserScreens/Timetablecriteria', null,
         function (response) {
             if (response != 0) {
-                $('#Seventh_PartailConatiner').html(response);
+                //$('#Seventh_PartailConatiner').html(response);
             } else {
                 var spanElement = $('<span>No Data Found</span>');
-                $('#Seventh_PartailConatiner').append(spanElement);
+                //$('#Seventh_PartailConatiner').append(spanElement);
             }
         },
         function (status, error) {
@@ -453,7 +453,7 @@ function Studentsunderwithdrawalfun() {
     CallToAjax('GET', '/UserScreens/Studentsunderwithdrawal', null,
         function (response) {
             if (response != 0) {
-                $('#Ninth_PartailConatiner').html(response);
+               $('#Ninth_PartailConatiner').html(response);
             } else {
                 var spanElement = $('<span>No Data Found</span>');
                 $('#Ninth_PartailConatiner').append(spanElement);

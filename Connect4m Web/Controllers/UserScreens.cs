@@ -271,7 +271,7 @@ namespace Connect4m_Web.Controllers
             }
             ViewBag.Instanceidbyusephotodoc = "Instanceid" + InstanceId;
             ViewBag.instanceid = InstanceId;
-            ViewBag.PhotoNameFullName = "/UserPhotos/" + InstanceId + "/" + item[0].Photo + "/" + item[0].Photo;
+            //ViewBag.PhotoNameFullName = "/UserPhotos/" + InstanceId + "/" + item[0].Photo + "/" + item[0].Photo;
             ViewBag.Usersbirthdays = item;
             return View();           
         }

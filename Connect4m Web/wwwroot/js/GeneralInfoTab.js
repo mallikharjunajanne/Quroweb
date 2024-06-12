@@ -189,6 +189,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
         debugger;
         var TCtakenCheckedValue = $("input[type='radio'][name='TcTaken']:checked").val();
         //var IsActiveCheckedValue = $("input[type='radio'][name='IsActive']:checked").val();
+        var ChkIsUserJoined = document.getElementById("ChkIsUserJoined");
         const radioButtons = document.querySelectorAll('input[name="IsActive"]');
         let IsActiveCheckedValue = '';
         radioButtons.forEach((radio) => {
