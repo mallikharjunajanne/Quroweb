@@ -25,8 +25,6 @@
 
     @*<script src="~/js/ManageStaffLeave.js"></script>*@
 
-
-
     @*<script src="~/js/PaginationToTables.js"></script>*@
 
     @*<script src="~/js/LeaveDelegation.js"></script>*@
@@ -52,7 +50,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE STAFF LEAVE</h4>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@MANAGE STAFF LEAVE</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
@@ -71,127 +69,112 @@
                             @*=====================================AddLeaveDelegationPage_Div Result page*@
 
                             <div class="card mb-4" id="SearchPage">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            USERS SEARCH
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                                    <span>
+                                        USERS SEARCH
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <form id="FmSearchUserPage_SearchDetails">
-                                        <div class="row">
-                                            <div class="col">
-                                                @*----------------------*@
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Employee ID</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control" id="TxtUserName_SearchUserPage" name="InstanceUserCode" placeholder="Employee ID" />
 
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Department</label>
-                                                    <div class="col-sm-4">
-                                                        <div class="position-relative">
-                                                            <select class="select2 form-select select2-hidden-accessible" id="DdlDepartment_SearchUserPage" name="InstanceClassificationId" asp-items="@(new SelectList(""))">
-                                                                <option>---------Select---------</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @*----------------------*@
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">First Name</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control" id="TxtFirstname_SearchUserPage" name="FirstName" placeholder="First Name" />
+                                        @*----------------------*@
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Employee ID</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="TxtUserName_SearchUserPage" name="InstanceUserCode" placeholder="Employee ID" />
 
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Last Name</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control" id="TxtLastname_SearchUserPage" name="LastName" placeholder="Last Name" />
-                                                    </div>
-                                                </div>
-                                                @*----------------------*@
-                                                <div class="mb-3 row">
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Email ID</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="email" class="form-control" id="TxtEmailId_SearchUserPage" name="PortalEmail" placeholder="Email ID" />
-                                                    </div>
-                                                    <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Mobile Phone</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control" name="Mobilephone" placeholder="Mobile phone" />
-                                                    </div>
-                                                </div>
-                                                @*----------------------*@
-                                            <div class="mb-3 row">
-                                                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">LMS Category</label>
-                                                <div class="col-sm-4">
-                                                    <select class="select2 form-select select2-hidden-accessible" id='DdlLmsCategory_SearchUserPage' name="LMSCategoryId" onchange="DdlLmsSubCategory_Calingfunction(this.id,'DdlSubDepartment_SearchUserPage')" asp-items="@(new SelectList(""))">
-                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-
-                                                        @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
-                                                        <option value=''>Select a department</option>
-
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Department</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select class="select2 form-select select2-hidden-accessible" id="DdlDepartment_SearchUserPage" name="InstanceClassificationId" asp-items="@(new SelectList(""))">
+                                                        <option>---------Select---------</option>
                                                     </select>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">First Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="TxtFirstname_SearchUserPage" name="FirstName" placeholder="First Name" />
 
-                                                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">LMS Sub Category</label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative">
-                                                        <select class="select2 form-select select2-hidden-accessible" id='DdlSubDepartment_SearchUserPage' name="LMSSubCategoryId" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Please select a section</option>
-                                                        </select>
-                                                    </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Last Name</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="TxtLastname_SearchUserPage" name="LastName" placeholder="Last Name" />
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Email ID</label>
+                                            <div class="col-sm-4">
+                                                <input type="email" class="form-control" id="TxtEmailId_SearchUserPage" name="PortalEmail" placeholder="Email ID" />
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Mobile Phone</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Mobilephone" placeholder="Mobile phone" />
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">LMS Category</label>
+                                            <div class="col-sm-4">
+                                                <select class="select2 form-select select2-hidden-accessible" id='DdlLmsCategory_SearchUserPage' name="LMSCategoryId" onchange="DdlLmsSubCategory_Calingfunction(this.id,'DdlSubDepartment_SearchUserPage')" asp-items="@(new SelectList(""))">
+                                                    @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-group input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+
+                                                    @*<select id='DdlDepartmentId' name="Departmentid" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" class="form-control input-air-primary form-select" style="width: 230px; color: black; font-size: inherit;" asp-items="@(new SelectList(""))">*@
+                                                    <option value=''>Select a department</option>
+
+                                                </select>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">LMS Sub Category</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative">
+                                                    <select class="select2 form-select select2-hidden-accessible" id='DdlSubDepartment_SearchUserPage' name="LMSSubCategoryId" asp-items="@(new SelectList(""))" disabled>
+                                                        <option value=''>Please select a section</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            @*----------------------*@
-
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-10">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValues('FmSearchUserPage_SearchDetails')" value="Clear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearch" onclick=" TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/_TblStaffUserList_ManageStaffLeave', 'TblStaffList_SearchedRecords', 'Counts', 'FmSearchUserPage_SearchDetails','_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div')" value="Search">Search</button>
-                                                </div>
-                                            </div>
-                                            @*--------------------------*@
-
-
                                         </div>
+                                        @*----------------------*@
+
+                                        <div class="text-center">
+
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValues('FmSearchUserPage_SearchDetails')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearch" onclick=" TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/_TblStaffUserList_ManageStaffLeave', 'TblStaffList_SearchedRecords', 'Counts', 'FmSearchUserPage_SearchDetails','_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div')" value="Search">Search</button>
                                         </div>
-                                
-                                </form>
-
-
-
-                            </div>
-                        </div>
-
-                            @*=====================================TblStaffUserList_ManageStaffLeave_SearchedRecords Result page*@
-                        <div class="card" id="_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div" style="display:none">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-                                    </h5>
+                                        @*--------------------------*@
+                                    </form>
                                 </div>
                             </div>
 
+                            @*=====================================TblStaffUserList_ManageStaffLeave_SearchedRecords Result page*@
+                        <div class="card" id="_TblStaffUserList_ManageStaffLeave_SearchedRecords_Div" style="display:none">
+                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                            </div>
+
                             <div class="table-responsive text-nowrap">
-                                    <table id="TblStaffList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
-                                        <thead class="table-dark">
-                                            <tr><th>S No</th>
-                                                <th>Name</th>
-                                                <th>Role</th>
-                                                <th>Department</th>
-                                                <th>Employee Id</th>
-                                                <th>Email</th>
-                                                <th>Date Of Joining</th>
-                                                <th>Mobile Phone</th>
-                                                <th>Apply Leave</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                             
+                                <table id="TblStaffList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>S No</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Department</th>
+                                            <th>Employee Id</th>
+                                            <th>Email</th>
+                                            <th>Date Of Joining</th>
+                                            <th>Mobile Phone</th>
+                                            <th>Apply Leave</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                         </div>

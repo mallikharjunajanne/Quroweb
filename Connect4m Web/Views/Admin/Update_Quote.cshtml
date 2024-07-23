@@ -4,20 +4,16 @@
     Layout = null;
 }
 
-
-
-
 <div class="col-md-12 col-lg-12 mb-3">
-    <span id="Errormsg" class="text-danger"></span>
+    <span id="Errormsg" class="text-validation"></span>
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                UPDATE QUOTE
-            </h5><small>* INDICATES REQUIRED FIELDS</small>
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+            <span class="text-header">UPDATE QUOTE</span>
+            <small class="text-header-small">* INDICATES REQUIRED FIELDS</small>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col">
+            @*<div class="row">*@
+                <div class="row col">
                     <form id="UpdateQuote" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row mb-3">
@@ -36,22 +32,15 @@
                                 <span class="text-danger" id="Error_Sp"></span>
                             </div>
                         </div>
-                        <div class="row justify-content text-center">
-                            <div class="col-sm-12">
-                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Dltbtn">Delete</button>
-                                <button type="button" class="btn btn-dark waves-effect waves-light" id="BackToSearchUbtn">BackToSearch</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Updatebtn">Update</button>
-                            </div>
+                        <div class="col-sm-12 text-center">
+                            @*<div class="col-sm-12">*@
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="Dltbtn">Delete</button>
+                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="BackToSearchUbtn">BackToSearch</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Updatebtn">Update</button>
+                            @*</div>*@
                         </div>
-
-                        @*<div class="form-group col-5" style="margin-left: 31px;">
-                                <input type="button" id="Dltbtn" name="Delete" value="Delete" class="btn btn-pill btn-outline-danger btn-air-danger">
-                                <input type="button" id="BackToSearchUbtn" name="BackToSearch" value="BackToSearch" class="btn btn-pill btn-outline-primary btn-aprimary">
-                                <input type="submit" id="Updatebtn" name="Update" value="Update" class="btn btn-pill btn-outline-success btn-air-success">
-                            </div>*@
-
                     </form>
-                </div>
+                @*</div>*@
             </div>
         </div>
     </div>
@@ -68,16 +57,3 @@
 }
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
 <script src="~/js/Managequote.js"></script>
-<script>
-
-    $(document).ready(function () {
-        @*debugger;
-        var originalstartDate = '@ViewBag.Items.DisplayDate_';
-        var startdateParts = originalstartDate.split(' ')[0].split('-');
-        var formattedstartDate = startdateParts[2] + '-' + startdateParts[1] + '-' + startdateParts[0];
-        document.getElementById("DisplayDate_txtid").value = formattedstartDate;
-        $('#Quote_txtid').val('@ViewBag.Items.Quote');
-        $('#QuoteId_txtid').val('@ViewBag.Items.QuoteId');*@
-    });
-
-</script>

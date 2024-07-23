@@ -1070,6 +1070,9 @@ function clearForm(formId) {
     var form = document.getElementById(formId);
     if (form) {
         form.reset(); // Reset the form elements
+        $('#sublocationdisplay').hide();
+        $('#instancesdisplay').hide();
+        $('#appendallfeesummary').empty();
         var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
         validationSpans.forEach(span => {
             span.textContent = ''; // Clear validation messages

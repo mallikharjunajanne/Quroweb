@@ -45,7 +45,8 @@ $("#Serach_MA").submit(function (event) {
             CommonAjaxFunction('GET', '/Rolewise/PostAttendanceSave', null, function (response) {
                 $("#GetMentorAttendenceAppend").html(response);
                 $("#Serach_MA #deletebutton #deleteinner").text("");
-                $("#Serach_MA #deletebutton #deleteinner").append('<input type="button" value="Delete" class="btn btn-pill btn-outline-danger btn-air-warning" id="deleteattendance" />');
+                $("#Serach_MA #deletebutton #deleteinner").append('<button type="button" class="btn btn-danger waves-effect waves-light" value="Delete" id="deleteattendance">Delete</button> ');
+                /*<input type="button" value="Delete" class="btn btn-pill btn-outline-danger btn-air-warning" id="deleteattendance" />*/
                 searchManageMentorAttendence(Attendanceformdate,startdate,enddate);
 
             }, function (status, error) {
@@ -98,21 +99,17 @@ function searchManageMentorAttendence(data, startdate, enddate) {
         if (response.length != 0) {
             $("#totalrecords_Tranctions_EAP").text(response.length);
             newTableMA = $("#tblMAsearchresults").DataTable({
-                dom: 'Bfrtip',
+                dom: '<"top"lf>t<"bottom"ip>',
                 buttons: [],
-
                 bProcessing: false,
                 bLengthChange: true,
                 bfilter: false,
                 bSort: true,
                 searching: false,
                 paging: false,
-                bPaginate: false,
-                /*  scrollX: true,*/
+                bPaginate: false,              
                 data: response,
                 columns: [
-
-
                     {
                         targets: 1, // Assuming this is the column index where you want to display numbering
                         render: function (data, type, row, meta) {
@@ -129,9 +126,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                             return row.firstname[0]
 
                         }
-                    },
-
-                    {
+                    },{
                         data: "InstanceUserId",
 
                         render: function (data, type, row, meta) {

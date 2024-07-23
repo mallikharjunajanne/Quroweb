@@ -57,7 +57,7 @@ function FN_ClearValuesInLeavecancelllation(Formid) {
     try {
         debugger;
        // document.getElementById(Formid).reset(); // Reset the form
-
+        var form = document.getElementById(Formid);
         // $('#' + ListBoxId).text('');
         $("#DdlEmployee").empty();
         $("#DdlEmployee").append("<option value=''>Please select Employee</option>")
@@ -69,6 +69,10 @@ function FN_ClearValuesInLeavecancelllation(Formid) {
 
         $('#DateErrormessage').text("");
         $('#DateErrormessage_1').text("");
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
         //$(error).find('.compare').removeClass('error2').text('');
 
     } catch (x) {
@@ -358,7 +362,8 @@ function EditLeavesCalingFunction(Userid, LeaveApplicationId, LeaveRequestStatus
         $(".ErrorMessageSpan").empty();
         // event.preventDefault();
         debugger;
-        var dept = $(this).closest('tr').find('td:eq(1)').text();
+        //var dept = $(this).closest('tr').find('td:eq(1)').text();
+        var dept = $(this).closest('tr').find('td:eq(2)').text();
 
          loaddingimg.css('display', 'block');
         $.ajax({
@@ -610,8 +615,10 @@ function _LeavesSearchPage_PagePartialViewFunction() {
 
                 $("#LeavesSearchPage_Div").html(data);
                 DepartmentsDropdown_Caliingfunction('DdlDepartment', '1', 'SelectName');
-                TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
+               // TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
+               //// TblDataTableWithColumns_CallingFunction(event, 'Stop', '/Attendance/_TblLeavesSearchedResultPage_LeaveCancellation', 'TblLeaveDeligationAuthorityList_SearchedRecords', 'Counts', 'FmLeavesSearchPage_SearchDetails','TblLeavesSearchedResultPage_Div');
                 //  _TblLeavesSearchedResultPage_PagePartialViewFunction(event, 'stop');
+                loaddingimg.css('display', 'None');
             },
             error: function () {
                 $("#Main_Span_Error").text("Something Error");

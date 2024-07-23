@@ -50,15 +50,16 @@ function CategorytypesNames() {
             if (RoleName == "ADMINISTRATOR") {
              
                 var AddingCategorytypeNames = [
-                    "BIRTHDAYS IN SCHOOL FOR THE DAY",
-                    "ABSENTEE STUDENTS FOR THE DAY",
-                    "COOL LINKS",
-                    "LEAVE STATUS",
-                    "TIME TABLE",
-                    "NEW ADMISSION(S)",
-                    "STUDENT(S) UNDER WITHDRAWAL PROCESS",
-                    "QUESTIONS POSTED TO ME",
-                    "CALENDAR"
+                    "Birthdays In School For The Day",
+                    "Absentee Students For The Day",
+                    "Cool Links",
+                    "Leave Status",
+                    "Time Table",
+                    "New Admission(s)",
+                    //"Student(s) Under Withdrawal Process",
+                    "Achievements",
+                    "Questions Posted To Me",
+                    "Calendar"
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -82,20 +83,22 @@ function CategorytypesNames() {
                 Timetablefun();
                 Newadmissiontblfun();
                 Studentsunderwithdrawalfun();
+                StudentthirdboxEnoticeboard();
 
             }
             else if (RoleName == "CLASS TEACHER") {
              
                 var AddingCategorytypeNames = [
-                    "BIRTHDAYS IN SCHOOL FOR THE DAY",
-                    "ABSENTEE STUDENTS FOR THE DAY",
-                    "COOL LINKS",
-                    "LEAVE STATUS",
-                    "TIME TABLE",
-                    "NEW ADMISSION(S)",
-                    "STUDENT(S) UNDER WITHDRAWAL PROCESS",
-                    "QUESTIONS POSTED TO ME",
-                    "CALENDAR"
+                    "Birthdays In School For The Day",
+                    "Absentee Students For The Day",
+                    "Cool Links",
+                    "Leave Status",
+                    "Time Table",
+                    "New Admission(s)",
+                    //"Student(s) Under Withdrawal Process",
+                    "Achievements",
+                    "Questions Posted To Me",
+                    "Calendar"
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -123,15 +126,16 @@ function CategorytypesNames() {
             else if (RoleName == "School Admin") {
              
                 var AddingCategorytypeNames = [
-                    "BIRTHDAYS IN SCHOOL FOR THE DAY",
-                    "ABSENTEE STUDENTS FOR THE DAY",
-                    "COOL LINKS",
-                    "LEAVE STATUS",
-                    "TIME TABLE",
-                    "NEW ADMISSION(S)",
-                    "STUDENT(S) UNDER WITHDRAWAL PROCESS",
-                    "QUESTIONS POSTED TO ME",
-                    "CALENDAR"
+                    "Birthdays In School For The Day",
+                    "Absentee Students For The Day",
+                    "Cool Links",
+                    "Leave Status",
+                    "Time Table",
+                    "New Admission(s)",
+                    //"Student(s) Under Withdrawal Process",
+                    "Achievements",
+                    "Questions Posted To Me",
+                    "Calendar"
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -160,8 +164,8 @@ function CategorytypesNames() {
                 debugger;
              
                 var AddingCategorytypeNames = [
-                    "BEST PERFORMERS",
-                    "COOL LINKS",
+                    "Best Performers",
+                    "Cool Links",
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -189,8 +193,8 @@ function CategorytypesNames() {
                 debugger;
              
                 var AddingCategorytypeNames = [
-                    "BEST PERFORMERS",
-                    "COOL LINKS",
+                    "Best Performers",
+                    "Cool Links",
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -216,15 +220,16 @@ function CategorytypesNames() {
             else {
              
                 var AddingCategorytypeNames = [
-                    "BIRTHDAYS IN SCHOOL FOR THE DAY",
-                    "ABSENTEE STUDENTS FOR THE DAY",
-                    "COOL LINKS",
-                    "LEAVE STATUS",
-                    "TIME TABLE",
-                    "NEW ADMISSION(S)",
-                    "STUDENT(S) UNDER WITHDRAWAL PROCESS",
-                    "QUESTIONS POSTED TO ME",
-                    "CALENDAR"
+                    "Birthdays In School For The Day",
+                    "Absentee Students For The Day",
+                    "Cool Links",
+                    "Leave Status",
+                    "Time Table",
+                    "New Admission(s)",
+                    //"Student(s) Under Withdrawal Process",
+                    "Achievements",
+                    "Questions Posted To Me",
+                    "Calendar"
                 ];
                 $('#SchoolwellcomepageFirstbtn').text(Categorytypes[0].categoryName).attr('title', Categorytypes[0].assetTypeId);
                 $('#SchoolwellcomepageSecoundbtn').text(AddingCategorytypeNames[0]);
@@ -275,25 +280,25 @@ function FirstboxFlashnews() {
     );
 }
 
-function ThirdboxEnoticeboard() {
-    var ENoticeType = $('#SchoolwellcomepageThirdbtn').text();
-    var IsGlobalNotice = $('#SchoolwellcomepageThirdbtn').attr('title');
+//function ThirdboxEnoticeboard() {
+//    var ENoticeType = $('#SchoolwellcomepageThirdbtn').text();
+//    var IsGlobalNotice = $('#SchoolwellcomepageThirdbtn').attr('title');
 
-    var dataToSend = {
-        ENoticeType: ENoticeType,
-        IsGlobalNotice: IsGlobalNotice
-    };    
-    var url = '/UserScreens/E_Noticeboard';
+//    var dataToSend = {
+//        ENoticeType: ENoticeType,
+//        IsGlobalNotice: IsGlobalNotice
+//    };    
+//    var url = '/UserScreens/E_Noticeboard';
 
-    CallToAjax('GET', url, dataToSend,
-        function (response) {
-            $('#Third_PartailConatiner').html(response);
-        },
-        function (status, error) {
-            // Handle error if needed
-        }
-    );
-}
+//    CallToAjax('GET', url, dataToSend,
+//        function (response) {
+//            $('#Third_PartailConatiner').html(response);
+//        },
+//        function (status, error) {
+//            // Handle error if needed
+//        }
+//    );
+//}
 
 /*===== ** COOL LINKS FUNCTION CODE START ** =====*/
 

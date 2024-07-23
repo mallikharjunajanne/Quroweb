@@ -8,145 +8,94 @@
         display: none
     }
 </style>
-
-<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Manage Category</h4>
-
-<div class="row mb-2">
+<div class="flex-grow-1 container-p-y container-xxl">
+    <h4 class="mb-3 text-center">@*<span class="text-muted fw-light"> Admin Module/</span>*@MANAGE CATEGORY</h4>
     <div class="col-md-12 col-lg-12 mb-3">
+        <div class="col-sm-12 text-end">
+            <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="addnewmanagecategorybtn">
+                Create New Category
+            </button>
+        </div>
+        <div id="appendsearchmanagecategory">
+            <div class="card mb-4">
+                @*<div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">
+                        <span id="AddNewText_Span_CreatePage">
+                            MANAGE CATEGORY
+                        </span>
+                    </h5>
+                </div>*@
+                @*<div class="demo-inline-spacing text-end">
 
-        <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span id="AddNewText_Span_CreatePage">
-                        MANAGE CATEGORY
-                    </span>
-                </h5>
-            </div>
-            <div class="demo-inline-spacing text-end">
-
-                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewmanagecategorybtn"> Create New Category</button>
-            </div>
-            <div id="appendsearchmanagecategory">
-                <h5><label>SEARCH CATEGORY</label></h5>
-
-                <div class="card-body mb-2">
-
-                    @*=============================  Form Start ================================*@
+                    <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewmanagecategorybtn"> Create New Category</button>
+                </div>*@
+                @*<div id="appendsearchmanagecategory">*@
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    SEARCH CATEGORY
+                </div>
+                <div class="card-body">
                     <form id="Serach_MC">
-                        <div>
-                            <div class="row">
-                                <div class="col">
-                                    @*=====================        TEXT BOX                 =================*@
+                        @*=====================        TEXT BOX                 =================*@
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="PayrollCategoryName"></label>
+                            <div class="col-sm-4">
+                                <input class="form-control" asp-for="PayrollCategoryName" id="PayrollCategoryName">
+                            </div>
+                        </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PayrollCategoryName"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <input class="form-control" asp-for="PayrollCategoryName" id="PayrollCategoryName">
+                        @*=====================        TEXT BOX                 =================*@
 
-                                        </div>
-                                        <div class="col-sm-3">
-                                        </div>
-                                    </div>
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="isLeaveApplicable"></label>
-                                        <div class="col-sm-4" style="display:flex">
-
-
-                                            <div class="form-check form-check-primary ">
-                                                <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="0" checked>
-                                                <label class="form-check-label">
-                                                    PayRoll
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="1">
-                                                <label class="form-check-label">
-                                                    Leave
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="2">
-                                                <label class="form-check-label">
-                                                    Both
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                        </div>
-
-                                    </div>
-
-                                    @*=====================         BUTTONS                =================*@
-
-                                    <div class="row justify-content">
-                                        <div class="col-sm-4">
-                                        </div>
-
-                                        <div class="col-sm-8">
-                                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_MC" onclick="nextpage('SearchSalaryAttributesForRoles',null)">Previous Page</button>
-
-
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" id="sub_tblMC">Search</button>
-
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_MC" onclick="nextpage('SearchManageSubCatogory',null)">Next Page</button>
-
-                                        </div>
-                                    </div>
-
+                        <div class="row mb-3">
+                            <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="isLeaveApplicable"></label>
+                            <div class="col-sm-4" style="display:flex">
+                                <div class="form-check form-check-primary col-4">
+                                    <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="0" checked>
+                                    <label class="form-check-label">PayRoll</label>
+                                </div>
+                                <div class="form-check form-check-primary col-4">
+                                    <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="1">
+                                    <label class="form-check-label">Leave</label>
+                                </div>
+                                <div class="form-check form-check-primary col-4">
+                                    <input asp-for="isLeaveApplicable" class="form-check-input" name="isLeaveApplicable" type="radio" value="2">
+                                    <label class="form-check-label">Both</label>
                                 </div>
                             </div>
                         </div>
+
+                        @*=====================         BUTTONS                =================*@
+
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_MC" onclick="nextpage('SearchSalaryAttributesForRoles',null)">Previous Page</button>
+                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblMC">Search</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="Nextpage_MC" onclick="nextpage('SearchManageSubCatogory',null)">Next Page</button>
+                        </div>
                     </form>
-                    @*=============================  Form End ================================*@
-
                 </div>
-
-                @*=============================  TABLE START ================================*@
-
-                <div class="card">
-
-                    <h6 class="card-title mb-0">
-                        <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MC" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-                    </h6>
-                    <div class="table-responsive text-nowrap">
-                        <table id="tblMCsearchresults" class="link table table-hover table-bordered ">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>
-                                        S.No
-                                    </th>
-                                    <th>
-                                        S.No
-                                    </th>
-                                    <th>
-                                        Category Name
-                                    </th>
-                                    <th>
-                                        Delete
-                                    </th>
-
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+            </div>
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MC" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).
                 </div>
-                @*=============================  TABLE END ================================*@
+                <div class="table-responsive text-nowrap">
+                    <table id="tblMCsearchresults" class="link table table-hover table-bordered ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th></th>
+                                <th>S.No</th>
+                                <th>Category Name</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
-            <div id="appendinsertmanagecategory">
-
-            </div>
-
         </div>
+        <div id="appendinsertmanagecategory" style="display:none;"></div>
     </div>
-
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

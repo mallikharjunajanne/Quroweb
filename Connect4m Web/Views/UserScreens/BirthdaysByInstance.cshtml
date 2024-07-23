@@ -10,13 +10,13 @@
         animation: scroll 8s linear infinite;
         transform-origin: bottom;
         list-style-type: none;
+        height: 150px;
     }
 
         .Scrolling li {
             padding-bottom: 10px;
             text-wrap: normal;
-            /*line-height: 24px;*/
-            line-height: 50px;
+           /* line-height: 24px;*/
             padding: 0px;
             list-style: decimal;
         }
@@ -38,8 +38,8 @@
     .scrolling-container {
         white-space: nowrap;
         overflow-x: auto;
-        width: 100%;
-        min-height: 240px;
+        width: 200%;
+        min-height: 300px;
         overflow-y: hidden;
     }
 </style>
@@ -53,18 +53,17 @@
             @foreach (var item in ViewBag.Usersbirthdays)
             {
                 var Photopath = "/UserPhotos/" + ViewBag.instanceid + "/" + item.UserId + "/" + item.Photo;
-                <li class="text-primary" style="list-style-type: none;">
-                    @*<img src="/Managenoticesdocs/@ViewBag.Instanceidbyusephotodoc/@item.Photo" alt="" id="ImgPhotoDisplay" height="80" width="80">*@
+                <li class="text-dark" style="list-style-type: none;">
                     <img src="@Photopath" alt="" id="ImgPhotoDisplay" height="80" width="80">
                     <span> @item.FirstName  <b>@item.Class</b></span>
                 </li>
             }
         }
         else
-        {
-            <span class="text-primary" style="color:black;">
-                No birthdays today.
-            </span>
+        { 
+                <span class="text-dark">
+                    No birthdays today.
+                </span>
         }
     </ul>
 </div>

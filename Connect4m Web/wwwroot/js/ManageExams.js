@@ -4,24 +4,28 @@ function EditValuesGettingFunction(examid) {
     debugger;
     // $("#loadingOverlay").show();
     //  var data = { Id: examid };
-    CreateNewExams();
+    //CreateNewExams();
+    EditNewExams();
     var url = "/Examination/TblExamListData?Id=" + examid;
     performCrudOperationCommonFunction("POST", url, null, function (responce) {
         debugger;
+       
+        var Acadamicyearid = responce[0].academicYearId;      
+        Acadamicyearddl(Acadamicyearid);
         $("#AddNewText_Span_CreatePage").text("UPDATE EXAM NAME");
-        $("#DdlAcademicYearCreatePage1").val(responce[0].academicYearId);
+        //s$("#DdlAcademicYearCreatePage1").val(responce[0].academicYearId);
         $("#TxtExamNameCreatePage1").val(responce[0].examName);
         $("#TxtDisplayorderCreatePage").val(responce[0].displayorder);
         $("#TxtExamidCreatePage").val(responce[0].id);
 
         $('input[name="ExamForAcademics"][value="' + responce[0].exaternalExam + '"]').prop("checked", true);
-        // $("#BtnSave").val("Update");
+       
         $("#BtnSave").attr("value", "Update");
         $("#BtnSave").text("Update");
         $("#BtnClear").prop("disabled", true);
         $('#BtnClear').hide();
         $('#Deletebtn').show();
-
+       
         //this delete button adding by arjun
         var examId = $("#TxtExamidCreatePage").val();
         var onclickFunction = "DeleteExamsById('" + examId + "')"; 
@@ -29,6 +33,49 @@ function EditValuesGettingFunction(examid) {
     });
     // $("#loadingOverlay").hide();
 }
+
+function Acadamicyearddl(Acadamicyearid) {
+    $.ajax({
+        url: '/Examination/GetAcademicyearsddl',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
+            debugger;
+            var dropdownSelector = '#DdlAcademicYearCreatePage1';
+            var dropdown = $(dropdownSelector);
+            var valueField = 'value';
+            var textField = 'text';
+            //dropdown.empty();
+            dropdown.append($('<option>', {
+                value: ' ',
+                text: '---Select---'
+            }));
+            $.each(response, function (index, item) {
+                //dropdown.append($('<option>', {
+                //    value: item[valueField],
+                //    text: item[textField]
+                //}));
+
+                var option = $('<option>', {
+                    value: item[valueField],
+                    text: item[textField]
+                });
+
+                if (item[valueField] == Acadamicyearid) {
+                    option.prop('selected', true); // Select the option if it matches
+                }
+
+                dropdown.append(option);
+
+            });
+        },
+        error: function (xhr, status, error) {
+
+            console.error('Error sending data:', error);
+        }
+    });
+}
+
 
 
 
@@ -73,14 +120,34 @@ function SaveExams(event, FormId) {
 //create new page function
 function CreateNewExams() {
     debugger;
+    
     performCrudOperationCommonFunction("POST", "/Examination/Create_Update_Pview_ManageExams", "FmExamsSearch", function (response) {
         debugger;
+        $('#DdlAcademicYearCreatePage1').empty();
+        Acadamicyearddl(null);
         $("#MainSearchPage").hide();
         $("#CreateNewExams").html(response);
+       
     }, function (error) {
         //console.error(error);
     });
 }
+
+function EditNewExams() {
+    debugger;
+
+    performCrudOperationCommonFunction("POST", "/Examination/Create_Update_Pview_ManageExams", "FmExamsSearch", function (response) {
+        debugger;
+        $('#DdlAcademicYearCreatePage1').empty();
+        //Acadamicyearddl(null);
+        $("#MainSearchPage").hide();
+        $("#CreateNewExams").html(response);
+
+    }, function (error) {
+        //console.error(error);
+    });
+}
+
 
 function BackTOSearhExams(event) {
     try {

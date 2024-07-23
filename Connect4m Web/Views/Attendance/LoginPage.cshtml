@@ -141,10 +141,7 @@
 
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
-                                <label class="form-label" for="password">Password</label>
-                                @*<a href="#">
-                                <small>Forgot Password?</small>
-                            </a>*@
+                                <label class="form-label" for="password">Password</label>                               
                             </div>
                             <div class="input-group input-group-merge">
                                 <input type="password"
@@ -154,6 +151,9 @@
                                        aria-describedby="password" />
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                                 <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="text-end">
+                                <i class="fa fa-question-circle"></i><a href="Attendance/ForgetPassword"><small>Forget Password </small></a>
                             </div>
                         </div>
                         <div class="mb-3">

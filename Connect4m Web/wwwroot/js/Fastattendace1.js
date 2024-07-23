@@ -223,8 +223,9 @@ $("#Fastattendanceform").on('submit', function () {
                 }
             );
         }
+        loaddingimg.css('display', 'none');
     }, 50);
-    loaddingimg.css('display', 'block');
+    loaddingimg.css('display', 'none');
 });
 
 

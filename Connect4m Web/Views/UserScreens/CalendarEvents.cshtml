@@ -104,8 +104,13 @@
         }
     }
 
-    function generateCalendar(month, year, eventCalendar) {
+    function isSameDate(date1, date2) {
+        return date1.getFullYear() === date2.getFullYear() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getDate() === date2.getDate();
+    }
 
+    function generateCalendar(month, year, eventCalendar) {
 
         var Selectedmonthtext = getMonthName(month);
         $('#SelectedMonthyearspid').text(Selectedmonthtext + '  ' + year);
@@ -131,28 +136,16 @@
         for (let i = 0; i < startingDay; i++) {
             table.append('<td class="OtherMonth"></td>');
         }
-
-        
-
         for (let i = 1; i <= daysInMonth; i++) {
             let cellClass = 'Weekdays';
             let eventtitle = '';
             let EventName = '';
             let currentDateFormatted = formatDate(date);
-            let today = new Date(); // Get today's date       
+            let today = new Date(); // Get today's date  
 
-     
-
-            //ONLY ONE MONTH  TODAY DATE BACKGROUND COLOR BLACK
-            //let isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && i === today.getDate();
-
-            //EVERY MONTH TODAY DATE BACKGROUND COLOR BLACK
             let isToday = i === today.getDate();
-
-            debugger;
-            ///
             let isPastDate = date < today;
-            ///
+            let isFutureDate = date > today; // Check if the date is in the future
             let eventExists = false;
             for (let j = 0; j < eventCalendar.length; j++) {
                 let eventDate = new Date(eventCalendar[j].eventdate);
@@ -163,27 +156,39 @@
                     break;
                 }
             }
-
-            let cellStyle = 'width: 10%;';
+          
+            /*debugger;*/
+            let cellStyle = 'width: 10%;';            
             if (eventExists) {
                 cellClass += ' EventDateStyle';
-                cellStyle += 'background-color:lightgreen;color:black;height:20%;';
-                EventName = eventtitle;
-            }
-            if (isToday) {
-                cellStyle += 'width: 10%;background-color: #999999;';
-            }
+                EventName = eventCalendar.find(event => formatDate(new Date(event.eventdate)) === currentDateFormatted)?.EventTitle || '';
 
-            ///
-            if (isPastDate) {
-                cellStyle += ' background-color: lightgray;'; // Change background color for past dates
+                if (isToday && EventName) {
+                    cellStyle += 'background-color: #FFA500; height: 19%;'; // Light orange for future event dates
+                }
+                else if (isFutureDate && EventName) {
+                    cellStyle += 'background-color: yellow; height: 19%;'; // Yellow for today's event date
+                }
+                else if (isPastDate && EventName) {
+                    cellStyle += 'background-color: #27AE60; height: 19%;'; // Green for past event dates
+                }
             }
-            ///
-
-           //table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="width: 10%;">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
+            else {
+                if (isToday && EventName) {
+                    cellStyle += 'background-color: #27AE60; height: 19%;'; // Green for past event dates
+                } else if (isFutureDate && EventName) {
+                    cellStyle += 'background-color: #FFA500; height: 19%;'; // Light orange for future dates
+                } else if (isPastDate && EventName) {
+                    cellStyle += 'background-color: yellow; height: 19%;'; // Yellow for today's event date
+                }
+                else {
+                    if ((isToday || isPastDate) && !EventName) {
+                        cellStyle += 'background-color: lightgray;'; // lightgray for today's event date
+                    }                  
+                }
+            }
             table.append(`<td class="${cellClass}" data-date="${currentDateFormatted}" style="${cellStyle}">${i}<br/><span style="font-size: 11px;">${EventName}</span></td>`);
             date.setDate(date.getDate() + 1);
-
             if (date.getDay() === 0 || i === daysInMonth) {
                 table.append('</tr><tr>');
             }
@@ -208,10 +213,8 @@
         });
     }
 
-
-
     $(document).ready(function () {
-        debugger;
+        /*debugger;*/
         let eventCalendar = @Html.Raw(eventCalendarJson);
         let currentMonth = new Date().getMonth() + 1;
         let currentYear = new Date().getFullYear();
@@ -226,8 +229,8 @@
         });
         // Color dates based on eventCalendar
         $('td.EventDateStyle').css({
-            'color': 'green',
-            'background-color': 'lightgreen',
+            //'color': 'green',
+            //'background-color': 'lightgreen',
             'width':'10%;',
             /*'border': '1px solid black'*/ // Add border style as an example
         });

@@ -68,8 +68,8 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Student Module /</span>LEAVE APPROVAL</h4>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Student Module /</span>*@LEAVE APPROVAL</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
@@ -92,12 +92,8 @@
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                         <div class="card mb-4">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        SEARCH STUDENTS
-                                    </span>
-                                </h5>
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">SEARCH STUDENTS</span>
                             </div>
                             <div class="card-body">
                                 @*<form id="ApproveReject_Form " class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">*@
@@ -140,8 +136,8 @@
 
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-8">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnClearSerach" onclick="FN_ClearValues()" value="Clear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApplied_SearchRecords','32','0','ctl00_ContentPlaceHolder1_lblNumRecords','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmApplied_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentLeaveApproval')" value="Search">Search</button>
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnClearSerach" onclick="FN_ClearValues()" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApplied_SearchRecords','32','0','ctl00_ContentPlaceHolder1_lblNumRecords','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmApplied_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentLeaveApproval')" value="Search">Search</button>
                                                 </div>
                                             </div>
                                             @*--------------------------*@
@@ -157,13 +153,13 @@
                         @*<a id="ExportExcelLink_ApproveReject" class="ExportExcelLink" onclick="ExportExcelLink('TblApplied_SearchRecords','StudentLeaveApproval')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
 
                         <div class="card" id="FmApplied_SearchRecords_Div" style="display:none">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
+                            <div class="card-header bg-danger text-white">
+                                @*<div class="head-label text-center">
+                                    <h5 class="card-title mb-0">*@
                                         @*<span id="ctl00_ContentPlaceHolder1_lblNumRecords">No Records</span>*@
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                    </h5>
-                                </div>
+                                        <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                    @*</h5>
+                                </div>*@
                             </div>
                             <div class="table-responsive text-nowrap">
                                 @*<form id="FmApplied_SearchRecords">*@
@@ -189,11 +185,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    </tbody>
-                                    @*<tfoot>
-                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblApplied_SearchRecords_pagination"></div></td></tr>
-
-                                        </tfoot>*@
+                                    </tbody>                          
                                 </table>
 
                                 @*</form>*@
@@ -212,50 +204,47 @@
                                             @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
                                         </div>
                                         <div class="card mb-3">
-                                            <h10 class="mb-2">PAST LEAVES DETAILS</h10>
-                                            <div class="card-header flex-column flex-md-row">
-                                                <div class="head-label">
-                                                    <h10 class="card-title mb-0">
-                                                        @*<span id="lblLeaveHistoryNumRecordsCounts"> No Data Found.</span>*@
-                                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="lblLeaveHistoryNumRecordsCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                                    </h10>
+                                            <h7 style="font-weight: bold;">PAST LEAVES DETAILS</h7>
+                                            <span id="LeavesNoRecordsdataid1"></span>
+                                            <div id="LeavesNoRecordsdata_divid1">
+                                                <div class="card-header bg-danger text-white">
+                                                    @*<span id="lblLeaveHistoryNumRecordsCounts"> No Data Found.</span>*@
+                                                    <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="lblLeaveHistoryNumRecordsCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                                                 </div>
-                                            </div>
-                                            <div class="table-responsive text-nowrap">
-                                                <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-responsive tableid">
-                                                    <thead class="table-dark">
-                                                        <tr>
-                                                            <th>Sl. No.</th>
-                                                            <th>From Date</th>
-                                                            <th>To Date</th>
-                                                            <th>Leave Type</th>
-                                                            <th>Approved / Rejected Remarks</th>
-                                                            <th>Leave Status</th>
-                                                            <th>View File</th>
-                                                            <th>Approved / Rejected Date</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblAppliedLeavesHistory_SearchRecords_pagination"></div></td></tr>
+                                                <div class="table-responsive text-nowrap">
+                                                    <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-responsive tableid">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th>Sl. No.</th>
+                                                                <th>From Date</th>
+                                                                <th>To Date</th>
+                                                                <th>Leave Type</th>
+                                                                <th>Approved / Rejected Remarks</th>
+                                                                <th>Leave Status</th>
+                                                                <th>View File</th>
+                                                                <th>Approved / Rejected Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblAppliedLeavesHistory_SearchRecords_pagination"></div></td></tr>
 
-                                                    </tfoot>
-                                                </table>
+                                                        </tfoot>
+                                                    </table>
 
+                                                </div>
                                             </div>
                                         </div>
 
                                         @*=============summery Table====================*@
-                                        <div class="card mb-4">
-                                            <h10 class="mb-2">LEAVES SUMMARY</h10>
-                                            <div class="card-header flex-column flex-md-row">
-                                                <div class="head-label">
-                                                    <h10 class="card-title mb-0">
-                                                        @*<span id="lblLeaveTypesSummaryNumRecordsCounts">  No Data Found.</span>*@
-                                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="lblLeaveTypesSummaryNumRecordsCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                                    </h10>
-                                                </div>
+                                    <div class="card mb-4">
+                                        <h7 style="font-weight: bold;">LEAVES SUMMARY</h7>
+                                        <span id="LeavesNoRecordsdataid2"></span>
+                                        <div id="LeavesNoRecordsdata_divid2">
+                                            <div class="card-header bg-danger text-white">
+                                                @*<span id="lblLeaveTypesSummaryNumRecordsCounts">  No Data Found.</span>*@
+                                                <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="lblLeaveTypesSummaryNumRecordsCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                                             </div>
                                             <div class="table-responsive text-nowrap" id="FmAppliedLeavesSummery_SearchRecordsForScrollid">
                                                 <table id="TblAppliedLeavesSummery_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
@@ -269,10 +258,9 @@
                                                     <tbody>
                                                     </tbody>
                                                 </table>
-
                                             </div>
-
                                         </div>
+                                    </div>
                                         @*=================================Form====================list box===========*@
                                         <form id="Fm_ApproveandReject_PopUp">
                                             <div class="row">
@@ -318,9 +306,9 @@
                                                     @*--------------------------*@
                                                     <div class="row justify-content-end">
                                                         <div class="col-sm-8">
-                                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnApprove" onclick="StudentLeaveApproval_Save(event, this.value)" value="Approve">Approve</button>
-                                                            <button type="button" class="btn btn-danger waves-effect waves-light" id="BtnReject" onclick="StudentLeaveApproval_Save(event, this.value)" value="Reject">Reject</button>
-                                                            <button type="button" class="btn btn-warning waves-effect waves-light" id="BtnCancel" onclick="ClosePopup()" value="Cancel">Cancel</button>
+                                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnApprove" onclick="StudentLeaveApproval_Save(event, this.value)" value="Approve">Approve</button>
+                                                            <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnReject" onclick="StudentLeaveApproval_Save(event, this.value)" value="Reject">Reject</button>
+                                                            <button type="button" class="btn btn-warning waves-effect waves-light btn-sm" id="BtnCancel" onclick="ClosePopup()" value="Cancel">Cancel</button>
                                                         </div>
                                                     </div>
                                                     @*--------------------------*@
@@ -342,12 +330,8 @@
                     @*----------tab 2--------------------div code start----*@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card mb-4">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        SEARCH FOR APPROVED LEAVES
-                                    </span>
-                                </h5>
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">SEARCH FOR APPROVED LEAVES</span>
                             </div>
                             <div class="card-body">
                                 <form id="Approved_Form">
@@ -373,7 +357,7 @@
                                                 </div>
                                                 <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Last Name</label>
                                                 <div class="col-sm-4 ">
-                                                    <input type="date" class="form-control" id="ctl00_ContentPlaceHolder1_txtlastname" placeholder="Last Name" />
+                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtlastname" placeholder="Last Name" />
                                                 </div>
                                             </div>
                                             @*--------------------------*@
@@ -387,8 +371,8 @@
                                             @*--------------------------*@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-8">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" value="Clear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearch" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApproved_SearchRecords','31','1','ctl00_ContentPlaceHolder1_lblApprovedNumRecords','ExportExcelLink_Approved','ctl00_ContentPlaceHolder1_txtStartDate','ctl00_ContentPlaceHolder1_txtEndDate','FmApproved_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentApprovedLeaves')" value="Search">Search</button>
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearch" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblApproved_SearchRecords','31','1','ctl00_ContentPlaceHolder1_lblApprovedNumRecords','ExportExcelLink_Approved','ctl00_ContentPlaceHolder1_txtStartDate','ctl00_ContentPlaceHolder1_txtEndDate','FmApproved_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo','StudentApprovedLeaves')" value="Search">Search</button>
                                                 </div>
                                             </div>
                                             @*--------------------------*@
@@ -403,13 +387,13 @@
                         @*<a id="ExportExcelLink_Approved" class="ExportExcelLink" onclick="ExportExcelLink('TblApproved_SearchRecords','StudentApprovedLeaves')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
 
                         <div class="card" id="FmApproved_SearchRecords_Div" style="display:none">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
+                            <div class="card-header bg-danger text-white">
+                                @*<div class="head-label text-center">
+                                    <h5 class="card-title mb-0">*@
                                         @*<span id="ctl00_ContentPlaceHolder1_lblApprovedNumRecords">No Records</span>*@
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblApprovedNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                    </h5>
-                                </div>
+                                        <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblApprovedNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                    @*</h5>
+                                </div>*@
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="TblApproved_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
@@ -447,12 +431,8 @@
 
 
                         <div class="card mb-4">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        SEARCH FOR REJECTED LEAVES
-                                    </span>
-                                </h5>
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">SEARCH FOR REJECTED LEAVES</span>
                             </div>
                             <div class="card-body">
                                 <form id="Rejected_Form">
@@ -478,7 +458,7 @@
                                                 </div>
                                                 <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Last Name</label>
                                                 <div class="col-sm-4 ">
-                                                    <input type="date" class="form-control" id="ctl00_ContentPlaceHolder1_txtLastNameReject" placeholder="Last Name" />
+                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtLastNameReject" placeholder="Last Name" />
                                                 </div>
                                             </div>
                                             @*--------------------------*@
@@ -492,8 +472,8 @@
                                             @*--------------------------*@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-8">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnRejectClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject')" value="Clear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnRejectSearch" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblRejected_SearchRecords','30','2','ctl00_ContentPlaceHolder1_lblRejectedNumRecords','ExportExcelLink_Rejected','ctl00_ContentPlaceHolder1_txtRejectFromDate','ctl00_ContentPlaceHolder1_txtRejectToDate','FmRejected_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject','StudentRejectedLeaves')" value="Search">Search</button>
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnRejectClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject')" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnRejectSearch" onclick="TblApplied_SearchRecords_Calingfunction(event,'1','TblRejected_SearchRecords','30','2','ctl00_ContentPlaceHolder1_lblRejectedNumRecords','ExportExcelLink_Rejected','ctl00_ContentPlaceHolder1_txtRejectFromDate','ctl00_ContentPlaceHolder1_txtRejectToDate','FmRejected_SearchRecords_Div','ctl00_ContentPlaceHolder1_txtFirstNameReject','ctl00_ContentPlaceHolder1_txtLastNameReject','ctl00_ContentPlaceHolder1_txtAdmNoReject','StudentRejectedLeaves')" value="Search">Search</button>
                                                 </div>
                                             </div>
                                             @*--------------------------*@
@@ -506,44 +486,40 @@
                         @*=====================searched result table=========================*@
                         @*<a id="ExportExcelLink_Rejected" class="ExportExcelLink" onclick="ExportExcelLink('TblRejected_SearchRecords','StudentRejectedLeaves')" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
 
-                        <div class="card" id="FmRejected_SearchRecords_Div" style="display:none">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
-                                        @*<span id="ctl00_ContentPlaceHolder1_lblRejectedNumRecords">No Records</span>*@
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblRejectedNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="table-responsive text-nowrap">
-                                <table id="TblRejected_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            @*<th>S No</th>*@
-                                            <th>Student Name</th>
-                                            <th>Admission Number</th>
-                                            <th>Class - Section</th>
-                                            <th>Leave Type</th>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>No. of Days</th>
-                                            <th>Comments</th>
-                                            <th>Applied By</th>
-                                            <th>Rejected Date</th>
-                                            <th>Rejected By</th>
-                                            <th>View File</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    @*<tfoot>
-                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblRejected_SearchRecords_pagination"></div></td></tr>
-                                        </tfoot>*@
-                                </table>
-
-
-                            </div>
+                    <div class="card" id="FmRejected_SearchRecords_Div" style="display:none">
+                        <div class="card-header bg-danger text-white">
+                            @*<span id="ctl00_ContentPlaceHolder1_lblRejectedNumRecords">No Records</span>*@
+                            <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="ctl00_ContentPlaceHolder1_lblRejectedNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
                         </div>
+                        <div class="table-responsive text-nowrap">
+                            <table id="TblRejected_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                <thead class="table-dark">
+                                    <tr>
+                                        @*<th>S No</th>*@
+                                        <th>Student Name</th>
+                                        <th>Admission Number</th>
+                                        <th>Class - Section</th>
+                                        <th>Leave Type</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th>No. of Days</th>
+                                        <th>Comments</th>
+                                        <th>Applied By</th>
+                                        <th>Rejected Date</th>
+                                        <th>Rejected By</th>
+                                        <th>View File</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                @*<tfoot>
+                    <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblRejected_SearchRecords_pagination"></div></td></tr>
+                </tfoot>*@
+                            </table>
+
+
+                        </div>
+                    </div>
 
 
 

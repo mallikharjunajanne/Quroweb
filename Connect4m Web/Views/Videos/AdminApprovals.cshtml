@@ -182,7 +182,7 @@
                         <label class="control-label  space">Comments</label>
                     </div>
                     <div class="form-group col-sm-4">
-                        <textarea></textarea>v
+                        <textarea></textarea>
                         @*<textarea class="form-control" rows="10" style="height:85px"></textarea>*@
                     </div>
                     <div class="col-sm-4"></div>
@@ -195,7 +195,7 @@
 
                         <div class="col-sm-6">
                       
-                            <button type="button" class="btn btn-success waves-effect waves-light" id="submitapprovals">Submit</button>
+                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="submitapprovals">Submit</button>
 
                         </div>
                     </div>
@@ -224,10 +224,8 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
-        
-
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>Expensive Admin Approvals</h4>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">/</span>*@Expensive Admin Approvals</h4>
 
         <!-- Examples -->
         <div class="row mb-2">
@@ -235,222 +233,215 @@
                 @*<span class="ErrorMessageSpan"></span>*@
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-header bg-danger text-white">
                         <div id="appendsearchexpansives">
-                            <h5 class="mb-0">
-                                <span id="AddNewText_Span_CreatePage">
-                                    SEARCH TYPE OF EXPENDITURE
-                                </span>
-                            </h5> @*<small class="text-muted float-end">Default label</small>*@
+                            <span id="AddNewText_Span_CreatePage">
+                                SEARCH TYPE OF EXPENDITURE
+                            </span>
+                            @*<small class="text-muted float-end">Default label</small>*@
                         </div>
-                        </div>
-                        <div class="card-body">
-                            @*=============================  Form Start ================================*@
-                            <form id="SerachSEM">
-                                <div>
-                                    <div class="row">
-                                        <div class="col">
+                    </div>
+                    <div class="card-body">
+                        @*=============================  Form Start ================================*@
+                        <form id="SerachSEM">
+                            <div>
+                                <div class="row">
+                                    <div class="col">
 
-                                            @*=====================         DROP DOWN               =================*@
+                                        @*=====================         DROP DOWN               =================*@
 
-                                            <div class="row mb-3">
+                                        <div class="row mb-3">
 
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="TypeofExpenditure"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.TypeofExpenditure,
-                                                    new SelectList(ViewBag.FoundSource, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_FoundSource_SEM", @style = "color:black;" })
-
-                                                    </div>
-                                                </div>
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PaymentMode"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.PaymentMode,
-                                                    new SelectList(ViewBag.PaymentMode, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_PaymentMode_SEM", @style = "color:black;" })
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*=====================         DROP DOWN               =================*@
-
-                                            <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="YearId"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.YearId,
-                                                    new SelectList(ViewBag.Years, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Yearid_SEM", @style = "color:black;" })
-
-                                                    </div>
-                                                </div>
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MonthId"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.MonthId,
-                                                    new SelectList(ViewBag.Months, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Monthid_SEM", @style = "color:black;" })
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*=====================         DROP DOWN               =================*@
-
-                                            <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Amount"></label>
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" asp-for="Amount" type="number" id="Amount_SEM">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Recipient"></label>
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" asp-for="Recipient" id="Recipient_SEM">
-                                                </div>
-
-
-                                            </div>
-                                            @*=====================         DROP DOWN               =================*@
-
-                                            <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="VendorCategory"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.VendorCategory,
-                                                    new SelectList(ViewBag.Vendorcategory, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Vendor_SEM", @style = "color:black;" })
-
-                                                    </div>
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PaymentDate"></label>
-                                                <div class="col-sm-4">
-                                                    <input class="form-control" asp-for="PaymentDate" id="Date_SEM">
-                                                </div>
-
-
-                                            </div>
-                                            @*=====================         DROP DOWN               =================*@
-
-                                            <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Approvals"></label>
-
-
-                                                <div class="col-sm-4" style="display:flex">
-
-                                                    <div class="form-check form-check-primary ">
-                                                        <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="1">
-                                                        <label class="form-check-label">
-                                                            Approve
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check form-check-primary ">
-                                                        <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="0">
-                                                        <label class="form-check-label">
-                                                            Reject
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check form-check-primary ">
-                                                        <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="undefined" checked>
-                                                        <label class="form-check-label">
-                                                            Both
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*=====================         BUTTONS                =================*@
-
-                                            <div class="row justify-content">
-                                                <div class="col-sm-5">
-                                                </div>
-
-                                                <div class="col-sm-7">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblSEM">Search</button>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="TypeofExpenditure"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+                                                    @Html.DropDownListFor(
+                                               x => x.TypeofExpenditure,
+                                                new SelectList(ViewBag.FoundSource, "Value", "Text"),
+                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_FoundSource_SEM", @style = "color:black;" })
 
                                                 </div>
                                             </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PaymentMode"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+                                                    @Html.DropDownListFor(
+                                               x => x.PaymentMode,
+                                                new SelectList(ViewBag.PaymentMode, "Value", "Text"),
+                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_PaymentMode_SEM", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*=====================         DROP DOWN               =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="YearId"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+                                                    @Html.DropDownListFor(
+                                               x => x.YearId,
+                                                new SelectList(ViewBag.Years, "Value", "Text"),
+                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Yearid_SEM", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MonthId"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+                                                    @Html.DropDownListFor(
+                                               x => x.MonthId,
+                                                new SelectList(ViewBag.Months, "Value", "Text"),
+                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Monthid_SEM", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*=====================         DROP DOWN               =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Amount"></label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" asp-for="Amount" type="number" id="Amount_SEM">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Recipient"></label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" asp-for="Recipient" id="Recipient_SEM">
+                                            </div>
+
 
                                         </div>
+                                        @*=====================         DROP DOWN               =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="VendorCategory"></label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="dropdown">
+                                                    @Html.DropDownListFor(
+                                               x => x.VendorCategory,
+                                                new SelectList(ViewBag.Vendorcategory, "Value", "Text"),
+                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Vendor_SEM", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="PaymentDate"></label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" asp-for="PaymentDate" id="Date_SEM">
+                                            </div>
+
+
+                                        </div>
+                                        @*=====================         DROP DOWN               =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Approvals"></label>
+
+
+                                            <div class="col-sm-4" style="display:flex">
+
+                                                <div class="form-check form-check-primary ">
+                                                    <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="1">
+                                                    <label class="form-check-label">
+                                                        Approve
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-primary ">
+                                                    <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="0">
+                                                    <label class="form-check-label">
+                                                        Reject
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-primary ">
+                                                    <input class="form-check-input" asp-for="Approvals" type="radio" name="Approvals" value="undefined" checked>
+                                                    <label class="form-check-label">
+                                                        Both
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*=====================         BUTTONS                =================*@
+
+                                        <div class="row justify-content">
+                                            <div class="col-sm-5">
+                                            </div>
+
+                                            <div class="col-sm-7">
+                                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblSEM">Search</button>
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
-                            </form>
-                            @*=============================  Form End ================================*@
-                        </div>
-
-                        @*=============================  TABLE START ================================*@
-
-                        <div class="card" id="dataforexpensivereport">
-                            <h6 class="card-title mb-0">
-                                <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_SEM" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-                            </h6>
-                            <div class="table-responsive text-nowrap">
-                                <table id="tblSEMsearchresults" class="table table-hover table-bordered ">
-                                    <thead class="table-dark">
-                                        <tr>
-
-
-                                            <th>
-                                                GovFundId
-                                            </th>
-                                            <th>
-                                                S.No
-                                            </th>
-                                            <th>
-                                                Type of Expenditure
-
-                                            </th>
-                                            <th>
-                                                Amount
-
-                                            </th>
-                                            <th>
-                                                Payment Mode
-
-                                            </th>
-                                            <th>
-                                                Description
-
-                                            </th>
-                                            <th>
-                                                Payment Date
-
-                                            </th>
-                                            <th>
-
-                                                Status
-                                            </th>
-                                            <th>
-
-                                                Credit/Debit
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                </table>
                             </div>
-                        </div>
 
+                        </form>
+                        @*=============================  Form End ================================*@
+                    </div>
+
+                    @*=============================  TABLE START ================================*@
+                </div>
+                <div class="card" id="dataforexpensivereport">
+                    <div class="card-header bg-danger text-white">
+                        <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_SEM" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table id="tblSEMsearchresults" class="table table-hover table-bordered ">
+                            <thead class="table-dark">
+                                <tr>
+
+
+                                    <th>
+                                        GovFundId
+                                    </th>
+                                    <th>
+                                        S.No
+                                    </th>
+                                    <th>
+                                        Type of Expenditure
+
+                                    </th>
+                                    <th>
+                                        Amount
+
+                                    </th>
+                                    <th>
+                                        Payment Mode
+
+                                    </th>
+                                    <th>
+                                        Description
+
+                                    </th>
+                                    <th>
+                                        Payment Date
+
+                                    </th>
+                                    <th>
+
+                                        Status
+                                    </th>
+                                    <th>
+
+                                        Credit/Debit
+                                    </th>
+
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    
-
-
-
+    </div>
 </body>
 </html>
 

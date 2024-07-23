@@ -1,18 +1,61 @@
 ﻿
 @{
     Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .Scrolling {
+        white-space: initial;
+        overflow: unset;
+        animation: scroll 8s linear infinite;
+        transform-origin: bottom;
+        list-style-type: none;
+        height: 150px;
+    }
 
-    
-        <ul style="margin: -19px 1px 42px;">
-            @foreach (var item in ViewBag.Enotice)
-            {
-            <li>
-                <span style="color: #151316; font-size: 12px; font-weight: bold; font-style: normal;" id="@item.ENoticeId" value="@item.DisplayOrder">@item.Subject</span> <br />
-                <span>@item.createddate</span>&nbsp;&nbsp;&nbsp;<br />
+        .Scrolling li {
+            padding-bottom: 10px;
+            text-wrap: normal;
+            line-height: 24px;
+            padding: 0px;
+            list-style: decimal;
+        }
+
+        .Scrolling:hover {
+            animation-play-state: paused;
+        }
+
+    @@keyframes scroll {
+        0% {
+            transform: translateY(100%); /* Start from below the element */
+        }
+
+        100% {
+            transform: translateY(-100%); /* Scroll text to the top */
+        }
+    }
+
+    .scrolling-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        width: 200%;
+        min-height: 250px;
+        overflow-y: hidden;
+    }
+</style>
+
+<div class="scrolling-container">
+    <ul class="Scrolling">
+        @foreach (var item in ViewBag.Enotice)
+        {
+            <li class="text-dark">
+                <span id="@item.ENoticeId" value="@item.DisplayOrder">@item.Subject</span> <br />
+                <span>@item.createddate</span><br />
             </li>
-            }
-        </ul>
+        }
+    </ul>
+</div>
+
 
 

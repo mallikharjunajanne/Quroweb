@@ -5,224 +5,128 @@
     ViewData["Title"] = "StaffMonthlyLeaveReport";
 
 }
-@*<link href="~/css/CommonStyle.css" rel="stylesheet" />
-    <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
-    <link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />*@
-<style>
-    #appendstaffsearchLeave {
-        display: none
-    }
-
-    /*.dataTable td:nth-child(2) {
-        color: black;*/
-    /*  text-decoration: underline;*/
-    /*font-weight: 600 !important;
-    }
-
-    .dataTable td:nth-child(1) {
-        text-align: center !important;
-    }
-
-
-    .dataTable td:nth-child(2):hover {
-        cursor: auto !important;
-        color: black;
-        font-weight: 600;
-        text-decoration: none;
-        background-color: antiquewhite;
-    }
-
-    .dataTables_wrapper table.dataTable tbody td {
-        text-align: center;
-    }
-
-    .table > thead {
-        background-color: black;
-        color: white;
-    }
-
-    .table > :not(:last-child) > :last-child > * {
-        color: white;
-        font-weight: 900;
-        padding: 5px;
-    }
-
-    .dataTables_wrapper table.dataTable tbody td :hover {
-        background-color: black !important;
-        color: white;
-        font-weight: 900
-    }
-
-    thead tr:hover {
-        background-color: black !important;
-    }*/
-
-    /*    #tblStaffattendancesearchresults tbody tr td:hover {
-        background-color: #040404;
-        color: white;
-    }
-
-    .dataTables_wrapper table.dataTable th {
-        padding: 0px;
-    }
-
-    table.dataTable thead th {
-        padding: 4px
-    }
-
-    thead {
-        height: 36px;
-    }
-
-    .container-fluid {
-        padding-left: 0px;
-        padding-right: 0px;
-    }*/
-</style>
 
 <!DOCTYPE html>
 <html>
 <head>
-
+    <style>
+        #appendstaffsearchLeave {
+            display: none
+        }
+    </style>
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>Staff Monthly Leave Report</h4>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Reports /</span>*@Staff Monthly Leave Report</h4>
 
         <!-- Examples -->
-        <div class="row mb-2">
-            <div class="col-md-12 col-lg-12 mb-3">
-                @*<span class="ErrorMessageSpan"></span>*@
-                @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+        <div class="row mb-1">
+            <div class="col-md-12 col-lg-12 mb-2">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
                             <span id="AddNewText_Span_CreatePage">
                                 SEARCH EMPLOYEE LEAVE DETAILS
                             </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                        @*<small class="text-muted float-end">Default label</small>*@
                     </div>
                     <div id="appendsearchmanageemployees">
                         <div class="card-body">
                             @*=============================  Form Start ================================*@
                             <form id="Serach_StaffLeaveReport" class="needs-validation was-validated" novalidate>
-                                <div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforSMLR" disabled hidden />
+                                <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforSMLR" disabled hidden />
 
-                                            @*=====================      =================*@
-                                            @*=====================         DROP DOWN               =================*@
+                                @*=====================      =================*@
+                                @*=====================         DROP DOWN               =================*@
 
-                                            <div class="row mb-3">
+                                <div class="row mb-3">
 
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.InstanceClassificationId,
-                                                    new SelectList(ViewBag.Department, "Value", "Text"),
-                                                    "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_instanceclassficationstaffLeave", @style = "color:black;", @required = "required" })
-                                                        <span asp-validation-for="InstanceClassificationId" class="invalid-feedback"></span>
-                                                    </div>
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="UserIdforEmployee"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.UserIdforEmployee,
-                                                    new SelectList(ViewBag.EmployeeNames, "Value", "Text"),
-                                                  "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_Userid", @style = "color:black;", @required = "required" })
-                                                        <span asp-validation-for="UserIdforEmployee" class="invalid-feedback"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*=====================      =================*@
-                                            @*=====================         DROP DOWN               =================*@
-
-                                            <div class="row mb-3">
-
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.Month,
-                                                    new SelectList(ViewBag.Months, "Value", "Text"),
-                                                 "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_Start_Month", @style = "color:black;", @required = "required" })
-                                                        <span asp-validation-for="Month" class="invalid-feedback"></span>
-                                                    </div>
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndMonth"></label>
-                                                <div class="col-sm-4">
-                                                    <div class="position-relative" id="dropdown">
-                                                        @Html.DropDownListFor(
-                                                   x => x.EndMonth,
-                                                    new SelectList(ViewBag.Months, "Value", "Text"),
-                                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_End_Month", @style = "color:black;", @required = "required" })
-                                                        <span asp-validation-for="EndMonth" class="invalid-feedback"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*=====================      =================*@
-                                            @*=====================    Radio Buttons ( Summary and Detail Summary)  =================*@
-
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ReportType"></label>
-
-
-                                                <div class="form-check form-check-primary col-sm-2">
-                                                    <input asp-for="ReportType" class="form-check-input" type="radio" name="ReportType" value="0" required checked>
-                                                    <label class="form-check-label">
-                                                        Employee Montly Leave Report
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-primary col-sm-2">
-                                                    <input class="form-check-input" asp-for="ReportType" type="radio" name="ReportType" value="1" required>
-                                                    <label class="form-check-label">
-                                                        Employee Weekly Leave Report
-                                                    </label>
-                                                    <span asp-validation-for="ReportType" class="text-danger"></span>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                </div>
-                                            </div>
-
-
-                                            @*=====================         BUTTONS                =================*@
-
-                                            <div class="row justify-content">
-                                                <div class="col-sm-5">
-                                                </div>
-
-                                                <div class="col-sm-7">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblSMLR">Search</button>
-
-                                                </div>
-                                            </div>
-
-
-
+                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
+                                    <div class="col-sm-4">
+                                        <div class="position-relative" id="dropdown">
+                                            @Html.DropDownListFor(
+                                       x => x.InstanceClassificationId,
+                                        new SelectList(ViewBag.Department, "Value", "Text"),
+                                        "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_instanceclassficationstaffLeave", @style = "color:black;", @required = "required" })
+                                            <span asp-validation-for="InstanceClassificationId" class="invalid-feedback"></span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="UserIdforEmployee"></label>
+                                    <div class="col-sm-4">
+                                        <div class="position-relative" id="dropdown">
+                                            @Html.DropDownListFor(
+                                       x => x.UserIdforEmployee,
+                                        new SelectList(ViewBag.EmployeeNames, "Value", "Text"),
+                                      "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_Userid", @style = "color:black;", @required = "required" })
+                                            <span asp-validation-for="UserIdforEmployee" class="invalid-feedback"></span>
                                         </div>
                                     </div>
                                 </div>
+                                @*=====================      =================*@
+                                @*=====================         DROP DOWN               =================*@
 
+                                <div class="row mb-3">
+
+                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
+                                    <div class="col-sm-4">
+                                        <div class="position-relative" id="dropdown">
+                                            @Html.DropDownListFor(
+                                       x => x.Month,
+                                        new SelectList(ViewBag.Months, "Value", "Text"),
+                                     "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_Start_Month", @style = "color:black;", @required = "required" })
+                                            <span asp-validation-for="Month" class="invalid-feedback"></span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndMonth"></label>
+                                    <div class="col-sm-4">
+                                        <div class="position-relative" id="dropdown">
+                                            @Html.DropDownListFor(
+                                       x => x.EndMonth,
+                                        new SelectList(ViewBag.Months, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_End_Month", @style = "color:black;", @required = "required" })
+                                            <span asp-validation-for="EndMonth" class="invalid-feedback"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*=====================      =================*@
+                                @*=====================    Radio Buttons ( Summary and Detail Summary)  =================*@
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="ReportType"></label>
+
+
+                                    <div class="form-check form-check-primary col-sm-4">
+                                        <input asp-for="ReportType" class="form-check-input" type="radio" name="ReportType" value="0" required checked>
+                                        <label class="form-check-label">
+                                            Employee Monthly Leave Report
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary col-sm-4">
+                                        <input class="form-check-input" asp-for="ReportType" type="radio" name="ReportType" value="1" required>
+                                        <label class="form-check-label">
+                                            Employee Weekly Leave Report
+                                        </label>
+                                        <span asp-validation-for="ReportType" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    </div>
+                                </div>
+
+                                @*=====================         BUTTONS                =================*@
+
+                                <div class="justify-content text-center">
+                                    <button type="button" class="btn btn-danger waves-effect waves-light" id="clearform" onclick="Clearfun('Serach_StaffLeaveReport')">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblSMLR">Search</button>
+                                </div>
                             </form>
                             @*=============================  Form End ================================*@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
-
-
         <div id="appendstaffsearchLeave"></div>
     </div>
 </body>

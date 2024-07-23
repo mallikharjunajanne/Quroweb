@@ -3,23 +3,19 @@
     ViewData["Title"] = "getAttendanceSummary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <!DOCTYPE html>
 <html>
 <head>
-
-
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>POST ATTENDANCE </h4>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-2 text-center"> ATTENDANCE DETAILS </h4>
+        <span class="text-danger" id="Commoneerrormessage"></span>
         <div class="row mb-2">
-            <div class="col-md-12 col-lg-12 mb-3">
+            <div class="col-md-12 col-lg-12 mb-2">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            SEARCH FOR STUDENTS
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        SEARCH FOR STUDENTS <small>* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -30,16 +26,18 @@
                                         <div class="col-sm-4">
                                             <div class="position-relative">
                                                 <select class="select2 form-select select2-hidden-accessible" id="DdAcademicYearid" asp-for="AcademicYear">
+                                                    <option value="">2020-2021</option>
+                                                    <option value="">2022-2023</option>
+                                                    <option value="">2024-2025</option>
                                                 </select>
                                                 <span asp-validation-for="AcademicYear" class="text-danger"></span>
-                                                @*@Html.DropDownListFor(Model => Model.SubjectName, new SelectList(string.Empty, "Value", "Text"), "--Select--", new { @class = "form-select Dropdown", @id = "SubjectName" })*@
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content text-center">
                                         <div class="col-sm-12">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('attendancesummaryform')" id="BtnClear">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Get Attendance Form</button>
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="CommonClearFunction('attendancesummaryform')" id="BtnClear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Searchbtn">Get Attendance Form</button>
                                         </div>
                                     </div>
                                 </form>
@@ -48,7 +46,195 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12 col-lg-12 mb-2" id="Printdiv1">
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="card col-sm-4">
+                        <div class="row">
+                            <div class="row mb-1">
+                                <label class="control-label col-sm-5 col-form-label text-end space">Department </label>
+                                <div class="col-sm-7 col-form-label  text-primary" id="Departmenttxt"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Class </label>
+                                <div class="col-sm-7 col-form-label  text-primary" id="Classtxt"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 text-end">
+                        <a href="javascript:void()" id="SummaryPrint" class="btn btn-label-linkedin waves-effect btn-sm">Print</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 mb-2" id="Printdiv2">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        ATTENDANCE SUMMARY
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover table-bordered no-footer" id="Summarydetailstbl">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Slot</th>
+                                    <th>Total Classes</th>
+                                    <th>Present</th>
+                                    <th>Absent</th>
+                                    <th>On Duty</th>
+                                    <th>Percentage</th>
+                                    <th>Required(%)</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 </html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function TblCallToAjax(method, url, data, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            // success: Datatablesbindingfun,
+            success: function (response) {
+                successCallback(response);
+            },
+            error: function (xhr, status, error) {
+                errorCallback(xhr.status, error);
+            }
+        });
+    }
+    $(document).ready(function () {
+        BindSummarydetailstblfun();
+        $('#Commoneerrormessage').text('');
+    });
+
+    $('#Searchbtn').click(function () {
+        BindSummarydetailstblfun();
+    });
+
+    function BindSummarydetailstblfun() {
+        debugger;
+        $('#Commoneerrormessage').text('');
+        loaddingimg.css('display', 'block');
+
+        var AcademicYearid=$('#DdAcademicYearid').val();
+        var formData = $('#attendancesummaryform').serialize();
+
+        TblCallToAjax('GET', '/Attendance/AttendanceSummarytbl?AcademicYear=' + AcademicYearid, formData,
+            function (response) {
+                if (response.length > 0) {
+                    Tabledatabindingfun(response);
+                } else {
+                    $('#Commoneerrormessage').text('Unfortunately, we couldn'+"'"+'t find any matching records.Please reach out to your school for further assistance.');
+                    loaddingimg.css('display', 'none');
+                }
+            },
+            function (status, error) {
+                $('#Commoneerrormessage').text('Something went wrong  in table data binding function...!!!!');
+                loaddingimg.css('display', 'none');
+            }
+        );
+    }
+    function Tabledatabindingfun(response) {
+        var table = $('#Summarydetailstbl').DataTable();
+        table.destroy();
+        var Department = response[0].classificationName;
+        var SubclassificationName = response[0].subclassificationName;
+        $('#Departmenttxt').text(Department);
+        $('#Classtxt').text(SubclassificationName);
+
+        var newTable = $("#Summarydetailstbl").DataTable({
+            dom: '<"top"lf>t<"bottom"ip>',
+            buttons: [],
+            bProcessing: false,
+            bLengthChange: false,
+            //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+            bfilter: true,
+            bSort: false,
+            searching: false,
+            //scrollX: true,
+            //scrollY: '400px',
+            //scrollCollapse: true,
+            paging: false,
+            bPaginate: false,
+            //stateSave:true,
+            data: response,
+            columns: [
+                {                  
+                    data: "Subjectslotname",
+                    render: function (data, type, row, meta) {
+                        return row.subjectslotname
+                    }
+                },
+                {
+                    data: "TotalClasses",
+                    render: function (data, type, row, meta) {
+                        return row.totalClasses
+                    }
+                },
+                {
+                    data: "TotalPresent",
+                    render: function (data, type, row, meta) {
+                        return row.totalPresent
+                    }
+                },
+                {
+                    data: "TotalAbsent",
+                    render: function (data, type, row, meta) {
+                        return row.totalAbsent
+                    }
+                },
+                {
+                    data: "OnDuty",
+                    render: function (data, type, row, meta) {
+                        return row.onDuty
+                    }
+                },
+                {
+                    data: "AttendancePercentage",
+                    render: function (data, type, row, meta) {
+                        //return row.attendancePercentage
+                        if (row.attendancePercentage > row.attendanceRequiredPercent) {
+                            return '<span class="text-success">' + row.attendancePercentage + '</span>';
+                        } else {
+                            return '<span class="text-danger">' + row.attendancePercentage + '</span>';
+                        }
+                    }
+                },
+                {
+                    data: "AttendanceRequiredPercent",
+                    render: function (data, type, row, meta) {
+                        return row.attendanceRequiredPercent
+                    }
+                }
+            ],
+        });
+        //newTable.$('tbody').addClass('bordered-table-body');
+        loaddingimg.css('display', 'none');
+    }
+    $('#SummaryPrint').on('click', function () {
+        var printContents =$('#Printdiv2').prop('outerHTML');
+        var departmentContent = $('#Departmenttxt').text();
+        var classContent = $('#Classtxt').text();
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head>');
+        printWindow.document.write('<title></title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('table { width: -webkit-fill-available; }');
+        printWindow.document.write('table, th, td { border: 1px solid black; border-collapse: collapse; }'); // Collapse borders
+        printWindow.document.write('.table-dark th { background-color: #343a40; color: #fff; }'); // Dark table header styles
+        printWindow.document.write('</style></head><body>');
+        printWindow.document.write('<div style="text-align:center;color:blue;font-weight:bold;">Department: ' + departmentContent + '</div>');
+        printWindow.document.write('<div style="text-align:center;color:blue;font-weight:bold;">Class: ' + classContent + '</div>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    });
+</script>

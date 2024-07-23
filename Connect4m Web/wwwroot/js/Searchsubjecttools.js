@@ -18,6 +18,25 @@ function searchsubjecttoos(SubjectToolName) {
 }
 
 
+//------------------------ Create New Subject tool function 
+$('#Subjecttoolcreatebtn').click(function () {
+    debugger;
+    $('#SUBJECTTOOLSAPPENDINGDIV').empty();
+
+    $.ajax({
+        url: "/Videos/Insertsubjecttool",
+        type: "GET",
+        //dataType: "JSON",
+        success: function (response) {
+            $('#SUBJECTOOLSMAINDIV').hide();
+            $('#SUBJECTTOOLSAPPENDINGDIV').append(response);
+            $('#InsertUpdate_Spantxt').text('SAVE SUBJECT TOOL DETAILS');
+            $('#sub_tblsubjecttools').text('Save').val('Create');
+         
+            loaddingimg.css('display', 'none');
+        },
+    });
+});
 
 
 //var length = 0;
@@ -110,8 +129,7 @@ $(document).on('click', "#mst_search", function () {
 
 $(document).on('click', "#mst_clear", function () {
     $("#subject_tool_name").val("");
-    
-
+    searchsubjecttoos(" ");
 })
 
 
@@ -171,8 +189,25 @@ $(document).on('click', '#tblsubjecttools tbody tr td', function (event) {
     var instanceSubjectToolId= $(id).find('input[type = "text"]').val();
   //  var id = $(this).find('').find('input[type="text"]').val();
  
-    if ($(this).find('.fa-trash-o').length==0) {
-        window.location.href = "/Videos/Insertsubjecttool?InstanceSubjectToolId=" + instanceSubjectToolId;
+    if ($(this).find('.fa-trash-o').length == 0) {
+        $('#SUBJECTTOOLSAPPENDINGDIV').empty();
+
+        $.ajax({
+            url: "/Videos/Insertsubjecttool?InstanceSubjectToolId=" + instanceSubjectToolId,
+            type: "GET",
+            //dataType: "JSON",
+            success: function (response) {
+                $('#SUBJECTOOLSMAINDIV').hide();
+                $('#SUBJECTTOOLSAPPENDINGDIV').append(response);
+                $('#InsertUpdate_Spantxt').text('UPDATE SUBJECT TOOL DETAILS');
+                $('#sub_tblsubjecttools').text('Update').val('Update');
+               
+                loaddingimg.css('display', 'none');
+            },
+        });
+
+
+        //window.location.href = "/Videos/Insertsubjecttool?InstanceSubjectToolId=" + instanceSubjectToolId;
        
     }
 

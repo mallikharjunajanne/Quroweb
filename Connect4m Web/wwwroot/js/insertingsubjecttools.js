@@ -92,10 +92,14 @@ $("#Insertsubjecttool").submit(function (event) {
 
 
 $(document).on('change', '#Insertsubjecttool textarea', function () {
+    debugger;
+    //var textarealength = $(this).val();
+    //alert(textarealength);
+    var maxLength = 250;
+    var currentLength = $(this).val().length;
+    var remainingLength = maxLength - currentLength;
 
-    var textarealength = $(this).val();
-    alert(textarealength);
-
-
-
+    if (remainingLength >= 0) {
+        $('#subtools_remaining_char').text('Remaining characters: ' + remainingLength);       
+    }   
 })

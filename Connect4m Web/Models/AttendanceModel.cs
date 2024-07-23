@@ -818,6 +818,9 @@ namespace Connect4m_Web.Models
         public string ChangePWOnLogin { get; set; }
 
         public int ParentFlag { get; set; }
+
+
+        public string Mobilenumber { get; set; }
     }
 
 

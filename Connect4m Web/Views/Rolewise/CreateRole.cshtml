@@ -20,17 +20,14 @@
 
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
-<div class="card" id="ForCreateRole">
-    <div class="row mb-2">
+    <div class="row mb-2" id="ForCreateRole">
         <div class="col-md-12 col-lg-12 mb-3">
 
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">
-                        <span>
-                            Save Role
-                        </span>
-                    </h5>
+                <div class="card-header d-flex align-items-center justify-content-between bg-danger text-white">
+                    <span>
+                        Save Role
+                    </span>
                 </div>
 
                 <div class="card-body mb-2">
@@ -52,7 +49,7 @@
                                             <span class="compare"></span>
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="button" id="Checkroleavailability" class="btn rounded-pill btn-outline-primary waves-effect" value="Check Availability" />
+                                            <input type="button" id="Checkroleavailability" class="btn btn-label-linkedin waves-effect btn-sm" value="Check Availability" />
                                         </div>
                                         <div class="col-sm-3">
                                         </div>
@@ -113,8 +110,8 @@
                                     <div class="row mb-3">
 
                                         <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="MenuItems"></label>
-                                        <div class="col-sm-10" style="border-top: 1px solid black; border-left: 1px solid black;" >
-                                            <div class="bg-info" style="color:white"> <label >Menu Name</label></div>
+                                        <div class="col-sm-10" style="border-top: 1px solid black; border-left: 1px solid black;">
+                                            <div class="bg-info" style="color:white"> <label>Menu Name</label></div>
                                             @foreach (var parent in item2)
                                             {
                                                 int count = 0;
@@ -197,7 +194,7 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <button type="button" class="btn btn-primary waves-effect waves-light" id="backtosearch_CR">Back To Search</button>
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light" id="clearform">Clear</button>
                                             <button type="submit" class="btn btn-success waves-effect waves-light" id="Save_CR">Save</button>
                                         </div>
                                     </div>
@@ -214,7 +211,7 @@
             </div>
         </div>
     </div>
-    </div>
+
    
     <div id="ForDisplayOrder" style="display:none">
 

@@ -222,113 +222,64 @@ function bindDatatable(response, submitButtonValue) {
 
 
     var newTable = $("#Searchpayfeeuserstbl").DataTable({
-        dom: 'Bfrtip',
+        dom: '<"tops"lf>t<"bottom"ip>',
         buttons: [],
-
         bProcessing: false,
-        bLengthChange: true,
+        bLengthChange: false,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
         /* scrollCollapse: true,*/
         paging: true,
-        bPaginate: true,
+        bPaginate: false,
         //  stateSave:true,
         data: response,
         columns: [
-
-            //{
-            //    data: "SNO",
-            //    //visible: false,
-
-            //    render: function (data, type, row, meta) {
-            //        //  length++;
-            //        return row.holidayId
-            //    }
-            //},
-            //{
-            //    targets: 0, // Assuming this is the column index where you want to display numbering
-            //    render: function (data, type, row, meta) {
-            //        var currentPage = table.page.info().page;
-            //        var rowsPerPage = table.page.info().length;
-            //        return (0 * rowsPerPage) + meta.row + 1;
-            //    }
-            //},
-
             {
                 data: "FirstName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.firstName
-
+                    return row.firstName;
                 }
             },
             {
                 data: "InstanceUserCode",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.instanceUserCode
-
+                    return row.instanceUserCode;
                 }
             },
             {
                 data: "RoleName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.roleName + '<input type="text" value=' + row.userId + ' hidden/>'
-
+                    return row.roleName + '<input type="text" value=' + row.userId + ' hidden/>';
                 }
             },
             {
                 data: "ClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.classificationName
-
+                    return row.classificationName;
                 }
-            }, {
+            },
+            {
                 data: "SubClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-                    return row.subClassificationName
+                    return row.subClassificationName;
                 }
-            }, {
+            },
+            {
                 data: "MobilePhone",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-                    return row.mobilePhone
+                   return row.mobilePhone
                 }
-            }, {
+            },
+            {
                 data: "PortalEmail",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.portalEmail
+                   return row.portalEmail
                 }
             }
-            //,{
-            //    data: "BankAccountId",
-
-            //    render: function (data, type, row, meta) {
-            //        // return row.holidayId
-            //        return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-            //        // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'  
-            //    }
-            //}
         ]
 
     });
@@ -336,12 +287,16 @@ function bindDatatable(response, submitButtonValue) {
     table.on('draw', function () {
         $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
             'text-decoration': 'underline',
-            'font-weight': 'bold'
-        });;
+            'font-weight': 'bold',
+            'cursor': 'pointer',
+            'color': 'blue'
+        });
     });
     $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
         'text-decoration': 'underline',
-        'font-weight': 'bold'
+        'font-weight': 'bold',
+        'cursor': 'pointer',
+        'color': 'blue'
     });;
 
     loaddingimg.css('display', 'none');
@@ -349,9 +304,11 @@ function bindDatatable(response, submitButtonValue) {
 $(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event) {
     event.stopImmediatePropagation();
 
+    debugger;
     loaddingimg.css('display', 'block');
 
     $('#Studentdetails_Spid').text('');
+    $('#SubmitvalidationMessage').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
 
     var parent = $(event.target).closest('tr');
@@ -425,7 +382,7 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
 //function Userfeedetailstblfunction(previousduestbl, feedetialsbyuseridtbl, totalpayedamounttbl, StudentName) { //=====>>>>Old code(11)
 function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
     try {
-        //debugger;
+        debugger;
         $('#Quantitydivid').hide();
         //$('#Feedetailsusernamespanid').text(StudentName);//=====>>>>Old code(11)
         var feedetailtbl = feedetialsbyuseridtbl;
@@ -627,12 +584,12 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
 
         $.each(feedetailtotalpayedamounttbl, function (index, UsersDueFeetblsfooter) {
             totalFee += parseFloat(UsersDueFeetblsfooter.totalFee);
-            totalDueAmount += parseFloat(UsersDueFeetblsfooter.totalDueAmount);
+            totalDueAmount += parseFloat(UsersDueFeetblsfooter.discountamount);
             totalAmountPayed += parseFloat(UsersDueFeetblsfooter.totalAmountPayed);
             payedamount += parseFloat(UsersDueFeetblsfooter.payedamount);
             dueAmount += parseFloat(UsersDueFeetblsfooter.dueAmount);
         });
-
+        debugger;
         // Update the table footer cells
         tfoot.append($('<tr></tr>')
             .append($('<td colspan="3"></td>').css('text-align', 'center').text('TOTAL'))
@@ -1205,9 +1162,15 @@ function Payinstallmentsubbtn(event) {
             //old code           
 
             var BalanceDue = cell8Text - textboxValues;
-            var PaidDueAmount = cell4Text - cell7Text;
+           // var PaidDueAmount = cell4Text - cell7Text;
             //var Totalfeeamounttominasediscountamount = cell4Value - cell6Value;
             //var Paidamountvaluetoduevalue = Totalfeeamounttominasediscountamount - cell7Value;
+            debugger;
+            let cell4Number = parseFloat(cell4Text); 
+           //let cell7Number = cell7Text ? parseFloat(cell7Text) : 0;
+            let cell7Number = isNaN(parseFloat(cell7Text)) ? 0 : parseFloat(cell7Text);
+            let PaidDueAmount = cell4Number - cell7Number;
+
 
             if (textboxValues !== "") {
                 var Inttextboxvalue = parseInt(textboxValues);
@@ -1290,7 +1253,7 @@ function Payinstallmentsubbtn(event) {
                         $('#Errormessage').text('Fee paid Successfully ');
                         $('#Studentdetailsid').text('');
 
-                        $('#btnsubmit').prop('disabled', true);
+                        //$('#btnsubmit').prop('disabled', true);
                         
                         $('#ddltermid').empty();
                         $('#ddlFeetermid').empty();

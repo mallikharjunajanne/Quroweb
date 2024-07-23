@@ -10,25 +10,16 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>MANAGE FEE CONCEDING(DISCOUNT) TYPES </h4>
-        <div class="row justify-content">
-            <span id="Commonerrormessage" class="text-danger"></span>
-            <div class="text-end">
-                <a href="javascript:void(0);" id="Addnewfeetypelinkbtn" onclick="lnkAddNew(event)">Create Fee Discount Type</a>
-            </div>
-            @*<div class="col-sm-12 text-end">
-                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light " onclick="Create_NewFeeDiscountType(event);">Create Fee Discount Type</button>
-            </div>*@
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-2 text-center">MANAGE FEE CONCEDING(DISCOUNT) TYPES </h4>
+        <span id="Commonerrormessage" class="text-danger"></span>
+        <div class="justify-content text-end">
+            <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" onclick="lnkAddNew(event)">Create Fee Discount Type</button>
         </div>
         <div class="row mb-2" id="SearchMaindiv">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            SEARCH FEE DISCOUNT TYPES
-                        </h5>
-                    </div>
+                    <div class="card-header bg-danger text-white">SEARCH FEE DISCOUNT TYPES</div>
                     <div class="card-body">
                         <div class="row col">
                             <form class="form theme-form" id="Searchfeedescounttypesform">
@@ -38,16 +29,10 @@
                                         <input type="text" asp-for="ConcedingTypeName" id="Concedingtypenametxt" class="form-control">
                                     </div>
                                 </div>
-                                <div class="row justify-content text-center">
-                                    <div class="col-sm-12">
-                                        <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
-                                        <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
-
-                                        @*<button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Searchfeedescounttypesform')" id="BtnClear">Clear</button>
-                                        <button type="button" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>*@
-                                    </div>
+                                <div class="justify-content text-center">
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
                                 </div>
                             </form>
                         </div>
@@ -56,32 +41,26 @@
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
-                            </span>
-                        </h5>
+                    <div class="card-header bg-danger text-white">
+                        YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
                     </div>
-                    <div class="card-body">
-                        <table class="table table-bordered" id="Discounttbl">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>S.NO</th>
-                                    <th>Fee Discount Type</th>
-                                    <th>Amount</th>
-                                    <th>Description</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table class="table table-bordered" id="Discounttbl">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>S.NO</th>
+                                <th>Fee Discount Type</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
         <div id="Addnew_div1">
 
-        </div>  
+        </div>
     </div>
 </body>
 </html>

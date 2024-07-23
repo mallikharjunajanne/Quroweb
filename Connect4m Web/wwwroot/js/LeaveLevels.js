@@ -224,7 +224,7 @@
 
                 $("#Counts").text("");
                 $("#Counts").text(response.length);
-
+                debugger;
                     var table = js('#LeaveLevels_SearchRecords_Table').DataTable();
                     var currentPage = table.page.info().page;
                     table.destroy();
@@ -258,7 +258,7 @@
                     //if (val == 12) {
                       
 
-                    var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4,5];
+                    var ExcelDownloadColumnsNo = [0, 1, 2, 3, 4, 5, /*6,*/ 7, 8];
                     TblDataTableWith_OutColumns_CallingFunction("LeaveLevels_SearchRecords_Table", response, response.length, currentPage, 'LeaveLevels', ExcelDownloadColumnsNo, '','LeaveLevels_SearchRecords_Table_Div');
                   //  }
 
@@ -397,7 +397,7 @@
             }
 
             GetUserName_BY_SelectRoleId(Approveruserid, 'Edit');
-            $("#SaveLeaveLevels_CreatePage_BTN").val("Update");
+            $("#SaveLeaveLevels_CreatePage_BTN").val("Update").text('Update');
          
             loaddingimg.css('display', 'none');
 
@@ -445,7 +445,7 @@ function LeaveTypeChange() {
             $("#CreateNewPage").show();
             if (Editval != "Edit") {
                 FN_ClearValues('clearbutton1_CreatePage', 'Form_CreatePage', 'AppliedEmployeesNames_Id_CreatePage');
-                $("#SaveLeaveLevels_CreatePage_BTN").val("Save");
+                $("#SaveLeaveLevels_CreatePage_BTN").val("Save").text('Save');
             }
             $("#SaveLeaveLevels_CreatePage_BTN").prop('disabled', false);
             loaddingimg.css('display', 'none');

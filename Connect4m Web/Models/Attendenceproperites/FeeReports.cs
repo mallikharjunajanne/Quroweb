@@ -122,9 +122,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
     {
         public string TermName { get; set; }
     }
-    public class Userwisepayment
+    public class Userwisepayment:Commonproperties
     {
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public string hallticket { get; set; }
         public int SubClassificationId { get; set; }
         public string FirstName { get; set; }
@@ -132,15 +132,12 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public List<ManageClassification> classificationlist { get; set; }
         public List<ManageSubClassification> subclassificationlist { get; set; }
         public List<Paymentmodedd> paymentmodeddlist { get; set; }
-
         public string Name { get; set; }
         public decimal StudentAmountSet { get; set; }
         public decimal StudentDiscountAmount { get; set; }
         public decimal StudentCollectedAmount { get; set; }
         public decimal StudentBalance { get; set; }
         public decimal totalAmountSet { get; set; }
-
-
         public int ROWIDCOL { get; set; }
         public int UserReceiptGenerationID { get; set; }
         public decimal Amount { get; set; }
@@ -149,6 +146,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string typename { get; set; }
         public decimal balance { get; set; }
         public string InvoiceNo { get; set; }
+
+        public string ChallanaIdsptxtid { get; set; }
+        public string Amounttxt { get; set; }
+        public string Paymentdatetxt { get; set; }
+        public string PaymentModedd { get; set; }
+        public string Transactiontxtid { get; set; }
+        public string Chequeddnotxt { get; set; }
+        public string finetxt { get; set; }
+        public string Challanid { get; set; }
+        public string Userreceiptgenerationidtxtid { get; set; }
+
     }
     public class Termwisechallandetails
     {
@@ -242,8 +250,22 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string Feetermids { get; set; }
         public int AcademicYearId { get; set; }
         public string TermName { get; set; }
-        public int StudentUserid { get; set; }
+        public string StudentUserid { get; set; }
         public string UserFeeId1 { get; set; }
+
+
+        //public List<string> FeeTermId { get; set; }
+        //public List<TermNames> termnames { get; set; }
+        //public int SubClassificationId { get; set; }
+        //public string Feetermids { get; set; }
+        //public int AcademicYearId { get; set; }
+        //public string TermName { get; set; }
+        //// public int StudentUserid { get; set; }
+        //public string UserFeeId1 { get; set; }
+
+
+
+
     }
     public class TermNames
     {
@@ -345,6 +367,17 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string Due { get; set; }
         public string DueDate { get; set; }
         public int Challanid { get; set; }
+        //public int Feetermid { get; set; }
+        public string Feetermid { get; set; }
+        public int Userfeeid { get; set; }
+        public string AdmissionNumber { get; set; }
+        public string InstanceName { get; set; }
+        public string ReceiptNo { get; set; }
+        public DateTime Paymentdate { get; set; }
+        public string Collectedby { get; set; }
+        public string PaymentMode { get; set; }
+        public string AccountNumber { get; set; }
+        public string Description { get; set; }
     }
     public class ViewChallanDetails:Commonproperties
     {

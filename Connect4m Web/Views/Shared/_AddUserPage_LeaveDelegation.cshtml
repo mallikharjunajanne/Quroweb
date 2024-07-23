@@ -5,94 +5,81 @@
 
 @*==========================  SEARCH USERS TO ADD AS LEAVE DELEGATION AUTHORITY Card====================*@
 <div class="card mb-4" id="SearchPage">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">
-            <span>
-                SEARCH USERS TO ADD AS LEAVE DELEGATION AUTHORITY
-            </span>
-        </h5>
+    <div class="card-header bg-danger text-white">
+        <span>
+            SEARCH USERS TO ADD AS LEAVE DELEGATION AUTHORITY
+        </span>
     </div>
     <div class="card-body">
         <form id="FmAddUserPage_SearchDetails">
-
-            <div class="row">
-                <div class="col">
-                    @*----------------------*@
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">User Name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="TxtUserName_AddUserPage" name="Username" placeholder="User name" />
-                        </div>
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Role</label>
-                        <div class="col-sm-4">
-                            <div class="position-relative">
-                                <select class="select2 form-select select2-hidden-accessible" id="DdlRole_AddUserPage" name="RoleId" onchange="GetApprovingAuthorityUserName_BY_SelectRoleId()" asp-items="@(new SelectList(""))">
-                                    <option>---------Select---------</option>
-                                </select>
-                            </div>
-                        </div>
+            @*----------------------*@
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">User Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="TxtUserName_AddUserPage" name="Username" placeholder="User name" />
+                </div>
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Role</label>
+                <div class="col-sm-4">
+                    <div class="position-relative">
+                        <select class="select2 form-select select2-hidden-accessible" id="DdlRole_AddUserPage" name="RoleId" onchange="GetApprovingAuthorityUserName_BY_SelectRoleId()" asp-items="@(new SelectList(""))">
+                            <option>---------Select---------</option>
+                        </select>
                     </div>
-                    @*----------------------*@
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Designation</label>
-                        <div class="col-sm-4">
-                            <div class="position-relative">
-                                <select class="select2 form-select select2-hidden-accessible" id="DdlDesignation_AddUserPage" name="DesignationId" asp-items="@(new SelectList(""))">
-                                    <option>---------Select---------</option>
-                                </select>
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Email ID</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="TxtEmailId_AddUserPage" name="PortalEmail" placeholder=" Email ID" />
-                        </div>
-                    </div>
-                    @*----------------------*@
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">First Name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="TxtFirstname_AddUserPage" name="FirstName" placeholder="First Name" />
-
-                        </div>
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Last Name</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="TxtLastname_AddUserPage" name="LastName" placeholder="Last Name" />
-                        </div>
-                    </div>
-                    @*----------------------*@
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Department</label>
-                        <div class="col-sm-4">
-                            <div class="position-relative">
-                                <select class="select2 form-select select2-hidden-accessible" id="DdlDepartment_AddUserPage" name="InstanceClassificationId" onchange="DdlClassId_Calingfunction(this.id,'DdlSubDepartment_AddUserPage')" asp-items="@(new SelectList(""))">
-                                    <option value=''>Select a department</option>
-                                </select>
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Sub Department</label>
-                        <div class="col-sm-4">
-                            <div class="position-relative">
-                                <select class="select2 form-select select2-hidden-accessible" id="DdlSubDepartment_AddUserPage" name="InstanceSubClassificationId" asp-items="@(new SelectList(""))" disabled>
-                                    <option value=''>Please select a section</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    @*----------------------*@
-                    <div class="row justify-content-end">
-                        <div class="col-sm-8">
-                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" value="Clear">Clear</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearch" onclick="_TblLeaveDelegationAuthorityList_LeaveDeligation(event)" value="Search">Search</button>
-                        </div>
-                    </div>
-                    @*--------------------------*@
-
                 </div>
             </div>
+            @*----------------------*@
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Designation</label>
+                <div class="col-sm-4">
+                    <div class="position-relative">
+                        <select class="select2 form-select select2-hidden-accessible" id="DdlDesignation_AddUserPage" name="DesignationId" asp-items="@(new SelectList(""))">
+                            <option>---------Select---------</option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Email ID</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="TxtEmailId_AddUserPage" name="PortalEmail" placeholder=" Email ID" />
+                </div>
+            </div>
+            @*----------------------*@
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">First Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="TxtFirstname_AddUserPage" name="FirstName" placeholder="First Name" />
+
+                </div>
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Last Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="TxtLastname_AddUserPage" name="LastName" placeholder="Last Name" />
+                </div>
+            </div>
+            @*----------------------*@
+            <div class="row mb-2">
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name">Department</label>
+                <div class="col-sm-4">
+                    <div class="position-relative">
+                        <select class="select2 form-select select2-hidden-accessible" id="DdlDepartment_AddUserPage" name="InstanceClassificationId" onchange="DdlClassId_Calingfunction(this.id,'DdlSubDepartment_AddUserPage')" asp-items="@(new SelectList(""))">
+                            <option value=''>Select a department</option>
+                        </select>
+                    </div>
+                </div>
+                <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"> Sub Department</label>
+                <div class="col-sm-4">
+                    <div class="position-relative">
+                        <select class="select2 form-select select2-hidden-accessible" id="DdlSubDepartment_AddUserPage" name="InstanceSubClassificationId" asp-items="@(new SelectList(""))" disabled>
+                            <option value=''>Please select a section</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            @*----------------------*@
+            <div class="text-center">
+                <button type="reset" class="btn btn-danger waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnApproveClear" onclick="FN_ClearValuesForAppliedleaves('ctl00_ContentPlaceHolder1_txtfirstname','ctl00_ContentPlaceHolder1_txtlastname','ctl00_ContentPlaceHolder1_txtAdmNo')" value="Clear">Clear</button>
+                <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearch" onclick="_TblLeaveDelegationAuthorityList_LeaveDeligation(event)" value="Search">Search</button>
+            </div>
+            @*--------------------------*@
         </form>
-
-
-
     </div>
 </div>
 

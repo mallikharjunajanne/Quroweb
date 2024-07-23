@@ -210,7 +210,7 @@ $('#Createnoticetypeform1').submit(function (event) {
         var validationMessages2 = $('.error2');
         var validationmelength = validationMessages.length;
         $('#Message_spid').text('');
-
+        
         if (validationmelength == 0 && validationMessages2.length == 0) {
             var formdata_ISN = new FormData($('#Createnoticetypeform1')[0]);
 

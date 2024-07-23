@@ -310,7 +310,7 @@ function EditValuesGettingFunction(DdlDepartmentid, DdlRoleId, DelegationFromUse
                 $("#TxtToDate").val(formattedTxtToDate);
                 $("#HdnLeaveDelegationId").val(DelegationId);
                 $("#BtnSaveId").val("Update").text('Update');
-                $("#BtnClearSearchForm").prop("disabled", true);
+                //$("#BtnClearSearchForm").prop("disabled", true);
 
                 loaddingimg.css('display', 'none');
 

@@ -209,10 +209,11 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
 
 
 $('#DepartmentSearchClearlink').on('click', function () {
-
+    debugger;
     $("#SelectAllDepartmentsChk").prop("checked", false);
     $('#DdlDepartment option').prop('selected', false);
-
+    $('#DdlClass').empty();
+    $('#Selectallsubclasschk').prop('checked', false);
 });
 
 $('#ClassSearchClearlink').on('click', function () {
@@ -602,3 +603,27 @@ $('#Reporttblexporttoexcel, #_AttendancereportExportExcel').on('click', function
     // Replace the original table with the cloned table in the document
     table1.parentNode.replaceChild(table1Clone, table1);     
 });
+
+
+function Clearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        $('#DdlClass').empty();        
+        $('#Selectallsubclasschk').prop('checked', false);
+        $('#Appendsclasswiseandstudentwiseattendancereportdiv').empty();
+
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

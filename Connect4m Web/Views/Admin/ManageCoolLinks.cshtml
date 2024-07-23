@@ -3,15 +3,12 @@
     //ViewData["Title"] = "ManageCoolLinks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-xxl ">
+    <div class="flex-grow-1 container-p-y container-xxl">
         <h4 class="mb-1 text-center">MANAGE COOL LINKS </h4>
         <div class="row mb-2">
             <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
@@ -28,19 +25,19 @@
                         </div>
                         <div class="card-body">
                             <form id="Coollinksearchform">
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label class="control-label col-sm-4 col-form-label text-end space">Cool Link Name</label>
                                     <div class="col-sm-4">
                                         <input type="text" asp-for="LinkName" id="LinkNameTXT" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label class="control-label col-sm-4 col-form-label text-end space">Cool Link URL</label>
                                     <div class="col-sm-4">
                                         <input type="text" asp-for="LinkURL" id="LinkURLTXT" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
                                     <div class="col-sm-4">
                                         <textarea class="form-control" asp-for="Description" id="DescriptionTXT"></textarea>
@@ -48,37 +45,32 @@
                                 </div>
                                 <div class="row justify-content text-center">
                                     <div class="col-sm-12">
-                                        <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="Clearcommonfunction('Coollinksearchform', null)" id="Clearcoollink_Btn">Clear</button>
+                                        <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="Clearcommonfunction('Coollinksearchform', 'UpdatevalidationMessage')" id="Clearcoollink_Btn">Clear</button>
                                         <button type="button" class="btn btn-success waves-effect waves-light" id="Searchcoollink_Btn">Search</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-12 mb-3">
                     <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                YOUR SEARCH RESULTED <span id="Recordscount" class="text-dark"></span> RECORDS.
-                            </h5>
+                        <div class="card-header bg-danger text-white">
+                            YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive text-nowrap">
-                                <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>SNO</th>
-                                            <th>Cool Link Name</th>
-                                            <th>Cool Link URL</th>
-                                            <th>Description</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
+                        <div class="table-responsive text-nowrap">
+                            <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>SNO</th>
+                                        <th>Cool Link Name</th>
+                                        <th>Cool Link URL</th>
+                                        <th>Description</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -120,7 +112,7 @@
                                         </div>
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Clear_savebtn">Clear</button>
+                                                <button type="reset" class="btn btn-danger waves-effect waves-light" id="Clear_savebtn">Clear</button>
                                                 <button type="button" class="btn btn-dark waves-effect waves-light" id="Backtoseach_savebtn">BackToSearch</button>
                                                 <button type="button" class="btn btn-success waves-effect waves-light" id="savecoollink_btn">Save</button>
                                             </div>
@@ -137,10 +129,8 @@
                     <span id="Updatevalidation2" class="text-danger"></span>
                     <span id="UpdateMessage" class="text-danger"></span>
                     <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                UPDATE COOL LINK
-                            </h5><small>* INDICATES MANDATORY FIELDS.</small>
+                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                            UPDATE COOL LINK <small>* INDICATES MANDATORY FIELDS.</small>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -170,7 +160,7 @@
                                         </div>
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
-                                                <button type="button" class="btn btn-warning waves-effect waves-light" id="Delete_Upbtn">Delete</button>
+                                                <button type="button" class="btn btn-danger waves-effect waves-light" id="Delete_Upbtn">Delete</button>
                                                 <button type="button" class="btn btn-dark waves-effect waves-light" id="Backtoseach_Upbtn">BackToSearch</button>
                                                 <button type="button" class="btn btn-success waves-effect waves-light" id="Updatecoollink_Btn">Update</button>
                                             </div>
@@ -186,13 +176,6 @@
     </div>
 </body>
 </html>
-
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/Coollinks.js"></script>
-
-
-
-
-

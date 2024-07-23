@@ -6,18 +6,10 @@
 
 @*=============================  TABLE START ================================*@
 
-<div class="card">
-
-    <div id="checksall">
-        <div class="card-header d-flex align-items-center justify-content-between" id="appendsearchsalaryattributeforroles">
-            <h6 class="mb-0">
-                <span>
-                    NOTE
-                </span>
-            </h6>
-        </div>
-
-        <div class="row mb-3">
+<div class="card mb-2">
+    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between" id="appendsearchsalaryattributeforroles">NOTE</div>
+    <div class="card-body">
+        <div class="row mb-1">
 
             <label class="col-sm-6 col-form-label" for="basic-default-name" style="color: green;">
                 Green Date--Indicates attendance already posted.
@@ -27,7 +19,7 @@
                 -- Indicates Send Sms is true.
             </label>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-1">
 
             <label class="col-sm-6 col-form-label" for="basic-default-name" style="color: red;">
                 Red Date--Indicates attendance not yet posted.
@@ -37,63 +29,54 @@
                 -- Indicates Send Sms is false.
             </label>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-1">
             <label class="col-sm-6 col-form-label" for="basic-default-name">
                 <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" />
                 --Indicates Attendance modified.
             </label>
         </div>
-        <div class="row mb-3">
-            <label class="col-sm-12 col-form-label errorofallemployeeattendence" for="basic-default-name" style="color:red">
 
-            </label>
-        </div>
-        <div style="background-color: antiquewhite ">
-            <div class="row mb-3">
-                <div class="col-sm-12">
-                    <input class="form-check-input" type="checkbox">
-                    <label class="col-form-label " for="basic-default-name">
-                        Send SMS
-                    </label>
-                </div>
-            </div>
-            <div class="row mb-3" >
-                <div class="col-sm-12">
-                    <input class="form-check-input" type="checkbox" id="_checkallattendance">
-                    <label class="col-form-label " for="basic-default-name">
-                        Check All
-                    </label>
-                </div>
-            </div>
-        </div>
-
-
-        <h6 class="card-title mb-0">
-            <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_MA" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-        </h6>
-        <div class="table-responsive text-nowrap" id="attendencetable">
-            <table id="tblMAsearchresults" class="table table-hover table-bordered" style="background-color: whitesmoke;">
-                <thead class="table-dark">
-
-                    <tr>
-                        <th>
-                            S.No
-                        </th>
-
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Registration No.
-                        </th>
-                        <th>
-                            Mentor Sms Status
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
     </div>
-    @*=============================  TABLE END ================================*@
 </div>
+<div id="checksall" class="col-sm-12">
+    <div class="col-sm-2">
+        <input class="form-check-input" type="checkbox">
+        <label class="col-form-label " for="basic-default-name">Send SMS</label>
+    </div>
+    <div class="col-sm-3">
+        <input class="form-check-input" type="checkbox" id="_checkallattendance">
+        <label class="col-form-label " for="basic-default-name">Check All</label>
+    </div>
+</div>
+
+<label class="col-sm-12 col-form-label errorofallemployeeattendence" for="basic-default-name" style="color:red"></label>
+<div class="card">
+    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_MA" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+    </div>
+    <div class="table-responsive text-nowrap" id="attendencetable">
+        <table id="tblMAsearchresults" class="table table-hover table-bordered" style="background-color: whitesmoke;">
+            <thead class="table-dark">
+
+                <tr>
+                    <th>
+                        S.No
+                    </th>
+
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Registration No.
+                    </th>
+                    <th>
+                        Mentor Sms Status
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@*=============================  TABLE END ================================*@
+
 

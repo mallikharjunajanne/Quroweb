@@ -124,12 +124,11 @@
         </div>
         <div class="col-md-12 col-lg-12 mb-3">
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h6 class="mb-0">YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.</h6>
+                <div class="card-header bg-danger text-white">
+                    YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.
                 </div>
-
-                <div class="row">
-                    <div class="row mb-2">
+                <div class="card-body">
+                    <div class="row mb-1">
                         <label class="col-sm-2 text-end form-label space">Enter Amount</label>
                         <div class="col-sm-2">
                             <input type="text" id="Sameamounttxt" class="Inputtext form-control" maxlength="8" />
@@ -145,27 +144,26 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
-                    <thead style="background-color:white;">
-                        <tr style=" background-color: #DDDEEE; text-align: center;">
-                            <th>S.No</th>
-                            <th data-sort-col="Name">Name</th>
-                            <th data-sort-col="RegNo"><b>Reg. No</b></th>
-                            <th class="hideable">Route Name</th>
-                            <th class="hideable">Stop Name</th>
-                            <th>Fee Amount</th>
-                            <th>Discount Type</th>
-                            <th>Discount Amount</th>
-                            <th>Comments</th>
-                        </tr>
-                    </thead>
-                    <tbody id="Usersdiscounttbl" style="background-color: whitesmoke;">
-                        @*Discount_Users_tbl*@
-                        @{
+                    <table class="Set_Fee_Users_Table table-responsive" style=" margin-top: 0px; margin-left: 3px; width: 99.5%;" id="FeeSet_Users_TableData">
+                        <thead style="background-color:white;">
+                            <tr style=" background-color: #DDDEEE; text-align: center;">
+                                <th>S.No</th>
+                                <th data-sort-col="Name">Name</th>
+                                <th data-sort-col="RegNo"><b>Reg. No</b></th>
+                                <th class="hideable">Route Name</th>
+                                <th class="hideable">Stop Name</th>
+                                <th>Fee Amount</th>
+                                <th>Discount Type</th>
+                                <th>Discount Amount</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Usersdiscounttbl" style="background-color: whitesmoke;">
+                            @*Discount_Users_tbl*@
+                            @{
                             int Sno = 1;
-                        }
-                        @foreach (var item in groupedUsers)
+                            }
+                            @foreach (var item in groupedUsers)
                         {
                             var DiscountUsers = item.First();
                             <tr>
@@ -197,26 +195,26 @@
 
                                 @if (!string.IsNullOrEmpty(DiscountUsers.RouteName))
                                 {
-                                    <td class="hideable">@DiscountUsers.RouteName</td>
+                                <td class="hideable">@DiscountUsers.RouteName</td>
                                 }
                                 else
                                 {
-                                    <td class="hideable" style="display: none;"></td>
+                                <td class="hideable" style="display: none;"></td>
                                 }
                                 @if (!string.IsNullOrEmpty(DiscountUsers.StopName))
                                 {
-                                    <td class="hideable">@DiscountUsers.StopName</td>
+                                <td class="hideable">@DiscountUsers.StopName</td>
                                 }
                                 else
                                 {
-                                    <td class="hideable" style="display: none;"></td>
+                                <td class="hideable" style="display: none;"></td>
                                 }
 
                                 <td align="center">
                                     <input type="text" id="UserFeeAmount_TxtId" value="@DiscountUsers.FeeAmount" class="Inputtext" />
                                     @if (DiscountUsers.DisplayIcon == "1")
                                     {
-                                        <span class="search-icon">🔍</span>
+                                    <span class="search-icon">🔍</span>
 
                                     }
                                 </td>
@@ -227,11 +225,11 @@
                                         {
                                             if (DisocuntDD.Value == DiscountUsers.ConcedingTypeId)
                                             {
-                                                <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
+                                        <option value="@DiscountUsers.ConcedingTypeId" selected>@DisocuntDD.Text</option>
                                             }
                                             else
                                             {
-                                                <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
+                                        <option value="@DisocuntDD.Value">@DisocuntDD.Text</option>
                                             }
 
                                         }
@@ -244,16 +242,16 @@
                             </tr>
                             Sno++;
                         }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td align="center" colspan="9">
-                                @*<button value="Submit" onclick="DiscountAmount_InsertBtn()" class="btn btn-success waves-effect waves-light">Submit</button>*@
-                                <button value="Submit" onclick="Discountfeedetailsinserting()" id="Dssavebtn" class="btn btn-success waves-effect waves-light">Submit</button>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td align="center" colspan="9">
+                                    <button value="Submit" onclick="Discountfeedetailsinserting()" id="Dssavebtn" class="btn btn-success waves-effect waves-light">Submit</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

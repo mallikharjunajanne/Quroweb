@@ -10,12 +10,13 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
         <div class="col-md-12 col-lg-12 mb-3">
             <span id="Errormessages" class="text-danger"></span>
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">SEARCH FOR RESULTS</h5><small>* INDICATES REQUIRED FIELDS</small>
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    <span class="text-header">  SEARCH FOR RESULTS</span>
+                    <small class="text-header-small">* INDICATES REQUIRED FIELDS</small>
                 </div>
                 <div class="card-body">
                     <div class="row col">
@@ -30,8 +31,8 @@
                             </div>
                             <div class="row justify-content text-center">
                                 <div class="col-sm-12">
-                                    <button type="button" onclick="Clearfun('#Searchform');" class="btn btn-warning waves-effect waves-light" id="Clearbtn">Clear</button>
-                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="Searchbtn">Search</button>
+                                    <button type="button" onclick="Clearfun('#Searchform');" class="btn btn-danger waves-effect waves-light btn-sm" id="Clearbtn">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Searchbtn">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -40,13 +41,14 @@
             </div>
         </div>
         <div class="col-md-12 col-lg-12 mb-3" id="Divcontainer1" style="display:none;">
-            <span class="text-danger">NOTE: * Indicates Subject Marks not included in Total</span>
+            <span class="text-danger text-validation"><b>NOTE :</b> * Indicates Subject Marks not included in Total</span>
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">
+                <div class="card-header bg-danger text-white">
+                    <span class="text-header">
                         YOUR SEARCH RESULTED
-                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> </span> SUBJECTS.
-                    </h5>
+                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> 0 </span>
+                        SUBJECTS.
+                    </span>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered" id="Resultstbl">
@@ -108,7 +110,8 @@
             data: data,
             //contentType: false,
             //processData: false,
-            success: Bindtable,
+            //success: Bindtable,
+            success: successCallback,
             error: function (xhr, status, error) {
                 errorCallback(xhr.status, error);
             }
@@ -172,6 +175,17 @@
                 debugger;
                 var formData = $('#Searchform').serialize();
                 handleAjaxtabledata('POST', "/UserScreens/Examsdetailstbl", formData,
+                    function (response) {
+                        debugger;
+                        if (response.length > 0) {
+                            Bindtable();
+                        }
+                        else {
+                            $('#Divcontainer1').show();
+                            $('#Resultstbl').hide();
+                            loaddingimg.css('display', 'none');
+                        }
+                    },
                     function (status, error) {
                         loaddingimg.css('display', 'none');
                     },

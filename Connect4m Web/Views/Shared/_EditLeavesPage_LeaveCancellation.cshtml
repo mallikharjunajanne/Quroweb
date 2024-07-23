@@ -11,16 +11,16 @@
         <div class="col">
             @*--------------------------*@
             <div class="row ">
-                <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Employee Name</label>
+                <label class="col-sm-5 col-form-label text-end space" for="basic-default-name">Employee Name</label>
                 <div class="col-sm-4 ">
-                    <label class="form-control-plaintext"  id="SpanEmpName"></label>
+                    <label class="col-form-label" id="SpanEmpName"></label> @*Class name form-control-plaintext*@
                 </div>
             </div>
             @*--------------------------*@
             <div class="row ">
-                <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Department </label>
+                <label class="col-sm-5 col-form-label text-end space" for="basic-default-name">Department </label>
                 <div class="col-sm-4 ">
-                    <label class="form-control-plaintext" id="SpanEmpDept"></label>
+                    <label class="col-form-label" id="SpanEmpDept"></label> @*Class name form-control-plaintext*@
                 </div>
             </div>
         </div>
@@ -30,19 +30,15 @@
 
 @*==========================Edit Leaves Card====================*@
 <div class="card mb-4" id="SearchPage">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">
-            <span>
+    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
                 UPDATE LEAVE
-            </span>
-        </h5>
     </div>
     <div class="card-body">
         <form id="FmUpdateLeaves">
             <div class="row">
                 <div class="col">
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Type</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
@@ -56,7 +52,7 @@
                         </div>
                     </div>
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Leave Days Available</label>
                         <div class="col-sm-4 ">
                             <label class="form-control-plaintext" id="GetLeaveDaysAvailableid"></label>
@@ -67,7 +63,7 @@
                     </div>
 
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Short Description for Leave Reason</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
@@ -81,7 +77,7 @@
                     </div>
                     @*----------------------*@
 
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Type</label>
                         <div class="col-sm-4">
                             <div class="col mt-2">
@@ -100,7 +96,7 @@
 
                     @*--------------------------*@
                     <div id="Dates_Div">
-                        <div class="row mb-3 ">
+                        <div class="row mb-2">
                             <label class="col-sm-4 col-form-label  text-end required" id="HAlfdayLB" for="basic-default-name">Date</label>
                             <label class="col-sm-4 col-form-label  text-end required" id="fromdateLB" for="basic-default-name">From Date</label>
                             <div class="col-sm-4 ">
@@ -109,7 +105,7 @@
                                 <input type="image" class="form-control" id="imgAuditIconFrodate" src="/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveDetails', @ViewBag.LeaveApplicationId, 'FromDate')" style="display:none">
                             </div>
                         </div>
-                        <div class="row mb-3 ">
+                        <div class="row mb-2">
                             <label class="col-sm-4 col-form-label  text-end required" id="todateLB" for="basic-default-name">To Date</label>
                             <div class="col-sm-4 ">
                                 <input type="date" name="InputValue[0].Todate" class="form-control" id="todate">
@@ -120,7 +116,7 @@
                     </div>
                     @*----------------------*@
 
-                    <div class="row mb-3 " id="DaySession">
+                    <div class="row mb-2" id="DaySession">
                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Session</label>
                         <div class="col-sm-4">
                             <div class="col mt-2">
@@ -136,8 +132,8 @@
                         </div>
                     </div>
                     @*----------------------*@
-                    <div class="row mb-3 ">
-                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Comments<br /><i style="font-size:8px">(Max of 500 Characters)</i></label>
+                    <div class="row mb-2">
+                        <label class="col-sm-4 col-form-label  text-end" for="basic-default-name">Leave Comments<br /><i style="font-size:8px">(Max of 500 Characters)</i></label>
                         <div class="col-sm-4">
                             <textarea class="form-control" id="Textarea" rows="3" asp-for="Leavecomments" name="InputValue[0].Leavecomments" oninput="CharactercountFunction.call(this,'TextareacountSPAN')" maxlength="500"></textarea>
                             <label class="form-control" id="LblTextareacount" style="display:none"> <i><span id="TextareacountSPAN">500</span> Character(s) remaining.</i></label>
@@ -155,8 +151,8 @@
                     @*----------------------*@
                     <div class="row justify-content-end">
                         <div class="col-sm-8">
-                            <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBack" onclick="BackTOSearhUserLeavestypes(event)" value="Back To Search">Back To Search</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" id="savebutton" onclick="FmUpdateLeaves_CalingFunction(event)" value="Update Leave">Update Leave</button>
+                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="BtnBack" onclick="BackTOSearhUserLeavestypes(event)" value="Back To Search">Back To Search</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="savebutton" onclick="FmUpdateLeaves_CalingFunction(event)" value="Update Leave">Update Leave</button>
                         </div>
                     </div>
                     @*--------------------------*@

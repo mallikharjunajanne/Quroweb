@@ -1,0 +1,127 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.SMSTemplates
+@{
+    ViewData["Title"] = "SMS NOTICE TEMPLATES DETAILS";
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="row mb-3">
+        <span class="control-label col-sm col-form-label  text-danger" id="Errormessage"></span>
+    </div>*@
+<style>
+    .Formtext {
+        width: 20%;
+        height: 23px;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: #6f6b7d;
+        //appearance: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid #dbdade;
+        border-radius: var(--bs-border-radius);
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+</style>
+
+
+<div class="card-body">
+    <div>
+        <span class="text-danger text-validation" id="Commonerrormessage1"></span>
+        <label class="col-form-label"> @ViewBag.SMSTemplates[0].TemplateDescription</label>
+        <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateMasterPK" asp-for="DisplayIcon" id="DisplayIcon_txt" />
+        <input type="hidden" value="@ViewBag.SMSTemplates[0].TemplateDescription" asp-for="Subject" id="Subject_txt" />
+    </div>
+
+    <div class="row mb-3">
+        @{
+            var Counts = ViewBag.SMSTemplates.Count;
+            var trueorfalse = false;
+            int counters = 1;
+            int j = 1;
+        }
+        @foreach (var detail in ViewBag.SMSTemplates)
+        {
+            var template = detail.TemplateDescription;
+
+            for (int i = 0; i < ViewBag.SMSTemplates.Count; i++)
+            {
+
+                var textdetails = ViewBag.SMSTemplates[i];
+                string replacement = "";
+
+                if (textdetails.AttributeName.StartsWith("{TEXT"))
+                {
+                    string textPlaceholder = textdetails.AttributeName;
+                    replacement = $"<input type='text' id='txt{j}' class='textInput Formtext' name='textValue' maxlength='{textdetails.length}'   placeholder='Text' oninput='storeTextboxValue(txt{j},this)' />";
+                    template = template.Replace(textPlaceholder, replacement);
+
+                }
+                else if (textdetails.AttributeName.StartsWith("{DATE"))
+                {
+                    string textPlaceholder = textdetails.AttributeName;
+                    replacement = $"<input type='text' id='txt{j}' class='textInput Formtext' name='dateValue' maxlength='{textdetails.length}'   placeholder='dd/mm/yy' onkeypress='return RestrictDateChar(event)' oninput='storeTextboxValue(txt{j},this)' />";
+                    template = template.Replace(textPlaceholder, replacement);
+                }
+                else if (textdetails.AttributeName.StartsWith("{TIME"))
+                {
+                    string textPlaceholder = textdetails.AttributeName;
+                    replacement = $"<input type='text' id='txt{j}' class='textInput Formtext' name='timeValue' maxlength='{textdetails.length}'   placeholder='Time' oninput='storeTextboxValue(txt{j},this)' />";
+                    template = template.Replace(textPlaceholder, replacement);
+                }
+                else if (textdetails.AttributeName.StartsWith("{NUMERIC"))
+                {
+                    string textPlaceholder = textdetails.AttributeName;
+                    replacement = $"<input type='text' id='txt{j}' class='textInput Formtext' name='numericValue' maxlength='{textdetails.length}'   placeholder='Numeric' onkeypress='return RestrictNumericInput(event)' oninput='storeTextboxValue(txt{j},this)' />";
+                    template = template.Replace(textPlaceholder, replacement);
+                }
+
+                j++;
+            }
+            trueorfalse = true;
+            if (trueorfalse)
+            {
+                <div class="col-sm col-form-label" style=" line-height: 2;" id="TemplateDescription_divId">
+                    @Html.Raw(template)
+                </div>
+            }
+            counters++;
+            break;
+
+        }
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-3">
+        <label class="control-label col-sm-4 col-form-label text-end required space">Start Date</label>
+        <div class="col-sm-4">
+            <input type="date" id="Startdate_txt" class="form-control" />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="control-label col-sm-4 col-form-label text-end required space">End Date(Expiry Date)</label>
+        <div class="col-sm-4">
+            <input type="date" id="EndDate_txt" class="form-control" />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center">
+        <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="BacktoSmsTemplatebtn">Back To Select SMS Template(s)</button>
+        <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="SaveandPostSMSTemplatebtn">Save and Post</button>
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Managenoticessms1.js"></script>
+@*<script src="~/js/Managenotice_2.js"></script>*@

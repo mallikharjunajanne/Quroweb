@@ -4,11 +4,12 @@
 ******************************************************************************/
 
 .light-style .menu .app-brand.demo {
-  height: 64px;
+  height: 50px;
+  background-color:#e22132;
 }
 
 .dark-style .menu .app-brand.demo {
-  height: 64px;
+  height: 50px;
 }
 
 .app-brand-logo.demo {

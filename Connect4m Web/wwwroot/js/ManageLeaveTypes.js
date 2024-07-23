@@ -219,7 +219,7 @@ function EditValuesGettingFunction() {
                         else {
 
                         }
-                        $("#BtnSave").val("Update");
+                        $("#BtnSave").val("Update").text('Update');
                         $("#BtnClear").prop("disabled", true);
 
                         loaddingimg.css('display', 'none');
@@ -444,6 +444,7 @@ function CreateNewLeaveTypes() {
         function fun2(response) {
             $("#SearchLeaveTypePagePartialView").hide();
             $("#CreateLeaveTypePageView_id").html(response);
+            $('#BtnSave').text('Save');
             //$("#imgAuditIconAllowPastDays").hide();
             loaddingimg.css('display', 'none');
         }
@@ -477,12 +478,13 @@ function BackTOSearhLeaveTypes(event) {
 
 
 function FN_ClearValues(Formid, ListBoxId) {
+    debugger;
     try {
         document.getElementById(Formid).reset(); // Reset the form
 
         $('#' + ListBoxId).text('');
-        $("#TextareaDescriptioncountSPAN").text('50');
-        $("#TextareacountSPAN").text('250 Character(s) remaining.');
+        $("#TextareaDescriptioncountSPAN").text('');
+        $("#TextareacountSPAN").text('');
 
         $(".ErrorMessageSpan").empty();
     } catch (x) {

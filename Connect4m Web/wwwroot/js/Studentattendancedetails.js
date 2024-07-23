@@ -69,15 +69,15 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
 
-
-});
 
 
 
 /* ---****  MONTH WISE AND DATE WISE FUNCTION ***----*/
 function ShowFields() {
+
+    $('#resultcountmessage').text('');
+    $('#Slotddl option').prop('selected', false);
     var dateWiseDiv = document.getElementById("Datewisecontent");
     var monthWiseDiv = document.getElementById("Monthwisecontent");
     var dateRadioButton = document.getElementById("defaultRadio1");

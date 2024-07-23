@@ -10,75 +10,70 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <span id="Inserterrormessage" class="text-danger"></span>
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                SAVE HOLIDAYS
-            </h5>
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+            SAVE HOLIDAYS
+            <small>* INDICATES MANDATORY FIELDS.</small>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col" id="ManageHolidaysMaindivId">
-                    <form id="Insertholiday" enctype="multipart/form-data">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="row mb-3">
-                            <label class="control-label col-sm-4 col-form-label required text-end space">Start Date</label>
-                            <div class="col-sm-4">
-                                <input type="date" asp-for="Sdate" id="SDate_txtid" class="form-control" />
-                                <span asp-validation-for="Sdate" class="text-danger"></span>
+            <div class="col" id="ManageHolidaysMaindivId">
+                <form id="Insertholiday" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-4 col-form-label required text-end space">Start Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" asp-for="Sdate" id="SDate_txtid" class="form-control" />
+                            <span asp-validation-for="Sdate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-4 col-form-label required text-end space">End Date</label>
+                        <div class="col-sm-4">
+                            <input type="date" asp-for="Edate" id="EDate_txtid" class="form-control" />
+                            <span asp-validation-for="Edate" class="text-danger"></span>
+                            <span class="text-danger" id="Error_Sp"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" asp-for="HolidayName" id="Holidaytxtid" class="form-control" />
+                            <span asp-validation-for="HolidayName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Type</label>
+                        <div class="col-sm-6" style="display:flex;">
+                            <div class="form-check col-4">
+                                <input name="default-radio-1" class="form-check-input" type="radio" value="1" id="defaultRadio1" asp-for="HType">
+                                <label class="form-check-label" for="defaultRadio1">
+                                    Holidays
+                                </label>
+                            </div>
+                            <div class="form-check col-4">
+                                <input name="default-radio-1" class="form-check-input" type="radio" value="2" id="defaultRadio2" asp-for="HType">
+                                <label class="form-check-label" for="defaultRadio2">
+                                    Week-Ends
+                                </label>
+                            </div>
+                            <div class="form-check col-8">
+                                <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
+                                <label class="form-check-label" for="defaultRadio3">
+                                    Restricted Holidays
+                                </label>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="control-label col-sm-4 col-form-label required text-end space">End Date</label>
-                            <div class="col-sm-4">
-                                <input type="date" asp-for="Edate" id="EDate_txtid" class="form-control" />
-                                <span asp-validation-for="Edate" class="text-danger"></span>
-                                <span class="text-danger" id="Error_Sp"></span>
-                            </div>
+                        <label class="control-label col-sm-4 col-form-label  text-end "></label>
+                        <div class="col-sm-4">
+                            <span asp-validation-for="HolidayType" id="HolidaySp_id" class="text-danger"></span>
                         </div>
-                        <div class="row mb-3">
-                            <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Name</label>
-                            <div class="col-sm-4">
-                                <input type="text" asp-for="HolidayName" id="Holidaytxtid" class="form-control" />
-                                <span asp-validation-for="HolidayName" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Type</label>
-                            <div class="col-sm-6" style="display:flex;">
-                                <div class="form-check col-4">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="1" id="defaultRadio1"  asp-for="HType">
-                                    <label class="form-check-label" for="defaultRadio1">
-                                        Holidays
-                                    </label>
-                                </div>
-                                <div class="form-check col-4">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="2" id="defaultRadio2"  asp-for="HType">
-                                    <label class="form-check-label" for="defaultRadio2">
-                                        Week-Ends
-                                    </label>
-                                </div>
-                                <div class="form-check col-8">
-                                    <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
-                                    <label class="form-check-label" for="defaultRadio3">
-                                        Restricted Holidays
-                                    </label>
-                                </div>
-                            </div>
-                            <label class="control-label col-sm-4 col-form-label  text-end "></label>
-                            <div class="col-sm-4">
-                                <span asp-validation-for="HolidayType" id="HolidaySp_id" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row justify-content text-center">
-                            <div class="col-sm-12">
-                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearcommonfunction('Classificaitionformid', null)" id="Clearbtn">Clear</button>
-                                <button type="button" class="btn btn-dark waves-effect waves-light" id="BackToSearchbtn">BackToSearch</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Savebtn">Save</button>
-                            </div>
-                        </div>
+                    </div>
 
-                    </form>
-                </div>
+                    <div class="col-sm-12 text-center">
+                        <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="Clearform('Insertholiday', null)" id="Clearbtn">Clear</button>
+                        <button type="button" class="btn btn-dark waves-effect waves-light" id="BackToSearchbtn">BackToSearch</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light" id="Savebtn">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

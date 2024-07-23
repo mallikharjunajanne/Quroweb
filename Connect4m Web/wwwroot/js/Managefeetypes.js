@@ -52,6 +52,20 @@ $(document).ready(function () {
     Pageload();
 });
 
+function SearchClearform() {
+    $('#txtFeeTypesSeach').text('');   
+    $('#Commonerrormessage').text('');
+    handleAjaxtabledata('GET', "/FeeSection/Bindtblfeetype?FeeType=" + '', null,
+        
+        function (status, error) {
+            loaddingimg.css('display', 'none');
+        },
+        true
+    );
+}
+
+
+
 function Pageload() {
     debugger;
     var FeeType = "";
@@ -81,21 +95,21 @@ function Bindtable(response) {
     table.destroy();
 
     var newTable = $("#Feetypestbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [ ],
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
         bProcessing: false,
-        bLengthChange: true,
-        /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        pageLength: 20,
-        bfilter: false,
-        bSort: true,
+        bLengthChange: false,
+        //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+        bfilter: true,
+        bSort: false,
         searching: false,
-        scrollX: true,
-        scrollY: '400px',
-        scrollCollapse: true,
+        //scrollX: true,
+        //scrollY: '400px',
+        //scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
+        pageLength: 20,
+        //stateSave:true,
         data: response,
         columns: [
             {
@@ -108,8 +122,9 @@ function Bindtable(response) {
             },
             {
                 data: "FeeType",
-                render: function (data, type, row, meta) {                   
-                    return row.feeType
+                render: function (data, type, row, meta) {
+                    return `<a href="javascript:void(0)" onclick="handleClick('${row.concedingtypename}', ${row.concedingtypeid});">${row.feeType}</a>`;
+                    ////return row.feeType;
                 }
             },
             {
@@ -131,38 +146,19 @@ function Bindtable(response) {
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
                 }
             }
-            //{
-            //    data: "FatherName",
-            //    render: function (data, type, row, meta) {
-            //        return row.fatherName
-            //    }
-            //},
-            //{
-            //    data: "MotherName",
-            //    render: function (data, type, row, meta) {
-            //        return row.motherName
-            //    }
-            //},
-            //{
-            //    data: "MobileNumber",
-            //    render: function (data, type, row, meta) {
-            //        return row.mobileNumber
-            //    }
-            //},
-           
         ]
     });
 
     table.on('draw', function () {
         $('#Feetypestbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
             fontWeight: 'bold'
         });
     });
     $('#Feetypestbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'
@@ -238,6 +234,8 @@ $(document).on('click', '#Feetypestbl td:nth-child(2)', function (event) {
     }
 })
 
+
+
 $(document).on('click', '#Feetypestbl td:nth-child(5) .fa-trash-o', function (event) {
     try {
         loaddingimg.css('display', 'block');
@@ -273,6 +271,7 @@ function clearForm(formId) {
             span.textContent = ''; // Clear validation messages
         });
         $('#Errormessage').text('');
+        $('#Commonerrormessage').text('');
     }
 }
 

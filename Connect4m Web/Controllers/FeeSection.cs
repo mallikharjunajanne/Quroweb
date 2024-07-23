@@ -117,6 +117,18 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
+        public IActionResult GetFeeDetialsByUserFeeIdFeeInstallments(string feeTermId,int userfeeid)
+        {
+            ViewFeeDetails viewfeedetails = new ViewFeeDetails();
+            viewfeedetails.InstanceId = InstanceId;
+            viewfeedetails.StudentUserid = UserId;
+            viewfeedetails.Feetermid = feeTermId;
+            viewfeedetails.Userfeeid = userfeeid;
+            List<ViewFeeDetails> list =
+                CommonMethodobj.CommonListMethod<ViewFeeDetails, ViewFeeDetails>(viewfeedetails, "/GetFeeDetialsByUserFeeId", client);
+            return Json(list);
+        }
+
         #endregion
 
         #endregion
@@ -551,7 +563,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        #region SET FEE FOR USERS
+        #region SET FEE FOR USERS //====
         [Authorize]
         public IActionResult ManageFeeDetails()
         {
@@ -1519,7 +1531,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(Termsddllist);
         }
-        public IActionResult Feetermbyfeetypes(int Academicyearid, int Feetermid)
+        public IActionResult Feetermbyfeetypes(int Academicyearid, string Feetermid)
         {
             List<SelectListItem> typsddl = new List<SelectListItem>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Getfeestatusfeetypesddl?InstanceId=" + InstanceId + "&Academicyearid=" + Academicyearid + "&FeeTermId=" + Feetermid+ "&CreatedBy="+UserId).Result;
@@ -1542,7 +1554,7 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult FeeStatus_ByIndividual(int FeeTermId, string Studentid)
+        public IActionResult FeeStatus_ByIndividual(string FeeTermId, string Studentid)
         {
             Feestatus feestatus = new Feestatus();
             feestatus.FeeTermId = FeeTermId;
@@ -2142,13 +2154,7 @@ namespace Connect4m_Web.Controllers
         /*----==== UserWiseFeeDetails ACTION METHOD CODE END ====----*/
 
 
-        /*----==== USERWISE FEE PAYMENT ACTION METHOD CODE START ====----*/
-        [HttpGet]
-        public IActionResult PaymentAutomationuserwise()
-        {
-            return View();
-        }
-        /*----==== USERWISE FEE PAYMENT ACTION METHOD CODE END ====----*/
+
 
 
 

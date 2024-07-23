@@ -2329,16 +2329,35 @@ $('#GetMyAppliedLeaves_Table').on('click', 'td span', function () {
                         $.each(response, function (i, value122) {
                             $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("'" + TR.find('td:nth-child(2)').text() + "' LEAVE STATUS ")
 
-                            createdDate = value122.createdDate;
-                            createdDate = createdDate.split("T")[0];
-                            createdDate = createdDate.split("-").reverse().join("-");
+                            var Createddates = value122.createdDate;
+
+                            var createdDate1 = Createddates.split("T")[0];
+                            var createdTime = Createddates.split("T")[1];
+
+                            var timeParts = createdTime.split(":");
+                            var hours = timeParts[0];
+                            var minutes = timeParts[1];
+                            var seconds = timeParts[2];
+
+                            var dateParts = createdDate1.split("-");
+                            var formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0].substring(2);
+                            // Adjust the date format as needed
+
+                            var formattedDateTime = formattedDate + ' ' + hours + ':' + minutes + ':' + seconds;
+
+
+                            //createdDate = value122.createdDate;
+                            //createdDate = createdDate.split("T")[0];
+                            //var createdDateTime = createdDate.split("T")[1];
+                            //createdDate = createdDate.split("-").reverse().join("-");
                             $("#GetMyAppliedLeaves_Table_VIEW tbody").append("<tr>" +
                                 "<td>" + value122.submittedby + "</td>" +
                                 "<td >" + value122.assignedTo + " </td>" +
                                 "<td>" + value122.comments + " </td>" +
                                 "<td>" + value122.approvalstatus + " </td>" +
                                 "<td >" + value122.overallRequestStatus + " </td>" +
-                                "<td>" + createdDate + " </td>" +
+                                "<td>" + formattedDateTime + " </td>" +
+                                /*"<td>" + createdDate + " </td>" +*/
                                 "</tr>"
                             );
                         });
@@ -2381,7 +2400,7 @@ $('#GetMyAppliedLeaves_Table').on('click', 'td span', function () {
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
+                    confirmButtonText: "Yes"
                 }).then((result) => {
                     // If user confirms deletion
                     if (result.isConfirmed) {

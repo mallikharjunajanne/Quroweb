@@ -12,107 +12,100 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>ATTENDANCE DETAILS </h4>
-        <div class="row mb-2">
-            <span id="ErrorMessage" class="text-danger"></span>
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">ATTENDANCE DETAILS</h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <form class="form" id="Attendancedetailsform">
-                                    <div class="row mb-3">
-                                        <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">StartDate</label>
-                                        <div class="col-sm-4">
-                                            <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
-                                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div id="Admin_View_ID">
-                                        <div class="row mb-3">
-                                            <label asp-for=EndDate class="control-label col-sm-4 col-form-label text-end required space">EndDate </label>
-                                            <div class="col-sm-4">
-                                                <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
-                                                <span asp-validation-for="StartDate" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
-                                                    </select>
-                                                    <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
-                                                    </select>
-                                                    <span asp-validation-for="InstanceSubclassificaitionId" class="text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="Studentuserid" class="control-label col-sm-4 col-form-label text-end required space">Student</label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select class="select2 form-select select2-hidden-accessible" id="Studentnamesddl" asp-for="Studentuserid">
-                                                    </select>
-                                                    <span asp-validation-for="Studentuserid" class="text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="SubjectSlotID" class="control-label col-sm-4 col-form-label text-end required space">Slots </label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select multiple class="select2 form-select select2-hidden-accessible" id="Slotddl" asp-for="SubjectSlotID">
-                                                    </select>
-                                                    <span asp-validation-for="SubjectSlotID" class="text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label asp-for="bFlagForDisplay" class="control-label col-sm-4 col-form-label text-end required space">Display only for </label>
-                                            <div class="col-sm-4">
-                                                <div class="col-1 form-check">
-                                                    <input type="radio" asp-for="bFlagForDisplay" value="1" name="bFlagForDisplay" class="form-check-input" id="defaultRadio1">
-                                                    <label class="form-check-label" for="defaultRadio1">Present</label>
-                                                </div>
-                                                <div class="col-1 form-check">
-                                                    <input type="radio" asp-for="bFlagForDisplay" value="0" name="bFlagForDisplay" class="form-check-input" id="defaultRadio2">
-                                                    <label class="form-check-label" for="defaultRadio2">Absent</label>
-                                                </div>
-                                                <div class="col-1 form-check">
-                                                    <input type="radio" asp-for="bFlagForDisplay" value="2" name="bFlagForDisplay" class="form-check-input" id="defaultRadio3">
-                                                    <label class="form-check-label" for="defaultRadio3">Both</label>
-                                                </div>
-                                                <span asp-validation-for="bFlagForDisplay" id="bFlagForDisplayvalidationmessages" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="Clearfun('Attendancedetailsform')" id="BtnClear">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Get_atd_btn">Search </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Attendance /</span>*@ATTENDANCE DETAILS </h4>
+        <span id="ErrorMessage" class="text-danger text-validation"></span>
+        <div class="col-md-12 col-lg-12 mb-3">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    <span class="text-header"> ATTENDANCE DETAILS</span>
+                    <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
+                </div>
+                <div class="card-body">
+                    <form class="form" id="Attendancedetailsform">
+                        <div class="row mb-2">
+                            <label asp-for="StartDate" class="control-label col-sm-4 col-form-label text-end required space">StartDate</label>
+                            <div class="col-sm-4">
+                                <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
+                        <div id="Admin_View_ID">
+                            <div class="row mb-2">
+                                <label asp-for=EndDate class="control-label col-sm-4 col-form-label text-end required space">EndDate </label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                        </select>
+                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-4 col-form-label text-end required space">Class</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
+                                        </select>
+                                        <span asp-validation-for="InstanceSubclassificaitionId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label asp-for="Studentuserid" class="control-label col-sm-4 col-form-label text-end required space">Student</label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select class="select2 form-select select2-hidden-accessible" id="Studentnamesddl" asp-for="Studentuserid">
+                                        </select>
+                                        <span asp-validation-for="Studentuserid" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label asp-for="SubjectSlotID" class="control-label col-sm-4 col-form-label text-end required space">Slots </label>
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <select multiple class="select2 form-select select2-hidden-accessible" id="Slotddl" asp-for="SubjectSlotID">
+                                        </select>
+                                        <span asp-validation-for="SubjectSlotID" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label asp-for="bFlagForDisplay" class="control-label col-sm-4 col-form-label text-end required space">Display only for </label>
+                                <div class="row col-sm-7">
+                                    <div class="col-2 form-check">
+                                        <input type="radio" asp-for="bFlagForDisplay" value="1" name="bFlagForDisplay" class="form-check-input" id="defaultRadio1">
+                                        <label class="form-check-label" for="defaultRadio1">Present</label>
+                                    </div>
+                                    <div class="col-2 form-check">
+                                        <input type="radio" asp-for="bFlagForDisplay" value="0" name="bFlagForDisplay" class="form-check-input" id="defaultRadio2">
+                                        <label class="form-check-label" for="defaultRadio2">Absent</label>
+                                    </div>
+                                    <div class="col-2 form-check">
+                                        <input type="radio" asp-for="bFlagForDisplay" value="2" name="bFlagForDisplay" class="form-check-input" id="defaultRadio3">
+                                        <label class="form-check-label" for="defaultRadio3">Both</label>
+                                    </div>
+                                    <span asp-validation-for="bFlagForDisplay" id="bFlagForDisplayvalidationmessages" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Clearfun('Attendancedetailsform')" id="BtnClear">Clear</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Get_atd_btn">Search </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div id="User_Attendance_Tbl">
+        </div>
+        <div id="User_Attendance_Tbl">
 
-            </div>
         </div>
     </div>
 </body>

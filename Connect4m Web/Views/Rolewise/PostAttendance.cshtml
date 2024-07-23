@@ -14,21 +14,19 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
         
 
-            <h4 class="py-3 mb-4"><span class="text-muted fw-light"> /</span> Post Mentor Attendance</h4>
+            <h4 class="mb-3 text-center">Post Mentor Attendance</h4>
 
-            <div class="row mb-2">
+            @*<div class="row mb-2">*@
                 <div class="col-md-12 col-lg-12 mb-3">
 
                     <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h6 class="mb-0">
-                                <span id="AddNewText_Span_CreatePage">
-                                    POST ATTENDANCE
-                                </span>
-                            </h6>
+                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                            <span id="AddNewText_Span_CreatePage">
+                                POST ATTENDANCE
+                            </span>
                         </div>
 
                         <div class="card-body mb-2">
@@ -42,38 +40,32 @@
 
                                             @*=====================        TEXT BOX                 =================*@
 
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="StartDate"></label>
+                                            <div class="row mb-3">                                           
+                                                <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="StartDate"></label>
                                                 <div class="col-sm-4 form-group">
                                                     <input type="date" class="form-control" id="StartDate" asp-for="StartDate" required>
                                                     <span asp-validation-for="StartDate" class="invalid-feedback"></span>
 
                                                 </div>
-                                                <div class="col-sm-3">
-                                                </div>
+                                               
                                             </div>
                                             @*=====================         TEXT BOX                =================*@
 
                                             <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndDate"></label>
+                                               
+                                                <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="EndDate"></label>
                                                 <div class="col-sm-4 form-group">
                                                     <input type="date" class="form-control" id="EndDate" asp-for="EndDate" required>
                                                     <span asp-validation-for="EndDate" class="invalid-feedback"></span>
                                                     <span class="compare"></span>
                                                 </div>
-                                                <div class="col-sm-3">
-                                                </div>
+                                             
                                             </div>
                                             @*=====================         TEXT BOX                =================*@
 
                                             <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Department"></label>
+                                              
+                                                <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="Department"></label>
                                                 <div class="col-sm-4">
                                                     <div class="position-relative" id="dropdown">
 
@@ -83,17 +75,15 @@
                                                    "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Department_MA", @style = "color:black;", @required = "required" })
                                                         <span asp-validation-for="Department" class="invalid-feedback"></span>
                                                     </div>
-                                                   
+
                                                 </div>
-                                                <div class="col-sm-3">
-                                                </div>
+                                              
                                             </div>
                                             @*=====================         TEXT BOX                =================*@
 
                                             <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Slots"></label>
+                                               
+                                                <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="Slots"></label>
                                                 <div class="col-sm-4">
                                                     <div class="position-relative" id="dropdown">
 
@@ -105,15 +95,13 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3">
-                                                </div>
+                                               
                                             </div>
                                             @*=====================         TEXT BOX                =================*@
 
                                             <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Mentors"></label>
+                                              
+                                                <label class="control-label col-sm-4 col-form-label text-end space" for="basic-default-name" asp-for="Mentors"></label>
                                                 <div class="col-sm-4">
                                                     <div class="position-relative" id="dropdown">
 
@@ -124,7 +112,8 @@
                                                         <span asp-validation-for="Mentors" class="invalid-feedback" id="ddlspMentors"></span>
                                                         @* Mentors span tag id adding by Arjun*@
                                                     </div>
-                                                    <div class="row mb-3">   @*Adding By Arjun*@
+                                                    <div class="row mb-3">
+                                                        @*Adding By Arjun*@
                                                         <label class="form-check-label col-sm-6" for="defaultCheck3" id="ClearSelectionlbl">Clear Selection</label>
                                                         <div class="col-sm-6">
                                                             <input class="form-check-input" type="checkbox" value="" id="Select_All">
@@ -132,17 +121,14 @@
                                                         </div>
                                                     </div>
                                                     @*<label class="form-check-label" for="defaultCheck3">Clear Selection</label>
-                                                    <input class="form-check-input" type="checkbox" value="" id="Select_All">*@
+                <input class="form-check-input" type="checkbox" value="" id="Select_All">*@
                                                 </div>
-                                                <div class="col-sm-3">
-                                                </div>
+                                                
                                             </div>
                                             @*=====================         BUTTONS                =================*@
 
-                                            <div class="row justify-content-end" id="deletebutton">
-                                                <div class="col-sm-4">
-                                                </div>
-                                                <div class="col-sm-2" id="deleteinner">
+                                            <div class="row justify-content-end" id="deletebutton">                                              
+                                                <div class="col-sm-6 text-end" id="deleteinner">
 
                                                 </div>
                                                 <div class="col-sm-6">
@@ -160,7 +146,7 @@
                     </div>
                     
                 </div>
-            </div>
+            @*</div>*@
 
        
         <div id="GetMentorAttendenceAppend"></div>

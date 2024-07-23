@@ -137,6 +137,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string messages = ex.Message;
                 return Json(0);
             }
         }
@@ -188,6 +189,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
                 return View(0);
             }
         }
@@ -236,6 +238,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string messages = ex.Message;
                 // throw;
                 return Json(new { success = false, message = "Something Error" });
             }
@@ -546,6 +549,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string messages = ex.Message;
                 // throw;
                 return Json(new { success = false, message=  "Something Error"  });
             }
@@ -985,7 +989,8 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
-               // logTrace.logError("PopulationManagementController  && PopulationManagementDataServicesDataProvider", "GetDataTable_VillagePopulation", ex.StackTrace.ToString(), "");
+                string messages = ex.Message;
+                // logTrace.logError("PopulationManagementController  && PopulationManagementDataServicesDataProvider", "GetDataTable_VillagePopulation", ex.StackTrace.ToString(), "");
             }
             return periodicTable;
         }
@@ -1184,6 +1189,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string messagea = ex.Message;
                 // throw;
                 return Json(new { success = false, message = "Something Error" });
             }

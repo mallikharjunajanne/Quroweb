@@ -1,0 +1,110 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.ManageNotice
+@{
+    ViewData["Title"] = "Manage Notices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">MANAGE NOTICES</h4>
+        <span id="Commonerrormessage" class="text-danger text-validation"></span>
+        <div class="col-sm-12 text-end">
+            <a href="javascript:void(0);" id="Addnotice" onclick="Createnotice()" class="btn btn-label-linkedin waves-effect btn-sm">Create Notice</a>
+            <a href="javascript:void(0);" id="AddnewSMS" onclick="Createsms()" class="btn btn-label-linkedin waves-effect btn-sm">Create SMS</a>
+            <a href="javascript:void(0);" id="AddnewSMSNNotices" onclick="Createnoticesms()" class="btn btn-label-linkedin waves-effect btn-sm">Create Notice and SMS</a>
+        </div>
+
+        <div class="row mb-2" id="Searchnotices_Maindiv">
+            <div class="col-md-12 col-lg-12 mb-1">
+                <div class="card mb-2">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span class="text-header">SEARCH NOTICES</span>
+                    </div>
+                    <div class="card-body">
+                        <form id="Noticesearchform">
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Notice Type</label>
+                                <div class="col-sm-4">
+                                    <select class="form-select select2 form-select select2-hidden-accessible" id="Enoticetypeddl"></select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Notice Subject</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="Subjecttxt" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3" id="Startdateparent">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Start Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="Startdatetxt" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3" id="Enddateparent">
+                                <label class="control-label col-sm-4 col-form-label text-end space">End Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="Enddatetxt" class="form-control" />
+                                    <span id="Dateerrormessage" class="text-danger Validation"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end"></label>
+                                <div class="col-sm-6">
+                                    <input id="SMStemplatechk" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="IsSMSTemplate" value="0" />
+                                    <label class="col-sm-4">SMS Template</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content text-center">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-danger waves-effect waves-light btn-sm" id="Noticebtnclear">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Searchbtn">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12 mb-1">
+                <span id="ErrorMessage" class="text-danger"></span>
+                <a href="javascript:void(0)" id="lnkexporttoexcel" class="btn btn-label-linkedin waves-effect btn-sm">Export To Excel</a>
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <span class="text-header">
+                            YOUR SEARCH RESULTED
+                            <span id="Recordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">0</span> RECORDS.
+                        </span>
+                    </div>
+                    <table class="table table-bordered" id="Noticestbl">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 5%;">SNO</th>
+                                <th style="width: 30%;">Notice Subject</th>
+                                <th width="204px">End Date(Expiry Date)</th>
+                                <th>Posted</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="Noticesadding_Firstdiv"></div>
+        <div id="Noticesadding_Seconddiv"></div>
+        <div id="Noticesadding_Thirddiv"></div>
+
+    </div>
+</body>
+</html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="~/js/Managenotices_1.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

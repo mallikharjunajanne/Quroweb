@@ -28,8 +28,7 @@ namespace Connect4m_Web.Models.LMSproperties
        
         public string SubjectTypeName { get; set; }
 
-        [Display(Name = "Comments")]
-      
+        [Display(Name = "Description")]      
         public string Comments { get; set; }
 
       

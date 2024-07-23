@@ -92,15 +92,15 @@ function searchManageStaffLeave(data) {
                 table.append(tabletr+"</tr>");
                 count++;
             }
-            $("#_staffLeavePrint").css('display', 'block');
-            $("#_staffLeaveExportExcel").css('display', 'block');
+            //$("#_staffLeavePrint").css('display', 'block');
+            //$("#_staffLeaveExportExcel").css('display', 'block');
             loaddingimg.css('display', 'none');
         }
 
         else {
 
-            $("#_staffLeavePrint").css('display', 'none');
-            $("#_staffLeaveExportExcel").css('display', 'none');
+            //$("#_staffLeavePrint").css('display', 'none');
+            //$("#_staffLeaveExportExcel").css('display', 'none');
             loaddingimg.css('display', 'none');
         }
 
@@ -504,6 +504,24 @@ $(document).on('click', '#_staffLeavePrint', function (event) {
     printWindow.print();
 })
 
+//===Clear function
+function Clearfun(formid) {
+    var form = document.getElementById(formid);
 
+    if (form) {
+        form.reset();
 
+        $('#dropdown_staff_Start_Month').prop('selectedIndex', 1);
+        $('#dropdown_staff_End_Month').prop('selectedIndex', 1);
+        $('#appendstaffsearchLeave').empty();
 
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

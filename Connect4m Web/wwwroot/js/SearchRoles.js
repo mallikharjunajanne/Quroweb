@@ -52,24 +52,41 @@ function searchRoles() {
         //  alert("hi1");
 
         var newTable=    $("#tblMRsearchresults").DataTable({
-             dom: 'Bfrtip',
-     
-
+            dom: '<"top"lf>t<"bottom"ip>',
+            buttons: [],
             bProcessing: false,
-            bLengthChange: true,
-            /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-            bfilter: false,
-            bSort: true,
+            bLengthChange: false,
+            //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+            bfilter: true,
+            bSort: false,
             searching: false,
             //scrollX: true,
             //scrollY: '400px',
-            /* scrollCollapse: true,*/
+            //scrollCollapse: true,
             paging: true,
-             bPaginate: true,
-             buttons: [],
-
-            //  stateSave:true,
+            bPaginate: false,
+            //stateSave:true,
             data: response,
+
+
+
+
+            //dom: '<"top"lf>t<"bottom"ip>',
+            ///* dom: 'Bfrtip',*/
+            //bProcessing: false,
+            //bLengthChange: true,
+            ///*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+            //bfilter: false,
+            //bSort: true,
+            //searching: false,
+            ////scrollX: true,
+            ////scrollY: '400px',
+            ///* scrollCollapse: true,*/
+            //paging: true,
+            // bPaginate: true,
+            // buttons: [],
+            ////  stateSave:true,
+            //data: response,
             columns: [
 
                

@@ -6,13 +6,13 @@
 
 
 
-<div class="col-md-12 col-lg-12 mb-3">
+<div class="col-md-12 col-lg-12 mb-1">
     <div class="card mb-1">
-        <div class="card-header d-flex align-items-center justify-content-between"><h5 class="mb-0">NOTE</h5></div>
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">NOTE</div>
         <div class="card-body">
-            <label class="control-label  col-form-label text-end ">1) Please Enter Absent Students REG. NO.(s) in Mentioned formate (like 1,2,3,4 or o3c31a1201,03c31a1202,03c31a1203) only.</label>
-            <label class="control-label  col-form-label text-end ">2) If all Students are present textbox should be Empty.</label><br />
-            <label class="control-label  col-form-label text-end ">3) Only For Absenties SMS will Send.</label>
+            <label>1) Please Enter Absent Students REG. NO.(s) in Mentioned formate (like 1,2,3,4 or o3c31a1201,03c31a1202,03c31a1203) only.</label>
+            <label>2) If all Students are present textbox should be Empty.</label><br />
+            <label>3) Only For Absenties SMS will Send.</label>
         </div>
     </div>
 </div>
@@ -32,10 +32,10 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glows"> @ViewBag.resultCount </span>  RECORDS.</h5>
+        <div class="card-header bg-danger text-white">
+            YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glows"> @ViewBag.resultCount </span>  RECORDS.
         </div>
-        <div class="card-body">
+        @*<div class="card-body">*@
             <table class="table table-hover table-bordered">
                 <tbody>
                     <tr>
@@ -72,7 +72,7 @@
                     <button type="submit" id="btnSubmit" class="btn btn-success waves-effect waves-light"> Submit </button>
                 </div>
             </div>
-        </div>
+        @*</div>*@
     </div>
 </div>
 

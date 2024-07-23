@@ -1,7 +1,5 @@
 ﻿@model Connect4m_Web.Models.Attendenceproperites.Attendance_Details
-@{
-    // ViewData["Title"] = "GetViewAttendanceDetailstbl";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+@{   
     Layout = null;
 }
 
@@ -9,8 +7,8 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">BRIEF DETAILS</h5>
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <span class="text-header">BRIEF DETAILS</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -86,35 +84,35 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                TOTAL NUMBER OF RECORDS: <span class="badge badge-center rounded-pill bg-primary bg-glow">@ViewBag.Records</span>
-            </h5>
+        <div class="card-header bg-danger text-white">
+            <span class="text-header">
+                TOTAL NUMBER OF RECORDS:
+                <span class="badge badge-center rounded-pill bg-primary bg-glow text-header"> @ViewBag.Records </span>
+            </span>
         </div>
-        <div class="card-body">
-            <div class="table-responsive text-nowrap" id="attendanceTableContainer">
-                <table class="table table-bordered" id="StudentDetailTblbody">
-                    <thead class="table-dark">
-                        <tr>
-                            <th align="left" scope="col">  Date</th>
-                            <th align="left" scope="col">  IsPresent</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in @ViewBag.UserAttendance)
-                                            {
+        
+        <div class="table-responsive text-nowrap" id="attendanceTableContainer">
+            <table class="table table-bordered dataTable" id="StudentDetailTblbody">
+                <thead class="table-dark">
+                    <tr>
+                        <th align="left" scope="col">  Date</th>
+                        <th align="left" scope="col">  IsPresent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @ViewBag.UserAttendance)
+                    {
                         <tr>
                             <td align="left"> @item.CreatedDate</td>
                             <td align="left">  @item.IsPresent</td>
                         </tr>
-                                            }
-                    </tbody>
-                </table>
-                <div id="pagination_numbers" style="text-align: center;">
+                    }
+                </tbody>
+            </table>
+            <div id="pagination_numbers" style="text-align: center;">
 
-                </div>
             </div>
-        </div>
+        </div>       
     </div>
 </div>
 
@@ -124,46 +122,46 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
-    var tableBody = document.getElementById('StudentDetailTblbody');
-    var paginationContainer = document.getElementById('pagination_numbers');
-    var rows = Array.from(tableBody.getElementsByTagName('tr'));
-    var numRows = rows.length;
-    var rowsPerPage = 10;
-    var totalPages = Math.ceil(numRows / rowsPerPage);
+    //var tableBody = document.getElementById('StudentDetailTblbody');
+    //var paginationContainer = document.getElementById('pagination_numbers');
+    //var rows = Array.from(tableBody.getElementsByTagName('tr'));
+    //var numRows = rows.length;
+    //var rowsPerPage = 10;
+    //var totalPages = Math.ceil(numRows / rowsPerPage);
 
-    if (numRows >= 10) {
-        function showPage(page) {
-            var startIndex = (page - 1) * rowsPerPage;
-            var endIndex = Math.min(startIndex + rowsPerPage, numRows);
+    //if (numRows >= 10) {
+    //    function showPage(page) {
+    //        var startIndex = (page - 1) * rowsPerPage;
+    //        var endIndex = Math.min(startIndex + rowsPerPage, numRows);
 
-            // Hide all rows
-            rows.forEach(function (row) {
-                row.style.display = 'none';
-            });
+    //        // Hide all rows
+    //        rows.forEach(function (row) {
+    //            row.style.display = 'none';
+    //        });
 
-            // Show rows for the specified page
-            for (var i = startIndex; i < endIndex; i++) {
-                rows[i].style.display = 'table-row';
-            }
-        }
+    //        // Show rows for the specified page
+    //        for (var i = startIndex; i < endIndex; i++) {
+    //            rows[i].style.display = 'table-row';
+    //        }
+    //    }
 
-        for (var i = 1; i <= totalPages; i++) {
-            var link = document.createElement('a');
-            link.href = '#';
-            link.textContent = i;
-            link.classList.add('pagination-link');
-            paginationContainer.appendChild(link);
-        }
+    //    for (var i = 1; i <= totalPages; i++) {
+    //        var link = document.createElement('a');
+    //        link.href = '#';
+    //        link.textContent = i;
+    //        link.classList.add('pagination-link');
+    //        paginationContainer.appendChild(link);
+    //    }
 
-        showPage(1);
+    //    showPage(1);
 
-        paginationContainer.addEventListener('click', function (e) {
-            e.preventDefault();
+    //    paginationContainer.addEventListener('click', function (e) {
+    //        e.preventDefault();
 
-            if (e.target.tagName === 'A') {
-                var page = parseInt(e.target.textContent);
-                showPage(page);
-            }
-        });
-    }
+    //        if (e.target.tagName === 'A') {
+    //            var page = parseInt(e.target.textContent);
+    //            showPage(page);
+    //        }
+    //    });
+    //}
 </script>

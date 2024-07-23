@@ -91,12 +91,11 @@ function FileCallToAjax(method, url, data, successCallback, errorCallback, hasFi
 
 //-----------------Search Quote
 $('#Mainview_Searchbtn').click(function () {
-    SearchQuotes();
+    Searchfun();
 });
 
-function SearchQuotes() {
-    var Title= $('#Titletxtid').val();
-    
+function Searchfun() {
+    var Title= $('#Titletxtid').val();    
    
     var dataToSend = {
         Title: Title
@@ -123,65 +122,22 @@ function bindDatatable(response) {
 
 
     var newTable = $("#Managebestperformertbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            //{
-            //    extend: 'pdfHtml5',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-
-            //}
-            //,
-            //{
-            //    extend: 'excel',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-            //},
-
-
-            //{
-            //    extend: 'print',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-            //}
-
-
-        ],
-
+        dom: '<"top"lf>t<"bottom"ip>',
+        buttons: [],
         bProcessing: false,
-        bLengthChange: true,
-        /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bLengthChange: false,
+        //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
-        /* scrollCollapse: true,*/
+        //scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
+        //stateSave:true,
         data: response,
-        columns: [
-
-            //{
-            //    data: "SNO",
-            //    //visible: false,
-
-            //    render: function (data, type, row, meta) {
-            //        //  length++;
-            //        return row.holidayId
-            //    }
-            //},
+        columns: [          
             {
                 targets: 0, // Assuming this is the column index where you want to display numbering
                 render: function (data, type, row, meta) {
@@ -239,13 +195,15 @@ function bindDatatable(response) {
         $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit').css({
             'text-decoration': 'underline',
             'font-weight': 'bold',
-            'color': 'black'
+            'color': 'blue',
+            'cursor': 'pointer'
         });
     });
     $('#Managebestperformertbl').find('td:nth-child(2)').attr('title', 'Edit').css({
         'text-decoration': 'underline',
         'font-weight': 'bold',
-        'color': 'black'
+        'color': 'blue',
+        'cursor': 'pointer'
     });
 }
 
@@ -302,7 +260,7 @@ $(document).on('click', '#Managebestperformertbl .fa-trash-o', function (event) 
     //        type: 'GET',
     //        success: function (response) {
     //            $('#Errmsg').text('Record deleted successfully');
-    //            SearchQuotes();
+    //            Searchfun();
     //        },
     //        error: function (xhr, status, error) {
     //            errorCallback(xhr.status, error);
@@ -456,16 +414,25 @@ function populateSubclassificationDropdown(subclassificationList) {
 }
 
 $('#Insert_Clearbtn').click(function () {
-    $('#Errormessage').text('');
-    $('#Insertbestperoformer')[0].reset();
-    $('#Addbestperformerdataaddingaccordionoc2').hide();
-    $('#Addbestperformerdataaddingtbl_accordionoc3').hide();
+    debugger;
+    var form = document.getElementById('Insertbestperoformer');
+    if (form) {
+        form.reset();
+        $('#Errormessage').text('');
+        $('#Insertbestperoformer')[0].reset();
+        $('#SelectedBestperformerusername_spid').text('Select').val('');
+        $('#Addbestperformerdataaddingaccordionoc2').hide();
+        $('#Addbestperformerdataaddingtbl_accordionoc3').hide();
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+    }
 });
 
 $('#Insert_BackToSearchbtn').click(function () {
-
     location.reload();
-
 });
 
 ///-----****Search best performer result functions
@@ -483,32 +450,28 @@ $('#SearchUserform_id').submit(function (event) {
         processData: false,
         contentType: false,
         success: function (response) {
-            $('#Addbestperformerdataaddingtbl_accordionoc3').show();
-            
+            $('#Addbestperformerdataaddingtbl_accordionoc3').show();            
             var formattedDate = GetDateFormat();
-
             var table = $('#Bestperformertbl').DataTable();
             table.destroy();
             $("#bestperformertbl_Recordscount").text(response.length);
 
-
             var newTable = $("#Bestperformertbl").DataTable({
-                dom: 'Bfrtip',
-                buttons: [ ],
-
+                dom: '<"top"lf>t<"bottom"ip>',
+                buttons: [],
                 bProcessing: false,
-                bLengthChange: true,
-                /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-                bfilter: false,
-                bSort: true,
+                bLengthChange: false,
+                //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+                bfilter: true,
+                bSort: false,
                 searching: false,
                 //scrollX: true,
                 //scrollY: '400px',
-                /* scrollCollapse: true,*/
+                //scrollCollapse: true,
                 paging: true,
-                bPaginate: true,
-                //  stateSave:true,
-                data: response,
+                bPaginate: false,
+                //stateSave:true,
+                data: response,                          
                 columns: [
 
                     //{
@@ -530,143 +493,36 @@ $('#SearchUserform_id').submit(function (event) {
                     },
                     {
                         data: "UserId",
-
-                        render: function (data, type, row, meta) {
-
-                            /* row.firstName + */
-                            return '<input type="radio" name="' + row.firstName + '" value="' + row.userId + '" />';
-
+                        render: function (data, type, row, meta) {                           
+                            return '<input type="radio" name="' + row.firstName + '" value="' + row.userId + '"  class="form-check-input"/>';
                         }
                     },
                     {
                         data: "FirstName",
-
                         render: function (data, type, row, meta) {
-                          
-
                             return row.firstName
-
                         }
                     },
                     {
                         data: "RoleName",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.roleName
-
                         }
                     },
                     {
                         data: "ClassificationName",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.classificationName + '<input type="text" value=' + row.userId + ' hidden/>'
-
                         }
                     },
                     {
                         data: "PortalEmail",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.portalEmail
-
                         }
                     }
-                    //,
-                    //{
-                    //    data: "NoofDays",
-
-                    //    render: function (data, type, row, meta) {
-                    //        return row.noofDays
-                    //        //var paymentDate = new Date(row.paymentDate);
-
-                    //        // return paymentDate.toLocaleDateString();
-
-                    //    }
-                    //},
-                    //{
-                    //    data: "IsPosted",
-
-                    //    render: function (data, type, row, meta) {
-                    //        //return row.isPosted
-                    //        if (row.isPosted == 'False') {
-                    //            return 'Not Posted'
-                    //        } else {
-                    //            return 'Posted'
-                    //        }
-
-                    //        //if (row.docName.trim() !== "") {
-                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i><i class="fa fa-eye" title="View document" id="SEMView_document" ><span style="display:none">' + row.docName + '</span> </i>'
-                    //        //}
-                    //        //else {
-                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i>'
-                    //        //}
-
-                    //    }
-                    //}, {
-                    //    data: "HolidayId",
-
-                    //    render: function (data, type, row, meta) {
-                    //        // return row.holidayId
-                    //        return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-                    //        // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'
-                    //        //if (row.expenditureType == 0) {
-                    //        //    return '<span>Credit</span>';
-
-                    //        //}
-                    //        //else {
-                    //        //    return '<span>Debit</span>';
-
-                    //        //}
-
-                    //    }
-                    //}
-                    //}, {
-                    //    data: "Approvals",
-
-                    //    render: function (data, type, row, meta) {
-                    //        if (row.approvals == null || row.approvals == "") {
-
-                    //            return '<div class="SEMapprovals"><img src="/Images_IMP/pending_02.png"  title="Pending" /></div>'
-                    //        }
-                    //        else if (row.approvals == "0") {
-                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/Rejects.png" title="Reject" /><i class="fa fa-eye" style="font-size:20px" title="View Comments" ></i></i></div>'
-                    //        }
-                    //        else {
-                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/approvals_1.png"  title="Approvals" /><i class="fa fa-eye" style="font-size:20px" title="View Comments"  ></i></i></div>'
-                    //        }
-
-                    //    }
-                    //}
-                    //, {
-
-                    //    render: function (data, type, row, meta) {
-                    //        //  length++;
-                    //        if (row.approvals == "1") {
-                    //            return ''
-                    //        }
-                    //        else {
-                    //            return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-
-                    //        }
-
-                    //    }
-                    //}
                 ]
-
-
-            });
-            //$('.dt-buttons').css('display', 'block');
-            //table.on('draw', function () {
-            //    $('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
-            //});
-            //$('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+            });          
         },    
         error: function (xhr, status, error) {
             errorCallback(xhr.status, error);
@@ -758,6 +614,7 @@ $(document).on('click', '#Bestperformertbl td:nth-child(2)', function (event) {
 ///-----****Search best performer view fileds clear button code start
 $('#Addingusers_Clearbtn').click(function () {
     $('#SearchUserform_id')[0].reset();
+    $('#Addbestperformerdataaddingtbl_accordionoc3').hide();
 });
 
 
@@ -843,25 +700,6 @@ $('#Updatebestperoformer').submit(function (event) {
 
 });
 
-
-//$('#UV_Deletebtn').click(function () {
-//    var PerformerId = $('#PerformerId_txtid').val();
-//    $.ajax({
-//        url: '/Admin/Delete_ManageBestPerformer?PerformerId=' + PerformerId,
-//        type: 'GET',
-//        //data: data,
-//        success: function (response) {
-//            debugger;
-//            if (response == "Deleted") {
-//                $('#Errmsg').text('Record deleted successfully');
-//                SearchQuotes();                
-//            } else {
-//                $('#Errormessage').text('Sommething went wrong...!')
-//            }
-//        }
-//    });
-//})
-
 $('#UpdateView_SearchUserform_id').submit(function (event) {
     debugger;
     event.preventDefault();
@@ -879,47 +717,24 @@ $('#UpdateView_SearchUserform_id').submit(function (event) {
             var formattedDate = GetDateFormat();
             var table = $('#Updateview_Bestperformertbl').DataTable();
             table.destroy();
-            $("#bestperformertbl_Recordscount").text(response.length);
-
-
+            $("#Updateview_bestperformertbl_Recordscount").text(response.length);
             var newTable = $("#Updateview_Bestperformertbl").DataTable({
-
-
-
-
-            //var table = $('#Updateview_Bestperformertbl').DataTable();
-            //table.destroy();
-            //$("#bestperformertbl_Recordscount").text(response.length);
-
-
-            /*var newTable = $("#Updateview_Bestperformertbl").DataTable({*/
-                dom: 'Bfrtip',
+                dom: '<"top"lf>t<"bottom"ip>',
                 buttons: [],
-
                 bProcessing: false,
-                bLengthChange: true,
-                /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-                bfilter: false,
-                bSort: true,
+                bLengthChange: false,
+                //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+                bfilter: true,
+                bSort: false,
                 searching: false,
                 //scrollX: true,
                 //scrollY: '400px',
-                /* scrollCollapse: true,*/
+                //scrollCollapse: true,
                 paging: true,
-                bPaginate: true,
-                //  stateSave:true,
+                bPaginate: false,
+                //stateSave:true,
                 data: response,
-                columns: [
-
-                    //{
-                    //    data: "SNO",
-                    //    //visible: false,
-
-                    //    render: function (data, type, row, meta) {
-                    //        //  length++;
-                    //        return row.holidayId
-                    //    }
-                    //},
+                columns: [                
                     {
                         targets: 0, // Assuming this is the column index where you want to display numbering
                         render: function (data, type, row, meta) {
@@ -930,143 +745,36 @@ $('#UpdateView_SearchUserform_id').submit(function (event) {
                     },
                     {
                         data: "UserId",
-
                         render: function (data, type, row, meta) {
-
-                            /* row.firstName + */
-                            return '<input type="radio" name="' + row.firstName + '" value="' + row.userId + '" />';
-
+                            return '<input type="radio" name="' + row.firstName + '" value="' + row.userId + '"class="form-check-input" />';
                         }
                     },
                     {
                         data: "FirstName",
-
                         render: function (data, type, row, meta) {
-
-
                             return row.firstName
-
                         }
                     },
                     {
                         data: "RoleName",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.roleName
-
                         }
                     },
                     {
                         data: "ClassificationName",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.classificationName + '<input type="text" value=' + row.userId + ' hidden/>'
-
                         }
                     },
                     {
                         data: "PortalEmail",
-
                         render: function (data, type, row, meta) {
-                            //  length++;
-
                             return row.portalEmail
-
                         }
                     }
-                    //,
-                    //{
-                    //    data: "NoofDays",
-
-                    //    render: function (data, type, row, meta) {
-                    //        return row.noofDays
-                    //        //var paymentDate = new Date(row.paymentDate);
-
-                    //        // return paymentDate.toLocaleDateString();
-
-                    //    }
-                    //},
-                    //{
-                    //    data: "IsPosted",
-
-                    //    render: function (data, type, row, meta) {
-                    //        //return row.isPosted
-                    //        if (row.isPosted == 'False') {
-                    //            return 'Not Posted'
-                    //        } else {
-                    //            return 'Posted'
-                    //        }
-
-                    //        //if (row.docName.trim() !== "") {
-                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i><i class="fa fa-eye" title="View document" id="SEMView_document" ><span style="display:none">' + row.docName + '</span> </i>'
-                    //        //}
-                    //        //else {
-                    //        //    return '<i class="fa fa-eye" title="View Expenditure Details" id="SEM_Expendituredetails" ></i>'
-                    //        //}
-
-                    //    }
-                    //}, {
-                    //    data: "HolidayId",
-
-                    //    render: function (data, type, row, meta) {
-                    //        // return row.holidayId
-                    //        return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-                    //        // return row.holidayId + '<input type="text" value=' + row.holidayId + ' hidden/>'
-                    //        //if (row.expenditureType == 0) {
-                    //        //    return '<span>Credit</span>';
-
-                    //        //}
-                    //        //else {
-                    //        //    return '<span>Debit</span>';
-
-                    //        //}
-
-                    //    }
-                    //}
-                    //}, {
-                    //    data: "Approvals",
-
-                    //    render: function (data, type, row, meta) {
-                    //        if (row.approvals == null || row.approvals == "") {
-
-                    //            return '<div class="SEMapprovals"><img src="/Images_IMP/pending_02.png"  title="Pending" /></div>'
-                    //        }
-                    //        else if (row.approvals == "0") {
-                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/Rejects.png" title="Reject" /><i class="fa fa-eye" style="font-size:20px" title="View Comments" ></i></i></div>'
-                    //        }
-                    //        else {
-                    //            return '<div class="SEMapprovalsafter"><img src="/Images_IMP/approvals_1.png"  title="Approvals" /><i class="fa fa-eye" style="font-size:20px" title="View Comments"  ></i></i></div>'
-                    //        }
-
-                    //    }
-                    //}
-                    //, {
-
-                    //    render: function (data, type, row, meta) {
-                    //        //  length++;
-                    //        if (row.approvals == "1") {
-                    //            return ''
-                    //        }
-                    //        else {
-                    //            return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-
-                    //        }
-
-                    //    }
-                    //}
                 ]
-
-
-            });
-            //$('.dt-buttons').css('display', 'block');
-            //table.on('draw', function () {
-            //    $('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
-            //});
-            //$('#Bestperformertbl').find('td:nth-child(2)').attr('title', 'Edit');
+            });         
         },
         error: function (xhr, status, error) {
             errorCallback(xhr.status, error);
@@ -1105,7 +813,7 @@ function Deletefunction(PerformerId) {
             function (response) {
                 if (response == "Deleted") {
                     $('#Errormessage').text('Record deleted successfully');
-                    SearchQuotes();
+                    Searchfun();
                 } else {
                     $('#Errormessage').text('Sommething went wrong...!');
                 }
@@ -1120,4 +828,10 @@ function Deletefunction(PerformerId) {
 
 $('#UV_BackToSearchbtn').click(function () {
     location.reload();
+});
+
+
+$('#UV_Addingusers_Clearbtn').click(function () {
+    $('#UpdateView_SearchUserform_id')[0].reset();
+    $('#Updateview_Addbestperformerdataaddingtbl_accordionoc3').hide();
 });

@@ -21,22 +21,21 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span> Organisation Fee Summary</h4>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Reports /</span>*@ Organisation Fee Summary</h4>
 
         <!-- Examples -->
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3" >
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">            
                             <span id="AddNewText_Span_CreatePage">
                                 ORGANISATION FEE SUMMARY
                             </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                       @*<small class="text-muted float-end">Default label</small>*@
                     </div>
 
 
@@ -61,7 +60,7 @@
                                             new SelectList(ViewBag.FeeselectLocation, "Value", "Text"),
                                              new { @class = "form-select", @id = "dropdown_LOCATION", @multiple = "multiple", @required = "required" })
                                                 <input class="form-check-input" type="checkbox" value="" id="Select_All">
-                                                <label class="form-check-label" for="defaultCheck3">
+                                                <label class="form-check-label col-sm-7" for="defaultCheck3">
                                                     Select All Locations
                                                 </label>
                                                 <a onclick="Sublocation('dropdown_LOCATION','dropdown_sublocation','sublocationdisplay','FeeselectSubLocation','locationname','locationid','Location','errorbox1')">
@@ -88,7 +87,7 @@
 
                                              new { @class = "form-select", @id = "dropdown_sublocation", @multiple = "multiple", @required = "required" })
                                                 <input class="form-check-input" type="checkbox" value="" id="Select_Allsub">
-                                                <label class="form-check-label" for="defaultCheck3">
+                                                <label class="form-check-label col-sm-7" for="defaultCheck3">
                                                     Select All Sub Locations
                                                 </label>
                                                 <a onclick="Sublocation('dropdown_sublocation','dropdown_Instances','instancesdisplay','selectedInstance','Instancename','instanceid','Sublocation','errorbox2')">
@@ -166,14 +165,10 @@
 
 
 
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-5">
-                                                </div>
-                                                <div class="col-sm-7">                                                  
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="clearForm('Searchfeesummary')">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light">Get Report</button>
-                                                </div>
-                                            </div>
+                                        <div class="col-sm-12 text-center">
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="clearForm('Searchfeesummary')">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm">Get Report</button>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>

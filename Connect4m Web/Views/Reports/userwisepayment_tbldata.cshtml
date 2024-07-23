@@ -11,9 +11,9 @@
 </head>
 <body>
     <div class="card">
-        <h5 class="card-header">
-            YOUR SEARCH RESULTED @Model.Count() RECORDS.
-        </h5>
+        <div class="card-header bg-danger text-white">
+            YOUR SEARCH RESULTED  <span class="badge badge-center rounded-pill bg-primary bg-glow"> @Model.Count()  </span> RECORDS.
+        </div>
         <div class="card-datatable text-nowrap">
             <div class="table-responsive">
                 <div class="table-responsive text-nowrap">
@@ -35,7 +35,7 @@
                                 <tr>
                                     <td>@item.hallticket</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-id="@item.Name" onclick="Feestatementbyuserid('@item.UserId','@item.Name')">
+                                        <a href="javascript:void(0);" style="text-decoration:underline;" data-id="@item.Name" onclick="Feestatementbyuserid('@item.UserId', '@item.Name', '@item.hallticket')">
                                             @item.Name
                                         </a>
                                     </td>

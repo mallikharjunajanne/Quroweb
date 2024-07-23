@@ -7,19 +7,15 @@
 
 <!DOCTYPE html>
 <html>
-<head>
- 
-</head>
+<head></head>
 <body>   
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Attendance /</span>Fast Attendance </h4>
+        <h4 class="mb-3 text-center">Fast Attendance </h4>
         <div class="row mb-2">
-            <span id="ErrorMessage" class="text-danger"></span>
+            <span id="ErrorMessage" class="text-danger text-validation"></span>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">SEARCH FOR STUDENTS</h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
-                    </div>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">SEARCH FOR STUDENTS<small>* INDICATES MANDATORY FIELD</small></div>
                     <div class="card-body">
                         <form id="Fastattendanceform" enctype="multipart/form-data">
                             <input type="hidden" id="FAROLENAMESPANID" value="@ViewBag.rolename" />
@@ -32,7 +28,6 @@
                                             <span asp-validation-for="StartDate" class="text-danger"></span>
                                         </div>
                                     </div>
-
                                     <div class="row mb-3">
                                         <label asp-for="InstanceClassificationId" class="control-label col-sm-4 col-form-label text-end required space">Department</label>
                                         <div class="col-sm-4">
@@ -41,6 +36,10 @@
                                                 </select>
                                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                             </div>
+                                        </div>
+                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end required space">Total Credits</label>
+                                        <div class="col-sm-2">
+                                            <span class="text-danger">2562</span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -52,6 +51,10 @@
                                                 <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        <label class="control-label col-sm-2 col-form-label text-end required space">Used Credits</label>
+                                        <div class="col-sm-2">
+                                            <span class="text-danger">2562</span>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label asp-for="SlotId" class="control-label col-sm-4 col-form-label text-end required space">Slot </label>
@@ -61,6 +64,11 @@
                                                 </select>
                                                 <span asp-validation-for="SlotId" class="text-danger"></span>
                                             </div>
+                                        </div>
+
+                                        <label class="control-label col-sm-2 col-form-label text-end required space">Remaining Credits</label>
+                                        <div class="col-sm-2">
+                                            <span class="text-danger">2562</span>
                                         </div>
                                     </div>
                                     <div class="row justify-content text-center">
@@ -74,7 +82,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="Divcontent">
             </div>
         </div>

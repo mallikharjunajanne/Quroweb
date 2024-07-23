@@ -35,27 +35,29 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
+      
         <div id="SearchRoleWise">
-
-            <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span> MANAGE ROLE</h4>
-
             <div class="row mb-2">
+                <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@ MANAGE ROLE</h4>
+
+
+                <div class="text-end">
+                    <button id="addnewRoleformanage" class="btn btn-label-linkedin waves-effect btn-sm">Create Role</button>
+                </div>
                 <div class="col-md-12 col-lg-12 mb-3">
 
                     <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h6 class="mb-0">
-                                <span id="AddNewText_Span_CreatePage">
-                                    MANAGE ROLE
-                                </span>
-                            </h6>
+                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                            <span id="AddNewText_Span_CreatePage">
+                                MANAGE ROLE
+                            </span>
                         </div>
-                        <div class="demo-inline-spacing text-end" >
-                            <div class="col-sm-3">
-                            </div>
-                            <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewRoleformanage"> Create Role</button>
+                        @*<div class="demo-inline-spacing text-end">
+                        <div class="col-sm-3">
                         </div>
+                        <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="addnewRoleformanage"> Create Role</button>
+                    </div>*@
                         <div class="card-body mb-2">
 
                             @*=============================  Form Start ================================*@
@@ -93,7 +95,7 @@
                                                 <div class="col-sm-5">
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light" id="clearform">Clear</button>
                                                     <button type="button" class="btn btn-success waves-effect waves-light" id="sub_tblMR">Search</button>
                                                 </div>
                                             </div>
@@ -108,43 +110,49 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                @*</div>*@
 
-            @*=============================  TABLE START ================================*@
+                @*=============================  TABLE START ================================*@
 
-            <div class="card">
+                <div class="col-md-12 col-lg-12 mb-3">
 
-                <h6 class="card-title mb-0">
-                    <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_MR" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-                </h6>
-                <div class="table-responsive text-nowrap">
-                    <table id="tblMRsearchresults" class="link table table-hover table-bordered ">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>
-                                    S.No
-                                </th>
-                                <th>
-                                    Role Name
-                                </th>
-                                <th>
-                                    Description
-                                </th>
-                                <th>
-                                    Folder Size(In MB)
-                                </th>
-                                <th>
-                                    Delete
-                                </th>
+                    <div class="card mb-4">
+                        @*<div class="card">*@
 
-                            </tr>
-                        </thead>
-                    </table>
+                        <div class="card-header bg-danger text-white">
+                            <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_MR" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+                        </div>
+                        <div class="table-responsive text-nowrap">
+                            <table id="tblMRsearchresults" class="link table table-hover table-bordered ">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>
+                                            S.No
+                                        </th>
+                                        <th>
+                                            Role Name
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Folder Size(In MB)
+                                        </th>
+                                        <th>
+                                            Delete
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+                @*=============================  TABLE END ================================*@
             </div>
-            @*=============================  TABLE END ================================*@
         </div>
-        <div id="CreateRoleScreenAll" style="display:none"></div>
+            <div id="CreateRoleScreenAll" style="display:none"></div>
+       
 
     </div>
 

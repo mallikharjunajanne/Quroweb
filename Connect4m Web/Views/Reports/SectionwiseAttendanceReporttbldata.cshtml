@@ -4,58 +4,45 @@
     Layout = null;
 }
 
-<style>
-    /* #tblStaffLeavesearchresults td {
-        padding: 2px;
-        border: 3px solid black;
-        font-weight: 600;
-    }
-
-    #FirstTable td {
-        border: 1px solid black;
-    }*/
-</style>
 
 <div class="row mb-2">
     <div class="row justify-content" style=" color: #7367f0;">
         <div class="col-sm-6" id="Reporttblexporttoexcel">
-            <a herf="Javascript:void(0);" id="_AttendancereportExportExcel">Export To Excel</a>
+            <a herf="Javascript:void(0);" id="_AttendancereportExportExcel" class="btn btn-label-linkedin waves-effect btn-sm">Export To Excel</a>
         </div>
         <div class="col-sm-6 text-end" id="reporttblprint">
-            <a herf="javascript:void(0);" id="_attendancereportPrint">Print</a>
+            <a herf="javascript:void(0);" id="_attendancereportPrint" class="btn btn-label-linkedin waves-effect btn-sm">Print</a>
         </div>
     </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span id="AddNewText_Span_CreatePage">
-                        ATTENDANCE DETAILS
-                    </span>
-                </h5>
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                <span id="AddNewText_Span_CreatePage">
+                    ATTENDANCE DETAILS
+                </span>
             </div>
-            <div class="card-body">
-                <div class="card-datatable text-nowrap">
-                    <div class="table-responsive">
-                        <div class="table-responsive text-nowrap" id="Printattendancereport">
-                            <div style=" text-align: center; font-weight: 500;">
-                                <b>Quro Schools</b>
-                                <p>Attendance for the Classes <span id="Selectedepartmentspid"></span> for the period of <span id="Fromdatespid"></span> To <span id="Enddatespid"></span></p>
-                            </div>
-                            <table class="table table-bordered" id="SectionwiseattendaceReport" style="border-collapse: separate;">
-                                <thead id="tablehead" class="table-dark">
 
-                                </thead>
-                                <tbody id="tableBody">
-                                </tbody>
-                            </table>
-                            <div id="AttendanceSignaturesdiv">
+            <div class="card-datatable text-nowrap">
+                <div class="table-responsive">
+                    <div class="table-responsive text-nowrap" id="Printattendancereport">
+                        <div style=" text-align: center; font-weight: 500;">
+                            <b>Quro Schools</b>
+                            <p>Attendance for the Classes <span id="Selectedepartmentspid"></span> for the period of <span id="Fromdatespid"></span> To <span id="Enddatespid"></span></p>
+                        </div>
+                        <table class="table table-bordered" id="SectionwiseattendaceReport" style="border-collapse: separate;">
+                            <thead id="tablehead" class="table-dark">
 
-                            </div>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                        <div id="AttendanceSignaturesdiv">
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

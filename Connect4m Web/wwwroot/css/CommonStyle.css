@@ -284,19 +284,6 @@ textarea {
 
 
 
-/* select {
-    font-size: 14px;
-    margin-left: -1px;
-    text-align: center;
-    width: 100%;
-    line-height: 0.8;
-}*/ /* select {
-    font-size: 14px;
-    margin-left: -1px;
-    text-align: center;
-    width: 100%;
-    line-height: 0.8;
-}*/
 
 /*   ----------------------   Manage Subjects   ---------------------------------------------*/
 #checks .col-1 {
@@ -442,17 +429,7 @@ h6 {
 }
 
 /*Adding     code #01  ------------------     28-09-2023  */
-/*.description {
-    font-size: 21px;
-    line-height: 30px;
-    width: 796px;
-    margin-top: -370px;
-}
 
-.title {
-  font-size: 96px;
-  margin: 0;
-}*/
 .required::before {
     content: "*";
     color: red;
@@ -674,3 +651,16 @@ table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting
     background-color: #70747496 !important
 }
 
+/*----Home page buttons headers text start-----*/
+.headertext {
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+}
+.headertextbtn {
+    background-color: #e22132 !important;
+    color: white !important;
+    border-radius: 10px 10px 0px 0px;
+    padding: 6px;
+    padding: 6px;
+}
+/*----Home page buttons headers text end-----*/

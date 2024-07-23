@@ -175,7 +175,7 @@ function StudentLeaveApproval_Save(event, submitButtonName) {
 //===============================to see Pop up
 $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
-
+        debugger;
         loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
     var popup = document.getElementById("popup");
@@ -199,8 +199,10 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
     $("#InstanceClassificationId_Popup").val(InstanceClassificationId);
     $("#InstanceSubClassificationId_Popup").val(InstanceSubClassificationId);
     $("#TblApplied_SearchRecords_Tr_Id").val(TblApplied_SearchRecords_Tr_Id);
-    TblAppliedLeavesHistory_SearchRecords_Calingfunction(Studentid);
-    TblAppliedLeavesSummery_SearchRecords_Calingfunction(Studentid);
+    //TblAppliedLeavesHistory_SearchRecords_Calingfunction(Studentid);
+        TblAppliedLeavesHistory_SearchRecordsAproverejectfun_Calingfunction(Studentid);
+    //TblAppliedLeavesSummery_SearchRecords_Calingfunction(Studentid);
+        TblAppliedLeavesSummery_SearchRecordsAproverejectfun_Calingfunction(Studentid);
     GetAttendancePercentagebyUserID(Studentid);
    // document.getElementById('id01').style.display = "block";
     
@@ -262,6 +264,7 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
 
 function DdlDepartmentId_Calingfunction() {
     try {
+        debugger;
         $("#ErrorMessageSpan").empty();
     $.ajax({
         url: "/Attendance/DdlDepartmentId_Calingfunction",
@@ -591,6 +594,7 @@ function TblAppliedLeavesHistory_SearchRecords_Calingfunction(Studentid) {
         url: "/Attendance/TblAppliedLeavesHistory_SearchRecords_Calingfunction?Studentid=" + Studentid,
         type: "GET",
         success: function (response) {
+            debugger;
             if (response.length <= 0) {
                 $("#TblAppliedLeavesHistory_SearchRecords").hide();
                 //TextcountsofStudents = "No Data Found.";
@@ -691,6 +695,7 @@ function TblAppliedLeavesSummery_SearchRecords_Calingfunction(Studentid) {
         url: "/Attendance/TblAppliedLeavesSummery_SearchRecords_Calingfunction?Studentid=" + Studentid,
         type: "GET",
         success: function (response) {
+            debugger;
             var TextcountsofStudents = 0.0;
             $("#lblLeaveTypesSummaryNumRecordsCounts").text(response.length);
             if (response.length <= 0) {
@@ -816,7 +821,7 @@ function ClosePopup() {
 
 function ViewStudentLeavesHistory(InstanceId, UserID) {
     try {
-
+        debugger;
         var screenWidth = screen.availWidth;
 
         var windowWidth = 700; // Adjust the width of the window as needed
@@ -1028,5 +1033,165 @@ function ViewStudentLeavesHistory(InstanceId, UserID) {
         });
     } catch (e) {
         $("#Main_Span_Error").text("Something Error");
+    }
+}
+
+
+function TblAppliedLeavesSummery_SearchRecordsAproverejectfun_Calingfunction(Studentid) {//TblAppliedLeavesSummery_SearchRecords_Calingfunction
+    try {
+        // var Studentid = 28566;
+        $.ajax({
+            url: "/Attendance/TblAppliedLeavesSummery_SearchRecords_Calingfunction?Studentid=" + Studentid,
+            type: "GET",
+            success: function (response) {
+                debugger;
+                var TextcountsofStudents = 0.0;
+                $("#lblLeaveTypesSummaryNumRecordsCounts").text(response.length);
+                if (response.length <= 0) {
+                    TextcountsofStudents = "No Data Found.";
+                    $('#LeavesNoRecordsdata_divid2').hide();
+                    $('#LeavesNoRecordsdataid2').text('No Data Found.');
+                } else {
+                    TextcountsofStudents = "YOUR SEARCH RESULTED <span class='number-circle' style='font-size: 7px;'>   " + response.length + "</span>  RECORD(S).";
+                }
+                // $("#lblLeaveTypesSummaryNumRecordsCounts").html(TextcountsofStudents);
+                $('#LeavesNoRecordsdata_divid2').hide();
+
+
+                $("#TblAppliedLeavesSummery_SearchRecords tbody").empty();
+
+
+                var Sno = 1;
+
+                $.each(response, function (i, Value2) {
+                    $("#TblAppliedLeavesSummery_SearchRecords tbody").append("<tr>" +
+                        "<td>" + Sno + "</td>" +
+                        "<td>" + Value2.leaveType + " </td>" +
+                        "<td>" + Value2.leaveNoOfDays + " </td>" +
+                        "</tr>"
+                    );
+                    Sno++;
+
+                });
+
+                var rowcount1 = $("#TblAppliedLeavesSummery_SearchRecords tbody tr").length;
+
+                if (rowcount1 <= 0) {
+                    $("#TblAppliedLeavesSummery_SearchRecords").hide();
+                }
+                else {
+
+                    $("#TblAppliedLeavesSummery_SearchRecords").show();
+                }
+            },
+            error: function (xhr, status, error) {
+                $("#Main_Span_Error").text("Something Error");
+            }
+        });
+    } catch (x) {
+
+        $("#Main_Span_Error").text("Something Error");
+    }
+}
+function TblAppliedLeavesHistory_SearchRecordsAproverejectfun_Calingfunction(Studentid) {//TblAppliedLeavesHistory_SearchRecords_Calingfunction
+    try {
+        // var Studentid = 28566;
+        //loaddingimg.css('display', 'block');
+        $.ajax({
+            url: "/Attendance/TblAppliedLeavesHistory_SearchRecords_Calingfunction?Studentid=" + Studentid,
+            type: "GET",
+            success: function (response) {
+                debugger;
+                if (response.length <= 0) {
+                    $("#TblAppliedLeavesHistory_SearchRecords").hide();
+                    //TextcountsofStudents = "No Data Found.";
+                    $('#LeavesNoRecordsdata_divid1').hide();
+                    $('#LeavesNoRecordsdataid1').text('No Data Found.');
+                } else {
+                    // TextcountsofStudents = "YOUR SEARCH RESULTED <span class='number-circle' style='font-size: 7px;'> " + response.length + "</span>  RECORD(S).";
+                    // $("#lblLeaveHistoryNumRecordsCounts").html(TextcountsofStudents);
+                    $("#lblLeaveHistoryNumRecordsCounts").text(response.length);
+                    $('#LeavesNoRecordsdata_divid1').show();
+                    $("#TblAppliedLeavesHistory_SearchRecords tbody").empty();
+
+                    var viewfiles = "";
+                    var Sno = 1;
+                    var fromdate1 = "";
+                    var Todate1 = "";
+                    var year1 = "";
+                    var month1 = "";
+                    var day1 = "";
+                    var fromdateConvert12 = "";
+                    var year2 = "";
+                    var month2 = "";
+                    var day2 = "";
+                    var TodateConvert12 = "";
+                    $.each(response, function (i, Value2) {
+                        //var StudentLeaveDetailsID1 = Value2.studentLeaveDetailsID;
+
+
+                        fromdate1 = Value2.fromdate.split("T")[0];
+                        Todate1 = Value2.todate.split("T")[0];
+
+                        const fromdateConvert1 = new Date(fromdate1);
+                        year1 = fromdateConvert1.getFullYear();
+                        month1 = ('0' + (fromdateConvert1.getMonth() + 1)).slice(-2);
+                        day1 = ('0' + fromdateConvert1.getDate()).slice(-2);
+                        /*var dateString = year + '-' + month + '-' + day;*/
+                        fromdateConvert12 = day1 + '/' + month1 + '/' + year1;
+
+
+                        const TodateConvert1 = new Date(Todate1);
+                        year2 = TodateConvert1.getFullYear();
+                        month2 = ('0' + (TodateConvert1.getMonth() + 1)).slice(-2);
+                        day2 = ('0' + TodateConvert1.getDate()).slice(-2);
+                        TodateConvert12 = day2 + '/' + month2 + '/' + year2;
+
+                        if (Value2.attachedFileName != "") {
+                            viewfiles = " <a class='badge rounded-pill bg-info bg-glow' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank'>View</a >";
+                        }
+                        else {
+                            viewfiles = "<a class='badge rounded-pill bg-secondary bg-glow'>View</a>";
+                        }
+
+                        $("#TblAppliedLeavesHistory_SearchRecords tbody").append("<tr>" +
+
+                            "<td>" + Sno + "</td>" +
+                            "<td>" + fromdateConvert12 + " </td>" +
+                            "<td>" + TodateConvert12 + " </td>" +
+                            "<td>" + Value2.leaveType + " </td>" +
+                            "<td>" + Value2.remarks + "</td>" +
+                            "<td>" + Value2.leaveStatus + " </td>" +
+
+                            "<td style='text-align:center;'>" + viewfiles + "</td>" +
+
+                            "<td>" + Value2.approved_Regected_Date + " </td>" +
+
+                            "</tr>"
+                        );
+                        Sno++;
+
+                    });
+                }
+                $("#TblAppliedLeavesHistory_SearchRecords").show();
+                //var rowcount1 = $("#TblAppliedLeavesHistory_SearchRecords tbody tr").length;
+                //if (rowcount1 <= 0) {
+                //    $("#TblAppliedLeavesHistory_SearchRecords").hide();
+                //}
+                //else {
+
+                //    $("#TblAppliedLeavesHistory_SearchRecords").show();
+                //}
+            }
+            ,
+            error: function (xhr, status, error) {
+                loaddingimg.css('display', 'none');
+                $("#Main_Span_Error").text("Something Error");
+            }
+        });
+    } catch (x) {
+        //$("#loadingOverlay").hide();
+        $("#Main_Span_Error").text("Something Error");
+        loaddingimg.css('display', 'none');
     }
 }

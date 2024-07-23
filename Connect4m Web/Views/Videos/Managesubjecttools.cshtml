@@ -15,100 +15,90 @@
         </div>
     </div>*@
 
-<div class="col-sm-12 ">
+<div class="flex-grow-1 container-p-y container-xxl">
+    <h4 class="mb-3 text-center">MANAGE SUBJECT TOOLS</h4>
+    <div class="col-sm-12 text-end">
+        <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="Subjecttoolcreatebtn"> Create Subject Tool</button>
 
-    <div class="card">
-
-        <div class="card-header pb-0">
-            <a class="btn btn-primary" href="/Videos/Insertsubjecttool" style=" margin-left: 74%; border-radius: 15px; height: 35px;">
-                Create Subject Tool
-            </a>
-
-        </div>
-        <div class="card-body">
+        @*<a class="btn btn-label-linkedin waves-effect btn-sm" id="Subjecttoolcreatebtn" href="javascript:void()" href="/Videos/Insertsubjecttool">
+            Create Subject Tool
+        </a>*@
+    </div>
+    <div id="SUBJECTOOLSMAINDIV">
+        <div class="card mb-3">
             <div class="default-according style-1" id="accordionoc">
-                <div class="card">
-                    <div class="card-header bg-primary">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> SEARCH FOR SUBJECT TOOLS</button>
-                        </h5>
-                    </div>
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    SEARCH FOR SUBJECT TOOLS
+                    @*<button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"> SEARCH FOR SUBJECT TOOLS</button>*@
+                </div>
+                <div class="card-body">
                     <div class="collapse show" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
 
                         <div class="row padding-search">
-                            <div class="col-lg-2">
-
-
+                            <div class="row mb-3">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Notice Subject</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="subject_tool_name" class="form-control" />
+                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <lable> Subject Tool Name</lable>
-
+                            <div class="col-sm-12 text-center">
+                                <button class="btn btn-danger waves-effect waves-light" id="mst_clear">Clear</button>
+                                <button type="button" class="btn btn-success waves-effect waves-light" id="mst_search">Search</button>
                             </div>
-
-                            <div class="col-lg-4">
+                            @*<div class="col-lg-3"><lable> Subject Tool Name</lable></div>
+                                <div class="col-lg-4">
                                 <input type="text" id="subject_tool_name" class="form-control" />
-
-                            </div>
-                            <div class="col-lg-3">
-
-
-                            </div>
-                            <div class="col-lg-5">
-
-
-                            </div>
-                            <div class="col-lg-2 button-subject">
+                                </div>
+                                <div class="col-lg-2 button-subject">
                                 <input type="button" id="mst_clear" value="Clear" />
-
-                            </div>
-                            <div class="col-lg-2 button-subject">
+                                </div>
+                                <div class="col-lg-2 button-subject">
                                 <input type="button" id="mst_search" value="Search" />
-
-                            </div>
+                                </div>*@
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header bg-primary">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_subtools" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>
-                            </h5>
-                        </div>
-
-                        <div id="eg1" style="color: black; background-color: whitesmoke">
-                            <table class=" table table-bordered" id="tblsubjecttools" style="background-color:whitesmoke ;width:9px;border-color:red">
-                                <thead style="width:9px;">
-                                    <tr style="border-color: black;">
-                                        <th style="width: 9px; border-color: blue" class="bg-primary" hidden>
-                                            Instance Subject ToolId
-
-                                        </th>
-                                        <th style=" width: 30%; border-color: blue" id="th2tool" class="bg-primary">
-                                            Subject Tool Name
-
-                                        </th>
-                                        <th class="bg-primary" style="border-color: blue;" id="th3description">
-                                            Description
-                                        </th>
-                                        <th style="width: 8px; border-color: blue;" id="th4delete" class="bg-primary">
-                                            Delete
-                                        </th>
-
-
-
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-
-
-
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 mb-1">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    YOUR SEARCH RESULTS <span id="totalrecords_subtools" class="badge badge-center rounded-pill bg-primary bg-glows"></span> RECORD(S)
 
+                    @*<button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"> YOUR SEARCH RESULTS <span id="totalrecords_subtools" style=" background-color: white; color: red; font-weight: 900; background-color: white; padding: 5px; border-radius: 16px;"></span> RECORD(S)</button>*@
+                </div>
+
+                <div id="eg1" style="color: black; background-color: whitesmoke">
+                    <table class=" table table-bordered" id="tblsubjecttools" style="background-color:whitesmoke ;width:9px;border-color:red">
+                        <thead style="width:9px;">
+                            <tr style="border-color: black;">
+                                <th style="width: 9px; border-color: blue" class="bg-primary" hidden>
+                                    Instance Subject ToolId
+
+                                </th>
+                                <th style=" width: 30%; border-color: blue" id="th2tool" class="bg-primary">
+                                    Subject Tool Name
+
+                                </th>
+                                <th class="bg-primary" style="border-color: blue;" id="th3description">
+                                    Description
+                                </th>
+                                <th style="width: 8px; border-color: blue;" id="th4delete" class="bg-primary">
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <div id="SUBJECTTOOLSAPPENDINGDIV">
+
+    </div>
 </div>
+
+
 
 
 

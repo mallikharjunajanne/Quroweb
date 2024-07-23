@@ -10,7 +10,7 @@
             errorCallback(xhr.status, error);
         }
     };
-    debugger;
+    /*debugger;*/
     if (hasFileUpload) {
         ajaxOptions.contentType = false;
         ajaxOptions.processData = false;
@@ -39,10 +39,14 @@ function TblCallToAjax(method, url, data, successCallback, errorCallback) {
 }
 
 $(document).ready(function () {
-    debugger;  
+    /*debugger;*/ 
 
     // Default appending start date and end date 
     setMonthStartEndDates();
+
+    CommonDropdownAjaxFunction("PaymentModeSearchddl", "GET", "/Admin/Paymentmodeddl", null, function (resp) {
+        loaddingimg.css('display', 'none');
+    }, true);
 
     //Table Data Binding function
     Bankdeposittablebindingfun();
@@ -51,7 +55,7 @@ $(document).ready(function () {
 
 function Bankdeposittablebindingfun() {
     var formData = $('#BankdepositSearchForm').serialize();
-    debugger;
+    /*debugger;*/
     TblCallToAjax('GET', '/Admin/ManageBankDeposittbl', formData,
         function (response) {
             // Assuming response contains data for DataTable binding
@@ -125,7 +129,7 @@ function DateFormate(date) {
 }
 
 $('#BankdepositSearchForm').submit(function () {
-    debugger;
+    /*debugger;*/
     event.preventDefault();
     event.stopPropagation();
     $('#Commoneerrormessage').text('');
@@ -147,17 +151,11 @@ $('#BankdepositSearchForm').submit(function () {
 function Newdiposit() {
     debugger;
     $('#Amountdepositdiv1').empty();
-
     handleAjax('GET', "/Admin/Insertmanagebankdeposit", null,
         function (resp) {
             loaddingimg.css('display', 'none');
             $('#Bankdipositdiv').hide();
             $('#Amountdepositdiv1').append(resp);
-
-            //CommonDropdownAjaxFunction("Paymentmodeidddl", "GET", "/Admin/Paymentmodeddl", null, function (responce) {
-            //    debugger;
-            //    loaddingimg.css('display', 'none');
-            //}, true);
         },
         function (status, error) {
             loaddingimg.css('display', 'none');
@@ -168,7 +166,7 @@ function Newdiposit() {
 
 ///===>> BACK TO SEARCH  FUNCTION CODE START
 $('#Backtosearchlnk').click(function (e) {
-    debugger;
+    /*debugger;*/
     e.preventDefault();
     $('#Amountdepositdiv1').empty();
     $('#Bankdeposittblid').empty();
@@ -186,7 +184,7 @@ $('#Bankdepositform').on('submit', function (event) {
     event.stopPropagation();
     $('#Commoneerrormessage').text('');
     //$('#emailError').text('');
-    var DateofDeposit = $('#Depositdatetxt').val();
+    var DateofDeposit = $('#Depositdatetxtid').val();
     var Depositdate = new Date(DateofDeposit);
     var today = new Date();
     if (Depositdate > today) {
@@ -197,24 +195,45 @@ $('#Bankdepositform').on('submit', function (event) {
         $('#Commoneerrormessage').text('');
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-
         var validationMessagesLength = validationMessages.length;
-
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
             loaddingimg.css('display', 'block');
-
             var formData = new FormData($('#Bankdepositform')[0]);
+            //var fileInput = document.getElementById('AttachedDocument');
+            //var file;
+            //if (fileInput.files.length > 0) {
+            //    file = fileInput.files[0];
+            //    formData.append('AttachedDocument', file);
+            //}
+            debugger;
             var fileInput = document.getElementById('AttachedDocument');
             var file;
             if (fileInput.files.length > 0) {
+                debugger;
                 file = fileInput.files[0];
-                formData.append('AttachedDocument', file);
+                var fileName = file.name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                // List of allowed file extensions
+                var allowedExtensions = ['doc', 'docx', 'pdf', 'jpeg', 'jpg', 'png', 'gif'];
+
+                // Check if the selected file's extension is in the allowedExtensions array
+                if (allowedExtensions.indexOf(fileExtension) !== -1) {
+                    // Valid file format, proceed to append to formData
+                    formData.append('AttachedDocument', file);
+                } else {
+                    // Invalid file format, show error message
+                    $('#Commoneerrormessage').text('Please upload only .doc, .docx, .pdf, .jpeg, .jpg, .png, or .gif formats.');
+                    // Optionally clear the file input field
+                    fileInput.value = '';
+                    loaddingimg.css('display', 'none');
+                    return;
+                }
             }
 
-            var Depositdate = $('#Depositdatetxt').val();
-            var Feedepositval = $('#Feedeposittxtid').val();
 
-            formData.append("Depositdate", Depositdate);
+            var Depositdate = $('#Depositdatetxtid').val();
+            formData.append("Datedeposit", Depositdate);
 
             if (file) {
                 var url = "/Admin/Insertmanagebankdeposit?AttachedDocument=" + file;
@@ -225,46 +244,26 @@ $('#Bankdepositform').on('submit', function (event) {
             //handleAjax('POST', "/Admin/Insertmanagebankdeposit?AttachedDocument=" + file, formData,
             handleAjax('POST', url, formData,
                 function (resp) {
-                   
-
-                        if (resp == 'FileExist') {
-                            loaddingimg.css('display', 'none');
+                    debugger;
+                    loaddingimg.css('display', 'none');
+                    switch (resp) {
+                        case 'FileExist':
                             $('#Commoneerrormessage').text("File already exists");
-                        }
-                        else if (resp == '1MB') {
-                            loaddingimg.css('display', 'none');
+                            break;
+                        case '1MB':
                             $('#Commoneerrormessage').text("Document size cannot be greater than 1 MB.");
-                        }
-                        else if (resp == 'FileNotExist') {
-                            loaddingimg.css('display', 'none');
-                            $('#Commoneerrormessage').text("File Not Exist");
-                        }
-                        else if (resp == "0") {
-                            loaddingimg.css('display', 'none');
-                            $('#Commoneerrormessage').text("Record Insert Unsuccessful Please try again");
-                        }
-                    if (Feedepositval == null) {
-                        if (resp == "-1") {
-                            loaddingimg.css('display', 'none');
-                            $('#Commoneerrormessage').text("Record Insert Unsuccessful Please try again");
-                        }
-                        else {
-                            $('#Clearbtn').prop("disabled", true);
-                            $('#submitbtn').css('opacity', '0.3').prop("disabled", true);
-                            loaddingimg.css('display', 'none');
+                            break;
+                        case 'FileNotExist':
+                            $('#Commoneerrormessage').text("Please upload only .doc or .docx or .pdf or .jpeg or .jpg or .png or .gif formats.");
+                            break;
+                        case '0':
+                        case '-1':
+                            $('#Commoneerrormessage').text("Record Insert Unsuccessful. Please try again");
+                            break;
+                        default: // Success case
+                            $('#Clearbtn, #submitbtn').prop("disabled", true).css('opacity', '0.3');
                             $('#Commoneerrormessage').text("Record inserted successfully.");
-                        }
-                    } else {
-                        if (resp == "-1") {
-                            loaddingimg.css('display', 'none');
-                            $('#Commoneerrormessage').text("Record Update Unsuccessful Please try again");
-                        }
-                        else {
-                            $('#Clearbtn').prop("disabled", true);
-                            $('#submitbtn').css('opacity', '0.3').prop("disabled", true);
-                            loaddingimg.css('display', 'none');
-                            $('#Commoneerrormessage').text("Record Update successfully.");
-                        }
+                            break;
                     }
                 },
                 function (status, error) {
@@ -282,52 +281,21 @@ $(document).on('click', '#Bankdeposittblid td:nth-child(1)', function (event) {
         loaddingimg.css('display', 'block');
         debugger;
         event.stopImmediatePropagation();
-
         var parent = $(event.target).closest('tr');
         var spanValue = $(parent).find('td:first-child span').text();
-        //var ManageBankdepositid = $(parent).find('td').find('input[type="text"]').val();
-        //var table = $('#Bankdeposittblid').DataTable();
-        //tabletargetpagetblSEMsearchresults = table.page.info().page;
-
-        
-        //var data = { ManageBankdepositid: parseInt(ManageBankdepositid) };
-        handleAjax('GET', "/Admin/Insertmanagebankdeposit?ManageBankdepositid=" + spanValue, null,
-        //handleAjax('GET', "/Admin/Insertmanagebankdeposit?ManageBankdepositid=" + ManageBankdepositid, null,
+        handleAjax('GET', "/Admin/Updatemanagebankdeposit?ManageBankdepositid=" + spanValue, null,
             function (resp) {
                 debugger;
+                $('#Amountdepositdiv1').empty();
                 loaddingimg.css('display', 'none');              
                 $('#Bankdipositdiv').hide();
                 $('#Amountdepositdiv1').append(resp);
-
-                $('#Clearbtn').hide();
-
-                var INSERTUPDATEVALUE = $('#Insert_Updatespanid').data('value');
-                var button = document.getElementById('submitbtn');
-                //var form = document.getElementById('Bankdepositform');
-                debugger;
-                if (INSERTUPDATEVALUE && INSERTUPDATEVALUE.trim() === "UpdateMethod") {
-                    button.id = "Updatebtn";
-                    button.name = "Update";
-                    button.textContent = "Update";
-                    button.value = "Update";
-                    //    form.id = "UpdateBankdepositform";
-                    //    form.setAttribute('name', 'UpdateBankdepositform');
-                }
-                else {
-                    button.id = "Savebtn";
-                    button.name = "Submit";
-                    button.textContent = "Submit";
-                    button.value = "Submit";
-                    //    form.id = "Bankdepositform";
-                    //    form.setAttribute('name', 'Bankdepositform');
-                }
             },
             function (status, error) {
                 loaddingimg.css('display', 'none');
             },
             true
         );
-        //Editfun(Registrationuserid);
     }
     catch (e) {
 
@@ -346,12 +314,7 @@ function DateFormat() {
 
 //======>>>> TABLE DATA BINDING FUNCTION
 function Tabledatabindingfun(response) {
-    debugger;
-    CommonDropdownAjaxFunction("PaymentModeSearchddl", "GET", "/Admin/Paymentmodeddl", null, function (resp) {
-        loaddingimg.css('display', 'none');
-    }, true);
-    // Assuming response is an array of objects containing data
-
+   
     $("#Recordscount").text(response.length);
 
     // Clear the existing content of the table
@@ -414,37 +377,66 @@ function Tabledatabindingfun(response) {
 }
 
 //=====>>>> CLEAR FUNCTION
-function Clearcommonfunction(Formid, ErrorMessageSpanId) {
+function Clearform(formid) {
     debugger;
-    $('#Paymentmodeidddl').val('');
-    $('#Depositamounttxt').val('');
-    $('#Depositdatetxt').val('');
-    $('#BankNametxt').val('');
-    $('#Branchnametxt').val('');
-    $('#Accountnumbertxt').val('');
-    $('#AttachedDocument').val('');
-    $('#Commentstxta').val('');
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        Bankdeposittablebindingfun();
+        $('#Commoneerrormessage').text('');
+
+        // Clear ASP.NET Core validation messages
+        //var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        //validationSpans.forEach(span => {
+        //    span.textContent = ''; // Clear validation messages
+        //});
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+function InsertClearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        //Bankdeposittablebindingfun();
+        $('#Commoneerrormessage').text('');
+
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
 }
 
 
-
-
 //======>>>> EXPORT TO EXCEL FUNCTION CODE START
-$('#Amountdepositdivexporttoexcel, #AmountdepositExportToExcel').on('click', function () {
+//$('#Amountdepositdivexporttoexcel, #AmountdepositExportToExcel').on('click', function () {
+$('#AmountdepositExportToExcel').on('click', function () {
 
     var formattedDate = DateFormat();
 
-    debugger;
     var startDate = $('#Startdatetxt').val();
     var endDate = $('#Enddatetxt').val();
 
     var headerContent = `
             <div style="display: grid; grid-template-columns: repeat(18, 1fr);">
                 <div style="grid-column: 1 / span 18;">
-                     <h4 style="margin: 0; text-align: center;">Fee Amount Deposit </h4>
-                     <h4 style="margin: 0; text-align: center;">Report On:${formattedDate}</h4>
-                     <h4 style="margin: 0; text-align: center;">Start Date: ${startDate.replace('/', '-')}</h4>
-                     <h4 style="margin: 0; text-align: center;">End Date: ${endDate.replace('/', '-')}</h4>
+                     <h5 style="margin: 0; text-align: center;">Fee Amount Deposit </h5>
+                     <h5 style="margin: 0; text-align: center;">Report On:${formattedDate}</h5>
+                     <h5 style="margin: 0; text-align: center;">Start Date: ${startDate.replace('/', '-')}</h5>
+                     <h5 style="margin: 0; text-align: center;">End Date: ${endDate.replace('/', '-')}</h5>
                 </div>
             </div>`;
 
@@ -477,250 +469,3 @@ $('#Amountdepositdivexporttoexcel, #AmountdepositExportToExcel').on('click', fun
     table1.parentNode.replaceChild(table1Clone, table1);
 
 });
-
-
-
-
-
- //CommonDropdownAjaxFunction("PaymentModeSearchddl", "GET", "/Admin/Paymentmodeddl", null, function (responce) {
-    //    loaddingimg.css('display', 'none');
-    //}, true);
-
-//Dropdown bindining function
-    //handleAjax('GET', '/Admin/Paymentmodeddl__', null,
-    //    function (response) {
-    //        populateDropdown(response, 'PaymentModeSearchddl');
-    //    },
-    //    function (status, error) {
-    //        var Dropdownappending = $('#PaymentModeSearchddl');
-    //        Dropdownappending.append($('<option>', {
-    //            value: '0000',
-    //            text: "500 Error"
-    //        }));
-    //    },
-    //    true
-    //);
-
-    //Table Data binding function
-    //var Startdate = $('#Startdatetxt').val();
-    //var formData = $('#BankdepositSearchForm').serialize();
-    //debugger;
-    //TblCallToAjax('GET', '/Admin/ManageBankDeposittbl', formData,
-    //    function (response) {
-    //        // Assuming response contains data for DataTable binding
-    //        //Datatablesbindingfun(response);
-    //        Tabledatabindingfun(response);
-    //    },
-    //    function (status, error) {
-    //        $('#Commoneerrormessage').text('Something went wrong  in table data binding function...!!!!');
-    //    }
-    //);
-
-/////===>>> Dropdown Appending function
-//function populateDropdown(dropdownvalues,Dropdownid) {
-//    debugger;
-//    var Dropdownappending = $('#' + Dropdownid);
-//    Dropdownappending.append($('<option>', {
-//        value: '',
-//        text: '------Select------'
-//    }));
-//    $.each(dropdownvalues, function (index, item) {
-//        Dropdownappending.append($('<option>', {
-//            value: item.value,
-//            text: item.text
-//        }));
-//    });
-//}
-
-
-//function Datatablesbindingfun(response) {
-
-//    CommonDropdownAjaxFunction("PaymentModeSearchddl", "GET", "/Admin/Paymentmodeddl", null, function (resp) {
-//        loaddingimg.css('display', 'none');
-//    }, true);
-
-//    debugger;
-//    var formattedDate = DateFormat();
-//    var startDate = DateFormat($('#Startdatetxt').val());
-//    var endDate = DateFormat($('#Enddatetxt').val());
-
-//    debugger;
-//    //$('#Bankdeposittblid').empty();
-//    $('#Bankdeposittblid tbody').empty();
-//    var table = $('#Bankdeposittblid').DataTable();
-//    table.destroy();
-//    $("#Bankdeposittblid").css("font-size", "12px");
-//    $("#Recordscount").text(response.length);
-
-//    var newTable = $("#Bankdeposittblid").DataTable({
-//        dom: 'Bfrtip',
-//        buttons: [
-//            //{
-//            //    extend: 'pdfHtml5',
-//            //    title: 'Fee Amount Deposit',
-//            //    message: "Report On: " + formattedDate,
-//            //    //exportOptions: {
-//            //    //    columns: [1, 2]
-//            //    //},
-//            //},
-//            {
-//                extend: 'excel',
-//                title: 'Fee Amount Deposit',
-//                message: "Report On: " + formattedDate + "\nStart Date: " + startDate + "\nEnd Date: " + endDate,
-//                customize: function (xlsx) {
-
-//                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-//                    sheet.getElementsByTagName('row')[1].setAttribute('ht', '40');
-//                    // Set background color to white for the entire sheet
-//                    $('sheet', sheet).attr('ss:Color', '#FFFFFF');
-
-//                    // Set border color to white for all cells
-//                    $('sheet sheetData row c', sheet).each(function () {
-//                        $(this).attr('s', '51'); // Style ID for white border
-//                    });
-
-//                    // Set 1px black border for data cells
-//                    $('sheet sheetData row c[r^="A"]', sheet).each(function () {
-//                        $(this).attr('s', '52'); // Style ID for black border
-//                    });
-//                }
-//            }
-//            //,{
-//            //    extend: 'print',
-//            //    title: 'SMANAGE CATEGORY REPORT',
-//            //    message: "Report On: " + formattedDate,
-//            //    exportOptions: {
-//            //        columns: [1, 2]
-//            //    },
-//            //}
-//        ],
-//        bProcessing: false,
-//        bLengthChange: true,
-//        /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-//        bfilter: true,
-//        bSort: false,
-//        searching: false,
-//        scrollX: true,
-//        scrollY: '400px',
-//        scrollCollapse: true,
-//        paging: true,  
-//        bPaginate: true,
-//        pageLength: 20,  
-//        //  stateSave:true,
-//        data: response,
-//        columns: [
-//            //{
-//            //    targets: 0, // Assuming this is the column index where you want to display numbering
-//            //    render: function (data, type, row, meta) {
-//            //        var currentPage = table.page.info().page;
-//            //        var rowsPerPage = table.page.info().length;
-//            //        return (0 * rowsPerPage) + meta.row + 1;
-//            //    }
-//            //},
-//            {
-//                data: "FeeDepositId",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.feeDepositId
-//                }
-//            },
-//            {
-//                data: "SchoolName",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.schoolName
-//                }
-//            },
-//            {
-//                data: "DipositAmount",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.dipositAmount + '<input type="text" value=' + row.feeDepositId + ' hidden/>'
-//                }
-//            },            
-//            {
-//                data: "BankName",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.bankName
-//                }
-//            },
-//            {
-//                data: "BranchName",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.branchName
-//                }
-//            },
-//            {
-//                data: "AccountNumber",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.accountNumber
-//                }
-//            },
-//            {
-//                data: "PaymentMode",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.paymentMode
-//                }
-//            },
-//            {
-//                data: "DipositDate",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.dipositDate
-//                }
-//            },
-//            {
-//                data: "CreatedDate",
-//                render: function (data, type, row, meta) {
-//                    //  length++;
-//                    return row.createdDate
-//                }
-//            }
-//            //,{
-//            //    data: "BranchName",
-//            //    render: function (data, type, row, meta) {
-//            //        return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-//            //    }
-//            //}
-//        ]
-
-//    });
-
-//    table.on('draw', function () {
-//        $('#Admissionssummaryreporttbl').find('td:nth-child(1)').attr('title', 'Edit').attr('title', 'Edit').css({
-//            color: 'black',
-//            'text-decoration': 'underline',
-//            cursor: 'pointer',
-//            fontWeight: 'bold'
-//        });
-//    });
-//    $('#Bankdeposittblid').find('td:nth-child(1)').attr('title', 'Edit').attr('title', 'Edit').css({
-//        color: 'black',
-//        'text-decoration': 'underline',
-//        cursor: 'pointer',
-//        fontWeight: 'bold'
-//    });
-//}
-
-
-
-///===>> CREATE New BANK DEPOSITE FUNCTION CODE START
-
- //handleAjax('GET', '/Admin/Paymentmodeddl', null,
-    //    function (response) {
-    //        debugger;
-    //        populateDropdown(response,'Paymentmodeidddl');
-    //    },
-    //    function (status, error) {
-    //        var Dropdownappending = $('#Paymentmodeidddl');
-    //        Dropdownappending.append($('<option>', {
-    //            value: '0000',
-    //            text: "500 Error"
-    //        }));
-    //    },
-    //    true
-    //);

@@ -10,16 +10,18 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span> MANAGE SUBJECTS</h4>
+        <h4 class="mb-3 text-center">MANAGE SUBJECTS</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
-                <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan text-danger text-validation" id="Main_Span_Error"></span>
 
                 @*<a id="BtnCreateNewSubjects" class="BTNCreateNew Undeline ClsCreateNewLink" onclick="CreateNewSubjects()">Create Subject</a>*@
-                <button id="BtnCreateNewSubjects" class="btn rounded-pill btn-info waves-effect waves-light" onclick="CreateNewSubjects()">Create Subject</button>
+                <div class="col-sm-12 text-end">
+                    <button id="BtnCreateNewSubjects" class="btn btn-label-linkedin waves-effect btn-sm" onclick="CreateNewSubjects()">Upload Subjects</button>
+                </div>
 
                 @*-------------------------------create page-------------------------------*@
                 <div id="CreateNewSubjects">
@@ -30,80 +32,62 @@
                 <div id="SubjectSearchsDiv">
 
 
-                    <div class="card mb-4" id="CreateNewPage">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    SEARCH SUBJECTS
-                                </span>
-                            </h5>
+                    <div class="card mb-3" id="CreateNewPage">
+                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                            <span class="text-header"> SEARCH SUBJECTS</span>
                         </div>
 
-
                         <div class="card-body">
-                            @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
-                            <form id="FmSubjectSearch">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="row mb-3">
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Name</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" name="Name" class="form-control" id="TxtSubjectName" placeholder="Subject Name">
-                                            </div>
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Subject Code</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" name="SubjectCode" class="form-control" id="TxtSubjectCode" placeholder="Subject Code">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
-                                            <div class="col-sm-4">
-                                                <div class="position-relative">
-                                                    <select id='DdlDepartment' name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
-                                                        <option value=''>Select a Department</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                            <div class="row col">
+                                @*<form id="FmExamsCreatePage" asp-action="ManageExams" asp-controller="Examination">*@
+                                <form id="FmSubjectSearch">
 
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Class</label>
-                                            <div class="col-sm-4">
-                                                <select id='DdlClass' name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
-                                                    <option value=''>Please select a Class</option>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Subject Name</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="Name" class="form-control" id="TxtSubjectName" placeholder="Subject Name">
+                                        </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Subject Code</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="SubjectCode" class="form-control" id="TxtSubjectCode" placeholder="Subject Code">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4">
+                                            <div class="position-relative">
+                                                <select id='DdlDepartment' name="InstanceClassificationId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Attendance/DdlClassId_Calingfunction?InstanceClassificationId=' + this.value, 'DdlClass', 'Please select a Class', true)" asp-items="@(new SelectList(""))">
+                                                    <option value=''>Select a Department</option>
                                                 </select>
                                             </div>
                                         </div>
 
-
-                                        <div class="row justify-content-end">
-                                            <div class="col-sm-5">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <button type="reset" class="btn btn-primary waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblBulkUploadSubjectsList', 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);" id="BtnSave">Search</button>
-
-                                            </div>
+                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-company">Class</label>
+                                        <div class="col-sm-4">
+                                            <select id='DdlClass' name="InstanceSubClassificationId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))" disabled>
+                                                <option value=''>Please select a Class</option>
+                                            </select>
                                         </div>
-
                                     </div>
-                                </div>
 
-                            </form>
+                                    <div class="col-sm-12 text-center">
+                                        @*<button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>*@
+                                        <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Searchclearfun('FmSubjectSearch')" id="BtnClear">Clear</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblBulkUploadSubjectsList', 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);" id="BtnSave">Search</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
                     </div>
 
-                    <br />
+                    @*<br />*@
                     @*===============================searched result table*@
                     <div id="Div_TblBulkUploadSubjectsList" style="display:none">
                         <div class="card" id="SearchedTablePage">
                             <div class="card-datatable table-responsive pt-0">
                                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                    <div class="card-header flex-column flex-md-row">
-                                        <div class="head-label text-center">
-                                            <h5 class="card-title mb-0">
-                                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                            </h5>
-                                        </div>
+                                    <div class="card-header bg-danger text-white flex-column flex-md-row">                                       
+                                                <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>                                         
                                     </div>
                                     @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
                                     <table id="TblBulkUploadSubjectsList" class="datatables-basic table dataTable no-footer dtr-column">
@@ -121,11 +105,7 @@
                                         </thead>
                                         <tbody>
                                         </tbody>
-
                                     </table>
-
-
-
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@
     Layout = null;
     var UpdateIdentification = ViewBag.UpdateIdentification;
     var Text = "";
+    var StudentStatus = "";
 }
 @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
 
@@ -71,11 +72,14 @@
 
 </head>
 <body>
-    <a id="BtnPrint" href="#" class="btn rounded-pill btn-outline-info waves-effect float-end" onclick="CallPrintInline('HtmlDidToPrint')">PRINT</a>
 
-    <div class="flex-grow-1 container-p-y container-fluid" id="HtmlDidToPrint">
+    <div class="text-end">
+        <a id="BtnPrint" href="javascript:void(0)" class="btn btn-label-linkedin waves-effect btn-sm" onclick="CallPrintInline('HtmlDidToPrint')">PRINT</a>
+    </div>
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MANAGE USERS</h4>
+    <div class="flex-grow-1 container-p-y container-xxl" id="HtmlDidToPrint">
+
+        <h4 class="mb-1 text-center">MANAGE USERS</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -89,13 +93,7 @@
 
                         @*=================================== Users Details Card==============================*@
                         <div class="border card mb-4 p-3 rounded">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span id="SpnCardHeaderName">
-                                        STUDENT DETAILS
-                                    </span>
-                                </h5>
-                            </div>
+                            <div class="card-header bg-danger text-white"><span id="SpnCardHeaderName">STUDENT DETAILS</span></div>
                             <div class="card-body">
                                 <div class="row">
 
@@ -112,185 +110,179 @@
                                                     <span asp-validation-for="DdlUsersDetails.RoleId" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                          </div>
-                                            <div class="mb-1 row">
-                                                <label asp-for="RoleId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.RoleName">
-                                                    @*<input type="hidden" asp-for="RoleId" id="DdlRoleId" readonly />*@
-                                                </div>
-
-                                                @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
-
-                                                <div class="col-sm-6 ">
-                                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-
-                                                    <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px;" />
-                                                    @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
-                                                    }
-
-                                                   
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end  ClsDivTeachers" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDivTeachers">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Designation">
-                                                </div>
-                                               
-
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-1 row">
-                                                <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDivTeachers">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Qualification">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                    <div class="mb-1 row ">
-                                        <label asp-for="Batch" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
-                                        <div class="col-sm-4 ClsSessionStudent">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Batch">
                                         </div>
+                                        <div class="mb-1 row">
+                                            <label asp-for="RoleId" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.RoleName">
+                                                @*<input type="hidden" asp-for="RoleId" id="DdlRoleId" readonly />*@
+                                            </div>
 
-                                        <label class="col-sm-2 col-form-label  text-end  " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <div class="mb-0 row ">
-                                                @if (ViewBag.FatherName != "" && ViewBag.FatherName != null)
+                                            @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
+
+                                            <div class="col-sm-6 ">
+                                                @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+
+                                                <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px; border-width: 0px;" />
+                                                @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                 {
-                                                    <label asp-for="ParentName" class="col-sm-6 col-form-label  text-end">Father Name </label>
-                                                                                                                                              <div class="col-sm-6 ">
-                                                                                                                                                  <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.FatherName">
-                                                                                                                                              </div>
+                                                    <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
+                                                }
+
+
+                                            </div>
+                                        </div>
+
+                                        @*----------------------*@
+                                        <div class="mb-1 row">
+                                            <label asp-for="DesignationId" class="col-sm-2 col-form-label  text-end  ClsDivTeachers" for="basic-default-name"></label>
+                                            <div class="col-sm-4 ClsDivTeachers">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Designation">
+                                            </div>
+
+
+                                        </div>
+                                        @*----------------------*@
+
+                                        <div class="mb-1 row">
+                                            <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name"></label>
+                                            <div class="col-sm-4 ClsDivTeachers">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Qualification">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="mb-1 row ">
+                                            <label asp-for="Batch" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
+                                            <div class="col-sm-4 ClsSessionStudent">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Batch">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label  text-end  " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <div class="mb-0 row ">
+                                                    @if (ViewBag.FatherName != "" && ViewBag.FatherName != null)
+                                                    {
+                                                        <label asp-for="ParentName" class="col-sm-6 col-form-label  text-end">Father Name </label>
+                                                        <div class="col-sm-6 ">
+                                                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.FatherName">
+                                                        </div>
                                                     }
-                                                @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null)
+                                                    @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null)
+                                                    {
+                                                        <label asp-for="MotherFirstName" class="col-sm-6 col-form-label  text-end">Mother Name </label>
+                                                        <div class="col-sm-6 ">
+                                                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.MotherFirstName">
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+
+                                        <div class="mb-1 row">
+                                            <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
+                                            <div class="col-sm-4 ClsDivTeachers">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.InstanceUserCode">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="mb-1 row">
+
+                                            <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.FirstNameInGeneral">
+                                            </div>
+
+                                            <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.MiddleName">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="mb-1 row">
+                                            <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.LastName">
+                                            </div>
+
+                                            <label asp-for="DateOfJoining" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlUsersDetails.DateOfJoining != null ? Convert.ToDateTime(Model.DdlUsersDetails.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+
+                                        <div class="mb-1 row">
+                                            <label asp-for="Nationality" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Nationality">
+                                            </div>
+                                            <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end required ClsSessionStudent" for="basic-default-name"></label>
+                                            <div class="col-sm-4 ClsSessionStudent">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.AdmissionNumberNew">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+
+                                        <div class="mb-1 row">
+                                            <label asp-for="IsUserJoined" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
+                                            <div class="col-sm-4 ClsSessionStudent">
+                                                @if (Model.DdlUsersDetails.IsUserJoined == "True")
+                                                {<input type="text" readonly="" class="form-control-plaintext" value="Yes">
+                                                }
+                                                else
+                                                {<input type="text" readonly="" class="form-control-plaintext" value="No">
+                                                }
+                                            </div>
+                                            <label asp-for="BloodGroup" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.BloodGroupName">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="mb-1 row">
+                                            <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PlaceOfBirth">
+                                            </div>
+                                            <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.CollegeCode">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="mb-1 row">
+                                            <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                @{ var Gender = "";}
+                                                @if (Model.DdlUsersDetails.Gender == "1")
                                                 {
-                                                    <label asp-for="MotherFirstName" class="col-sm-6 col-form-label  text-end">Mother Name </label>
-                                                                                                                                                   <div class="col-sm-6 ">
-                                                                                                                                                       <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.MotherFirstName">
-                                                                                                                                                   </div>
-                                                    }
+                                                    Gender = "Male";
+                                                }
+                                                else if (Model.DdlUsersDetails.Gender == "0")
+                                                {
+                                                    Gender = "FeMale";
+                                                }
+                                                else
+                                                {
+                                                    Gender = "Others";
+                                                }
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
+                                            </div>
+                                            <label asp-for="ICNumber" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.ICNumber">
                                             </div>
                                         </div>
+                                        @*----------------------*@
                                     </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-1 row">
-                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label  text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
-                                                <div class="col-sm-4 ClsDivTeachers">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.InstanceUserCode">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-
-                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.FirstNameInGeneral">
-                                                </div>
-
-                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.MiddleName">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.LastName">
-                                                </div>
-
-                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlUsersDetails.DateOfJoining != null ? Convert.ToDateTime(Model.DdlUsersDetails.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-1 row">
-                                                <label asp-for="Nationality" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Nationality">
-                                                </div>
-                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label  text-end required ClsSessionStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsSessionStudent">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.AdmissionNumberNew">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-1 row">
-                                                <label asp-for="IsUserJoined" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsSessionStudent">
-                                                    @if (Model.DdlUsersDetails.IsUserJoined == "True")
-                                                    {<input type="text" readonly="" class="form-control-plaintext" value="Yes">
-                                                    }
-                                                    else
-                                                    {<input type="text" readonly="" class="form-control-plaintext" value="No">
-                                                    }
-                                                </div>
-                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.BloodGroupName">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PlaceOfBirth">
-                                                </div>
-                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.CollegeCode">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    @{ var Gender = "";}
-                                                    @if (Model.DdlUsersDetails.Gender == "1")
-                                                    {
-                                                        Gender = "Male";
-                                                    }
-                                                    else if (Model.DdlUsersDetails.Gender == "0")
-                                                    {
-                                                        Gender = "FeMale";
-                                                    }
-                                                    else
-                                                    {
-                                                        Gender = "Others";
-                                                    }
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
-                                                </div>
-                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.ICNumber">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         @*===================================PERSONAL INFORMATION Card========================*@
                         <div class="border card mb-4 p-3 rounded">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        PERSONAL INFORMATION
-                                    </span>
-                                </h5>
-                            </div>
+                            <div class="card-header bg-danger text-white">PERSONAL INFORMATION</div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-8 mx-auto">
@@ -343,12 +335,14 @@
                                         <div class="mb-1 row">
                                             <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
                                             <div class="col-sm-4 ">
-                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PermanentAddress1">
+                                                <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.DdlParentDetails.PermanentAddress1">@Model.DdlParentDetails.PermanentAddress1</textarea>
+                                                @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PermanentAddress1">*@
                                             </div>
 
                                             <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
                                             <div class="col-sm-4 ">
-                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PermanentAddress2">
+                                                <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.DdlParentDetails.PermanentAddress1">@Model.DdlParentDetails.PermanentAddress2</textarea>
+                                                @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PermanentAddress2">*@
                                             </div>
                                         </div>
                                         @*----------------------*@
@@ -383,13 +377,7 @@
 
                         @*====================================== OTHER INFORMATION Card==============================*@
                         <div class="border card mb-4 p-3 rounded">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        OTHER INFORMATION
-                                    </span>
-                                </h5>
-                            </div>
+                            <div class="card-header bg-danger text-white">OTHER INFORMATION</div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-8 mx-auto">
@@ -454,153 +442,152 @@
 
                         @*=================================================GENERAL INFORMATION Card========================*@
                         <div class="border card mb-4 p-3 rounded">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        GENERAL INFORMATION
-                                    </span>
-                                </h5>
-                            </div>
+                            <div class="card-header bg-danger text-white">GENERAL INFORMATION</div>
                             <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-8 mx-auto">
-                                            @*----------------------*@
-                                            <div class="row mb-1 ">
-                                                <label asp-for="StudentIdentificationMarks" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.StudentIdentificationMarks">
-                                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8 mx-auto">
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="StudentIdentificationMarks" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.StudentIdentificationMarks">
                                             </div>
-                                            @*----------------------*@
-                                            <div class="row mb-1 ">
-                                                <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    @if (Model.DdlUsersDetails.SiblingsInSameCollege == "1")
-                                                    {
-                                                        Text = "Yes";
-                                                    }
-                                                    else
-                                                    {
-                                                        Text = "No";
-                                                    }
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="row mb-1 ">
-                                                <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    @if (Model.DdlUsersDetails.SiblingsOtherCollege == "1")
-                                                    {
-                                                        Text = "Yes";
-                                                    }
-                                                    else
-                                                    {
-                                                        Text = "No";
-                                                    }
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="row mb-1 ">
-                                                <label asp-for="PhysicallyChalenged" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PhysicallyChalenged">
-                                                </div>
-                                            </div>
-
-                                            @*----------------------*@
-                                            <div class="row mb-1 ">
-                                                <label asp-for="PhysicallyChallengedDetails" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PhysicallyChallengedDetails">
-                                                </div>
-                                            </div>
-                                         
-                                            @*----------------------*@
                                         </div>
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="SiblingsInSameCollege" id="LblSiblingsInSameCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                @if (Model.DdlUsersDetails.SiblingsInSameCollege == "1")
+                                                {
+                                                    Text = "Yes";
+                                                }
+                                                else
+                                                {
+                                                    Text = "No";
+                                                }
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                @if (Model.DdlUsersDetails.SiblingsOtherCollege == "1")
+                                                {
+                                                    Text = "Yes";
+                                                }
+                                                else
+                                                {
+                                                    Text = "No";
+                                                }
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                            </div>
+                                        </div>
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="PhysicallyChalenged" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.DisabilityName">
+                                                @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PhysicallyChalenged">*@
+                                                @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PhysicallyChallengedDetails">*@
+                                            </div>
+                                        </div>
+
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="PhysicallyChallengedDetails" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.PhysicallyChallengedDetails">
+                                            </div>
+                                        </div>
+
+                                        @*----------------------*@
                                     </div>
                                 </div>
-                         </div>
+                            </div>
+                        </div>
 
 
                         @*============================================ LOGIN INFORMATION Card============================*@
-                         <div class="border card mb-4 p-3 rounded">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    LOGIN INFORMATION
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-8 mx-auto">
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="IsActive" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlUsersDetails.IsActive == "1")
-                                            {
-                                                Text = "Yes";
-                                            }
-                                            else
-                                            {
-                                                Text = "No";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                        <div class="border card mb-4 p-3 rounded">
+                            <div class="card-header bg-danger text-white">LOGIN INFORMATION</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-8 mx-auto">
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="IsActive" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                @if (Model.DdlUsersDetails.IsActive == "1")
+                                                {
+                                                    Text = "Yes";
+                                                }
+                                                else
+                                                {
+                                                    Text = "No";
+                                                }
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
+                                        @*----------------------*@
 
-                                    <div class="row mb-1 ">
-                                        <label asp-for="StudentStatus" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.StudentStatus">
+                                        <div class="row mb-1 ">
+                                            <label asp-for="StudentStatus" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                @if (Model.DdlUsersDetails.IsActive == "1")
+                                                {
+                                                    StudentStatus = "Active";
+                                                }
+                                                else
+                                                {
+                                                    StudentStatus = "Inactive";
+                                                }
+                                                <input type="hidden" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.StudentStatus">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@StudentStatus">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1">
-                                        <label asp-for="UserName" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.UserName">
+                                        @*----------------------*@
+                                        <div class="row mb-1">
+                                            <label asp-for="UserName" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.UserName">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="SecurityQuestionId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Question">
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="SecurityQuestionId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Question">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="Answer" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Answer">
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label asp-for="Answer" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Answer">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label  class="col-sm-5 col-form-label  text-end " for="basic-default-name">Need to change password on login</label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlUsersDetails.ChangePwOnLogin == true)
-                                            {
-                                                Text = "Yes";
-                                            }
-                                            else
-                                            {
-                                                Text = "No";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                        @*----------------------*@
+                                        <div class="row mb-1 ">
+                                            <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Need to change password on login</label>
+                                            <div class="col-sm-4 ">
+                                                @if (Model.DdlUsersDetails.ChangePwOnLogin == true)
+                                                {
+                                                    Text = "Yes";
+                                                }
+                                                else
+                                                {
+                                                    Text = "No";
+                                                }
+                                                <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                            </div>
                                         </div>
-                                    </div>
-                                    @*----------------------*@
+                                        @*----------------------*@
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
                     </form>
@@ -608,287 +595,295 @@
                     @*}*@
                     @if (ViewBag.IsParentIdentification == "Parent")
                     {
-                <form id="FmParentDetailsTab">
-                    <h4 class="py-3 mb-4">PARENT DETAILS</h4>
-                    @*===================================== Parents Details Card=====================*@
-                    <div class="border card mb-4 p-3 rounded">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    PARENT DETAILS
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-8 mx-auto">
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="Relationship" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
-                                        <div class="col-sm-4">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Relationship">
-                                        </div>
+                        <form id="FmParentDetailsTab">
+                            <h4 class="mb-1" style=" font-family: math; font-size: 18px; font-weight: bold;">PARENT DETAILS</h4>
+                            @*===================================== Parents Details Card=====================*@
+                            <div class="border card mb-4 p-3 rounded">
+                                <div class="card-header bg-danger text-white">PARENT DETAILS</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 mx-auto">
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="Relationship" class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Relationship">
+                                                </div>
 
-                                        @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
+                                                @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
 
-                                        <div class="col-sm-6 ">
-                                            <img src="@ViewBag.ParentPhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px;" />
-                                            @if (ViewBag.ParentPhotoName != "" && ViewBag.ParentPhotoName != null && UpdateIdentification == "UpdateDetails")
-                                            {
-                                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.ParentPhotoName</span>}
+                                                <div class="col-sm-6 ">
+                                                    <img src="@ViewBag.ParentPhotoNameFullName" alt="" id="ImgPhotoDisplay" style="height: 100px; width: 100px;" />
+                                                    @if (ViewBag.ParentPhotoName != "" && ViewBag.ParentPhotoName != null && UpdateIdentification == "UpdateDetails")
+                                                    {
+                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.ParentPhotoName</span>
+                                                        @*<span id="SpnPhotoName" class="ClsFileName">@ViewBag.ParentPhotoNameFullName</span>*@
+                                                        
+                                                        }
+
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+
+                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.FirstNameInGeneral">
+                                                </div>
+
+                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.MiddleName">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.LastName">
+                                                </div>
+
+                                                <label asp-for="Occupation" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Occupation">
+                                                </div>
+                                            </div>
+
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="Designation" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Designation">
+                                                </div>
+
+                                                <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Qualification">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+
+                                            <div class="mb-1 row">
+                                                <label asp-for="CompanyName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.CompanyName">
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Annual Income</label>
+                                                <div class="col-sm-4 ">
+                                                    @if (!string.IsNullOrEmpty(Model.DdlParentDetails.LacsType))
+                                                    {
+                                                        if (Model.DdlParentDetails.LacsType == "-1.-1")
+                                                        {
+                                                            <input type="text" readonly class="form-control-plaintext" value="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="text" readonly class="form-control-plaintext" value="@Model.DdlParentDetails.LacsType Lacs (@Model.DdlParentDetails.CurrencyType)">
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" readonly class="form-control-plaintext" value="">
+                                                    }
+
+
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.LacsType Lacs( @Model.DdlParentDetails.CurrencyType )">*@
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Thousands">*@
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.CurrencyType">*@
+                                                </div>
+                                            </div>
+
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="DOB" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlParentDetails.DOB != null? Convert.ToDateTime(Model.DdlParentDetails.DOB).ToString("dd/MM/yyyy"): string.Empty)">
+                                                </div>
+
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Do You Want to have SMS Option</label>
+                                                <div class="col-sm-4 ">
+                                                    @*@if (Model.DdlParentDetails.SendSMS == "1")
+                                                    {
+                                                        Text = "Yes";
+                                                    }
+                                                    else
+                                                    {
+                                                        Text = "No";
+                                                    }
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">*@
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.SendSMS">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row" style="display:none">
+                                                <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlParentDetails.DOB != null? Convert.ToDateTime(Model.DdlParentDetails.DOB).ToString("dd/MM/yyyy"): string.Empty)">
+                                                </div>
+
+                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Do You Want to have SMS Option</label>
+                                                <div class="col-sm-4 ">
+                                                    @if (Model.DdlParentDetails.Gender == "1")
+                                                    {
+                                                        Text = "Male";
+                                                    }
+                                                    else if (Model.DdlParentDetails.Gender == "0")
+                                                    {
+                                                        Text = "Female";
+                                                    }
+                                                    else
+                                                    {
+                                                        Text = "Others";
+                                                    }
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
 
                                         </div>
                                     </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-
-                                        <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.FirstNameInGeneral">
-                                        </div>
-
-                                        <label asp-for="MiddleName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.MiddleName">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="LastName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.LastName">
-                                        </div>
-
-                                        <label asp-for="Occupation" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Occupation">
-                                        </div>
-                                    </div>
-
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="Designation" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Designation">
-                                        </div>
-
-                                        <label asp-for="Qualification" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.Qualification">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-
-                                    <div class="mb-1 row">
-                                        <label asp-for="CompanyName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.CompanyName">
-                                        </div>
-
-                                        <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Annual Income</label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.LacsType Lacs( @Model.DdlParentDetails.CurrencyType )">
-                                            @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Thousands">*@
-                                            @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.CurrencyType">*@
-                                        </div>
-                                    </div>
-
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="DOB" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-2 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlParentDetails.DOB != null? Convert.ToDateTime(Model.DdlParentDetails.DOB).ToString("dd/MM/yyyy"): string.Empty)">
-                                        </div>
-
-                                        <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Do You Want to have SMS Option</label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlParentDetails.SendSMS == "1")
-                                            {
-                                                Text = "Yes";
-                                            }
-                                            else
-                                            {
-                                                Text = "No";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row" style="display:none">
-                                        <label asp-for="Gender" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DdlParentDetails.DOB != null? Convert.ToDateTime(Model.DdlParentDetails.DOB).ToString("dd/MM/yyyy"): string.Empty)">
-                                        </div>
-
-                                        <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Do You Want to have SMS Option</label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlParentDetails.Gender == "1")
-                                            {
-                                                Text = "Male";
-                                            }
-                                            else if (Model.DdlParentDetails.Gender == "0")
-                                            {
-                                                Text = "Female";
-                                            }
-                                            else
-                                            {
-                                                Text = "Others";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    @*======================================== PERSONAL INFORMATION Card ===================*@
-                    <div class="border card mb-4 p-3 rounded">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    PERSONAL INFORMATION
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-8 mx-auto">
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.MobilePhone">
+                            @*======================================== PERSONAL INFORMATION Card ===================*@
+                            <div class="border card mb-4 p-3 rounded">
+                                <div class="card-header bg-danger text-white">PERSONAL INFORMATION</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 mx-auto">
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="MobilePhone" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.MobilePhone">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PortalEmail">
+                                                </div>
+
+                                                <label asp-for="AlternateEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.AlternateEmail">
+                                                </div>
+
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PermanentAddress1">*@
+                                                    <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.DdlParentDetails.PermanentAddress1">@Model.DdlParentDetails.PermanentAddress1</textarea>
+                                                </div>
+
+                                                <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PermanentAddress2">*@
+                                                    <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.DdlParentDetails.PermanentAddress2">@Model.DdlParentDetails.PermanentAddress2</textarea>
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="PCity" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PCity">
+                                                </div>
+                                                <label asp-for="PCountryId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PCountryName">*@
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PCountryId">
+                                                </div>
+
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="mb-1 row">
+                                                <label asp-for="PStateId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PStateName">*@
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PStateId">
+                                                </div>
+                                                <label asp-for="PZip" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PZip">
+                                                </div>
+
+                                            </div>
+                                            @*----------------------*@
+
                                         </div>
                                     </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="PortalEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PortalEmail">
-                                        </div>
-
-                                        <label asp-for="AlternateEmail" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.AlternateEmail">
-                                        </div>
-
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PermanentAddress1">
-                                        </div>
-
-                                        <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PermanentAddress2">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="PCity" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PCity">
-                                        </div>
-                                        <label asp-for="PCountryId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PCountryName">
-                                        </div>
-
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="mb-1 row">
-                                        <label asp-for="PStateId" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PStateName">
-                                        </div>
-                                        <label asp-for="PZip" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.PZip">
-                                        </div>
-
-                                    </div>
-                                    @*----------------------*@
-
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    @*======================================== LOGIN INFORMATION Card======================================*@
-                    <div class="border card mb-4 p-3 rounded">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    LOGIN INFORMATION
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-8 mx-auto">
-                                    @*----------------------*@
-                                    <div class="row mb-1">
-                                        <label asp-for="UserName" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.UserName">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="SecurityQuestionId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Question">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="Answer" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                        <div class="col-sm-4 ">
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Answer">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label asp-for="IsActive" class="col-sm-5 col-form-label  text-end " for="basic-default-name">Is Enabled</label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlUsersDetails.IsActive == "YES")
-                                            {
-                                                Text = "Yes";
-                                            }
-                                            else
-                                            {
-                                                Text = "No";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
-                                    <div class="row mb-1 ">
-                                        <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Need to change password on login</label>
-                                        <div class="col-sm-4 ">
-                                            @if (Model.DdlUsersDetails.ChangePwOnLogin == true)
-                                            {
-                                                Text = "Yes";
-                                            }
-                                            else
-                                            {
-                                                Text = "No";
-                                            }
-                                            <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                        </div>
-                                    </div>
-                                    @*----------------------*@
+                            @*======================================== LOGIN INFORMATION Card======================================*@
+                            <div class="border card mb-4 p-3 rounded">
+                                <div class="card-header bg-danger text-white">LOGIN INFORMATION</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 mx-auto">
+                                            @*----------------------*@
+                                            <div class="row mb-1">
+                                                <label asp-for="UserName" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.UserName">*@
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlParentDetails.UserName">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="row mb-1 ">
+                                                <label asp-for="SecurityQuestionId" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Question">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="row mb-1 ">
+                                                <label asp-for="Answer" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DdlUsersDetails.Answer">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="row mb-1 ">
+                                                <label asp-for="IsActive" class="col-sm-5 col-form-label  text-end " for="basic-default-name">Is Enabled</label>
+                                                <div class="col-sm-4 ">
+                                                    @if (Model.DdlUsersDetails.IsActive == "YES")
+                                                    {
+                                                        Text = "Yes";
+                                                    }
+                                                    else
+                                                    {
+                                                        Text = "No";
+                                                    }
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
+                                            <div class="row mb-1 ">
+                                                <label class="col-sm-5 col-form-label  text-end " for="basic-default-name">Need to change password on login</label>
+                                                <div class="col-sm-4 ">
+                                                    @if (Model.DdlUsersDetails.ChangePwOnLogin == true)
+                                                    {
+                                                        Text = "Yes";
+                                                    }
+                                                    else
+                                                    {
+                                                        Text = "No";
+                                                    }
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                                </div>
+                                            </div>
+                                            @*----------------------*@
 
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </form>
+                        </form>
                     }
                 </div>
             </div>

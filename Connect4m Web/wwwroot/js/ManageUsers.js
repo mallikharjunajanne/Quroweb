@@ -253,7 +253,34 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
             $("#BtnPreview").css('display', '');
 
 
-        } else {
+        }
+        //else if ($("#DdlRoleIdInGeneralTab option:selected").text().toUpperCase() == "ADMIN" || $("#DdlRoleIdInGeneralTab option:selected").text().toUpperCase() == "ADMINISTRATOR") {
+        //    debugger;
+        //    //$("#BtnPreview").css('display', 'none !important');
+        //    //$("#ParentDetailsTab").css("display", "none");
+        //    //$(".ClsSessionStudent").css("display", "block");
+        //    //$(".ClsDivTeachers").css("display", "none");
+
+        //    //if (!IsEmpty) {
+        //    //    $("#PayRoleinformation_divid").empty();
+        //    //    CommonAjaxFunction('GET', '/Users/ManageUsersPayrole', null, function (response) {
+        //    //        debugger;
+        //    //        //$(".ClsDesignationId").html(response);
+        //    //        $("#PayRoleinformation_divid").append(response);
+
+        //    //        loaddingimg.css('display', 'none');
+
+        //    //    }, function (status, error) {
+        //    //        loaddingimg.css('display', 'none');
+        //    //    }, false);
+        //    //}
+
+        //    //$("#LblSiblingsInSameCollege").text("Child studying in same School");
+        //    //$("#LblSiblingsOtherCollege").text("Child studying in Other School ");
+        //    //$("#LblTcTakenGeneralTab").text("Hide in the portal");
+        //    //$("#LblInstanceUserCodeGeneralTab").text("Employee ID");
+        //}
+        else {
             $("#BtnPreview").css('display', 'none !important');
 
             $("#ParentDetailsTab").css("display", "none");
@@ -367,7 +394,8 @@ function DeletePhoto_CallingFunction() {
             $("#FlPhoto").css("display", "block");
             $("#SpnPhotoName").text("");
             $(".ClsFileName").css("display", "none");
-        } else {
+        }
+        else {
             $('.alert-danger p').text(response.message);
             $(".alert-danger").show().delay(6000).fadeOut();
            // $("#Main_Span_Error").text(response.message);
@@ -375,6 +403,40 @@ function DeletePhoto_CallingFunction() {
         window.scrollTo(0, 0);
     });
 }
+
+
+
+//Parent Delete Photo Function Added start
+function DeleteParentPhoto_CallingFunction() {
+    // <img src="~/UserPhotos/545/217720/Profile Photo.jpg" />
+    debugger;
+    //ARJUN
+
+    //var UserId = $("#HdnUserId").val();
+    var UserId = $("#HdnParentId").val();
+    var Deletemsg = "Photo";
+    //CommonDeleteFunction_Vs1(Deletemsg, "POST", "/Users/DeletePhoto_CallingFunction?ButtonName=Delete&UserId=" + UserId, function (response) {
+    CommonDeleteFunction_Vs1(Deletemsg, "POST", "/Users/DeleteParentPhoto_CallingFunction?ButtonName=Delete&UserId=" + UserId, function (response) {
+
+        if (response.message == "Photo Deleted Sucessfully.") {
+            $('.alert-success p').text(response.message);
+            $(".alert-success").show().delay(6000).fadeOut()
+
+            //  $("#Main_Span_Error").text(response.message);
+            $("#ImgPhotoDisplay").attr("src", "/Images/No imageAvailable.gif");
+            $("#FlPhoto").css("display", "block");
+            $("#SpnPhotoName").text("");
+            $(".ClsFileName").css("display", "none");
+        }
+        else {
+            $('.alert-danger p').text(response.message);
+            $(".alert-danger").show().delay(6000).fadeOut();
+            // $("#Main_Span_Error").text(response.message);
+        }
+        window.scrollTo(0, 0);
+    });
+}
+//Parent Delete Photo Function Added end
 
 ////=====================================Delete Users 
 //$("#BtnDeleteFormInGeneralInfo").click(function (event) {

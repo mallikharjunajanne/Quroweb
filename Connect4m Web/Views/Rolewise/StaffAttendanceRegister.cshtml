@@ -6,90 +6,22 @@
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />
     <link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />
     <link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />*@
-<style>
-    #appendstaffsearchatendance {
-        display: none
-    }
-
-    /*.dataTable td:nth-child(2) {
-        color: black;*/
-    /*  text-decoration: underline;*/
-    /*font-weight: 600 !important;
-    }
-
-    .dataTable td:nth-child(1) {
-        text-align: center !important;
-    }
-
-
-    .dataTable td:nth-child(2):hover {
-        cursor: auto !important;
-        color: black;
-        font-weight: 600;
-        text-decoration: none;
-        background-color: antiquewhite;
-    }
-
-    .dataTables_wrapper table.dataTable tbody td {
-        text-align: center;
-    }
-
-    .table > thead {
-        background-color: black;
-        color: white;
-    }
-
-    .table > :not(:last-child) > :last-child > * {
-        color: white;
-        font-weight: 900;
-        padding: 5px;
-    }
-
-    .dataTables_wrapper table.dataTable tbody td :hover {
-        background-color: black !important;
-        color: white;
-        font-weight: 900
-    }
-
-    thead tr:hover {
-        background-color: black !important;
-    }
-
-    #tblStaffattendancesearchresults tbody tr td:hover {
-        background-color: #040404;
-        color: white;
-    }
-
-    .dataTables_wrapper table.dataTable th {
-        padding: 0px;
-    }
-
-    table.dataTable thead th {
-        padding: 4px
-    }
-
-    thead {
-        height: 36px;
-    }
-
-    .container-fluid {
-        padding-left: 0px;
-        padding-right: 0px;
-    }*/
-</style>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-
-
+    <style>
+        #appendstaffsearchatendance {
+            display: none
+        }
+    </style>
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>Attendance Register</h4>
+        <h4 class="mb-4 text-center">@*<span class="text-muted fw-light">Reports /</span>*@Attendance Register</h4>
 
         <!-- Examples -->
         <div class="row mb-2">
@@ -97,12 +29,11 @@
                 @*<span class="ErrorMessageSpan"></span>*@
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                SEARCH
-                            </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span id="AddNewText_Span_CreatePage">
+                            SEARCH
+                        </span>
+                        @*<small class="text-muted float-end">Default label</small>*@
                     </div>
                     <div id="appendsearchmanageemployees">
                         <div class="card-body">
@@ -213,7 +144,7 @@
                                                    x => x.LMSCategory,
                                                     new SelectList(ViewBag.LMSCategory, "Value", "Text"),
                                                   "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_staff_LMSCategory", @style = "color:black;" })
-                                                     
+
                                                     </div>
                                                 </div>
 
@@ -231,24 +162,13 @@
 
                                             @*=====================         BUTTONS                =================*@
 
-                                            <div class="row justify-content">
-                                                <div class="col-sm-5">
-                                                </div>
-
-                                                <div class="col-sm-7">                                                
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="clearForm('Serach_Staffregister')" id="clearform">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblPGE">Search</button>
-
-                                                </div>
+                                            <div class="justify-content text-center">
+                                                <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="clearForm('Serach_Staffregister')" id="clearform">Clear</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblPGE">Search</button>
                                             </div>
-
-
-
-
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                             @*=============================  Form End ================================*@
                         </div>

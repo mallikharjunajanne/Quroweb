@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "StaffattendanceSearch";
     Layout = null;
 }
@@ -7,22 +6,26 @@
     .table > :not(caption) > * > * {
         padding: 4px !important;
     }
+
     .card #tblStaffattendancesearchresults tbody td:hover {
         background-color: black !important;
         color: white;
         font-weight: 900
     }
 </style>
-<div class="card">
-    <div class="card-body" id="checksall">
-        <div class="demo-inline-spacing">
-            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="_staffattendanceExportExcel" title="Export Excel">Export Excel</button>
-            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="_staffattendancePrint" title="Print">PRINT</button>
-        </div>
 
-        <h6 class="card-title mb-0">
+
+<div class="justify-content text-end">
+    <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="_staffattendanceExportExcel" title="Export Excel">Export Excel</button>
+    <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="_staffattendancePrint" title="Print">PRINT</button>
+</div>
+<div class="card">
+    <div @*class="card-body"*@ id="checksall">
+
+
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
             <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_StaffA" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-        </h6>
+        </div>
 
         <div class="table-responsive text-nowrap">
             <table id="tblStaffattendancesearchresults" class="table table-hover table-bordered ">

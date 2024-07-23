@@ -20,9 +20,9 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>VIEW LECTURES / DOCS</h4>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">/</span>*@VIEW LECTURES / DOCS</h4>
 
 
         <!-- Examples -->
@@ -38,61 +38,64 @@
                             <div class="row mb-3">
                                 @foreach (var item in Model)
                                 {
-                                    
-                                <div class="col-sm-4">
-                                    <div class="card-body">
-                                        <div class="accordion">
+                                    @*if (item.ViewLectureDocs.Count == 0)
+                                    {
+                                        <span class="text-validation"> Text @item.ViewLectureDocs.Count</span>
+                                    }
+                                    else
+                                    {*@
+                                        <div class="col-sm-4">
+                                            <div class="card-body">
+                                                <div class="accordion">
+                                                    <div class="card accordion-item active">
+                                                        <h2 class="accordion-header" id="headingOne">
+
+                                                            <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.ViewLectureDocs2[0]?.InstanceSubClassificationId" aria-expanded="true">@*<button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.ViewLectureDocs[0]?.InstanceSubClassificationId" aria-expanded="true">*@
+                                                                @item.ViewLectureDocs2[0].ClassificationName
+                                                                @*@item.ViewLectureDocs[0].ClassificationName*@
+                                                            </button>
+                                                        </h2>
+
+                                                        <div id="accordionWithIcon-@item.ViewLectureDocs2[0]?.InstanceSubClassificationId" class="accordion-collapse collapse show" style=""> @*<div id="accordionWithIcon-@item.ViewLectureDocs[0]?.InstanceSubClassificationId" class="accordion-collapse collapse show" style="">*@
+                                                            <div class="accordion-body">
+                                                                <div style="margin-top: 12%; margin-bottom: 12%;">
 
 
+                                                                    <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
+                                                                    <label style="margin-left: 19%;">   @item.ViewLectureDocs2[0]?.ClassificationDescription</label>@*<label style="margin-left: 19%;">   @item.ViewLectureDocs[0]?.ClassificationDescription</label>*@
+                                                                </div>
+                                                                @{
 
-                                            <div class="card accordion-item active">
-                                                <h2 class="accordion-header" id="headingOne">
-                                                    <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.ViewLectureDocs[0].InstanceSubClassificationId" aria-expanded="true">
-                                                        @item.ViewLectureDocs[0].ClassificationName
-                                                    </button>
-                                                </h2>
+                                                                    double progressbar = ((double)item.ViewLectureDocs2[0]?.viewPoints / (double)item.ViewLectureDocs2[0]?.TotalPoints) * 100;/* double progressbar = ((double)item.ViewLectureDocs[0]?.viewPoints / (double)item.ViewLectureDocs[0]?.TotalPoints) * 100;*/
 
-                                                <div id="accordionWithIcon-@item.ViewLectureDocs[0].InstanceSubClassificationId" class="accordion-collapse collapse show" style="">
-                                                    <div class="accordion-body">
-                                                        <div style="margin-top: 12%; margin-bottom: 12%;">
+                                                                }
+                                                                <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(ViewBag.GetallViewvideopoints)%,#bfbed5 0);margin-left:auto">
+                                                                    @Convert.ToInt32(ViewBag.GetallViewvideopoints)%
+                                                                </div>
 
-
-                                                            <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
-                                                            <label style="margin-left: 19%;">   @item.ViewLectureDocs[0].ClassificationDescription</label>
+                                                            </div>
                                                         </div>
-                                                        @{
-
-                                                            double progressbar = ((double)item.ViewLectureDocs[0].viewPoints / (double)item.ViewLectureDocs[0].TotalPoints) * 100;
-
-                                                        }
-                                                        <div class="progress-bar" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#500ef6 @Math.Round(ViewBag.GetallViewvideopoints)%,#bfbed5 0);margin-left:auto">
-                                                            @Convert.ToInt32(ViewBag.GetallViewvideopoints)%
+                                                        <div id="VLD_ProgressDetails">
+                                                            <input type="text" value="@item.ViewLectureDocs2[0]?.InstanceClassificationId" id="VLD_Instanceclassficationid" hidden style="display:none" />@*<input type="text" value="@item.ViewLectureDocs[0]?.InstanceClassificationId" id="VLD_Instanceclassficationid" hidden style="display:none" />*@
+                                                            <input type="text" value="@item.ViewLectureDocs2[0]?.InstanceSubClassificationId" id="VLD_InstanceSubClassificationId" hidden style="display:none" /> @*<input type="text" value="@item.ViewLectureDocs[0]?.InstanceSubClassificationId" id="VLD_InstanceSubClassificationId" hidden style="display:none" />*@
+                                                            <label id="ProgramDetails" class="btn">Program Details >></label>
                                                         </div>
-
                                                     </div>
+
                                                 </div>
-                                                <div id="VLD_ProgressDetails">
-                                                    <input type="text" value="@item.ViewLectureDocs[0].InstanceClassificationId" id="VLD_Instanceclassficationid" hidden style="display:none" />
-                                                    <input type="text" value="@item.ViewLectureDocs[0].InstanceSubClassificationId" id="VLD_InstanceSubClassificationId" hidden style="display:none" />
-                                                    <label id="ProgramDetails" class="btn">Program Details >></label>
-                                                </div>
+
+
                                             </div>
-
                                         </div>
-
-
-                                    </div>
-                                </div>
-
+                                    @*}*@
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </div>
-
-
-
 </body>
 </html>
 

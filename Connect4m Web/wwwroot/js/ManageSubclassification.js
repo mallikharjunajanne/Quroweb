@@ -31,8 +31,6 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
         }
     });
 }
-
-
 function handleAjax(method, url, data, successCallback, errorCallback, hasFileUpload) {
 
     var ajaxOptions = {
@@ -44,11 +42,6 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
             errorCallback(xhr.status, error);
         }
     };
-
-    //if (hasFileUpload) {
-    //    ajaxOptions.processData = false;
-    //    ajaxOptions.contentType = false;
-    //}
 
     $.ajax(ajaxOptions);
 }
@@ -105,6 +98,7 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
 $('#btnsearch').click(function () {
     debugger;
 
+    $('#Commonerrormessage').text('');
     $('#Errmsg').text('');
     var formdata = $('#Classificaitionformid').serialize();
     var InstanceClassificationId = $('#ddldepartmentid').val();
@@ -130,7 +124,6 @@ $('#btnsearch').click(function () {
 //-----------------DataTable Data Dinding Function
 function Subclasstabledatabinding() {
     TblCallToAjax('GET', '/Admin/Subclass_Tabledata',
-
         function (status, error) {
 
         }
@@ -143,24 +136,22 @@ function bindDatatables(response) {
     var table = $('#ManageSubclassificationtbl').DataTable();
     table.destroy();
     $("#Subclassification_Recordscount").text(response.length); 
-
-
     var newTable = $("#ManageSubclassificationtbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [ ],
-
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
         bProcessing: false,
-        bLengthChange: true,
-        /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bLengthChange: false,
+        //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
-        /* scrollCollapse: true,*/
+        //scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
+        pageLength: 10,
+        //stateSave:true,
         data: response,
         columns: [
             {
@@ -173,67 +164,46 @@ function bindDatatables(response) {
             },
             {
                 data: "SubClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.subClassificationName
-
+                    return row.subClassificationName;
                 }
             },
             {
                 data: "ClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.classificationName + '<input type="text" value=' + row.instanceSubclassificaitionId + ' hidden/>'
-
+                    return row.classificationName + '<input type="text" value=' + row.instanceSubclassificaitionId + ' hidden/>';
                 }
             },
             {
                 data: "SubClassificationDescription",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.subClassificationDescription
-
+                    return row.subClassificationDescription;
                 }
             },
             {
                 data: "ClassTeacher",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.classTeacher
-
+                    return row.classTeacher;
                 }
             },
             {
-
                 data: "instanceClassificationId",
-
                 render: function (data, type, row, meta) {
-                    return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-
+                    return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>';
                 }
             }
         ]
     });
-
-
     table.on('draw', function () {
         $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
             fontWeight: 'bold'
         });
     });
     $('#ManageSubclassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'
@@ -440,7 +410,7 @@ $(document).on('click', '#ManageSubclassificationtbl td:nth-child(2)', function 
     EditSubclassification(Subclassid);
 })
 function EditSubclassification(Subclassid) {
-
+    $('#Commonerrormessage').text('');
     $.ajax({
         url: '/Admin/Update_ManageSubClassification?InstanceSubClassificationId=' + Subclassid,
         type: 'GET',
@@ -464,7 +434,7 @@ $(document).on('click', '#ManageSubclassificationtbl .fa-trash-o', function (eve
     debugger;
     var parent = $(event.target).closest('tr');
     var Subclassid = $(parent).find('td').find('input[type="text"]').val();
-    var Subclassname = $(parent).find('td:first').text().trim();
+    var Subclassname = $(parent).find('td:eq(1)').text().trim();
     var table = $('#ManageSubclassificationtbl').DataTable();
     tabletargetpagetblSEMsearchresults = table.page.info().page;
     Deletefunction(Subclassid, Subclassname);
@@ -546,13 +516,6 @@ function Subclass_CoClassteacher() {
     );
 }
 
-
-
-
-
-
-
-
 /////-----**** INSERTING CLASSES ***-----
 $('#Insertclassformid').submit(function (event) {
     event.preventDefault();
@@ -561,7 +524,7 @@ $('#Insertclassformid').submit(function (event) {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 
-        $('#Errormessages').text('');
+        $('#Commonerrormessage').text('');
 
         var validationmelength = validationMessages.length;
       
@@ -571,27 +534,28 @@ $('#Insertclassformid').submit(function (event) {
             var Subclassname = $('#Subclass_txtid').val();
             var Displayorder = $('#Displayordertxtid').val();
             if (Displayorder == "0") {
-                $('#Errormessages').text('Display Order cannot be Zero.');
+                $('#Commonerrormessage').text('Display Order cannot be Zero.');
                 return;
             }
 
             var url = '/Admin/Insert_ManageSubClassification';
             handleAjax('POST', url, formData,
                 function (response) {
-                    debugger;                  
+                    debugger;
+                    window.scrollTo(10, 500);
                     if (response == "2") {
-                        $('#Errormessages').text("Attendance Effective Date and Attendance End Date should be with in the period of Department 's Effective Date and End Date.");
+                        $('#Commonerrormessage').text("Attendance Effective Date and Attendance End Date should be with in the period of Department 's Effective Date and End Date.");
                     } else if (response == "4") {
-                        $('#Errormessages').text("You can't create a new 'SubClassificationName' as the Class Teacher is Associated to other '" + ViewState("SubClassificationName") + "'.");
+                        $('#Commonerrormessage').text("You can't create a new " + Subclassname + " as the Class Teacher is Associated to other '" + Subclassname+"'.");
                     } else if (response == "0") {
-                        $('#Errormessages').text('SubClassificationName with Name ' + ' " ' + Subclassname + ' " ' + ' already exists.');
+                        $('#Commonerrormessage').text('SubClassificationName with Name ' + ' " ' + Subclassname + ' " ' + ' already exists.');
                     } else if (response == "5") {
-                        $('#Errormessages').text('Display Order Already Exists.');
+                        $('#Commonerrormessage').text('Display Order Already Exists.');
                     } else if (response == "") {
-                        $('#Errormessages').text('An error occurred.');
+                        $('#Commonerrormessage').text('Please try again.');
                     } else {
                         $('#btnclear, #btnsubmit').prop('disabled', true);
-                        $('#Errormessages').text('Record inserted successfully.');
+                        $('#Commonerrormessage').text('Record inserted successfully.');
                     }
                 },
                 function (status, error) {
@@ -604,9 +568,8 @@ $('#Insertclassformid').submit(function (event) {
     }, 50);
 });
 
-
 $('#btnBackToSearch').click(function () {
-    $('#Errormessages').text('');
+    $('#Commonerrormessage').text('');
     location.reload();
 });
 
@@ -724,11 +687,11 @@ function DatesCompare(Sdate, Edate) {
         var Enddate = new Date($("#Enddatetxtid").val());
 
         if (Enddate.getTime() === Startdate.getTime()) {
-            $('#Errormessages').text("End date and Start date cannot be the same.");
+            $('#Commonerrormessage').text("End date and Start date cannot be the same.");
         } else if (Enddate < Startdate) {
-            $('#Errormessages').text("End date should be greater than Start date.");
+            $('#Commonerrormessage').text("End date should be greater than Start date.");
         } else {
-            $('#Errormessages').text("");
+            $('#Commonerrormessage').text("");
         }       
     } catch (error) {
         console.log(error);
@@ -753,16 +716,17 @@ $('#btndelete').click(function () {
         };
         handleAjax('GET', '/Admin/Delete_ManageSubClassification', datatosend,
             function (response) {
+                window.scrollTo(10, 500);
                 if (response == "0") {
-                    $('#Errormessages').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
+                    $('#Commonerrormessage').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
                 } else if (response == "-2") {
-                    $('#Errormessages').text("Elective subjects are associated with" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Elective subjects are associated with" + SubClassificationName + ".");
                 } else if (response == "-3") {
-                    $('#Errormessages').text("Academic subjects are associated with" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Academic subjects are associated with" + SubClassificationName + ".");
                 } else if (response == "-4") {
-                    $('#Errormessages').text("Timetable has created for this" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Timetable has created for this" + SubClassificationName + ".");
                 } else if (response == "-5") {
-                    $('#Errormessages').text("Users have been created for this" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
                 } else if (response == "1") {
                     $('#Errmsg').text("Record deleted successfully.");
                     fetchDataAndPopulateDropdown(
@@ -776,7 +740,7 @@ $('#btndelete').click(function () {
                     $('#ManagesubclassificationInsertUpdatediv').empty();
 
                 } else {
-                    $('#Errormessages').text("Please try again.");
+                    $('#Commonerrormessage').text("Please try again.");
                 }
             },
             function (status, error) {
@@ -795,16 +759,17 @@ function Deletefunction(Subclassificationid, SubClassificationName) {
         };
         handleAjax('GET', '/Admin/Delete_ManageSubClassification', datatosend,
             function (response) {
+                window.scrollTo(10, 500);
                 if (response == "0") {
-                    $('#Errormessages').text("You can't delete" + SubClassificationName + "as Users are already Associated.");
+                    $('#Commonerrormessage').text("You can't delete " + SubClassificationName + " as Users are already Associated.");
                 } else if (response == "-2") {
-                    $('#Errormessages').text("Elective subjects are associated with" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Elective subjects are associated with " + SubClassificationName + ".");
                 } else if (response == "-3") {
-                    $('#Errormessages').text("Academic subjects are associated with" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Academic subjects are associated with " + SubClassificationName + ".");
                 } else if (response == "-4") {
-                    $('#Errormessages').text("Timetable has created for this" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Timetable has created for this " + SubClassificationName + ".");
                 } else if (response == "-5") {
-                    $('#Errormessages').text("Users have been created for this" + SubClassificationName + ".");
+                    $('#Commonerrormessage').text("Users have been created for this " + SubClassificationName + ".");
                 } else if (response == "1") {
                     $('#Errmsg').text("Record deleted successfully.");
                     Subclasstabledatabinding();
@@ -829,7 +794,7 @@ $('#Updateclassformid').submit(function (event) {
     setTimeout(function () {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
-        $('#Errormessages').text('');
+        $('#Commonerrormessage').text('');
         var validationmelength = validationMessages.length;
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
@@ -841,7 +806,7 @@ $('#Updateclassformid').submit(function (event) {
           
             var Displayorder = $('#Displayordertxtid').val();
             if (Displayorder == "0") {
-                $('#Errormessages').text('Display Order cannot be Zero.');
+                $('#Commonerrormessage').text('Display Order cannot be Zero.');
                 return;
             }
 
@@ -850,23 +815,24 @@ $('#Updateclassformid').submit(function (event) {
             handleAjax('POST', url, formData,
                 function (response) {
                     debugger;
+                    window.scrollTo(10, 250);
                     if (response == "3") {
-                        $('#Errormessages').text("Attendance Effective Date and Attendance End Date should be with in the period of" + Classname + "s Effective Date and End Date.");
+                        $('#Commonerrormessage').text("Attendance Effective Date and Attendance End Date should be with in the period of" + Classname + "s Effective Date and End Date.");
                     } else if (response == "4") {
-                        $('#Errormessages').text("You can't update " + Subclassname + " as the Class Teacher is Associated to othere " + Subclassname + ".");
+                        $('#Commonerrormessage').text("You can't update " + Subclassname + " as the Class Teacher is Associated to othere " + Subclassname + ".");
                     } else if (response == "0") {
-                        $('#Errormessages').text('Class with Name "' + Subclassname + '" already exists or the Attendance End Date can\'t be greater than ' + Classname + '\'s Attendance End Date.');
+                        $('#Commonerrormessage').text('Class with Name "' + Subclassname + '" already exists or the Attendance End Date can\'t be greater than ' + Classname + '\'s Attendance End Date.');
                     } else if (response == "5") {
-                        $('#Errormessages').text('Display Already Exists.');
+                        $('#Commonerrormessage').text('Display Already Exists.');
                     } else if (response == "") {
-                        $('#Errormessages').text('An error occurred.');
+                        $('#Commonerrormessage').text('An error occurred.');
                     } else if (response == "2") {
-                        $('#Errormessages').text("You can't update " + Subclassname + " as already marks are posted or Users are already Associated.");
+                        $('#Commonerrormessage').text("You can't update " + Subclassname + " as already marks are posted or Users are already Associated.");
                     } else if (response == "1") {
                         $('#btnclear, #btnsubmit').prop('disabled', true);
-                        $('#Errormessages').text('Record Updated successfully.');
+                        $('#Commonerrormessage').text('Record Updated successfully.');
                     } else {
-                        $('#Errormessages').text('Please try again.');
+                        $('#Commonerrormessage').text('Please try again.');
                     }
                 },
                 function (status, error) {
@@ -881,7 +847,7 @@ $('#Updateclassformid').submit(function (event) {
 
 
 $('#Ubtnbacktosearch').click(function () {
-    $('#Errormessages').text('');
+    $('#Commonerrormessage').text('');
     location.reload();
 });
 

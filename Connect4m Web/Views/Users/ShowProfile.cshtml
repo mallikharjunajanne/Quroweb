@@ -15,9 +15,10 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span>MY PROFILE</h4>
+        <!--<h4 class="mb-4 text-center">-->@*<span class="text-muted fw-light">Admin Module /</span>*@<!--MY PROFILE</h4>-->
+        <h4 class="mb-4 text-center">MY PROFILE</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -41,21 +42,18 @@
 
                             @*=================================== Users Details Card==============================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span id="SpnCardHeaderName">
-                                            STUDENT DETAILS
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span id="SpnCardHeaderName" class="text-header">
+                                        STUDENT DETAILS
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-
-                                        <div class="col">
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="RoleId" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 HideFileds" style="display:none !important">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                @*----------------------*@
+                                                <label asp-for="RoleId" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 HideFileds" style="display:none !important">
                                                     <div class="position-relative">
                                                         @Html.DropDownListFor(x => x.RoleId,
                             new SelectList(ViewBag.DdlInstanceRole, "Value", "Text"), "-------select-------",
@@ -64,67 +62,120 @@
                                                         <span asp-validation-for="RoleId" class="text-danger"></span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-8 mb-2">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.RoleName">
                                                     @*<input type="hidden" asp-for="RoleId" id="DdlRoleId" readonly />*@
                                                 </div>
 
-                                                @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
-
-                                            <div class="col-sm-6 " style="display: flex;">
-                                                @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                                @if (UpdateIdentification == "UpdateDetails")
-                                                {
-                                                    <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
-                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                }
-                                                @*else if (UpdateIdentification == "UpdateDetails")
-        {
-            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
-            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
-
-        }*@
-                                                <div>
-                                                    @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
-                                                    }<br />
-                                                    @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            </div>
-
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="DesignationId" class="col-sm-2 col-form-label space text-end  ClsDivTeachers" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDivTeachers">
+                                                @*----------------------*@
+                                                <label asp-for="DesignationId" class="col-sm-4 col-form-label space text-end  ClsDivTeachers" for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Designation">
                                                 </div>
 
-
-                                            </div>
-                                            @*----------------------*@
-
-                                            <div class="mb-1 row">
-                                                <label asp-for="Qualification" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsDivTeachers">
+                                                @*----------------------*@
+                                                <label asp-for="Qualification" class="col-sm-4 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Qualification">
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row ">
-                                                <label asp-for="Batch" class="col-sm-2 col-form-label space text-end ClsSessionStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsSessionStudent">
+
+                                                @*----------------------*@
+                                                <label asp-for="Batch" class="col-sm-4 col-form-label space text-end ClsSessionStudent" for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ClsSessionStudent">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Batch">
                                                 </div>
 
-                                                <label asp-for="Photo" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
+                                                @*----------------------*@
+
+                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-4 col-form-label space text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
+                                                <div class="col-sm-8 mb-2 ClsDivTeachers">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.InstanceUserCode">
+                                                </div>
+
+                                                @*----------------------*@
+                                                <label asp-for="FirstNameInGeneral" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.FirstNameInGeneral">
+                                                </div>
+
+                                                @*----------------------*@
+                                                <label asp-for="Nationality" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.Nationality">
+                                                </div>
+
+
+                                                @*----------------------*@
+                                                <label asp-for="BloodGroup" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.BloodGroupName">
+                                                </div>
+
+                                                @*----------------------*@
+
+                                                <label asp-for="PlaceOfBirth" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.PlaceOfBirth">
+                                                </div>
+                                                @*----------------------*@
+
+                                                <label asp-for="Gender" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    @{ var Gender = "";}
+                                                    @if (Model.Gender == "1")
+                                                    {
+                                                        Gender = "Male";
+                                                    }
+                                                    else if (Model.Gender == "0")
+                                                    {
+                                                        Gender = "FeMale";
+                                                    }
+                                                    else
+                                                    {
+                                                        Gender = "Others";
+                                                    }
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
+                                                </div>
+                                                @*----------------------*@
+
+                                                <label asp-for="ICNumber" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.ICNumber">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <label class="col-sm-4 col-form-label text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-4" style="display: flex;">
+                                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                                    @if (UpdateIdentification == "UpdateDetails")
+                                                    {
+                                                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                    }
+                                                    @*else if (UpdateIdentification == "UpdateDetails")
+            {
+                <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
+                <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+
+            }*@
+                                                    <div>
+                                                        @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
+                                                        }<br />
+                                                        @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <label asp-for="Photo" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                     {
                                                         <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
@@ -142,117 +193,44 @@
                                                     <input type="hidden" asp-for="PhotoSize" readonly />
                                                     <input type="hidden" asp-for="PhotoName" readonly />
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
 
-                                            <div class="mb-1 row">
-                                                <label asp-for="InstanceUserCode" id="LblInstanceUserCodeGeneralTab" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name">Reg. No./Emp ID</label>
-                                                <div class="col-sm-4 ClsDivTeachers">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.InstanceUserCode">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
 
-                                                <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.FirstNameInGeneral">
-                                                </div>
-
-                                                <label asp-for="MiddleName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
+                                                <label asp-for="MiddleName" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.MiddleName">
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="LastName" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.LastName">
-                                                </div>
 
-                                                <label asp-for="DateOfJoining" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
+
+                                                <label asp-for="DateOfJoining" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@(Model.DateOfJoining != null ? Convert.ToDateTime(Model.DateOfJoining).ToString("dd/MM/yyyy"): string.Empty)">
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
 
-                                            <div class="mb-1 row">
-                                                <label asp-for="Nationality" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.Nationality">
-                                                </div>
-                                                <label asp-for="AdmissionNumberNew" class="col-sm-2 col-form-label space text-end  ClsSessionStudent" for="basic-default-name"></label>
-                                                <div class="col-sm-4 ClsSessionStudent">
+                                                <label asp-for="AdmissionNumberNew" class="col-sm-4 col-form-label space text-end  ClsSessionStudent" for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ClsSessionStudent">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.AdmissionNumberNew">
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
 
-                                            <div class="mb-1 row">
-                                                @*<label asp-for="IsUserJoined" class="col-sm-2 col-form-label  text-end ClsSessionStudent" for="basic-default-name"></label>
-                                                    <div class="col-sm-4 ClsSessionStudent">
-                                                        @if (Model.IsUserJoined == "True")
-                                                        {<input type="text" readonly="" class="form-control-plaintext" value="Yes">
-                                                        }
-                                                        else
-                                                        {<input type="text" readonly="" class="form-control-plaintext" value="No">
-                                                        }
-                                                    </div>*@
-                                                <label asp-for="BloodGroup" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.BloodGroupName">
-                                                </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="PlaceOfBirth" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.PlaceOfBirth">
-                                                </div>
-                                                <label asp-for="CollegeCode" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
+                                                <label asp-for="CollegeCode" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.CollegeCode">
                                                 </div>
-                                            </div>
-                                            @*----------------------*@
-                                            <div class="mb-1 row">
-                                                <label asp-for="Gender" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
-                                                    @{ var Gender = "";}
-                                                    @if (Model.Gender == "1")
-                                                    {
-                                                        Gender = "Male";
-                                                    }
-                                                    else if (Model.Gender == "0")
-                                                    {
-                                                        Gender = "FeMale";
-                                                    }
-                                                    else
-                                                    {
-                                                        Gender = "Others";
-                                                    }
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
-                                                </div>
-                                                <label asp-for="ICNumber" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
-                                                <div class="col-sm-4 ">
+
+                                                @*<label asp-for="ICNumber" class="col-sm-4 col-form-label space text-end " for="basic-default-name"></label>
+                                                <div class="col-sm-8 mb-2 ">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.ICNumber">
-                                                </div>
+                                                </div>*@
                                             </div>
-                                            @*----------------------*@
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             @*===================================PERSONAL INFORMATION Card========================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            PERSONAL INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        PERSONAL INFORMATION
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -310,12 +288,14 @@
                                             <div class="mb-1 row">
                                                 <label asp-for="PermanentAddress1" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress1">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress1">*@
+                                                    <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.PermanentAddress1">@Model.PermanentAddress1</textarea>
                                                 </div>
 
                                                 <label asp-for="PermanentAddress2" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress2">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.PermanentAddress2">*@
+                                                    <textarea readonly="" style="resize: none;" class="form-control-plaintext" rows="2" value="@Model.PermanentAddress2">@Model.PermanentAddress2</textarea>
                                                 </div>
                                             </div>
                                             @*----------------------*@
@@ -350,12 +330,10 @@
 
                             @*====================================== OTHER INFORMATION Card==============================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            OTHER INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        OTHER INFORMATION
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -391,12 +369,10 @@
 
                             @*=================================================GENERAL INFORMATION Card========================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            GENERAL INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        GENERAL INFORMATION
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -425,24 +401,25 @@
                                             </div>
                                             @*----------------------*@
                                             @*<div class="row mb-1 ">
-                                                    <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
-                                                    <div class="col-sm-4 ">
-                                                        @if (Model.SiblingsOtherCollege == "1")
-                                                        {
-                                                            Text = "Yes";
-                                                        }
-                                                        else
-                                                        {
-                                                            Text = "No";
-                                                        }
-                                                        <input type="text" readonly="" class="form-control-plaintext" value="@Text">
-                                                    </div>
-                                                </div>*@
+                                <label asp-for="SiblingsOtherCollege" id="LblSiblingsOtherCollege" class="col-sm-5 col-form-label  text-end " for="basic-default-name"></label>
+                                <div class="col-sm-4 ">
+                                    @if (Model.SiblingsOtherCollege == "1")
+                                    {
+                                        Text = "Yes";
+                                    }
+                                    else
+                                    {
+                                        Text = "No";
+                                    }
+                                    <input type="text" readonly="" class="form-control-plaintext" value="@Text">
+                                </div>
+                            </div>*@
                                             @*----------------------*@
                                             <div class="row mb-1 ">
                                                 <label asp-for="PhysicallyChalenged" class="col-sm-5 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.PhysicallyChalenged">
+                                                    @*<input type="text" readonly="" class="form-control-plaintext" value="@Model.PhysicallyChalenged">*@
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Model.DisabilityName">
                                                 </div>
                                             </div>
 
@@ -463,12 +440,10 @@
 
                             @*============================================ LOGIN INFORMATION Card============================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            LOGIN INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        LOGIN INFORMATION
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -529,7 +504,7 @@
                                 @*================================= Buttons ==================  *@
                                 <div class="row justify-content-end">
                                     <div class="col-sm-8">
-                                        <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -540,12 +515,10 @@
 
                             @*=============================Save Users Card=================================*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            UPDATE PROFILE
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        UPDATE PROFILE
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -570,32 +543,32 @@
 
                                                 @*<label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>*@
 
-                                            <div class="col-sm-6 " style="display: flex;">
-                                                @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
-                                                @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
-                                                @if (UpdateIdentification == "UpdateDetails")
-                                                {
-                                                    <img src="@ViewBag.PhotoNameFullName" alt="Image Not Available" id="ImgPhotoDisplay" height="100" width="100" />
-                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                    @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
-                                                }
-                                                @*else if (UpdateIdentification == "UpdateDetails")
-        {
-            <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
-            <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
-
-        }*@
-                                                <div>
-                                                    @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
+                                                <div class="col-sm-6 " style="display: flex;">
+                                                    @*<img src="@ViewBag.PhotoNameFullName" style=" display: none; height: 100px; width: 100px; border-width: 0px;" />*@
+                                                    @*@if (ViewBag.PhotoName != "" && UpdateIdentification == "UpdateDetails")*@
+                                                    @if (UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
-                                                    }<br />
-                                                    @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
-                                                    {
-                                                        <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
+                                                        <img src="@ViewBag.PhotoNameFullName" alt="Image Not Available" id="ImgPhotoDisplay" height="100" width="100" />
+                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
+                                                        @*<img src="~/Images/No imageAvailable.gif" alt="" id="ImgNophotoAvailable" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;display:none" />*@
                                                     }
+                                                    @*else if (UpdateIdentification == "UpdateDetails")
+                                    {
+                                        <img src="@ViewBag.PhotoNameFullName" id="ImgPhotoDisplay" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%; display: none" />
+                                        <img src="~/Images/No imageAvailable.gif" id="ImgNophotoAvailable" alt="" style="height: 100px; width: 100px; border-width: 0px; margin-left: 120%;" />
+
+                                    }*@
+                                                    <div>
+                                                        @if (ViewBag.FatherName != "" && ViewBag.FatherName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="ParentName" class="control-label space">Father Name </label><span class="text-danger">@ViewBag.FatherName</span>
+                                                        }<br />
+                                                        @if (ViewBag.MotherFirstName != "" && ViewBag.MotherFirstName != null && UpdateIdentification == "UpdateDetails")
+                                                        {
+                                                            <label asp-for="MotherFirstName" class="control-label space ">Mother Name </label><span>@ViewBag.MotherFirstName</span>
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                             @*----------------------*@
 
@@ -623,7 +596,7 @@
                                                 <div class="col-sm-4 ClsDivTeachers">
                                                     <input type="text" readonly="" class="form-control-plaintext" value="@Model.Qualification">
                                                 </div>
-          
+
                                                 <label asp-for="Photo" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
@@ -661,10 +634,10 @@
                                             <div class="mb-3 row">
 
                                                 @*<label asp-for="FirstName"  class="col-sm-2 col-form-label  text-end required" for="basic-default-name"></label>
-                                                    <div class="col-sm-4 ">
-                                                        <input type="text" asp-for="FirstName" class="form-control" placeholder="Reg. No./Emp ID">
-                                                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                                                    </div>*@
+                                <div class="col-sm-4 ">
+                                    <input type="text" asp-for="FirstName" class="form-control" placeholder="Reg. No./Emp ID">
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>*@
                                                 <label asp-for="FirstNameInGeneral" class="col-sm-2 col-form-label space text-end " for="basic-default-name"></label>
                                                 <div class="col-sm-4 HideFileds" style="display:none !important">
                                                     <input type="text" asp-for="FirstNameInGeneral" class="form-control" placeholder="First Name" required>
@@ -786,20 +759,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4 ">
-                                                    @{ var Gender = "";}
+                                                    @{ var Genders = "";}
                                                     @if (Model.Gender == "1")
                                                     {
-                                                        Gender = "Male";
+                                                        Genders = "Male";
                                                     }
                                                     else if (Model.Gender == "0")
                                                     {
-                                                        Gender = "FeMale";
+                                                        Genders = "FeMale";
                                                     }
                                                     else
                                                     {
-                                                        Gender = "Others";
+                                                        Genders = "Others";
                                                     }
-                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Gender">
+                                                    <input type="text" readonly="" class="form-control-plaintext" value="@Genders">
                                                 </div>
                                                 <label asp-for="FeeConcedingTypeId" class="col-sm-2 col-form-label space text-end ClsDivTeachers" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsDivTeachers">
@@ -851,12 +824,10 @@
                             @*--- PERSONAL INFORMATION Card----*@
                             <div class="card mb-4">
 
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span id="SpnCardHeaderName">
-                                            PERSONAL INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span id="SpnCardHeaderName" class="text-header">
+                                        PERSONAL INFORMATION
+                                    </span>
                                 </div>
 
                                 <div class="card-body">
@@ -985,12 +956,10 @@
 
                             <div class="card mb-4">
 
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            OTHER INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        OTHER INFORMATION
+                                    </span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -1064,8 +1033,8 @@
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
                                                         <!--<div class="form-group col-4" style="display:flex">
-                                                        <input asp-for="TcTaken" type="radio" id="TcTakenYes" name="TcTaken" value="1" onclick="TcTakenChecking(this.value)" style="flex: 0.2;" /><span>Yes</span>
-                                                        <input asp-for="TcTaken" type="radio" id="TcTakenNo" checked="checked" name="TcTaken" value="0" onclick="TcTakenChecking(this.value)" style="flex: 0.2;" /><span>No</span>-->
+                                    <input asp-for="TcTaken" type="radio" id="TcTakenYes" name="TcTaken" value="1" onclick="TcTakenChecking(this.value)" style="flex: 0.2;" /><span>Yes</span>
+                                    <input asp-for="TcTaken" type="radio" id="TcTakenNo" checked="checked" name="TcTaken" value="0" onclick="TcTakenChecking(this.value)" style="flex: 0.2;" /><span>No</span>-->
                                                         @*<input asp-for="TcTaken" type="radio" id="TcTakenNo"  name="TcTaken" value="0" onclick="TcTakenChecking(this.value)" style="flex: 0.2;" /><span>No</span>*@
                                                         <!--</div>-->
                                                         <div class="form-check form-check-inline">
@@ -1099,12 +1068,10 @@
                             @*---GENERAL INFORMATION Card----*@
                             <div class="card mb-4">
 
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            GENERAL INFORMATION
-                                        </span>
-                                    </h5>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        GENERAL INFORMATION
+                                    </span>
                                 </div>
 
                                 <div class="card-body">
@@ -1182,12 +1149,12 @@
 
                             @*--- LOGIN INFORMATION Card----*@
                             <div class="card mb-4">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="mb-0">
-                                        <span>
-                                            LOGIN INFORMATION
-                                        </span>
-                                    </h5><span class="required float-end"> INDICATES REQUIRED FIELDS</span>
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        LOGIN INFORMATION
+                                    </span>
+                                    <small class="text-header-small">* INDICATES REQUIRED FIELDS</small>
+                                    @*<span class="required float-end"> INDICATES REQUIRED FIELDS</span>*@
                                 </div>
 
                                 <div class="card-body">
@@ -1235,7 +1202,8 @@
                                                 </div>
                                             </div>
                                             @*----------------------*@
-                                            <div class="row mb-3 ">
+                                            @*<div class="row mb-3 ">*@
+                                            <div class="row mb-3 HideFileds" style="display:none !important">
                                                 <label asp-for="Password" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
                                                 <div class="col-sm-4 ">
@@ -1244,7 +1212,8 @@
                                                 </div>
                                             </div>
                                             @*----------------------*@
-                                            <div class="row mb-3 ">
+                                            @*<div class="row mb-3 ">*@
+                                            <div class="row mb-3 HideFileds" style="display:none !important">
                                                 <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="ConfirmPassword" id="ConPassword" class="form-control" placeholder="Confirm Password" required />
@@ -1252,7 +1221,8 @@
                                                 </div>
                                             </div>
                                             @*----------------------*@
-                                            <div class="row mb-3 ">
+                                            @*<div class="row mb-3 ">*@
+                                            <div class="row mb-3 HideFileds" style="display:none !important">
                                                 <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
@@ -1264,7 +1234,8 @@
                                                 </div>
                                             </div>
                                             @*----------------------*@
-                                            <div class="row mb-3 ">
+                                            @*<div class="row mb-3 ">*@
+                                            <div class="row mb-3 HideFileds" style="display:none !important">
                                                 <label asp-for="Answer" class="col-sm-4 col-form-label space text-end required" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ">
                                                     <input asp-for="Answer" class="form-control" placeholder="Answer" required />
@@ -1284,11 +1255,11 @@
 
 
                                             @*================================= Buttons ==================  *@
-                                        <div class="row justify-content-end">
-                                            <div class="col-sm-8">
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSaveFormInGeneralInfo" value="Update">Update</button>
+                                                </div>
                                             </div>
-                                        </div>
 
                                         </div>
                                     </div>

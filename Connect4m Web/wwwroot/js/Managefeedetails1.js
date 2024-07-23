@@ -103,6 +103,7 @@ function Feedetailsinserting() {
             };
 
             debugger;
+            var isValid = true;
             row.find('td:gt(8)').each(function () {
                 var $td = $(this);
                 var FeeTypeIds = $td.find('.FeeTypeid_Input').val();
@@ -119,6 +120,7 @@ function Feedetailsinserting() {
                         'border': '1px solid red',
                         'background-color': 'rgb(255, 238, 238)'
                     });
+                    isValid = false; // Set flag to false indicating validation failure
                     return false;
                 }
                 else {
@@ -138,10 +140,13 @@ function Feedetailsinserting() {
                 };
                 rowData.FeeDetails.push(Details);
             });
-            rowDataList.push(rowData);
+            if (isValid) {
+                rowDataList.push(rowData);
+            }
         });
         //handleAjax('POST', "/FeeSection/InsertUserfeedetails", rowDataList,
         //handleAjax('POST', "/FeeSection/InsertUserfeedetails", { feeDetailsList: JSON.stringify(rowDataList) },
+        if (rowDataList.length > 0) {
             $.ajax({
                 url: "/FeeSection/InsertUserfeedetails",
                 type: "POST",
@@ -172,7 +177,8 @@ function Feedetailsinserting() {
                     loaddingimg.css('display', 'none');
                 },
             });
-        //);
+        }
+        //else {}
 
     }
     else {
@@ -185,11 +191,6 @@ function Feedetailsinserting() {
 }
 
 ////=======>>>>>> WITHOUT DISCOUNT USER FEE DETAILS INSERTING CODE HERE END
-
-
-
-
-////======>>>>>>
 
 
 //===>> SET AMOUNT CHECKBOX FUNCTION
@@ -353,6 +354,3 @@ function Discountfeedetailsinserting() {
         $('#Commonerrormessage').html("Please enter Due Date.");
     }
 }
-
-
-////======>>>>>>

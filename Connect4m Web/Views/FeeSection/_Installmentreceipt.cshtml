@@ -2,336 +2,265 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model List<ChallanaDetails>
+<style>
+    .card-body {
+        padding: 5px;
+    }
 
+    .challan {
+        border: 1px solid #000;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        margin-bottom: 1px;
+    }
 
+    .header {
+        display: flex;
+        align-items: center;
+    }
 
+    .school-infos {
+        margin-left: 20px;
+    }
 
-    <div class="row justify-content text-end">
-        <div class="col-sm-12">
-            <button id="Print_Matrix_Button" class="btn btn-secondary waves-effect waves-light">PRINT On Dot-Matrix</button>
-            <button id="Print_Button" class="btn btn-secondary waves-effect waves-light">Print</button>   
-        </div>
-    </div> 
+    .school-name {
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-    <div class="card-body" style="border: 1px solid; border-color: cornflowerblue; border-radius: 8px; ">
-        @foreach (var item in Model)
-        {
-            <div id="Fee_DetailsPrint">
-                <table class="table table-bordered">
-                    <tbody style="">
-                        <tr style="border: white;text-align: right;">
-                            <td colspan="12" class="">
-                                <span id="dateSpan"></span><br>
-                                <span id="timeSpan"></span>
-                            </td>
-                        </tr>
-                        <tr style="border-color:white;">
-                            <td>
-                                <span>
-                                    <img src="~/Images/Jnanadeeplogo.png" />
-                                </span>
-                            </td>
-                            <td>
-                                <span style="letter-spacing: 2px; font-family: Times New Roman; font-size: 14px; font-weight: bold;">
-                                    <b>JNANADEEPA VIDYA SAMSTE</b>
-                                </span><br />
-                                <span class="SchoolAddress_SPId" style="letter-spacing: 3px; font-size: 11px; font: 11px arial; color: #333333;">
-                                    Raghav Nagar, Hyderabad, Telangana - 500003
-                                </span>
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Name :
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_UserName
-                            </td>
+    .school-address {
+        font-size: 12px;
+        color: #333333;
+    }
 
-                            <td class="" style=" text-align: right;">Fee Amount :</td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_FeeAmount
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Registration Number:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_UserRegId
-                            </td>
+    .content {
+        margin-top: 20px;
+    }
 
-                            <td class="" style=" text-align: right;">Discount Type :</td>
-                            <td class="" style="text-align: left;">
-                                @(string.IsNullOrEmpty(item.Challana_DiscountType) ? "NA" : item.Challana_DiscountType)
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Department:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_ClassificationName
-                            </td>
+    .row {
+        display: flex;
+        margin-bottom: 10px;
+    }
 
-                            <td class="" style=" text-align: right;">Discount Amount :</td>
-                            <td class="" style="text-align: left;">
-                                @(item.Challana_DiscountAmount == null ? "NILL" : item.Challana_DiscountAmount.ToString())
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Semester:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_subclassificationName
-                            </td>
+    .value {
+        flex: 1;
+    }
 
-                            <td class="" style=" text-align: right;">Paid Amount :</td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_PaidAmount
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Term:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_TermName
-                            </td>
+    .footer {
+        margin-top: 20px;
+    }
 
-                            <td class="" style=" text-align: right;">Due Amount :</td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_DueAmount
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Due Date:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_DueDate
-                            </td>
-
-                            <td class="" style=" text-align: right;">Paying Amount :</td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_PayingAmount
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td class="" style="text-align: right;">
-                                Fee type:
-                            </td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_FeeType
-                            </td>
-
-                            <td class="" style=" text-align: right;">Balance Due :</td>
-                            <td class="" style="text-align: left;">
-                                @item.Challana_BalanceDue
-                            </td>
-                        </tr>
-                        <tr style="border: white;">
-                            <td style="text-align: right;">
-                                Stamp
-                            </td>
-                            <td style="text-align: center;">
-                                Signature Of Accountant
-                            </td>
-
-                            <td style="text-align: center;">Signature Of Payee</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-            <div id="MatricChallanaPrint">
-                <table class="table table-bordered">
-                    <tbody style="">
-                        <tr style="border: white;text-align: center;">
-                            <td colspan="12" class="">
-                                ADS SCHOOL - HYDERABAD, H.S - 2, Sector - 23, Opposite Pkt. - 3
-                            </td>
-                        </tr>
-                        <tr style="border: white;text-align: center;">
-                            <td colspan="12" class="" style="">
-                                ***** FEE RECEIPT *****
-                            </td>
-                        </tr>
-                        <tr style="">
-                        </tr>
-                        <tr style="border: white;">
-                            <td colspan="2" class="" style="text-align: right;">
-                                RECEIPT NO :
-                            </td>
-                            <td colspan="2" class="" style="text-align: left;">
-                                @item.ReturnStringValue
-                            </td>
-
-                            <td colspan="2" class="" style=" text-align: right;">RECEIPT DATE :</td>
-                            <td colspan="1" class="" style="text-align: left;">
-                                @item.Challana_UserName
-                            </td>
-                        </tr>
-                        <tr style="border-color: white;">
-                        </tr>
-                        <tr style="border-color: white;">
-                            <td colspan="2" class="" style="text-align: right;">
-                                Name :
-                            </td>
-                            <td colspan="1" class="lbl" style="text-align: left;">
-                                @item.Challana_UserName
-                            </td>
-                            <td class="" style=" text-align: right;">CLASS :</td>
-                            <td colspan="1" class="">@item.Challana_subclassificationName</td>
-                            <td colspan="1" class="" style="text-align: right;">
-                                ADM.NO :
-                            </td>
-                            <td colspan="2" class="">@item.Challana_UserRegId</td>
-                        </tr>
-                        <tr>
-                        </tr>
-
-                        <tr style="border-color: white;">
-                            <td colspan="12">
-                            </td>
-                        </tr>
-                        <tr style="border-color: white;">
-                            <td colspan="4" class="" style="text-align: right;">
-                                Instalment Number ****
-                            </td>
-                            <td class="">@item.Challana_TermName</td>
-
-                        </tr>
-                        <tr style="border-color: white;">
-                            <td colspan="4" class="" style="text-align: right;">
-                                Amount ****
-                            </td>
-                            <td class="Inslbl">@item.Challana_PayingAmount</td>
-                        </tr>
-                        <tr style="border-color: white;">
-
-                            <td class="" style="text-align: center;" colspan="13">
-                                ---------------------------
-                            </td>
-
-                        </tr>
-                        <tr style="border-color: white;">
-                            <td colspan="4" class="" style="text-align: right;">
-                                TOTAL FEE      ****
-                            </td>
-                            <td colspan="5" class="">@item.Challana_PayingAmount</td>
-                        </tr>
-                        <tr style="border-color: white;">
-
-                            <td class="" style="text-align: center;" colspan="13">
-                                ---------------------------
-                            </td>
-
-                        </tr>
-
-                        <tr style="border-color: white;">
-                            <td colspan="12" style="text-align: right;">
-                                <label class="">SIGNATURE</label>
-                            </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+        .footer .row {
+            display: flex;
         }
-        <div class="row justify-content text-center">
-            <div class="col-sm-12">
-                <button type="button" id="Pfuchallanbacktosearchbtn" class="btn btn-dark waves-effect waves-light">Back To Search</button>
-                <button type="button" id="Pfuchallanbacktopayfeebtn" class="btn btn-dark waves-effect waves-light">Back To Pay Fee</button>
+
+        .footer .label {
+            flex: 1;
+            text-align: center;
+        }
+
+    .matric-challana {
+        border: 2px solid #333; /* Border color */
+        border-radius: 10px; /* Rounded corners */
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .school-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .school-info p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .school-info h2 {
+            font-size: 24px;
+            margin: 5px 0;
+        }
+
+    .receipt-details {
+        margin-top: 20px;
+    }
+
+    .row {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .label {
+        flex: 1;
+        text-align: right;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .total-fee {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    .signature {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #333; /* Divider color */
+        margin: 10px 0;
+    }
+
+    #dateSpan {
+        margin-left: 85%;
+    }
+</style>
+
+<div class="card-body">
+    <div class="justify-content text-end">
+        <button id="Print_Matrix_Button" class="btn btn-label-linkedin waves-effect btn-sm">PRINT On Dot-Matrix</button>
+        <button id="Print_Button" class="btn btn-label-linkedin waves-effect btn-sm">Print</button>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div id="Fee_DetailsPrint" class="challan">
+            <span id="dateSpan"></span>
+            <span id="timeSpan"></span>
+            <div class="header">
+                <img src="~/assets/img/QuroSchool_Logo.png" alt="Quro Logo" width="100px" height="100px"/>
+                <div class="school-infos">
+                    <span class="school-name"><b>QURO SCHOOLS</b></span><br>
+                    <span class="school-address">2A, Siva Sadan, SRK Colony, Opp HDFC Bank, West Marredpally (Secunderabad), Hyderabad, 500026</span>
+                </div>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="label">Name :</div>
+                    <div class="value">@item.Challana_UserName</div>
+                    <div class="label">Fee Amount :</div>
+                    <div class="value">@item.Challana_FeeAmount</div>
+                </div>
+                <div class="row">
+                    <div class="label">Registration Number:</div>
+                    <div class="value">@item.Challana_UserRegId</div>
+                    <div class="label">Discount Type :</div>
+                    @if (String.IsNullOrEmpty(item.Challana_DiscountType))
+                    {
+                        <div class="value">NA</div>
+                    }
+                    else
+                    {
+                        <div class="value">@item.Challana_DiscountType</div>
+                    }
+                    @*<div class="value">@String.IsNullOrEmpty(item.Challana_DiscountType) ? NA : item.Challana_DiscountType</div>*@
+                </div>
+                <div class="row">
+                    <div class="label">Department:</div>
+                    <div class="value">@item.Challana_ClassificationName</div>
+                    <div class="label">Discount Amount :</div>
+                    @if (item.Challana_DiscountAmount == "NaN")
+                    {
+                        <div class="value">0.00</div>
+                    }
+                    else
+                    {
+                        <div class="value">@item.Challana_DiscountAmount</div>
+                    }
+
+                    @*<div class="value">@String.IsNullOrEmpty(item.Challana_DiscountAmount) || item.Challana_DiscountAmount == "NaN" ? "0.00" : item.Challana_DiscountAmount</div>*@
+                </div>
+                <div class="row">
+                    <div class="label">Semester:</div>
+                    <div class="value">@item.Challana_subclassificationName</div>
+                    <div class="label">Paid Amount :</div>
+                    @if (item.Challana_PaidAmount == "NaN")
+                    {
+                        <div class="value">0.00</div>
+                    }
+                    else
+                    {
+                        <div class="value">@item.Challana_PaidAmount</div>
+                    }
+
+                    @*<div class="value">@String.IsNullOrEmpty(item.Challana_PaidAmount) || item.Challana_PaidAmount == "NaN" ? "0.00" : item.Challana_PaidAmount</div>*@
+                </div>
+                <div class="row">
+                    <div class="label">Term:</div>
+                    <div class="value">@item.Challana_TermName</div>
+                    <div class="label">Due Amount :</div>
+                    <div class="value">@item.Challana_DueAmount</div>
+                </div>
+                <div class="row">
+                    <div class="label">Due Date:</div>
+                    <div class="value">@item.Challana_DueDate</div>
+                    <div class="label">Paying Amount :</div>
+                    <div class="value">@item.Challana_PayingAmount</div>
+                </div>
+                <div class="row">
+                    <div class="label">Fee type:</div>
+                    <div class="value">@item.Challana_FeeType</div>
+                    <div class="label">Balance Due :</div>
+                    <div class="value">@item.Challana_BalanceDue</div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <div class="label">Stamp</div>
+                    <div class="label">Signature Of Accountant</div>
+                    <div class="label">Signature Of Payee</div>
+                </div>
             </div>
         </div>
+        <div id="MatricChallanaPrint" class="matric-challana">
+            <div class="school-info">
+                <p>QURO SCHOOLS - HYDERABAD, H.S - 2, Sector - 23, Opposite Pkt. - 3</p>
+                <h2>***** FEE RECEIPT *****</h2>
+            </div>
+            <div class="receipt-details">
+                <div class="row">
+                    <div class="label">RECEIPT NO :</div>
+                    <div class="value">@item.ReturnStringValue</div>
+                    <div class="label">RECEIPT DATE :</div>
+                    <div class="value">@item.Challana_UserName</div>
+                </div>
+                <div class="row">
+                    <div class="label">Name :</div>
+                    <div class="value">@item.Challana_UserName</div>
+                    <div class="label">CLASS :</div>
+                    <div class="value">@item.Challana_subclassificationName</div>
+                    <div class="label">ADM.NO :</div>
+                    <div class="value">@item.Challana_UserRegId</div>
+                </div>
+                <div class="row">
+                    <div class="label">Instalment Number :</div>
+                    <div class="value">@item.Challana_TermName</div>
+                </div>
+                <div class="row">
+                    <div class="label">Amount :</div>
+                    <div class="value">@item.Challana_PayingAmount</div>
+                </div>
+                <hr>
+                <div class="total-fee">
+                    TOTAL FEE: @item.Challana_PayingAmount
+                </div>
+                <hr>
+                <div class="signature">
+                    <label>SIGNATURE</label>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="justify-content text-center">
+        <button type="button" id="Pfuchallanbacktosearchbtn" class="btn btn-dark waves-effect waves-light">Back To Search</button>
+        <button type="button" id="Pfuchallanbacktopayfeebtn" class="btn btn-dark waves-effect waves-light">Back To Pay Fee</button>
     </div>
-
-          
-
-
-
-
-
+</div>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/Payfeeforuserpartialview.js"></script>
-
-<script>
-    //$(document).ready(function () {
-
-
-    //    updateDateTime();
-
-
-    //    setInterval(updateDateTime, 1000);
-
-
-    //});
-
-    //function updateDateTime() {
-    //    const currentDate = new Date();
-    //    const months = [
-    //        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    //        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    //    ];
-
-    //    const month = months[currentDate.getMonth()];
-    //    const day = currentDate.getDate();
-    //    const year = currentDate.getFullYear();
-    //    const hours = currentDate.getHours();
-    //    const minutes = currentDate.getMinutes();
-    //    const amOrPm = hours >= 12 ? "PM" : "AM";
-    //    const formattedHours = hours % 12 || 12;
-
-    //    const formattedDate = `${month} ${day} ${year}`;
-    //    const formattedTime = `${formattedHours}:${minutes}${amOrPm}`;
-
-    //    // Update the <span> elements with the formatted date and time
-    //    document.getElementById("dateSpan").textContent = formattedDate;
-    //    document.getElementById("timeSpan").textContent = formattedTime;
-    //}
-
-    //document.getElementById("Print_Matrix_Button").addEventListener("click", function () {
-    //    // Get the content of the div with id 'MatricChallanaPrint'
-    //    const printContent = document.getElementById("MatricChallanaPrint").innerHTML;
-    //    //const printContent = document.getElementById("MatricChallanaPrintdiv").innerHTML;
-
-    //    // Create a new window for printing
-    //    const printWindow = window.open('', '', 'width=800,height=600');
-    //    printWindow.document.open();
-    //    printWindow.document.write('<html><head><title>Print</title></head><body>');
-
-    //    // Write the content to the new window
-    //    printWindow.document.write(printContent);
-
-    //    // Close the new window after printing
-    //    printWindow.document.write('</body></html>');
-    //    printWindow.document.close();
-    //    printWindow.print();
-    //    printWindow.close();
-    //});
-
-
-
-    //document.getElementById("Print_Button").addEventListener("click", function () {
-    //    //const printContent = document.getElementById("Fee_DetailsPrintdiv").innerHTML;
-    //    const printContent = document.getElementById("Fee_DetailsPrint").innerHTML;
-    //    const printWindow = window.open('', '', 'width=800,height=600');
-    //    printWindow.document.open();
-    //    printWindow.document.write('<html><head><title>Print Fee Details</title></head><body>');
-    //    printWindow.document.write(printContent);
-    //    printWindow.document.write('</body></html>');
-    //    printWindow.document.close();
-    //    printWindow.print();
-    //    printWindow.close();
-    //});
-
-
-</script>

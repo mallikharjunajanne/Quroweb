@@ -4,25 +4,46 @@
     Layout = null;
 }
 
+<style>
+    .Htbl {
+        width: 100%;
+        border-collapse: separate;
+        border: 1px solid #afd4f7;
+    }
+
+    .Htbltr {
+        background-color: #E8E8E8;
+        font-size: 14px;
+        font-weight: 700;
+        height: 26px;
+        text-align: center;
+        color: black;
+    }
+
+    .Htbltrtd {
+        border: 1px solid #dbdbdb;
+        height: 24px;
+        color: black
+    }
+</style>
 @if (ViewBag.Newstudentadmissions.Count > 0)
 {
-    <table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
-        <thead>
-            <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
-                <th>StudentName</th>
-                <th>Department</th>
-                <th>Class</th>
-                <th>DateofJoining</th>
-            </tr>
-        </thead>
+    <table class="Htbl">
+        <tr class="Htbltr">
+            <th>StudentName</th>
+            <th>Department</th>
+            <th>Class</th>
+            <th>DateofJoining</th>
+        </tr>
+
         <tbody>
             @foreach (var item in ViewBag.Newstudentadmissions)
             {
                 <tr>
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.FirstName</td>
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.ClassificationName</td>
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.SubclassificationName</td>
-                    <td style="border: 1px solid #dbdbdb; height: 24px;">@item.DateofJoining</td>
+                    <td class="Htbltrtd">@item.FirstName</td>
+                    <td class="Htbltrtd">@item.ClassificationName</td>
+                    <td class="Htbltrtd">@item.SubclassificationName</td>
+                    <td class="Htbltrtd">@item.DateofJoining</td>
                 </tr>
             }
         </tbody>
@@ -30,7 +51,7 @@
 }
 else
 {
-<span class="text-primary">No data available in this new admission.</span>
+    <span class="text-dark">No data available in this new admission.</span>
 }
 
 

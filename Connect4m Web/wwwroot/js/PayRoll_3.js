@@ -1,16 +1,16 @@
 ﻿
-//--------------------------------------  For mANAGE cATEGORY   12-09-2023
+//------------------------------------------------------------------------  For mANAGE cATEGORY   12-09-2023
 
 
 
 
-//--------------------------Search The CONFIGURE mANage Category
+//------------------------------------------------------------------------  Search The CONFIGURE mANage Category
 $(document).ready(function () {
         searchManageCategory();
        // setProgressBar(3, '.c-3');
     
 })
-//---------------------------------------------------------------------------Search
+//------------------------------------------------------------------------  Search
 $(document).on('click', '#Serach_MC #sub_tblMC', function (event) {
     event.stopImmediatePropagation();
     searchManageCategory();
@@ -154,8 +154,7 @@ function searchManageCategory() {
   
 }
 
-//------------------------------------------------------------------------------   Delete Manage Category
-
+//------------------------------------------------------------------------   Delete Manage Category
 
 $(document).on('click', '#tblMCsearchresults .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
@@ -171,7 +170,8 @@ $(document).on('click', '#tblMCsearchresults .fa-trash-o', function (event) {
     });
 })
 
-//---------------------------------------------------------------------------------------------   When Click ON submit Button 
+//------------------------------------------------------------------------   When Click ON submit Button
+
 $("#Insert_MC").submit(function (event) {
     event.preventDefault();
     // event.stopImmediatePropagation();
@@ -225,8 +225,9 @@ $("#Insert_MC").submit(function (event) {
     }, 50);
 
 })
-//--------------------------------------------------------------------------------  Click On Crete Manage Category
-//------------------------------------------c
+
+//------------------------------------------------------------------------  Click On Crete Manage Category
+
 $(document).on('click', '#addnewmanagecategorybtn', function (event) {
     event.stopImmediatePropagation();
     loaddingimg.css('display', 'block');
@@ -243,7 +244,9 @@ $(document).on('click', '#addnewmanagecategorybtn', function (event) {
     }, false);
 
 })
-//---------------------------------------------------------------------------------------  Data Getting For Update
+
+//------------------------------------------------------------------------  Data Getting For Update
+
 $(document).on('click', '#tblMCsearchresults td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
     debugger;
@@ -255,11 +258,12 @@ var data = {
 };
     CommonAjaxFunction('GET', '/PayRoll/CreateManageCategory', data, function (response) {
         $('#appendinsertmanagecategory').html('');
-      //  $('#appendsearchmanagecategory').html('');
+        //  $('#appendsearchmanagecategory').html('');
+        debugger;
         $('#appendsearchmanagecategory').css('display', 'none');
         $('#appendinsertmanagecategory').css('display', 'block');
         $('#appendinsertmanagecategory').html(response);
-    $('#Insert_MC #Save_MC').val("Update");
+        $('#Insert_MC #Save_MC').val("Update").text('Update');
     $('.card #updatesalaryattribute').text("UPDATE");
 
     $('#Insert_MC #clearform').css('opacity', '0.3');
@@ -275,7 +279,7 @@ var table = $('#tblMCsearchresults').DataTable();
 tabletargetpagetblSEMsearchresults = table.page.info().page;
 })
 
-//---------------------------------------------------------------------------------------------  When click on back to search Manage Category
+//------------------------------------------------------------------------  When click on back to search Manage Category
 
 $(document).on('click', '#Insert_MC #backtosearch_MC', function (event) {
     event.stopImmediatePropagation();
@@ -286,3 +290,24 @@ $(document).on('click', '#Insert_MC #backtosearch_MC', function (event) {
     searchManageCategory();
     loaddingimg.css('display', 'none');
 })
+
+//-------- CLEAR FUNCTION
+function SaveClearform(formid) {
+    debugger;
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+

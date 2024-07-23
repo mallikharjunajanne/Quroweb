@@ -1,14 +1,4 @@
-/*.description {
-    font-size: 21px;
-    line-height: 30px;
-    width: 796px;
-    margin-top: -370px;
-}
 
-.title {
-  font-size: 96px;
-  margin: 0;
-}*/
 .required::before {
     content: "*";
     color: red;
@@ -116,13 +106,7 @@
     width: auto;
     text-align: left;
 }
-/*.buttons-pdf {
-    background-color: green !important;
-}
 
-.buttons-print {
-    background-color: black !important;
-}*/
 
 .dataTables_info {
     display: none;

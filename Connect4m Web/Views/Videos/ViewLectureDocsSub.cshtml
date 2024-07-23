@@ -18,9 +18,9 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>VIEW LECTURES / DOCS</h4>
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">/</span>*@VIEW LECTURES / DOCS</h4>
 
 
 
@@ -47,53 +47,53 @@
                             <div class="row mb-3">
                                 @foreach (var item in Model)
                                 {
-                                   
-                                <div class="col-sm-4">
-                                    <div class="card-body">
-                                        <div class="accordion">
+
+                                    <div class="col-sm-4">
+                                        <div class="card-body">
+                                            <div class="accordion">
 
 
-                                           
 
 
-                                            <div class="card accordion-item active">
-                                                <h2 class="accordion-header" id="headingOne">
-                                                    <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.SubjectId" aria-expanded="true">
-                                                        @item.SubjectName
-                                                    </button>
-                                                </h2>
 
-                                                <div id="accordionWithIcon-@item.SubjectId" class="accordion-collapse collapse show" style="">
-                                                    <div class="accordion-body">
+                                                <div class="card accordion-item active">
+                                                    <h2 class="accordion-header" id="headingOne">
+                                                        <button type="button" class="accordion-button btn btn-success waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-@item.SubjectId" aria-expanded="true">
+                                                            @item.SubjectName
+                                                        </button>
+                                                    </h2>
 
-                                                        <div style="margin-top: 12%; margin-bottom: 12%;">
+                                                    <div id="accordionWithIcon-@item.SubjectId" class="accordion-collapse collapse show" style="">
+                                                        <div class="accordion-body">
+
+                                                            <div style="margin-top: 12%; margin-bottom: 12%;">
 
 
-                                                            <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
-                                                            <label style="margin-left: 19%;">   @item.ClassTeacherName</label>
+                                                                <img src="~/Images/Book.png" style="height: 70px; width: 60px; border-width: 0px;" />
+                                                                <label style="margin-left: 19%;">   @item.ClassTeacherName</label>
+                                                            </div>
+
+
+
+
                                                         </div>
-
-
-
-
+                                                    </div>
+                                                    <div id="VLD_ProgressDetails_sub">
+                                                        <input type="text" value="@item.InstanceClassificationId" id="VLD_Instanceclassficationid_sub" hidden style="display:none" />
+                                                        <input type="text" value="@item.InstanceSubClassificationId " id="VLD_InstanceSubClassificationId_sub" hidden style="display:none" />
+                                                        <input type="text" value="@item.SubjectId" id="VLD_SubjectId_sub" hidden style="display:none" />
+                                                        <label id="ProgramDetails_sub" class="btn">Program Details >></label>
                                                     </div>
                                                 </div>
-                                                <div id="VLD_ProgressDetails_sub">
-                                                    <input type="text" value="@item.InstanceClassificationId" id="VLD_Instanceclassficationid_sub" hidden style="display:none" />
-                                                    <input type="text" value="@item.InstanceSubClassificationId " id="VLD_InstanceSubClassificationId_sub" hidden style="display:none" />
-                                                    <input type="text" value="@item.SubjectId" id="VLD_SubjectId_sub" hidden style="display:none" />
-                                                    <label id="ProgramDetails_sub" class="btn">Program Details >></label>
-                                                </div>
+
+
+
+
                                             </div>
 
 
-
-
                                         </div>
-
-
                                     </div>
-                                </div>
 
 
                                 }
@@ -101,9 +101,9 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
+        </div>
     </div>
-
 
 
 </body>

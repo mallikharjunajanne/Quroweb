@@ -59,6 +59,7 @@ function fun32READYFUNCTION() {
 
             $("#StudentAttendanceDetails_Card").show();
             $("#profile-tabs").show();
+            loaddingimg.css('display', 'none');
         }
 
         //var Month = $("#Monthid").val();
@@ -127,6 +128,9 @@ resetButton.addEventListener('click', function () {
 
     $("#clearbutton").prop("disabled", false);
     $("#savebutton").prop("disabled", false);
+    $('#home').show();
+    $('#profile').hide();
+
     loaddingimg.css('display', 'none');
 
 });
@@ -170,6 +174,8 @@ ViewStudentLeaves_BTN.addEventListener('click', function () {
         var Month = $("#Monthid").val();
         var AcadamicYearID = $("#AcadamicYearID").val();
         stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves(StudentId_ByParent, Month, AcadamicYearID, event, "12");//here 12 is gave for not prevent defalut
+        $('#home').hide();
+        $('#profile').show();
     }
 
     loaddingimg.css('display', 'none');
@@ -870,6 +876,7 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
                 TblDataTableWith_OutColumns_CallingFunction("StudentDataGetting_ID", 'noresponse', Length, currentPage, 'Noname', ExcelDownloadColumnsNo);
               //  loaddingimg.css('display', 'none');
                 $("#StudentAttendanceDetails_Table").show();
+                loaddingimg.css('display', 'none');
             }
         }
         ,

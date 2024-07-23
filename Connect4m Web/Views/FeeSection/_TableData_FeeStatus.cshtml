@@ -4,34 +4,25 @@
 
 @model List<Feestatusdetails>
 
-
-@*<link href="~/css/FeeDueRemainders.css" rel="stylesheet" />*@
-
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">SMS CREDITS</h5>
+        <div class="card-header bg-danger text-white">SMS CREDITS</div>
+        <div class="row mb-1">
+            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Total Credits</label>
+            <div class="col-sm-4">
+                <label></label>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="row mb-2">
-                    <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Total Credits</label>
-                    <div class="col-sm-4">
-                        <label></label>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Used Credits</label>
-                    <div class="col-sm-4">
-                        <label></label>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Remaining Credits</label>
-                    <div class="col-sm-4">
-                        <label></label>
-                    </div>
-                </div>
+        <div class="row mb-1">
+            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Used Credits</label>
+            <div class="col-sm-4">
+                <label></label>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Remaining Credits</label>
+            <div class="col-sm-4">
+                <label></label>
             </div>
         </div>
     </div>
@@ -39,7 +30,7 @@
 @if (@ViewBag.ItemsCount > 0)
 {
     <div class="col-md-12 col-lg-12 mb-3">
-        <a href="#" id="exportToExcelButton">Export to Excel Expand Grid</a>
+        <a href="#" id="exportToExcelButton" class="btn btn-label-linkedin waves-effect">Export to Excel Expand Grid</a>
         <div class="row">
             <div class="col-sm-2">
                 <input type="checkbox" class="form-check-input" id="chksmsstudent">
@@ -63,12 +54,10 @@
             </div>
         </div>
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
+            <div class="card-header bg-danger text-white">
                     YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glow"> @ViewBag.ItemsCount </span> RECORDS FOR <span id="Typeoffspid" value="@ViewBag.ButtonName"> @ViewBag.ButtonName </span>.
-                </h5>
             </div>
-            <div class="links table-responsive text-nowrap" id="Admissiontbldiv">
+            <div class="table-responsive text-nowrap" id="Admissiontbldiv">
                 <table id="Feedetailstbl" class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -124,7 +113,7 @@
                     </tbody>
                 </table>
                 <div class="text-center">
-                    <button class="btn btn-success waves-effect waves-light" id="GoToStep2btn"> Go To Step2 </button>
+                    <button class="btn btn-success waves-effect waves-light btn-sm" id="GoToStep2btn"> Go To Step2 </button>
                 </div>
             </div>
         </div>
@@ -132,9 +121,7 @@
 
     <div class="col-md-12 col-lg-12 mb-3" id="MessagecontentDiv2" style="display:none;">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">TYPE MESSAGE</h5>
-            </div>
+            <div class="card-header bg-danger text-white">TYPE MESSAGE</div>
             <div class="card-body">
                 <div class="row">
                     <div class="row mb-2">
@@ -146,12 +133,12 @@
                     <div class="row mb-2">
                         <label class="col-sm-2 col-form-label  text-end" for="basic-default-name"></label>
                         <div class="col-sm-10">
-                            <span class="text-danger"> NOTE : The Messege Type here will send as subject for Email and Concatinates to Default Message.</span>
+                            <span class="text-danger text-validation"> NOTE : The Messege Type here will send as subject for Email and Concatinates to Default Message.</span>
                         </div>
                     </div>
                     <div class="row justify-content-center text-center">
                         <div class="col-sm-12">
-                            <button class="btn btn-info waves-effect waves-light" id="PreviewBtn">Preview</button>
+                            <button class="btn btn-info waves-effect waves-light btn-sm" id="PreviewBtn">Preview</button>
                             <span class="Spantext" title="NOTE: Preview will come for selected users if they have Mobile Number and SmsStatus true.">
                                 <i>?</i>
                             </span>
@@ -164,7 +151,7 @@
 }
 else
 {
-    <span class="text-danger">Your search resulted 0 records.</span>
+    <span class="text-danger text-validation">Your search resulted 0 records.</span>
 }
 
 
@@ -180,6 +167,7 @@ else
 
     $('#GoToStep2btn').click(function (e) {
         debugger;
+        loaddingimg.css('display', 'block');
         $('#Commonerrormessage').text('');
         e.preventDefault();
         var tableCheckboxes = document.querySelectorAll('.userCheckbox');
@@ -196,13 +184,14 @@ else
             $('html, body').animate({
                 scrollTop: $('#Commonerrormessage').offset().top
             }, 1000);
+            loaddingimg.css('display', 'none');
 
         } else if (!tableCheckboxesChecked) {
             $('#Commonerrormessage').text('Please select at least one student to send SMS or EMAIL.');
             $('html, body').animate({
                 scrollTop: $('#Commonerrormessage').offset().top
             }, 1000);
-
+            loaddingimg.css('display', 'none');
         }
         else {
 
@@ -249,11 +238,13 @@ else
             //console.log('Collected Data:', collectedData);
             $('#MessagecontentDiv2').show();
             $('#Commonerrormessage').text('');
+            loaddingimg.css('display', 'none');
         }
     });
 
     $('#PreviewBtn').click(function (e) {
         $('#Commonerrormessage').text('');
+        loaddingimg.css('display', 'block');
         debugger;
         e.preventDefault();
         var collectedData = {
@@ -271,11 +262,13 @@ else
         if (typeof collectedData === 'undefined') {
             $('#Commonerrormessage').text('Please select at least one student to send SMS or EMAIL.');
             window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
             return;
         }
         if (Subject =='') {
             $('#Commonerrormessage').text('Please enter the text you want to send.');
             window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
             return;
         }
 
@@ -297,8 +290,10 @@ else
             contentType: 'application/json',
             success: function (response) {
                 var message = '';
+                window.scrollTo(0, 500);
                 if (response == "1") {
                     //var message = '';
+                   
                     if (chksmsstudent.checked) {
                         message = 'Student SMS sent successfully';
                     } else if (chksmsparents.checked) {
@@ -313,6 +308,7 @@ else
                 else if (response == "-1") {
                     $('#Commonerrormessage').text('Something went wrong please try again.....!');
                 }
+                loaddingimg.css('display', 'none');
             }
         });
     });

@@ -16,7 +16,6 @@
 
     $.ajax(ajaxOptions);
 }
-
 function DataCallToAjax(method, url, data, successCallback, errorCallback) {
     $.ajax({
         url: url,
@@ -31,12 +30,11 @@ function DataCallToAjax(method, url, data, successCallback, errorCallback) {
 
 
 $(document).ready(function () {    
-    //ManageCoollinks();
+ 
     ManageCoollinksfun();  
 });
 
 $("#Searchcoollink_Btn").click(function () {
-
     $('#DeleteMessage').text('');
     $('#validationMessage').text('');
     $('#validation2').text('');
@@ -46,10 +44,7 @@ $("#Searchcoollink_Btn").click(function () {
     var Description = $("#DescriptionTXT").val();
 
     ManageCoollinksfun();
-    //ManageCoollinks();
 });
-
-
 function ManageCoollinksfun() {
     var LinkName = $("#LinkNameTXT").val();
     var LinkURL = $("#LinkURLTXT").val();
@@ -76,42 +71,9 @@ function bindDatatable(response) {
     var table = $('#Coollinkstbl_id').DataTable();
     table.destroy();
     $("#Recordscount").text(response.length);
-
-
     var newTable = $("#Coollinkstbl_id").DataTable({
         dom: 'Bfrtip',
-        buttons: [
-            //{
-            //    extend: 'pdfHtml5',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-
-            //}
-            //,
-            //{
-            //    extend: 'excel',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-            //},
-
-
-            //{
-            //    extend: 'print',
-            //    title: 'Manage Holidays Report',
-            //    message: "Report On: " + formattedDate,
-            //    exportOptions: {
-            //        columns: [1, 2, 3, 4, 5, 6]
-            //    },
-            //}
-        ],
-
+        buttons: [],
         bProcessing: false,
         bLengthChange: true,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
@@ -126,16 +88,6 @@ function bindDatatable(response) {
         //  stateSave:true,
         data: response,
         columns: [
-
-            //{
-            //    data: "SNO",
-            //    //visible: false,
-
-            //    render: function (data, type, row, meta) {
-            //        //  length++;
-            //        return row.holidayId
-            //    }
-            //},
             {
                 targets: 0, // Assuming this is the column index where you want to display numbering
                 render: function (data, type, row, meta) {
@@ -144,48 +96,31 @@ function bindDatatable(response) {
                     return (0 * rowsPerPage) + meta.row + 1;
                 }
             },
-
             {
                 data: "LinkName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.linkName
-
+                  return row.linkName
                 }
             },
             {
                 data: "LinkURL",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.linkURL + '<input type="text" value=' + row.coollinkId + ' hidden/>'
-
+                 return row.linkURL + '<input type="text" value=' + row.coollinkId + ' hidden/>'
                 }
             },
             {
                 data: "Description",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
                     return row.description
-
                 }
             },
             {
                 data: "CoollinkId",
-
                 render: function (data, type, row, meta) {
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-
                 }
             }
         ]
-
-
     });
     //Pdfs buttons hide this code
     newTable.buttons().container().hide();
@@ -199,43 +134,15 @@ function bindDatatable(response) {
         fontWeight: 'bold'
     });
 }
-
-function ManageCoollinks() {
-    //$('#DeleteMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-
-
-
-    var LinkName = $("#LinkName").val();
-    var LinkURL = $("#LinkURL").val();
-    var Description = $("#Description").val();
-
-
-
-
-    $.ajax({
-        url: "/Admin/ManageCoolLinks_Tabledata",
-        data: { LinkName: LinkName, LinkURL: LinkURL, Description: Description },
-        type: "GET",
-        success: function (response) {
-            debugger;
-            $('#Coollinks_PartailConatiner').html(response);
-            pagination();
-
-        }
-    });
-}
-
-
-
 function Clearcommonfunction(Formid, ErrorMessageSpanId) {
+    debugger;
     document.getElementById(Formid).reset(); // Reset the form 
     document.getElementById(ErrorMessageSpanId).innerText = '';
 
     $('#DeleteMessage').text('');
     $('#validationMessage').text('');
     $('#validation2').text('');
+    ManageCoollinksfun();
 }
 $('#CreateNewCoolllink_Btn').click(function () {
 
@@ -260,7 +167,7 @@ $('#CreateNewCoolllink_Btn').click(function () {
 
 $('#Backtoseach_savebtn').click(function () {
 
-    $('#DeleteMessage').text('');
+    $('#UpdatevalidationMessage').text('');
     $('#validationMessage').text('');
     $('#validation2').text('');
     $('#CreateNew_CoollinkView').hide();
@@ -275,7 +182,7 @@ $('#Backtoseach_savebtn').click(function () {
 
 $('#Clear_savebtn').click(function () {
 
-    $('#DeleteMessage').text('');
+    $('#UpdatevalidationMessage').text('');
     $('#validation2').text('');
     $('#validationMessage').text('');
     $('#S_InstanceIdTxt').val('');
@@ -284,8 +191,11 @@ $('#Clear_savebtn').click(function () {
     $('#S_DescriptionTxt').val('');
 
 });
-
-
+function isValidURL(url) {
+    let urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    // Test the URL against the regex pattern
+    return urlPattern.test(url);
+}
 $('#savecoollink_btn').click(function () {
 
     debugger;
@@ -293,41 +203,37 @@ $('#savecoollink_btn').click(function () {
     var LinkURL = $('#S_LinkURLTxt').val();
     var Description = $('#S_DescriptionTxt').val();
     if (SaveValidation()) {
-
-        var dataToSend = {
-            LinkName: LinkName,
-            LinkURL: LinkURL,
-            Description: Description
-        };
-
         $('#validation2').text('');
         $('#validationMessage').text('');
-        DataCallToAjax('POST', '/Admin/CoolLinks_INSERT', dataToSend,
-            function (response) {
-                if (response == "0") {
-                    $('#validationMessage').text("Cool Link with Name " + '"' + LinkName + '"' + " already exists.");
-                } else if (response = "") {
-                    $('#validationMessage').text("Somthing Went wrong...!");
-                } else {
-                    $('#validationMessage').text("Record inserted successfully.");
-                    $('#savecoollink_btn, #Clear_savebtn').prop('disabled', true);
-                }
-            }, function (status, error) {
-                // Handle error if needed
-            }
-        );
-        //$.ajax({
-        //    url: "/Admin/CoolLinks_INSERT",
-        //    data: dataToSend,
-        //    type: "POST",
-        //    success: function (response) {
-                
-        //    }
+        if (isValidURL(LinkURL)) {
+            //console.log('URL is valid');
+            var dataToSend = {
+                LinkName: LinkName,
+                LinkURL: LinkURL,
+                Description: Description
+            };
+           
+            DataCallToAjax('POST', '/Admin/CoolLinks_INSERT', dataToSend,
+                function (response) {
+                    if (response == "0") {
+                        $('#validationMessage').text("Cool Link with Name " + '"' + LinkName + '"' + " already exists.");
+                    } else if (response = "") {
+                        $('#validationMessage').text("Somthing Went wrong...!");
+                    } else {
+                        $('#validationMessage').text("Record inserted successfully.");
+                        $('#savecoollink_btn, #Clear_savebtn').prop('disabled', true);
+                    }
+                }, function (status, error) {
 
-        //});
+                }
+            );
+        }
+        else {
+            //console.log('URL is not valid');
+            $('#validationMessage').text('Invalid URL. Please enter a valid URL starting with http:// or https://.');
+        }
     }
 });
-
 function SaveValidation() {
     debugger;
     
@@ -348,15 +254,6 @@ function SaveValidation() {
         hasError = true;
     }
 
-    var urlInput = document.getElementById('S_LinkURLTxt');
-    var urlError = document.getElementById('urlError');
-    var urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-
-    if (!urlPattern.test(urlInput.value)) {
-        validationMessage += ('Invalid URL. Please enter a valid URL starting with http:// or https://.');
-        hasError = true;
-    } 
-
     if (hasError) {
         $('#validation2').html("Following fields have invalid data :<br>");
         $("#validationMessage").html(validationMessage);
@@ -366,10 +263,6 @@ function SaveValidation() {
         return true;
     }
 }
-
-
-
-
 $(document).on('click', '#Coollinkstbl_id td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
     debugger;
@@ -405,12 +298,11 @@ function EditCoolinkFunction(Coollinkid) {
 
     });
 }
-
-
 $(document).on('click', '#Coollinkstbl_id .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
     var confirmed = confirm("Are you sure you want to delete Coollink?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
     if (confirmed) {
+        $("#UpdatevalidationMessage").text('');
         debugger;
         var Coollinkid = $(this).closest('tr').find('input[type="text"]').val();
         var table = $('#Coollinkstbl_id').DataTable();
@@ -419,9 +311,10 @@ $(document).on('click', '#Coollinkstbl_id .fa-trash-o', function (event) {
             url: "/Admin/CoolLinks_DELETE?CoollinkId=" + Coollinkid,
             type: "POST",
             success: function (response) {
-                //ManageCoollinks();
+              
+                window.scroll(0, 500);
                 ManageCoollinksfun();
-                $("#DeleteMessage").text('Record deleted successfully.');
+                $("#UpdatevalidationMessage").text('Record deleted successfully.');
             }
         });
     }
@@ -436,9 +329,9 @@ $("#Delete_Upbtn").click(function () {
             url: "/Admin/CoolLinks_DELETE?CoollinkId=" + CoollinkId,
             type: "POST",
             success: function (response) {
-               
+                window.scroll(0, 500);
                 ManageCoollinksfun();
-                $('#CreateNew_CoollinkView').show();
+                $('#CreateNew_CoollinkView').hide();
                 $('#SearchCoollinkView').show();
                 $('#CoollinkUpdateView').hide();
                 $('#linkNameEditTxt').val('');
@@ -451,8 +344,6 @@ $("#Delete_Upbtn").click(function () {
         });
     }
 });
-
-
 $('#Backtoseach_Upbtn').click(function () {
 
 
@@ -469,7 +360,6 @@ $('#Backtoseach_Upbtn').click(function () {
     $('#SearchCoollinkView').show();
 
 });
-
 $('#Updatecoollink_Btn').click(function () {
     debugger;
     var LinkName = $('#linkNameEditTxt').val();
@@ -535,67 +425,3 @@ function UpdateValidation() {
         return true;
     }
 }
-
-
-
-
-
-/*---PAGINATION CODE IS START---*/
-
-function pagination() {
-    var tableId = 'Coollinkstbl_id';
-    var paginationDiv = document.getElementById('Pagination_div');
-    var rowsPerPage = 10;
-    var currentPage = 1;
-    var table = document.getElementById(tableId);
-    var rows = Array.from(table.querySelectorAll('tbody tr'));
-    var numRows = rows.length;
-    var totalPages = Math.ceil(numRows / rowsPerPage);
-
-    if (numRows >= rowsPerPage) {
-        function showPage(page) {
-            currentPage = page;
-            var startIndex = (page - 1) * rowsPerPage;
-            var endIndex = Math.min(startIndex + rowsPerPage, numRows);
-
-            rows.forEach(function (row) {
-                row.style.display = 'none';
-            });
-
-            for (var i = startIndex; i < endIndex; i++) {
-                rows[i].style.display = 'table-row';
-            }
-        }
-
-        function updatePagination() {
-            paginationDiv.innerHTML = '';
-
-            for (var i = 1; i <= totalPages; i++) {
-                var link = document.createElement('a');
-                link.href = '#';
-                link.textContent = i;
-                link.classList.add('pagination-link');
-                link.dataset.page = i;
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var page = parseInt(this.dataset.page);
-                    showPage(page);
-                    updatePagination();
-                });
-
-                if (i === currentPage) {
-                    link.classList.add('current-page');
-                    link.style.cursor = 'unset'; 
-                    link.style.fontWeight = 'bold'; 
-                    link.style.color = '#ff0000';
-                    link.style.margin = '0px 5px';
-                }
-                paginationDiv.appendChild(link);
-            }
-        }
-
-        showPage(currentPage);
-        updatePagination();
-    }
-}
-/*---PAGINATION CODE IS END---*/

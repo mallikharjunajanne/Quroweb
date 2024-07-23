@@ -288,7 +288,7 @@ $(document).on('click', '#tblSEMsearchresults td:nth-child(7) .SEMapprovalsafter
         partial: "313"
     };
     CommonAjaxFunction('GET', '/Videos/AddExpenditure', data, function (response) {
-        
+        debugger;
         $("#popupContainerapprovals #approvalsdiscrption").html(response);
         var paymentmodeval = $('#approvalsdiscrption #dropdown_PaymentMode_SEM_view').val();
         dropdownchangeSEM(paymentmodeval);

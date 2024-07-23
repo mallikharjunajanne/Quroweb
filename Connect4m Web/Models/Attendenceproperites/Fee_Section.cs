@@ -420,7 +420,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public int StudentQuotaId { get; set; }
         [Required(ErrorMessage = "Academic year is required")]
         public int AcademicYearId { get; set; }
-        public int FeeTermId { get; set; }
+        public string FeeTermId { get; set; }
         [Required(ErrorMessage = "Feetype is required")]
         public string FeeTypeId { get; set; }
         public string Amounttype { get; set; }

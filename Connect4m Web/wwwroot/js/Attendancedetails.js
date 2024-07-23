@@ -32,7 +32,7 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 
 $(document).ready(function () {
 
-    setTodayDate("StartDateid", "EndDateid");
+    //setTodayDate("StartDateid", "EndDateid");
 
     fetchDataAndPopulateDropdown(                           //==== << ** Classification Dropdown ** >>
         '/Attendance/Attendancedetailsdepartment',          // URL for data fetching
@@ -227,4 +227,5 @@ function Clearfun(formid) {
     $('#' + formid).find('input, select, textarea').val('');
     $('#' + formid).find('.field-validation-error').html('');
     $('#User_Attendance_Tbl').empty();
+    $('#ErrorMessage').text('');
 }

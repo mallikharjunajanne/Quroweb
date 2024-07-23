@@ -170,7 +170,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public int InstanceSubclassificaitionId { get; set; }
         public string SubClassificationName { get; set; }
 
-        [Required(ErrorMessage = "Subject is required")]
+        [Required(ErrorMessage = "Slot is required")]
         public int InstancesubjectId { get; set; }
         public string SubjectName { get; set; }
         public string ColumnString { get; set; }

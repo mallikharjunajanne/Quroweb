@@ -6,58 +6,53 @@
 
 
 
+
+<div class="justify-content text-end">
+    <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="exportexcelsummary">Export Excel</button>
+    <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="printsummary">Print</button>
+</div>
 <div class="card" id="datatable1">
 
     @*<h5 class="card-header">Dark Table head</h5>*@
-
-    <div class="demo-inline-spacing">
-        <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="exportexcelsummary">Export Excel</button>
-        <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="printsummary">Print</button>
+    <div class="card-header bg-danger text-white">
+        <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
     </div>
-    <h5 class="card-title mb-0">
-        <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span>
-    </h5>
-
-
     <div class="table-responsive text-nowrap">
-    <table id="Tblsummary1" class="table table-hover">
-        <thead class="table-dark">
+        <table id="Tblsummary1" class="table table-hover">
+            <thead class="table-dark">
 
-        </thead>
-        <tbody  class="table-border-bottom-0">
-        </tbody>
-
-    </table>
-
-
-</div>
+            </thead>
+            <tbody class="table-border-bottom-0">
+            </tbody>
+        </table>
+    </div>
 </div>
 @{if (ViewBag.summaryid == 2)
     {
-
-    <div class="card" id="datatable2">
-        <div class="demo-inline-spacing">
-            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="exportexceldetailesummary">Export Excel</button>
-            <button type="button" class="btn rounded-pill btn-label-primary waves-effect" id="printdetailesummary">Print</button>
+        <div class="justify-content text-end">
+            <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="exportexceldetailesummary">Export Excel</button>
+            <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="printdetailesummary">Print</button>
         </div>
-        @*<h5 class="card-header">Dark Table head</h5>*@
-        <h5 class="card-title mb-0">
-            <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="number-circle">0</span> RECORD(S).</span>
-        </h5>
+        <div class="card" id="datatable2">
+
+            @*<h5 class="card-header">Dark Table head</h5>*@
+            <div class="card-header bg-danger text-white">
+                <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+            </div>
 
 
-        <div class="table-responsive text-nowrap">
-            <table id="Tblsummary2" class="table table-hover">
-                <thead class="table-dark">
+            <div class="table-responsive text-nowrap">
+                <table id="Tblsummary2" class="table table-hover">
+                    <thead class="table-dark">
 
-                </thead>
-                <tbody class="table-border-bottom-0">
-                </tbody>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    </tbody>
 
-            </table>
+                </table>
 
 
+            </div>
         </div>
-    </div>
-        }
     }
+}

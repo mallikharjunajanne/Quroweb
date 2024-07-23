@@ -12,7 +12,8 @@ $(document).ready(function () {
         searchTransactions();
         var dropdown = document.getElementById("dropdown_FinancialYear_SEM");
         dropdown.selectedIndex = dropdown.options.length - 1;
-    } else {
+    }
+    else {
         var paymentmodeval = $('#InsertSEM #dropdown_PaymentMode_SEM').val();
         dropdownchangeSEM(paymentmodeval);
         if ($('#InsertSEM #GovFundId_Sem').val() != "0") {
@@ -113,6 +114,7 @@ function searchTransactions() {
  
     function bindDatatableSEM(response) {
         //
+        debugger;
     
         var formattedDate = GetDateFormat();
      //   var num = 0;
@@ -232,8 +234,7 @@ function searchTransactions() {
                         return row.description + '<input type="text" value=' + row.govFundId + ' hidden/>'
 
                     }
-                }
-                ,
+                },
                 {
                     data: "PaymentDate",
 
@@ -256,21 +257,24 @@ function searchTransactions() {
                         }
                       
                     }
-                }, {
+                },
+                {
                     data: "ExpenditureType",
 
                     render: function (data, type, row, meta) {
                         if ( row.expenditureType == 0) {
                             return '<span>Credit</span>';
 
+                        } else if (row.expenditureType==1) {
+                            return '<span>Debit</span>';
                         }
                         else {
-                            return '<span>Debit</span>';
-
+                            return '<span> </span>';
                         }
                       
                     }
-                }, {
+                },
+                {
                     data: "Approvals",
 
                     render: function (data, type, row, meta) {
@@ -286,8 +290,8 @@ function searchTransactions() {
                         }
 
                     }
-                }
-                , {
+                },
+                {
 
                     render: function (data, type, row, meta) {
                         //  length++;
@@ -575,7 +579,12 @@ $(document).on('click', '#InsertSEM #clearform', function (event) {
     event.stopImmediatePropagation();
     $('#InsertSEM #dropdown_FoundSource_SEM').prop('selectedIndex', 0);
     $('#InsertSEM #dropdown_PaymentMode_SEM').prop('selectedIndex', 0);
-
+    var form = document.getElementById('InsertSEM');
+    form.reset();
+    var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+    validationSpans.forEach(span => {
+        span.textContent = ''; // Clear validation messages
+    });
 
     $('#InsertSEM').find('.col-4').find('input').val('');
     $('#InsertSEM').find('textarea').val('');

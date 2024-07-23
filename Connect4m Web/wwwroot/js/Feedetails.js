@@ -69,8 +69,9 @@ $("#Btnsearch").click(function () {
             var FeeCollected = response.feeCollected;
             var Discount = response.discount;
             var Due = response.due;
-
+            
             if (Responselist.length != 0) {
+                $('#Paymentoptionchangediv').show();
                 $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '  Fee Collected:' + FeeCollected + '  Discount:' + Discount + '  Due:' + Due);
             }
             var RemoveElement = $(event).closest('tr').next('tr').find('td[colspan="7"]').closest('tr').remove();
@@ -415,6 +416,27 @@ $(document).on('click', '#Exporttoexcellnk', function () {
     const blob = new Blob([htmlToExport], { type: 'application/vnd.ms-excel' });
     saveAs(blob, 'Fee Details.xls');
 });
+
+function Searchclearfun(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $('#Paymentoptionchangediv').hide();
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+
 
 
 

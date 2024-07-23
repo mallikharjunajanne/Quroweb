@@ -124,20 +124,20 @@ function Bindtable(response) {
     table.destroy();
 
     var newTable = $("#Feetermstbl").DataTable({
-        dom: 'Bfrtip',
+        dom: '<"tops"lf>t<"bottom"ip>',
         buttons: [],
         bProcessing: false,
-        bLengthChange: true,
+        bLengthChange: false,
         /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
         pageLength: 20,
-        bfilter: false,
+        bfilter: true,
         bSort: true,
         searching: false,
         scrollX: true,
         scrollY: '400px',
         scrollCollapse: true,
         paging: true,
-        bPaginate: true,
+        bPaginate: false,
         //  stateSave:true,
         data: response,
         columns: [
@@ -197,14 +197,14 @@ function Bindtable(response) {
 
     table.on('draw', function () {
         $('#Feetermstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
             fontWeight: 'bold'
         });
     });
     $('#Feetermstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'
@@ -336,6 +336,20 @@ function clearForm(formId) {
         validationSpans.forEach(span => {
             span.textContent = ''; // Clear validation messages
         });
+        $('#Errormessage').text('');
+    }
+}
+
+function Searchclearform(formId) {
+    debugger;
+    var form = document.getElementById(formId);
+    if (form) {
+        form.reset(); // Reset the form elements
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        Pageload();
         $('#Errormessage').text('');
     }
 }

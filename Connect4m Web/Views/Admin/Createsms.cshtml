@@ -1,0 +1,67 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.SMSTemplates
+@{
+    ViewData["Title"] = "Update FeeTerm";
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12 col-lg-12 mb-3" id="Managenotice_CreateSMS_Divid">
+    @*<span id="SmsErrormessage" class="text-danger"></span>*@
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between"><span class="text-header">SAVE SMS</span></div>
+        <div class="card-body mb-1">
+            <div class="row">
+                <div class="col-2">
+                    <label class="control-label col-sm-10 col-form-label text-end space">SMS Template</label>
+                </div>
+                <div class="col-10">
+                    <div style="height: 297px; width: 100%; overflow: scroll;">
+                        <table class="table-responsive">
+                            @foreach (var item in ViewBag.SMSTemplates)
+                            {
+                                <tr style="height: 31px;">
+                                    <td>
+                                        @*style=" font: 14px arial; color: #333333; "*@
+                                        <input type="radio" value="@item.TemplateMasterPK" name="Templatedetails" class="form-check-input check" id="@item.NumberofParameter" />
+                                    </td>
+                                    <td>
+                                        @*style=" color: black; font-size: 12px; font-weight: normal; font-style: normal;"*@
+                                        @item.TemplateDescription
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-10">
+                    <span style=" font: 12px arial; color: black;">
+                        <b>NOTE:</b>   Following characters are restricted:<b>< > & | % "</b>
+                        Some Characters like <b>` ~ ^ + $</b> may not deliver properly to all mobiles.
+                        <b> Date format can be: dd/mm/yy or dd/mm/yyyy</b>
+                    </span>
+                </div>
+                <div class="col-sm-12 text-center">
+                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="SMSNextbtn">Edit SMS Template</button>
+                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="SMSBacktosearchbtn">Back To Search</button>
+                </div>
+            </div>
+        </div>
+        <div id="Createsms_templatesappendingDiv">
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script src="~/js/Managenoticessms1.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -113,11 +113,12 @@
     </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.</h5>
-            </div>
+            <div class="card-header bg-danger text-white">
+                <h6 class="mb-0">YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.</h6>
+</div>
+            @*<div class="table-responsive text-wrap card-datatable">*@
             <table class="Set_Fee_Users_Table  table table-bordered no-footer table-responsive" id="FeeSet_Users_TableData">
-                <thead @*style="background-color:white;"*@>
+                <thead>
                     <tr style=" background-color: #DDDEEE;">
                         <td rowspan="2"><b>S.No</b></td>
                         <td rowspan="2" data-sort-col="Name" onclick="sortTable('Name')"><b>Name</b></td>
@@ -133,32 +134,32 @@
                             var AmountTxtId = $"txtSame_{FeeTypeNames}";
                             var CheckboxId = $"Amount_Chaing_checkbox_{FeeTypeNames}";
 
-                        <td class="setContainer">
-                            <table class="table2 table-responsive" border="1" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(221, 153, 0); margin-top: 0px;">
-                                <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            Enter Amount:
-                                            <input type="text" class="red-border" id="@AmountTxtId" style="width:60px;border:1px solid #D90;" maxlength="8" oninput="inputvalidate(this)">&nbsp;
-                                            <input type="checkbox" id="@CheckboxId" onclick="toggleSameAmount(this,'@FeeTypeNames','@TrCount')">Set same amount for all users
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center">
-                                            <b id="Term_Names_SPid_0">@FeeTypeNames</b>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="table3" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(0, 0, 0); margin-top: 0px;">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%; text-align:center;"><b>Fee Amount</b></td>
-                                        <td style="width: 50%;text-align:center;"><b>Comments</b></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
+                            <td class="setContainer">
+                                <table class="table2 table-responsive" border="1" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(221, 153, 0); margin-top: 0px;">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                Enter Amount:
+                                                <input type="text" class="red-border" id="@AmountTxtId" style="width:60px;border:1px solid #D90;" maxlength="8" oninput="inputvalidate(this)">&nbsp;
+                                                <input type="checkbox" id="@CheckboxId" onclick="toggleSameAmount(this,'@FeeTypeNames','@TrCount')">Set same amount for all users
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <b id="Term_Names_SPid_0">@FeeTypeNames</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table3" style="width: 100%; border-collapse: collapse; border: 0px solid rgb(0, 0, 0); margin-top: 0px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 50%; text-align:center;"><b>Fee Amount</b></td>
+                                            <td style="width: 50%;text-align:center;"><b>Comments</b></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                             TrCount++;
                         }
                     </tr>
@@ -168,16 +169,16 @@
                     @foreach (var group in groupedUsers)
                     {
                         var user = group.First();
-                    <tr style="background-color:#DDDEDF;">
-                        <td>@Sno</td>
-                        <td>@user.FirstName</td>
-                        <td hidden id="UserId">@user.UserId</td>
-                        <td hidden id="FeeTypeid">@user.FeeTypeid</td>
-                        <td hidden id="ConcedingAmount">@user.ConcedingAmount</td>
-                        <td hidden id="DueDate">
-                            @user.DueDate
+                        <tr style="background-color:#DDDEDF;">
+                            <td>@Sno</td>
+                            <td>@user.FirstName</td>
+                            <td hidden id="UserId">@user.UserId</td>
+                            <td hidden id="FeeTypeid">@user.FeeTypeid</td>
+                            <td hidden id="ConcedingAmount">@user.ConcedingAmount</td>
+                            <td hidden id="DueDate">
+                                @user.DueDate
 
-                            <script>
+                                <script>
 
                                 $(document).ready(function () {
                                     var formattedDate = formatDate("@user.DueDate");
@@ -192,37 +193,37 @@
                                     }
                                     return "";
                                 }
-                            </script>
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(user.InstanceUserCode))
+                                </script>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(user.InstanceUserCode))
                                 {
-                            @user.InstanceUserCode
+                                    @user.InstanceUserCode
                                 }
                                 else
                                 {
-                            @Html.Raw("--")
+                                    @Html.Raw("--")
                                 }
-                        </td>
+                            </td>
 
-                        @if (!string.IsNullOrEmpty(user.RouteName))
+                            @if (!string.IsNullOrEmpty(user.RouteName))
                             {
-                        <td class="hideable">@user.RouteName</td>
+                                <td class="hideable">@user.RouteName</td>
                             }
                             else
                             {
-                        <td class="hideable" style="display: none;"></td>
+                                <td class="hideable" style="display: none;"></td>
                             }
-                        @if (!string.IsNullOrEmpty(user.StopName))
+                            @if (!string.IsNullOrEmpty(user.StopName))
                             {
-                        <td class="hideable">@user.StopName</td>
+                                <td class="hideable">@user.StopName</td>
                             }
                             else
                             {
-                        <td class="hideable" style="display: none;"></td>
+                                <td class="hideable" style="display: none;"></td>
                             }
 
-                        @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
+                            @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
                             {
                                 var matchingUser = group.FirstOrDefault(u => u.FeeTypeid == feeType);
                                 var displayIcon = matchingUser?.DisplayIcon ?? "";
@@ -230,21 +231,21 @@
                                 var inputId = $"txtFA_{user.UserId}_{feeType}_{user.FirstName}";
                                 var textareaId = $"textarea_{user.UserId}_{feeType}_{user.FirstName}";
 
-                        <td>
-                            <div style="display: flex;">
-                                <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext" style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;" oninput="validateNumberInput(this)" />
-                                @if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")
+                                <td>
+                                    <div style="display: flex;">
+                                        <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext" style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;" oninput="validateNumberInput(this)" />
+                                        @if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")
                                         {
-                                <span class="search-icon">🔍</span>
+                                            <span class="search-icon">🔍</span>
                                         }
-                                <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
-                                <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
-                                <textarea id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
-                            </div>
-                        </td>
+                                        <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
+                                        <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
+                                        <textarea id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
+                                    </div>
+                                </td>
                             }
 
-                    </tr>
+                        </tr>
                         Sno++;
                     }
                 </tbody>
@@ -260,6 +261,7 @@
                     </tr>
                 </tfoot>
             </table>
+            @*</div>*@
         </div>
     </div>
 </div>

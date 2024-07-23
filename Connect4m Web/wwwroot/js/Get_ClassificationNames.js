@@ -250,7 +250,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
     debugger;
-   // dropdown.empty(); // Clear existing options
+    dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
         text: '---Select---'
@@ -374,84 +374,110 @@ $('#Postattendaceformid').on('submit', function () {
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
         $("#Errormessage").text("");
+
+        var startDateInput = $('#StartDateid').val();
+        
+        //var startDateInput = $(this).val();
+        var startDate = new Date(startDateInput);
+        var today = new Date();
+
+        if (startDate >= today) {
+            $('#Errormessage').text('Start Date should be less than today.');
+            return false;
+        } else {
+            $('#Errormessage').text('');
+        }
+
+
+
+
         var validationMessagesLength = validationMessages.length;
-       
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
             debugger;
             $('#GetAttendance_Table').empty();
             loaddingimg.css('display', 'block');
-
-
-            var formData = $('#Postattendaceformid').serialize();
-            if ($('#Roldisplaydate').is(':visible')) {
-                var roldisplaydateValue = $('#Roldisplaydate').text();
-                var parts = roldisplaydateValue.split('/');
-                var newDateValue = parts[1] + '/' + parts[0] + '/' + parts[2];
-                var startdate = newDateValue;
-                var enddate = newDateValue;
-                formData += "&StartDate=" + startdate;
-                formData += "&EndDate=" + enddate;
-            }
-
-            //else {
-            //    //formData += "&StartDate=" + startdate;
-            //    //formData += "&EndDate=" + enddate;
+            //var Isvalid = true;
+            //var StartdateInput = $("#StartDateid").val();
+            //var EnddateInput = $("#EndDateid").val();
+            //var Sdate = new Date(StartdateInput);
+            //var Edate = new Date(EnddateInput);
+            //var formattedSdate = GetDateFormat(Sdate);
+            //var formattedEdate = GetDateFormat(Edate);
+            //if (formattedSdate != formattedEdate) {
+            //    if (formattedSdate >= formattedEdate) {
+            //        $('#Errormessage').text('Start Date should be less than today.');//
+            //        Isvalid = false;
+            //    } else {
+            //        $('#Errormessage').text("");
+            //    }
             //}
+           /* if (Isvalid) {*/
+                var formData = $('#Postattendaceformid').serialize();
+                if ($('#Roldisplaydate').is(':visible')) {
+                    var roldisplaydateValue = $('#Roldisplaydate').text();
+                    var parts = roldisplaydateValue.split('/');
+                    var newDateValue = parts[1] + '/' + parts[0] + '/' + parts[2];
+                    var startdate = newDateValue;
+                    var enddate = newDateValue;
+                    formData += "&StartDate=" + startdate;
+                    formData += "&EndDate=" + enddate;
+                }
 
-            var url = "/Attendance/GetAttedanceDetails";
-            handleAjax('GET', url, formData,                
-                function (response) {
-                    debugger;
-                    var DepartmentText;
-                    var SubClassText;
-                    if ($('#Roldisplaydate').is(':visible')) {
-                         DepartmentText = $("#ddlInstanceClassificationSearch option:selected").text();
-                         SubClassText = $("#ddlInstanceSubclassificationSearch option:selected").text();
-                    } else {
-                         DepartmentText = $("#Ddldepartment option:selected").text();
-                         SubClassText = $("#DdlSubClass option:selected").text();
-                    }
-                   
-                    var holidaynameslist = response[0].holidaysnames;
-                    var validateornotmessage=response[0].attendanceValidateornotretunmessage;
-                    var formattedDates = "";
-                    if (holidaynameslist && holidaynameslist.length > 0) {
-
-                        for (var i = 0; i < holidaynameslist.length; i++) {
-                            var holidayNames = holidaynameslist[i].holidayName;
-                            var originalDate = holidaynameslist[i].holidayDate;
-                            var formattedDate = new Date(originalDate).toLocaleDateString('en-GB');
-
-                            //var formattedDate = formatDate(originalDate);
-                            formattedDates += formattedDate + " (" + holidayNames + "),";
-                        }
-                        // $("#GetAttendance_Table").html(resp);      
-
-                        formattedDates = formattedDates.slice(0, -1);
-                        $('#Errormessage').text('There are holidays/week-offs in the selected date range on ' + formattedDates);
-                    }
-                    else {
+                var url = "/Attendance/GetAttedanceDetails";
+                handleAjax('GET', url, formData,
+                    function (response) {
                         debugger;
-                        if (validateornotmessage == "0") {
-                            $('#Errormessage').text('you cannot select start date less than Effective Date ');
-                           
+                        var DepartmentText;
+                        var SubClassText;
+                        if ($('#Roldisplaydate').is(':visible')) {
+                            DepartmentText = $("#ddlInstanceClassificationSearch option:selected").text();
+                            SubClassText = $("#ddlInstanceSubclassificationSearch option:selected").text();
                         } else {
+                            DepartmentText = $("#Ddldepartment option:selected").text();
+                            SubClassText = $("#DdlSubClass option:selected").text();
+                        }
+
+                        var holidaynameslist = response[0].holidaysnames;
+                        var validateornotmessage = response[0].attendanceValidateornotretunmessage;
+                        var formattedDates = "";
+                        if (holidaynameslist && holidaynameslist.length > 0) {
+
+                            for (var i = 0; i < holidaynameslist.length; i++) {
+                                var holidayNames = holidaynameslist[i].holidayName;
+                                var originalDate = holidaynameslist[i].holidayDate;
+                                var formattedDate = new Date(originalDate).toLocaleDateString('en-GB');
+
+                                //var formattedDate = formatDate(originalDate);
+                                formattedDates += formattedDate + " (" + holidayNames + "),";
+                            }
+                            // $("#GetAttendance_Table").html(resp);      
+
+                            formattedDates = formattedDates.slice(0, -1);
+                            $('#Errormessage').text('There are holidays/week-offs in the selected date range on ' + formattedDates);
+                        }
+                        else {
                             debugger;
-                            $("#btndelete").show();
-                            $("#GetAttendance_Table").html(response);
-                            
-                            $('#Printattendancereport #Selecteddepartmentclassnamesdiv').text('' + DepartmentText + ' ' + SubClassText);
-                        }  
-                    }
-                    loaddingimg.css('display', 'none');
-                },
-                function (status, error) {
-                    /*debugger;*/
-                    console.error("Error fetching data:", error);
-                    loaddingimg.css('display', 'none');
-                },
-                true
-            );
+                            if (validateornotmessage == "0") {
+                                $('#Errormessage').text('you cannot select start date less than Effective Date ');
+
+                            } else {
+                                debugger;
+                                $("#btndelete").show();
+                                $("#GetAttendance_Table").html(response);
+
+                                $('#Printattendancereport #Selecteddepartmentclassnamesdiv').text('' + DepartmentText + ' ' + SubClassText);
+                            }
+                        }
+                        loaddingimg.css('display', 'none');
+                    },
+                    function (status, error) {
+                        /*debugger;*/
+                        console.error("Error fetching data:", error);
+                        loaddingimg.css('display', 'none');
+                    },
+                    true
+                );
+            //}
         }
     }, 50);
 });
@@ -700,8 +726,6 @@ function AttendancedeleteAll() {
                             },
                             true
                         );
-
-
                      
                     } else if (response == "0") {
                         debugger;
@@ -725,12 +749,13 @@ function Showchangeactivity(Key, Attendanceid, TableName) {
     handleAjax('GET', "/Attendance/Changeactivitytblattendance?AuditKey=" + Key + "&SourceId=" + Attendanceid + "&TableName=" + TableName, null,
         function (response) {
             /*debugger;*/
-            var tableHTML = '<table style="border-collapse: collapse; width: 100%;">';
+            var tableHTML = '<table style="border-collapse: collapse; width: 100%;font-size: 10pt;">';
             tableHTML += '<tr>';
             tableHTML += '<td colspan="8" style="padding: 0px; text-align: center; border-bottom: 1px solid #ddd;"> View Change Activity </td>';
             tableHTML += '</tr>';
 
-            var headings = ['SNO','Audit Trail ID', 'Audit Key', 'Current Value', 'Previous Value', 'Previous Value Created By', 'Current Value Created By', 'Current Value Created Date'];           
+            /*var headings = ['SNO', 'Audit Trail ID', 'Audit Key', 'Current Value', 'Previous Value', 'Previous Value Created By', 'Current Value Created By', 'Current Value Created Date'];*/
+            var headings = ['SNO', 'Key', 'Current', 'Previous', 'Previously Changed By', 'Changed By', 'Changed On'];
             tableHTML += '<tr>';
             for (var i = 0; i < headings.length; i++) {
                 tableHTML += '<th style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f2f2f2; font-weight: bold;">' + headings[i] + '</th>';
@@ -740,7 +765,7 @@ function Showchangeactivity(Key, Attendanceid, TableName) {
             for (var i = 0; i < response.length; i++) {
                 tableHTML += '<tr>';
                 tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + sno + '</td>';
-                tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + response[i].auditTrailId + '</td>';
+                //tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + response[i].auditTrailId + '</td>';
                 tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + response[i].auditKey + '</td>';
                 tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + response[i].currentValue + '</td>';
                 tableHTML += '<td style="padding: 0px; text-align: left; border-bottom: 1px solid #ddd;">' + response[i].previousValue + '</td>';

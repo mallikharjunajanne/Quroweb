@@ -296,7 +296,8 @@ namespace Connect4m_Web.Controllers
 
             ViewBag.Department = CommonDropdown("GetDepartment", parameter, "ClassificationName", "InstanceClassificationId");    /* new List<SelectListItem>();//---------------------  Getting  Department*/
             ViewBag.Slots = CommonDropdown("GetSlots", parameter, "SlotName", "SlotId");         /* new List<SelectListItem>();//---------------------  Getting  Slots*/
-            ViewBag.Mentors = new List<SelectListItem>();   //  CommonDropdown("GetRoleEAP", parameter, "SlotName", "SlotId");  /* new List<SelectListItem> { new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" } };//----------------*/
+            ViewBag.Mentors = new List<SelectListItem>();  
+            //  CommonDropdown("GetRoleEAP", parameter, "SlotName", "SlotId");  /* new List<SelectListItem> { new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" } };//----------------*/
             ViewBag.instancceidME = InstanceId;
 
             return View();
@@ -304,8 +305,6 @@ namespace Connect4m_Web.Controllers
         }
 
         //==========================  Get Mentor Attendance
-
-
         public IActionResult GetMentorAttendance(MentorAttedanceProp obj)
         {
             // obj.ErrorModuleName = "Rolewise/PostAttendanceSave";
@@ -328,23 +327,14 @@ namespace Connect4m_Web.Controllers
                 list = JsonConvert.DeserializeObject<List<MentorAttedancePropList>>(data);
                 return Json(list);
             }
-
-
-
             return Json(list);
-
-
         }
         public IActionResult PostAttendanceSave()
         {
-
             return View();
-
         }
 
         //=========================================   When Click On Save (post the mentor attendance)
-
-
         [HttpPost]
         public IActionResult PostAttendanceSave([FromBody] List<AttendanceData> obj)
         {
@@ -352,13 +342,10 @@ namespace Connect4m_Web.Controllers
             try
             {
                 obj[0].CreatedBy = UserId;
-
                 obj[0].startdate = Convert.ToDateTime(Request.Cookies["Attendancestartdate"]);
                 obj[0].SubjectSlotID = Request.Cookies["Attendanceslotid"];
                 string jsonData = JsonConvert.SerializeObject(obj);
                 StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-
                 HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/MentorAttendancePosting", content).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -372,14 +359,9 @@ namespace Connect4m_Web.Controllers
             {
                 return Json(0);
             }
-
         }
 
-
-
-
         //==============================  Delete Thew Attendance  
-
         public IActionResult AttendanceDelete()
         {
             AttendanceDelete obj = new AttendanceDelete();
@@ -395,8 +377,6 @@ namespace Connect4m_Web.Controllers
                 obj.InstanceClassificationId = Convert.ToInt32(Request.Cookies["Attendance_InstanceClassificationId"]);
                 string jsonData = JsonConvert.SerializeObject(obj);
                 StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-
                 HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/MentorAttendanceDelete", content).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -410,7 +390,6 @@ namespace Connect4m_Web.Controllers
             {
                 return Json(0);
             }
-
         }
 
 

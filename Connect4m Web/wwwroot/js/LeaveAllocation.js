@@ -160,7 +160,8 @@ function SearchLeaveAllocationPartialViewFunction(event) {
         event.preventDefault();
         loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
-        var GenderId = $("input[type='radio'].check:checked").val();
+        //var GenderId = $("input[type='radio'].check:checked").val();
+        var GenderId = $("input[name='LeaveStatus']:checked").val();
 
         //if (GenderId == undefined) {
         //    GenderId = default;

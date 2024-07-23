@@ -191,8 +191,21 @@ function bindDatatable(response) {
 
     var newTable = $("#ManageHolidaystbl").DataTable({
         dom: 'Bfrtip',
-        buttons: [  ],
-
+        buttons: [
+            {
+                extend: 'print',
+                text: '<i class="fa-solid fa-print"></i>Print',
+                title: 'Quro School Holidays List',
+                className: 'btn btn-primary',
+                titleAttr: 'Print' // Tooltip for accessibility
+            },
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-file-excel-o"></i>Export to Excel',
+                title: 'Quro School Holidays List', // Custom title for Excel export
+                className: 'btn btn-success'
+            }
+        ],
         bProcessing: false,
         bLengthChange: true,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
@@ -365,6 +378,27 @@ function GetDateFormat() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
+
+function Clearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        Holidaysbindingfun();
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+
 
 
 $(document).on('click', '#ManageHolidaystbl .fa-trash-o', function (event) {

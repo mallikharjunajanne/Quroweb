@@ -167,6 +167,30 @@ function DeleteExamsById(InstanceSubjectId) {
     // });
 }
 
+
+//========CLEAR FUNCTION ON SEARCH SUBJECT SCREEN
+function Searchclearfun(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+
+        TblDataTableWithColumns_CallingFunction(event, 'Stop', "/Examination/TblBulkUploadSubjectsList", 'TblBulkUploadSubjectsList', 'Counts', 'FmSubjectSearch', 'Div_TblBulkUploadSubjectsList', '', []);
+
+        // Clear ASP.NET Core validation messages
+        //var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        //validationSpans.forEach(span => {
+        //    span.textContent = ''; // Clear validation messages
+        //});
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+
     //$(document).on("click", '#BtnUpdate', function (event) {
     //    try {
     //    event.stopImmediatePropagation();

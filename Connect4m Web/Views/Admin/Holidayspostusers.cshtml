@@ -7,11 +7,7 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <span id="Errormessage" class="text-danger"></span>
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                POST HOLIDAYS
-            </h5>
-        </div>
+        <div class="card-header bg-danger text-white  d-flex align-items-center justify-content-between">POST HOLIDAYS</div>
         <div class="card-body">
             <div class="row">
                 <div class="col" id="ManageHolidaysMaindivId">
@@ -22,16 +18,6 @@
                             <input type="hidden" id="HolidayidlblId" value="" />
                         </div>
                     </div>
-
-                    @*<div class="col-2 rowcol">
-                            <label>Selected Holiday Name:</label>
-                        </div>
-                        <div class="col-10 rowcol">
-                            <label class="form-check-label" id="HolidayNamelblid"></label>
-                            <input type="hidden" id="HolidayidlblId" value="" />
-                            <label class="form-check-label" id="HolidayidlblId"></label>
-                        </div>*@
-
                     <div class="row mb-3">
                         <label class="control-label col-sm-3 col-form-label  text-end "></label>
                         <div class="col-sm-4">
@@ -56,22 +42,7 @@
 
                     <div class="col-10 rowcol">
                         <div class="form-check form-check-inline col-4">
-                            @{
-                                //bool isChecked0 = false;
-
-                                //foreach (var Holidayitem in ViewBag.List.HolidayTargetTbl[0])
-                                //{
-                                //    string Comparingvalue = Holidayitem.ForAll;
-
-                                //    if (Comparingvalue == "True")
-                                //    {
-                                //        isChecked0 = true;
-                                //        break;
-                                //    }
-                                //}
-                            }
-                            <!--<input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" @(isChecked0 ? "checked" : "") />-->@*onclick="Selectalluserschkvalues()"*@
-                            <!--<label class="form-check-label" style="font: 12px arial; color: blue; ">Post to all users</label>-->
+                          
                         </div>
                     </div>
                     <div class="col-12 rowcol">
@@ -226,18 +197,14 @@
                         </div>
                     </div>
 
-                    <div class="row justify-content text-center">
-                        <div class="col-sm-12">
+            
+                        <div class="col-sm-12 text-center">
                             <button type="button" class="btn btn-dark waves-effect waves-light" id="BacktoSearchinpostuserbtn">BackToSearch</button>
                             <button type="button" class="btn btn-success waves-effect waves-light" id="PostSmsMailbtn">Post</button>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
-            @*<div style="text-align:center;">
-                    <input type="button" id="BacktoSearchinpostuserbtn" value="Back" class="btn btn-pill btn-outline-primary btn-aprimary" />
-                    <input type="button" id="PostSmsMailbtn" value="Post" class="btn btn-pill btn-outline-success btn-air-success" />
-                </div>*@
         </div>
     </div>
 </div>
@@ -245,8 +212,7 @@
 
 
 
-@*</body>
-    </html>*@
+
 <script src="~/js/Manageholiday.js"></script>
 
 

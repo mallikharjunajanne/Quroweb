@@ -9,21 +9,17 @@
 *@
 @*==========================search LEAVES Card====================*@
 <div class="card mb-4">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">
+    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
             <span>
                 LEAVES SEARCH
             </span>
-        </h5>
     </div>
     <div class="card-body">
         <form id="FmLeavesSearchPage_SearchDetails">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="row">
-                <div class="col">
+          
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Department</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
@@ -35,7 +31,7 @@
                         </div>
                     </div>
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Employee</label>
                         <div class="col-sm-4 ">
                             <div class="position-relative">
@@ -48,7 +44,7 @@
                         </div>
                     </div>
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">From Date</label>
                         <div class="col-sm-4 ">
                             <input type="date" class="form-control"  id="TxtFromDate" name="Fromdate"/>
@@ -57,7 +53,7 @@
                         </div>
                     </div>
                     @*--------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-2">
                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">To Date</label>
                         <div class="col-sm-4">
                             <input type="date" class="form-control" id="TxtToDate"name="Todate" />
@@ -68,15 +64,12 @@
                     @*--------------------------*@
                     @*<input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />*@
                     @*--------------------------*@
-                    <div class="row justify-content-end">
-                        <div class="col-sm-8">
-                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" value="Clear">Clear</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" value="Search">Search</button>
-                        </div>
+                    <div class="text-center">
+                            <button type="reset" class="btn btn-danger waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" value="Clear">Clear</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" value="Search">Search</button>                       
                     </div>
                     @*--------------------------*@
-                </div>
-            </div>
+            
         </form>
     </div>
 </div>
@@ -85,83 +78,79 @@
 
 @*-----GetSearchedRecords Result page*@
 <div class="card" id="TblLeavesSearchedResultPage_Div" style="display:none">
-    <div class="card-header flex-column flex-md-row">
-        <div class="head-label text-center">
-            <h5 class="card-title mb-0">
-                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-            </h5>
-        </div>
+    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
     </div>
 
     <div class="table-responsive text-nowrap">
         @*-----------------------------------------Cancel Comment Popup-----------------------------*@
         @*<div id="DivCancelComment" class="Commentpopup" style="display: none;">
-            <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
-                <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
-                    <span style="font-size: 24px;cursor:pointer">×</span>
-                </a>
-                <br>
-                <span class="ErrorMessageSpan" style=" background-color: yellow;" id="CancelLeaveError"></span>
-                <span style="margin-left: 34%;">Comments</span>
-                <textarea style="height: 100px; width: 100%;" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment"></textarea><br />
-                <label> <i style="font-size: 10px;"><span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</i></label>
-                <div>
-                    <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
+                <div id="Commentpopup-content" class="Commentpopup-content" style="padding-top: 0; border-style: groove;">
+                    <a style="margin-left: 99%; width: -1%;" onclick="document.getElementById('DivCancelComment').style.display='none'">
+                        <span style="font-size: 24px;cursor:pointer">×</span>
+                    </a>
+                    <br>
+                    <span class="ErrorMessageSpan" style=" background-color: yellow;" id="CancelLeaveError"></span>
+                    <span style="margin-left: 34%;">Comments</span>
+                    <textarea style="height: 100px; width: 100%;" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment"></textarea><br />
+                    <label> <i style="font-size: 10px;"><span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</i></label>
+                    <div>
+                        <input type="button" value=" Ok " style="margin-left: 41%;" id="OkBtn">
+                    </div>
+                </div>
+            </div>*@
+
+
+        <div class="modal fade show" id="DivCancelComment" tabindex="-1" style="background-color: rgba(75, 70, 92, 0.4); display: none; padding-left: 0px;" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                <div class="modal-content p-3 p-md-5">
+                    <div class="modal-body">
+
+                        <form class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
+                            <button type="reset" onclick="document.getElementById('DivCancelComment').style.display='none'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="text-center mb-4">
+                                <h3 class="mb-2">Cancel Comment</h3>
+                                @*<p class="text-muted">Add new card to complete payment</p>*@
+                                <label class="form-label ErrorMessageSpan" style=" background-color: khaki;" id="CancelLeaveError">dgbdgdgsgs</label>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label w-100" for="modalAddCard">Comment</label>
+                                <div class="">
+                                    <textarea class="form-control" rows="4" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment" placeholder="Enter a Leave Comment"></textarea>
+                                    <label class="form-label"> <span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</label>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="OkBtn">Submit</button>
+                                <button type="reset" class="btn btn-label-secondary btn-reset waves-effect" onclick="document.getElementById('DivCancelComment').style.display='none'" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>*@
-
-
-    <div class="modal fade show" id="DivCancelComment" tabindex="-1" style="background-color: rgba(75, 70, 92, 0.4); display: none; padding-left: 0px;" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-        <div class="modal-content p-3 p-md-5">
-            <div class="modal-body">
-
-                <form class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
-                    <button type="reset" onclick="document.getElementById('DivCancelComment').style.display='none'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="text-center mb-4">
-                        <h3 class="mb-2">Cancel Comment</h3>
-                        @*<p class="text-muted">Add new card to complete payment</p>*@
-                        <label class="form-label ErrorMessageSpan" style=" background-color: khaki;" id="CancelLeaveError">dgbdgdgsgs</label>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label w-100" for="modalAddCard">Comment</label>
-                        <div class="">
-                            <textarea class="form-control" rows="4" oninput="CharactercountFunction.call(this,'TextareacountSPANOf_POPup')" id="TxtAreaCancelComment" placeholder="Enter a Leave Comment"></textarea>
-                            <label class="form-label"> <span id="TextareacountSPANOf_POPup">500</span> Character(s) remaining.</label>
-                        </div>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="OkBtn" >Submit</button>
-                        <button type="reset" class="btn btn-label-secondary btn-reset waves-effect" onclick="document.getElementById('DivCancelComment').style.display='none'" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                    </div>
-                </form>
-            </div>
         </div>
-    </div>
-</div>
 
 
         @*<form id="Fm_TblLeaveDeligationAuthorityList_SearchedRecords">*@
-            <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
-                <thead class="table-dark">
-                    <tr>
-                        <th>LeaveApplicationId</th>
-                        <th>S No</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Reason</th>
-                        <th>Leave Type</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th>No of Days</th>
-                        <th>Status</th>
-                        <th>Cancel Leave</th>
-                        <th>Cancel Comments</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-            </table>
+        <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>LeaveApplicationId</th>
+                    <th>S No</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Reason</th>
+                    <th>Leave Type</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>No of Days</th>
+                    <th>Status</th>
+                    <th>Cancel Leave</th>
+                    <th>Cancel Comments</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+        </table>
         @*</form>*@
 
     </div>

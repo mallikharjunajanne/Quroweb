@@ -340,12 +340,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             [Required]
             public DateTime SDate { get; set; }
         }
-        public class ManagenoticeExporttoexcel
-        {
-            public string Subject { get; set; }
-            public string IsPosted { get; set; }
-            public string ExpiryDate { get; set; }
-        }
+        
         public class Homenoticeupdate : Insatnceids
         {
             public int ENoticeId { get; set; }
@@ -431,7 +426,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<SubclassificationList> SubclassificationList { get; set; }
             public List<RouteList> RouteList { get; set; }
             public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
-            public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
+            //public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
 
             //====>> Api Properties and web properties  comparing           
             //public string StartDate { get; set; }          
@@ -498,26 +493,36 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ForAll { get; set; }
 
         }
-        public class ENoticetargetTbl
+        //public class ENoticetargetTbl
+        //{
+        //    public string ENoticeTargetId { get; set; }
+        //    //public string InstanceId { get; set; }
+        //    //public string ENoticeId { get; set; }
+        //    public string ForAll_ { get; set; }
+        //    public string Value { get; set; }
+        //    public string AuthTypeId { get; set; }
+
+        //}
+
+        public class Targetenoticetbl
         {
             public string ENoticeTargetId { get; set; }
-            //public string InstanceId { get; set; }
-            //public string ENoticeId { get; set; }
             public string ForAll_ { get; set; }
             public string Value { get; set; }
             public string AuthTypeId { get; set; }
-
         }
+
         public class Multipuleusers
         {
             public string Userids { get; set; }
         }
-        public class Postnoticetabledate : Insatnceids
+        public class Postnoticetabledate:Insatnceids
         {
+            public int Studentuserid { get; set; }
             public string UserName { get; set; }
             public int RoleId { get; set; }
             public string InstanceUserCode { get; set; }
-            public int InstanceUserCodes { get; set; }
+            public string InstanceUserCodes { get; set; }
             public string PortalEmail { get; set; }
             public string FirstName { get; set; }
             public string FatherName { get; set; }
@@ -533,7 +538,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CollegeHostel { get; set; }
             public string MultiAdmissionNumber { get; set; }
             public string ExcludeUserIds { get; set; }
-
+            public string StudentMobilePhone { get; set; }
+            public string ParentMobilePhone { get; set; }
         }
         public class BirthdaysByInstance
         {
@@ -615,18 +621,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         }
 
 
-        //public class TemplateDetails : NoticeTypes
-        //{
-        //    public int TemplateMasterPK { get; set; }
-        //    public string TemplateDescription { get; set; }
-        //    public int NumberofParameter { get; set; }
-        //    public string AttributeName { get; set; }
-        //    public string AttributeType { get; set; }
-        //    public string length { get; set; }
-
-
-        //    //public TemplateDetails_SMS SmsDetails{get; set;}
-        //}
+        
 
         #endregion
 
@@ -744,7 +739,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<SubclassificationList> SubclassificationList { get; set; }
             public List<RouteList> RouteList { get; set; }
             public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
-            public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
+            public List<List<Targetenoticetbl>> ENoticeTargetTbl { get; set; }
+            public string Returnmessage { get; set; }
         }
         public class PostedNoticemessage
         {
@@ -934,7 +930,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Depositamount { get; set; }
 
             [Required(ErrorMessage = "Date of Deposit is  required")]
-            public string Depositdate { get; set; }
+            public DateTime Datedeposit { get; set; }//Depositdate
 
             public string DocumentName { get; set; }
             public string DocumentSize { get; set; }
@@ -1016,9 +1012,282 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
         #region MANAGE NOTICE
 
+        public class ManageNotice:Insatnceids
+        {
+            public int Enoticeid { get; set; }
+            public string Subject{ get; set; }
+            public string CategoryName{ get; set; }
+            public string Isposted{ get; set; }
+            public string Startdate{ get; set; }
+            public string Expirydate{ get; set; }
+            public int IsSMSTemplate { get; set; }
+            public int GetAll { get; set; }
+        }
+        public class ManagenoticeExporttoexcel
+        {
+            public string Subject { get; set; }
+            public string IsPosted { get; set; }
+            public string ExpiryDate { get; set; }
+            public string RepeatSMStoparents { get; set; }
+        }
+        public class Managenoticesinsert:Insatnceids
+        {
+            [Required(ErrorMessage = "Notice Type is required")]
+            public string ENoticeTypeId { get; set; }
+            public int ENoticeId { get; set; }
+
+            [Required(ErrorMessage = "Notice Subject is required")]
+            public string Subject { get; set; }
+
+            [Required(ErrorMessage = "Start date can not be blank.")]
+            public DateTime StartDate { get; set; }
+
+            [Required(ErrorMessage = "End date can not be blank.")]
+            //[Compare(nameof(StartDate), ErrorMessage = "End date must be greater than Start date.")]
+            public DateTime ExpiryDate { get; set; }
+            public int DisplayOrder { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string ShowInLogin { get; set; }
+            public string DocSize { get; set; }
+            public string DisplayIcon { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public IFormFile AttachedDocument { get; set; }
+            public int CountFlag { get; set; }
+            public string NoticeTypetext { get; set; }
+            //public int ENoticeId { get; set; }
+            //public string SMSTextInXML { get; set; }
+            //public string Action { get; set; }
+            //public string SMSFromText { get; set; }
+            //public int ENOTICEID { get; set; }
+            //public string NoticeTypetext { get; set; }
+            //public string DMLTYPE { get; set; }
+        }
+        public class SMStemplatedetails:Insatnceids
+        {
+            [Required]
+            public DateTime ExDate { get; set; }
+            [Required]
+            public DateTime SDate { get; set; }
+
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+            public string Subject { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string DocSize { get; set; }
+            public int DisplayOrder { get; set; }
+            public string DisplayIcon { get; set; }
+            public string ShowInLogin { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public int ENoticeTypeId { get; set; }
+            public int ENoticeId { get; set; }
+            public string createddate { get; set; }
+            public string CategoryName { get; set; }
+            public string IsPostedv { get; set; }
+            public string ExpiryDate { get; set; }
+            public string IsPosted { get; set; }
+            public bool IsSMSTemplate { get; set; }
+            public int GetAll { get; set; }
+            public string UserName { get; set; }
+            public int RoleId { get; set; }
+            public string InstanceRoleId { get; set; }
+            public string InstanceUserCodes { get; set; }
+            public string PortalEmail { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int InstanceClassificationId { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string RouteId { get; set; }
+            public int CollegeHostel { get; set; }
+            public string MultiAdmissionNumber { get; set; }
+            public string ExcludeUserIds { get; set; }
+            public string DMLTYPE { get; set; }
+            public int SendSMS { get; set; }
+            public int SendEMail { get; set; }
+            public int IncludeParents { get; set; }
+            public int ForAll { get; set; }
+            public string NotificationSubject { get; set; }
+            public string RoleName { get; set; }
+            public string MobilePhone { get; set; }
+            public string NotificationMessage { get; set; }
+            public int NoticeTypeId { get; set; }
+            public string NoticeTypeName { get; set; }
+            public DateTime? NotifcationDate { get; set; }
+            public int IsParent { get; set; }
+            //---Mail related Parameters
+            public string SMSTextInXML { get; set; }
+            public string SMSFromText { get; set; }
+            public string Action { get; set; }
+            public string[] RoleIds { get; set; }
+            public string[] GroupIds { get; set; }
+            public string[] ClassificationIds { get; set; }
+            public string[] SubClassificationIds { get; set; }
+            public string[] UserIds { get; set; }
+            public List<RoleList> IRoleList { get; set; }
+            public List<RoleList> roleList_byInstanceId { get; set; }
+            public List<GroupList> GroupList { get; set; }
+            public List<ClassificationList> ClassificationList { get; set; }
+            public List<SubclassificationList> SubclassificationList { get; set; }
+            public List<RouteList> RouteList { get; set; }
+            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
+            //public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
+            public List<List<Targetenoticetbl>> Targetenoticetbl { get; set; }
+            public string Returnmessage { get; set; }
+        }
+        public class Noticeuserstbl:Insatnceids
+        {
+            public string UserName { get; set; }
+            public int RoleId { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int InstanceClassificationId { get; set; }       
+            public string InstanceUserCode { get; set; }
+            public string PortalEmail { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string RouteId { get; set; }
+            public int CollegeHostel { get; set; }
+            public string ExcludeUserIds { get; set; }
+            public string MultiAdmissionNumber { get; set; }
+            public string InstanceUserCodes { get; set; }
+            public string FatherName { get; set; }
+            public string ClassificationName { get; set; }
+            public string AdmissionNumber { get; set; }
+            public string SubClassificationName { get; set; }
+            public string StaffMobilePhone { get; set; }
+            public string RoleName { get; set; }
+            public string NoOfUsers { get; set; }
+        }
+
+
+
+
+        #region CREATE SMS PROPERTIES
+        public class SMSTemplates:Insatnceids
+        {
+            public int TemplateMasterPK { get; set; }
+            public string TemplateDescription { get; set; }
+            public int NumberofParameter { get; set; }
+            public string AttributeName { get; set; }
+            public string AttributeType { get; set; }
+            public string length { get; set; }
+
+            public string DisplayIcon { get; set; }
+            public string Subject { get; set; }
+
+            [Required(ErrorMessage = "Startdate is required")]
+            public DateTime SDate { get; set; }
+            [Required(ErrorMessage = "Enddate is required")]
+            public DateTime ExDate { get; set; }
+
+        }
+
+        public class SMSTemplates_Insert:Insatnceids
+        {
+            //public int ENoticeTypeId { get; set; }
+            //public string Subject { get; set; }
+            //public DateTime StartDate { get; set; }
+            //public DateTime ExpiryDate { get; set; }
+            //public int DisplayOrder { get; set; }
+            //public int ENoticeId { get; set; }
+            //public string ENoticeDescription { get; set; }
+            //public string NoticeDocument { get; set; }
+            //public string ShowInLogin { get; set; }
+            //public string DocSize { get; set; }
+            //public string DisplayIcon { get; set; }
+            //public int IsGlobalNotice { get; set; }
+            //public IFormFile AttachedDocument { get; set; }
+            //public string SMSTextInXML { get; set; }
+            //public string Action { get; set; }
+            //public string SMSFromText { get; set; }
+            //public string DMLTYPE { get; set; }
+            //public int CountFlag { get; set; }
+
+
+
+            public int ENoticeId { get; set; }
+            public string ENoticeTypeId { get; set; }
+            public string Subject { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime ExpiryDate { get; set; }
+            public int DisplayOrder { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string ShowInLogin { get; set; }
+            public string DocSize { get; set; }
+            public string DisplayIcon { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public IFormFile AttachedDocument { get; set; }
+            public int CountFlag { get; set; }
+            public string NoticeTypetext { get; set; }
+
+        }
         #endregion
 
+        //NOTICE POST CLASS START
+
+        public class PostNoticesmsmails:Insatnceids
+        {
+            public int ENoticeId { get; set; }
+            public int ForAll { get; set; }
+            public string[] RoleIds { get; set; }
+            public string[] GroupIds { get; set; }
+            public string[] ClassificationIds { get; set; }
+            public string[] SubClassificationIds { get; set; }
+            public string[] UserIds { get; set; }
+            public string SendSMS { get; set; }
+            public string SendEMail { get; set; }
+            public string IncludeParents { get; set; }
+
+            public string DMLTYPE { get; set; }
+            public string NotificationSubject { get; set; }
+
+            public string Studentsms { get; set; }
+            public string Parentsms { get; set; }
+            public string Studentmail { get; set; }
+            public string Parentmail { get; set; }
 
 
+
+
+            //public int ENoticeId { get; set; }
+            //public int ForAll { get; set; }
+            //public string[] RoleIds { get; set; }
+            //public string[] GroupIds { get; set; }
+            //public string[] ClassificationIds { get; set; }
+            //public string[] SubClassificationIds { get; set; }
+            //public string[] UserIds { get; set; }
+            //public string SendSMS { get; set; }
+            //public string SendEMail { get; set; }
+            //public string IncludeParents { get; set; }
+
+            //public string DMLTYPE { get; set; }
+            //public string NotificationSubject { get; set; }
+            //public string Action { get; set; }
+            //public int NoticeTypeId { get; set; }
+            //public string NoticeTypeName { get; set; }
+            //public int IsParent { get; set; }
+            //public int ParentId { get; set; }
+            //public DateTime? NotifcationDate { get; set; }
+            //public string NotificationMessage { get; set; }
+            //public int SendEmailForstudents { get; set; }
+            //public int SendEmailForParents { get; set; }
+
+            //public string Studentsms { get; set; }
+            //public string Parentsms { get; set; }
+            //public string Studentmail { get; set; }
+            //public string Parentmail { get; set; }
+
+        }
+        public class ExistingSmsmailsdetails
+        {
+            public List<string> parentlist { get; set; }
+            public List<string> studentlist { get; set; }
+        }
+
+
+        //NOTICE POST CLASS END
+
+        #endregion
     }
 }

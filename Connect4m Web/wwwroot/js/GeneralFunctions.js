@@ -115,7 +115,34 @@ function TblDataTableWith_OutColumns_CallingFunction(tablename, response, TableC
                         return DeleteBTN
                     }
                 },
-            ]
+
+                {
+                    data: "appliedUserId",
+                    className: "CenterAlign",
+                    render: function (data, type, row, meta) {
+                        if (row.appliedUserId === null) {
+                            return "0";
+                        }
+                        return row.appliedUserId
+                    }
+                },
+                {
+                    data: "approverUserId",
+                    className: "CenterAlign",
+                    render: function (data, type, row, meta) {
+                        if (row.approverUserId === null) {
+                            return "0";
+                        }
+                        return row.approverUserId
+                    }
+                },
+            ],
+                columnDefs = [
+                    {
+                        targets: [7, 8], // Indexes of columns to hide (0-based index)
+                        visible: false
+                    }
+                ]
             var Newtable = js("#" + tablename).DataTable({
                 dom: 'Bfrtip',
                 buttons: [
@@ -337,7 +364,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "Username",
                             render: function (data, type, row, meta) {
                                 if (row.leaveDetails == "No") {
-                                    return '<a id="UserName" style="cursor: pointer;font-weight: bold;color: black;" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
+                                    return '<a id="UserName" style="cursor: pointer;font-weight: bold;color: blue;text-decoration: underline;" onclick="EditCompensatoryLeavesFunction.call(this,' + row.leavetypeid + ')"> ' + row.username + '</a>';
                                 } else
                                     return row.username
                             }
@@ -895,7 +922,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "Name",
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
-                               return '<a style="cursor:pointer" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">'+row.name+' </a>';
+                                return '<a style="cursor: pointer;color: blue;text - decoration: underline;font - weight: 600;" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">'+row.name+' </a>';
                             
                             }
                         }
@@ -912,7 +939,7 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                         {
                             data: "SubjectName",
                             render: function (data, type, row, meta) {
-                                return '<a id="TBLSubjectid" class="Undeline" onclick="EditValuesGettingFunction(' + row.instanceSubjectId + ')" style="cursor: pointer;font-weight: bold;color:black">' + row.subjectName + '</a>';
+                                return '<a id="TBLSubjectid" class="Undeline" onclick="EditValuesGettingFunction(' + row.instanceSubjectId + ')" style="cursor: pointer;font-weight: bold;color:blue;text-decoration: underline;">' + row.subjectName + '</a>';
                             }
                         }, {
                             data: "SubjectCode",                         
@@ -1640,8 +1667,8 @@ function CommonDeleteFunction_Vs1(Deletemsg,type, URL,  successCallback) {//I us
                     //  type: "Post",
                     url: URL,
                     type: type,
-                    success: function (response) {
-                        if (response.message.toUpperCase() === "RECORD DELETED SUCCESSFULLY." || response.message.toUpperCase() == "PHOTO DELETED SUCCESSFULLY.") {
+                    success: function (response) {                                                                              
+                        if (response.message.toUpperCase() === "RECORD DELETED SUCESSFULLY." || response.message.toUpperCase() == "PHOTO DELETED SUCESSFULLY.") {
                             //TblDataTableWithColumns_CallingFunction(event, 'noStop', '/Attendance/TblCompensatoryLeavesDetails_CallingFunction', 'TblcompensatoryLeaves_SearchedRecords', 'counts', 'FmCOMPENSATORYLEAVESSEARCH');
                             //Swal.fire({
                             //    icon: "success",

@@ -1,13 +1,37 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
+<style>
+    .HomeScreenTbl {
+        border: 1px solid #afd4f7;
+        width: 100%;
+        border-collapse: separate;
+    }
+        .HomeScreenTbltr {
+            background-color: #E8E8E8;
+            font-size: 14px;
+            font-weight: 700;
+            height: 26px;
+            text-align: center;
+            color: black;
+        }
+    .HomeScreenTbltrs {
+        color: Black;
+        font-size: 14px;
+        height: 25px;
+        text-align: center;
+    }
+    .HomeScreenTbltrstds {
+        width: 30%;
+        border: 1px solid #dbdbdb;
+        height: 24px;
+    }
+</style>
 
-
-<table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+<table class="HomeScreenTbl">
     <tbody>
-        <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+        <tr class="HomeScreenTbltr">
             <td>Class - Section</td>
             <td>Count</td>
         </tr>
@@ -35,9 +59,9 @@
 
         @foreach (var pair in countedNames)
         {
-            <tr style="color: Black; font-size: 14px; height: 25px; text-align: center;">
-                <td style="width: 30%; border: 1px solid #dbdbdb; height: 24px;" onclick="Absenteestudentsforthedaykey('@pair.Key', this);">@pair.Key</td>
-                <td style="width: 70%; border: 1px solid #dbdbdb; height: 24px;">@pair.Value</td>
+            <tr class="HomeScreenTbltrs">
+                <td class="HomeScreenTbltrstds" onclick="Absenteestudentsforthedaykey('@pair.Key', this);">@pair.Key</td>
+                <td class="HomeScreenTbltrstds">@pair.Value</td>
             </tr>
         }  
 

@@ -123,6 +123,28 @@ namespace Connect4m_Web.Controllers
             return "0";
         }
 
+        [Authorize]
+        public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
+        {
+            List<SelectListItem> DropdownList = new List<SelectListItem>();
+            CommonDropdown obj = new CommonDropdown();
+            obj.procedurename = methodname;
+            obj.Parameters = Parameters;
+            obj.text = text;
+            obj.value = value;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return DropdownList;
+        }
+
+
 
         //--------------------------------------============================= Manage Exams Screen ===================------------------------------
         public IActionResult TblExamListData(ExaminationModel obj, int Id)
@@ -144,6 +166,15 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+
+        public IActionResult GetAcademicyearsddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), LoginUserId.ToString() };
+            List<SelectListItem> lis = new List<SelectListItem>();
+            lis = CommonDropdownData("GetAcademicyears_ForAcademicYearDetails", parameter2, "Years", "AcademicYearId");
+            return Json(lis);           
+        }
+
 
         [HttpPost]
         public IActionResult ManageExams(ExaminationModel obj, int DeleteID, string ButtonName)
@@ -370,6 +401,10 @@ namespace Connect4m_Web.Controllers
                 obj.ScreenName = "ViewDepartments_Class";
                 ViewBag.ActivityName = "ViewDepartments_Class";
             }
+            else if (true)
+            {
+                ViewBag.ActivityName = "GETMENTORIDS";
+            }
             else
             {
                 obj.InstanceClassificationId = InstanceClassificationId;
@@ -379,6 +414,18 @@ namespace Connect4m_Web.Controllers
             List<SubjectModel> list = CommonListMethod(obj, "/TblViewSubjectsList");
           
             ViewBag.SubjectDetailsList = list;
+            return PartialView("_ViewChangeActivities");
+        }
+        public IActionResult TblViewMentorList(SubjectModel obj, int InstanceClassificationId, int InstanceSubClassificationId)
+        {
+            //InitializeCookieValues();
+            obj.InstanceID = InstanceId;
+            obj.CreatedBy = LoginUserId;
+            obj.ScreenName = "GETMENTORIDS_SCREEN";
+            ViewBag.ActivityName = "GETMENTORIDS";
+
+            List<SubjectModel> list = CommonListMethod(obj, "/TblViewMentorsList");
+            ViewBag.MentorDetailsList = list;
             return PartialView("_ViewChangeActivities");
         }
 
@@ -733,6 +780,7 @@ namespace Connect4m_Web.Controllers
                     }
                     catch (System.IO.InvalidDataException ex)
                     {
+                        string messages = ex.Message;
                         return Json(new { success = false, message = "Invalid Excel file format.Please Save as the opened excel sheet in 'Excel Workbook' format." });
 
                     }

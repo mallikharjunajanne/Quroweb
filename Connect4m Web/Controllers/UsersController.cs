@@ -200,6 +200,23 @@ namespace Connect4m_Web.Controllers
                         ViewBag.FatherName = DdlParentDetails.ParentName;
                         ViewBag.MotherFirstName = DdlParentDetails.MotherFirstName;
                         //ModelState.Clear();
+
+                        int communityid = DdlUsersDetails.CommunityId;
+                        string communityText = null;
+                        if (ViewBag.DdlCommunityList != null)
+                        {
+                            foreach (var item in ViewBag.DdlCommunityList)
+                            {
+                                // Assuming item.Id and communityid are integers
+                                if (item.Value == communityid.ToString())
+                                {
+                                    communityText = item.Text;
+                                    break;
+                                }
+                            }
+                        }
+                        DdlUsersDetails.CommunityName = communityText;
+
                         return View(DdlUsersDetails);
                     }
                 }
@@ -273,7 +290,10 @@ namespace Connect4m_Web.Controllers
                         if (DdlParentDetails.PhotoName != null && DdlParentDetails.PhotoName != "")
                         {
                             ViewBag.ParentPhotoName = DdlParentDetails.PhotoName;
-                            ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                            //ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                            //ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentNames.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                            //ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentNames.Relationship + "/" + DdlParentDetails.ParentId + "/" + DdlParentDetails.PhotoName;
+                            ViewBag.ParentPhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentNames.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
                         }
                         else
                         {
@@ -282,6 +302,30 @@ namespace Connect4m_Web.Controllers
                     }
                     List<DropdownClass> DdlInstanceRole = CommonMethodobj.CommonListMethod<DropdownClass, DropdownClass>(val, "/DdlInstanceRole_Calingfunction", client);
                     ViewBag.DdlInstanceRole = DdlInstanceRole;
+                    string Lactypes = DdlParentDetails.LacsType;
+                    int firstPart;
+                    int secondPart;
+                    if (!string.IsNullOrEmpty(Lactypes))
+                    {
+                        string[] parts = Lactypes.Split('.');
+                        
+                        int part0 = int.Parse(parts[0]);
+                        int part1=int.Parse(parts[1]);
+                        string fisrtvalue="";
+                        string Secoundvalue="";
+                        if (part0 > 0)
+                        {
+                            firstPart = part0;
+                            fisrtvalue = Convert.ToString(firstPart);
+                        }
+                        if (part1 > 1)
+                        {
+                            secondPart = part1;
+                            Secoundvalue= Convert.ToString(secondPart);
+                        }
+                        string LactypeValues= fisrtvalue + Secoundvalue;
+                        DdlParentDetails.LacsType = LactypeValues;
+                    }
 
                     ManageUsersModel viewModel = new ManageUsersModel
                     {
@@ -509,7 +553,11 @@ namespace Connect4m_Web.Controllers
                         //ViewBag.MotherFirstName = DdlUsersDetails.MotherFirstName;
                         ViewBag.FatherName = DdlParentDetails.ParentName;
                         ViewBag.MotherFirstName = DdlParentDetails.MotherFirstName;
+
+                        ViewBag.IsUserjoinedid = DdlUsersDetails.IsUserJoined;
                         //ModelState.Clear();
+                        
+
                         return View(DdlUsersDetails);
                     }
                 }
@@ -582,6 +630,27 @@ namespace Connect4m_Web.Controllers
             }
 
         }
+        public IActionResult DeleteParentPhoto_CallingFunction(DropdownClass val, int UserId)
+        {
+            try
+            {
+                val.UserId = UserId;
+                returnvalue = CommonMethodobj.CommonSaveMethod(val, "/DeleteParentPhoto_CallingFunction", client);
+                if (returnvalue != "0")
+                {
+                    return Json(new { success = true, message = returnvalue });
+                }
+                else
+                    return Json(new { success = false, message = "Something Error" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
 
         // ============= Search Users Page
         public IActionResult ManageUsers(DropdownClass val)
@@ -619,7 +688,8 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-                
+              
+
                 //if (rolename.toupper().contains("student"))//identification is stundent or teachers
                 //{
                 //    val.rolename = "student";
@@ -666,7 +736,7 @@ namespace Connect4m_Web.Controllers
                     val.PhotoSize = Convert.ToInt32(val.Photo.Length);
                     val.PhotoName = val.Photo.FileName;
                     var fileExtension = Path.GetExtension(val.Photo.FileName);
-                    if (fileExtension != ".gif" && fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                    if (fileExtension.ToLower() != ".gif" && fileExtension.ToLower() != ".jpg" && fileExtension.ToLower() != ".jpeg" && fileExtension.ToLower() != ".png")
                     {
                         ErrorMessage = "Invalid file extension.allowed extensions are .gif,.jpg,.jpeg,.png";
                         errorCount++;
@@ -743,6 +813,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
                 // throw;
                 return Json(new { success = false, message = "Something Error", userid = 0 });
             }
@@ -786,6 +857,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult CreateNewParents(DropdownClass val, int UserId, int ParentId, int isParentTable)
         {
 
+            ViewBag.StudentUserId = UserId;
             ViewBag.UserId = UserId;
             //ViewBag.url = "GeneralInfoTab";
             val.UserId = UserId;
@@ -832,7 +904,8 @@ namespace Connect4m_Web.Controllers
                     if (DdlParentDetails.PhotoName != null && DdlParentDetails.PhotoName != "")
                     {
                         ViewBag.PhotoName = DdlParentDetails.PhotoName;
-                        ViewBag.PhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                        //ViewBag.PhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + val.UserId + "/" + DdlParentDetails.PhotoName;
+                        ViewBag.PhotoNameFullName = "/ParentPhotos/" + InstanceId + "/" + DdlParentDetails.Relationship + "/" + DdlParentDetails.StudentId + "/" + DdlParentDetails.PhotoName;
                     }
                     else
                     {
@@ -841,6 +914,7 @@ namespace Connect4m_Web.Controllers
                     ViewBag.identitypassword = DdlParentDetails.Password;
                     ViewBag.identityUserName = DdlParentDetails.UserName;
                     ViewBag.isParentTable = isParentTable;
+                    ViewBag.instanceid = InstanceId;
                     return View(DdlParentDetails);
                 }
 
@@ -916,10 +990,11 @@ namespace Connect4m_Web.Controllers
                     val.PhotoSize = Convert.ToInt32(val.Photo.Length);
                     val.PhotoName = val.Photo.FileName;
                     var fileExtension = Path.GetExtension(val.Photo.FileName);
-                    if (fileExtension != ".gif" && fileExtension != ".jpg" && fileExtension != ".jpeg" && fileExtension != ".png")
+                    if (fileExtension.ToLower() != ".gif" && fileExtension.ToLower() != ".jpg" && fileExtension.ToLower() != ".jpeg" && fileExtension.ToLower() != ".png")
                     {
                         ErrorMessage = "Invalid file extension.allowed extensions are .gif,.jpg,.jpeg,.png";
                         errorCount++;
+                        return Json(new { success = false, message = ErrorMessage });
                     }
                     else
                         PhotoAvailable = true;
@@ -977,6 +1052,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
                 // throw;
                 return Json(new { success = false, message = "Something Error" });
             }

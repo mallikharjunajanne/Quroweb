@@ -36,7 +36,8 @@ namespace Connect4m_Web.Controllers
         private readonly int InstanceClassificationId;
         private readonly int Roleid;
         private readonly int StudentUserId;
-
+        //public readonly int DeclaringFinancialYearId = 534;
+        public readonly int DeclaringFinancialYearId = 3166;
 
         private readonly PdfGenerator _pdfGenerator;
 
@@ -69,7 +70,7 @@ namespace Connect4m_Web.Controllers
 
 
 
-        //public int InstanceId = 545;
+        //public int InstanceId = 515;
         //public int UserId = 217606;
         //public int RoleId = 4629;
         //public int StudentUserId = 29255;//-----Student Login
@@ -422,21 +423,14 @@ namespace Connect4m_Web.Controllers
 
 
         public IActionResult SearchUploadlecturedocsjson(string ClassificationIds, string InstanceSubClassificationId, string InstanceSubjectsId, int IsVideoUploaded, string SubjectsToolId, int uploaded)
-
         {
-
-
             List<Uploaddocs> list = new List<Uploaddocs>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchUploadlecturedocs?InstanceId=" + InstanceId + "&ClassificationIds=" + ClassificationIds + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&InstanceSubjectsId=" + InstanceSubjectsId + "&IsVideoUploaded=" + IsVideoUploaded + "&InstanceSubjectsToolIds=" + SubjectsToolId + "&uploaded=" + uploaded).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchUploadlecturedocs?InstanceId=" + InstanceId + "&ClassificationIds=" + ClassificationIds + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&InstanceSubjectsId=" + InstanceSubjectsId + "&IsVideoUploaded=" + IsVideoUploaded + "&InstanceSubjectsToolIds=" + SubjectsToolId + "&uploaded=" + uploaded+"&Createdby="+UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 list = JsonConvert.DeserializeObject<List<Uploaddocs>>(data);
-
             }
-
-
-
             return Json(list);
         }
 
@@ -521,6 +515,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
                 // Log or handle the exception more specifically
                 return StatusCode(500); // Return a 500 Internal Server Error response
             }
@@ -541,7 +536,23 @@ namespace Connect4m_Web.Controllers
                 list = JsonConvert.DeserializeObject<List<ViewLectureDocsMain>>(data);
 
             }
-            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/GetallViewvideopoints?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + list[0].ViewLectureDocs[0].InstanceClassificationId + "&InstanceSubClassificationId=" + 0 + "&SubjectId=" + 0).Result;
+            int? Value = 0;
+            if (list.Count==0)// Added by arjun
+            {
+                if (list[0].ViewLectureDocs.Count() > 0)
+                {
+                    Value = list[0].ViewLectureDocs[0].InstanceClassificationId;
+
+                }
+                else if (list[0].ViewLectureDocs2.Count() > 0)
+                {
+                    Value = list[0].ViewLectureDocs2[0].InstanceClassificationId;
+                }
+            }
+           
+            //int Value = list[0].ViewLectureDocs[0].InstanceClassificationId;
+            //HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/GetallViewvideopoints?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + list[0].ViewLectureDocs[0].InstanceClassificationId + "&InstanceSubClassificationId=" + 0 + "&SubjectId=" + 0).Result;
+            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/GetallViewvideopoints?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + Value + "&InstanceSubClassificationId=" + 0 + "&SubjectId=" + 0).Result;
             if (response2.IsSuccessStatusCode)
             {
                 List<VideoViewpoints> list3 = new List<VideoViewpoints>();
@@ -580,12 +591,6 @@ namespace Connect4m_Web.Controllers
                 //{
                 //    ViewBag.GetallViewvideopoints = 0;
                 //}
-
-
-               
-
-
-
             }
             return View(list);
 
@@ -673,7 +678,7 @@ namespace Connect4m_Web.Controllers
             {
                 //  ViewBag.pdfcheckvalue = "1215";
 
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PDFView?SubjectVideoId=" + SubjectVideoId + "&InstanceId=" + InstanceId).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PDFView?SubjectVideoId=" + SubjectVideoId + "&InstanceId=" + InstanceId+"&Createdby="+UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -1319,7 +1324,6 @@ namespace Connect4m_Web.Controllers
 
 
         public IActionResult SimpleExpenseManagement()
-
         {
             //------------------------------------------------------   Getting Found Source Names
             Commonclass obj = new Commonclass();
@@ -1379,8 +1383,9 @@ namespace Connect4m_Web.Controllers
             }
             ViewBag.Vendorcategory = list6;
 
-
-            SEMproperitesSub list2 = GettingAcademicFees(0);
+            //int FinancialYearId = 0;
+            //SEMproperitesSub list2 = GettingAcademicFees(0);
+            SEMproperitesSub list2 = GettingAcademicFees(DeclaringFinancialYearId);
             ViewBag.FeeCollected = list2.FeeCollected;
             ViewBag.Transfered = list2.Transfered;
             ViewBag.RemainingAmount = list2.RemainingAmount;
@@ -1403,8 +1408,14 @@ namespace Connect4m_Web.Controllers
             {
                 Approvals = null;
             }
+
+            //int FinancialYearId = 534;
+            int FinancialYearId = DeclaringFinancialYearId;
+            //int FinancialYearId = 0;
+            //int FinancialYearId = 3007;
+
             List<SEMtblGovFundRecieved> list = new List<SEMtblGovFundRecieved>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchtblGovFundRecieved?InstanceId=" + InstanceId + "&FundRecievedFromId=" + FundRecievedFromId+ "&FinancialYearId="+ 534+ "&Amount="+ Amount+ "&PaymentModeId="+ PaymentModeId+ "&YearId="+ YearId+ "&MonthId="+ MonthId + "&VendorName="+ VendorName+ "&VendorCategory="+ VendorCategory + "&PaymentDate=" + Paymentdate+ "&Approvals="+Approvals).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchtblGovFundRecieved?InstanceId=" + InstanceId + "&FundRecievedFromId=" + FundRecievedFromId+ "&FinancialYearId="+ FinancialYearId + "&Amount="+ Amount+ "&PaymentModeId="+ PaymentModeId+ "&YearId="+ YearId+ "&MonthId="+ MonthId + "&VendorName="+ VendorName+ "&VendorCategory="+ VendorCategory + "&PaymentDate=" + Paymentdate+ "&Approvals="+Approvals).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -1468,7 +1479,7 @@ namespace Connect4m_Web.Controllers
             if (GovFundId !=0)
             {
             
-                HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/ListUpdateExpenditure?InstanceId=" + InstanceId+ "&GovFundId="+GovFundId).Result;
+                HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/ListUpdateExpenditure?InstanceId=" + InstanceId+ "&GovFundId="+GovFundId+ "&CreatedBy="+UserId).Result;
                 if (response4.IsSuccessStatusCode)
                 {
                   
@@ -1489,11 +1500,11 @@ namespace Connect4m_Web.Controllers
         }
         [HttpPost]
         public IActionResult AddExpenditure(SEMtblGovFundRecieved obj, IFormFile DocName)
-            {
-           if(DocName != null)
+        {
+            if (DocName != null)
             {
                 Random random = new Random();
-                int randomNumber = random.Next(1000, 999999);   
+                int randomNumber = random.Next(1000, 999999);
 
                 var filename = randomNumber + DocName.FileName;
                 var fileName = Path.GetFileName(filename);
@@ -1511,25 +1522,28 @@ namespace Connect4m_Web.Controllers
             {
                 obj.DocName = obj.DocNameEdit;
             }
-           // if (ModelState.IsValid)
-           // {
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                obj.FundRecievedFromId = Convert.ToInt32(obj.TypeofExpenditure);
-                obj.FinancialYearId = 534;
-            
-                string jsonData = JsonConvert.SerializeObject(obj);
-                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/AddExpenditure", content).Result;
+            // if (ModelState.IsValid)
+            // {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.FundRecievedFromId = Convert.ToInt32(obj.TypeofExpenditure);
+            //obj.FinancialYearId = 534;
+            obj.FinancialYearId = DeclaringFinancialYearId;
+            //obj.FinancialYearId = 3007;
+            //obj.FundCategoryId = 20;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string data = response.Content.ReadAsStringAsync().Result;
-                    int list3 = JsonConvert.DeserializeObject<int>(data);
-                    return Json(list3);
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/AddExpenditure", content).Result;
 
-                }
-           // }
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                int list3 = JsonConvert.DeserializeObject<int>(data);
+                return Json(list3);
+
+            }
+            // }
 
 
             return Json(0);

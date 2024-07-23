@@ -15,6 +15,7 @@ $(document).ready(function () {
     Bindddls();
 });
 function Bindddls() {
+    loaddingimg.css('display', 'block');
     $.ajax({
         url: '/FeeSection/Bindfeestatusddl',
         type: 'GET',
@@ -74,10 +75,11 @@ function Bindddls() {
             errorCallback(xhr.status, error);
         }
     });
+    loaddingimg.css('display', 'none');
 }
 $('#Feetermsddl').on("change", function () {
     debugger;
-
+    loaddingimg.css('display', 'block');
     var AcadamicSelectedvalue = $('#Acadamicyearddl').val();
     var TermSelectedvalue = $('#Feetermsddl').val();
     //var data = { Acadamicyear: AcadamicSelectedvalue, Feeterm: TermSelectedvalue};
@@ -100,7 +102,7 @@ $('#Feetermsddl').on("change", function () {
                 li.append(checkbox, label);
                 ul.append(li);
             });
-
+            loaddingimg.css('display', 'none');
             //var Feetypesddl = $('#Feetypesddl');
             //Feetypesddl.empty();
             //Feetypesddl.append($('<option>').val('').text('------Select------'));
@@ -131,10 +133,12 @@ function validatePriceInput() {
     }
 }
 function previouspages(url, data) {
+    debugger;
     return new Promise((resolve, reject) => {
         /* debugger;*/
         loaddingimg.css('display', 'block');
-        handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
+        CallToAjax('GET', `/FeeSection/${url}`, data, (response) => {
+        //handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
             window.location.href = `/FeeSection/${url}`;
             loaddingimg.css('display', 'none');
             resolve();
@@ -147,7 +151,7 @@ function previouspages(url, data) {
 
 function submitForm(Buttonvalue) {
     $('#PartialContainer').empty();
-
+    loaddingimg.css('display', 'block');
     setTimeout(function () {
         $('#Commonerrormessage').text('');
         var validationMessages = $('.field-validation-error');
@@ -218,7 +222,9 @@ function submitForm(Buttonvalue) {
                 },
             );
         }
+        loaddingimg.css('display', 'none');
     }, 50);
+    loaddingimg.css('display', 'none');
 }
 
 function lnkAddNew() {

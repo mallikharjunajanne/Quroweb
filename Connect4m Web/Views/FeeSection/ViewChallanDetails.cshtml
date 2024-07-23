@@ -6,33 +6,31 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-
-</head>
+<head></head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
         <div class="col-md-12 col-lg-12 mb-3">
-            <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>FEE DETAILS</h4>
-            <span id="Errormessages" class="text-danger">Note: Please Click on Challan Id to View & Print the Challan.</span>
+            <h4 class="mb-3 text-center">FEE DETAILS</h4>
+            <span id="Errormessages" class="text-validation"><b>Note:</b> Please Click on Challan Id to View & Print the Challan.</span>
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow">  </span> RECORD.</h5>
+                <div class="card-header bg-danger text-white">
+                    <span class="text-header">
+                        YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> 0 </span> RECORD.
+                    </span>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered" id="Feedetailstbl">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>S.No</th>
-                                <th>Challan Id</th>
-                                <th>Term</th>
-                                <th>Challan Amount</th>
-                                <th>Paid</th>
-                                <th>Due</th>
-                                <th>Fine/Excess Amount</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+                <table class="table table-bordered" id="Feedetailstbl">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Challan Id</th>
+                            <th>Term</th>
+                            <th>Challan Amount</th>
+                            <th>Paid</th>
+                            <th>Due</th>
+                            <th>Fine/Excess Amount</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -94,21 +92,20 @@
         var table = $('#Feedetailstbl').DataTable();
         table.destroy();
         var newTable = $("#Feedetailstbl").DataTable({
-            dom: 'Bfrtip',
+            dom: '<"top"lf>t<"bottom"ip>',
             buttons: [],
             bProcessing: false,
-            bLengthChange: true,
-            /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-            //pageLength: 20,
-            //bfilter: false,
-            bSort: true,
+            bLengthChange: false,
+            //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+            bfilter: true,
+            bSort: false,
             searching: false,
-            scrollX: true,
-            scrollY: '400px',
+            //scrollX: true,
+            //scrollY: '400px',
             //scrollCollapse: true,
-            paging: false,
-            //bPaginate: true,
-            //  stateSave:true,
+            paging: true,
+            bPaginate: false,
+            //stateSave:true,
             data: response,
             columns: [
                 {
@@ -182,14 +179,14 @@
         });
         table.on('draw', function () {
             $('#Feedetailstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-                color: 'black',
+                color: 'blue',
                 'text-decoration': 'underline',
                 cursor: 'pointer',
                 fontWeight: 'bold'
             });
         });
         $('#Feedetailstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
             fontWeight: 'bold'

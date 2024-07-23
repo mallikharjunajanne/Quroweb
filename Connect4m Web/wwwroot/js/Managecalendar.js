@@ -108,11 +108,14 @@ function populateMonthDropdown(selectId) {
 
 $('#Addnewevent').click(function () {
 
+    $('#Errormessage').text('');
     DataCallToAjax('GET', '/Admin/CalendareventsInsert', null,
         function (response) {
             debugger;
             $('#Managecalendarmaindiv').hide();
             $('#UpdateManagecalendardiv3').empty();
+            $('#previewofcalendardiv4').hide();
+            $('#Previewofcalendardiv5').empty();
             $('#InsertManagecalendardiv2').html(response);
         },
         function (status, error) {
@@ -124,6 +127,7 @@ $('#Addnewevent').click(function () {
 
 
 $('#Eventsinsertingform').submit(function (event) {
+    $('#Errormessage').text('');
     event.preventDefault();
     debugger;
     setTimeout(function () {
@@ -133,14 +137,15 @@ $('#Eventsinsertingform').submit(function (event) {
         var validationmelength = validationMessages.length;
 
         if (validationmelength == 0 && validationMessages2.length == 0) {
-
+            var Title=$('#EventTitletxt').val();
             var formdata_Uph = new FormData($('#Eventsinsertingform')[0]);
 
             CallToAjax('POST', '/Admin/CalendareventsInsert', formdata_Uph,
                 function (response) {
                     debugger;
                     if (response === "0") {
-                        $('#Errormessage').text('An error occurred.');
+                        $('#Errormessage').text('Event for the selected date already exists.');
+                        //$('#Errormessage').text('Event with title ' + Title +' already exists.');
                     } else {
                         $('#Errormessage').text('Record inserted successfully.');
                     }
@@ -156,6 +161,7 @@ $('#Eventsinsertingform').submit(function (event) {
 
 
 $('#Searchbtn').click(function () {
+    $('#Errormessage').text('');
     SearchCalendar();
 });
 
@@ -304,8 +310,9 @@ function GetDateFormat() {
 
 
 $(document).on('click', '#Managecalendartbl .fa-trash-o', function (event) {
+    $('#Errormessage').text('');
     event.stopImmediatePropagation();
-
+    debugger;
     var parent = $(event.target).closest('tr');
     var EventId = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Managecalendartbl').DataTable();
@@ -314,13 +321,16 @@ $(document).on('click', '#Managecalendartbl .fa-trash-o', function (event) {
 });
 
 function Deletefunction(EventId) {
+    $('#Errormessage').text('');
+    debugger;
     var confirmed = confirm("Are you sure you want to delete Event?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
     if (confirmed) {
         var data = { EventId: EventId };
 
-        CallToAjax('POST', '/Admin/Delete_Calendar', data,
+        CallToAjax('POST', '/Admin/Delete_Calendar?EventId=' + EventId, null,
             function (response) {
-                if (response == '1') {
+                debugger;
+                if (response == '0') {
                     $('#Errormessage').text('Record deleted successfully');
                     Tabledatebindingfunction();
                 } else {
@@ -338,6 +348,7 @@ function Deletefunction(EventId) {
 
 
 $(document).on('click', '#Managecalendartbl td:nth-child(1)', function (event) {
+    $('#Errormessage').text('');
     event.stopImmediatePropagation();
     debugger;
     var parent = $(event.target).closest('tr');
@@ -389,7 +400,7 @@ $('#Eventsupdatingform').submit(function () {
                             $('#Errormessage').text('Record can'+"'"+'t be update.');
                         } else if (response == "1") {
                             $('#btnclear, #btnupdate').prop('disabled', true);
-                            $('#Errormessage').text('Record inserted successfully.');
+                            $('#Errormessage').text('Record updated successfully.');
                         } else {
                             $('#Errormessage').text('Record can' + "'" + 't be update.');
                         }

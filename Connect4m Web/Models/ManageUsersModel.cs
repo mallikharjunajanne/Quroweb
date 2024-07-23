@@ -12,6 +12,7 @@ namespace Connect4m_Web.Models
     {
         public ManageUsersModel DdlParentDetails { get; set; }
         public ManageUsersModel DdlUsersDetails { get; set; }
+        public string FirstParentRelationshipid { get; set; }
         public string Question { get; set; }
         public string ClassTeacherName { get; set; }
         public string BloodGroupName { get; set; }
@@ -302,60 +303,6 @@ namespace Connect4m_Web.Models
         public string IncomeRange { get; set; }
         public string PPPID { get; set; }
     }
-
-    //---this is for Not greater than today date validation
-//    public class DateValidation_NotGreaterThanTodayAttribute : ValidationAttribute
-//    {
-//        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-//        {
-//            if (value != null && value is DateTime dob)
-//            {
-//                // Compare the DOB with today's date
-//                if (dob > DateTime.Today)
-//                {
-//                    return new ValidationResult(ErrorMessage);
-//                }
-//            }
-//            return ValidationResult.Success;
-//        }
-//    }
-
-//[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-//    public class DateComparisonAttribute : ValidationAttribute
-//    {
-//        private readonly string _otherPropertyName;
-
-//        public DateComparisonAttribute(string otherPropertyName, string errorMessage)
-//            : base(errorMessage)
-//        {
-//            _otherPropertyName = otherPropertyName;
-//        }
-
-//        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-//        {
-//            var otherPropertyInfo = validationContext.ObjectType.GetProperty(_otherPropertyName);
-
-//            if (otherPropertyInfo == null)
-//            {
-//                return new ValidationResult($"Unknown property: {_otherPropertyName}");
-//            }
-
-//            var otherPropertyValue = (DateTime?)otherPropertyInfo.GetValue(validationContext.ObjectInstance);
-
-//            if (value is DateTime? && otherPropertyValue.HasValue)
-//            {
-//                var currentDate = (DateTime)value;
-
-//                if (currentDate <= otherPropertyValue)
-//                {
-//                    return new ValidationResult(ErrorMessage);
-//                }
-//            }
-
-//            return ValidationResult.Success;
-//        }
-//    }
-
 
     public class MultipleDropDownList
     {

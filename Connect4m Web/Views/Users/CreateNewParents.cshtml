@@ -15,28 +15,29 @@
 <form id="FmParentDetailsTab" class="needs-validation was-validated" novalidate>
 
     @*<div class="form-group col-12 passwordfor"><span class="ErrorMessageSpan" id="Main_Span_Error"></span></div>*@
-    <div class=" passwordfor"><span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span></div>
+    <div class=" passwordfor"><span class="ErrorMessageSpan text-danger text-validation" id="Main_Span_Error"></span></div>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @* Added by Arjun*@
     @*<input type="hidden" asp-for="UserId" id="HdnUserId" />*@
+    @* Added by Arjun*@
     <input type="hidden" asp-for="InstanceID" id="HdnInstanceID" />
     <input type="hidden" asp-for="ParentId" value="@ViewBag?.ParentId" id="HdnParentId" />
 
     @*=============================================Save Parents Card============================*@
     <div class="card  mb-4">
 
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                <span id="SpnParentCardHeaderName">
-                    SAVE PARENTS
-                </span>
-            </h5><span class="required float-end"> INDICATES REQUIRED FIELDS</span>
+        <div class="card-header bg-danger text-white">
+            <span id="SpnParentCardHeaderName">SAVE PARENTS</span>
+            <span class="required float-end"> INDICATES REQUIRED FIELDS</span>
         </div>
         <div class="card-body">
             <div class="row">
 
                 <div class="col">
-                    <input type="hidden" asp-for="StudentId" value="@ViewBag?.UserId" readonly />
+                    @*<input type="hidden" asp-for="StudentId" value="@ViewBag?.UserId" readonly />*@
+                    <input type="hidden" asp-for="StudentId" value="@ViewBag?.StudentUserId" readonly />
                     <input type="hidden" asp-for="IsParent" value="@ViewBag?.isParentTable" readonly />
+                    @*<input type="hidden" asp-for="ParentId" value="@ViewBag?.ParentId" readonly />*@
                     @*----------------------*@
                     <div class="row mb-3 ">
                         <label asp-for="Relationship" class="col-sm-2 col-form-label  text-end required" for="basic-default-name"></label>
@@ -54,8 +55,12 @@
                         <div class="col-sm-4 ">
                             @if (UpdateIdentification == "UpdateDetails")
                             {
-                                <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
                             }
+                            @*else
+                            {
+                            <img src="/ParentPhotos/@ViewBag.instanceid/  @ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                            }*@
                         </div>
                     </div>
 
@@ -66,13 +71,16 @@
                         <div class="col-sm-4 ">
                             @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                             {
-                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class="btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                @*<span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class="btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>*@
+
+                                <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class="btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeleteParentPhoto_CallingFunction()">Delete</a>
 
                                 <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
                             }
                             else if (UpdateIdentification == "UpdateDetails")
                             {
-                                <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display:none !important" class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                @*<span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display:none !important" class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>*@
+                                <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display:none !important" class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeleteParentPhoto_CallingFunction()">Delete</a>
                                 <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
                             }
                             else
@@ -156,7 +164,7 @@
                     @*----------------------*@
                     <div class="row mb-3 ">
                         <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Annual Income </label>
-                        <div class="col-sm-1 ">
+                        <div class="col-sm-2">
                             <div class="position-relative">
                                 <select id="DdlLacs" asp-for="LacsType" class="select2 form-select select2-hidden-accessible">
                                     <option selected="selected" value="-1" title="Lacs">Lacs</option>
@@ -264,7 +272,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-1 ">
+                        <div class="col-sm-2">
                             <div class="position-relative">
 
                                 <select id="Ddlthousands" asp-for="Thousands" class="select2 form-select select2-hidden-accessible">
@@ -379,6 +387,8 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3 ">
                         <label asp-for="DOB" class="col-sm-2 col-form-label  text-end" for="basic-default-name"> </label>
                         <div class="col-sm-4 ">
                             <input type="date" asp-for="DOB" id="DOB" class="form-control" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Date Of Birth')" />
@@ -441,13 +451,7 @@
 
     @*==========================================PERSONAL INFORMATION Card============================*@
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                <span>
-                    PERSONAL INFORMATION
-                </span>
-            </h5>
-        </div>
+        <div class="card-header bg-danger text-white">PERSONAL INFORMATION</div>
         <div class="card-body">
             <div class="row">
                 <div class="col">
@@ -533,13 +537,7 @@
         @*=============================================LOGIN INFORMATION Card=================================*@
         <div class="card mb-4 ClsLoginInfoCard">
 
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span>
-                        LOGIN INFORMATION
-                    </span>
-                </h5><span class="required float-end"> INDICATES REQUIRED FIELDS</span>
-            </div>
+            <div class="card-header bg-danger text-white">LOGIN INFORMATION<span class="required float-end"> INDICATES REQUIRED FIELDS</span></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">

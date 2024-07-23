@@ -190,6 +190,12 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
         var TCtakenCheckedValue = $("input[type='radio'][name='TcTaken']:checked").val();
         //var IsActiveCheckedValue = $("input[type='radio'][name='IsActive']:checked").val();
         var ChkIsUserJoined = document.getElementById("ChkIsUserJoined");
+        var value;
+        if (ChkIsUserJoined.checked) {
+            value = "1";
+        } else {
+            value = "0";
+        }
         const radioButtons = document.querySelectorAll('input[name="IsActive"]');
         let IsActiveCheckedValue = '';
         radioButtons.forEach((radio) => {
@@ -299,6 +305,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                 formData.append("IdentityPassword", $("#IdentityPassword").val());
                 formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                 formData.append("ScreenName", $("#HdnScreenName").val());
+                formData.append("IsUserJoined", value);
                 var ControllerName;
                 debugger;
                 if (formId == "FmGeneralInfoTab") {
@@ -364,6 +371,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                     formData.append("IdentityPassword", $("#IdentityPassword").val());
                     formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                     formData.append("ScreenName", $("#HdnScreenName").val());
+                    formData.append("IsUserJoined", value);
                     var ControllerName;
                     debugger;
                     if (formId == "FmGeneralInfoTab") {
@@ -435,6 +443,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                     formData.append("IdentityPassword", $("#IdentityPassword").val());
                     formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                     formData.append("ScreenName", $("#HdnScreenName").val());
+                    formData.append("IsUserJoined", value);
                     var ControllerName;
                     debugger;
                     if (formId == "FmGeneralInfoTab") {

@@ -3,34 +3,34 @@
 .padding-search {
     padding: 26px;
 }
-.form-control {
+/*.form-control {
     border: 1px solid #c5b9b9;
     border-radius: 2px;
     background-color: white;
     height: 30px;
     font: 14px arial;
-}
+}*/
 select {
     padding-top: 1px !important;
 }
-.form-control:focus {
+/*.form-control:focus {
     border: 1px solid black;
     background-color: white;
     font-weight: 600 !important;
     filter: drop-shadow(2px 4px 6px black);
-}
+}*/
 
 
 #Insertsubjecttool .form-control {
-    border: 1px solid black;
+  /*  border: 1px solid black;
     border-radius: 2px;
     background-color: white;
-    height: 30px;
+    height: 30px;*/
 }
 
 #Insertsubjecttool .form-control:focus {
-        border: 2px solid black;
-        background-color: white;
+    /*    border: 2px solid black;
+        background-color: white;*/
     }
 
 #Insertsubjecttool .row > div {

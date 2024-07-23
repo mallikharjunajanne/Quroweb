@@ -10,27 +10,26 @@
 
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin Module /</span> Manage Subjects</h4>
-        <div class="demo-inline-spacing">
-            <button class="btn rounded-pill btn-label-primary waves-effect" id="BtnCreateNewSubjects" onclick="CreateNewSubjects()"> Create Subject</button>
+        <h4 class="mb-2 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@ MANAGE SUBJECTS</h4>
+        <div class="demo-inline-spacing text-end">
+            <button class="btn btn-label-linkedin waves-effect btn-sm" id="BtnCreateNewSubjects" onclick="CreateNewSubjects()"> Create Subject</button>
             @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
         </div>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
-                <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
+                <span class="ErrorMessageSpan text-danger text-validation" id="Main_Span_Error"></span>
                 <div id="DivSearchSubjectsPage">
 
                     @*=========================Search Subjects Card==================================*@
                     <div class="card mb-4" id="CreateNewPage">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span id="AddNewText_Span_CreatePage">
+                        <div class="card-header bg-danger text-white">
+                                <span id="AddNewText_Span_CreatePage" class="text-header">
                                     SEARCH SUBJECTS
                                 </span>
-                            </h5> @*<small class="text-muted float-end">Default label</small>*@
+                             @*<small class="text-muted float-end">Default label</small>*@
                         </div>
                         <div class="card-body" id="CreateNewSubjectsDiv">
                             <form id="FmSubjectSearch">
@@ -66,7 +65,8 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                <div class="col-2">
+                                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name"></label>
+                                                <div class="col-4">
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input" id="showallsubjects" />
                                                         <label class="form-check-label" for="showallsubjects">Show all Subjects</label>
@@ -75,12 +75,9 @@
 
                                             </div>
 
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-12">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblSubjectListData', 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);" id="BtnSave">Search</button>
-
-                                                </div>
+                                            <div class="justify-content-end text-center">
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="CommonClearFunction('FmSubjectSearch')" id="BtnClear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" onclick="TblDataTableWithColumns_CallingFunction(event, 'NoStop', '/Examination/TblSubjectListData', 'TblSubjectListData', 'Counts', 'FmSubjectSearch', 'Div_TblSubjectListData', '', []);" id="BtnSave">Search</button>
                                             </div>
 
                                         </div>
@@ -97,19 +94,19 @@
                         <div class="card" id="SearchedTablePage">
                             <div class="card-datatable table-responsive pt-0">
                                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                    <div class="card-header flex-column flex-md-row">
-                                        <div class="head-label text-center">
-                                            <h5 class="card-title mb-0">
-                                                <span>YOUR SEARCH RESULTED<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                            </h5>
-                                        </div>
+                                    <div class="card-header bg-danger text-white">
+                                        <span class="text-header">
+                                            YOUR SEARCH RESULTED
+                                            <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                                            RECORD(S).
+                                        </span>
                                     </div>
                                     <form id="Fm_TblSubjectListData">
                                         @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
                                         <table id="TblSubjectListData" class="datatables-basic table dataTable no-footer dtr-column">
                                             <thead>
                                                 <tr>
-                                                    <th>Subjects</th>
+                                                    <th style="width: 0px; font-weight: bold; color: black;">Subjects</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

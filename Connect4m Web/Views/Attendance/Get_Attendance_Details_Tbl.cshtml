@@ -41,214 +41,106 @@
         }
 </style>
 
-@*@if (@ViewBag.NoRecordsFound == "0")
-{
-    <span class="text-danger"> Your Search Resulted:@ViewBag.NoRecordsFound records.</span>
-}
-else
-{*@
+
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">BRIEF DETAILS</h5>
+            <div class="card-header bg-danger text-white">
+                BRIEF DETAILS
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="attendance-container">
-                            <div class="row mb-3">
-                                <div class="labelvalue">Attendance Last Posted</div>
-                                <div class="col-sm-4">
-                                    <div class="rowvalue">@ViewBag.AttendanceDate</div>
-                                </div>
-                            </div>
-                            <div class="separator"></div>
-                            <div class="row mb-3">
-                                <div class="labelvalue">Total Present:</div>
-                                <div class="col-sm-4">
-                                    <div class="rowvalue">
-                                        @{
-                                            int Presentcount = 0;
-                                            int AbsentCounts = 0;
-                                        }
+            <div class="attendance-container">
+                <div class="row mb-2">
+                    <div class="labelvalue">Attendance Last Posted</div>
+                    <div class="col-sm-4">
+                        <div class="rowvalue">@ViewBag.AttendanceDate</div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="row mb-2">
+                    <div class="labelvalue">Total Present:</div>
+                    <div class="col-sm-4">
+                        <div class="rowvalue">
+                            @{
+                                int Presentcount = 0;
+                                int AbsentCounts = 0;
+                            }
 
-                                        @foreach (var present in ViewBag.UserAttendance)
-                                        {
-                                            if (present.Present == "1")
-                                            {
-                                                Presentcount++;
-                                            }
-                                            else
-                                            {
-                                                AbsentCounts++;
-                                            }
-                                        }
-                                        @Presentcount
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="separator"></div>
-                            <div class="row mb-3">
-                                <div class="labelvalue">Conducted Classes:</div>
-                                <div class="col-sm-4">
-                                    <div class="rowvalue">@ViewBag.Records</div>
-                                </div>
-                            </div>
-                            <div class="separator"></div>
-                            <div class="row mb-3">
-                                <div class="labelvalue">Attendance Percentage:</div>
-                                <div class="col-sm-4">
-                                    <div class="rowvalue">
-                                        @{
-                                            double percentage = 0.0;
-                                            int totalRecords = (int)ViewBag.Records; // Replace with your actual total records value
-                                            percentage = (double)Presentcount / totalRecords * 100;
-                                        }
-                                        @if (percentage < 70)
-                                        {
-                                            <span class="percentage red">@percentage.ToString("0.00")% (Required attendance is 70%)</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="percentage green">@percentage.ToString("0.00")% (Required attendance is 70%)</span>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="table-responsive">
-                            @*<table cellpadding="0" width="100%" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <td width="40%" style="height: 24px; text-align: right;">
-                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Attendance Last Posted :</span>&nbsp;
-                            </td>
-                            <td width="70%">
-                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">@ViewBag.AttendanceDate</span>
-                            </td>
-                        </tr>
-                        <tr class="LightSeperator">
-                            <td colspan="2" height="1">
-                            </td>
-                        </tr>
-
-                        <tr class="LightSeperator">
-                            <td colspan="2" height="1">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 24px; text-align: right;">
-                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Total Present :</span>&nbsp;
-                            </td>
-                            <td style="height: 24px;">
-                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">
-                                    @{
-                                        int Presentcount = 0;
-                                        int AbsentCounts = 0;
-                                    }
-
-                                    @foreach (var present in ViewBag.UserAttendance)
-                                    {
-                                        @if (present.Present == "1")
-                                        {
-                                            Presentcount++;
-                                        }
-                                        else
-                                        {
-                                            AbsentCounts++;
-                                        }
-                                    }
-                                    @Presentcount
-                                </span>
-                            </td>
-                        </tr>
-                        <tr class="LightSeperator">
-                            <td colspan="2" height="1">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 24px; text-align: right;">
-                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Conducted Classes :</span>&nbsp;
-                            </td>
-                            <td style="height: 24px;">
-                                <span style="color: black; font-size: 14px; font-weight: normal; font-style: normal; font-family: none;">@ViewBag.Records</span>
-                            </td>
-                        </tr>
-                        <tr class="LightSeperator">
-                            <td colspan="2" height="1">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 24px; text-align: right;">
-                                <span style="color: #424286; font-family: none; font-size: 14px; font-weight: bolder; font-style: normal;">Attendance Percentage :</span>&nbsp;
-                            </td>
-                            <td style="height: 24px;">
-                                @{
-                                    double percentage = 0.0;
-                                    int totalRecords = (int)ViewBag.Records; // Replace with your actual total records value
-                                    percentage = (double)Presentcount / totalRecords * 100;
-                                }
-                                @if (percentage < 70)
+                            @foreach (var present in ViewBag.UserAttendance)
+                            {
+                                if (present.Present == "1")
                                 {
-                                    <span style="font-size: 11px; font-weight: normal; font-style: normal; font-family: none; color: red; ">
-
-                                        @percentage.ToString("0.00")% (Required attendance is 70%)
-                                    </span>
-
+                                    Presentcount++;
                                 }
                                 else
                                 {
-                                    <span style="font-size: 14px; font-weight: normal; font-style: normal; font-family: none; color: green;">
-                                        @percentage.ToString("0.00")%
-                                        (Required attendance is 70%)
-                                    </span>
+                                    AbsentCounts++;
                                 }
-
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>*@
+                            }
+                            @Presentcount
+                        </div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="row mb-2">
+                    <div class="labelvalue">Conducted Classes:</div>
+                    <div class="col-sm-4">
+                        <div class="rowvalue">@ViewBag.Records</div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="row mb-2">
+                    <div class="labelvalue">Attendance Percentage:</div>
+                    <div class="col-sm-4">
+                        <div class="rowvalue">
+                            @{
+                                double percentage = 0.0;
+                                int totalRecords = (int)ViewBag.Records; // Replace with your actual total records value
+                                percentage = (double)Presentcount / totalRecords * 100;
+                            }
+                            @if (percentage < 70)
+                            {
+                                <span class="percentage red">@percentage.ToString("0.00")% (Required attendance is 70%)</span>
+                            }
+                            else
+                            {
+                                <span class="percentage green">@percentage.ToString("0.00")% (Required attendance is 70%)</span>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="table-responsive">
+
+            </div>
         </div>
     </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">TOTAL NUMBER OF RECORDS: <span class="badge badge-center rounded-pill bg-primary bg-glows" value="@ViewBag.Records"> @ViewBag.Records</span> .</h5>
+            <div class="card-header bg-danger text-white">
+                TOTAL NUMBER OF RECORDS: <span class="badge badge-center rounded-pill bg-primary bg-glows" value="@ViewBag.Records"> @ViewBag.Records </span> .
             </div>
-            <div class="card-body">
-                <table class="table table-bordered" id="DetailTbl">
-                    <thead class="table-dark">
+            <table class="table table-bordered" id="DetailTbl">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>IsPresent</th>
+                    </tr>
+                </thead>
+                <tbody id="DetailTblbody">
+                    @foreach (var item in ViewBag.UserAttendance)
+                    {
                         <tr>
-                            <th>Date</th>
-                            <th>IsPresent</th>
+                            <td align="left">@item.CreatedDate</td>
+                            <td align="left">@item.IsPresent</td>
                         </tr>
-                    </thead>
-                    <tbody id="DetailTblbody">
-                        @foreach (var item in ViewBag.UserAttendance)
-                        {
-                            <tr>
-                                <td align="left">@item.CreatedDate</td>
-                                <td align="left">@item.IsPresent</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div id="pagination" style="text-align: center;">
+                    }
+                </tbody>
+            </table>
+            <div id="pagination" style="text-align: center;">
 
-                </div>
             </div>
         </div>
     </div>
    
-@*}*@
 
 
 <script src="~/lib/jquery/dist/jquery.js"></script>

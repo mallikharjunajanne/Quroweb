@@ -8,6 +8,8 @@
         overflow: unset;
         animation: scroll 8s linear infinite;
         transform-origin: bottom;
+        list-style-type: none;
+        height: 150px;
     }
 
         .Scrolling li {
@@ -35,8 +37,8 @@
     .scrolling-container {
         white-space: nowrap;
         overflow-x: auto;
-        width: 100%;
-        min-height: 240px;
+        width: 200%;
+        min-height: 300px;
         overflow-y: hidden;
     }
 </style>
@@ -50,7 +52,7 @@
         {
             @foreach (var item in Model)
             {
-                <li class="text-primary">
+                <li class="text-dark">
                     @item.Subject<span> <br />@item.createddate</span>
                 </li>
             }

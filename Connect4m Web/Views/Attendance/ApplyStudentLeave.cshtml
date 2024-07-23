@@ -14,8 +14,8 @@
 </head>
 <body>
 
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Student Module /</span>STUDENT LEAVE DETAILS</h4>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Student Module /</span>*@STUDENT LEAVE DETAILS</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <ul class="nav nav-pills" id="myTab" role="tablist">
@@ -23,18 +23,15 @@
                     <li class="nav-item" id="ViewStudentLeaves_BTN"><a class="nav-link" style="display:none" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Student Leaves</a></li>
                 </ul>
 
-                <div class="tab-content" id="myTabContent">
+                @*<div class="tab-content" id="myTabContent">*@
+                <div id="myTabContent">
                     @*--------------Tab 1 --------------- start----------*@
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                         <div class="card mb-4" id="StudentAttendanceDetails_Card" style="display:none">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
+                            <div class="card-header bg-danger text-white">                               
                                         <span>ATTENDANCE DETAILS</span>
-                                        @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
-                                    </h5>
-                                </div>
+                                        @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@                                  
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="StudentAttendanceDetails_Table" class="table table-hover table-bordered no-footer dataTable">
@@ -67,12 +64,8 @@
                         <span class="ErrorMessageSpan" id="successMessage"></span>
 
                         <div class="card mb-4">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        Apply Student Leave
-                                    </span>
-                                </h5><small class="required">INDICATES REQUIRED FEILDS</small>
+                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                                <span>Apply Student Leave</span><small class="required">INDICATES REQUIRED FEILDS</small>
                             </div>
                             <div class="card-body">
                                 <form id="myForm">
@@ -186,7 +179,7 @@
                                             @*----------------------*@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-8">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton" onclick="FN_ClearValues()" value="Clear">Clear</button>
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light" id="clearbutton" onclick="FN_ClearValues()" value="Clear">Clear</button>
                                                     <button type="submit" class="btn btn-success waves-effect waves-light" id="savebutton" value="Apply Leave">Apply Leave</button>
                                                 </div>
                                             </div>
@@ -199,13 +192,13 @@
                         </div>
                         @*=========================== searched table---------------------------------------*@
                         <div class="card mb-4">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
+                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                                @*<div class="head-label text-center">
+                                    <h5 class="card-title mb-0">*@
                                         @*<span id="CountOfRecords_StudentLeaves"></span>*@
                                         <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                    </h5>
-                                </div>
+                                    @*</h5>
+                                </div>*@
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <form id="StudentDataGetting_ID_FORM">
@@ -246,12 +239,10 @@
                         </p>
 
                         <div class="card mb-4">
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
+                            <div class="card-header bg-danger text-white">
                                     <span>
                                         LEAVE LEVEL SEARCH
                                     </span>
-                                </h5>
                             </div>
                             <div class="card-body">
                                 <form>
@@ -307,7 +298,7 @@
                                             @*--------------------------*@
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-8">
-                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton1" value="Clear">Clear</button>
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light" id="clearbutton1" value="Clear">Clear</button>
                                                     <button type="submit" class="btn btn-success waves-effect waves-light" id="SearchBTN_ViewStudentLeaves" onclick="Search_stp_ViewStudentLeaves(event)" value="Search">Search</button>
                                                 </div>
                                             </div>
@@ -321,13 +312,9 @@
 
                         @*=======================searched table values=============*@
                         <div class="card mb-4">
-                            <div class="card-header flex-column flex-md-row">
-                                <div class="head-label text-center">
-                                    <h5 class="card-title mb-0">
-                                        @*<span id="CountOfRecords_View_Student_Leaves"></span>*@
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_View_Student_Leaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                    </h5>
-                                </div>
+                            <div class="card-header bg-danger text-white">
+                                @*<span id="CountOfRecords_View_Student_Leaves"></span>*@
+                                <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_View_Student_Leaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="ViewStudentLeaves_Table" class="table table-hover table-bordered no-footer dataTable" style="display:none">

@@ -223,6 +223,7 @@ namespace Connect4m_Web.Controllers
             }
             catch(Exception ex)
             {
+                string message = ex.Message;
                 return Json(0);
             }
 

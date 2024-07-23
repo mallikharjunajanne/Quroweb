@@ -71,60 +71,10 @@ namespace Connect4m_Web.Controllers
 
             return xml;
         }
-        public IActionResult LoginPage1()
-        {
+       
+        
+      
 
-            //School Admin 
-
-            //int InstanceId = 545;
-            //int Roleid = 4629;
-            //int LoginUserId = 217606;
-            //int InstanceClassificationId = 813;
-            //int InstanceSubClassificationId = 1178;
-            //int DelegationClasses = 1;
-
-
-            //Admin Login
-
-            int Roleid = 775;
-            int InstanceId = 545;
-            int LoginUserId = 32891;
-            int InstanceClassificationId = 813;
-            int InstanceSubClassificationId = 1178;
-            int DelegationClasses = 0;
-
-
-            // Student Login
-            //int Roleid = 775;
-            //int InstanceId = 545;
-            //int LoginUserId = 29255;
-            //int InstanceClassificationId = 813;
-            //int InstanceSubClassificationId = 1178;
-            //int DelegationClasses = 1;
-
-            //ClassTeacher
-
-            //int LoginUserId = 32886;
-            //int InstanceClassificationId = 813;
-            //int InstanceSubClassificationId = 1178;
-            //int InstanceId = 545;
-            //int Roleid = 2092;
-            //int DelegationClasses = 1;
-
-
-            Response.Cookies.Append("INSTANCEID", InstanceId.ToString());
-            Response.Cookies.Append("Roleid", Roleid.ToString());
-
-            Response.Cookies.Append("LoginUserId", LoginUserId.ToString());
-            Response.Cookies.Append("InstanceClassificationId", InstanceClassificationId.ToString());
-            Response.Cookies.Append("InstanceSubClassificationId", InstanceSubClassificationId.ToString());
-            Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-
-
-            return View();
-        }
-
-        //Post Attendance Main Method 
 
         //---this two methods are use many places so please dont touch 1.Get_SubClassificationNames_ByInstanceClassifications 2.Slot_by_subclassification
         public IActionResult Get_SubClassificationNames_ByInstanceClassifications(string InstanceId, string InstanceClassificationId)
@@ -141,7 +91,7 @@ namespace Connect4m_Web.Controllers
             return View();
 
         }
-        //public IActionResult Slot_by_subclassification(string SubClassificationId, string ClassificationId)
+
         public IActionResult Slot_by_subclassification(int SubClassificationId, int ClassificationId)
         {
             PostAttendance obj = new PostAttendance();
@@ -153,24 +103,8 @@ namespace Connect4m_Web.Controllers
 
             List<SelectListItem> list = new List<SelectListItem>();
             list = CommonMethodobj.CommonListMethod<PostAttendance, SelectListItem>(obj, "/Departmentbyslots", client);
-
-
-
-
-
-            //var instanceid = Request.Cookies["INSTANCEID"];
-            //var FilterTeachingSubjects = 0;
-            //List<SelectListItem> Value2 = new List<SelectListItem>();
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_Slot_By_Sc?InstanceId=" + instanceid + "&ClassificationId=" + ClassificationId + "&SubClassificationId=" + SubClassificationId + "&FilterTeachingSubjects=" + FilterTeachingSubjects).Result;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string data = response.Content.ReadAsStringAsync().Result;
-            //    Value2 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            //}
             ViewBag.Subjectnames = list;
-
             return View();
-
         }
 
         //Create Columnstring parameter  Method        
@@ -229,287 +163,10 @@ namespace Connect4m_Web.Controllers
             return Json(list);          
         }
 
-        [HttpPost]
-        public IActionResult post_ate(string dataList)
-        {
-            List<PostAttendance> attendanceData = JsonConvert.DeserializeObject<List<PostAttendance>>(dataList);
+      
 
-            //var instanceid = Request.Cookies["INSTANCEID"];
-            var fromAddress = new MailAddress("mangasrikanth313@gmail.com", "Srekanth");
-
-            var successMessage = new StringBuilder();
-            var failureMessage = new StringBuilder();
-
-            foreach (var data in attendanceData)
-            {
-                var userId = data.UserId;
-                var name = data.Name;
-                var date = data.dateValue;
-                var emailAddress = data.StudEmail;
-                var attendanceStatus = data.Ispresent == "1" ? "Present" : "Absent";
-
-                if (!string.IsNullOrEmpty(emailAddress))
-                {
-                    var subject = "Attendance Notification";
-                    var body = $"Dear {name},\n\nYour attendance status is recorded as {attendanceStatus}.";
-
-                    var message = new MailMessage();
-                    message.From = fromAddress;
-                    message.To.Add(new MailAddress(emailAddress));
-                    message.Subject = subject;
-                    message.Body = body;
-
-                    using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtpClient.EnableSsl = true;
-                        smtpClient.UseDefaultCredentials = false;
-                        smtpClient.Credentials = new NetworkCredential("mangasrikanth313@gmail.com", "tyiuriuqbbduqhvd");
-
-                        try
-                        {
-                            smtpClient.Send(message);
-                            successMessage.AppendLine(name);
-                        }
-                        catch (SmtpException ex)
-                        {
-                            // Handle specific SMTP-related errors
-                            failureMessage.AppendLine(name);
-                            Console.WriteLine("SMTP Exception: " + ex.Message);
-                        }
-                        catch (SocketException ex)
-                        {
-                            // Handle specific socket-related errors
-                            failureMessage.AppendLine(name);
-                            Console.WriteLine("Socket Exception: " + ex.Message);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle other exceptions
-                            failureMessage.AppendLine(name);
-                            Console.WriteLine("Error sending email: " + ex.Message);
-                        }
-                    }
-                }
-            }
-
-            var finalMessage = "Mail successfully sent for students: \n" + successMessage.ToString() + "\n\n";
-            finalMessage += "Mail not sent for students: \n" + failureMessage.ToString();
-
-            return Ok(finalMessage);
-        }
-
-
-        //[HttpPost]
-        //public IActionResult PostAttendance_(string dataList)
-        //{
-        //    //List<PostAttendance> attendanceData = JsonConvert.DeserializeObject<List<PostAttendance>>(dataList);
-        //    List<Attendanceposting> attendanceData = JsonConvert.DeserializeObject<List<Attendanceposting>>(dataList);
-        //    int i = 0;
-        //    int IsParent;
-        //    var NotificationSubject = "Attendance";
-        //    var NoticeTypeId = 1;
-        //    //DateTime NotificationDate = DateTime.Now();
-        //    string data1 = "";
-        //    try
-        //    {
-        //        //data1.Replace('/', '');
-        //        var fromAddress = new MailAddress("mangasrikanth313@gmail.com", "Srekanth");
-        //        var successMessage = new List<string>();
-        //        var failureMessage = new List<string>();
-        //        foreach (var data in attendanceData)
-        //        {
-        //            var StudentUserid1 = data.studentName;
-        //            var Ispresent = data.isPresentValue;
-        //            var StudentName = data.studentName;
-        //            var dateValue = data.attendancedate;
-        //            //var NotificationDate = dateValue+ " 00:00:00";
-        //            var NotificationDate = DateTime.Now;
-        //            //var selectedValues = data.dropdownValue;
-        //            var SplAttenanceComments = data.Comments;
-        //            var AttendanceTypeId = data.dropdownValue;
-        //            var SubjectSlotID = data.SubjectSlotID;
-        //            var ParentName = data.ParentName;
-        //            var ParentId = data.ParentId;
-        //            var emailAddress = data.StudEmail;
-        //            var AttendanceTypetext = data.dropdowntext;
-
-        //            string NotificationMessage = "";
-        //            string parentnotificationmessage = "";
-        //            var Attendancetextmessage = AttendanceTypetext.Trim() != "" ? AttendanceTypetext : "Absent";
-        //            if (Ispresent != "1")
-        //            {
-        //                NotificationMessage = "Dear " + StudentName + ", your attendance for " + dateValue + " has been posted as Present.";
-        //            }
-        //            else
-        //            {
-        //                NotificationMessage = "Dear " + StudentName + ", your attendance for " + dateValue + " has been posted as (" + Attendancetextmessage + ") As Absent.";
-        //            }
-        //            if (ParentId != "")
-        //            {
-        //                var ParentNotificationMessage = "Dear Parent (" + ParentName + "), your ward's attendance for " + dateValue + " has been posted as Present.";
-        //            }
-        //            string apiUrl;
-        //            var content = new StringContent(string.Empty);
-        //            HttpResponseMessage response;
-        //            if (Ispresent != "Disablecheckbox")
-        //            {
-        //                if (ParentId != null)
-        //                {
-        //                    i = 1;
-        //                    for (int k = 0; k <= i; k++)
-        //                    {
-        //                        if (k == 0)
-        //                        {
-        //                            IsParent = k;
-
-        //                            // Logic for IsParent = 0                             
-        //                            NotificationMessage = "Dear " + StudentName + ", your attendance for " + dateValue + " has been posted as" + (Ispresent == "1" ? " Present." : " Absent.");
-
-        //                            apiUrl = $"/AttendancePost?InstanceId={InstanceId}&UserId={StudentUserid1}&NotificationMessage={NotificationMessage}&NotificationDate={NotificationDate}&NotificationSubject={NotificationSubject}&NoticeTypeId={NoticeTypeId}&IsParent={IsParent}&SplAttenanceComments={SplAttenanceComments}&Ispresent={Ispresent}&AttendanceTypeId={AttendanceTypeId}&SubjectSlotID={SubjectSlotID}&CreatedBy={UserId}"; //CreatedBy
-
-        //                            response = client.PostAsync(client.BaseAddress + apiUrl, content).Result;
-        //                            data1 = response.Content.ReadAsStringAsync().Result;
-        //                            if (response.IsSuccessStatusCode)
-        //                            {
-        //                                //data1 = response.Content.ReadAsStringAsync().Result;
-        //                            }
-        //                        }
-        //                        else if (k == 1)
-        //                        {
-        //                            IsParent = k;
-        //                            // Logic for IsParent = 1
-
-        //                            NotificationMessage = "Dear Parent (" + ParentName + "), your ward's attendance for " + dateValue + " has been posted as" + (Ispresent == "1" ? " Present." : " Absent.");
-        //                            apiUrl = $"/AttendancePost?InstanceId={InstanceId}&UserId={ParentId}&NotificationMessage={NotificationMessage}&NotificationDate={NotificationDate}&NotificationSubject={NotificationSubject}&NoticeTypeId={NoticeTypeId}&IsParent={IsParent}&SplAttenanceComments={SplAttenanceComments}&Ispresent={Ispresent}&AttendanceTypeId={AttendanceTypeId}&SubjectSlotID={SubjectSlotID}&CreatedBy={UserId}"; //CreatedBy
-        //                                                                                                                                                                                                                                                                                                                                                                                                                                  // content = new StringContent(string.Empty);
-        //                            response = client.PostAsync(client.BaseAddress + apiUrl, content).Result;
-        //                            data1 = response.Content.ReadAsStringAsync().Result;
-        //                            if (response.IsSuccessStatusCode)
-        //                            {
-
-        //                            }
-        //                        }
-        //                    }
-
-        //                }
-        //                else
-        //                {
-        //                    IsParent = 0;
-        //                    // Logic for IsParent = 0
-
-        //                    NotificationMessage = "Dear " + StudentName + ", your attendance for " + dateValue + " has been posted as" + (Ispresent == "1" ? " Present." : " Absent.");
-        //                    apiUrl = $"/AttendancePost?InstanceId={InstanceId}&UserId={StudentUserid1}&NotificationMessage={NotificationMessage}&NotificationDate={NotificationDate}&NotificationSubject={NotificationSubject}&NoticeTypeId={NoticeTypeId}&IsParent={IsParent}&SplAttenanceComments={SplAttenanceComments}&Ispresent={Ispresent}&AttendanceTypeId={AttendanceTypeId}&SubjectSlotID={SubjectSlotID}&CreatedBy={UserId}"; //CreatedBy
-        //                                                                                                                                                                                                                                                                                                                                                                                                                                //var content = new StringContent(string.Empty);
-        //                    response = client.PostAsync(client.BaseAddress + apiUrl, content).Result;
-        //                    if (response.IsSuccessStatusCode)
-        //                    {
-        //                        data1 = response.Content.ReadAsStringAsync().Result;
-        //                    }
-        //                }
-        //            }
-        //            if (!string.IsNullOrEmpty(emailAddress))
-        //            {
-        //                var subject = "Attendance Notification";
-        //                var body = NotificationMessage;
-
-        //                var message = new MailMessage();
-        //                message.From = fromAddress;
-        //                message.To.Add(new MailAddress(emailAddress));
-        //                message.Subject = subject;
-        //                message.Body = body;
-
-        //                using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
-        //                {
-        //                    smtpClient.EnableSsl = true;
-        //                    smtpClient.UseDefaultCredentials = false;
-        //                    smtpClient.Credentials = new NetworkCredential("mangasrikanth313@gmail.com", "tyiuriuqbbduqhvd");
-
-        //                    try
-        //                    {
-        //                        smtpClient.Send(message);
-        //                        successMessage.Add(StudentName);
-        //                    }
-        //                    catch (SmtpException ex)
-        //                    {
-
-        //                        failureMessage.Add(StudentName);
-        //                        Console.WriteLine("SMTP Exception: " + ex.Message);
-        //                    }
-        //                    catch (SocketException ex)
-        //                    {
-        //                        // Handle specific socket-related errors
-        //                        failureMessage.Add(StudentName);
-        //                        Console.WriteLine("Socket Exception: " + ex.Message);
-        //                    }
-        //                    catch (Exception ex)
-        //                    {
-        //                        // Handle other exceptions
-        //                        failureMessage.Add(StudentName);
-        //                        Console.WriteLine("Error sending email: " + ex.Message);
-        //                    }
-        //                }
-        //            }
-
-
-        //        }
-        //        string successMessage = "";
-        //        string failureMessage = "";
-        //        int successCount = 0; //successMessage.Count;
-        //        int failureCount = 0;//failureMessage.Count;
-
-        //        var result = new
-        //        {
-        //            Data1 = data1,
-        //            SuccessCount = successCount,
-        //            SuccessList = successMessage,
-        //            FailureCount = failureCount,
-        //            FailureList = failureMessage,
-        //        };
-        //        return Json(data1);
-        //        return Json(result);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        var result = new
-        //        {
-        //            Data1 = "",
-        //            SuccessCount = 0,
-        //            SuccessList = 0,
-        //            FailureCount = 0,
-        //            FailureList = 0,
-        //        };
-        //        return Json(result);
-        //    }
-        //}
        
-        [HttpPost]
-        public IActionResult PostAttendance(string dataList)
-        {  
-            List<Attendanceposting> attendanceList = JsonConvert.DeserializeObject<List<Attendanceposting>>(dataList);
-            Attendanceposting listvalues = new Attendanceposting();
-            listvalues.InstanceId = InstanceId;
-            listvalues.CreatedBy = UserId;
-            listvalues.NotificationSubject = "Attendance";
-            listvalues.NoticeTypeId =1;
-            listvalues.DataList = dataList;
 
-            client.Timeout = TimeSpan.FromMinutes(5);
-
-            string updatedDataList = JsonConvert.SerializeObject(listvalues);
-            StringContent contents = new StringContent(updatedDataList, Encoding.UTF8, "application/json");
-            HttpResponseMessage responses = client.PostAsync(client.BaseAddress + "/Attendanceinserting", contents).Result;
-            //string itemss = "";
-            List<string> items = new List<string>();
-            string data2 = responses.Content.ReadAsStringAsync().Result;
-            if (responses.IsSuccessStatusCode)
-            {
-                items = JsonConvert.DeserializeObject<List<string>>(data2);
-                //itemss = JsonConvert.DeserializeObject<string>(data2);
-            }
-            return Json(items);
-            //return Json(itemss);
-
-        }
 
         //empty method please check once delete this method
         public IActionResult SlotidBy_Student_Names(string InstanceClassificationId, string InstanceSubClassificationId, string RoleId)
@@ -528,8 +185,8 @@ namespace Connect4m_Web.Controllers
         }
         //Attendance Summery Method Code End
 
-        #region  PostAttendance
-        [HttpGet] /*Post_Attendance*/
+        #region POST ATTENDACNE PostAttendance
+        [HttpGet] 
         public IActionResult PostAttendance()
         {
             string roleName = Request.Cookies["RoleName"];
@@ -701,6 +358,37 @@ namespace Connect4m_Web.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult PostAttendance(string dataList)
+        {
+            List<Attendanceposting> attendanceList = JsonConvert.DeserializeObject<List<Attendanceposting>>(dataList);
+            Attendanceposting listvalues = new Attendanceposting();
+            listvalues.InstanceId = InstanceId;
+            listvalues.CreatedBy = UserId;
+            listvalues.NotificationSubject = "Attendance";
+            listvalues.NoticeTypeId = 1;
+            listvalues.DataList = dataList;
+
+            client.Timeout = TimeSpan.FromMinutes(5);
+
+            string updatedDataList = JsonConvert.SerializeObject(listvalues);
+            StringContent contents = new StringContent(updatedDataList, Encoding.UTF8, "application/json");
+            HttpResponseMessage responses = client.PostAsync(client.BaseAddress + "/Attendanceinserting", contents).Result;
+            //string itemss = "";
+            List<string> items = new List<string>();
+            string data2 = responses.Content.ReadAsStringAsync().Result;
+            if (responses.IsSuccessStatusCode)
+            {
+                items = JsonConvert.DeserializeObject<List<string>>(data2);
+                //itemss = JsonConvert.DeserializeObject<string>(data2);
+            }
+            return Json(items);
+            //return Json(itemss);
+
+        }
+
+
+
 
         #region TEACHER LOGIN DROPDOWN DATA BINDING METHODS
         public IActionResult Teacher_attendanceclassification()
@@ -748,67 +436,8 @@ namespace Connect4m_Web.Controllers
             return Json(itemsubject);
         }
 
-
-
         #endregion
 
-        #endregion
-
-        #region STUDENT LOGIN ATTENDANCE DETAILS VIEWATTENDANCEDETAILS  
-
-        public IActionResult ViewAttendanceDetails()
-        {
-            List<SelectListItem> Valueslist = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_UserNames_By_Slot?InstanceId=" + InstanceId + "&Userid=" + UserId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Valueslist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }
-            ViewBag.Slots = Valueslist;
-
-            return View();
-        }
-
-        public IActionResult attendancedetailsSlots()
-        {
-            List<SelectListItem> Valueslist = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_UserNames_By_Slot?InstanceId=" + InstanceId + "&Userid=" + UserId).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                Valueslist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            }
-            return Json(Valueslist);
-        }
-
-        public IActionResult GetViewAttendanceDetailstbl(Studentattendancedetails obj)
-        {
-            obj.InstanceId = InstanceId;
-            obj.UserId = UserId;
-            List<StudentDetailsforattedance> list = CommonMethodobj.CommonListMethod<Studentattendancedetails, StudentDetailsforattedance>(obj, "/Getstudentattendancedetails", client);
-
-            var listcount = list.Count();
-            if (listcount <= 0)
-            {
-                return Json(listcount);
-            }
-            ViewBag.departmentName = list[0].ClassificationName;
-            ViewBag.className = list[0].SubClassificationName;
-            ViewBag.AttendanceLastDate = list[0].CreatedDate;
-            // ViewBag.PresentCount = value[0].Present;
-            ViewBag.UserAttendance = list;
-            ViewBag.Records = list.Count();
-            return View();
-        }
-
-        #endregion
-
-        #region GetAttendanceSummary
-        public IActionResult getAttendanceSummary()
-        {
-            return View();
-        }
         #endregion
 
         public IActionResult Slot_by_UserName(string UserID, string InstanceID)
@@ -823,8 +452,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.Slot_Subjectnames = Valueslist;
             return View();
         }
-
-       
+               
         public IActionResult F_Get_Inc_By_Subclass(string InstanceId, string InstanceClassificationId)
         {
             
@@ -1353,6 +981,72 @@ namespace Connect4m_Web.Controllers
                 };
             ViewBag.AllValues = valuess;
             return Json(ViewBag.AllValues);
+        }
+
+        #endregion
+
+        #region  PARENT LOGIN GET ATTENDANCE SUMMARY
+        public IActionResult getAttendanceSummary()
+        {
+            return View();
+        }
+        public IActionResult AttendanceSummarytbl(string AcademicYear)
+        {
+            studentsummary obj = new studentsummary();
+            obj.AcademicYear = AcademicYear;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<studentsummary> list = CommonMethodobj.CommonListMethod<studentsummary, studentsummary>(obj, "/GetParentattendancesummarytbl", client);
+            return Json(list);
+        }
+        #endregion
+
+        #region STUDENT LOGIN ATTENDANCE DETAILS VIEWATTENDANCEDETAILS  
+
+        public IActionResult ViewAttendanceDetails()
+        {
+            List<SelectListItem> Valueslist = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_UserNames_By_Slot?InstanceId=" + InstanceId + "&Userid=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                Valueslist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            ViewBag.Slots = Valueslist;
+
+            return View();
+        }
+
+        public IActionResult attendancedetailsSlots()
+        {
+            List<SelectListItem> Valueslist = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Get_UserNames_By_Slot?InstanceId=" + InstanceId + "&Userid=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                Valueslist = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return Json(Valueslist);
+        }
+
+        public IActionResult GetViewAttendanceDetailstbl(Studentattendancedetails obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.UserId = UserId;
+            List<StudentDetailsforattedance> list = CommonMethodobj.CommonListMethod<Studentattendancedetails, StudentDetailsforattedance>(obj, "/Getstudentattendancedetails", client);
+
+            var listcount = list.Count();
+            if (listcount <= 0)
+            {
+                return Json(listcount);
+            }
+            ViewBag.departmentName = list[0].ClassificationName;
+            ViewBag.className = list[0].SubClassificationName;
+            ViewBag.AttendanceLastDate = list[0].CreatedDate;
+            // ViewBag.PresentCount = value[0].Present;
+            ViewBag.UserAttendance = list;
+            ViewBag.Records = list.Count();
+            return View();
         }
 
         #endregion

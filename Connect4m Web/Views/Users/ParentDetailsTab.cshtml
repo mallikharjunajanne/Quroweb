@@ -16,93 +16,121 @@
    
     @*================================================== Parent Details Card================================*@
 <div class="card mb-4">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">
-            <span>
-                PARENT DETAILS
-            </span>
-        </h5>
-    </div>
-   
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    @*----------------------*@
-                    <div class="row mb-3 ">
-                        <label asp-for="Name" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                        <div class="col-sm-4 ">
-                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Name">
-                        </div>
-                    </div>
+    <div class="card-header bg-danger text-white">PARENT DETAILS</div>
+    <div class="card-body">
+        <div class="row">
 
-                    @*----------------------*@
-                    <div class="row mb-3 ">
-                        <label asp-for="ClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                        <div class="col-sm-4 ">
-                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Department">
-                        </div>
+            @*-----NEWLY ADDED CODE START-----*@
+            <!-- Left side: Name, Department, Class, Student Id -->
+            <div class="col-sm-6">
+                <div class="row mb-1">
+                    <label asp-for="Name" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Name">
                     </div>
-                    @*----------------------*@
-                    <div class="row mb-3 ">
-                        <label asp-for="SubClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                        <div class="col-sm-4 ">
-                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Class">
-                        </div>
+                </div>
+                <div class="row mb-1">
+                    <label asp-for="ClassificationName" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Department">
                     </div>
-                    @*----------------------*@
-                    <div class="row mb-3 ">
-                        <label asp-for="InstanceUserCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name">Student Id</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.InstanceUserCode">
-                        </div>
+                </div>
+                <div class="row mb-1">
+                    <label asp-for="SubClassificationName" class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Class">
                     </div>
-                    @*----------------------*@
-
-                    <div class="row mb-3 ">
-                        <label class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
-                        <div class="col-sm-4 ">
-                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" width="100" height="100"/>
-                        </div>
+                </div>
+                <div class="row mb-1">
+                    <label asp-for="InstanceUserCode" class="col-sm-4 col-form-label  text-end " for="basic-default-name">Student Id</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.InstanceUserCode">
                     </div>
-                
-                    @*----------------------*@
                 </div>
             </div>
+            <!-- Right side: Photo -->
+            <div class="col-sm-6">
+                <div class="row mb-1">
+                    <div class="col-sm-12">
+                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" width="130" height="130" />
+                        @*D:\QuroConnect4m\Quroweb\Connect4m Web\wwwroot\ParentPhotos\879\500\*@
+                    </div>
+                </div>
+            </div>
+            @*-----NEWLY ADDED CODE END-----*@
+
+            <div class="col">
+                @*----------------------*@
+                <!--<div class="row mb-3 ">
+                    <label asp-for="Name" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-4 ">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Name">
+                    </div>
+                </div>-->
+
+                @*----------------------*@
+                <!--<div class="row mb-3 ">
+                    <label asp-for="ClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-4 ">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Department">
+                    </div>
+                </div>-->
+                @*----------------------*@
+                <!--<div class="row mb-3 ">
+                    <label asp-for="SubClassificationName" class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-4 ">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.Class">
+                    </div>
+                </div>-->
+                @*----------------------*@
+                <!--<div class="row mb-3 ">
+                    <label asp-for="InstanceUserCode" class="col-sm-2 col-form-label  text-end " for="basic-default-name">Student Id</label>
+                    <div class="col-sm-4 ">
+                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.InstanceUserCode">
+                    </div>
+                </div>-->
+                @*----------------------*@
+
+                <!--<div class="row mb-3 ">
+                    <label class="col-sm-2 col-form-label  text-end " for="basic-default-name"></label>
+                    <div class="col-sm-4 ">
+                        <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" width="100" height="100" />
+                    </div>
+                </div>-->
+
+                @*----------------------*@
+            </div>
         </div>
-   
+    </div>
 </div>
 
     @*--- Parent Details Table Card----*@
 <div class="card" id="DivTblParentsSearchresults">
     <div class="card-datatable table-responsive pt-0">
+        <div class="card-header bg-danger text-white">
+            YOUR SEARCH RESULTED &nbsp;<span id="TblParentCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).
+        </div>
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-            <div class="card-header flex-column flex-md-row">
-                <div class="head-label text-center">
-                    <h5 class="card-title mb-0">
-                        <span>YOUR SEARCH RESULTED &nbsp;<span id="TblParentCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                    </h5>
-                </div>
-            </div>
-           
             @if (@ViewBag?.UserId != null && @ViewBag?.UserId != 0)
             {
-                <button class="btn rounded-pill btn-outline-info waves-effect float-end" id="BtnAddNewParents" onclick="MoveTonextpage('CreateNewParents',null)">Add New</button>
+                <div class="text-end">
+                    <button class="btn btn-label-linkedin waves-effect btn-sm" id="BtnAddNewParents" onclick="MoveTonextpage('CreateNewParents',null)">Add New</button>
+                </div>
             }
-                <table class="datatables-basic table dataTable no-footer dtr-column link" id="TblParentsSearchresults" style="display:none">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>S.No</th>
-                            <th>Parent Name</th>
-                            <th>Relationship</th>
-                            <th>Mobile Number</th>
-                            <th>SMS Status</th>
-                            <th>Login Status</th>
-                            @*<th>Edit</th>*@
-                            <th>Make Primary Contact</th>
-                        </tr>
-                    </thead>
-                </table>
-            
+            <table class="datatables-basic table dataTable no-footer dtr-column link" id="TblParentsSearchresults" style="display:none">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Parent Name</th>
+                        <th>Relationship</th>
+                        <th>Mobile Number</th>
+                        <th>SMS Status</th>
+                        <th>Login Status</th>
+                        @*<th>Edit</th>*@
+                        <th>Make Primary Contact</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>

@@ -56,7 +56,7 @@ namespace Connect4m_Web.Controllers
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
-        #region FeeDetails
+        #region FEE DETAILS
         public IActionResult FeeDetails()
         {
             return View();
@@ -141,7 +141,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        #region Fee Recipt New    
+        #region FEE RECIPT NEW
         public IActionResult FeeReceiptNew()
         {
             return View();
@@ -426,7 +426,7 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
-        #region Bank Deposit Details Report
+        #region BANK DEPOSIT DETAILS REPORT
         public IActionResult BankDepositReport()
         {
             return View();
@@ -593,8 +593,10 @@ namespace Connect4m_Web.Controllers
             return View(model);
             //return Json(model);
         }
-        public IActionResult userwisepaymentdetailstbldata(int FUserid, string StudentUserName)
+        public IActionResult userwisepaymentdetailstbldata(int FUserid, string StudentUserName,string Userreceiptgenerationid)
         {
+            //hallticket==Userreceiptgenerationid
+            string ChallanId = string.Empty;
             List<Userwisepayment> model = new List<Userwisepayment>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetFeeDetailsByUserID?UserId=" + FUserid).Result;
             if (response.IsSuccessStatusCode)
@@ -606,6 +608,9 @@ namespace Connect4m_Web.Controllers
             if (count != 0)
             {
                 ViewBag.username = StudentUserName;
+                ViewBag.FUserid = FUserid;
+                ViewBag.ChallanId = ChallanId;
+                ViewBag.Userreceiptgenerationid = Userreceiptgenerationid;
                 ViewBag.model = model;
                 return View(model);
             }
@@ -626,6 +631,42 @@ namespace Connect4m_Web.Controllers
             }
             return Json(value);
         }
+
+        public IActionResult FeechallanUploadVerification(Userwisepayment userwisepayment)
+        {
+            List<Userwisepayment> model = new List<Userwisepayment>();
+            
+            int LoginUserId = UserId;
+            int Studentuserid = userwisepayment.UserId;
+            int InstaneId = InstanceId;
+           
+            string Paymentedate = userwisepayment.Paymentdatetxt.Replace("-","/");
+
+            int Userreceiptgenerationid;
+
+            if (userwisepayment.Userreceiptgenerationidtxtid != null)
+            {
+                int.TryParse(userwisepayment.Userreceiptgenerationidtxtid, out Userreceiptgenerationid);
+            }
+            else
+            {
+            Userreceiptgenerationid = 0; 
+            }
+
+
+            //int Userreceiptgenerationid =int.Parse(userwisepayment.Userreceiptgenerationidtxtid);
+            string Amount = userwisepayment.Amounttxt;
+            string Invoicenumber = userwisepayment.Userreceiptgenerationidtxtid;
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FeeChallanreceiptdetails?userwisepayment=" + userwisepayment).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<List<Userwisepayment>>(data);
+            }
+            return View();
+        }
+
         public IActionResult Classification_DD()
         {
             Userwisepayment model = new Userwisepayment();

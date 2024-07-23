@@ -336,7 +336,7 @@ function bindDatatable(response) {
         $('#ManageQuotestbl').find('td:nth-child(2)').attr('title', 'Edit');
     });
     $('#ManageQuotestbl').find('td:nth-child(2)').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'

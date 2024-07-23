@@ -5,10 +5,9 @@
 }
 
         <div class="card mb-4" id="CreateLeaveTypePage">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">             
                     <span id="CreateLeaveType_Span_CreatePage">  SAVE LEAVE TYPE</span>
-                </h5> <small class="required">INDICATES REQUIRED FIELDS</small>
+              <small>INDICATES REQUIRED FIELDS</small>
             </div>
 
             <div class="card-body">
@@ -55,7 +54,7 @@
                                     <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Allow Leave Apply for Past Days</label>
                                     <div class="col-sm-4 ">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" asp-for="AllowPastDates_bool" id="TxtAllowLeaveApplyforPastDays_Createpage" checked="checked" />
+                                            <input type="checkbox" class="form-check-input" asp-for="AllowPastDates_bool" id="TxtAllowLeaveApplyforPastDays_Createpage" />@*checked="checked"*@
                                             @if (ViewBag.Leavetypeid != 0 && ViewBag.LeavetypeidCount > 0)
                                             {
                                                 <input type="image" class="imgAuditIconAllowPastDays" id="imgAuditIconAllowPastDays" src="~/IconImages/searchbtn image.png" onclick="_ViewChangeActivities(event,'tblLeaveType', @ViewBag.Leavetypeid, 'AllowPastDates')">
@@ -72,7 +71,7 @@
                                 <div class="row justify-content-end">
                                     <div class="col-sm-8">
                                         <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBacktoList" onclick="BackTOSearhLeaveTypes(event)" value="Back To Search">Back To Search</button>
-                                        <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear" onclick="FN_ClearValues('FmCreateLeaveType','TxtAreaDescription_Createpage')">Clear</button>
+                                        <button type="reset" class="btn btn-danger waves-effect waves-light" id="BtnClear" onclick="FN_ClearValues('FmCreateLeaveType','TxtAreaDescription_Createpage')">Clear</button>
                                         <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSave" onclick="FN_LeaveTypes_Save(event)" value="Save">Save</button>
                                     </div>
                                 </div>

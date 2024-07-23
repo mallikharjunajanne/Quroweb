@@ -13,6 +13,12 @@ function ClearFunction() {
     $(".ErrorMessageSpan").empty();
     $("#Div_TblUser").hide();
     $("#TblUser tbody").empty();
+    var form = document.getElementById('FmUsersSearchForMBA');
+    form.reset();
+    var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+    validationSpans.forEach(span => {
+        span.textContent = ''; // Clear validation messages
+    });
 }
 //================================Search Records=====================
 $("#FmUsersSearch").submit(function (event) {

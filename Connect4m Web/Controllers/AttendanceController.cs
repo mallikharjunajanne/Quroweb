@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +25,8 @@ using Connect4m_Web.Views;
 namespace Connect4m_Web.Controllers
 {
 
+    //[System.ComponentModel.DisplayName("Login")]
+    //[Route("Users")]
     public class AttendanceController : Controller  //ManagePastDaysLeave   3777 line [Authorize]
     {
          Uri baseaddress = new Uri("https://localhost:44379/api/ApplyStudentAttendance");
@@ -33,14 +34,6 @@ namespace Connect4m_Web.Controllers
         //Uri baseaddress = new Uri("http://192.168.1.143:94/api/ApplyStudentAttendance");
         //HttpClient client;
        
-
-        //public AttendanceController()
-        //{
-        //    client = new HttpClient();
-        //    client.BaseAddress = baseaddress;
-        //}
-
-
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
         private readonly IMemoryCache _memoryCache;
@@ -144,14 +137,13 @@ namespace Connect4m_Web.Controllers
 
             //  return View();
             val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
+            
+            // val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using //DATABASE NAME:-Dev_C4MProd
+            val.SubDomineName = "Quro.connect4m.com";//it is temperory using  //NEW DATABASE Name:C4MProd
+            //  val.SubDomineName = HtstpContext.Request.Host.Host.ToUpper();
 
-
-                // val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using //DATABASE NAME:-Dev_C4MProd
-                val.SubDomineName = "Quro.connect4m.com";//it is temperory using  //NEW DATABASE Name:C4MProd
-                                                        //  val.SubDomineName = HttpContext.Request.Host.Host.ToUpper();
-
-                //val.IPAddress = "183.82.116.209";
-                val.IPAddress = await GetPublicIpAddress();//to get IP address
+            //val.IPAddress = "183.82.116.209";
+            val.IPAddress = await GetPublicIpAddress();//to get IP address
 
 
             // val.URL = "http://develop.connect4m.com";
@@ -323,6 +315,7 @@ namespace Connect4m_Web.Controllers
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
                 return Json(0);
             }
         }
@@ -330,6 +323,101 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult GetForgetPassworddetails(LoginModel val)
+        {
+            val.SubDomineName = "DEVELOP.CONNECT4M.COM";
+            List<LoginDetailsListModel> Value2 = new List<LoginDetailsListModel>();
+            string data = JsonConvert.SerializeObject(val);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForgotPassword", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data1 = response.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
+            }
+            return Json(Value2);
+        }
+
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgetPassword(LoginModel val)
+        {
+            if (val.Username == null || val.Mobilenumber == null)
+            {
+                return Json(0);
+            }
+
+            val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
+            val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
+            val.SubDomineName = "DEVELOP.CONNECT4M.COM"; //it is temperory using //DATABASE NAME:-Dev_C4MProd
+                                                         //val.SubDomineName = "Quro.connect4m.com";  //it is temperory using  //NEW DATABASE Name:C4MProd
+
+            //val.IPAddress = "183.82.116.209";
+            val.IPAddress = await GetPublicIpAddress();//to get IP address
+            val.URL = HttpContext.Request.GetDisplayUrl();
+            val.LoginAttempt = IncrementLoginCount(val.Username);
+            val.LoginStatus = 1;
+            List<LoginDetailsListModel> Value2 = new List<LoginDetailsListModel>();
+            string data = JsonConvert.SerializeObject(val);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForgotPassword", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data1 = response.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
+                if (Value2.Count > 0)
+                {
+                    if (Value2[0].UserDetailsList.Count > 0 && Value2[0].UserDetailsList.Count > 0)
+                    {
+                        _memoryCache.Set(val.Username, 0);//set a login count is 0 with Username
+                        Response.Cookies.Append("Instanceid", Value2[0].UserDetailsList[0].InstanceID.ToString());
+                        Response.Cookies.Append("LoginUserId", Value2[0].UserDetailsList[0].UserId.ToString());
+                        Response.Cookies.Append("InstanceClassificationId", Value2[0].UserDetailsList[0].InstanceClassificationId.ToString());
+                        Response.Cookies.Append("InstanceSubClassificationId", Value2[0].UserDetailsList[0].InstanceSubClassificationId.ToString());
+                        Response.Cookies.Append("Roleid", Value2[0].UserDetailsList[0].RoleId.ToString());
+                        Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
+                        Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString().ToUpper());
+                        Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
+                        Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
+                        //  Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
+
+                        int DelegationClasses = 1;// This for Arjun
+
+                        Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() + " " + Value2[0].UserDetailsList[0].LastName.ToString()); Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
+
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, val.Username),
+                            new Claim(ClaimTypes.Role, "Admin")
+                        };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties
+                        {
+                            // Set additional properties if needed
+                        };
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                        if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString() == "1")
+                        {
+                            return Json("changepassword");
+                        }
+                        else
+                        {
+                            return Json("correct");
+                        }
+                    }                  
+                }
+            }
+            return Json(0);
+        }
+
+
         //====================================Apply Student Leave==================================================
         #region
         [Authorize]
@@ -1605,7 +1693,8 @@ namespace Connect4m_Web.Controllers
         #endregion
         //---------------------------------Leave Levels Module--------------------
         [Authorize]
-        public IActionResult Delete_LeaveLevels(int LeaveLevelId, string submitButton)// string InstanceClassificationId, string InstanceSubClassificationId)
+        public IActionResult Delete_LeaveLevels(int LeaveLevelId, string submitButton)
+            // string InstanceClassificationId, string InstanceSubClassificationId)
         {
             LeaveLevelModel obj = new LeaveLevelModel();
             obj.LeaveLevelId = LeaveLevelId;
@@ -3013,90 +3102,17 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        [Authorize]
-        public IActionResult DdlLmsSubCategory_Calingfunction(int PayrollCategoryId)// string InstanceClassificationId, string InstanceSubClassificationId)
-        {
-           // int DelegationClasses = 1;
+ 
 
-          //  int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
-
-            //int InstanceClassificationId = Convert.ToInt32(Request.Cookies["Instanceid"]);
-
-            List<AttendanceModel> Value2 = new List<AttendanceModel>();
-            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/DdlLmsSubCategory_Calingfunction?InstanceId=" + InstanceId12 + "&PayrollCategoryId=" + PayrollCategoryId).Result;
-            if (response2.IsSuccessStatusCode)
-            {
-                string data2 = response2.Content.ReadAsStringAsync().Result;
-                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data2);
-            }
-            var items = new List<SelectListItem>();
-            for (int i = 0; i < Value2.Count; i++)
-            {
-                items.Add(new SelectListItem { Value = Value2[i].PayrollSubCategoryId.ToString(), Text = Value2[i].PayrollSubCategoryName.ToString() });
-            }
-            ViewBag.DdlLmsSubCategory_Calingfunction = new SelectList(items, "Value", "Text");
-            return new JsonResult(ViewBag.DdlLmsSubCategory_Calingfunction);
-        }
-        [Authorize]
-        public IActionResult DdlLmsCategory_Calingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
-        {
-           // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            // int InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
-
-            List<AttendanceModel> Value2 = new List<AttendanceModel>();
-            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/DdlLmsCategory_Calingfunction?InstanceId=" + InstanceId12).Result;
-            if (response2.IsSuccessStatusCode)
-            {
-                string data2 = response2.Content.ReadAsStringAsync().Result;
-                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data2);
-            }
-
-            var items = new List<SelectListItem>();
-
-            for (int i = 0; i < Value2.Count; i++)
-            {
-                items.Add(new SelectListItem { Value = Value2[i].PayrollCategoryId.ToString(), Text = Value2[i].PayrollCategoryName.ToString() });
-            }
-
-            ViewBag.DdlLmsCategory_Calingfunction = new SelectList(items, "Value", "Text");
-            return new JsonResult(ViewBag.DdlLmsCategory_Calingfunction);
-        }
-
-        [Authorize]
-        public IActionResult LeaveAllocationTBLView(AttendanceModel val,string GenderId,int PayrollCategoryId,int PayrollSubCategoryId)
-        {
-           // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
-            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
-            val.InstanceID = InstanceId12;
-            val.InstanceRoleId = default; //not dynamic
-            val.DesignationId = default; //not dynamic
-          
-            val.GenderId = GenderId;
-            val.PayrollCategoryId = PayrollCategoryId;
-            val.PayrollSubCategoryId = PayrollSubCategoryId;
-
-
-            List<AttendanceModel> Value2 = new List<AttendanceModel>();
-            string data = JsonConvert.SerializeObject(val);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/GetTblLeaveAllocationListDvalues_CaliingFunction", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data1 = response.Content.ReadAsStringAsync().Result;
-                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data1);
-            }
-            return View(Value2);
-           // return PartialView("_LeaveAllocationTBLView");
-        }
-
-
+        #region ALLOCATE LEAVES
+               
+      
         [Authorize]
         public IActionResult LeaveAllocation()
         {
             return View();
         }
+
         [HttpPost]
         [Authorize]
         //public IActionResult LeaveAllocation(List<AttendanceModel> val, string ButtonName)
@@ -3182,6 +3198,93 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+
+
+        [Authorize]
+        public IActionResult LeaveAllocationTBLView(AttendanceModel val, string GenderId, int PayrollCategoryId, int PayrollSubCategoryId)
+        {
+            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
+            val.InstanceID = InstanceId12;
+            val.InstanceRoleId = default; //not dynamic
+            val.DesignationId = default; //not dynamic
+
+            val.GenderId = GenderId;
+            val.PayrollCategoryId = PayrollCategoryId;
+            val.PayrollSubCategoryId = PayrollSubCategoryId;
+
+
+            List<AttendanceModel> Value2 = new List<AttendanceModel>();
+            string data = JsonConvert.SerializeObject(val);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/GetTblLeaveAllocationListDvalues_CaliingFunction", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data1 = response.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data1);
+            }
+            return View(Value2);
+            // return PartialView("_LeaveAllocationTBLView");
+        }
+
+        [Authorize]
+        public IActionResult DdlLmsSubCategory_Calingfunction(int PayrollCategoryId)// string InstanceClassificationId, string InstanceSubClassificationId)
+        {
+            // int DelegationClasses = 1;
+
+            //  int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
+
+            //int InstanceClassificationId = Convert.ToInt32(Request.Cookies["Instanceid"]);
+
+            List<AttendanceModel> Value2 = new List<AttendanceModel>();
+            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/DdlLmsSubCategory_Calingfunction?InstanceId=" + InstanceId12 + "&PayrollCategoryId=" + PayrollCategoryId).Result;
+            if (response2.IsSuccessStatusCode)
+            {
+                string data2 = response2.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data2);
+            }
+            var items = new List<SelectListItem>();
+            for (int i = 0; i < Value2.Count; i++)
+            {
+                items.Add(new SelectListItem { Value = Value2[i].PayrollSubCategoryId.ToString(), Text = Value2[i].PayrollSubCategoryName.ToString() });
+            }
+            ViewBag.DdlLmsSubCategory_Calingfunction = new SelectList(items, "Value", "Text");
+            return new JsonResult(ViewBag.DdlLmsSubCategory_Calingfunction);
+        }
+
+        [Authorize]
+        public IActionResult DdlLmsCategory_Calingfunction()// string InstanceClassificationId, string InstanceSubClassificationId)
+        {
+            // int LoginUserId = Convert.ToInt32(Request.Cookies["LoginUserId"]);
+            int InstanceId12 = Convert.ToInt32(Request.Cookies["Instanceid"]);
+            // int InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["InstanceSubClassificationId"]);
+
+            List<AttendanceModel> Value2 = new List<AttendanceModel>();
+            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/DdlLmsCategory_Calingfunction?InstanceId=" + InstanceId12).Result;
+            if (response2.IsSuccessStatusCode)
+            {
+                string data2 = response2.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<AttendanceModel>>(data2);
+            }
+
+            var items = new List<SelectListItem>();
+
+            for (int i = 0; i < Value2.Count; i++)
+            {
+                items.Add(new SelectListItem { Value = Value2[i].PayrollCategoryId.ToString(), Text = Value2[i].PayrollCategoryName.ToString() });
+            }
+
+            ViewBag.DdlLmsCategory_Calingfunction = new SelectList(items, "Value", "Text");
+            return new JsonResult(ViewBag.DdlLmsCategory_Calingfunction);
+        }
+        #endregion
+
+
+
+
+
+
 
 
         //--------------------------Leave Delegation Screen------------------------------

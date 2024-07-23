@@ -53,8 +53,47 @@ function Clearcommonfunction(Formid, ErrorMessageSpanId) {
     document.getElementById(Formid).reset(); // Reset the form 
     document.getElementById(ErrorMessageSpanId).innerText = '';
 }
+function Clearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
 
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        Searchclassifications();
 
+        // Clear ASP.NET Core validation messages
+        //var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        //validationSpans.forEach(span => {
+        //    span.textContent = ''; // Clear validation messages
+        //});
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+function InsertClearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+       
+
+         //Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $('#Errormessages').text('');
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
 
 function DataCallToAjax(method, url, data, successCallback, errorCallback) {
     $.ajax({
@@ -107,95 +146,65 @@ function Searchclassifications() {
 
 //-----------------DataTable Data Dinding Function
 function bindDatatables(response) {
-
-    //var formattedDate = GetDateFormat();
     debugger;
     var table = $('#ManageClassificationtbl').DataTable();
     table.destroy();
-    $("#Classification_Recordscount").text(response.length); /*Quote_Recordscount*/
-
-
+    $("#Classification_Recordscount").text(response.length);
     var newTable = $("#ManageClassificationtbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [ ],
-
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
         bProcessing: false,
-        bLengthChange: true,
+        bLengthChange: false,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
         /* scrollCollapse: true,*/
         paging: true,
-        bPaginate: true,
+        bPaginate: false,
         //  stateSave:true,
         data: response,
         columns: [
-
-            //{
-            //    data: "SNO",
-            //    //visible: false,
-
-            //    render: function (data, type, row, meta) {
-            //        //  length++;
-            //        return row.holidayId
-            //    }
-            //},
             {
-                targets: 0, // Assuming this is the column index where you want to display numbering
+                targets: 0, 
                 render: function (data, type, row, meta) {
                     var currentPage = table.page.info().page;
                     var rowsPerPage = table.page.info().length;
                     return (0 * rowsPerPage) + meta.row + 1;
                 }
             },
-
             {
                 data: "ClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.classificationName
-
+                    return row.classificationName;
                 }
             },
             {
                 data: "ClassificationDescription",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
                     return row.classificationDescription + '<input type="text" value=' + row.instanceClassificationId + ' hidden/>'
-
                 }
             },
             {
                 data: "instanceClassificationId",
-
                 render: function (data, type, row, meta) {
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
-
                 }
             }
         ]
-
-
     });
- 
-   
     table.on('draw', function () {
         $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
-            fontWeight:'bold'
+            fontWeight: 'bold'
         });
     });
     $('#ManageClassificationtbl').find('td:nth-child(2)').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'
@@ -247,7 +256,7 @@ $(document).on('click', '#ManageClassificationtbl .fa-trash-o', function (event)
                 } else if (response == "-4") {
                     $('#Errmsg').text('Timetable has created for this Department.');
                 } else if (response == "-5") {
-                    $('#Errmsg').text('Users have been created for this Department.');
+                    $('#Errmsg').text('Users have been created for this Department.');//You can't delete Class as Users are already Associated.
                 } else {
                     $('#Errmsg').text('Some unexpected error occured.');
                 }

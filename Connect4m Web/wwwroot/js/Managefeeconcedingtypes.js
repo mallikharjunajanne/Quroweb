@@ -91,21 +91,20 @@ function Bindtable(response) {
     table.destroy();
 
     var newTable = $("#Discounttbl").DataTable({
-        dom: 'Bfrtip',
+        dom: '<"top"lf>t<"bottom"ip>',
         buttons: [],
         bProcessing: false,
-        bLengthChange: true,
-        /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        pageLength: 10,
-        bfilter: false,
-        bSort: true,
+        bLengthChange: false,
+        //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+        bfilter: true,
+        bSort: false,
         searching: false,
-        scrollX: true,
-        scrollY: '400px',
-        scrollCollapse: true,
+        //scrollX: true,
+        //scrollY: '400px',
+        //scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
+        //stateSave:true,
         data: response,
         columns: [
             {
@@ -141,38 +140,19 @@ function Bindtable(response) {
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
                 }
             }
-            //{
-            //    data: "FatherName",
-            //    render: function (data, type, row, meta) {
-            //        return row.fatherName
-            //    }
-            //},
-            //{
-            //    data: "MotherName",
-            //    render: function (data, type, row, meta) {
-            //        return row.motherName
-            //    }
-            //},
-            //{
-            //    data: "MobileNumber",
-            //    render: function (data, type, row, meta) {
-            //        return row.mobileNumber
-            //    }
-            //},
-
         ]
     });
 
     table.on('draw', function () {
         $('#Discounttbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'black',
+            color: 'blue',
             'text-decoration': 'underline',
             cursor: 'pointer',
             fontWeight: 'bold'
         });
     });
     $('#Discounttbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'black',
+        color: 'blue',
         'text-decoration': 'underline',
         cursor: 'pointer',
         fontWeight: 'bold'

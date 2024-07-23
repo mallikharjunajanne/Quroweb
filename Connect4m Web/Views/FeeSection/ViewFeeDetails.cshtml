@@ -7,17 +7,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .table-header-row {
+            background-color: brown;
+            color: white;
+            font-weight: bold;
+            padding: 8px;
+            text-align: left;
+        }
 
+            /* Define a class for the second row of the table header */
+            .table-header-row th {
+                background-color: white;
+                height: 24px;
+            }
+            .table-header-row td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+    </style>
 </head>
 <body>
-    <div class="flex-grow-1 container-p-y container-fluid">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>FEE DETAILS</h4>
-        <span id="Errormessages" class="text-danger"></span>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">FEE DETAILS</h4>
+        <span id="Errormessages" class="text-danger text-validation"></span>
         <div class="col-md-12 col-lg-12 mb-3">
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">SEARCH FEE DETAILS</h5>
-                </div>
+                <div class="card-header bg-danger text-white"><span class="text-header"> SEARCH FEE DETAILS </span></div>
                 <div class="card-body">
                     <div class="row col">
                         <form id="" enctype="multipart/form-data">
@@ -28,10 +45,8 @@
                                     <select multiple="" class="form-select" id="lstTerms" aria-label="Multiple select example"></select>
                                 </div>
                             </div>
-                            <div class="row justify-content text-center">
-                                <div class="col-sm-12">
-                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
-                                </div>
+                            <div class="justify-content text-center">
+                                <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
                             </div>
                         </form>
                     </div>
@@ -40,26 +55,27 @@
         </div>
         <div class="col-md-12 col-lg-12 mb-3">
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">YOUR SEARCH RESULTS <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.</h5>
+                <div class="card-header bg-danger text-white">
+                    <span class="text-header">
+                        YOUR SEARCH RESULTS <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORDS.
+                    </span>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered" id="FeeDetailstbl">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>S.No</th>
-                                <th>Term</th>
-                                <th>Fee Type</th>
-                                <th>Fee Amt</th>
-                                <th>Discount Type</th>
-                                <th>Discount Amount</th>
-                                <th>Paid</th>
-                                <th>Due</th>
-                                <th>Due Date</th>
-                            </tr>
-                        </thead>    
-                    </table>
-                </div>
+                <table class="table table-bordered" id="FeeDetailstbl">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S.No</th>
+                            <th>Term</th>
+                            <th>Fee Type</th>
+                            <th>Fee Amt</th>
+                            <th>Discount Type</th>
+                            <th>Discount Amount</th>
+                            <th>Paid</th>
+                            <th>Due</th>
+                            <th>Due Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -187,21 +203,20 @@
         var table = $('#FeeDetailstbl').DataTable();
         table.destroy();
         var newTable = $("#FeeDetailstbl").DataTable({
-            dom: 'Bfrtip',
+            dom: '<"top"lf>t<"bottom"ip>',
             buttons: [],
             bProcessing: false,
-            bLengthChange: true,
-            /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-            //pageLength: 20,
-            //bfilter: false,
-            bSort: true,
+            bLengthChange: false,
+            //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+            bfilter: true,
+            bSort: false,
             searching: false,
             scrollX: true,
             scrollY: '400px',
-            //scrollCollapse: true,
-            paging: false,
-            //bPaginate: true,
-            //  stateSave:true,
+            scrollCollapse: true,
+            paging: true,
+            bPaginate: false,
+            //stateSave:true,
             data: response,
             columns: [
                 {
@@ -276,7 +291,25 @@
                     render: function (data, type, row, meta) {
                         return row.dueDate
                     }
+                },
+                {
+                    data: "ExtraColumn",
+                    render: function (data, type, row, meta) {
+                        // Convert feeAmount to a number, handling null values
+                        var feeAmount = row.feeAmount !== null ? parseFloat(row.feeAmount) : NaN;
+
+                        // Convert paid to a number, handling null values
+                        var paid = row.paid !== null ? parseFloat(row.paid) : NaN;
+
+                        // Check if feeAmount and paid are numerically equal and not NaN
+                        if (!isNaN(feeAmount) && !isNaN(paid) && feeAmount === paid) {
+                            return '<span style="cursor: pointer;" onclick="searchIconClicked(\'' + row.feetermid + '\', \'' + row.userFeeId1 + '\', this)">🔍</span>';
+                        } else {
+                            return ''; // Render empty if feeAmount does not equal paid or if either value is NaN
+                        }
+                    }
                 }
+
             ],
             drawCallback: function (settings) {
                 // Append a new row with total amounts
@@ -297,6 +330,88 @@
                 $("#FeeDetailstbl tbody").append(totalRow);
             }
         });
+    }
+
+    function searchIconClicked(feeTermId, userfeeid) {
+        debugger;
+        var url = "/FeeSection/GetFeeDetialsByUserFeeIdFeeInstallments?feeTermId=" + feeTermId + "&userfeeid=" + userfeeid;
+        CallToAjax('GET', url,
+            function (response) {
+                var newWindow = window.open('', '_blank', 'width=700,height=400')
+
+                var tableHtml = '<html><head><title>User Fee Details - Number of Records: ' + response.length + '</title>';
+                tableHtml += '<style>table { border-collapse: collapse;width:80%;margin: 20px auto; } th, td { border: 1px solid black; padding: 8px; text-align: center; }</style>';
+                tableHtml += '<style>.table-header-row { background-color: brown; color: white; font-weight: bold; text-align: left;font-size: 12px; }</style>';
+                tableHtml += '<style>.table-header-row th { height: 24px; }</style>';
+                tableHtml += '</head><body>';
+                
+                tableHtml += '<table>';
+                tableHtml += '<thead><tr class="table-header-row"><th colspan="11" style="text-align: left;"><h2 style="background-color:cadetblue;border-top-left-radius: 15px;border-top-right-radius: 15px;padding: 1px;text-align: center;">Fee Details</h2></th></tr>';
+
+                // Table headings
+                tableHtml += '<tr class="table-header-row"><th colspan="11" style="text-align: left;">User Fee Details - Number of Records: ' + response.length + '</th></tr>';
+                tableHtml += '<tr class="table-header-row">';
+                tableHtml += '<th>Sl. No</th>';
+                tableHtml += '<th>Fee Term</th>';
+                tableHtml += '<th>Fee Type</th>';
+                tableHtml += '<th>Challan No</th>';
+                tableHtml += '<th>Paid Amt</th>';
+                tableHtml += '<th>Paid On</th>';
+                tableHtml += '<th>Collected By</th>';
+                tableHtml += '<th>Payment Mode</th>';
+                tableHtml += '<th>Account Number</th>';
+                tableHtml += '<th>Comments</th>';
+                tableHtml += '<th>Description</th>';
+                tableHtml += '</tr></thead>';
+
+                // Table body - populate with data from 'response' (assuming 'response' is an array of objects)
+                tableHtml += '<tbody>';
+                if (response && response.length > 0) {
+                    for (var i = 0; i < response.length; i++) {
+                        tableHtml += '<tr>';
+                        tableHtml += '<td>' + (i + 1) + '</td>';
+                        tableHtml += '<td>' + response[i].feetermName + '</td>';
+                        tableHtml += '<td>' + response[i].feeTypeName + '</td>';
+                        tableHtml += '<td>' + response[i].receiptNo + '</td>';
+                        tableHtml += '<td>' + response[i].paid + '</td>';
+                        var paymentDate = new Date(response[i].paymentdate);
+                        var formattedDate = paymentDate.toLocaleDateString('en-GB', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit'
+                        });
+
+                        tableHtml += '<td>' + formattedDate + '</td>';
+
+
+                        //tableHtml += '<td>' + response[i].paymentdate + '</td>';
+                        tableHtml += '<td>' + response[i].collectedby + '</td>';
+                        tableHtml += '<td>' + response[i].paymentMode + '</td>';
+                        tableHtml += '<td>' + response[i].accountNumber + '</td>';
+                        tableHtml += '<td>' + response[i].description + '</td>';
+                        tableHtml += '<td>' + response[i].description + '</td>';
+                        tableHtml += '</tr>';
+                    }
+                } else {
+                    tableHtml += '<tr><td colspan="11">No data available</td></tr>';
+                }
+                tableHtml += '</tbody>';
+
+                // Close the table and HTML
+                tableHtml += '</table>';
+                tableHtml += '</body></html>';
+
+                // Write the HTML to the new window
+                newWindow.document.write(tableHtml);
+            },
+            function (status, error) {
+                // Handle errors here
+                console.error("Error fetching data:", error);
+            }
+        );
     }
 
     $('#btnsearch').click(function () {

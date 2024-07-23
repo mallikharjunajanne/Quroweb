@@ -46,9 +46,20 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string PeriodId { get; set; }
     }
 
-    public class studentsummary : InstanceCommonproperties
+    public class studentsummary:InstanceCommonproperties
     {
-        public int AcademicYear { get; set; }
-       
+        public string AcademicYear { get; set; }
+        public string Subjectslotname{ get; set; }
+        public string Mentors{ get; set; }
+        public string TotalClasses{ get; set; }
+        public string TotalPresent{ get; set; }
+        public string AttendancePercentage{ get; set; }
+        public string AttendanceRequiredPercent{ get; set; }
+        public string TotalAbsent{ get; set; }
+        public string OnDuty{ get; set; }
+        public string ClassificationName{ get; set; }
+        public string SubclassificationName{ get; set; }
+        public string FirstName{ get; set; }
+        public string LastName{ get; set; }
     }
 }

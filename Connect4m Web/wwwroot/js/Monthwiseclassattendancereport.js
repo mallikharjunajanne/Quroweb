@@ -1207,3 +1207,24 @@ function extractBackgroundColor(html) {
     var match = /background-color\s*:\s*([^;]+);/i.exec(html);
     return match ? match[1] : 'ffffff'; // Default color if not found
 }
+
+//CLEAR FUNCTION
+function Clearform(formid) {
+    debugger;
+    // Retrieve the form element by id
+    var form = document.getElementById(formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        $('#Appendsmonthwiseattendancereportdiv').empty();
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

@@ -5,53 +5,49 @@
 @model List<LeaveDelegationModel>
 
 
-    <div class="card">
-        <div class="card-header flex-column flex-md-row">
-            <div class="head-label text-center">
-                <h5 class="card-title mb-0">
-                    <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
-                </h5>
-            </div>
-        </div>
-        <div class="table-responsive text-nowrap">
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
+    </div>
+    <div class="table-responsive text-nowrap">
 
-            <table id="TblLeaveDeligationList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
-                <thead class="table-dark">
-                    <tr>
-                        <th style="text-align:center">Edit</th>
-                        <th>Delegation From User</th>
-                        <th>Delegation To User</th>
-                        <th>Department</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th style="text-align:center">Delete</th>
+        <table id="TblLeaveDeligationList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
+            <thead class="table-dark">
+                <tr>
+                    <th style="text-align:center">Edit</th>
+                    <th>Delegation From User</th>
+                    <th>Delegation To User</th>
+                    <th>Department</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th style="text-align:center">Delete</th>
 
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr id="Row@(i)">
+
+
+
+                        <td style="text-align:center;"><a class="ti ti-edit" title="Edit" onclick="EditValuesGettingFunction.call(this,@item.InstanceClassificationId,@item.RoleId,@item.DelegationFromUserId,@item.DelegationToUserId,@item.DelegationId)"></a></td>
+                        <td>@item.DelegationFromUserName</td>
+                        <td>@item.DelegationToUserName</td>
+                        <td>@item.DepartmentName</td>
+                        <td>@item.Fromdate.ToString("dd-MM-yyyy")</td>
+                        <td>@item.Todate.ToString("dd-MM-yyyy")</td>
+                        <td style="text-align:center;"><a class="ti ti-trash" id="TblDeleteBtn" onclick="DeleteLeaveDelegationCallingFunction.call(this,@item.DelegationId)" title="Click to delete this record"></a></td>
                     </tr>
-                </thead>
-                <tbody>
-                    @{ int i = 0;}
-                    @foreach (var item in Model)
-                    {
-                        i++;
-                        <tr id="Row@(i)">
+                }
+            </tbody>
 
-
-
-                            <td style="text-align:center;"><a class="ti ti-edit" title="Edit" onclick="EditValuesGettingFunction.call(this,@item.InstanceClassificationId,@item.RoleId,@item.DelegationFromUserId,@item.DelegationToUserId,@item.DelegationId)"></a></td>
-                            <td>@item.DelegationFromUserName</td>
-                            <td>@item.DelegationToUserName</td>
-                            <td>@item.DepartmentName</td>
-                            <td>@item.Fromdate.ToString("dd-MM-yyyy")</td>
-                            <td>@item.Todate.ToString("dd-MM-yyyy")</td>
-                            <td style="text-align:center;"><a class="ti ti-trash" id="TblDeleteBtn" onclick="DeleteLeaveDelegationCallingFunction.call(this,@item.DelegationId)" title="Click to delete this record"></a></td>
-                        </tr>
-                    }
-                </tbody>
-
-            </table>
-
-        </div>
+        </table>
 
     </div>
+
+</div>
 
 

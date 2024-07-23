@@ -2434,7 +2434,7 @@ table thead .border-bottom-warning th, table tbody .border-bottom-warning th, ta
     }
 
 body {
-    font-size: 14px;
+    font-size: 12px;
     overflow-x: hidden;
     font-family: "SF Pro Text";
     color: #2b2b2b;
@@ -44434,10 +44434,10 @@ footer {
     background-color: #fff;
     -webkit-box-shadow: 0 0 20px rgba(89,102,122,0.1);
     box-shadow: 0 0 20px rgba(89,102,122,0.1);
-    padding: 15px;
+    padding: 5px;
     bottom: 0;
     left: 0;
-    margin-left: 280px;
+   /* margin-left: 280px;*/
     -webkit-transition: 0.5s;
     transition: 0.5s
 }

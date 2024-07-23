@@ -3,11 +3,32 @@
     Layout = null;
 }
 
+<style>
+    .Waitingtbl {
+        width: 100%;
+        border-collapse: separate;
+        border: 1px solid #afd4f7;
+    }
+        .Waitingtbltr {
+            background-color: #E8E8E8;
+            font-size: 14px;
+            font-weight: 700;
+            height: 26px;
+            text-align: center;
+            color: black;
+        }
+    .Waitingtbltrtd {
+        border: 1px solid #dbdbdb;
+        height: 24px;
+        color:black
+    }
+</style>
+
 <div>
-    <span style=" border-bottom: 2px solid #66a8ec; text-transform: uppercase; height: 25px; margin: 50px 0px 0px 0px;"> WAITING FOR APPROVAL</span><br />
-    <table style=" border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+    <span class="text-dark" style="font-weight: 900; border-bottom: 1px solid black;"> WAITING FOR APPROVAL</span><br />
+    <table class="Waitingtbl">
         <tbody>
-            <tr style=" background-color: #E8E8E8; font-size: 14px; font-weight: 700; height: 26px; text-align: center; color: black;">
+            <tr class="Waitingtbltr">
                 <th>Staff Leave(s)</th>
                 <th>Student Leave(s)</th>
             </tr>
@@ -19,8 +40,8 @@
                 @foreach (var items_1 in ViewBag.studentstaffleavescount)
                 {
                     <tr style="text-align: center;">
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@items_1.Staffleaves</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">
+                        <td class="Waitingtbltrtd">@items_1.Staffleaves</td>
+                        <td class="Waitingtbltrtd">
                             @if (string.IsNullOrWhiteSpace(items_1.Studentleaves))
                             {
                                 @:0
@@ -36,16 +57,16 @@
             else
             {
                 <tr style="text-align: center;">
-                    <td colspan="2" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
+                    <td colspan="2" class="Waitingtbltrtd">No Records</td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <span style=" border-bottom: 3px solid #66a8ec; text-transform: uppercase; height: 25px;"> MY LEAVE(S) STATUS</span><br />
-    <table style="border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+    <span class="text-dark" style="font-weight: 900; border-bottom: 1px solid black;">MY LEAVE(S) STATUS</span><br />
+    <table class="Waitingtbl">
         <tbody>
-            <tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; color: black;">
+            <tr class="Waitingtbltr">
                 <th align="center">Leave Type</th>
                 <th align="center">From Date</th>
                 <th align="center">To date</th>
@@ -60,18 +81,18 @@
                 @foreach (var item_4 in ViewBag.leavestatus)
                 {
                     <tr>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveType</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.FromDate</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.ToDate</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.LeaveDays</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_4.Status</td>
+                        <td class="Waitingtbltrtd">@item_4.LeaveType</td>
+                        <td class="Waitingtbltrtd">@item_4.FromDate</td>
+                        <td class="Waitingtbltrtd">@item_4.ToDate</td>
+                        <td class="Waitingtbltrtd">@item_4.LeaveDays</td>
+                        <td class="Waitingtbltrtd">@item_4.Status</td>
                     </tr>
                 }
             }
             else
             {
                 <tr style="text-align: center;">
-                    <td colspan="5" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
+                    <td colspan="5" class="Waitingtbltrtd">No Records</td>
                 </tr>
             }
         </tbody>
@@ -79,9 +100,9 @@
     <div>
         <br />
     </div>
-    <table style="border: 1px solid #66a8ec; width: 100%; border-collapse: separate;">
+    <table class="Waitingtbl">
         <tbody>
-            <tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; text-align: center; color: black;">
+            <tr class="Waitingtbltr">
                 <th>Leave Type</th>
                 <th>Total</th>
                 <th>Used</th>
@@ -98,19 +119,19 @@
                 @foreach (var item_2 in ViewBag.leavetypes)
                 {
                     <tr>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.LeaveType</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Total</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.DaysUsed</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Approved</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.InProcess</td>
-                        <td style="border: 1px solid #dbdbdb; height: 24px;">@item_2.Available</td>
+                        <td class="Waitingtbltrtd">@item_2.LeaveType</td>
+                        <td class="Waitingtbltrtd">@item_2.Total</td>
+                        <td class="Waitingtbltrtd">@item_2.DaysUsed</td>
+                        <td class="Waitingtbltrtd">@item_2.Approved</td>
+                        <td class="Waitingtbltrtd">@item_2.InProcess</td>
+                        <td class="Waitingtbltrtd">@item_2.Available</td>
                     </tr>
                 }
             }
             else
             {
                 <tr style="text-align: center;">
-                    <td colspan="5" style="border: 1px solid #dbdbdb; height: 24px;">No Records</td>
+                    <td colspan="5" class="Waitingtbltrtd">No Records</td>
                 </tr>
             }
         </tbody>

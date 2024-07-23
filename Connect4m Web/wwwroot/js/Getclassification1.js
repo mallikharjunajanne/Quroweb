@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+    debugger;
     var Rolename = $('#ROLENAMESPANID').val().toUpperCase();
 
     if (Rolename == "CLASS TEACHER") {
@@ -148,7 +149,7 @@ $(document).on('change', '#ddlInstanceSubclassificationSearch', function () {
             var dropdown = $(dropdownSelector);
             var valueField = 'instancesubjectId';
             var textField = 'subjectName';
-            //dropdown.empty();
+            dropdown.empty();
             dropdown.append($('<option>', {
                 value: '',
                 text: '---Select---'

@@ -2129,15 +2129,15 @@ progress {
 }
 
 .form-control-plaintext {
-  display: block;
-  width: 100%;
-  padding: 0.422rem 0;
-  margin-bottom: 0;
-  line-height: 1.5;
-  color: var(--bs-body-color);
-  background-color: transparent;
-  border: solid transparent;
-  border-width: var(--bs-border-width) 0;
+    display: block;
+    width: 100%;
+    padding: 0.2rem 0;
+    margin-bottom: 0;
+    line-height: 0.5;
+    /*color: var(--bs-body-color);*/
+    background-color: transparent;
+    border: solid transparent;
+    border-width: var(--bs-border-width) 0;
 }
 .form-control-plaintext:focus {
   outline: 0;
@@ -12507,6 +12507,9 @@ button.list-group-item-gray.active {
   color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
 }
 
+
+
+
 .text-light {
   --bs-text-opacity: 1;
   color: #b7b5be !important;
@@ -17899,7 +17902,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   padding: 0.5rem 1rem;
 }
 .menu-vertical .menu-item .menu-link {
-  font-size: 0.9375rem;
+  font-size: 0.7rem;
 }
 .menu-vertical .menu-item .menu-toggle {
   padding-right: calc(1rem + 1.26em);

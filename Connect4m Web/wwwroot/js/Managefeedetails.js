@@ -487,6 +487,8 @@ function clearForm(formId) {
         $('#Commonerrormessage').text('');
         $('#Commonerrormessage1').text('');
         $('#partialViewContainer').empty();
+        $('#FeeType_checkboxListFeeType').empty();
+        $('#Users_checkboxList').empty();
     }
 }
 

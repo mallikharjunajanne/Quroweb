@@ -17,15 +17,15 @@
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
     @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     *@
@@ -56,494 +56,471 @@
     </script>
 </head>
 <body>
+    <div class="flex-grow-1 container-p-y container-xxl">
 
-               
+        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Staff Module /</span>*@LEAVE APPROVAL</h4>
 
-                <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <ul class="nav nav-pills" id="myTab" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve /Reject</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved & Rejected Leaves</a></li>
+                    <li class="nav-item"><a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Leave Requested</a></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    @*------------------------------Tab code end----*@
 
-                    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Staff Module /</span>LEAVE APPROVAL</h4>
+                    @*--------------tab 1----------------div code start----*@
 
-                    <div class="row mb-2">
-                        <div class="col-md-12 col-lg-12 mb-3">
-                            <ul class="nav nav-pills" id="myTab" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve /Reject</a></li>
-                                <li class="nav-item"><a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved & Rejected Leaves</a></li>
-                                <li class="nav-item"><a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Leave Requested</a></li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                @*------------------------------Tab code end----*@
-
-                                @*--------------tab 1----------------div code start----*@
-
-                                <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
-                                <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
-                                <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
-                                <span class="ErrorMessageSpan" id="Leaveselected_Span_Error"></span>
+                    <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
+                    <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
+                    <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
+                    <span class="ErrorMessageSpan" id="Leaveselected_Span_Error"></span>
 
 
-                                <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
 
 
-                                    <div id="TabApprove_Reject">
-                                        <div class="card mb-4">
-                                            <div class="card-header d-flex align-items-center justify-content-between">
-                                                <h5 class="mb-0">
-                                                    <span>
-                                                        SEARCH EMPLOYEE
-                                                    </span>
-                                                </h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <form id="ApproveReject_Form">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            @*--------------------------*@
-                                                            <div class="row mb-3 ">
-                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Department</label>
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="position-relative">
-                                                                        <select id='DdlDepartmentId' class="select2 form-select select2-hidden-accessible" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" asp-items="@(new SelectList(""))">
-                                                                            <option value=''>---------Select--------</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Role</label>
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="position-relative">
-                                                                        <select id='DdlRoles' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
-                                                                            <option value=''>---------Select--------</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            @*--------------------------*@
-
-                                                            <div class="row mb-3 ">
-                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">First Name</label>
-                                                                <div class="col-sm-4 ">
-                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtfirstname" placeholder="First Name" />
-                                                                </div>
-                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Last Name</label>
-                                                                <div class="col-sm-4 ">
-                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtlastname" placeholder="Last Name" />
-                                                                </div>
-                                                            </div>
-
-                                                            @*--------------------------*@
-
-                                                            <div class="row mb-3 ">
-                                                                <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">User Name</label>
-                                                                <div class="col-sm-4 ">
-                                                                    <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtUserName" placeholder="User Name" />
-                                                                </div>
-                                                            </div>
-                                                            @*--------------------------*@
-                                                            <div class="row justify-content-end">
-                                                                <div class="col-sm-8">
-                                                                    <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnClearSerach" onclick="FN_ClearValues('ok','ApproveReject_Form')" value="Clear">Clear</button>
-                                                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblAppliedStaffLeaves_SearchRecords_Calingfunction(event,'1','TblAppliedStaffLeaves_SearchRecords','Counts','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmAppliedStaffLeaves_SearchRecords_Div')" value="Search">Search</button>
-                                                                </div>
-                                                            </div>
-                                                            @*--------------------------*@
-
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-                                        </div>
-
-                                        @*searched result table*@
-                                        @*<a id="ExportExcelLink_ApproveReject" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
-
-                                        <div class="card" id="FmAppliedStaffLeaves_SearchRecords_Div" style="display:none">
-                                            <div class="card-header flex-column flex-md-row">
-                                                <div class="head-label text-center">
-                                                    <h5 class="card-title mb-0">
-                                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-                                                        @*<span id="Counts">No Records</span> *@
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="table-responsive text-nowrap">
-                                                <table id="TblAppliedStaffLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                                    @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
-                                                    <thead class="table-dark">
-                                                        <tr>
-                                                            @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
-                                                            <th>Employee Name</th>
-                                                            <th>Department</th>
-                                                            <th>From Date</th>
-                                                            <th>To Date</th>
-                                                            <th>Leave Type</th>
-                                                            <th>Reason</th>
-                                                            <th>No. of Days/Total Time</th>
-                                                            <th>Requested Date</th>
-                                                            <th>Delegation Record</th>
-                                                            <th>Approve/Reject</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-
-                                                </table>
-
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                    @*====================================this hiding page for Approve Leave==================*@
-                                    <div class="card" id="ApproveReject_Submitbuttonpage_Div" style="display:none">
-
-                                        <label class="form-label mx-auto">Staff Name: &nbsp;<span id="StaffUserName"></span></label>
-                                        <div class="card-header flex-column flex-md-row">
-                                            <div class="head-label text-center">
-                                                <h5 class="card-title mb-0">
-                                                    @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
-                                                    <span>LEAVE COMMENTS</span>
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="table-responsive text-nowrap mb-2">
-                                            <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
-                                                        <th>Leave Type</th>
-                                                        <th>From Date</th>
-                                                        <th>To Date</th>
-                                                        <th>Reason</th>
-                                                        <th>No. of Days</th>
-                                                        <th>DaySession</th>
-                                                        <th>Medical Certificate</th>
-                                                        <th>Requested Date</th>
-                                                        <th>Comments</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-
-                                            </table>
-
-                                        </div>
-
-
-                                        @*--------Form-----list box*@
-                                        <div class="card-body">
-                                            <form id="Fm_ApproveandReject_PopUp">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Comments</label>
-                                                            <div class="col-sm-4 ">
-                                                                <textarea class="form-control" id="TXTareaRemarks_Popup" name="Comments" maxlength="500" rows="3"></textarea>
-                                                                <label class="form-label"> <span id="TextareacountSPAN">500</span> Character(s) remaining.</label>
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                        <input type="hidden" name="BatchId" id="BatchId_Popup" />
-                                                        <input type="hidden" name="Userid" id="StaffId_Popup" />
-                                                        <input type="hidden" name="InstanceClassificationId" id="InstanceClassificationId_Popup" />
-                                                        <input type="hidden" name="InstanceId" id="InstanceId_Popup" />
-                                                        <input type="hidden" name="LeaveTypeId" id="LeaveTypeId_Popup" />
-
-
-                                                        @*--------------------------*@
-                                                        <div class="row justify-content-end">
-                                                            <div class="col-sm-8">
-                                                                <button type="button" class="btn btn-info waves-effect waves-light" onclick="BackTOSearhLevels(event)" value="Back">Back</button>
-                                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="FN_ClearValues('ok','Fm_ApproveandReject_PopUp')" value="Clear">Clear</button>
-                                                                <button type="button" class="btn btn-success waves-effect waves-light" id="BtnApprove" onclick="LeaveApproval_Save(event, this.value)" value="Approve">Approve</button>
-                                                                <button type="button" class="btn btn-danger waves-effect waves-light" id="BtnReject" onclick="LeaveApproval_Save(event, this.value)" value="Reject">Reject</button>
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                        <div id="TabApprove_Reject">
+                            <div class="card mb-4">
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">
+                                        SEARCH EMPLOYEE
+                                    </span>
                                 </div>
-                                @*-------------tab 1-----------------div code end----*@
+                                <div class="card-body">
+                                    <form id="ApproveReject_Form">
 
-
-
-                                @*-------------------tab 2-----------div code start----*@
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                                    <div class="card mb-4">
-                                        <div class="card-header d-flex align-items-center justify-content-between">
-                                            <h5 class="mb-0">
-                                                <span>
-                                                    SEARCH FOR APPROVED & REJECTED LEAVES
-                                                </span>
-                                            </h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <form id="ApproveRejectCompleted_Form">
-                                                <div class="row">
-                                                    <div class="col">
-
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> From Date</label>
-                                                            <div class="col-sm-4 ">
-                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> To Date</label>
-                                                            <div class="col-sm-4 ">
-                                                                <input id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Approved/Rejected </label>
-                                                            <div class="col-sm-4 ">
-                                                                <div class="position-relative">
-                                                                    <select id='DdlApproved_Rejected' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
-                                                                        <option value='All'>All</option>
-                                                                        <option value='Approved'>Approved</option>
-                                                                        <option value='Rejected'>Rejected</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        @*--------------------------*@
-
-                                                        <div class="row justify-content-end">
-                                                            <div class="col-sm-8">
-                                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="BtnSearchApproved_Rejected(event)" value="Search">Search</button>
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                    </div>
+                                        @*--------------------------*@
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Department</label>
+                                            <div class="col-sm-4 ">
+                                                <div class="position-relative">
+                                                    <select id='DdlDepartmentId' class="select2 form-select select2-hidden-accessible" onchange="DdlClassId_Calingfunction(this.id,'DdlClassId')" asp-items="@(new SelectList(""))">
+                                                        <option value=''>---------Select--------</option>
+                                                    </select>
                                                 </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    @*------------------searched Records---------------------------*@
-                                    <div class="demo-inline-spacing">
-                                        <button class="btn rounded-pill btn-outline-info waves-effect" id="ApprovedLeaves_SearchRecordsPrintBTN" @*class="PrintBtnClass"*@ onclick="javascript:CallPrint('ApprovedLeaves_SearchRecords_Div_For_Print')">PRINT</button>
-                                    </div>
-                                    <div id="ApprovedLeaves_SearchRecords_Div_For_Print" style="display:none">
-
-                                        <div id="ApprovedLeaves_SearchRecords_Div" style="display:none">
-                                            <label class="form-label mt-auto">APPROVED LEAVES</label>
-                                            <div class="card mb-4">
-                                                <div class="card-header flex-column flex-md-row">
-                                                    <div class="head-label text-center">
-                                                        <h5 class="card-title mb-0">
-                                                            @*<span id="SpanApprovedLeavesNumRecords"> No Data Found.</span>*@
-                                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="SpanApprovedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="table-responsive text-nowrap">
-                                                    @*<table id="TblApprovedLeaves_SearchRecords" border="1" class="table  tableid" style="border-collapse:collapse">*@
-                                                    <table id="TblApprovedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                                        <thead class="table-dark">
-                                                            <tr>
-                                                                <th>Employee Name</th>
-                                                                <th>Department</th>
-                                                                <th>Reason</th>
-                                                                <th>Leave Type</th>
-                                                                <th>From Date</th>
-                                                                <th>To Date</th>
-                                                                <th>Total Days/Time</th>
-                                                                <th>Requested Date</th>
-                                                                <th>Approved / Forwarded Date</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-
-                                                    </table>
-
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Role</label>
+                                            <div class="col-sm-4 ">
+                                                <div class="position-relative">
+                                                    <select id='DdlRoles' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                        <option value=''>---------Select--------</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
 
+                                        @*--------------------------*@
 
-
-
-
-                                        @*-======================-----Rejected Leaves----==============================*@
-
-                                        <div id="RejectedLeaves_SearchRecords_Div" style="display:none">
-                                            <label class="form-label mt-auto">REJECTED LEAVES</label>
-                                            <div class="card">
-
-                                                <div class="card-header flex-column flex-md-row">
-                                                    <div class="head-label text-center">
-                                                        <h5 class="card-title mb-0">
-                                                            @*<span id="SpanRejectedLeavesNumRecords"> No Data Found.</span>*@
-                                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="SpanRejectedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="table-responsive text-nowrap">
-                                                    @*<table id="TblRejectedLeaves_SearchRecords" class="table table-responsive tableid" border="1" style="border-collapse:collapse">*@
-                                                    <table id="TblRejectedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                                        <thead class="table-dark">
-                                                            <tr>
-                                                                <th>Employee Name</th>
-                                                                <th>Department</th>
-                                                                <th>Reason</th>
-                                                                <th>Leave Type</th>
-                                                                <th>From Date</th>
-                                                                <th>To Date</th>
-                                                                <th>Total Days/Time</th>
-                                                                <th>Requested Date</th>
-                                                                <th>Rejected Date</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-
-                                                    </table>
-
-                                                </div>
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">First Name</label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtfirstname" placeholder="First Name" />
+                                            </div>
+                                            <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">Last Name</label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtlastname" placeholder="Last Name" />
                                             </div>
                                         </div>
 
+                                        @*--------------------------*@
+
+                                        <div class="row mb-2">
+                                            <label class="col-sm-2 col-form-label  text-end " for="basic-default-name">User Name</label>
+                                            <div class="col-sm-4 ">
+                                                <input type="text" class="form-control" id="ctl00_ContentPlaceHolder1_txtUserName" placeholder="User Name" />
+                                            </div>
+                                        </div>
+                                        @*--------------------------*@
+                                        <div class="text-center">
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnClearSerach" onclick="FN_ClearValues('ok','ApproveReject_Form')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblAppliedStaffLeaves_SearchRecords_Calingfunction(event,'1','TblAppliedStaffLeaves_SearchRecords','Counts','ExportExcelLink_ApproveReject','ctl00_ContentPlaceHolder1_txtSearchFromDate','ctl00_ContentPlaceHolder1_txtSearchToDate','FmAppliedStaffLeaves_SearchRecords_Div')" value="Search">Search</button>
+                                        </div>
+                                        @*--------------------------*@
 
 
-                                    </div>
+                                    </form>
                                 </div>
 
+                            </div>
 
+                            @*searched result table*@
+                            @*<a id="ExportExcelLink_ApproveReject" style="font-weight: bold; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>*@
 
-                                @*---------------------tab 2---------div code end----*@
+                            <div class="card" id="FmAppliedStaffLeaves_SearchRecords_Div" style="display:none">
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                                    @*<span id="Counts">No Records</span> *@
+                                </div>
+                                <div class="table-responsive text-nowrap">
+                                    <table id="TblAppliedStaffLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                        @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
+                                        <thead class="table-dark">
+                                            <tr>
+                                                @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
+                                                <th>Employee Name</th>
+                                                <th>Department</th>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Type</th>
+                                                <th>Reason</th>
+                                                <th>No. of Days/Total Time</th>
+                                                <th>Requested Date</th>
+                                                <th>Delegation Record</th>
+                                                <th>Approve/Reject</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
 
-
-
-                                @*---------------------tab 3---------div code start----*@
-                                <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-                                    <div class="card mb-4">
-                                        <div class="card-header d-flex align-items-center justify-content-between">
-                                            <h5 class="mb-0">
-                                                <span>
-                                                    LEAVE REQUESTED
-                                                </span>
-                                            </h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <form id="LeaveRequested_Form">
-                                                <div class="row">
-                                                    <div class="col">
-
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">From Date</label>
-                                                            <div class="col-sm-4 ">
-                                                                <input type="date" class="form-control" id="LeaveRequested_txtSearchFromDate" />
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">To Date</label>
-                                                            <div class="col-sm-4 ">
-                                                                <input type="date" class="form-control" id="LeaveRequested_txtSearchToDate" />
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                        <div class="row mb-3 ">
-                                                            <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Status</label>
-                                                            <div class="col-sm-4 ">
-                                                                <div class="col mt-2">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input check" id="LeaveStatus_All" type="radio" name="LeaveStatus" value="1" required />
-                                                                        <label class="form-check-label" for="LeaveStatus_All">All</label>
-                                                                    </div>
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input check" id="LeaveStatus_Approved" type="radio" name="LeaveStatus" value="2" required />
-                                                                        <label class="form-check-label" for="LeaveStatus_Approved"> Approved</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-                                                        <div class="row justify-content-end">
-                                                            <div class="col-sm-8">
-                                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="FN_ClearValues(event,'LeaveRequested_Form')" value="Clear">Clear</button>
-                                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblLeaveRequested_SearchRecords_Calingfunction(event,'1','TblLeaveRequested_SearchRecords','LeaveRequested_lblNumRecords','ExportExcelLink_LeaveRequested','LeaveRequested_txtSearchFromDate','LeaveRequested_txtSearchToDate','LeaveRequested_SearchRecords_Div')" value="Search">Search</button>
-                                                            </div>
-                                                        </div>
-                                                        @*--------------------------*@
-
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    @*Searched Records*@
-
-                                    @*<a id="ExportExcelLink_LeaveRequested" class="ExportExcelLink" onclick="ExportExcelLink('TblLeaveRequested_SearchRecords','LeavesRequested')" style="font-weight: bold; color: blue;text-decoration:underline; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>
-                <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
-
-                                    <div class="card" id="LeaveRequested_SearchRecords_Div">
-                                        <div class="card-header flex-column flex-md-row">
-                                            <div class="head-label text-center">
-                                                <h5 class="card-title mb-0">
-                                                    <span>YOUR SEARCH RESULTED &nbsp;<span id="LeaveRequestedCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="table-responsive text-nowrap">
-                                            <table id="TblLeaveRequested_SearchRecords" class="table table-hover table-bordered no-footer dataTable" @*border="1" style="border-collapse:collapse"*@>
-                                                <thead class="table-dark">
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Department</th>
-                                                        <th>Class</th>
-                                                        <th>Leave Type</th>
-                                                        <th>Reason</th>
-                                                        <th>From Date</th>
-                                                        <th>To date</th>
-                                                        <th>No. of Days</th>
-                                                        <th>Requested Date</th>
-                                                        <th style=" width: 20%;">Approved / Forwarded / Rejected Date</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                                @*<tfoot>
-                                <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
-
-                            </tfoot>*@
-                                            </table>
-
-                                        </div>
-                                    </div>
+                                    </table>
 
                                 </div>
-                                @*----------------------tab 3--------div code end----*@
+                            </div>
 
-                                @*----------------------------Tab code start-----*@
+
+
+                        </div>
+
+                        @*====================================this hiding page for Approve Leave==================*@
+                        <div class="card" id="ApproveReject_Submitbuttonpage_Div" style="display:none">
+
+                            <label class="form-label mx-auto">Staff Name: &nbsp;<span id="StaffUserName"></span></label>
+                            <div class="card-header bg-danger text-white">
+                                @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
+                                <span class="text-header">LEAVE COMMENTS</span>
+                            </div>
+
+                            <div class="table-responsive text-nowrap mb-2">
+                                <table id="TblAppliedLeavesHistory_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
+                                            <th>Leave Type</th>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Reason</th>
+                                            <th>No. of Days</th>
+                                            <th>DaySession</th>
+                                            <th>Medical Certificate</th>
+                                            <th>Requested Date</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+
+                            @*--------Form-----list box*@
+                            <div class="card-body">
+                                <form id="Fm_ApproveandReject_PopUp">
+                                    <div class="row">
+                                        <div class="col">
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Comments</label>
+                                                <div class="col-sm-4 ">
+                                                    <textarea class="form-control" id="TXTareaRemarks_Popup" name="Comments" maxlength="500" rows="3"></textarea>
+                                                    <label class="form-label"> <span id="TextareacountSPAN">500</span> Character(s) remaining.</label>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <input type="hidden" name="BatchId" id="BatchId_Popup" />
+                                            <input type="hidden" name="Userid" id="StaffId_Popup" />
+                                            <input type="hidden" name="InstanceClassificationId" id="InstanceClassificationId_Popup" />
+                                            <input type="hidden" name="InstanceId" id="InstanceId_Popup" />
+                                            <input type="hidden" name="LeaveTypeId" id="LeaveTypeId_Popup" />
+
+
+                                            @*--------------------------*@
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm" onclick="BackTOSearhLevels(event)" value="Back">Back</button>
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="FN_ClearValues('ok','Fm_ApproveandReject_PopUp')" value="Clear">Clear</button>
+                                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="BtnApprove" onclick="LeaveApproval_Save(event, this.value)" value="Approve">Approve</button>
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnReject" onclick="LeaveApproval_Save(event, this.value)" value="Reject">Reject</button>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    @*-------------tab 1-----------------div code end----*@
+
+
+
+                    @*-------------------tab 2-----------div code start----*@
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                        <div class="card mb-4">
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">
+                                    SEARCH FOR APPROVED & REJECTED LEAVES
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <form id="ApproveRejectCompleted_Form">
+                                    <div class="row">
+                                        <div class="col">
+
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> From Date</label>
+                                                <div class="col-sm-4 ">
+                                                    <input id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" class="form-control" />
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> To Date</label>
+                                                <div class="col-sm-4 ">
+                                                    <input id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" class="form-control" />
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Approved/Rejected </label>
+                                                <div class="col-sm-4 ">
+                                                    <div class="position-relative">
+                                                        <select id='DdlApproved_Rejected' class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
+                                                            <option value='All'>All</option>
+                                                            <option value='Approved'>Approved</option>
+                                                            <option value='Rejected'>Rejected</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*--------------------------*@
+
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="BtnSearchApproved_Rejected(event)" value="Search">Search</button>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        @*------------------searched Records---------------------------*@
+                        <div class="demo-inline-spacing">
+                            <button class="btn rounded-pill btn-outline-info waves-effect" id="ApprovedLeaves_SearchRecordsPrintBTN" @*class="PrintBtnClass"*@ onclick="javascript:CallPrint('ApprovedLeaves_SearchRecords_Div_For_Print')">PRINT</button>
+                        </div>
+                        <div id="ApprovedLeaves_SearchRecords_Div_For_Print" style="display:none">
+
+                            <div id="ApprovedLeaves_SearchRecords_Div" style="display:none">
+                                <label class="form-label mt-auto col-form-label">APPROVED LEAVES</label>
+                                <div class="card mb-4">
+                                    <div class="card-header bg-danger text-white">
+                                        @*<span id="SpanApprovedLeavesNumRecords"> No Data Found.</span>*@
+                                        <span class="text-header">
+                                            YOUR SEARCH RESULTED
+                                            <span id="SpanApprovedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>
+                                            RECORD(S).
+                                        </span>
+                                    </div>
+                                    <div class="table-responsive text-nowrap">
+                                        @*<table id="TblApprovedLeaves_SearchRecords" border="1" class="table  tableid" style="border-collapse:collapse">*@
+                                        <table id="TblApprovedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Department</th>
+                                                    <th>Reason</th>
+                                                    <th>Leave Type</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days/Time</th>
+                                                    <th>Requested Date</th>
+                                                    <th>Approved / Forwarded Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            @*-======================-----Rejected Leaves----==============================*@
+
+                            <div id="RejectedLeaves_SearchRecords_Div" style="display:none">
+                                <label class="form-label mt-auto">REJECTED LEAVES</label>
+                                <div class="card">
+
+                                    <div class="card-header bg-danger text-white">
+                                        <div class="head-label text-center">
+                                            <h5 class="card-title mb-0">
+                                                @*<span id="SpanRejectedLeavesNumRecords"> No Data Found.</span>*@
+                                                <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="SpanRejectedLeavesNumRecords" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive text-nowrap">
+                                        @*<table id="TblRejectedLeaves_SearchRecords" class="table table-responsive tableid" border="1" style="border-collapse:collapse">*@
+                                        <table id="TblRejectedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Department</th>
+                                                    <th>Reason</th>
+                                                    <th>Leave Type</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days/Time</th>
+                                                    <th>Requested Date</th>
+                                                    <th>Rejected Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    @*---------------------tab 2---------div code end----*@
+
+
+
+                    @*---------------------tab 3---------div code start----*@
+                    <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                        <div class="card mb-4">
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">
+                                    LEAVE REQUESTED
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <form id="LeaveRequested_Form">
+                                    <div class="row">
+                                        <div class="col">
+
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">From Date</label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="date" class="form-control" id="LeaveRequested_txtSearchFromDate" />
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">To Date</label>
+                                                <div class="col-sm-4 ">
+                                                    <input type="date" class="form-control" id="LeaveRequested_txtSearchToDate" />
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <div class="row mb-2">
+                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Leave Status</label>
+                                                <div class="col-sm-4 ">
+                                                    <div class="col mt-2">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input check" id="LeaveStatus_All" type="radio" name="LeaveStatus" value="1" required />
+                                                            <label class="form-check-label" for="LeaveStatus_All">All</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input check" id="LeaveStatus_Approved" type="radio" name="LeaveStatus" value="2" required />
+                                                            <label class="form-check-label" for="LeaveStatus_Approved"> Approved</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-8">
+                                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="FN_ClearValues(event,'LeaveRequested_Form')" value="Clear">Clear</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="ctl00_ContentPlaceHolder1_btnSearchDetails" onclick="TblLeaveRequested_SearchRecords_Calingfunction(event,'1','TblLeaveRequested_SearchRecords','LeaveRequested_lblNumRecords','ExportExcelLink_LeaveRequested','LeaveRequested_txtSearchFromDate','LeaveRequested_txtSearchToDate','LeaveRequested_SearchRecords_Div')" value="Search">Search</button>
+                                                </div>
+                                            </div>
+                                            @*--------------------------*@
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        @*Searched Records*@
+
+                        @*<a id="ExportExcelLink_LeaveRequested" class="ExportExcelLink" onclick="ExportExcelLink('TblLeaveRequested_SearchRecords','LeavesRequested')" style="font-weight: bold; color: blue;text-decoration:underline; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>
+                            <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
+
+                        <div class="card" id="LeaveRequested_SearchRecords_Div">
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">
+                                    YOUR SEARCH RESULTED
+                                    <span id="LeaveRequestedCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
+                                    RECORD(S).
+                                </span>
+                            </div>
+
+                            <div class="table-responsive text-nowrap">
+                                <table id="TblLeaveRequested_SearchRecords" class="table table-hover table-bordered no-footer dataTable" @*border="1" style="border-collapse:collapse"*@>
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Class</th>
+                                            <th>Leave Type</th>
+                                            <th>Reason</th>
+                                            <th>From Date</th>
+                                            <th>To date</th>
+                                            <th>No. of Days</th>
+                                            <th>Requested Date</th>
+                                            <th style=" width: 20%;">Approved / Forwarded / Rejected Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    @*<tfoot>
+                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
+
+                                        </tfoot>*@
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    @*----------------------tab 3--------div code end----*@
+
+                    @*----------------------------Tab code start-----*@
                 </div>
-
-
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -554,59 +531,59 @@
 
 @*this for export to excel*@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-<script>
-    //function ExportExcelLink(LeaveLevels_SearchRecords_Table, ExelsheetName) {
-    //    var sheet = XLSX.utils.table_to_sheet(document.getElementById(LeaveLevels_SearchRecords_Table));
-    //    debugger;
-    //    var wb = XLSX.utils.book_new();
-    //    XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
-    //    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-    //    function s2ab(s) {
-    //        debugger;
-    //        var buf = new ArrayBuffer(s.length);
-    //        var view = new Uint8Array(buf);
-    //        debugger;
-    //        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-    //        return buf;
-    //    }
-    //    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xls');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script>
+        //function ExportExcelLink(LeaveLevels_SearchRecords_Table, ExelsheetName) {
+        //    var sheet = XLSX.utils.table_to_sheet(document.getElementById(LeaveLevels_SearchRecords_Table));
+        //    debugger;
+        //    var wb = XLSX.utils.book_new();
+        //    XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
+        //    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+        //    function s2ab(s) {
+        //        debugger;
+        //        var buf = new ArrayBuffer(s.length);
+        //        var view = new Uint8Array(buf);
+        //        debugger;
+        //        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        //        return buf;
+        //    }
+        //    saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xls');
 
-    //}
+        //}
 
 
-    function ExportExcelLink(exportTable, ExelsheetName) {
-        debugger;
-        var sheet = XLSX.utils.table_to_sheet(document.getElementById(exportTable));
+        function ExportExcelLink(exportTable, ExelsheetName) {
+            debugger;
+            var sheet = XLSX.utils.table_to_sheet(document.getElementById(exportTable));
 
-        // Calculate column widths based on content width
-        var range = XLSX.utils.decode_range(sheet['!ref']);
-        var colWidths = [];
-        for (var C = range.s.c; C <= range.e.c; ++C) {
-            var maxColWidth = 0;
-            for (var R = range.s.r; R <= range.e.r; ++R) {
-                var cellAddress = { r: R, c: C };
-                var cell = sheet[XLSX.utils.encode_cell(cellAddress)];
-                var cellValue = cell ? cell.v : '';
-                var cellWidth = (cellValue.toString().length + 2) * 1; // Adjust as needed
-                if (cellWidth > maxColWidth) {
-                    maxColWidth = cellWidth;
+            // Calculate column widths based on content width
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            var colWidths = [];
+            for (var C = range.s.c; C <= range.e.c; ++C) {
+                var maxColWidth = 0;
+                for (var R = range.s.r; R <= range.e.r; ++R) {
+                    var cellAddress = { r: R, c: C };
+                    var cell = sheet[XLSX.utils.encode_cell(cellAddress)];
+                    var cellValue = cell ? cell.v : '';
+                    var cellWidth = (cellValue.toString().length + 2) * 1; // Adjust as needed
+                    if (cellWidth > maxColWidth) {
+                        maxColWidth = cellWidth;
+                    }
                 }
+                colWidths.push({ wch: maxColWidth });
             }
-            colWidths.push({ wch: maxColWidth });
+            // Customize column widths
+            sheet['!cols'] = colWidths;
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
+            var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+            saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xlsx');
         }
-        // Customize column widths
-        sheet['!cols'] = colWidths;
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, sheet, 'Sheet JS');
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
-        }
-        saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), ExelsheetName + '.xlsx');
-    }
-</script>*@
+    </script>*@

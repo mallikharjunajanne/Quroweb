@@ -8,24 +8,23 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <span id="Errormessages" class="text-danger"></span>
     <div class="card mb-4">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
                 SAVE BEST PERFORMER
-            </h5><small>* INDICATES MANDATORY FIELDS.</small>
+            <small>* INDICATES MANDATORY FIELDS.</small>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col">
                     <form id="Insertbestperoformer" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <label class="control-label col-sm-4 col-form-label required text-end space">Title</label>
                             <div class="col-sm-4">
                                 <input type="text" asp-for="Title" id="Title " class="form-control" />
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <label class="control-label col-sm-4 col-form-label  text-end "></label>
                             <div class="col-sm-6">
                                 <input id="Addeventanduserphoto" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="Addeventanduserphoto" value="0" />
@@ -33,14 +32,14 @@
                             </div>
                         </div>
                         <div id="Addeventanduserphoto_Checkboxrelatedmain" style="display: contents;">
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-4 col-form-label required text-end space">Description</label>
                                 <div class="col-sm-4">
                                     <textarea class="form-control" asp-for="Description"></textarea>
                                     <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-4 col-form-label required text-end space">Image</label>
                                 <div class="col-sm-4">
                                     <input type="file" class="form-control" asp-for="EventPhoto" />
@@ -49,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <label class="control-label col-sm-4 col-form-label required text-end space">Display Until</label>
                             <div class="col-sm-4">
                                 <input type="date" asp-for="DisplayUntill" id="DisplayUntill_txtid" class="form-control" />
@@ -58,7 +57,7 @@
                             </div>
                         </div>
                         <div style="display:contents" id="Addeventanduserphoto_Checkboxrelated1">
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <input type="hidden" id="SelectedBestperformerusername_txtid" asp-for="UserId" />
                                 <label class="control-label col-sm-4 col-form-label required text-end space">User</label>
                                 <div class="col-sm-4">
@@ -70,9 +69,9 @@
                         </div>
                         <div class="row justify-content text-center">
                             <div class="col-sm-12">
-                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="Insert_Clearbtn">Clear</button>
-                                <button type="button" class="btn btn-dark waves-effect waves-light" id="Insert_BackToSearchbtn">BackToSearch</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light" id="Insert_Savebtn">save</button>
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="Insert_Clearbtn">Clear</button>
+                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Insert_BackToSearchbtn">BackToSearch</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Insert_Savebtn">save</button>
                             </div>
                         </div>
                     </form>
@@ -85,16 +84,14 @@
 
     <div id="Addbestperformerdataaddingaccordionoc2">
         <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
                     SEARCH USERS TO ADD AS BEST PERFORMER
-                </h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
                         <form id="SearchUserform_id" enctype="multipart/form-data">
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-2 col-form-label  text-end space">User Name</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" asp-for="UserName" />
@@ -103,12 +100,11 @@
                                 <label class="control-label col-sm-2 col-form-label  text-end space">Role</label>
                                 <div class="col-sm-4">
                                     <select class="form-select select2 form-select select2-hidden-accessible" id="roleDropdown" asp-for="RoleID">
-                                       
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-2 col-form-label  text-end space">Reg. No.</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" asp-for="InstanceUserCode" />
@@ -121,7 +117,7 @@
 
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-2 col-form-label  text-end space">First Name</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" asp-for="FirstName" />
@@ -132,7 +128,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-2">
                                 <label class="control-label col-sm-2 col-form-label  text-end space">Department</label>
                                 <div class="col-sm-4">
                                     <select class="form-select select2 form-select select2-hidden-accessible" id="classificationDropdown" asp-for="InstanceClassificationId">
@@ -147,15 +143,10 @@
                                     </select>
                                 </div>
                             </div>
-
-
-
-                            <div class="row justify-content text-center">
-                                <div class="col-sm-12">
-                                    <button type="button" class="btn btn-warning waves-effect waves-light" id="Addingusers_Clearbtn">Clear</button>
-                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="Insert_Savebtn">Search</button>
-                                </div>
-                            </div>                          
+                            <div class="col-sm-12 text-center">
+                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="Addingusers_Clearbtn">Clear</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Insert_Savebtn">Search</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -165,12 +156,10 @@
 
         <div class="col-md-12 col-lg-12 mb-3" id="Addbestperformerdataaddingtbl_accordionoc3">
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">
-                        YOUR SEARCH RESULTED <span id="bestperformertbl_Recordscount" class="text-dark"> </span>  RECORDS.
-                    </h5>
+                <div class="card-header bg-danger text-white">
+                    YOUR SEARCH RESULTED <span id="bestperformertbl_Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> 0 </span>  RECORDS.
                 </div>
-                <div class="card-body" id="#Addbestperformerdataaddingtbl_accordionoc3">
+                <div id="#Addbestperformerdataaddingtbl_accordionoc3">
                     <div class="table-responsive text-nowrap">
                         <table id="Bestperformertbl" class="table table-hover table-bordered no-footer">
                             <thead class="table-dark">

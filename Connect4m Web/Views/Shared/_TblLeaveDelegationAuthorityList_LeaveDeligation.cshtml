@@ -6,16 +6,12 @@
 @model List<LeaveDelegationModel>
 
 
-    <div class="card">
-        <div class="card-header flex-column flex-md-row">
-            <div class="head-label text-center">
-                <h5 class="card-title mb-0">
-                    <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
-                </h5>
-            </div>
-        </div>  <div class="table-responsive text-nowrap">
-    @if (Model.Count > 0)
-    {
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
+    </div>  <div class="table-responsive text-nowrap">
+        @if (Model.Count > 0)
+        {
             <table id="TblLeaveDeligationAuthorityList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
                 <thead class="table-dark">
                     <tr>
@@ -39,17 +35,17 @@
                     }
                 </tbody>
             </table>
-      
-    }
-    else
-    {
-        <div class="card-body">
-            <p style="text-align:center">No records found</p>
-        </div>
-        <br />
-    }
-</div>
+
+        }
+        else
+        {
+            <div class="card-body">
+                <p style="text-align:center">No records found</p>
+            </div>
+            <br />
+        }
     </div>
+</div>
         
 
 
