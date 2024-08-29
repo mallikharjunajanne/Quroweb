@@ -50,12 +50,12 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
 }
 
 $(document).ready(function () {
-    debugger;
+    //debugger;
     Pageload();
 });
 
 function Pageload() {
-    debugger;
+    //debugger;
 
     var formdata=$('#Searchbankaccountsform').serialize();
 
@@ -79,8 +79,7 @@ function Pageload() {
 }
 
 function Bindtable(response) {
-    debugger;
-    
+    //debugger;    
     $("#Recordscount").text(response.length);
     var table = $('#Bankaccountstbl').DataTable();
     table.destroy();
@@ -138,22 +137,22 @@ function Bindtable(response) {
     });
     table.on('draw', function () {
         $('#Bankaccountstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'blue',
-            'text-decoration': 'underline',
-            cursor: 'pointer',
-            fontWeight: 'bold'
+            color: '#2C2C2C',
+            'font-size': '14px',
+            'font-weight': 'bold',
+            'cursor': 'pointer'
         });
     });
     $('#Bankaccountstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'blue',
-        'text-decoration': 'underline',
-        cursor: 'pointer',
-        fontWeight: 'bold'
+        color: '#2C2C2C',
+        'font-size': '14px',
+        'font-weight': 'bold',
+        'cursor': 'pointer'
     });
 }
 
 $('#btnsearch').click(function () {
-    debugger;
+    //debugger;
     var Banknametxt = $('#Banknametxt').val();
     var Accountnumbertxt = $('#Accountnumbertxt').val();
     var formdata = {
@@ -191,7 +190,7 @@ function lnkAddNew() {
 $(document).on('click', '#Bankaccountstbl td:nth-child(2)', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();
 
         var parent = $(event.target).closest('tr');
@@ -207,7 +206,7 @@ $(document).on('click', '#Bankaccountstbl td:nth-child(2)', function (event) {
 
         CallToAjax('GET', "/FeeSection/Edit_Bankaccounts?BankAccountId=" + BankAccountId, null,
             function (resp) {
-                debugger;                
+                //debugger;                
                 $('#Mainsearchdiv').hide();
                 $('#Addnew_div1').append(resp);
                 loaddingimg.css('display', 'none');
@@ -226,7 +225,7 @@ $(document).on('click', '#Bankaccountstbl td:nth-child(2)', function (event) {
 $(document).on('click', '#Bankaccountstbl td:nth-child(5) .fa-trash-o', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();
 
         var parent = $(event.target).closest('tr');
@@ -249,7 +248,7 @@ $(document).on('click', '#Bankaccountstbl td:nth-child(5) .fa-trash-o', function
 
 //===>>> CLEAR FUNCTION
 function clearForm(formId) {
-    debugger;
+    //debugger;
     var form = document.getElementById(formId);
     if (form) {
         form.reset(); // Reset the form elements
@@ -266,14 +265,14 @@ function clearForm(formId) {
 //===>>> DELETE FUNCTION
 function DeleteFeeTypes(BankAccountId, Bankname) {//Feetypeid, FeetypeName, selectedIds, selectedTexts
     if (confirm("Are you sure you want to delete this Bankname?\nClick OK to delete or Cancel to stop deleting.")) {
-        debugger;
+        //debugger;
         //var formdata = {
         //    Feetypeid: Feetypeid,
         //    Concedingtypeid: concedingtypeIds
         //}
         CallToAjax('GET', "/FeeSection/Delete_Bankaccounts?BankAccountId=" + BankAccountId, null,
             function (resp) {
-                debugger;
+                //debugger;
                 loaddingimg.css('display', 'none');
                 const errorMessages = {
                     "1": 'Some fee installments are already associated with this Bank Account. So you cannot delete this account.',
@@ -297,7 +296,7 @@ function DeleteFeeTypes(BankAccountId, Bankname) {//Feetypeid, FeetypeName, sele
 
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-        /*debugger;*/
+        //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -313,7 +312,7 @@ function nextpages(url, data) {
 
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
-        /* debugger;*/
+         //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {

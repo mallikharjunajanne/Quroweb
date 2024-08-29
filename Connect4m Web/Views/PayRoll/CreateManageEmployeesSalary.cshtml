@@ -6,12 +6,9 @@
 
 
 <div class="card">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <h6 class="mb-0">
-            <span id="updatesalaryattribute">
-                EMPLOYEE SALARY DETAILS
-            </span>
-        </h6>
+    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+        @*<span id="updatesalaryattribute">EMPLOYEE SALARY DETAILS</span>*@
+        <span id="updatesalaryattribute">EMPLOYEE SALARY ATTRIBUTE DETAILS</span>
     </div>
 
     <div class="table-responsive text-nowrap">
@@ -51,194 +48,201 @@
             </thead>
         </table>
     </div>
-</div>
-@*=============================  TABLE END ================================*@
 
-<div class="card-body mb-2">
+    @*=============================  TABLE END ================================*@
 
-    @*=====================        TEXT BOX                 =================*@
-    <div class="row mb-3">
-        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Emp.No</label>
-        <label class="col-sm-4 col-form-label " for="basic-default-name" id="Emp_NO">@ViewBag.AdmissionNumber</label>
+    <div class="card-body mb-2">
 
-        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Name</label>
-        <label class="col-sm-4 col-form-label" for="basic-default-name" id="Name_Me">@ViewBag.FirstName</label>
+        @*=====================        TEXT BOX                 =================*@
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Emp.No</label>
+            <label class="col-sm-4 col-form-label " for="basic-default-name" id="Emp_NO">@ViewBag.AdmissionNumber</label>
 
-    </div>
-
-
-
-    @*=============================  Form Start ================================*@
-    <form id="Insert_MES" class="needs-validation was-validated" novalidate>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="text" asp-for="SalaryAttributeId" name="SalaryAttributeId" hidden style="display:none" readonly />
-
-        <div>
-            <div class="row">
-                <div class="col">
-                    @*=====================        Drop Down                =================*@
-
-                    <div class="row mb-3">
-
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSalaryAttributeId"></label>
-                        <div class="col-sm-4">
-                            <div class="position-relative" id="Drop_Format_SEM_3">
-
-                                @Html.DropDownListFor(
-                           x => x.InstanceSalaryAttributeId,
-                            new SelectList(ViewBag.InstanceSalaryAttributeId, "Value", "Text"),
-                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_SalaryAttributeId_ME_salary", @style = "color:black;", @required = "required" })
-                                <span asp-validation-for="InstanceSalaryAttributeId" class="text-danger"></span>
-
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Gross Salary</label>
-                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" id="Gross_salary">@ViewBag.GrossSalary</label>
-
-                    </div>
-
-                    @*=====================        Drop Down                =================*@
-
-                    <div class="row mb-3">
-
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="StartDate"></label>
-                        <div class="col-sm-4">
-                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                <input asp-for="StartDate" class="form-control" id="StartDateME" required />
-                                @if (Model?.DISPLAYICON_STARTDATE == "1")
-                                {
-                                    <div>
-                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'StartDate','SalaryAttributes');" />
-
-                                    </div>
-                                }
-                                <span asp-validation-for="StartDate" class="text-danger"></span>
-                                <span class="compare"></span>
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndDate"></label>
-                        <div class="col-sm-4">
-                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                <input asp-for="EndDate" class="form-control" id="EndDateME" required />
-                                @if (Model?.DISPLAYICON_ENDDATE == "1")
-                                {
-                                    <div>
-                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'EndDate','SalaryAttributes');" />
-
-                                    </div>
-                                }
-                                <span asp-validation-for="EndDate " class="text-danger"></span>
-                                <span class="compare"></span>
-                            </div>
-                        </div>
-                    </div>
-                    @*=====================        Drop Down                =================*@
-
-                    <div class="row mb-3">
-
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Is Salary Percentage</label>
-                        <div class="form-check form-check-primary col-sm-2">
-                            <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="P">
-                            <label class="form-check-label">
-                                Percentage
-                            </label>
-                        </div>
-                        <div class="form-check form-check-primary col-sm-2">
-                            <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="A">
-                            <label class="form-check-label">
-                                Amount
-                            </label>
-                            @if (Model?.DISPLAYICON_ISSALARYPERCENTAGE == "1")
-                            {
-                                <div>
-                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsSalaryPercentage','SalaryAttributes');" />
-
-                                </div>
-                            }
-                            <span asp-validation-for="IsSalaryPercentage" class="text-danger"></span>
-                        </div>
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IsActive"></label>
-                        <div class="col-sm-4">
-
-                            <input type="checkbox" asp-for="IsActive" class="form-check-input" />
-                            @if (Model?.DISPLAYICON_ISACTIVE == "1")
-                            {
-                                <div>
-                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsActive','SalaryAttributes');" />
-
-                                </div>
-                            }
-
-                        </div>
-
-                    </div>
-                    @*=====================        Drop Down                =================*@
-                    <div class="row mb-3">
-
-                        <div id="percenatgedisplay" style="display: contents">
-
-
-                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Percentage"></label>
-                            <div class="col-sm-4" id="percentagevalidations">
-
-                                <input asp-for="Percentage" class="form-control" id="percentage_ME" disabled="@(Model?.Percentage != 0 ? null : "disabled")" onkeypress="return(AllowFloat(event))" min="0" max="100" />
-
-                                @if (Model?.DISPLAYICON_PERCENTAGE == "1")
-                                {
-                                    <div>
-                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'Percentage','SalaryAttributes');" />
-
-                                    </div>
-                                }
-                                <span asp-validation-for="Percentage" class="text-danger"></span>
-                                <span class="compare"></span>
-
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Salary"></label>
-                        <div class="col-sm-4" id="salaryvalidations">
-
-                            <input asp-for="Salary" class="form-control" id="Salary_Me" disabled="@(Model?.Salary != 0 ? null : "disabled")" onkeypress="return(AllowFloat(event))" />
-
-                            @if (Model?.DISPLAYICON_AMOUNT == "1")
-                            {
-                                <div>
-                                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsActive','SalaryAttributes');" />
-
-                                </div>
-
-                            }
-                            <span asp-validation-for="Salary" class="text-danger"></span>
-
-                        </div>
-                    </div>
-                    @*=====================         BUTTONS                =================*@
-
-                    <div class="row justify-content">
-                        <div class="col-sm-3">
-                        </div>
-
-                        <div class="col-sm-9">
-                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_MC" onclick="nextpage('SearchManageSubCatogory',null)">Previous Page</button>
-
-                            <button type="button" class="btn btn-dark waves-effect waves-light" id="backtosearch_MESalaryattributes">Back To Search</button>
-                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" id="Save_MEsalary">Save</button>
-
-                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_MC" onclick="nextpage('SearchEmployeeAttendence',null)">Next Page</button>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Name</label>
+            <label class="col-sm-4 col-form-label" for="basic-default-name" id="Name_Me">@ViewBag.FirstName</label>
 
         </div>
-    </form>
-
-    @*=============================  Form End ================================*@
 
 
+
+        @*=============================  Form Start ================================*@
+        <form id="Insert_MES" class="needs-validation was-validated" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" asp-for="SalaryAttributeId" name="SalaryAttributeId" hidden style="display:none" readonly />
+
+            <div>
+                <div class="row">
+                    <div class="col">
+                        @*=====================        Drop Down                =================*@
+
+                        <div class="row mb-3">
+
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSalaryAttributeId"></label>
+                            <div class="col-sm-4">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                    @Html.DropDownListFor(
+                               x => x.InstanceSalaryAttributeId,
+                                new SelectList(ViewBag.InstanceSalaryAttributeId, "Value", "Text"),
+                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_SalaryAttributeId_ME_salary", @style = "color:black;", @required = "required" })
+                                    <span asp-validation-for="InstanceSalaryAttributeId" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Gross Salary</label>
+                            <label class="col-sm-4 col-form-label text-end" for="basic-default-name" id="Gross_salary">@ViewBag.GrossSalary</label>
+
+                        </div>
+
+                        @*=====================        Drop Down                =================*@
+
+                        <div class="row mb-3">
+
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="StartDate"></label>
+                            <div class="col-sm-4">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+                                    <input asp-for="StartDate" class="form-control" id="StartDateME" required />
+                                    @if (Model?.DISPLAYICON_STARTDATE == "1")
+                                    {
+                                        <div>
+                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'StartDate','SalaryAttributes');" />
+
+                                        </div>
+                                    }
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                    <span class="compare"></span>
+                                </div>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="EndDate"></label>
+                            <div class="col-sm-4">
+                                <div class="position-relative" id="Drop_Format_SEM_3">
+                                    <input asp-for="EndDate" class="form-control" id="EndDateME" required />
+                                    @if (Model?.DISPLAYICON_ENDDATE == "1")
+                                    {
+                                        <div>
+                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'EndDate','SalaryAttributes');" />
+
+                                        </div>
+                                    }
+                                    <span asp-validation-for="EndDate " class="text-danger"></span>
+                                    <span class="compare"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*=====================        Drop Down                =================*@
+
+                        <div class="row mb-3">
+
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Is Salary Percentage</label>
+                            <div class="form-check form-check-primary col-sm-2">
+                                <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="P">
+                                <label class="form-check-label">
+                                    Percentage
+                                </label>
+                            </div>
+                            <div class="form-check form-check-primary col-sm-2">
+                                <input asp-for="IsSalaryPercentage" type="radio" name="IsSalaryPercentage" value="A">
+                                <label class="form-check-label">
+                                    Amount
+                                </label>
+                                @if (Model?.DISPLAYICON_ISSALARYPERCENTAGE == "1")
+                                {
+                                    <div>
+                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsSalaryPercentage','SalaryAttributes');" />
+
+                                    </div>
+                                }
+                                <span asp-validation-for="IsSalaryPercentage" class="text-danger"></span>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="IsActive"></label>
+                            <div class="col-sm-4">
+
+                                <input type="checkbox" asp-for="IsActive" class="form-check-input" />
+                                @if (Model?.DISPLAYICON_ISACTIVE == "1")
+                                {
+                                    <div>
+                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsActive','SalaryAttributes');" />
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                        @*=====================        Drop Down                =================*@
+                        <div class="row mb-3">
+
+                            <div id="percenatgedisplay" style="display: contents">
+
+
+                                <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Percentage"></label>
+                                <div class="col-sm-4" id="percentagevalidations">
+
+                                    <input asp-for="Percentage" class="form-control" id="percentage_ME" disabled="@(Model?.Percentage != 0 ? null : "disabled")" onkeypress="return(AllowFloat(event))" min="0" max="100" />
+
+                                    @if (Model?.DISPLAYICON_PERCENTAGE == "1")
+                                    {
+                                        <div>
+                                            <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'Percentage','SalaryAttributes');" />
+
+                                        </div>
+                                    }
+                                    <span asp-validation-for="Percentage" class="text-danger"></span>
+                                    <span class="compare"></span>
+
+                                </div>
+                            </div>
+                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Salary"></label>
+                            <div class="col-sm-4" id="salaryvalidations">
+
+                                <input asp-for="Salary" class="form-control" id="Salary_Me" disabled="@(Model?.Salary != 0 ? null : "disabled")" onkeypress="return(AllowFloat(event))" />
+
+                                @if (Model?.DISPLAYICON_AMOUNT == "1")
+                                {
+                                    <div>
+                                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" onclick="ShowUserChangeActivityAmount(@ViewBag?.SalaryAttributeId,'IsActive','SalaryAttributes');" />
+
+                                    </div>
+
+                                }
+                                <span asp-validation-for="Salary" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        @*=====================         BUTTONS                =================*@
+
+                        <div class="row justify-content">
+                            <div class="col-sm-3">
+                            </div>
+
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_MC" onclick="nextpage('SearchManageSubCatogory',null)">
+                                Previous Page
+                                </button>
+
+                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="backtosearch_MESalaryattributes">
+                                Back To Search
+                                </button>
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform" onclick="Salaryattributeclearfun('Insert_MES')">
+                                Clear
+                                </button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Save_MEsalary">Save</button>
+
+                                <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="Nextpage_MC" onclick="nextpage('SearchEmployeeAttendence',null)">Next Page</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        @*=============================  Form End ================================*@
+
+
+    </div>
 </div>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 

@@ -44,11 +44,11 @@ $(document).ready(function () {
 });
 
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    debugger;
+    //debugger;
     CallToAjax('GET', url,
         function (response) {
 
-            debugger;
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -61,7 +61,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    debugger;
+    //debugger;
     dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -78,7 +78,7 @@ $('#Ddldepartment').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     //var SubClassificationId = $('#DdlSubClass').val();
    // var FilterTeachingSubjects = 0;
-    debugger;
+    //debugger;
     Departmentbysubclassdd(ClassificationId);
 });
 
@@ -88,7 +88,7 @@ function Departmentbysubclassdd(Departmentvalue) {
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#DdlSubClass';
             var dropdown = $(dropdownSelector);
             var valueField = 'value';
@@ -120,13 +120,13 @@ $('#DdlSubClass').change(function () {
 
 
 function Classwisestudentnames(Departmentvalue, SubClassificationId) {
-    debugger;
+    //debugger;
     $.ajax({
         url: '/Attendance/Classwisestudents?InstanceClassificationId=' + Departmentvalue + "&InstanceSubClassificationId=" + SubClassificationId,
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#Studentnamesddl';
             var dropdown = $(dropdownSelector);
             var valueField = 'value';
@@ -154,7 +154,7 @@ $('#Summerydetails').on('submit', function () {
     event.preventDefault();
     event.stopImmediatePropagation();
     setTimeout(function () {
-        debugger;
+        //debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 
@@ -170,13 +170,13 @@ $('#Summerydetails').on('submit', function () {
 
             handleAjax('GET', url, formData,
                 function (response) {
-                    debugger;
+                    //debugger;
                     $("#Attendance_Summary_Tbl").html(response);
                     loaddingimg.css('display', 'none');
 
                 },
                 function (status, error) {
-                    debugger;
+                    //debugger;
                     console.error("Error fetching data:", error);
                     loaddingimg.css('display', 'none');
                 },
@@ -186,7 +186,7 @@ $('#Summerydetails').on('submit', function () {
     }, 50);
 });
 
-function clearfun(formid) {
+function clearfun_(formid) {
     debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);

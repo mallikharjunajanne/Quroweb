@@ -922,7 +922,8 @@ function TblDataTableWithColumns_CallingFunction(event, val, Url, tablename, Tab
                             data: "Name",
                             className: "CenterAlign",
                             render: function (data, type, row, meta) {
-                                return '<a style="cursor: pointer;color: blue;text - decoration: underline;font - weight: 600;" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">'+row.name+' </a>';
+                                return '<a style="cursor: pointer;color: black;text-decoration: underline;font-weight: 600;font-size: 12px;" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">' + row.name + ' </a>';
+                                //return '<a style="cursor: pointer;color: blue;text - decoration: underline;font - weight: 600;" class="Undeline" id="UserName" onclick="EditValuesGettingFunction(this.text)">' + row.name + ' </a>';
                             
                             }
                         }

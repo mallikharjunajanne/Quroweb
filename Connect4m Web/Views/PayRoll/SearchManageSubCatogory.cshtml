@@ -14,25 +14,28 @@
 
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
-<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Manage Sub Category</h4>
+<h4 class="mb-3 text-center">@*<span class="text-muted fw-light"> Admin Module/</span>*@MANAGE SUB CATEGORY</h4>
 
 <div class="row mb-2">
     <div class="col-md-12 col-lg-12 mb-3">
+        <div id="appendsearchmanagesubcategory">
+            <div class="demo-inline-spacing text-end">
+                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light btn-sm" id="addnewmanagesubcategorybtn"> Create New Sub Category</button>
+            </div>
 
-        <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span id="AddNewText_Span_CreatePage">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    @*<h5 class="mb-0">*@
+                    <span id="AddNewText_Span_CreatePage" class="text-header">
                         MANAGE SUB CATEGORY
                     </span>
-                </h5>
-            </div>
-            <div class="demo-inline-spacing text-end">
-
-                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewmanagesubcategorybtn"> Create New Sub Category</button>
-            </div>
-            <div id="appendsearchmanagesubcategory">
-                <h5><label>SEARCH SUB CATEGORY</label></h5>
+                    @*</h5>*@
+                </div>
+                @*<div class="demo-inline-spacing text-end">
+                    <button type="button" class="btn rounded-pill btn-info waves-effect waves-light" id="addnewmanagesubcategorybtn"> Create New Sub Category</button>
+                </div>*@
+                @*<div id="appendsearchmanagesubcategory">*@
+                @*<h5><label>SEARCH SUB CATEGORY</label></h5>*@
 
                 <div class="card-body mb-2">
 
@@ -95,13 +98,13 @@
                                         </div>
 
                                         <div class="col-sm-8">
-                                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_MSC" onclick="nextpage('SearchManageCatogory',null)">Previous Page</button>
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_MSC" onclick="nextpage('SearchManageCatogory',null)">Previous Page</button>
 
 
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" id="sub_tblMSC">Search</button>
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblMSC">Search</button>
 
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_MC" onclick="nextpage('SearchManageEmployees',null)">Next Page</button>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="Nextpage_MC" onclick="nextpage('SearchManageEmployees',null)">Next Page</button>
 
                                         </div>
                                     </div>
@@ -114,51 +117,52 @@
 
                 </div>
                 @*=============================  TABLE START ================================*@
-
-                <div class="card">
-
-                    <h6 class="card-title mb-0">
-                        <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MSC" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-                    </h6>
-                    <div class="table-responsive text-nowrap">
-                        <table id="tblMSCsearchresults" class="link table table-hover table-bordered ">
-                            <thead class="table-dark">
-
-
-                                <tr>
-                                    <th>
-                                        S.No
-                                    </th>
-                                    <th>
-                                        S.No
-                                    </th>
-                                    <th>
-                                        Sub Category
-                                    </th>
-                                    <th>
-                                        Category
-                                    </th>
-                                    <th>
-                                        Description
-                                    </th>
-                                    <th>
-                                        Delete
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+            </div>
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    @*<h6 class="card-title mb-0">*@
+                    <span class="text-header">YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_MSC" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORD(S).</span>
+                    @*</h6>*@
                 </div>
-                @*=============================  TABLE END ================================*@
-            </div>
-            <div id="appendinsertmanagesubcategory">
+                <div class="table-responsive text-nowrap">
+                    <table id="tblMSCsearchresults" class="link table table-hover table-bordered ">
+                        <thead class="table-dark">
 
+
+                            <tr>
+                                <th>
+                                    S.No
+                                </th>
+                                <th>
+                                    S.No
+                                </th>
+                                <th>
+                                    Sub Category
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
+            @*=============================  TABLE END ================================*@
+        </div>
+
+        <div id="appendinsertmanagesubcategory">
 
         </div>
-    </div>
 
+    </div>
 </div>
+
 
 
 @section Scripts {

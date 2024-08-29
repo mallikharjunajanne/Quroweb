@@ -124,14 +124,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
 
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>EXPENSIVE REPORT</h4>
+        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>EXPENSIVE REPORT</h4>*@
+        <h4 class="mb-4 text-center"><b>EXPENSIVE REPORT</b></h4>
 
         <!-- Examples -->
         <div class="row mb-2">
@@ -139,186 +138,174 @@
                 @*<span class="ErrorMessageSpan"></span>*@
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                EXPENSIVE REPORT
-                            </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        @*<h5 class="mb-0">*@
+                        <span id="AddNewText_Span_CreatePage" class="text-header">
+                            EXPENSIVE REPORT
+                        </span>
+                        @*</h5>*@ @*<small class="text-muted float-end">Default label</small>*@
                     </div>
                     <div class="card-body">
                         @*=============================  Form Start ================================*@
                         <form id="Serach_ER" class="needs-validation was-validated" novalidate>
-                            <div>
-                                <div class="row">
-                                    <div class="col">
+                            <div class="row">
+                                <div class="col">
 
-                                        @*=====================         DROP DOWN               =================*@
+                                    @*========***** DROP DOWN *****========*@
 
-                                        @*=====================         DROP DOWN               =================*@
+                                    @*========***** DROP DOWN *****========*@
 
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3"></div>
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name"> From Date</label>
-                                            <div class="col-sm-4 form-group">
-                                                <input type="date" class="form-control" asp-for="FromDate" id="StartDate" name="FromDate" required>
-                                                <span asp-validation-for="FromDate" class="text-danger"></span>
-                                            </div>
-                                            <div class="col-sm-3">
-
-                                            </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3"></div>
+                                        <label class="col-sm-2 col-form-label required space text-end" for="basic-default-name"> From Date</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input type="date" class="form-control" asp-for="FromDate" id="StartDate" name="FromDate" required>
+                                            <span asp-validation-for="FromDate" class="text-danger"></span>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-sm-3"></div>
+                                        <div class="col-sm-3">
 
-                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name"> To Date</label>
-                                            <div class="col-sm-4 form-group">
-                                                <input type="date" class="form-control" asp-for="Todate" id="EndDate" name="Todate" required>
-                                                <span asp-validation-for="Todate" class="text-danger"></span>
-                                                <span class="compare"></span>
-                                            </div><div class="col-sm-3"></div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-3"></div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name"> Approvals</label>
-                                        <div class="col-sm-4" style="display:contents">
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Approval" type="radio" value="1">
-                                                <label class="form-check-label">
-                                                    Approve
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Approval" type="radio" value="0" >
-                                                <label class="form-check-label">
-                                                    Reject
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Approval" type="radio" value="2" checked>
-                                                <label class="form-check-label">
-                                                    Both
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
 
-                                        </div>
+                                        <label class="col-sm-2 col-form-label required space text-end" for="basic-default-name"> To Date</label>
+                                        <div class="col-sm-4 form-group">
+                                            <input type="date" class="form-control" asp-for="Todate" id="EndDate" name="Todate" required>
+                                            <span asp-validation-for="Todate" class="text-danger"></span>
+                                            <span class="compare"></span>
+                                        </div><div class="col-sm-3"></div>
                                     </div>
-
-
-
-
-                                    <div class="row mb-3" >
-                                        <div class="col-sm-3"></div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name"> Expenditure Type</label>
-                                        <div class="col-sm-4" style="display:contents">
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Expendituretype" type="radio" value="0">
-                                                <label class="form-check-label">
-                                                    Credit
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Expendituretype" type="radio" value="1">
-                                                <label class="form-check-label">
-                                                    Debit
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary ">
-                                                <input class="form-check-input" name="Expendituretype" type="radio" value="2" checked>
-                                                <label class="form-check-label">
-                                                    Both
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-
-                                        </div>
-                                    </div>
-
-                                    @*=====================         BUTTONS                =================*@
-
-                                    <div class="row justify-content">
-                                        <div class="col-sm-4">
-                                        </div>
-
-                                        <div class="col-sm-8">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" id="clearform">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblER">Get Report</button>
-
-                                        </div>
-                                    </div>
-
                                 </div>
-                            </div>
 
+                                <div class="row mb-3">
+                                    <div class="col-sm-3"></div>
+                                    <label class="col-sm-2 col-form-label space text-end" for="basic-default-name"> Approvals</label>
+                                    <div class="col-sm-4" style="display:contents">
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Approval" type="radio" value="1">
+                                            <label class="form-check-label">
+                                                Approve
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Approval" type="radio" value="0">
+                                            <label class="form-check-label">
+                                                Reject
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Approval" type="radio" value="2" checked>
+                                            <label class="form-check-label">
+                                                Both
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-sm-3"></div>
+                                    <label class="col-sm-2 col-form-label space text-end" for="basic-default-name"> Expenditure Type</label>
+                                    <div class="col-sm-4" style="display:contents">
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Expendituretype" type="radio" value="0">
+                                            <label class="form-check-label">
+                                                Credit
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Expendituretype" type="radio" value="1">
+                                            <label class="form-check-label">
+                                                Debit
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-primary ">
+                                            <input class="form-check-input" name="Expendituretype" type="radio" value="2" checked>
+                                            <label class="form-check-label">
+                                                Both
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+
+                                    </div>
+                                </div>
+
+                                @*====***==== BUTTONS ====***====*@
+
+                                <div class="justify-content text-center">
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblER">Get Report</button>
+                                </div>
+
+                            </div>
                         </form>
                         @*=============================  Form End ================================*@
 
 
                     </div>
-
-                    @*=============================  TABLE START ================================*@
-
-                    <div class="card" id="dataforexpensivereport">
-                        <div style=" text-align: center; padding: 8px; background-color: lightcyan;">
-                            <span style="font-weight:800 !important">
-                                <span class="control-label space" style="font-weight:800">Total Amount</span>
-                                <span class="control-label" id="TotalSearchedAmount">0</span>
-                            </span>
-
-                        </div>
-                        <h6 class="card-title mb-0">
-                            <span>YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_SEMER" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-                        </h6>
-                        <div class="table-responsive text-nowrap">
-                            <table id="tblSEMsearchresultsER" class="table table-hover table-bordered ">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>
-                                            S.No
-                                        </th>
-                                        <th>
-                                            Type of Expenditure
-
-                                        </th>
-                                        <th>
-                                            Amount
-
-                                        </th>
-                                        <th>
-                                            Payment Mode
-
-                                        </th>
-                                        <th>
-                                            Description
-
-                                        </th>
-                                        <th>
-                                            Payment Date
-
-                                        </th>
-                                        <th>
-
-                                            View
-                                        </th>
-                                        <th>
-
-                                            Credit/Debit
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-
                 </div>
+                @*=============================  TABLE START ================================*@
+
+            <div class="card" id="dataforexpensivereport">
+                <div style=" text-align: center; padding: 8px; background-color: lightcyan;">
+                    <span style="font-weight:800 !important">
+                        <span class="control-label space" style="font-weight:800">Total Amount</span>
+                        <span class="control-label" id="TotalSearchedAmount">0</span>
+                    </span>
+                </div>
+                <div class="card-header bg-danger text-white">
+                    @*<h6 class="card-title mb-0">*@
+                    <span class="text-header">YOUR SEARCH RESULTED <span id="totalrecords_Tranctions_SEMER" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORD(S).</span>
+                    @*</h6>*@
+                </div>
+                <div class="table-responsive text-nowrap">
+                    <table id="tblSEMsearchresultsER" class="table table-hover table-bordered ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>
+                                    S.No
+                                </th>
+                                <th>
+                                    Type of Expenditure
+
+                                </th>
+                                <th>
+                                    Amount
+
+                                </th>
+                                <th>
+                                    Payment Mode
+
+                                </th>
+                                <th>
+                                    Description
+
+                                </th>
+                                <th>
+                                    Payment Date
+
+                                </th>
+                                <th>
+
+                                    View
+                                </th>
+                                <th>
+
+                                    Credit/Debit
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
             </div>
         </div>
     </div>

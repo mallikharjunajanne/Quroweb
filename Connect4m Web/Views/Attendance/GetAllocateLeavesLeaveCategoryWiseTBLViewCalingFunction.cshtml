@@ -8,16 +8,12 @@
 @*@{ if (Model != null && Model.FirstOrDefault()?.LeaveShortNamesDynamic != null)
     {*@
 
-<label class="form-input">
-    NOTE: Enter a value in first text box of any leave type, and check respective check box of leave type then the value will apply to all the text boxes.
+<label class="text-warning">
+    <b>NOTE:</b> Enter a value in first text box of any leave type, and check respective check box of leave type then the value will apply to all the text boxes.
 </label>
 <div class="card" id="DivTBLSearchedLeavesType">
-    <div class="card-header flex-column flex-md-row">
-        <div class="head-label text-center">
-            <h5 class="card-title mb-0">
-                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
-            </h5>
-        </div>
+    <div class="card-header bg-danger text-white text-header">
+        YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">@Model.Count()</span>  RECORD(S).
     </div>
 
     <div class="table-responsive text-nowrap">
@@ -32,11 +28,9 @@
         {
            int i = 0; var j = 0; var N = 0; var D = 0; var SourceId = "";
             <table id="TblUserLeaveAllocationList_SearchedRecords" class="table table-hover table-bordered no-footer dataTable">
-                <thead>
+                <thead class="table-dark">
                     <tr>
-                        <th>
-                            LMS Category
-                        </th>
+                        <th>LMS Category</th>
                         <th>LMS Sub Category</th>
                         @foreach (var item in Model.FirstOrDefault()?.LeaveShortNamesDynamic)
                         {
@@ -101,7 +95,7 @@
 
             <div class="row justify-content-end">
                 <div class="col-sm-7">
-                    <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSubmit" onclick="SubmitLeaves(event);" value="Submit">Submit</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSubmit" onclick="SubmitLeaves(event);" value="Submit">Submit</button>
                 </div>
             </div>
         }

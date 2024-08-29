@@ -1055,7 +1055,7 @@ function insertingallvideos() {
 
 
 $(document).on("click", "#popupinner #save-all-videos", function () {
-
+    //debugger;
     var totalerrorsinvideos = checkvideovalidations();
 
     if (totalerrorsinvideos == 0) {

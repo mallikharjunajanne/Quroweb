@@ -11,7 +11,7 @@
 }
 
 $(document).ready(function () {  
-    debugger;
+    //debugger;
     Admissionsummaryreporttblfun();
 
 });
@@ -26,7 +26,7 @@ function Admissionsummaryreporttblfun() {
 
 
 $("#Acadamicyear_ddlid").change(function () {
-    debugger;
+    //debugger;
     // Get the selected value of the dropdown
     var selectedValue = $(this).val();
     if (selectedValue) {
@@ -45,7 +45,7 @@ function ClassDropdownfun() {
 }
 
 function bindDatatables(response) {
-    debugger;
+    //debugger;
     CommonDropdownmultipleAjaxFunction("Instancesnames_ddl", "GET", "/Reports/GetInstancenamesDropdown", null, function (resp) {
         loaddingimg.css('display', 'none');
     }, true);
@@ -57,14 +57,14 @@ function bindDatatables(response) {
     // Class Dropdown data function
     ClassDropdownfun();
 
-    debugger;
+    //debugger;
     var formattedDate = Dateformate();
-    debugger;
+    //debugger;
     var table = $('#Admissionssummaryreporttbl').DataTable();
     table.destroy();
-    $("#Admissionreporttblcount").text(response.length);
-
-
+    //$("#Admissionreporttblcount").text(response.length);
+    var filteredData = filterData(response, getSelectedStatus());
+     $("#Admissionreporttblcount").text(filteredData.length);
     var newTable = $("#Admissionssummaryreporttbl").DataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -128,7 +128,10 @@ function bindDatatables(response) {
         paging: true,
         bPaginate: true,
         //  stateSave:true,
-        data: response,
+        //data: response,
+        //data: filterData(response),
+        //data: filterData(response, getSelectedStatus()),
+        data: filteredData,
         columns: [
             {
                 targets: 0, // Assuming this is the column index where you want to display numbering
@@ -201,13 +204,23 @@ function bindDatatables(response) {
             {
                 data: "Status",
                 render: function (data, type, row, meta) {
+                    //var selectedStatus = getSelectedStatus();
+                    //if (selectedStatus === "0") {
+                    //    return 'Registered';
+                    //} else if (selectedStatus === "1") {
+                    //    return 'Admission Confirmed';
+                    //} else {
+                    //    if (row.status === "false") {
+                    //        return 'Admission Confirmed';
+                    //    } else if (row.status === "true") {
+                    //        return 'Registered';
+                    //    }
+                    //}
                     if (row.status === "false") {
                         return 'Admission Confirmed';
                     } else if (row.status === "true") {
                         return 'Registered';
                     }
-                    // return row.status
-                    //return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
                 }
             }
         ]
@@ -229,12 +242,33 @@ function bindDatatables(response) {
     //});
 }
 
+function filterData(data, selectedStatus) {
+    //debugger;
+    if (selectedStatus === "0") {
+        // Filter for 'Registered' (status === "0")
+        return data.filter(function (item) {
+            return item.status === "false";
+        });
+    } else if (selectedStatus === "1") {
+        // Filter for 'Admission Confirmed' (status === "1")
+        return data.filter(function (item) {
+            return item.status === "true";
+        });
+    } else {
+        // Return all data if no filter is applied
+        return data;
+    }
+}
+
+function getSelectedStatus() {
+    return $('input[name="ApplicationStatus"]:checked').val();
+}
 
 
 // Function to compare dates and show error message
 function DatesCompare(Sdate, Edate) {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#FromRegistrationdatetxt").val();
         var EnddateInput = $("#ToRegistrationdatetxt").val();
 
@@ -263,8 +297,8 @@ $("#ToRegistrationdatetxt").on("change", function () { DatesCompare("From date",
 
 
 ///===>>> New Admissionform Save Function code start
-$('#Admissionsummaryreportform').submit(function () {
-    debugger;
+$('#Admissionsummaryreportform').submit(function (event) {
+    //debugger;
     event.preventDefault();
 
     var formData = $('#Admissionsummaryreportform').serialize();
@@ -283,7 +317,7 @@ $('#Admissionsummaryreportform').submit(function () {
 $('#SummaryreportExporttoexcel').on('click', function () {
     //var formattedDate = Dateformate();
 
-    debugger;
+   //debugger;
     //var Forthesessiontext = document.getElementById("Forthesessiondd").textContent;
 
     var headerContent = `

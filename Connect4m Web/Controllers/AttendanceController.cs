@@ -27,7 +27,7 @@ namespace Connect4m_Web.Controllers
 
     //[System.ComponentModel.DisplayName("Login")]
     //[Route("Users")]
-    public class AttendanceController : Controller  //ManagePastDaysLeave   3777 line [Authorize]
+    public class AttendanceController : Controller  //ManagePastDaysLeave   3777 line //[Authorize]
     {
          Uri baseaddress = new Uri("https://localhost:44379/api/ApplyStudentAttendance");
         // Uri baseaddress = new Uri("https://localhost:44379/api/ApplyStudentAttendance");
@@ -39,7 +39,8 @@ namespace Connect4m_Web.Controllers
         private readonly IMemoryCache _memoryCache;
         private int loginCount = 0;
         private string returnvalue;
-
+        //private string SubDomineName = "DEVELOP.CONNECT4M.COM";
+        private string SubDomineName = "Quro.connect4m.com";
         private readonly IUserService _userService;
         private readonly int UserId;
         private readonly int InstanceId;
@@ -102,12 +103,16 @@ namespace Connect4m_Web.Controllers
                 return ipAddress;
             }
         }
-        public async Task< IActionResult> LoginPage()
+
+
+        #region LOGIN PAGE  && LOGOUT PAGE 
+        public async Task<IActionResult> LoginPage()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-           // ViewBag.Layout = "LoginPage";
+            // ViewBag.Layout = "LoginPage";
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         //  [ValidateAntiForgeryToken]
@@ -116,7 +121,7 @@ namespace Connect4m_Web.Controllers
             //try
             //{
 
-         
+
             //installed packeges 
             //Microsoft.AspNetCore.Session
             //Microsoft.AspNetCore.Authentication.Cookies
@@ -137,7 +142,7 @@ namespace Connect4m_Web.Controllers
 
             //  return View();
             val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
-            
+
             // val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using //DATABASE NAME:-Dev_C4MProd
             val.SubDomineName = "Quro.connect4m.com";//it is temperory using  //NEW DATABASE Name:C4MProd
             //  val.SubDomineName = HtstpContext.Request.Host.Host.ToUpper();
@@ -161,27 +166,28 @@ namespace Connect4m_Web.Controllers
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/LoginPage", content).Result;
             if (response.IsSuccessStatusCode)
             {
+                var loginResponse = new LoginModel();
                 string data1 = response.Content.ReadAsStringAsync().Result;
                 Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
                 if (Value2.Count > 0)
                 {
                     if (Value2[0].UserDetailsList.Count > 0 && Value2[0].UserDetailsList.Count > 0)
                     {
-            //            var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.Name, val.Username),
-            //    new Claim(ClaimTypes.Role, "Admin")
-            //};
+                        //            var claims = new List<Claim>
+                        //{
+                        //    new Claim(ClaimTypes.Name, val.Username),
+                        //    new Claim(ClaimTypes.Role, "Admin")
+                        //};
 
-            //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            //            var authProperties = new AuthenticationProperties
-            //            {
-            //                IsPersistent = true, // Whether to create a persistent cookie
-            //                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1) // Cookie expiration time
-            //            };
+                        //            var authProperties = new AuthenticationProperties
+                        //            {
+                        //                IsPersistent = true, // Whether to create a persistent cookie
+                        //                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1) // Cookie expiration time
+                        //            };
 
-                     
+
 
 
                         _memoryCache.Set(val.Username, 0);//set a login count is 0 with Username
@@ -199,20 +205,42 @@ namespace Connect4m_Web.Controllers
 
                         Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
                         Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
-                      //  Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
+                        //  Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
 
                         int DelegationClasses = 1;// This for Arjun
+                        string Userphoto = string.Empty;
+                        //var user = Value2[0].LoginUser[0];
+                        var user = Value2[0].UserPhotodetails[0];
+                        var instanceID = Value2[0].UserDetailsList[0].InstanceID.ToString();
+                        var userId = user.UserId;
+                        var photo = user.Photo;
+                        if (photo!=null)
+                        {
+                            if (Value2[0].UserDetailsList[0].RoleName.ToUpper() == "PARENT")
+                            {
+                                Userphoto = $"ParentPhotos/{instanceID}/{userId}/{photo}";
+                            }
+                            else
+                            {
+                                Userphoto = $"UserPhotos/{instanceID}/{userId}/{photo}";
+                            }
+                        }
+                        else
+                        {
+                            Userphoto = "";
+                        }
+                        
 
                         Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() +" "+ Value2[0].UserDetailsList[0].LastName.ToString()); Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
-
-
+                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() + " " + Value2[0].UserDetailsList[0].LastName.ToString());
+                        Response.Cookies.Append("UserNameHeaderPhoto_", Userphoto);
+                        Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
 
                         var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, val.Username),
-                    new Claim(ClaimTypes.Role, "Admin")
-                };
+                        {
+                            new Claim(ClaimTypes.Name, val.Username),
+                            new Claim(ClaimTypes.Role, "Admin")
+                        };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var authProperties = new AuthenticationProperties
@@ -220,15 +248,15 @@ namespace Connect4m_Web.Controllers
                             // Set additional properties if needed
                         };
 
-                        await    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-                        if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString()=="1")
-                            {
-                                return Json("changepassword");
-                            }
-                            else
-                            {
-                                return Json("correct");
-                            }
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                        if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString() == "1")
+                        {
+                            return Json("changepassword");
+                        }
+                        else
+                        {
+                            return Json("correct");
+                        }
                     }
                     //else
                     //{
@@ -254,6 +282,7 @@ namespace Connect4m_Web.Controllers
             //    return Json(0);
             //}
         }
+
 
         //public async Task<IActionResult> Logout()
 
@@ -293,12 +322,14 @@ namespace Connect4m_Web.Controllers
                 val.InstanceID = InstanceId;
                 val.UserId = UserId;
                 val.CreatedBy = UserId;
-               
-               
-                if (Request.Cookies["RoleName"] == "PARENT") { 
+
+
+                if (Request.Cookies["RoleName"] == "PARENT")
+                {
                     val.ParentFlag = 1;
-                 }
-                else{
+                }
+                else
+                {
                     val.ParentFlag = 0;
                 }
 
@@ -306,12 +337,12 @@ namespace Connect4m_Web.Controllers
                 returnvalue = CommonMethodobj.CommonSaveMethod(val, "/ChangePassword", client);
                 if (returnvalue != "0")
                 {
-                return Json("correct");
-            }
-            else
-            {
-                return Json(0);
-            }
+                    return Json("correct");
+                }
+                else
+                {
+                    return Json(0);
+                }
             }
             catch (Exception ex)
             {
@@ -319,103 +350,202 @@ namespace Connect4m_Web.Controllers
                 return Json(0);
             }
         }
+
+        #endregion
+
+
+        #region FORGET PASSWORD
         public IActionResult ForgetPassword()
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult GetForgetPassworddetails(LoginModel val)
+
+        #region PASSWORD CREATED AND SEND TO USER 
+        public IActionResult GetForgetPassword(string UserName, string Mobilenumber)
         {
-            val.SubDomineName = "DEVELOP.CONNECT4M.COM";
-            List<LoginDetailsListModel> Value2 = new List<LoginDetailsListModel>();
-            string data = JsonConvert.SerializeObject(val);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForgotPassword", content).Result;
-            if (response.IsSuccessStatusCode)
+            LoginModel val = new LoginModel();
+            try
             {
-                string data1 = response.Content.ReadAsStringAsync().Result;
-                Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
-            }
-            return Json(Value2);
-        }
+                //val.SubDomineName = "DEVELOP.CONNECT4M.COM";
+                val.SubDomineName = SubDomineName;
+                var queryString = $"?Username={Uri.EscapeDataString(UserName)}" +
+                  $"&Mobilenumber={Uri.EscapeDataString(Mobilenumber)}" +
+                  $"&SubDomineName={Uri.EscapeDataString(SubDomineName)}";
 
+                string Password = GetPassword();
 
+                var requestUrl = $"{client.BaseAddress}/ForgotPassword{queryString}";
 
+                // Send the API request
+                var response = SendGetApiRequest(requestUrl);
+                //var response = SendPostApiRequest(val);
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> ForgetPassword(LoginModel val)
-        {
-            if (val.Username == null || val.Mobilenumber == null)
-            {
-                return Json(0);
-            }
-
-            val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
-            val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
-            val.SubDomineName = "DEVELOP.CONNECT4M.COM"; //it is temperory using //DATABASE NAME:-Dev_C4MProd
-                                                         //val.SubDomineName = "Quro.connect4m.com";  //it is temperory using  //NEW DATABASE Name:C4MProd
-
-            //val.IPAddress = "183.82.116.209";
-            val.IPAddress = await GetPublicIpAddress();//to get IP address
-            val.URL = HttpContext.Request.GetDisplayUrl();
-            val.LoginAttempt = IncrementLoginCount(val.Username);
-            val.LoginStatus = 1;
-            List<LoginDetailsListModel> Value2 = new List<LoginDetailsListModel>();
-            string data = JsonConvert.SerializeObject(val);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ForgotPassword", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data1 = response.Content.ReadAsStringAsync().Result;
-                Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
-                if (Value2.Count > 0)
+                if (response.IsSuccessStatusCode)
                 {
-                    if (Value2[0].UserDetailsList.Count > 0 && Value2[0].UserDetailsList.Count > 0)
+                    var responseData = response.Content.ReadAsStringAsync().Result;
+
+                    // Deserialize the response
+                    var result = DeserializeJsonObject<ForgotPasswordResponse>(responseData);
+                    if (result.Returnerrormessage != null && result.Returnerrormessage.Any())
                     {
-                        _memoryCache.Set(val.Username, 0);//set a login count is 0 with Username
-                        Response.Cookies.Append("Instanceid", Value2[0].UserDetailsList[0].InstanceID.ToString());
-                        Response.Cookies.Append("LoginUserId", Value2[0].UserDetailsList[0].UserId.ToString());
-                        Response.Cookies.Append("InstanceClassificationId", Value2[0].UserDetailsList[0].InstanceClassificationId.ToString());
-                        Response.Cookies.Append("InstanceSubClassificationId", Value2[0].UserDetailsList[0].InstanceSubClassificationId.ToString());
-                        Response.Cookies.Append("Roleid", Value2[0].UserDetailsList[0].RoleId.ToString());
-                        Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
-                        Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString().ToUpper());
-                        Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
-                        Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
-                        //  Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
-
-                        int DelegationClasses = 1;// This for Arjun
-
-                        Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
-                        Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() + " " + Value2[0].UserDetailsList[0].LastName.ToString()); Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
-
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, val.Username),
-                            new Claim(ClaimTypes.Role, "Admin")
-                        };
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var authProperties = new AuthenticationProperties
-                        {
-                            // Set additional properties if needed
-                        };
-
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-                        if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString() == "1")
-                        {
-                            return Json("changepassword");
-                        }
-                        else
-                        {
-                            return Json("correct");
-                        }
-                    }                  
+                        return Json(result.Returnerrormessage);
+                    }
+                    else
+                    {
+                        ViewBag.Userlogindetails = result.UserLogins;
+                        ViewBag.Domaindetails = result.DomainLogins;
+                        return View();
+                    }
+                }
+                else
+                {
+                    //return Json(new { error = $"Request failed with status code: {response.StatusCode}" });
+                    //string message = $"Request failed with status code:{response.StatusCode}";
+                    string message = "0";
+                    return Json(message);
                 }
             }
-            return Json(0);
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
         }
+
+        private int RandomInt(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
+        }
+
+        // Method to generate a random string of a specified size
+        private string RandomString(int size, bool lowerCase)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+
+            for (int i = 0; i < size; i++)
+            {
+                // Generate a random uppercase letter (A-Z)
+                char ch = (char)random.Next('A', 'Z' + 1);
+                builder.Append(ch);
+            }
+
+            string result = builder.ToString();
+            if (lowerCase)
+            {
+                result = result.ToLower();
+            }
+
+            return result;
+        }
+
+        // Method to generate a password
+        private string GetPassword()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            // Append a random string of 4 lowercase letters
+            builder.Append(RandomString(4, true));
+
+            // Append a random 4-digit number
+            builder.Append(RandomInt(1000, 9999));
+
+            // Append a random string of 2 uppercase letters
+            builder.Append(RandomString(2, false));
+
+            // Append a special character
+            builder.Append("@");
+
+            return builder.ToString();
+        }
+        #endregion
+
+
+        public IActionResult GetForgetPassworddetails(string UserName,string Mobilenumber)
+        {
+            LoginModel val = new LoginModel();
+            try
+            {
+                //val.SubDomineName = "DEVELOP.CONNECT4M.COM";
+                val.SubDomineName = SubDomineName;
+                var queryString = $"?Username={Uri.EscapeDataString(UserName)}" +
+                  $"&Mobilenumber={Uri.EscapeDataString(Mobilenumber)}"+
+                  $"&SubDomineName={Uri.EscapeDataString(SubDomineName)}";
+
+                var requestUrl = $"{client.BaseAddress}/ForgotPassword{queryString}";
+   
+                // Send the API request
+                var response = SendGetApiRequest(requestUrl);
+                //var response = SendPostApiRequest(val);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseData = response.Content.ReadAsStringAsync().Result;
+
+                    // Deserialize the response
+                   var result = DeserializeJsonObject<ForgotPasswordResponse>(responseData);
+                    if (result.Returnerrormessage != null && result.Returnerrormessage.Any())
+                    {
+                        return Json(result.Returnerrormessage);
+                    }
+                    else
+                    {                           
+                        ViewBag.Userlogindetails = result.UserLogins;
+                        ViewBag.Domaindetails = result.DomainLogins;
+                        return View();
+                    }
+                }
+                else
+                {
+                    //return Json(new { error = $"Request failed with status code: {response.StatusCode}" });
+                    //string message = $"Request failed with status code:{response.StatusCode}";
+                    string message = "0";
+                    return Json(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetForgetPassworddetails(Forgotdetails val)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = "";
+                    val.StudentUserid = val.StudentUserid;
+                    val.Password = HashUtility.HashData((val.Password).Trim());
+                    // Send the API request
+                    var response = SendPostApiRequest(val, "ForgotPassword");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseData = response.Content.ReadAsStringAsync().Result;
+                        result = DeserializeJsonObject<string>(responseData);
+                    }
+                    return Json(result);
+                }
+                return Json("0");
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
 
 
         //====================================Apply Student Leave==================================================
@@ -2081,7 +2211,7 @@ namespace Connect4m_Web.Controllers
             
         }
 
-        [Authorize]
+        //[ Authorize]
 
 
         //-----------=====-------StudentLeaveApproval------------Start--------======-------------------
@@ -2516,14 +2646,13 @@ namespace Connect4m_Web.Controllers
 
 
         [Authorize]
-
         public IActionResult LeaveApproval()
         {
             return View();
         }
+        
         [HttpPost]
         [Authorize]
-
         public IActionResult LeaveApproval(StaffLeaveApprovalModel obj,string submitButtonName)
         {
 
@@ -3072,7 +3201,7 @@ namespace Connect4m_Web.Controllers
         //--------------------------------LEAVE ALLOCATION SCREEN--------------------------------
 
         //this is not using
-        [Authorize]
+        //[ Authorize]
         public IActionResult GetTblLeaveAllocationListDvalues_CaliingFunction(AttendanceModel val)
         {
 
@@ -3978,13 +4107,73 @@ namespace Connect4m_Web.Controllers
 
 
 
-        //--------below all for error page
+        #region ERROR PAGE 
+
         public IActionResult ErrorPage()
         {
             return View();
         }
-        //--------below all for error page
-       
+
+        #endregion
+
+
+
+
+
+        //=====>>>>>METHODS ADDED BY MALLIKHARJUNA
+
+        private HttpResponseMessage SendGetApiRequest(string requestUrl)
+        {
+            // Send GET request
+            return client.GetAsync(requestUrl).Result;
+        }
+        private HttpResponseMessage SendPostApiRequest(string requestUrl, object payload)
+        {
+            // Serialize the payload to JSON
+            var jsonPayload = JsonConvert.SerializeObject(payload);
+
+            // Create the content for the request
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            // Send POST request and return the response
+            return client.PostAsync(requestUrl, content).Result;
+        }
+
+        private HttpResponseMessage SendPostApiRequest<T>(T payload, string endpoint)
+        {
+            // Serialize the payload to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+
+            // Send the POST request
+            return client.PostAsync($"{client.BaseAddress}/{endpoint}", content).Result;
+        }
+
+        //private Task<HttpResponseMessage> SendPostApiRequestAsync(CompositePayload payload, string endpoint)
+        //{
+        //    var jsonPayload = JsonConvert.SerializeObject(payload);
+        //    var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+        //    return client.PostAsync(client.BaseAddress + endpoint, content);
+        //}
+
+
+        //private HttpResponseMessage SendGetApiRequest(LoginModel val)
+        //{
+        //    var content = new StringContent(JsonConvert.SerializeObject(val), Encoding.UTF8, "application/json");
+        //    return client.GetAsync(client.BaseAddress + "/ForgotPassword", content).Result;
+        //} 
+        //private HttpResponseMessage SendPostApiRequest(LoginModel val)
+        //{
+        //    var content = new StringContent(JsonConvert.SerializeObject(val), Encoding.UTF8, "application/json");
+        //    return client.PostAsync(client.BaseAddress + "/ForgotPassword", content).Result;
+        //}
+        public List<T> DeserializeJsonList<T>(string jsonData)
+        {
+            return JsonConvert.DeserializeObject<List<T>>(jsonData);
+        }
+        public T DeserializeJsonObject<T>(string jsonData)
+        {
+            return JsonConvert.DeserializeObject<T>(jsonData);
+        }
 
     }
 

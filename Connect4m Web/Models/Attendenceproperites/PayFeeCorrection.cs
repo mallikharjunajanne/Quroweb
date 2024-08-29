@@ -81,7 +81,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string Challana_subclassificationName { get; set; }
         public string Challana_UserName { get; set; }
         public int ReturnStringValue { get; set; }
-
+        public int StudentUserid{ get; set; }
     }
     public class PFCfeetermsnames
     {

@@ -49,7 +49,7 @@ function ManageCoollinksfun() {
     var LinkName = $("#LinkNameTXT").val();
     var LinkURL = $("#LinkURLTXT").val();
     var Description = $("#DescriptionTXT").val();
-    debugger;
+    //debugger;
     var dataToSend = {
         LinkName: LinkName,
         LinkURL: LinkURL,
@@ -67,7 +67,7 @@ function ManageCoollinksfun() {
 }
 function bindDatatable(response) {
     
-    debugger;
+    //debugger;
     var table = $('#Coollinkstbl_id').DataTable();
     table.destroy();
     $("#Recordscount").text(response.length);
@@ -135,7 +135,7 @@ function bindDatatable(response) {
     });
 }
 function Clearcommonfunction(Formid, ErrorMessageSpanId) {
-    debugger;
+    //debugger;
     document.getElementById(Formid).reset(); // Reset the form 
     document.getElementById(ErrorMessageSpanId).innerText = '';
 
@@ -198,7 +198,7 @@ function isValidURL(url) {
 }
 $('#savecoollink_btn').click(function () {
 
-    debugger;
+    //debugger;
     var LinkName = $('#S_LinkNameTxt').val();
     var LinkURL = $('#S_LinkURLTxt').val();
     var Description = $('#S_DescriptionTxt').val();
@@ -235,7 +235,7 @@ $('#savecoollink_btn').click(function () {
     }
 });
 function SaveValidation() {
-    debugger;
+    //debugger;
     
     var LinkName = $('#S_LinkNameTxt').val();
     var LinkURL = $('#S_LinkURLTxt').val();
@@ -265,7 +265,7 @@ function SaveValidation() {
 }
 $(document).on('click', '#Coollinkstbl_id td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
-    debugger;
+    //debugger;
     var parent = $(event.target).closest('tr');
     var Coollinkid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Coollinkstbl_id').DataTable();
@@ -303,7 +303,7 @@ $(document).on('click', '#Coollinkstbl_id .fa-trash-o', function (event) {
     var confirmed = confirm("Are you sure you want to delete Coollink?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
     if (confirmed) {
         $("#UpdatevalidationMessage").text('');
-        debugger;
+        //debugger;
         var Coollinkid = $(this).closest('tr').find('input[type="text"]').val();
         var table = $('#Coollinkstbl_id').DataTable();
         var tabletargetpagetblSEMsearchresults = table.page.info().page;
@@ -361,7 +361,7 @@ $('#Backtoseach_Upbtn').click(function () {
 
 });
 $('#Updatecoollink_Btn').click(function () {
-    debugger;
+    //debugger;
     var LinkName = $('#linkNameEditTxt').val();
 
     if (UpdateValidation()) {

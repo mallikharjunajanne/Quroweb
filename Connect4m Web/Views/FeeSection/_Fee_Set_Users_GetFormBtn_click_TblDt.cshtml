@@ -113,9 +113,10 @@
     </div>
     <div class="col-md-12 col-lg-12 mb-3">
         <div class="card">
-            <div class="card-header bg-danger text-white">
-                <h6 class="mb-0">YOUR SEARCH RESULTED : <span class="badge badge-center rounded-pill bg-primary bg-glow">@totalGroups</span> RECORDS.</h6>
-</div>
+            <div class="card-header bg-danger text-white text-header">
+                YOUR SEARCH RESULTED 
+                <span class="badge badge-center rounded-pill bg-primary bg-glow text-header">@totalGroups</span> RECORDS.
+            </div>
             @*<div class="table-responsive text-wrap card-datatable">*@
             <table class="Set_Fee_Users_Table  table table-bordered no-footer table-responsive" id="FeeSet_Users_TableData">
                 <thead>
@@ -233,14 +234,14 @@
 
                                 <td>
                                     <div style="display: flex;">
-                                        <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext" style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;" oninput="validateNumberInput(this)" />
+                                        <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext form-control"style="height: 27px; width: 40%;" @*style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;"*@ oninput="validateNumberInput(this)" />
                                         @if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")
                                         {
                                             <span class="search-icon">🔍</span>
                                         }
                                         <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
                                         <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
-                                        <textarea id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
+                                        <textarea class="form-control" id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
                                     </div>
                                 </td>
                             }
@@ -256,7 +257,7 @@
                         }
                         <td align="center" colspan="@totalColspan">
                             @*<button value="Submit" id="btnSave"  onclick="InsertFeeDetails()"class="btn btn-success waves-effect waves-light">Submit</button>*@
-                            <button id="btnSave" onclick="Feedetailsinserting()" class="btn btn-success waves-effect waves-light">Submit</button>
+                            <button id="btnSave" onclick="Feedetailsinserting()" class="btn btn-success waves-effect waves-light btn-sm">Submit</button>
                         </td>
                     </tr>
                 </tfoot>

@@ -6,19 +6,17 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-
-
-</head>
+<head></head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>ADMISSIONS SUMMARY REPORT</h4>
+        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>ADMISSIONS SUMMARY REPORT</h4>*@
+        <h4 class="mb-4 text-center">ADMISSIONS SUMMARY REPORT</h4>
         <div class="row mb-2">
-            <div class="col-md-12 col-lg-12 mb-3">
+            <div class="col-md-12 col-lg-12">
                 <span class="text-danger" id="Commonerrormessage"></span>
-                <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">SEARCH USERS</h5>
+                <div class="card mb-2">
+                    <div class="card-header bg-danger text-white text-header">
+                        SEARCH USERS
                     </div>
                     <div class="card-body">
                         <form id="Admissionsreportform" enctype="multipart/form-data">
@@ -51,11 +49,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row justify-content-center text-center">
-                                    <div class="col-sm-12">
-                                        <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClear">Clear</button>
-                                        <button type="submit" class="btn btn-success waves-effect waves-light" id="btnSubmit">Search</button>
-                                    </div>
+                                <div class="justify-content text-center">
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClear">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="btnSubmit">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -63,32 +59,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-lg-12 mb-3">
+        <div class="col-md-12 col-lg-12">
             <div class="text-right">
                 <a href="Javascript:void(0);" id="Admissionreportexporttoexcel">Export to Excel</a>
             </div>
-            <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h6 class="mb-0">
-                        <span>
-                            YOUR SEARCH RESULTED <span id="Recordcountstbl" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
-                        </span>
-                    </h6>
+            <div class="card mb-2">
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR SEARCH RESULTED <span id="Recordcountstbl" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive text-nowrap">
-                        <table id="Admissionscounttbl" class="table-hover table-bordered no-footer text-center dataTable">
-                            <thead>
-                                <tr>
-                                    <th>S. No.</th>
-                                    <th>Instance</th>
-                                    <th>Registration(s) Count</th>
-                                    <th>Admission(s) Count</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive text-nowrap">
+                    <table id="Admissionscounttbl" class="table table-bordered no-footer dataTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>S. No.</th>
+                                <th>Instance</th>
+                                <th>Registration(s) Count</th>
+                                <th>Admission(s) Count</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -97,12 +87,12 @@
                 <a href="Javascript:void(0);" id="Admissionreportexcel">Export to Excel</a>
             </div>
             <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h6 class="mb-0">
-                        <span>
-                            YOUR SEARCH RESULTED <span id="Registrationstblcount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
-                        </span>
-                    </h6>
+                <div class="card-header bg-danger text-header text-white text-header">
+                    YOUR SEARCH RESULTED
+                    <span id="Registrationstblcount" class="badge badge-center rounded-pill bg-primary bg-glow text-header text-header">
+                        0
+                    </span>
+                    RECORDS.
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-wrap">
@@ -123,47 +113,42 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-12 col-lg-12 mb-3" id="Admissiontbldiv" style="display:none;">
+        <div class="col-md-12 col-lg-12" id="Admissiontbldiv" style="display:none;">
             <div class="text-right">
                 <a href="Javascript:void(0);" id="">Export to Excel</a>
             </div>
-            <div class="card mb-4">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h6 class="mb-0">
-                        <span>
-                            YOUR SEARCH RESULTED <span id="Admissiontblcount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
-                        </span>
-                    </h6>
+            <div class="card mb-2">
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR SEARCH RESULTED <span id="Admissiontblcount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                    RECORDS.
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive text-wrap">
-                        <table id="RegistartionreportResultstbl" class="table table-bordered no-footer text-center" style="display:none;">
-                            <thead>
-                                <tr>
-                                    <th> S. No.</th>
-                                    <th>Registration Date</th>
-                                    <th>Reg No</th>
-                                    <th>Name</th>
-                                    <th>DOB</th>
-                                    <th>Class Applied</th>
-                                    <th>Father Name</th>
-                                    <th>Mother name</th>
-                                    <th>Mobile number</th>
-                                    <th>Email Id</th>
-                                    <th>DOJ</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+
+                <div class="table-responsive text-wrap">
+                    <table id="RegistartionreportResultstbl" class="table table-bordered no-footer text-center" style="display:none;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th> S. No.</th>
+                                <th>Registration Date</th>
+                                <th>Reg No</th>
+                                <th>Name</th>
+                                <th>DOB</th>
+                                <th>Class Applied</th>
+                                <th>Father Name</th>
+                                <th>Mother name</th>
+                                <th>Mobile number</th>
+                                <th>Email Id</th>
+                                <th>DOJ</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
-
         </div>
     </div>
 </body>

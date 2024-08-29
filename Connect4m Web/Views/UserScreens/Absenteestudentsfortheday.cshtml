@@ -76,7 +76,7 @@
 
 <script>
     function Absenteestudentsforthedaykey(key, clickedElement) {
-        debugger;
+        //debugger;
         $('.details-table').remove(); // Remove any existing details tables
 
         // Create a new table for details       
@@ -100,7 +100,7 @@
 
         // Populate the details table with the corresponding details
         var detailsHtml = '<thead><tr style=" background-color: #E8E8E8; font-size: 12px; font-weight: 700; height: 26px; color: black;"><th>Name</th><th>Program</th><th>Admission Number</th><th>Parent Name</th><th>Mobile Number</th></tr></thead><tbody>';
-        debugger;
+        //debugger;
         for (var i = 0; i < filteredData.length; i++) {
             var item = filteredData[i];
             detailsHtml += '<tr style="font-size: 10px;height: 25px;color: black;"><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;color: blueviolet;">' + item.FirstName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.ClassificationName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.AdmissionNumber + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.PFirstName + '</td><td style="font-size: 12px;border: 1px solid #dbdbdb;height: 24px;">' + item.MobilePhone + '</td></tr>';

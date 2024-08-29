@@ -62,8 +62,8 @@
                                     @*--------------------------*@
                                     <div class="row justify-content-end">
                                         <div class="col-sm-8">
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValues('FmAllocateLeavesSearch')" value="Clear">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" onclick="_TblAssignLeavesToStaffTblViewCalingFunction(event)" value="Search">Search</button>
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" id="BtnClearSearchForm" onclick="FN_ClearValues('FmAllocateLeavesSearch')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSearchId" onclick="_TblAssignLeavesToStaffTblViewCalingFunction(event)" value="Search">Search</button>
                                         </div>
                                     </div>
                                     @*--------------------------*@
@@ -96,7 +96,7 @@
 <script>
 
     function CheckAllCheckBoxes() {
-        debugger;
+        //debugger;
         var check = this.checked;
         $(":checkbox").prop("checked", check)
     }

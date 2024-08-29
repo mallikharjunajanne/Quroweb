@@ -212,22 +212,21 @@ function bindDatatable(response, submitButtonValue) {
 
 
     var newTable = $("#Searchpayfeeuserstbl").DataTable({
-        dom: 'Bfrtip',
+        dom: '<"tops"lf>t<"bottom"ip>',
         buttons: [],
-
         bProcessing: false,
-        bLengthChange: true,
+        bLengthChange: false,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
         /* scrollCollapse: true,*/
         paging: true,
-        bPaginate: true,
+        bPaginate: false,
         //  stateSave:true,
-        data: response,
+        data: response,       
         columns: [
 
             //{
@@ -250,64 +249,45 @@ function bindDatatable(response, submitButtonValue) {
 
             {
                 data: "FirstName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.firstName
-
+                    //return row.firstName;
+                    return `<a href="#" onclick="FirstNamehandlelnk('${row.userId}','${row.firstName}','${row.classificationName}','${row.subClassificationName}'); return false;">${row.firstName}</a>`;
                 }
             },
             {
                 data: "InstanceUserCode",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.instanceUserCode
-
+                    return row.instanceUserCode;
                 }
             },
             {
                 data: "RoleName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.roleName + '<input type="text" value=' + row.userId + ' hidden/>'
-
+                    return row.roleName + '<input type="text" value=' + row.userId + ' hidden/>';
                 }
             },
             {
                 data: "ClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.classificationName
-
+                    return row.classificationName;
                 }
-            }, {
+            },
+            {
                 data: "SubClassificationName",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-                    return row.subClassificationName
+                    return row.subClassificationName;
                 }
-            }, {
+            },
+            {
                 data: "MobilePhone",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-                    return row.mobilePhone
+                    return row.mobilePhone;
                 }
-            }, {
+            },
+            {
                 data: "PortalEmail",
-
                 render: function (data, type, row, meta) {
-                    //  length++;
-
-                    return row.portalEmail
+                    return row.portalEmail;
                 }
             }            
         ]
@@ -318,21 +298,78 @@ function bindDatatable(response, submitButtonValue) {
         $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
             'text-decoration': 'underline',
             'font-weight': 'bold'
-        });;
+        });
     });
     $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
         'text-decoration': 'underline',
         'font-weight': 'bold'
-    });;
+    });
 
     loaddingimg.css('display', 'none');
 }
 
 
+function FirstNamehandlelnk(StudentUserId, StudentName, Studentdepartment, Studentclass) {
+
+    handleAjax('GET', `/FeeSection/Pfcuserwisefeedetails`, { StudentUserId: StudentUserId },
+        function (response) {
+            debugger;
+            var Feetermsdropdownvalues = response.feetermsnames;
+            //var Feetermsdropdownvalues = response[0].feetermsnames;
+            var previousduestbl = response.Previousduesli;
+            var feedetialsbyuseridtbl = response.feedetialsli;//--
+            var totalpayedamounttbl = response.userpayedli;
+            var termsdd = response.termdetaisli;//--
+            var Managefeedetailsfeeterms = response.managefeedetailsfeeterms;//--
+            $('#Challan_DDId').empty();
+
+            if (Feetermsdropdownvalues.length != 0) {
+
+                for (var i = 0; i < termsdd.length; i++) {
+                    debugger;
+                    var optionForTermId = $('<option></option>').val(termsdd[i].feeTermId).text(termsdd[i].termName);
+                    $('#ddltermid').append(optionForTermId);
+                }
+                for (var k = 0; k < Managefeedetailsfeeterms.length; k++) {
+                    var optionForFeetermid = $('<option></option>').val(Managefeedetailsfeeterms[k].feeTermId).text(Managefeedetailsfeeterms[k].termName);
+                    $('#ddlFeetermid').append(optionForFeetermid);
+                }
+                for (var k = 0; k < Feetermsdropdownvalues.length; k++) {
+                    var optionForFeetermid = $('<option></option>').val(Feetermsdropdownvalues[k].userReceiptGenerationID).text(Feetermsdropdownvalues[k].termNameReceiptNo);
+                    $('#Challan_DDId').append(optionForFeetermid);
+                }
+                $('#Studentdetailsid').text('Selected User :' + StudentName + '-' + Studentdepartment + "-" + Studentclass);
+                $('#Studentuseridspid').val(StudentUserId);
+
+
+                Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl);
+                $('#Feedetailsusernamespanid').text(StudentName);
+
+                $('#Searchuserfields_tabledatadiv1').hide();
+                $('#Userfeedetailsdiv2').show();
+                $('#Feechallandiv').hide();
+                $('#Feedetailsupdateandedit_tablediv').hide();
+
+                $('#Studentfeedetailsscheduledornotspanid').text('');
+            }
+            else {
+                $('#Studentfeedetailsscheduledornotspanid').text("Fee Haven't Scheduled for '" + StudentName + "'");
+                $('#Searchuserfields_tabledatadiv1').show();
+                $('#Userfeedetailsdiv2').hide();
+                $('#Feechallandiv').hide();
+                $('#Feedetailsupdateandedit_tablediv').hide();
+            }
+            loaddingimg.css('display', 'none');
+        },
+        function (status, error) {
+            loaddingimg.css('display', 'none');
+        }, false);
+
+}
 
 
 
-$(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event) {
+$(document).on('click', '#Searchpayfeeuserstbl_ td:nth-child(1)', function (event) {
     event.stopImmediatePropagation();
 
     loaddingimg.css('display', 'block');

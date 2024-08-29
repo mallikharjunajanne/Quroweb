@@ -85,10 +85,15 @@ function ShowFields() {
     if (dateRadioButton.checked) {
         dateWiseDiv.style.display = "block";
         monthWiseDiv.style.display = "none";
-        
+        $('#Studentattendancedetailstbl').empty();
+        $('#StartDateid').val('');
+        $('#EndDateid').val('');
     } else {
         dateWiseDiv.style.display = "none";
         monthWiseDiv.style.display = "block";
+        $('#Studentattendancedetailstbl').empty();
+        $('#Ddlmonth').val($('#Ddlmonth option:first').val());
+        //$('#Ddlmonth').prop('selected',0)
     }
 }
 
@@ -241,7 +246,8 @@ $("#detailsbtn").click(function () {
             var additionalData = {
                 StartDate: startDateString,
                 EndDate: endDateString,
-                SubjectSlotID: Slotselectedvalue,
+                SubjectSlotID: Slotselectedvalue[0],
+                //SubjectSlotID: Slotselectedvalue,
                 //SubjectSlotID: Slotid,
             };
             var additionalDataString = $.param(additionalData);

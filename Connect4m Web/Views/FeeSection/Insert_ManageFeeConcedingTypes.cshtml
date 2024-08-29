@@ -8,9 +8,9 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
             SAVE FEE DISCOUNT TYPE
-            <small>* INDICATES MANDATORY FIELD</small>
+            <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
         </div>
         <div class="card-body">
             <form class="form" id="Newdiscountfeetypeform">
@@ -37,13 +37,11 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="row justify-content text-center">
-                    <div class="col-sm-12">
-                        <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="clearForm('Newdiscountfeetypeform')" id="btnclear">Clear</button>
-                        <button type="button" class="btn btn-dark waves-effect waves-light" id="Svbacktosearchbtn">Back To Search</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light">Save</button>
-                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
-                    </div>
+                <div class="justify-content text-center">
+                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="clearForm('Newdiscountfeetypeform')" id="btnclear">Clear</button>
+                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Svbacktosearchbtn">Back To Search</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm">Save</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
                 </div>
             </form>
         </div>

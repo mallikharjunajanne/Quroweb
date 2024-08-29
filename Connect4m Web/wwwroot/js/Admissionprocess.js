@@ -32,7 +32,7 @@ function TblCallToAjax(method, url, data, successCallback, errorCallback) {
 var dataTableInstance;
 
 $(document).ready(function () {
-    debugger;
+    //debugger;
 
     CommonDropdownAjaxFunction("ddlAcademicYearId", "GET", "/Admin/GetAcademicYearDropdown", null, function (resp) {
         loaddingimg.css('display', 'none');
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 $('#AdmissionsSearchform').submit(function () {
     //var Formdata = $('#AdmissionsSearchform').serialize();
-    debugger;
+    //debugger;
     TabledatabindingPageload();
 });
 
@@ -62,11 +62,30 @@ function TabledatabindingPageload() {
     );
 }
 
+//===>>>>> CLEAR FUNCTION
+function Searchclearfun(formid) {
+    var form = document.getElementById(formid);
+    //debugger;
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        TabledatabindingPageload(); //===>>>  Table calling function
+        
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
 
 //===>>>>> Dates compare
 function DatesCompare(Sdate, Edate) {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#Fromregistrationdate_txt").val();
         var EnddateInput = $("#Toregistrationdate_txt").val();
 
@@ -92,7 +111,7 @@ $("#Fromregistrationdate_txt").on("change", function () { DatesCompare("From dat
 $("#Toregistrationdate_txt").on("change", function () { DatesCompare("From date", "To date"); });
 
 $("#ddlAcademicYearId").change(function () {
-    debugger;
+    //debugger;
     // Get the selected value of the dropdown
     var selectedValue = $(this).val();
     if (selectedValue) {
@@ -121,7 +140,7 @@ function NewAdmissionsclass() {
 }
 
 $('#ddlCountry').change(function () {
-    debugger;
+    //debugger;
     var selectedValue = $(this).val();
     if (selectedValue) {
         ddlCountry_SelectedChanged(selectedValue);
@@ -141,7 +160,7 @@ function Bindtable(response) {
 
     ClassDropdownfun();
 
-    debugger;
+    //debugger;
     var formattedDate = Dateformate();
 
     $("#Recordscount").text(response.length);
@@ -165,7 +184,7 @@ function Bindtable(response) {
                     const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                     if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        debugger;
+                        //debugger;
                         // Set styles for the title (A1 cell)
                         const titleCell = $('c[r="A1"]', sheet);
                         if (titleCell && titleCell[0]) {
@@ -309,7 +328,7 @@ function Bindtable(response) {
 
 ///===>>> Email Pattern Isvalid or not function
 function validateEmail(input) {
-    debugger;
+    //debugger;
     const email = input.value.trim();
     const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com)$/i.test(email);
     const errorSpan = $('#emailError');
@@ -325,7 +344,7 @@ function validateEmail(input) {
 
 function DateofbirtDateCompare() {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#txtDOB").val();
         var Startdate = new Date(StartdateInput);
        // var todaydate = new Date(); // Get the current date
@@ -385,7 +404,7 @@ function Newadmission() {
 
 // Function to initialize DataTable
 function initializeDataTable() {
-    debugger;
+   //debugger;
     dataTableInstance = $('#Admissionstbl').DataTable({
         // DataTable initialization options
         // Example: paging: true, searching: true, etc.
@@ -395,7 +414,7 @@ function initializeDataTable() {
 
 ///===>>>Back to search function start
 $('#Backtosearchlnk').click(function (e) {
-    debugger;
+    //debugger;
     e.preventDefault(); 
     $('#ManageadmissionsContainerdiv1').empty();
     $('#SearchAdmissionsDiv').show();
@@ -408,7 +427,7 @@ $('#Backtosearchlnk').click(function (e) {
 
 // Function to clear DataTable and destroy the instance
 function clearDataTable() {
-    debugger;
+    //debugger;
     if (dataTableInstance) {
         dataTableInstance.destroy();
         dataTableInstance = null;
@@ -421,7 +440,7 @@ function clearDataTable() {
 
 // UPDATE && INSERT FUNCTION
 $('#NewAdmissionform_').submit(function (event) {
-    debugger;
+    //debugger;
     event.preventDefault();
     $('#CommonErrorMessage').text('');
     $('#emailError').text('');
@@ -507,7 +526,7 @@ $('#NewAdmissionform_').submit(function (event) {
 $(document).on('click', '#Admissionstbl td:nth-child(4)', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();             
 
         var parent = $(event.target).closest('tr');
@@ -520,7 +539,7 @@ $(document).on('click', '#Admissionstbl td:nth-child(4)', function (event) {
             function (resp) {
                 loaddingimg.css('display', 'none');
                 $('#SearchAdmissionsDiv').hide();
-                debugger;
+                //debugger;
                 $('#ManageadmissionsContainerdiv1').append(resp);
                 $('#Savebtn').val('Update');
                 $('#Savebtn').text('Update');
@@ -530,7 +549,8 @@ $(document).on('click', '#Admissionstbl td:nth-child(4)', function (event) {
             }
         );
        
-    } catch (e) {
+    }
+    catch (e) {
 
     }
 })

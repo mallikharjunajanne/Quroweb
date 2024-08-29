@@ -61,7 +61,7 @@
 
         $(document).ready(function () {
             var urlofpayroll = $("#UsersControllerAppend").val();
-            debugger;
+            //debugger;
             if (urlofpayroll != undefined) {
                 loaddingimg.css('display', 'block');
                 var UserId = $("#HdnUserIdCreatePage").val();
@@ -73,7 +73,7 @@
                 }
                 //  var data = { UserId: UserId};
                 performCrudOperationCommonFunction('GET', '/Users/' + urlofpayroll, { UserId: UserId }, function (response) {
-                    debugger;
+                    //debugger;
                     $('#AppendAllUSersDetails #InnerUsersTabs').html(response);
                     loaddingimg.css('display', 'none');
                 }, function (error) {

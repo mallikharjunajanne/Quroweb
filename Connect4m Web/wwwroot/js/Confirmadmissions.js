@@ -31,7 +31,7 @@ function ClassDropdownfun() {
 }
 
 $("#ddlAcademicYearId").change(function () {
-    debugger;
+    //debugger;
     // Get the selected value of the dropdown
     var selectedValue = $(this).val();
     if (selectedValue) {
@@ -61,7 +61,7 @@ $('#ConfirmAdmissions_searchform').submit(function (event) {
 
             handleAjax('GET', "/Admin/ManageQuroAdmissionstbl", formData,
                 function (resp) {
-                    debugger;
+                    //debugger;
                     loaddingimg.css('display', 'none');
                     //$('#SearchingConfirmadmissiondiv').hide();
                     $('#Confirmadmissionsdiv1').append(resp);
@@ -81,7 +81,7 @@ $('#ConfirmAdmissions_searchform').submit(function (event) {
 //==>>DATES COMPARING
 function DatesCompare(Sdate, Edate) {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#txtFromRegDate").val();
         var EnddateInput = $("#txtToRegDate").val();
 
@@ -94,7 +94,7 @@ function DatesCompare(Sdate, Edate) {
         var formattedEndDate = GetDateFormat(new Date(EnddateInput));
         var errorElement = $('#DateCompareErrormessage');
 
-        debugger;
+        //debugger;
 
         errorElement.text("");
         if (StartdateInput !== "" && formattedStartDate > Todaydate) {
@@ -155,7 +155,7 @@ $("#txtFromRegDate").on("change", function () { DatesCompare("From date", "To da
 $("#txtToRegDate").on("change", function () { DatesCompare("From Date", "To date"); });
 
 function GetDateFormat(date) {
-    debugger;
+    //debugger;
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().padStart(2, '0');
     var day = date.getDate().toString().padStart(2, '0');
@@ -166,20 +166,36 @@ function GetDateFormat(date) {
 
 
 ////==>> Select All Function
-//$('#chkCheckAll').on('click', function () {
-//    debugger;
-//    var isChecked = $(this).prop('checked');
-//    $('.chkRow').prop('checked', isChecked);
-//});
+$('#chkCheckAll').on('click', function () {
+    //debugger;
+    var isChecked = $(this).prop('checked');
+    //$('.chkRow').prop('checked', isChecked);
+    $('.checkbox').prop('checked', isChecked);
+});
 
 
 
 
 
 //==>> Clear Function
-function Clearfun(formid) {
-    $('#' + formid)[0].reset();
-    $('#DateCompareErrormessage').text('');
+function SearchClearfun(formid) {
+    var form = document.getElementById(formid);
+    //debugger;
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        $('#DateCompareErrormessage').text('');
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        TabledatabindingPageload(); //===>>>  Table calling function
+
+    }
+    else {
+        console.error("Form with id '" + formid + "' not found.");
+    }  
 }
 
 

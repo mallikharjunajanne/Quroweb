@@ -56,6 +56,62 @@ namespace Connect4m_Web.Controllers
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
+        #region ReportsMenu
+        public IActionResult ReportsMenu()
+        {
+            List<LoginModel> items = new List<LoginModel>();
+            var InstanceId = Request.Cookies["INSTANCEID"];
+            var UserId = Request.Cookies["LoginUserId"];
+            using (var tempClient = _httpClientFactory.CreateClient())
+            {
+                string originalBaseAddress = client.BaseAddress.ToString();
+                tempClient.BaseAddress = new Uri(originalBaseAddress.Replace("/AttendanceCtr", "/ApplyStudentAttendance"));
+                LoginModel val = new LoginModel();
+                val.UserId = Convert.ToInt32(UserId);
+                val.RoleId = Convert.ToInt32(Request.Cookies["Roleid"]);
+                val.InstanceID = Convert.ToInt32(InstanceId);
+                val.CategoryId = 11;
+                string data11 = JsonConvert.SerializeObject(val);
+                StringContent content = new StringContent(data11, Encoding.UTF8, "application/json");
+                HttpResponseMessage response1 = tempClient.PostAsync(tempClient.BaseAddress + "/GetAdminMenuItems_Modified", content).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    string data1 = response1.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<LoginModel>>(data1);
+                }
+            }
+            ViewBag.Menuitems = items;
+            return View();
+        }
+        public IActionResult ReportsSubMenus(int categoryId)
+        {
+            List<LoginModel> items = new List<LoginModel>();
+
+            using (var tempClient = _httpClientFactory.CreateClient())
+            {
+                string originalBaseAddress = client.BaseAddress.ToString();
+                tempClient.BaseAddress = new Uri(originalBaseAddress.Replace("/AttendanceCtr", "/ApplyStudentAttendance"));
+                LoginModel val = new LoginModel();
+                val.UserId = Convert.ToInt32(UserId);
+                val.RoleId = Convert.ToInt32(Request.Cookies["Roleid"]);
+                val.InstanceID = Convert.ToInt32(InstanceId);
+                val.CategoryId = categoryId;
+                val.MenuId = 2;
+
+                string data11 = JsonConvert.SerializeObject(val);
+                StringContent content = new StringContent(data11, Encoding.UTF8, "application/json");
+                HttpResponseMessage response1 = tempClient.PostAsync(tempClient.BaseAddress + "/GetAdminSubMenuItems", content).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    string data1 = response1.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<LoginModel>>(data1);
+                }
+            }
+            return Json(items);
+        }
+
+        #endregion
+
         #region FEE DETAILS
         public IActionResult FeeDetails()
         {
@@ -331,6 +387,7 @@ namespace Connect4m_Web.Controllers
             //stp_tblRegistrationUserDetails_GetAdmissionReport
             UserScreen.Admissionreport model = new UserScreen.Admissionreport();
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
 
             List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
             list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);

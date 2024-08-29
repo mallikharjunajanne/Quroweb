@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 //h=250 ,w=700
 function OpenIFrameModel(strURL, Width, Height, ScrollBar) {
-    debugger;
+    //debugger;
     strURL = "../Admin/ViewChangeActivity.aspx?Key=NoofLeaves&Id=9855918&Name=LeaveAllocation";
     Width = 700;
     Height = 250;
@@ -45,7 +45,7 @@ function OpenIFrameModel(strURL, Width, Height, ScrollBar) {
 
 function SubmitLeaves(event) {
     try {
-        debugger;
+        //debugger;
         loaddingimg.css('display', 'block');
         event.preventDefault();
         
@@ -79,7 +79,7 @@ function SubmitLeaves(event) {
             contentType: false,
             processData: false,
             success: function (response) {
-                debugger;
+                //debugger;
                 if (response.message == "Records inserted successfully.") {
                     $("#BtnSubmit").prop('disabled', true);
                     $('.alert-success p').text(response.message);
@@ -108,7 +108,7 @@ function SubmitLeaves(event) {
 
 //this for add same value in Textboxes by selecting checkbox
 function UpdateAllTextboxvaluesByChecked(checkbox, FirstTextBoxId, EffectiveTxtClass) {
-    debugger;
+    //debugger;
     const AllTextboxes = document.querySelectorAll('.' + EffectiveTxtClass);
     const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
     //const FirstTxtValue = document.getElementById(FirstTextBoxId).value;
@@ -124,7 +124,7 @@ function UpdateAllTextboxvaluesByChecked(checkbox, FirstTextBoxId, EffectiveTxtC
 ////  To get Partial View of SearchLeaveTypePage
 function GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event) {
     try {
-        debugger;
+        //debugger;
         event.preventDefault();
         loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
@@ -160,7 +160,7 @@ function GetAllocateLeavesLeaveCategoryWiseTBLViewCalingFunction(event) {
 
 function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
     try {
-        debugger;
+        //debugger;
         $("#ErrorMessageSpan").empty();
         var PayrollCategoryId = $("#" + buttonId).val();
         if (PayrollCategoryId == "") {
@@ -207,7 +207,9 @@ function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
 function DdlLmsCategory_Calingfunction() {
 
     try {
-        debugger;
+        //
+
+
         $("#ErrorMessageSpan").empty();
         $.ajax({
             url: "/Attendance/DdlLmsCategory_Calingfunction",

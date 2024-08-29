@@ -10,15 +10,15 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-1 text-center">MANAGE BANK ACCOUNTS</h4>
-        <span id="Commonerrormessage" class="text-danger"></span>
+        <h4 class="mb-2 text-center"><b>MANAGE BANK ACCOUNTS</b></h4>
+        <span id="Commonerrormessage" class="text-validation"></span>
         <div class="justify-content text-end">
             <button class="btn btn-label-linkedin waves-effect btn-sm" onclick="lnkAddNew(event)">Create Bank Account</button>
         </div>
         <div class="row mb-2" id="Mainsearchdiv">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white">SEARCH BANK ACCOUNTS</div>
+                    <div class="card-header bg-danger text-white text-header">SEARCH BANK ACCOUNTS</div>
                     <div class="card-body">
                         <form class="form" id="bankaccountsserform">
                             <div class="row mb-2">
@@ -34,12 +34,10 @@
                                 </div>
                             </div>
                             <div class="justify-content text-center">
-
-                                <button type="reset" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeTerms',null)">Previous Page</button>
-                                <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
-                                <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeDetails',null)">Next Page</button>
-
+                                <button type="reset" class="btn btn-info waves-effect waves-light btn-sm" onclick="previouspages('ManageFeeTerms',null)">Previous Page</button>
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
+                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="btnsearch">Search</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" onclick="nextpages('ManageFeeDetails',null)">Next Page</button>
                             </div>
                         </form>
                     </div>
@@ -47,8 +45,8 @@
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white">
-                        SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
+                    <div class="card-header bg-danger text-white text-header">
+                        SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
                     </div>
                     <table id="Bankaccountstbl" class="table table-bordered">
                         <thead class="table-dark">

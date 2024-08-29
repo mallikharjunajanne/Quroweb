@@ -399,3 +399,22 @@ $("#Insert_MES").submit(function (event) {
     loaddingimg.css('display', 'none');
 
 })
+
+function Salaryattributeclearfun(formid) {
+    var form = document.getElementById(formid);
+    debugger;
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        window.scrollTo(0, 0);
+        
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+    }
+    else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

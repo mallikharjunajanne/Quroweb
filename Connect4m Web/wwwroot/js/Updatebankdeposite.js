@@ -1,5 +1,5 @@
 ﻿$('#Updatebankdepositform').on('submit', function (event) {
-    debugger;
+    //debugger;
     event.preventDefault();
     event.stopPropagation();
     $('#Commoneerrormessage').text('');
@@ -37,7 +37,7 @@
 
             handleAjax('POST', url, formData,
                 function (resp) {
-                    debugger;
+                    //debugger;
                     loaddingimg.css('display', 'none');
                     switch (resp) {
                         case 'FileExist':
@@ -72,10 +72,30 @@
 function Showimage(fileName,Instanceid) {
     //D:\QuroConnect4m\Quroweb\Connect4m Web\wwwroot\Bankdepositdoc\Instanceid879\Quro logo.jpeg
 
-    debugger;
+    //debugger;
+    //const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
+    //window.open(filePath, '_blank');
+
     const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
-    window.open(filePath, '_blank');
+
+    // Create a new image element
+    const img = new Image();
+
+    // Set up the onload and onerror event handlers
+    img.onload = function () {
+        // If image loads successfully, open it in a new tab
+        window.open(filePath, '_blank');
+    };
+
+    img.onerror = function () {
+        // If image fails to load, show an alert
+        alert('Image is not available.');
+    };
+    // Set the src to start loading the image
+    img.src = filePath;
 }
+
+
 function Imagedlt() {
     $('#Documentiddiv').hide();
     $('#AttachedDocument').show();

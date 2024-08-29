@@ -6,7 +6,7 @@ $(document).ready(fun32READYFUNCTION);
 
 //ready function
 function fun32READYFUNCTION() {
-    debugger;
+    //debugger;
     //var RoleName = Request.Cookies["RoleName"];
 
   //  var val = '@roleName';
@@ -31,7 +31,7 @@ function fun32READYFUNCTION() {
     //else {
     //    $("#StudentAttendanceDetails_Card").show();
     //}
-    debugger;
+    //debugger;
     //var ReadyFunction_Count = $("#ReadyFunction_Count").val();
      //var roleid = $("#Roleid").val();
     var RoleName = $("#RoleName").val();
@@ -84,7 +84,7 @@ resetButton.addEventListener('click', function () {
     document.getElementById('myForm').reset(); // Reset the form
    //   $(".ErrorMessageSpan").empty();
     $(".ErrorMessageSpan").empty();
-    debugger;
+    //debugger;
     $("#AttendancePercentage").text('');
     $("#todateLB").show();
     $("#todate").show();
@@ -149,7 +149,7 @@ ViewStudentLeaves_BTN.addEventListener('click', function () {
    // $("#ViewStudentDetails_P_Span").find('span').empty();
     $(".ErrorMessageSpan").empty();
 
-    debugger;
+    //debugger;
     const today = new Date();
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     $("#Monthid").val(parseInt(month));
@@ -162,7 +162,7 @@ ViewStudentLeaves_BTN.addEventListener('click', function () {
         }
     });
 
-    debugger;
+    //debugger;
    // var roleid = $("#Roleid").val();
     var RoleName = $("#RoleName").val();
 
@@ -185,7 +185,7 @@ ViewStudentLeaves_BTN.addEventListener('click', function () {
 
 function FN_ClearValues() {
     try {
-        debugger;
+        //debugger;
         $("#TextareacountSPAN").text("500");
         
     } catch (x) {
@@ -201,7 +201,7 @@ $('#myForm').submit(function (event) {
         event.preventDefault(); // Prevent the form from submitting
         loaddingimg.css('display', 'block');
           $(".ErrorMessageSpan").empty();
-        debugger;
+        //debugger;
         var Studentid = $("#studentid").val();
         var Fromdate = $("#fromdate").val();
         var Todate = $("#todate").val();
@@ -340,7 +340,7 @@ $('#myForm').submit(function (event) {
                 return;
             }
         }
-        debugger;
+        //debugger;
 
         var formData = new FormData(this); // Create a FormData object
         /* formData = $(this).serialize();*/
@@ -359,7 +359,7 @@ $('#myForm').submit(function (event) {
             contentType: false,
             processData: false,
             success: function (response) {
-                debugger;
+                //debugger;
                //   $(".ErrorMessageSpan").empty();
                 if (response.message == "1") {
                     $('#Attachfile1').val('');
@@ -489,7 +489,7 @@ $('#StudentDataGetting_ID_FORM').on('click', '#Edit_Student_ID', function () {
             url: "/Attendance/stp_tblStudentApplyLeave_DetailsById_ToEDIT?Studentid=" + ID,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
 
 
                 var AdmissionNumCT = $("#AdmissionNumCT").val();
@@ -578,7 +578,7 @@ $('#StudentDataGetting_ID_FORM').on('click', '#Edit_Student_ID', function () {
                 // $("#myForm").find('div').find("myForm ,#attachdocument").val(attachdocument2);
                 /*$('#Attachfile').prop('files', response[0].attachdocument);*/
 
-                debugger;
+                //debugger;
                 /*$("#attachdocument")[0].files = response[0].attachdocument;*/
                 //var fileName = response[0].attachdocument;
                 //$('#Attachfile').val(fileName);
@@ -619,13 +619,13 @@ $('#StudentDataGetting_ID_FORM').on('click', '#Edit_Student_ID', function () {
 //===========================================This is for delete Leaves===========================
 
 function DeleteLeaveLevelCallingFunction(LeaveId,StudentId) {
-    debugger;
+    //debugger;
     try {
         $(".ErrorMessageSpan").empty();
      //   title, type, url, data, successcallback
         CommonDeleteFunction('leave Details', "POST", "/Attendance/ApplyStudentLeave?submitButton=Delete&StudentLeaveDetailsID_TO_Delete=" + LeaveId,null, function (response) {
             loaddingimg.css('display', 'block');
-            debugger;
+            //debugger;
             if (response.message == "Student Leave Deleted Successfully") {
                 stp_tblStudentApplyLeave_SelectById_ByAdmin(StudentId);
                 $('.alert-success p').text(response.message);
@@ -666,7 +666,7 @@ $('#myForm').on('click', '#AttachDocumentTB_FileName_LABEL_DELETE', function () 
        // CommonDeleteFunction('Document', "POST", null, null, function (response) {
       //  CommonDeleteFunction('Document', "POST", "/Attendance/DeleteDocumentFunction", null, function (response) {
             loaddingimg.css('display', 'block');
-            debugger;
+            //debugger;
             $("#AttachDocumentTB_FileName_LABEL_DELETE").css('display', 'none');
             var deletebtn = document.getElementById("AttachDocumentTB_FileName_LABEL_DELETE");
             deletebtn.innerHTML = "";
@@ -752,7 +752,7 @@ function Search_stp_ViewStudentLeaves(event) {
 
     //$(document).off('ready');
 
-    debugger;
+    //debugger;
     var StudentId_ByParent = $("#StudentId_ByParent").val();
     var Month = $("#Monthid").val();
 
@@ -770,7 +770,7 @@ function Search_stp_ViewStudentLeaves(event) {
         return;
     }
     else {
-        debugger;
+        //debugger;
         stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves(StudentId_ByParent, Month, AcadamicYearID,event)
     }
 
@@ -844,7 +844,7 @@ function stp_tblStudentLeaveDetails_TotalByUserId_ViewStudentLeaves( Studentid, 
 //================================This is for calling function to 	ATTENDANCE DETAILS of Student leaves to parent
 function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
     try {
-        debugger;
+        //debugger;
     $.ajax({
         url: "/Attendance/StudentApplyLeave_SelectById_ATTENDANCEDETAILS?Studentid=" + Studentid,
         type: "GET",
@@ -900,7 +900,8 @@ function StudentApplyLeave_SelectById_ATTENDANCEDETAILS(Studentid) {
 //This is for calling function to Student leaves to admin
 function stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid) {
     try {
-        debugger; loaddingimg.css('display', 'block');
+        //debugger;
+        loaddingimg.css('display', 'block');
     $.ajax({
         url: "/Attendance/stp_tblStudentApplyLeave_SelectById_Admin?Studentid=" + Studentid,
         type: "GET",
@@ -1235,7 +1236,7 @@ function fun1() {
         });
         function fun2(response) {
             $("#studentid").empty();
-            debugger;
+            //debugger;
             $("#studentid").append('<option value="">' + "-------select-------" + '</option>')
             $.each(response, function (i, value1) {
 

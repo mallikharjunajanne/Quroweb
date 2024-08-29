@@ -28,11 +28,11 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
     });
 }
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    /*debugger;*/
+    //debugger;
     CallToAjax('GET', url, null,
         function (response) {
 
-            /*debugger;*/
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -44,7 +44,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 }
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    /*debugger;*/
+    //debugger;
     dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -60,7 +60,7 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
 
 
 $(document).ready(function () {
-    /*debugger;*/
+    //debugger;
     Bindroleddl();
     BindDepartmentddl();
     BindReferralddl();
@@ -109,16 +109,17 @@ function BindAcademicyearddl() {
 }
 
 $('#ddlTerms').on('change', function () {
-    /*debugger;*/
+    //debugger;
+
     Termsonchangefeetypeddl();
 });
 $('#ddlInstanceSubClassification').on('change', function () {
-    /*debugger;*/
+    //debugger;
     SubclassonchangeUsersddl();
 });
 
 function Disocuntchkfun() {
-    /*debugger;*/
+    //debugger;
     var checkboxListFeeType_Container = document.getElementById("checkboxListFeeType_Container");
     var FeeType_checkboxListFeeType = document.getElementById("FeeType_checkboxListFeeType");
     var checkboxItems = FeeType_checkboxListFeeType.querySelectorAll("li input[type='checkbox']");
@@ -131,7 +132,7 @@ function Disocuntchkfun() {
     label.classList.add("label-normal");
 
     if (checkbox.checked) {
-        /*debugger;*/
+        //debugger;
         Termsonchangefeetypeddl();
         checkboxListFeeType_Container.style.display = "none";
         feeTypeidSelect.style.display = "block";
@@ -336,7 +337,7 @@ function NonHostlers() {
 }
 
 function PayfeeforusersGetform(event) {
-    debugger;
+    //debugger;
     loaddingimg.css('display', 'block');
     event.preventDefault();
     event.preventDefault();
@@ -348,7 +349,7 @@ function PayfeeforusersGetform(event) {
         $('#Commonerrormessage').text('');
 
         if (ValidationForSetFeeUsers()) {
-            debugger;
+            //debugger;
 
             loaddingimg.css('display', 'block');
             var checkboxes = document.querySelectorAll("#FeeType_checkboxListFeeType input[type='checkbox']");
@@ -390,12 +391,12 @@ function PayfeeforusersGetform(event) {
                 var InstanceClassificationId = $('#ddlInstanceClassification').val();
 
                 if (FeeType_checkedValues.length > 0) {
-                    debugger;
+                    //debugger;
                     formData.append('FeeTypeids', FeeType_checkedValues);
                     formData.append('FeeTypeCheckedFeetypeids', JSON.stringify(FeeType_checkedValues))
                 }
                 else {
-                    debugger;
+                    //debugger;
                     var discountCheckbox = document.getElementById("Discount_Checkbox_ID");
                     if (discountCheckbox.checked) {
                         //var Discount_CheckboxValue = "1432_Arjun"
@@ -424,11 +425,11 @@ function PayfeeforusersGetform(event) {
                 formData.append('InstanceSubClassificationId', InstanceSubClassificationId);
                 formData.append('InstanceClassificationId', InstanceClassificationId);
                 formData.append('FeeType_CheckedTextNames', JSON.stringify(FeeType_CheckedTextNames));
-                debugger;
+                //debugger;
                 //handleAjax('POST', "/FeeSection/Fee_Set_Users_GetFormBtn_click_TblDt", formData,
                 handleAjax('POST', "/FeeSection/SetfeeforusersGettable", formData,
                     function (response) {
-                        debugger;
+                        //debugger;
                         console.log(response);
                         $('#partialViewContainer').empty();
                         $('#partialViewContainer').append(response);
@@ -450,7 +451,7 @@ function PayfeeforusersGetform(event) {
 }
 
 function ValidationForSetFeeUsers() {
-    debugger;
+    //debugger;
     const fieldLabels = {
         'ddlRole': 'Role',
         'ddlInstanceClassification': 'Department',
@@ -476,7 +477,7 @@ function ValidationForSetFeeUsers() {
 }
 
 function clearForm(formId) {
-    debugger;
+    //debugger;
     var form = document.getElementById(formId);
     if (form) {
         form.reset(); // Reset the form elements

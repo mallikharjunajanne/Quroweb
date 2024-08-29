@@ -42,7 +42,7 @@ function CategorytypesNames() {
     var url = '/UserScreens/InstanceCategory_search';
     CallToAjax('GET', url, null,
         function (response) {
-            debugger;
+            //debugger;
             
             var Categorytypes = response.itemList;
             var RoleName = response.roleName;
@@ -161,7 +161,7 @@ function CategorytypesNames() {
                 Studentsunderwithdrawalfun();
             }
             else if (RoleName == "PARENT") {
-                debugger;
+                //debugger;
              
                 var AddingCategorytypeNames = [
                     "Best Performers",
@@ -190,7 +190,7 @@ function CategorytypesNames() {
 
             }
             else if (RoleName == "STUDENT") {
-                debugger;
+                //debugger;
              
                 var AddingCategorytypeNames = [
                     "Best Performers",
@@ -405,7 +405,7 @@ function PostedQuestions() {
 function Absenteestudentsfortheday() {
     CallToAjax('GET', '/UserScreens/Absenteestudentsfortheday',null,
         function (response) {
-            debugger;
+            //debugger;
             $('#Four_PartailConatiner').html(response);
 
         },
@@ -436,7 +436,7 @@ function Timetablefun() {
 /* NEW ADMISSION TABLE */
 function Newadmissiontblfun() {
 
-    debugger;
+    //debugger;
 
     CallToAjax('GET', '/UserScreens/Newadmissionstudents', null,
         function (response) {
@@ -454,7 +454,7 @@ function Newadmissiontblfun() {
 }
 /* Students Under Withdrawal */
 function Studentsunderwithdrawalfun() {
-    debugger;
+    //debugger;
     CallToAjax('GET', '/UserScreens/Studentsunderwithdrawal', null,
         function (response) {
             if (response != 0) {

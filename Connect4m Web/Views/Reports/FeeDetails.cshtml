@@ -10,12 +10,13 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-2 text-center">FEE DETAILS</h4>
+        <h4 class="mb-2 text-center"><b>FEE DETAILS</b></h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                       SEARCH FEE DETAILS<small>* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        SEARCH FEE DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <form id="Feedetailform" enctype="multipart/form-data">
@@ -27,9 +28,9 @@
                                     <span asp-validation-for="FeeTermId" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-12 text-center">                                
-                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClear" onclick="Searchclearfun('Feedetailform')">Clear</button>
-                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Btnsearch">Search</button>                              
+                            <div class="col-sm-12 text-center">
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClear" onclick="Searchclearfun('Feedetailform')">Clear</button>
+                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Btnsearch">Search</button>
                             </div>
                         </form>
                     </div>
@@ -40,7 +41,9 @@
                     <a href="javascript:void(0)" id="Exporttoexcellnk">Export To Excel</a>
                 </div>
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">FEE SUMMARY</div>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        FEE SUMMARY
+                    </div>
                     <!--Example-->
                     <div id="Feesummarytbls"></div>
                     <span id="Feesummarytblamountcountspid" style="color:green;"></span>

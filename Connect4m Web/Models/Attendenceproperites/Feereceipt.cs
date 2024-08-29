@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Models.Attendenceproperites
 {
-    public class Feereceipt
+
+    public class ApiResponse<T>
     {
-        public int InstanceId { get; set; }
-        public string UserId { get; set; }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+
+    public class Feereceipt:Commonproperties
+    {
+        //public int InstanceId { get; set; }
+        //public string UserId { get; set; }
+        [Required(ErrorMessage ="Department is required")]
         public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
+
+        [Required(ErrorMessage = "Class is required")]
         public int InstanceSubClassificationId { get; set; }
         public string SubClassificationName { get; set; }
         public string FirstName { get; set; }
@@ -25,6 +36,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string totalAmount { get; set; }
         public string Amount { get; set; }
         public int UserReceiptGenerationID { get; set; }
+        public string Studentuserid { get; set; }
     }
     public class New_GenerateFeeReceipt:Commonproperties
     {

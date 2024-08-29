@@ -50,12 +50,12 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
 }
 
 $(document).ready(function () {
-    debugger;
+    //debugger;
     Pageload();
 });
 
 function Pageload() {
-    debugger;
+    //debugger;
 
     var formdata = $('#Searchfeedescounttypesform').serialize();
 
@@ -81,7 +81,7 @@ function Pageload() {
 function Bindtable(response) {
 
 
-    debugger;
+    //debugger;
     //var formattedDate = Dateformate();
 
     $("#Recordscount").text(response.length);
@@ -145,22 +145,22 @@ function Bindtable(response) {
 
     table.on('draw', function () {
         $('#Discounttbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'blue',
-            'text-decoration': 'underline',
-            cursor: 'pointer',
-            fontWeight: 'bold'
+            color: '#2C2C2C',
+            'font-size': '14px',
+            'font-weight': 'bold',
+            'cursor': 'pointer'
         });
     });
     $('#Discounttbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'blue',
-        'text-decoration': 'underline',
-        cursor: 'pointer',
-        fontWeight: 'bold'
+        color: '#2C2C2C',
+        'font-size': '14px',
+        'font-weight': 'bold',
+        'cursor': 'pointer'
     });
 }
 
 $('#btnsearch').click(function () {
-    debugger;
+    //debugger;
     var Concedingtypename = $('#Concedingtypenametxt').val();
     
     var formdata = {
@@ -197,7 +197,7 @@ function lnkAddNew() {
 $(document).on('click', '#Discounttbl td:nth-child(2)', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();
 
         var parent = $(event.target).closest('tr');
@@ -213,7 +213,7 @@ $(document).on('click', '#Discounttbl td:nth-child(2)', function (event) {
 
         CallToAjax('GET', "/FeeSection/Update_ManageFeeConcedingTypes?ConcedingTypeId=" + ConcedingTypeId, null,
             function (resp) {
-                debugger;
+                //debugger;
                 $('#SearchMaindiv').hide();
                 $('#Addnew_div1').append(resp);
                 loaddingimg.css('display', 'none');
@@ -232,7 +232,7 @@ $(document).on('click', '#Discounttbl td:nth-child(2)', function (event) {
 $(document).on('click', '#Discounttbl td:nth-child(5) .fa-trash-o', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();
 
         var parent = $(event.target).closest('tr');
@@ -255,7 +255,7 @@ $(document).on('click', '#Discounttbl td:nth-child(5) .fa-trash-o', function (ev
 
 //===>>> CLEAR FUNCTION
 function clearForm(formId) {
-    debugger;
+    //debugger;
     var form = document.getElementById(formId);
     if (form) {
         form.reset(); // Reset the form elements
@@ -273,14 +273,14 @@ function clearForm(formId) {
 //===>>> DELETE FUNCTION
 function DeleteFeeTypes(ConcedingTypeid, ConcedingTypeName) {//Feetypeid, FeetypeName, selectedIds, selectedTexts
     if (confirm("Are you sure you want to delete this Bankname?\nClick OK to delete or Cancel to stop deleting.")) {
-        debugger;
+        //debugger;
         //var formdata = {
         //    Feetypeid: Feetypeid,
         //    Concedingtypeid: concedingtypeIds
         //}
         CallToAjax('GET', "/FeeSection/Delete_ManageFeeConcedingTypes?ConcedingTypeId=" + ConcedingTypeid, null,
             function (resp) {
-                debugger;
+                //debugger;
                 loaddingimg.css('display', 'none');
                 const errorMessages = {
                     "0": 'This DiscountType is Associated with one of Fee Types you cannot delete it.',
@@ -301,7 +301,7 @@ function DeleteFeeTypes(ConcedingTypeid, ConcedingTypeName) {//Feetypeid, Feetyp
 
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-        /*debugger;*/
+        //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -317,7 +317,7 @@ function nextpages(url, data) {
 
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
-        /* debugger;*/
+         //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {

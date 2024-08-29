@@ -387,7 +387,7 @@ $(document).on('click', '#tblMEsearchresults td:nth-child(2)', function (event) 
         $('#appendinsertmanageemployees').css('display', 'block');
         $('#appendinsertmanageemployees').html(response);
         $('#Insert_ME #Save_ME').val("Update");
-        $('.card #updatesalaryattribute').text("UPDATE");
+        $('.card #updatesalaryattribute').text("UPDATE ");
         
         $('#Insert_ME #clearform').css('opacity', '0.3');
       //  $('#Insert_ME #dropdown_PayrollCategoryName_MSC').css('opacity', '0.3').css('color', 'red');
@@ -593,3 +593,26 @@ navLinksinME.forEach(link => {
         this.classList.add('tabchanges');
     });
 });
+
+
+
+//----------------CLEAR FUNCTION
+function Inertclearfun(formid) {
+    var form = document.getElementById(formid);
+    debugger;
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        window.scrollTo(0, 0);
+        $('.compare.error2').text('');
+
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+    }
+    else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

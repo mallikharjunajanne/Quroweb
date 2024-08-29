@@ -8,7 +8,9 @@
     <div class="col-md-12 col-lg-12 mb-1">
         <span id="lblPostNoticeMsg" class="text-danger text-validation"></span>
         <div class="card mb-1">
-            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">POST NOTICE</div>
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                POST NOTICE
+            </div>
             <div class="card-body">
                 <div class="row mb-2">
                     <label class="control-label col-sm-2 col-form-label text-end space">Selected Notice</label>
@@ -47,22 +49,22 @@
 
                     <div class="col-sm-10">
                         @{
-                        var Rolesno = 0;
-                        var Grpsno = 0;
-                        var Cls = 0;
-                        var Scl = 0;
+                            var Rolesno = 0;
+                            var Grpsno = 0;
+                            var Cls = 0;
+                            var Scl = 0;
                         }
                         @foreach (var item in ViewBag.List.IRoleList)
                         {
-                        <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                            <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
-                            <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
-                        </div>
-                        @if (item.InstanceRoleId == 3)
-                        {
-                        break;
-                        }
-                        Rolesno++;
+                            <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
+                                <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
+                            </div>
+                            @if (item.InstanceRoleId == 3)
+                            {
+                                break;
+                            }
+                            Rolesno++;
                         }
                         <div class="form-check form-check-inline col-12" style=" margin-right: 0rem;">
                             <input class="form-check-input checkbox-item Chkitem" id="Selectallstaffrole" type="checkbox" onclick="handleSelectAllStaffRoleCheckbox();" />
@@ -79,15 +81,15 @@
                     <div class="col-10 rowcol" style="margin-right: -3rem;">
                         @foreach (var item in ViewBag.List.GroupList)
                         {
-                        <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                            <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
-                            <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
-                        </div>
-                        @if (item.GroupId == 3)
-                        {
-                        break;
-                        }
-                        Grpsno++;
+                            <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
+                                <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
+                            </div>
+                            @if (item.GroupId == 3)
+                            {
+                                break;
+                            }
+                            Grpsno++;
                         }
                     </div>
                 </div>
@@ -99,15 +101,15 @@
                     <div class="col-10 rowcol" style="margin-right: -3rem;">
                         @foreach (var item in ViewBag.List.ClassificationList)
                         {
-                        <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                            <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
-                            <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
-                        </div>
-                        @if (item.InstanceClassificationId == 3)
-                        {
-                        break;
-                        }
-                        Cls++;
+                            <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
+                                <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
+                            </div>
+                            @if (item.InstanceClassificationId == 3)
+                            {
+                                break;
+                            }
+                            Cls++;
                         }
                     </div>
                 </div>
@@ -120,15 +122,15 @@
                     <div class="col-10" style="margin-right: -3rem;">
                         @foreach (var item in ViewBag.List.SubclassificationList)
                         {
-                        <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                            <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
-                            <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
-                        </div>
-                        @if (item.InstanceSubClassificationId == 3)
-                        {
-                        break;
-                        }
-                        Scl++;
+                            <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
+                                <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
+                            </div>
+                            @if (item.InstanceSubClassificationId == 3)
+                            {
+                                break;
+                            }
+                            Scl++;
                         }
                     </div>
                 </div>
@@ -136,8 +138,8 @@
         </div>
         <div id="PostNoticeAddinguserstable_Div" style="display: none;">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">
-                YOUR HAVE SELECTED BELOW <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span> USER(S) TO POST THIS NOTICE.
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR HAVE SELECTED BELOW <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">0</span> USER(S) TO POST THIS NOTICE.
                 </div>
                 <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticeaddeduserstbl">
                     <thead class="table-dark">
@@ -163,7 +165,7 @@
         </div>
         <div id="SearchUser_AddUser_DivId_Postnotice" style="display: none;">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">SEARCH USERS TO POST NOTICE</div>
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">SEARCH USERS TO POST NOTICE</div>
                 <div class="card-body">
                     <form id="NoticeUserSeacrhform">
                         <div class="row mb-2">
@@ -241,9 +243,9 @@
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">
+                <div class="card-header bg-danger text-white text-header">
                     YOUR SEARCH RESULTED
-                    <span id="SearchRecordsspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span>
+                    <span id="SearchRecordsspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">0</span>
                     RECORDS.
                 </div>
                 <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticesearchuserstbl">

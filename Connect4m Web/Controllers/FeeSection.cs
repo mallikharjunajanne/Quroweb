@@ -139,6 +139,7 @@ namespace Connect4m_Web.Controllers
         {  
             return View();
         }
+        
         [Authorize]
         public IActionResult Bindtblfeetype(string FeeType)
         {
@@ -155,6 +156,7 @@ namespace Connect4m_Web.Controllers
             ConcedingTypes ddlobj = new ConcedingTypes();
 
             ddlobj.InstanceId = InstanceId;
+            ddlobj.CreatedBy = UserId;
             List<ConcedingTypes> list = CommonMethodobj.CommonListMethod<ConcedingTypes, ConcedingTypes>(ddlobj, "/BindConcedingDropdown", client); 
 
             var discountItems = new List<SelectListItem>
@@ -170,6 +172,7 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
+        
         [Authorize]
         [HttpPost]
         public IActionResult Insert_feetype(Feetypes obj)
@@ -193,6 +196,7 @@ namespace Connect4m_Web.Controllers
             string Returnvalue = CommonInsertingMethod(obj, "/Insertfeetypes");
             return Json(Returnvalue);
         }
+        
         [Authorize]
         [HttpGet]
         public IActionResult FeeType_Edit(int Feetypeid)
@@ -202,7 +206,9 @@ namespace Connect4m_Web.Controllers
 
             editobj.Feetypeid = Feetypeid;
             editobj.InstanceId = InstanceId;
+            editobj.CreatedBy = UserId;
             ddlobj.InstanceId = InstanceId;
+            ddlobj.CreatedBy = UserId;
             List<Feetypes> model = CommonMethodobj.CommonListMethod<Feetypes, Feetypes>(editobj, "/Editfeetypes", client);          
 
             var filteredRows = model.GroupBy(r => r.Feetypeid).SelectMany(g => g.GroupBy(r => r.Concedingtypeid)
@@ -231,6 +237,7 @@ namespace Connect4m_Web.Controllers
           
             return View();
         }
+        
         [Authorize]
         [HttpPost] //FeeType_Edit
         public IActionResult FeeTypeUpdate(Feetypes obj)
@@ -254,10 +261,12 @@ namespace Connect4m_Web.Controllers
             string Returnvalue = CommonInsertingMethod(obj, "/Updatefeetype");
             return Json(Returnvalue);
         }
+       
         [Authorize]
         public IActionResult Deletefeetype(Feetypes obj)
         {
             obj.InstanceId=InstanceId;
+            obj.CreatedBy=UserId;
             string Returnvalue = CommonInsertingMethod(obj, "/Deletefeetype");
             return Json(Returnvalue);
         }
@@ -275,7 +284,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult GetAcadamicyeardd()
         {
             List<SelectListItem> AcYear = new List<SelectListItem>();
-            HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId).Result;
+            HttpResponseMessage YearResponse = client.GetAsync(client.BaseAddress + "/AcademicYear_GETTYPES?InstanceId=" + InstanceId+ "&Createdby="+UserId).Result;
             if (YearResponse.IsSuccessStatusCode)
             {
                 string Yearsdata = YearResponse.Content.ReadAsStringAsync().Result;
@@ -288,7 +297,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Getfeetypesdd()
         {
             List<SelectListItem> feetypesli = new List<SelectListItem>();
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId).Result;
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/FeeTypes_GETTypes?InstanceId=" + InstanceId+ "&Createdby="+UserId).Result;
             if (Response.IsSuccessStatusCode)
             {
                 string Yearsdata = Response.Content.ReadAsStringAsync().Result;
@@ -319,8 +328,8 @@ namespace Connect4m_Web.Controllers
         public IActionResult Insert_feeterms(Feeterms obj)
         {
             //decimal amount = Convert.ToDecimal(obj.Amount);
-            obj.InstanceId = InstanceId;
-            obj.CreatedBy = UserId;
+            //obj.InstanceId = InstanceId;
+            //obj.CreatedBy = UserId;
 
             string FeeTypeIds = "";
             if (obj.FeeTypeIds != null)
@@ -347,8 +356,11 @@ namespace Connect4m_Web.Controllers
 
             editobj.FeeTermId = FeeTermId;
             editobj.InstanceId = InstanceId;
+            editobj.CreatedBy = UserId;
             ddlobj.InstanceId = InstanceId;
+            ddlobj.CreatedBy = UserId;
             AcademicYearddl.InstanceId = InstanceId;
+            AcademicYearddl.CreatedBy = UserId;
             List<Feeterms> model = CommonMethodobj.CommonListMethod<Feeterms, Feeterms>(editobj, "/Editfeeterms", client);
 
             var filteredRows = model.GroupBy(r => r.FeeTermId).SelectMany(g => g.GroupBy(r => r.FeeTypeId)
@@ -419,6 +431,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Deletefeeterm(Feeterms obj)
         {
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             string Returnvalue = CommonInsertingMethod(obj, "/Deletefeeterm");
             return Json(Returnvalue);
         }
@@ -466,7 +479,7 @@ namespace Connect4m_Web.Controllers
 
             editobj.ConcedingTypeId = ConcedingTypeId;
             editobj.InstanceId = InstanceId;
-            Feeconcedingtypes model = CommonMethodobj.CommonEditMethod<Feeconcedingtypes, Feeconcedingtypes>(null, "/EditFeeconcedingtypes?ConcedingTypeId=" + ConcedingTypeId, client);
+            Feeconcedingtypes model = CommonMethodobj.CommonEditMethod<Feeconcedingtypes, Feeconcedingtypes>(null, "/EditFeeconcedingtypes?ConcedingTypeId=" + ConcedingTypeId+ "&InstanceId="+ InstanceId+ "&Createdby="+UserId, client);
             return View(model);
         }
         [Authorize]
@@ -536,7 +549,7 @@ namespace Connect4m_Web.Controllers
             BankAccounts editobj = new BankAccounts();
             editobj.BankAccountId = BankAccountId;
             editobj.InstanceId = InstanceId;
-            BankAccounts model = CommonMethodobj.CommonEditMethod<BankAccounts, BankAccounts>(null, "/Editbankaccount?BankAccountId="+BankAccountId, client);
+            BankAccounts model = CommonMethodobj.CommonEditMethod<BankAccounts, BankAccounts>(null, "/Editbankaccount?BankAccountId="+BankAccountId+ "&InstanceId="+ InstanceId+ "&CreatedBy="+UserId, client);
             return View(model);
         }
         [Authorize]
@@ -556,6 +569,7 @@ namespace Connect4m_Web.Controllers
             BankAccounts obj = new BankAccounts();
             obj.InstanceId = InstanceId;
             obj.BankAccountId = BankAccountId;
+            obj.CreatedBy = UserId;
             
             string Returnvalue = CommonInsertingMethod(obj, "/DeleteBankaccounts");
             return Json(Returnvalue);
@@ -973,20 +987,20 @@ namespace Connect4m_Web.Controllers
                 //Item = item,
                 Challana_TermName = obj.Challana_TermName,                            //1  "Challana_TermName",              
                 Challana_FeeType = obj.Challana_FeeType,                              //2  "Challana_FeeType",               
-                Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),                          //3  "Challana_FeeAmount",             
+                Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),            //3  "Challana_FeeAmount",             
                 Challana_DiscountType = obj.Challana_DiscountType,                    //4  "Challana_DiscountType",          
                 Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5  "Challana_DiscountAmount",        
                 Challana_PaidAmount = obj.Challana_PaidAmount,
-                Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),//6  "Challana_PaidAmount",            
+                Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),      //6  "Challana_PaidAmount",            
 
                 Challana_DueAmount = obj.Challana_DueAmount,                          //7  "Challana_PayingAmount",----          
-                Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),                        //8  "Challana_DueAmount",             
+                Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),          //8  "Challana_DueAmount",             
                 Challana_DueDate = obj.Challana_DueDate,                              //9  "Challana_BalanceDue",            
-                Challana_UserRegId = obj.Challana_UserRegId,                          //10 "Challana_DueDate",               
-                Challana_ClassificationName = obj.Challana_ClassificationName,        //11 "Challana_UserRegId",             
-                Challana_subclassificationName = obj.Challana_subclassificationName,  //12 "Challana_ClassificationName",    
+                Challana_UserRegId = obj.Challana_UserRegId,                          //10  "Challana_DueDate",               
+                Challana_ClassificationName = obj.Challana_ClassificationName,        //11  "Challana_UserRegId",             
+                Challana_subclassificationName = obj.Challana_subclassificationName,  //12  "Challana_ClassificationName",    
                 Description = obj.Description,
-                Challana_UserName = obj.Challana_UserName,                             //13 "Challana_subclassificationName", 
+                Challana_UserName = obj.Challana_UserName,                            //13  "Challana_subclassificationName", 
                 ReturnStringValue = returnmessage,
 
             });
@@ -1079,6 +1093,68 @@ namespace Connect4m_Web.Controllers
             }
             return PartialView("_PFU_PaidAmount_Edit_SingleUser");
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Pfuuserfeerefundinstallment(Feeinstallmentsinsert obj)
+        {
+            try
+            {
+                obj.CreatedBy = UserId;
+                obj.InstanceId = InstanceId;
+                obj.PaymentDate = DateTime.Now;
+
+                string data1 = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+                //HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfufeeinstallmentsinsert", content).Result;
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Pfufeerefundinstallmentsinsert", content).Result;
+                FeeInstallmentResult items = new FeeInstallmentResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    var data2 = response.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<FeeInstallmentResult>(data2);
+                }
+                int returnmessage = int.Parse(items.Insertretunmessage);
+                int ReceiptNo = int.Parse(items.ReceiptNo);
+                List<ChallanaDetails> limodel = new List<ChallanaDetails>();
+
+
+                //double parsedAmount;
+                //bool isValidAmount = double.TryParse(obj.Challana_PayingAmount, out parsedAmount);
+                double payingAmount = double.Parse(obj.Challana_PayingAmount);
+                double absPayingAmount = Math.Abs(payingAmount);
+
+                limodel.Add(new ChallanaDetails
+                {                  
+                    Challana_TermName = obj.Challana_TermName,                            //1   "Challana_TermName",              
+                    Challana_FeeType = obj.Challana_FeeType,                              //2   "Challana_FeeType",               
+                    Challana_FeeAmount = double.Parse(obj.Challana_FeeAmount),            //3   "Challana_FeeAmount",             
+                    Challana_DiscountType = obj.Challana_DiscountType,                    //4   "Challana_DiscountType",          
+                    Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5   "Challana_DiscountAmount",        
+                    Challana_PaidAmount = obj.Challana_PaidAmount,
+                    Challana_PayingAmount = absPayingAmount,                              //6  "Challana_PaidAmount",    
+                    //Challana_PayingAmount = isValidAmount ? parsedAmount : 0.0,
+                    //Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),    //6   "Challana_PaidAmount",   
+                    Challana_DueAmount = obj.Challana_DueAmount,                          //7   "Challana_PayingAmount",
+                    Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),          //8   "Challana_DueAmount",             
+                    Challana_DueDate = obj.Challana_DueDate,                              //9   "Challana_BalanceDue",            
+                    Challana_UserRegId = obj.Challana_UserRegId,                          //10  "Challana_DueDate",               
+                    Challana_ClassificationName = obj.Challana_ClassificationName,        //11  "Challana_UserRegId",             
+                    Challana_subclassificationName = obj.Challana_subclassificationName,  //12  "Challana_ClassificationName",    
+                    Description = obj.Description,
+                    Challana_UserName = obj.Challana_UserName,                            //13  "Challana_subclassificationName", 
+                    ReturnStringValue = returnmessage,
+
+                });
+                return PartialView("_Installmentreceipt", limodel);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Json("0");
+            }
+        }
+
         #endregion
 
         #region PAY FEE CORRECTIONS // PayFeeForUserForChallan 
@@ -1222,6 +1298,8 @@ namespace Connect4m_Web.Controllers
             int returnmessage = int.Parse(items.Insertretunmessage);
             int ReceiptNo = int.Parse(items.ReceiptNo);
             List<ChallanaDetails> limodel = new List<ChallanaDetails>();
+
+
             limodel.Add(new ChallanaDetails
             {
                 Challana_TermName = obj.Challana_TermName,                            //1  "Challana_TermName",              
@@ -1231,6 +1309,7 @@ namespace Connect4m_Web.Controllers
                 Challana_DiscountAmount = obj.Challana_DiscountAmount,                //5  "Challana_DiscountAmount",        
                 Challana_PaidAmount = obj.Challana_PaidAmount,
                 Challana_PayingAmount = double.Parse(obj.Challana_PayingAmount),      //6  "Challana_PaidAmount",      
+                  
                 Challana_DueAmount = obj.Challana_DueAmount,                          //7  "Challana_PayingAmount",----          
                 Challana_BalanceDue = double.Parse(obj.Challana_BalanceDue),          //8  "Challana_DueAmount",             
                 Challana_DueDate = obj.Challana_DueDate,                              //9  "Challana_BalanceDue",            
@@ -1605,106 +1684,122 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        /*----====Feereceipt Action methods start ====----*/
+        #region FEERECEIPT
+
+        //FEE STATUS SCREEN  ddlClassification Classddl THESE TWO METHODS ARE USING DIFFERENT METHOD 
         public IActionResult Feereceipt()
-        {
-            var InstanceId = Request.Cookies["INSTANCEID"];
-            ViewBag.InstanceId = InstanceId;
+        {           
             return View();
-
         }
-        [HttpPost]
-        public IActionResult Feereceipt(int InstanceId, int ClassificationId, int SubClassificationId)
+        
+        public IActionResult Frclassificationddlbinding()
         {
-            List<Feereceipt> DiscountLi = new List<Feereceipt>();
+            List<SelectListItem> classificationlist = new List<SelectListItem>();
+            HttpResponseMessage clresponse = client.GetAsync(client.BaseAddress + "/ddlClassification?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+            if (clresponse.IsSuccessStatusCode)
+            {
+                string DD_Data = clresponse.Content.ReadAsStringAsync().Result;
+                classificationlist = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
+            }
+            return Json(classificationlist);
+        }
 
-            var queryString = $"?InstanceId={InstanceId}&ClassificationId={ClassificationId}&SubClassificationId={SubClassificationId}";
-            //exec stp_tblUser_HallTickets @InstanceId=545,@ClassificationId=806,@SubClassificationId=1172
+        public IActionResult FrSubclassddlbinding(int InstanceClassificationId)
+        {
+            List<SelectListItem> Subclassli = new List<SelectListItem>();
+            HttpResponseMessage subclassresponse = client.GetAsync(client.BaseAddress + "/Classddl?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
+            if (subclassresponse.IsSuccessStatusCode)
+            {
+                string data = subclassresponse.Content.ReadAsStringAsync().Result;
+                Subclassli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }            
+            return Json(Subclassli);
+        }
 
+
+        [HttpPost]
+        public IActionResult Feereceipt(Feereceipt obj,int ClassificationId, int SubClassificationId)
+        {
+            List<Feereceipt> feereceiptsli = new List<Feereceipt>();
+            var queryString = $"?InstanceId={InstanceId}&ClassificationId={obj.InstanceClassificationId}&SubClassificationId={obj.InstanceSubClassificationId}";
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Feereceipt_UserTable_Get" + queryString).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                DiscountLi = JsonConvert.DeserializeObject<List<Feereceipt>>(data);
+                feereceiptsli = JsonConvert.DeserializeObject<List<Feereceipt>>(data);
             }
-
-            ViewBag.FT_Tbl = DiscountLi;
-
-            return new JsonResult(ViewBag.FT_Tbl);
-
+            //return new JsonResult(feereceiptsli);
+            return Json(feereceiptsli);
         }
-        public IActionResult Feereceipt_Classification_DD(int InstanceId)
+        public IActionResult FrTermsddl()
         {
-            List<SelectListItem> PFU_Cl_DD = new List<SelectListItem>();
-            HttpResponseMessage ClS_DD_Response = client.GetAsync(client.BaseAddress + "/ddlClassification?InstanceId=" + InstanceId+ "&CreatedBy="+UserId).Result;
-            if (ClS_DD_Response.IsSuccessStatusCode)
+            //List<SelectListItem> Termsli = new List<SelectListItem>();
+            ApiResponse<List<SelectListItem>> Termsli = new ApiResponse<List<SelectListItem>>();
+            try
             {
-                string DD_Data = ClS_DD_Response.Content.ReadAsStringAsync().Result;
-                PFU_Cl_DD = JsonConvert.DeserializeObject<List<SelectListItem>>(DD_Data);
+                HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/FRtermsddl?InstanceId=" + InstanceId + "&Createdby=" + UserId).Result;
+                if (Response.IsSuccessStatusCode)
+                {
+                    string data = Response.Content.ReadAsStringAsync().Result;
+                    //Termsli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+                    Termsli = JsonConvert.DeserializeObject<ApiResponse<List<SelectListItem>>>(data);
+                    
+                }
             }
-            ViewBag.AcadamicYearDD = PFU_Cl_DD;
-
-            return Json(ViewBag.AcadamicYearDD);
-
-        }
-        public IActionResult FeereceiptClass_DD(int InstanceId, int InstanceClassificationId)
-        {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
-            HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/Classddl?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId).Result;
-            if (MFD_Response.IsSuccessStatusCode)
+            catch (Exception ex)
             {
-                string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
+                string message = ex.Message;
             }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
+            return Json(Termsli.Data);
+           // return Json(Termsli);
         }
-        public IActionResult FeeTerms_DD(int InstanceId)
+        public IActionResult Frfeetypeddl(int FeeTermIds)
         {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
-            HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/Feereceipt_FeeTermsDD?InstanceId=" + InstanceId).Result;
-            if (MFD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-            }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
-        }
-        public IActionResult Feereceipt_FeeType_DD(int InstanceId, int FeeTermIds)
-        {
-            List<SelectListItem> MFD_ClassDD_li = new List<SelectListItem>();
-            HttpResponseMessage MFD_Response = client.GetAsync(client.BaseAddress + "/Feereceipt_FeeTypeDD?InstanceId=" + InstanceId + "&FeeTermIds=" + FeeTermIds).Result;
-            if (MFD_Response.IsSuccessStatusCode)
-            {
-                string Sub_DD_Data = MFD_Response.Content.ReadAsStringAsync().Result;
-                MFD_ClassDD_li = JsonConvert.DeserializeObject<List<SelectListItem>>(Sub_DD_Data);
-            }
-            ViewBag.MFD_Class_Data = MFD_ClassDD_li;
-
-            return Json(ViewBag.MFD_Class_Data);
-        }
-        [HttpPost]
-        public IActionResult Feereceipt_Users_Challan_Result_Tbl(string FeeTermId, string FeeTypeIds, string UserIds, int InstanceId)
-        {
-
-
-            StringContent content = new StringContent("application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Feereceipt_Users_Challan_Result?FeeTermId=" + FeeTermId + "&FeeTypeIds=" + FeeTypeIds + "&UserIds=" + UserIds + "&InstanceId=" + InstanceId, content).Result;
-            var data2 = "";
-            List<Feereceipt> items = new List<Feereceipt>();
-
+            List<SelectListItem> FeeTypeli = new List<SelectListItem>();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/FRfeetypesddl?InstanceId=" + InstanceId + "&FeeTermIds=" + FeeTermIds+ "&Createdby=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
-                data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<List<Feereceipt>>(data2);
+                string data = response.Content.ReadAsStringAsync().Result;
+                FeeTypeli = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-            return Json(items);
-
+            return Json(FeeTypeli);
         }
-        /*----====Feereceipt Action methods start ====----*/
+
+
+        [HttpPost]
+        public IActionResult FrUserschallanresulttbl(string FeeTermId, string FeeTypeIds, string UserIds)
+        {
+            //List<Feereceipt> items = new List<Feereceipt>();
+            ApiResponse<List<Feereceipt>> items = new ApiResponse<List<Feereceipt>>();
+            StringContent content = new StringContent("application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/FRreceiptuserschallanresults?FeeTermId=" + FeeTermId + "&FeeTypeIds=" + FeeTypeIds + "&UserIds=" + UserIds + "&InstanceId=" + InstanceId+ "&Createdby="+UserId, content).Result;
+            
+            if (response.IsSuccessStatusCode)
+            {
+              string data2 = response.Content.ReadAsStringAsync().Result;
+                //items = JsonConvert.DeserializeObject<List<Feereceipt>>(data2);
+                items = JsonConvert.DeserializeObject<ApiResponse<List<Feereceipt>>>(data2);
+                return Json(items);
+            }
+            else
+            {
+                //items.StatusCode = (int)response.StatusCode;
+                items.StatusCode = -200;
+                return Json(items);
+                //return RedirectToAction("ErrorPage", "Attendance");
+            }
+            //return Json(items);
+            //return Json(items.Data);
+        }
+       
+        #endregion
+
+
+
+
+
+
+
 
 
         /*----====TransferChallan Action Method Code Start ====----*/

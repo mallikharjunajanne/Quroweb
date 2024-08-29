@@ -7891,8 +7891,10 @@ a.invert-bg-dark:hover, a.invert-bg-dark:focus {
     text-transform: uppercase;
     font-size: 0.8125rem;
     letter-spacing: 1px;
-    padding-top: 0.88rem;
-    padding-bottom: 0.88rem;
+  /*  padding-top: 0.88rem;
+    padding-bottom: 0.88rem;*/
+    padding-top: 0.48rem;
+    padding-bottom: 0.48rem;
 }
 
 .table:not(.table-dark) thead:not(.table-dark) th {

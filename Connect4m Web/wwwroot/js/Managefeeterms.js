@@ -197,17 +197,17 @@ function Bindtable(response) {
 
     table.on('draw', function () {
         $('#Feetermstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-            color: 'blue',
-            'text-decoration': 'underline',
-            cursor: 'pointer',
-            fontWeight: 'bold'
+            color: '#2C2C2C',
+            'font-size': '14px',
+            'font-weight': 'bold',
+            'cursor': 'pointer'
         });
     });
     $('#Feetermstbl').find('td:nth-child(2)').attr('title', 'Edit').attr('title', 'Edit').css({
-        color: 'blue',
-        'text-decoration': 'underline',
-        cursor: 'pointer',
-        fontWeight: 'bold'
+        color: '#2C2C2C',
+        'font-size': '14px',
+        'font-weight': 'bold',
+        'cursor': 'pointer'
     });
 }
 

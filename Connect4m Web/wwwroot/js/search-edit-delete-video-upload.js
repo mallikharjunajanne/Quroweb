@@ -13,7 +13,7 @@ $(document).ready(function () {
     //   document.getElementById("loading").style.display = "none";
 });
 function searchvideosuploading(videosClassificationIds, videosInstanceSubClassificationId, videosInstanceSubjectsId, videosInstanceSubjectsToolIds) {
-    debugger;
+    //debugger;
     $.ajax({
         url: "/Videos/SearchUploadlecturedocsjson?ClassificationIds=" + videosClassificationIds + "&InstanceSubClassificationId=" + videosInstanceSubClassificationId + "&InstanceSubjectsId=" + videosInstanceSubjectsId + "&SubjectsToolId=" + videosInstanceSubjectsToolIds ,
         type: "GET",
@@ -271,7 +271,7 @@ function bindDatatableforsearchvideos(response) {
 }
 
 function Opennewwindow(fileextens) {
-    debugger;
+    //debugger;
     var endsWithVideo = fileextens.endsWith(".mp4");
     if (endsWithVideo) {
         $('#TrailVideoviewbyadmin').css('display', 'block');
@@ -309,7 +309,7 @@ $(document).on('click', 'form #videos_uploading_clear', function () {
 
 //------------------------------------------------------------------------------------Search The Videos Uploading Screen
 $("#formsearchvideouploading").submit(function (event) {
-    debugger;
+    //debugger;
     
     event.preventDefault();
     videosClassificationIds = $('#Department').val();

@@ -20,7 +20,7 @@
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="demo-inline-spacing">
-                    <button class="btn rounded-pill btn-label-primary waves-effect" onclick="LnkApplyShortLeave()">Apply Short Leave</button>
+                    <button class="btn rounded-pill btn-label-primary waves-effect btn-sm" onclick="LnkApplyShortLeave()">Apply Short Leave</button>
                 </div>
 
                 <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
@@ -74,7 +74,7 @@
 
                     @*-----------------------------Print And Cancel And View  Details Table-----------------------*@
                     @*<a id="A1" href="#" onclick="javascript:CallPrint('PrintBTN')">PRINT</a>*@
-                    <button class="btn rounded-pill btn-label-primary waves-effect" id="PrintBTN" style="display:none" onclick="javascript:CallPrint('printDetails_Form')">
+                    <button class="btn rounded-pill btn-label-primary waves-effect btn-sm" id="PrintBTN" style="display:none" onclick="javascript:CallPrint('printDetails_Form')">
                         PRINT
                     </button>
 
@@ -238,7 +238,7 @@
                     </div>
 
                     @*-----------------------------Monthly sHORT lEAVES Details Table-----------------------*@
-                    <button class="btn rounded-pill btn-outline-info waves-effect" id="lnkShowMyPermissions" onclick="TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, '1', 'TblMonthlyAppliedShortLeaves_SearchRecords', 'CountOfRecords_MonthlyAppliedShortLeaves', 'MonthlyAppliedShortLeaves_SearchRecords_Div')">
+                    <button class="btn rounded-pill btn-outline-info waves-effect btn-sm" id="lnkShowMyPermissions" onclick="TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, '1', 'TblMonthlyAppliedShortLeaves_SearchRecords', 'CountOfRecords_MonthlyAppliedShortLeaves', 'MonthlyAppliedShortLeaves_SearchRecords_Div')">
                         Show My Short Leaves
                     </button>
 
@@ -505,9 +505,9 @@
                                     @*--------------------------*@
                                     <div class="row justify-content-end">
                                         <div class="col-sm-8">
-                                            <button type="button" class="btn btn-info waves-effect waves-light" id="Backbutton1" onclick="BackToDisplayShortLeaves(this.id)" value="Back">Back</button>
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearbutton1" onclick="FN_ClearValues(this.id,'FmApplyShortLeave','AppliedEmployeesNames_Id')" value="Clear">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="savebuttonId" value="Submit">Submit</button>
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="Backbutton1" onclick="BackToDisplayShortLeaves(this.id)" value="Back">Back</button>
+                                            <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" id="clearbutton1" onclick="FN_ClearValues(this.id,'FmApplyShortLeave','AppliedEmployeesNames_Id')" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="savebuttonId" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                     @*--------------------------*@

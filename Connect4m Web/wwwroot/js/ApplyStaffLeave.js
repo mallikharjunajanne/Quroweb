@@ -4,7 +4,7 @@ function FN_ClearValues1(Formid) {
     try {
       //  $('#your-p-id').find('span').empty();
         $(".ErrorMessageSpan").empty();
-        debugger;
+        //debugger;
         document.getElementById(Formid).reset(); // Reset the form
 
         //var form = document.getElementById(Formid);
@@ -148,7 +148,7 @@ function ApplyLeave_refreshpage() {
 //});
 
 function LeaveStatusTabCalingFunction_Btn() {
-    debugger;
+    //debugger;
     $(".ErrorMessageSpan").empty();
     //$('#your-p-id1').find('span').empty();
     var PrintBTN = document.getElementById("PrintBTN");
@@ -186,14 +186,14 @@ $(document).ready(function () {
             var ReturnTOStop = "";
             $('#myFormCart tbody tr').each(function () {
                 //var price = $(this).find("td:nth-child(3)").text()
-                debugger;
+                //debugger;
                 // Reason = $(this).find("td:nth-child(3) input").val();
                 // Reason = $(this).find("td:nth-child(3)").text().replace(" ","");
                 Reason = $(this).find("td:nth-child(3)").find("#DescriptionidtextCT").val().replace(" ", "");
                 if (count == 0) {
                     TopVAlue = Reason;
                 }
-                debugger;
+                //debugger;
                 if (Reason != TopVAlue) {
                    // $('#your-p-id').find('span').empty();
                     $('#successMessage').text("You can't apply a Leave Request with different Reasons.Leave Reason should be same for one Leave Request.");
@@ -227,10 +227,10 @@ $(document).ready(function () {
                 success: function (response) {
   
                     GetMysavedLeaves_CallingFunction();
-                    debugger;
+                    //debugger;
                     if (response.message.includes("Success12")) {
                         var successMessage = response.message;
-                        debugger;
+                        //debugger;
 
                         ApplyLeave_refreshpage();
                         var Batchid = successMessage.replace("Success12-", "").replace("", "");
@@ -239,7 +239,7 @@ $(document).ready(function () {
                     }
                     else if (response.message == "Staff Leave Saved Successfully" || response.message == "As you are a final level approver, but there is no Self-Approval defined to you." || response.message == "Staff Leave Deleted Successfully" || response.message == "Staff Leave Updated Successfully" || response.message == "Request has Self - Approved Successfully.") {
                        // $('#your-p-id').find('span').empty();
-                        debugger;
+                        //debugger;
                         //  $('#myForm').find('input').val('');
                         $("#myFormCart tbody").empty;
                         ApplyLeave_refreshpage();
@@ -258,7 +258,7 @@ $(document).ready(function () {
                         //$("#savebutton").prop("disabled", true)
                         // $("#MedicalLeaveDocument").hide();
                         // $("#GetLeaveDaysAvailableid").text('');
-                        debugger;
+                        //debugger;
                     
                         $("#savebutton").val("Add Leaves To Cart").text("Add Leaves To Cart").prop("disabled", false);
                        // $("#myForm #savebutton").prop("disabled", false);
@@ -299,7 +299,7 @@ $(document).ready(function () {
     //This Is For save in cart
     $("#myForm").submit(function (event) {
         try {
-            debugger;
+            //debugger;
             event.preventDefault(); // prevent the form from submitting
             loaddingimg.css('display', 'block');
             $(".ErrorMessageSpan").empty();
@@ -460,7 +460,7 @@ $(document).ready(function () {
             //  var id = $("#EditBTid").closest("tr").find("td:nth-child(2)").text();
             // var id = $("#EditBTid").closest("tr").find("td:nth-child(6)").text();
             var btn = $("#savebutton").val();
-            debugger;
+            //debugger;
             var LeaveApplicationId = $("#LeaveApplicationId").val();
 
             if (btn == "Update to Cart" && LeaveApplicationId != "") {
@@ -600,7 +600,7 @@ $(document).ready(function () {
                             //}
 
 
-                            debugger;
+                            //debugger;
 
                             //This is worked--------------------------------------------------------------
                             var id = $("#EditBTid").val();
@@ -702,7 +702,7 @@ $(document).ready(function () {
                                     count++;
                                 }
                             });
-                            debugger;
+                            //debugger;
                             if (count > 0) {
                                 $('#myFormCart tbody tr').each(function () {
                                     //var price = $(this).find("td:nth-child(3)").text()
@@ -814,7 +814,7 @@ $(document).ready(function () {
 
                        // $('#attachdocumentCT' + tablelength)[0].files = $("#attachdocument")[0].files;
 
-                        debugger;
+                        //debugger;
 
                         if (file12) {//this very importent for file transfer
                             var fileinputinForm_Toget = $("#attachdocument")[0].files[0];
@@ -878,7 +878,7 @@ $(document).ready(function () {
                         //var month = ('0' + (today.getMonth() + 1)).slice(-2);
                         //var day = ('0' + today.getDate()).slice(-2);
                         //var TodaydateString = year + '-' + month + '-' + day;
-                        debugger;
+                        //debugger;
                         //if (Date.parse(Fromdate) < Date.parse(TodaydateString) || Date.parse(Todate) < Date.parse(TodaydateString)) {
 
                         //    $("#myFormCart #Save_as_Draft_BTN").prop("disabled", true);
@@ -984,7 +984,7 @@ function GetShort_Description_for_Leave_Reason_CallingMethod(Descriptionid_Value
         $.each(response, function (i, value1) {
             $("#Descriptionid1").append('<option value="' + value1.value + '">' + value1.text + '</option>');
         });
-        debugger;
+        //debugger;
         //if (Descriptionid_Value == 9) {
         if (Descriptionid_Value == "Other") {
             $("#Descriptionid1").val(Descriptionid_Value);
@@ -1011,7 +1011,7 @@ function GetLeaveTypeDropdown_CallingMethod(DisplayMarriagecheckingLeaves, Leave
         });
         function fun2(response) {
             $("#leavetype").empty();
-            debugger;
+            //debugger;
             $("#leavetype").append('<option value="">' + "-------select-------" + '<option>')
 
             var LeavetypeText = "";
@@ -1073,7 +1073,7 @@ $('#myFormCart').on('click', 'td a', function () {
         /*alert(tablelength)*/
         //====This is getting Values
 
-        debugger;
+        //debugger;
         //var EDITbtnID1 = $(this).find('#id_For_Edit').val();
         var LeavetypeidCT2 = $(this).closest('tr').find('td').find('#LeavetypeidCT').val();
         var DescriptionidCT2 = $(this).closest('tr').find('td').find('#DescriptionidtextCT').val();
@@ -1138,7 +1138,7 @@ $('#myFormCart').on('click', 'td a', function () {
            
             $("#MedicalLeaveDocument").show();
 
-            debugger;
+            //debugger;
             // $("#attachdocumentCT")[0].files =  $("#attachdocumentCT")[0].files;
             $("#attachdocument")[0].files = $(this).closest('tr').find('td').find('.attachdocumentCT')[0].files;
             // $("#attachdocument")[0].files = $('#attachdocumentCT'+tablelength)[0].files;
@@ -1178,7 +1178,7 @@ $('#myFormCart').on('click', 'td a', function () {
                 success: fun215
             });
             function fun215(response) {
-                debugger;
+                //debugger;
                 //$("#GetLeaveDaysAvailableid").append(response);
                 //$("#GetLeaveDaysAvailableidtTotal").val('');
                 //$("#GetLeaveDaysAvailableidtTotal").val(response);
@@ -1186,7 +1186,7 @@ $('#myFormCart').on('click', 'td a', function () {
 
                 //  var LeaveApplicationIdCT = $(this).closest('tr').find('td').find("#LeaveApplicationIdCT").val();
                 // alert(LeaveApplicationIdCT12)
-                debugger;
+                //debugger;
                 if (LeaveApplicationIdCT12 == "") {
               
                     totalleaves = parseFloat(response) - totalleaves1;
@@ -1257,7 +1257,7 @@ $('#myFormCart').on('click', 'td a', function () {
         $("#Descriptionid1 option:contains('" + DescriptionidCT2 + "')").prop("selected", true);
 
         $("#DescriptionidTB1").val(DescriptionidCT2);
-        debugger;
+        //debugger;
         if (DaystypeCT2 == "Half day" || DaystypeCT2 == "Half Day") {
             $("#todateLB").hide();
             $("#todate").hide();
@@ -1352,7 +1352,7 @@ $('#myFormCartREFRESHTable').on('click', 'td a', function () {
             url: "/Attendance/STP_GetSubmittedLeaveRequestsByUserid_ToEDIT?Batchid=" + ID + "&Userid=" + Userid,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
                 $("#myFormCart tbody").empty();
               //  $('#your-p-id').find('span').empty();
                 document.getElementById('myForm').reset();
@@ -1367,7 +1367,7 @@ $('#myFormCartREFRESHTable').on('click', 'td a', function () {
                 /* $("#myFormCart tbody").remove();*/
                
                 lengt = response.length;
-                debugger;
+                //debugger;
                 for (var i = 0; i < response.length; i++) {
 
                     var Daysession12 = "";
@@ -1405,7 +1405,7 @@ $('#myFormCartREFRESHTable').on('click', 'td a', function () {
                     var tablelength = $("#myFormCart tbody tr").length;
 
                     var attachdocumentfile1 = "<input  type='file'  asp-for='file' class='attachdocumentCT' name='InputValue[" + i + "].file' id='attachdocumentCT" + tablelength + "'   hidden/>";
-                    debugger;
+                    //debugger;
                     var attachdocument1 = "<input  type='text'  asp-for='attachdocument' name='InputValue[" + i + "].attachdocument' id='attachdocumentCT_String'   value='" + response[i].attachdocument + "' hidden/>";
                     var marriagechecking = 0;
 
@@ -1556,11 +1556,11 @@ $('#myFormCart').on('click', 'td p', function () {
                         url: "/Attendance/Delete_Cancel_Staff_Saved_Leaves?submitButton=Delete&LeaveApplicationId1=" + LeaveApplicationId + "&Userid=" + Userid,
                         type: "POST",
                         success: function (response) {
-                            debugger;
+                            //debugger;
                             GetMysavedLeaves_CallingFunction();
                             if (response.message == "Staff Leave Deleted Successfully") {
                                 // $('#your-p-id').find('span').empty();
-                                debugger;
+                                //debugger;
                                 //$('#myForm').find('input').val('');
                                 /*$("#myFormCart tbody").empty;*/
                                 // $('#myFormCart').find('tbody').empty();
@@ -1600,7 +1600,7 @@ $('#myFormCart').on('click', 'td p', function () {
                                 else {
                                     $("#myFormCart").show();
                                 }
-                                debugger;
+                                //debugger;
                                 window.scrollTo(0, 0);
                             }
                             else {
@@ -1618,7 +1618,7 @@ $('#myFormCart').on('click', 'td p', function () {
                 }
                 else {
                     row.remove();
-                    debugger;
+                    //debugger;
                     var rowcount1 = $("#myFormCart tbody tr").length;
                     if (rowcount1 <= 0) {
                         $("#myFormCart").hide();
@@ -1642,7 +1642,7 @@ $('#myFormCart').on('click', 'td p', function () {
                 var rowcount1 = $("#myFormCart tbody tr").length;
                 if (rowcount1 <= 0) {
                     $("#myFormCart").hide();
-                    debugger;
+                    //debugger;
                     $("#labelLB").text('');
                     $(this).removeClass('labelLB');
                     $("#Descriptionid1").prop("disabled", false);
@@ -1688,7 +1688,7 @@ $('#myFormCart').on('click', 'td p', function () {
 $('#AttachDocumentTB_FileName_LABEL').click(function () {
     var imageName = $("#attachdocument_String").val();
     /*var imageName = $(this).text();*/
-    debugger;
+    //debugger;
     //download($('#barcode').attr('src'), "strcode.png", imageName);
     var Userid = $("#Userid").val();
     var Instanceid = $("#Instanceid").val();
@@ -1743,7 +1743,7 @@ $('#myForm').on('click', '#AttachDocumentTB_FileName_LABEL_DELETE', function () 
         // If user confirms deletion
         if (result.isConfirmed) {
            loaddingimg.css('display', 'block');
-            debugger;
+            //debugger;
             $("#AttachDocumentTB_FileName_LABEL_DELETE").css('display', 'none');
 
             var deletebtn = document.getElementById("AttachDocumentTB_FileName_LABEL_DELETE");
@@ -1770,7 +1770,7 @@ function ViewLapsedDetails(Lapsed, InstanceId, UserID, AcademicYearID) {
     try {
         //OpenIFrameModel("../Admin/ViewUserCompOffLeavesLapsedDetails.aspx?InstanceId=" + InstanceId + "&UserID=" + UserID + "&AcademicYearID=" + AcademicYearID + "&Lapsed=" + Lapsed, 700, 250)
         //return false;
-        debugger;
+        //debugger;
         $.ajax({
             url: "/Attendance/_ViewUserCompOffLeavesLapsedDetails?InstanceId=" + InstanceId + "&UserID=" + UserID + "&AcademicYearID=" + AcademicYearID + "&Lapsed=" + Lapsed,
             type: "GET",
@@ -1825,7 +1825,7 @@ function GetMyLeaveDetails_CallingMethod() {
             url: "/Attendance/GetMyLeaveDetails_CallingMethod?Userid=" + Userid,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
             var table = js('#MyLeaveDetails_Table').DataTable();
             var currentPage = table.page.info().page;
                 table.destroy();
@@ -1975,7 +1975,7 @@ function GetMysavedLeaves_CallingFunction() {
             success: function (response) {
             var batchid = 0;
             var leaveReason1 = "";
-                debugger;
+                //debugger;
                 var table = js('#myFormCartREFRESHTable').DataTable();
                 var currentPage = table.page.info().page;
                 table.destroy();
@@ -2032,7 +2032,7 @@ function GetMyAppliedLeaves_CallingMethod() {
             url: "/Attendance/GetMyAppliedLeaves_CallingMethod?Userid=" + Userid,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
                 var table = js('#GetMyAppliedLeaves_Table').DataTable();
                 currentPage = table.page.info().page;
                 table.destroy();
@@ -2084,7 +2084,7 @@ function GetMyAppliedLeaves_CallingMethod() {
                         "</tr>"
                     );
                 });
-                    debugger;
+                    //debugger;
                        //Pagination(response.length, "GetMyAppliedLeaves_Table");
                        var ExcelDownloadColumnsNo = [];
                        TblDataTableWith_OutColumns_CallingFunction("GetMyAppliedLeaves_Table", 'noresponse', response.length, currentPage, 'Noname', ExcelDownloadColumnsNo);
@@ -2130,7 +2130,7 @@ function MyAppliedLeaves_PrintTable(Batchid, printid_ForView) {
             PrintBTN.innerHTML = "";
             PrintBTN.innerHTML = "PRINT";
             $("#PrintBTN").css('display', '');
-            debugger;
+            //debugger;
             var Totaldays = 0.0;
             var sno = 1;
             $("#GetMyAppliedLeaves_Table_Print tbody").empty();
@@ -2288,7 +2288,8 @@ function MyAppliedLeaves_PrintTable_IN_ApplyLeaves(Batchid, printid_ForView) {
 $('#GetMyAppliedLeaves_Table').on('click', 'td span', function () {
     try {
         $(".ErrorMessageSpan").empty();
-        debugger; loaddingimg.css('display', 'block');
+        //debugger;
+        loaddingimg.css('display', 'block');
 
         var TR = $(this).closest('tr');
         var Batchid = $(this).closest('tr').find('#Batchid').val();
@@ -2444,7 +2445,7 @@ $('#GetMyAppliedLeaves_Table').on('click', 'td span', function () {
         }
         else {
             //print details
-            debugger;
+            //debugger;
             //GetMyAppliedLeaves_CallingMethod();
             MyAppliedLeaves_PrintTable(Batchid);
             loaddingimg.css('display', 'none');
@@ -2468,7 +2469,7 @@ function marriagecheckingCallingFunction(Pagename) {
             }
             //printDetails_Form_IN_ApplyLeave_FOR_Hide();
             var isChecked = $("#marriagechecking").prop("checked");
-            debugger;
+            //debugger;
             if (isChecked) {
                 var TB_Length = $("#myFormCart tbody tr").length;
                 if (TB_Length > 0) {
@@ -2501,13 +2502,13 @@ function marriagecheckingCallingFunction(Pagename) {
                 }
             }
             else {
-                debugger;
+                //debugger;
                 $("#Descriptionid1").val("");
                 $("#Descriptionid1").prop("disabled", false);
                 $("#labelLB").text('');
                 $(this).removeClass('labelLB');
                 $("#GetLeaveDaysAvailableid").text('');
-                debugger;
+                //debugger;
                 GetLeaveTypeDropdown_CallingMethod();
             }
         } catch (e) {
@@ -2546,13 +2547,13 @@ function GetLeaveDaysAvailable_CallingFuction(Pagename) {
     });
         function fun215(response) {
             $("#GetLeaveDaysAvailableid").empty();
-        debugger;
+        //debugger;
        // if (leavetype == "122" && response < 1) {
             if (leavetypetext == "LWP" && response < 1) {
             $("#GetLeaveDaysAvailableid").append('');
         }
         else {
-            debugger;
+            //debugger;
             var LeavetypeidForGetcurrectLeavedays = $("#HdnLeavetypeidForGetcurrectLeavedays").val();
             var HdnGetLeaveDaysAvailabletoLeavetype = $("#HdnGetLeaveDaysAvailabletoLeavetype").val();
             if (LeavetypeidForGetcurrectLeavedays == leavetype) {
@@ -2646,7 +2647,7 @@ function changefun() {
 //THIS for counting characters of textarea
 $(document).ready(function () {
     $("#Textarea").on("input", function () {
-        debugger;
+        //debugger;
         var textareavalue = $("#Textarea").val();
         var maxlength = 500;
         var textareacount = maxlength - textareavalue.length;
@@ -2661,7 +2662,7 @@ $(document).ready(function () {
 //$(document).ready(function(){
     $("input[type='radio'].check").click(function () {
         try {
-            debugger;
+            //debugger;
             //printDetails_Form_IN_ApplyLeave_FOR_Hide();
             if ($(this).is(':checked')) {
                 if ($(this).val() == 1) {

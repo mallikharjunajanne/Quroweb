@@ -10,42 +10,44 @@
         width:80% !important
     }
 </style>
-<div class="card">
-
-    <div id="appendsearchsalaryattributeforroles">
-
-        <h5 class="mb-3">
-            <span>NOTE </span>
-
-        </h5>
-        @*=====================        TEXT BOX                 =================*@
-        <div class="row mb-3">
-            <div class="col-sm-6">
-                <label class="col-form-label">
-                    <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" />
-                    --Indicates Attendance modified.
-                </label>
-            </div>
-
-            <div class="col-sm-6">
-                <label class="control-label col-form-label" style="color: green;">
-                    Green Fields--Indicates attendance already posted.
-                </label>
-            </div>
+<div id="appendsearchsalaryattributeforroles">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            @*<h5 class="mb-3">*@
+            <span class="text-header">NOTE </span>
+            @*</h5>*@
         </div>
-        @*=====================        TEXT BOX                 =================*@
-        <div class="row mb-3">
-            <div class="col-sm-6">
-                <label class="control-label ">
+        <div class="card-body">
+            @*=====================        TEXT BOX                 =================*@
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label class="col-form-label">
+                        <img src="~/Images_IMP/AuditIcon.png" style="width: 16px;" />
+                        --Indicates Attendance modified.
+                    </label>
+                </div>
 
-                </label>
+                <div class="col-sm-6">
+                    <label class="control-label col-form-label" style="color: green;">
+                        Green Fields--Indicates attendance already posted.
+                    </label>
+                </div>
+            </div>
+            @*=====================        TEXT BOX                 =================*@
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <label class="control-label ">
+
+                    </label>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="control-label col-form-label" style=" color: red;">
+                        Red Fields--Indicates attendance not yet posted.
+                    </label>
+                </div>
             </div>
 
-            <div class="col-sm-6">
-                <label class="control-label col-form-label" style=" color: red;">
-                    Red Fields--Indicates attendance not yet posted.
-                </label>
-            </div>
         </div>
         @*=====================        TEXT BOX                 =================*@
         <div class="row mb-3">
@@ -53,94 +55,93 @@
 
             </div>
         </div>
-        @*=====================        TEXT BOX                 =================*@
+    </div>
+
+    @*=====================        TEXT BOX                 =================*@
     <div class="row mb-3">
         <div class="form-group col-sm-12 errorofallemployeeattendence" style="color: red;  font-weight: 900;">
 
         </div>
+    </div>
+    @*=====================        TEXT BOX                 =================*@
+    <div class="row mb-3">
+        <div class="col-sm-3">
+            <input type="checkbox" class="form-check-input" />
+            <label class="col-form-label">
+                Send SMS
+            </label>
         </div>
-        @*=====================        TEXT BOX                 =================*@
-        <div class="row mb-3">
-            <div class="col-sm-3">
-                <input type="checkbox" class="form-check-input" />
-                <label class="col-form-label">
-                    Send SMS
-                </label>
-            </div>
-            <div class="col-sm-2">
-                Total Working Days
-            </div>
+        <div class="col-sm-2">
+            Total Working Days
+        </div>
 
-            <div class="col-sm-2" id="totalWorkingdays">
-                <input type="text" class="form-control" onkeypress="return(AllowFloat(event))" />
-            </div>
-            @*<div class="col-sm-1">
+        <div class="col-sm-2" id="totalWorkingdays">
+            <input type="text" class="form-control" onkeypress="return(AllowFloat(event))" />
+        </div>
+        @*<div class="col-sm-1">
             </div>*@
-            <div class="col-sm-3 form-group">
-                <div class="position-relative" id="Drop_Format_SEM_3">
-                    @Html.DropDownListFor(
-               x => x.DaysDrop,
-                new SelectList(ViewBag.DaysDrop, "Value", "Text"),
-               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_DaysDrop_EAP", @style = "color:black;" })
+        <div class="col-sm-3 form-group">
+            <div class="position-relative" id="Drop_Format_SEM_3">
+                @Html.DropDownListFor(
+           x => x.DaysDrop,
+            new SelectList(ViewBag.DaysDrop, "Value", "Text"),
+           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_DaysDrop_EAP", @style = "color:black;" })
 
-                </div>
             </div>
         </div>
-        <div class="card">
-            <h6 class="card-title mb-0">
-                <span>YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_EAP" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
-            </h6>
-
-
-
-            <div class="table-responsive" id="attendencetable">
-                <table id="tblEAPsearchresults" class="table table-hover table-bordered ">
-                    <thead class="table-dark">
-
-
-                        <tr>
-
-                            <th>
-                                S.No
-                            </th>
-                            <th>
-                                Employee No
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Department
-                            </th>
-                            <th>
-                                Mobile No
-                            </th>
-                            <th>
-                                Email
-                            </th>
-                            <th>
-                                Working Days
-                            </th>
-                            <th>
-                                Present Days
-                            </th>
-                            <th>
-                                Absent Days
-                            </th>
-                            <th>
-                                Loss Of Pay Days
-                            </th>
-                            <th>
-                                CL
-                            </th>
-                            <th>
-                                OD
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+    </div>
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            @*<h6 class="card-title mb-0">*@
+            <span class="text-header">YOUR SEARCH RESULTS <span id="totalrecords_Tranctions_EAP" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORD(S).</span>
+            @*</h6>*@
         </div>
+        @*<div class="card-body">*@
+        <div class="table-responsive" id="attendencetable">
+            <table id="tblEAPsearchresults" class="table table-hover table-bordered ">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Employee No
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Department
+                        </th>
+                        <th>
+                            Mobile No
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Working Days
+                        </th>
+                        <th>
+                            Present Days
+                        </th>
+                        <th>
+                            Absent Days
+                        </th>
+                        <th>
+                            Loss Of Pay Days
+                        </th>
+                        <th>
+                            CL
+                        </th>
+                        <th>
+                            OD
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        @*</div>*@
         @*=============================  TABLE END ================================*@
     </div>
 </div>

@@ -399,3 +399,26 @@ $(document).on('click', '#Feedetailsbyusertbl .delete-icon', function (event) {
         Deleteuserchallan(Userid);
     }
 })
+
+//======>>>>>> Clear function
+
+function searchclearfun(Formid) {
+    var form = document.getElementById(Formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        //$('#Mobilenumbervalidationspid').text('');
+        //$('#Commonfperrormessage').text('');
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+
+

@@ -1,0 +1,177 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Insatnceids
+@{
+    ViewData["Title"] = "AdminMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        ul.list-container {
+            flex-wrap: wrap; /* Allow items to wrap to new lines */
+            gap: 10px; /* Space between items */
+            /*padding: 0;*/
+            padding: 1;
+            margin: 0;
+            list-style-type: none;
+        }
+
+            ul.list-container li.list-item {
+                box-sizing: border-box;
+                margin-bottom: 10px; /* Space below each item */
+                display: flex;
+                align-items: center;
+            }
+
+        li.list-item:hover {
+            background-color: black !important;
+            border-radius: 3px;
+        }
+
+        .list-icon {
+            width: 20px; /* Fixed size for icons */
+            height: 20px;
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .text-color {
+            color: black;
+            font-size: 10pt;
+        }
+
+            .text-color:hover {
+                color: white;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center">Admin Area</h4>
+        <div class="row mb-2">
+            @for (var i = 0; i < ViewBag.Menuitems.Count; i += 3)
+            {
+                <div class="row col-sm-12">
+                    @for (var j = i; j < i + 3 && j < ViewBag.Menuitems.Count; j++)
+                    {
+                        var item = (dynamic)ViewBag.Menuitems[j]; // Cast to dynamic to access properties
+                        <div class="col-sm-4">
+                            <div class="card mb-4">
+                                <div class="card-header bg-danger text-white">
+                                    <span class="text-header text-uppercase" id="Menuitems_@j" title="@item.CategoryId">
+                                        @item.CategoryName
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <div id="menuList_@j">
+
+                                    </div>                                   
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            debugger;
+            $('.text-header').each(function () {
+                // Get the title attribute value
+                var categoryId = $(this).attr('title');
+
+                // Optionally, you can also get other information like the text
+                var categoryName = $(this).text();
+                var menuListId = $(this).attr('id').replace('Menuitems_', 'menuList_');
+                // Send the title value to the server using AJAX
+                $.ajax({
+                    url: '/Admin/AdminSubMenus', // Your action method URL
+                    type: 'GET',
+                    data: { categoryId: categoryId },
+                    success: function (data) {
+
+                        // Process the response from the server
+                        var menuItems = data;
+
+                        // Get the target div
+                        var $menuListDiv = $('#' + menuListId);
+
+                        // Clear the existing content (if needed)
+                        $menuListDiv.empty();
+
+                        // Create a new <ul> element
+                       /*var $ul = $('<ul class="py-1"></ul>');*/
+                        var $ul = $('<ul class="list-container"></ul>');
+
+                        // Append each menu item to the <ul>
+                        $.each(menuItems, function (index, item) {
+                            $ul.append(
+                                `<li class="list-item">
+                                    <a class="list-link" href="${item.menuUrl}">
+                                        <span class="text-color">${item.menuName}</span>
+                                    </a>
+                                </li>`
+                            );
+                        });
+                        //$.each(menuItems, function (index, item) {
+                        //    $ul.append(
+                        //        `<li class="menu-item">
+                        //            <a class="menu-link" href="${item.menuUrl}">
+                        //                <img src="${item.menuIcon}" height="15" width="15" class="menu-icon">
+                        //                <span>${item.menuName}</span>
+                        //            </a>
+                        //        </li>`
+                        //    );
+                        //});
+
+                        // Append the <ul> to the target div
+                        $menuListDiv.append($ul);
+
+
+
+
+
+                        //// Process the response from the server
+                        //// Assuming data is a list of menu items
+                        ////var menuItems = JSON.parse(data);
+                        //var menuItems = data;
+
+                        //// Clear the existing items (if needed)
+                        ////$('#menuList').empty();
+                        //$('#' + menuListId).empty();
+                        //$.each(menuItems, function (index, item) {
+                        //    $('#' + menuListId).append(
+                        //        `<li class="menu-item">
+                        //            <a class="menu-link" href="${item.menuUrl}">
+                        //                <span>${item.menuName}</span>
+                        //            </a>
+                        //         </li>`
+                        //    );
+                        //});
+                        //// Append each menu item to the ul
+                        ////$.each(menuItems, function (index, item) {
+                        ////    $('#menuList').append(
+                        ////        `<li class="menu-item">
+                        ////                <a class="menu-link" href="${item.menuUrl}">
+                        ////                    <span>${item.menuName}</span>
+                        ////                </a>
+                        ////         </li>`
+                        ////    );
+                        ////});
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

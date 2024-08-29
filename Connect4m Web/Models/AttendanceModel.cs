@@ -821,6 +821,9 @@ namespace Connect4m_Web.Models
 
 
         public string Mobilenumber { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public int MenuId { get; set; }
     }
 
 
@@ -835,8 +838,44 @@ namespace Connect4m_Web.Models
         public List<LoginModel> pageorsubdomainList_Data { get; set; }
         public List<LoginModel> UserDetailsList { get; set; }
         public List<LoginModel> LoginUser { get; set; }
+        public List<LoginModel> UserPhotodetails { get; set; }
         public List<LoginModel> RoleMenuByRoleId { get; set; }
         public List<LoginModel> ThemesList { get; set; }
 
     }
+
+    //public class Forgotdetails: CommonClass
+    public class Forgotdetails
+    {
+        public int StudentUserid { get; set; }
+        public string Mobilenumber { get; set; }
+        public string Portalemail { get; set; }
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string SendSMS { get; set; }
+        public string RoleName { get; set; }
+        public string SubDomineName { get; set; }
+        public int InstanceID { get; set; }
+
+        [Required]
+        [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=]).{8,10}$", ErrorMessage = "Password must be 8 to 10 characters long and include at least one digit, one lowercase letter, one uppercase letter, and one special character.")]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare("Password", ErrorMessage = "The password and Confirm password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+    public class ForgotPasswordResponse
+    {
+        public List<Forgotdetails> UserLogins { get; set; }
+        public List<Forgotdetails> DomainLogins { get; set; }
+        public List<string> Returnerrormessage { get; set; }
+        public ForgotPasswordResponse()
+        {
+            UserLogins = new List<Forgotdetails>();
+            DomainLogins = new List<Forgotdetails>();
+            Returnerrormessage = new List<string>();
+        }
+    }
+
 }

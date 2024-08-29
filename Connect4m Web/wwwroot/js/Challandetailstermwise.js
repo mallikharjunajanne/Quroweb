@@ -28,10 +28,10 @@ $(document).ready(function () {
 });
 
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    debugger;
+    //debugger;
     CallToAjax_Withoutdata('GET', url,
         function (response) {
-            debugger;
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -74,7 +74,7 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
 
 
 $("#Btnsearch").click(function () {
-    debugger;
+    //debugger;
 
     var Subclassificationid = $('#FddlDepartment').val();
     var FirstName = $('#Firstnametxtid').val();
@@ -91,7 +91,7 @@ $("#Btnsearch").click(function () {
     var url = "/Reports/ChallandetailsTermwise_tbldata";
     CallToAjax('GET', url, requestData,
         function (response) {
-            debugger;
+            //debugger;
             $("#Userwisepaymenttabldiv1").html(response);
             //bindDatatable(response);
         },
@@ -109,7 +109,7 @@ function GetFeeinstallmentsfeedetailsbyuserid(UserId,event) {
     };
     CallToAjax('GET', url, requestData,
         function (response) {
-            debugger;
+            //debugger;
             
             //bindorganisationfeesummary(response, event);
             $(event).closest('tr').after("<tr><td colspan='7'>" + response + "</td></tr>");
@@ -123,7 +123,7 @@ function GetFeeinstallmentsfeedetailsbyuserid(UserId,event) {
 
 
 function bindorganisationfeesummary(response,  event) {
-    debugger;
+    //debugger;
     // try {
 
     //if (response.length > 0) {
@@ -181,7 +181,7 @@ function Getviewreport(userReceiptGenerationID, userID) {
             url: url,
             type: 'GET',
             success: function (response) {
-                debugger;
+                //debugger;
                 var newWindow = window.open();
                 newWindow.document.write(response);
                 newWindow.focus();

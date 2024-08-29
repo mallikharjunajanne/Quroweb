@@ -26,7 +26,7 @@
             <div class="row mb-1">
                 <div class="col-md-12 col-lg-12 mb-2">
                     <div class="card mb-2">
-                        <div class="card-header bg-danger text-white">SEARCH USER</div>
+                        <div class="card-header bg-danger text-white text-header">SEARCH USER</div>
                         <div class="card-body">
                             <div class="row col">
                                 <form class="form" id="Payfeebyuserssearchform">
@@ -99,14 +99,12 @@
                                             <input type="text" id="txticnumberid" asp-for="ICNumber" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="row justify-content text-center">
-                                        <div class="col-sm-12">
-                                            <button type="reset" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeDetails',null)">Previous Page</button>
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('FeeStatus',null)">Next Page</button>
-                                            <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="CommonClearFunction('Payfeebyuserssearchform')" id="BtnClear">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" value="Search" id="Search_PayFeeUser">Search</button>
-                                            <button type="submit" class="btn btn-dark waves-effect waves-light" value="NoFee" id="Search_NoFeeUser">NoFee</button>
-                                        </div>
+                                    <div class="col-sm-12 text-center">
+                                        <button type="reset" class="btn btn-info waves-effect waves-light btn-sm" onclick="previouspages('ManageFeeDetails',null)">Previous Page</button>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" onclick="nextpages('FeeStatus',null)">Next Page</button>
+                                        <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="CommonClearFunction('Payfeebyuserssearchform')" id="BtnClear">Clear</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" value="Search" id="Search_PayFeeUser">Search</button>
+                                        <button type="submit" class="btn btn-dark waves-effect waves-light btn-sm" value="NoFee" id="Search_NoFeeUser">NoFee</button>
                                     </div>
                                 </form>
                             </div>
@@ -116,9 +114,9 @@
                 <span id="Studentfeedetailsscheduledornotspanid" class="text-danger text-validation"></span>
                 <div class="col-md-12 col-lg-12 mb-2">
                     <div class="card mb-3">
-                        <div class="card-header bg-danger text-white">
+                        <div class="card-header bg-danger text-white text-header">
                             YOUR SEARCH RESULTED:
-                            <span id="TableCount" class="badge badge-center rounded-pill bg-primary bg-glow" style=" width: 7%;">0</span>
+                            <span id="TableCount" class="badge badge-center rounded-pill bg-primary bg-glow text-header" style=" width: 7%;">0</span>
                             RECORDS.
                         </div>
                         <table class="table table-bordered" id="Searchpayfeeuserstbl">
@@ -151,7 +149,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="card mb-2">
-                            <div class="card-header bg-danger text-white">SEARCH FEE DETAILS</div>
+                            <div class="card-header bg-danger text-white text-header">SEARCH FEE DETAILS</div>
                             <div class="card-body">
                                 <div class="row col">
                                     <div class="row mb-3">
@@ -163,7 +161,7 @@
                                     </div>
                                     <div class="row justify-content text-center">
                                         <div class="col-sm-12">
-                                            <button type="button" class="btn btn-success waves-effect waves-light" value="Search" id="searchbtnterms">Search</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" value="Search" id="searchbtnterms">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +170,7 @@
                     </div>
                     <div class="col-6">
                         <div class="card mb-4">
-                            <div class="card-header bg-danger text-white">MANAGE FEE DETAILS</div>
+                            <div class="card-header bg-danger text-white text-header">MANAGE FEE DETAILS</div>
                             <div class="card-body" id="TableDate_forUsers_DivId">
 
                                 <div class="row">
@@ -240,8 +238,8 @@
                                         </div>
                                         <div class="row justify-content text-center">
                                             <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearfun('MANAGEFEEDETAILSFORM')" id="BtnClear">Clear</button>
-                                                <button type="button" class="btn btn-success waves-effect waves-light" id="Addfeeuserbtn" value="Submit">Submit</button>@*AddFeeByUser_Btn*@
+                                                <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" onclick="CommonClearfun('MANAGEFEEDETAILSFORM')" id="BtnClear">Clear</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Addfeeuserbtn" value="Submit">Submit</button>@*AddFeeByUser_Btn*@
                                             </div>
                                         </div>
                                     </form>
@@ -258,7 +256,7 @@
                 <span id="SubmitvalidationMessage" class="text-danger text-validation"></span>
                 <div class="col-md-12 col-lg-12 mb-3">
                     <div class="card mb-4">
-                        <div class="card-header bg-danger text-white">FEE DETAILS FOR : <span id="Feedetailsusernamespanid">:</span></div>
+                        <div class="card-header bg-danger text-white text-header">FEE DETAILS FOR : <span id="Feedetailsusernamespanid">:</span></div>
                         <div class="table-responsive text-nowrap">
                             <table id="Studentfeedetailstbl" class="table table-hover table-bordered no-footer">
                                 <thead class="table-dark">
@@ -341,9 +339,9 @@
                             </div>
                             <div class="row justify-content text-center">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-dark waves-effect waves-light" onclick="backToSearch(event);">Back To Search</button>
-                                    <button type="button" class="btn btn-warning waves-effect waves-light">Refund</button>
-                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsubmit" onclick="Payinstallmentsubbtn(event)">Submit</button>
+                                    <button type="submit" class="btn btn-dark waves-effect waves-light btn-sm" onclick="backToSearch(event);">Back To Search</button>
+                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm" onclick="ConfirmRefundFee(event);">Refund</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="btnsubmit" onclick="Payinstallmentsubbtn(event)">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -373,7 +371,7 @@
         <div id="Feechallandiv" style="display:none;">
             <div class="col-md-12 col-lg-12 mb-3 ">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white">FEE RECEIPT(S)</div>
+                    <div class="card-header bg-danger text-white text-header">FEE RECEIPT(S)</div>
                     <div id="Feereceipt_partailcontaindiv">
 
                     </div>

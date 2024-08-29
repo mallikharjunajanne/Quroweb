@@ -39,7 +39,9 @@
     </div>
 </div>
 <!--note-->
-<div><label id="lblStatus" style="color:Red;">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</label></div>
+<div>
+    <label id="lblStatus" class="text-validation">NOTE : Enter ' Hyphen ( - ) ' for Absent , 'O' For Optional.</label>
+</div>
 @{int sno = 0; int Subjectcount = 0; var subjectNamesForAlertMsg = ""; var color = "red"; int OptionalSubjectcount = 0; var ExamSubjectId = 0; var MaxMarks = 0.00; var PassMarks = 0.00; var subjectname = ""; var bluecolorCount = 0;}
 
 <span class="ErrorMessageSpan" id="StudentSMS_Error"></span>
@@ -53,12 +55,12 @@
 
     @*==========================Upload Subject By Excel Card====================*@
     <div class="card mb-4" id="Div_Fileupload">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                <span>
-                    UPLOAD FILE
-                </span>
-            </h5>
+        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+            @*<h5 class="mb-0">
+                <span>*@
+            UPLOAD FILE
+            @*</span>
+                </h5>*@
         </div>
 
         <div class="card-body">
@@ -70,7 +72,9 @@
                             @*@if (UsersCount > 0 || ViewBag.MarksUploadtype == "UploadWithExcelFile")*@
                             @if (UsersCount > 0 && ViewBag.MarksUploadtype == "UploadWithExcelFile")
                             {
-                                <a id="_Getexceltoupload" class="btn rounded-pill btn-outline-primary waves-effect col-sm-3">Get Excel To Upload</a>
+                                <a id="_Getexceltoupload" class="btn rounded-pill btn-outline-primary waves-effect col-sm-3 btn-sm">
+                                    Get Excel To Upload
+                                </a>
                             }
                             @if (UsersCount > 0)
                             {
@@ -122,7 +126,7 @@
                         @*------------------------------------*@
                         <div class="row justify-content-end">
                             <div class="col-sm-8">
-                                <button type="submit" class="btn btn-info waves-effect waves-light" id="BtnExcelValidate" value="Validate Excel">Validate Excel</button>
+                                <button type="submit" class="btn btn-info waves-effect waves-light btn-sm" id="BtnExcelValidate" value="Validate Excel">Validate Excel</button>
                             </div>
                         </div>
                         @*------------------------------------*@
@@ -137,20 +141,19 @@
 
     @*==========================STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL Card====================*@
 
-    <div class="card mb-4" id="Div_FileUploadSteps">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                <span>
-                    STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL
-                </span>
-            </h5>
+    <div class="card mb-2" id="Div_FileUploadSteps">
+        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+            @*<h5 class="mb-0">
+                <span>*@
+            STEPS TO BE FOLLOWED TO UPLOAD RESULTS THROUGH EXCEL
+            @*</span>
+                </h5>*@
         </div>
-
         <div class="card-body">
             <div class="row">
                 <div class="col">
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 1:-(View screenshot)<img src="~/PostResults Images/GetExcel.jpg" />
@@ -162,7 +165,7 @@
                     </div>
 
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 2:-(View screenshot)<img src="~/PostResults Images/openImage.jpg" />
@@ -173,7 +176,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 3:-(View screenshot)<img src="~/PostResults Images/SaveAs97-2003.jpg" />
@@ -184,7 +187,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 4:-(View screenshot)<img src="~/PostResults Images/NoEmpty.jpg" />
@@ -195,7 +198,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 5:-(View screenshot)<img src="~/PostResults Images/AllSubjects.jpg" />
@@ -206,7 +209,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 6:-(View screenshot)<img src="~/PostResults Images/browse.jpg" />
@@ -217,7 +220,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 7:-(View screenshot)<img src="~/PostResults Images/SameName.jpg" />
@@ -228,7 +231,7 @@
                         </div>
                     </div>
                     @*----------------------------------*@
-                    <div class="row mb-3 ">
+                    <div class="row mb-1">
                         <label class="col-sm-auto col-form-label   thumbnailleft" for="basic-default-name">
                             <b>
                                 Step 8:-(View screenshot)<img src="~/PostResults Images/excel.jpg" />
@@ -240,7 +243,7 @@
                     </div>
                     @*----------------------------------*@
 
-                    <div style="border-top: 1px solid #cbcbcb; margin-top: 20px;"></div>
+                    <div class="border-bottom" @*style="border-top: 1px solid #cbcbcb; margin-top: 20px;"*@></div>
                 </div>
             </div>
         </div>
@@ -254,7 +257,10 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
     <!--This is for Uploading marks with Excel file-->
     <!--card 4   Table of users-->
     @if (UsersCount > 0)
-    {<button type="button" id="_lnkExporttoexcel" class="btn btn-outline-info waves-effect">Export To Excel</button>
+    {
+        <button type="button" id="_lnkExporttoexcel" class="btn btn-outline-info waves-effect btn-sm">
+            Export To Excel
+        </button>
     }
     else
     {
@@ -263,16 +269,16 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
     <div class="card" id="DivUsersSearchedTbl">
         <div class="card-datatable table-responsive pt-0">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="card-header flex-column flex-md-row">
-                    <div class="head-label text-center">
-                        <h5 class="card-title mb-0">
-                            <span>YOUR SEARCH RESULTED<span class="badge badge-center rounded-pill bg-primary bg-glow">@UsersCount</span>  RECORD(S).</span>
-                        </h5>
-                    </div>
+                <div class="card-header bg-danger text-white text-header flex-column flex-md-row">
+                    @*<div class="head-label text-center">
+                        <h5 class="card-title mb-0">*@
+                    <span>YOUR SEARCH RESULTED  <span class="badge badge-center rounded-pill bg-primary bg-glow text-header">@UsersCount</span>  RECORD(S).</span>
+                    @*</h5>
+                        </div>*@
                 </div>@if (UsersCount > 0)
                 {
-                    <table id="TblUsersSearched" class="datatables-basic table dataTable no-footer dtr-column">
-                        <thead>
+                    <table id="TblUsersSearched" class="datatables-basic table dataTable no-footer dtr-column table table-bordered no-footer dataTable">
+                        <thead class="table-dark">
                             <tr>
                                 <th>S.No</th>
                                 <th>Name</th>
@@ -352,9 +358,9 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                         OptionalSubjectcount++;
                                     }
                                     @*@for (int i = 1; i <= Subjectcount; i++)
-                            {
-                                <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
-                            }*@
+                                        {
+                                            <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
+                                        }*@
                                 </tr>
                             }
                         </tbody>
@@ -363,16 +369,16 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
             </div>
         </div>
     </div>
-                        }
+}
 <input type="hidden" id="HdnSubjectNamesForAlertMsg" value="@subjectNamesForAlertMsg" readonly disabled />
-<div class="row justify-content-end">
-    <div class="col-sm-10">
-        <button type="button" class="btn btn-secondary waves-effect waves-light" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" value="Go Back to Step 1">Go Back to Step 1</button>
-        <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" value="Go Back to Step 2">Go Back to Step 2</button>
-        <button type="submit" class="btn btn-primary waves-effect waves-light" id="BtnSaveAsDraft" value="Save As Draft" @IsDisabled>Save As Draft</button>
-        <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnPublish" value="Publish" @IsDisabled>Publish</button>
-    </div>
+
+<div class="col-sm-12 text-center">
+    <button type="button" class="btn btn-secondary waves-effect waves-light btn-sm" id="BtnBackTo_Step1_inStep3" onclick="BackTOStep(event)" value="Go Back to Step 1">Go Back to Step 1</button>
+    <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="BtnBackTo_Step2" onclick="BackTOStep(event,this)" value="Go Back to Step 2">Go Back to Step 2</button>
+    <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" id="BtnSaveAsDraft" value="Save As Draft" @IsDisabled>Save As Draft</button>
+    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnPublish" value="Publish" @IsDisabled>Publish</button>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

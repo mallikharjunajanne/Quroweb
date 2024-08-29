@@ -35,7 +35,8 @@
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">User Module /</span>POST RESULTS</h4>
+        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">User Module /</span>POST RESULTS</h4>*@
+        <h4 class="mb-3 text-center">POST RESULTS</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -44,13 +45,8 @@
                 <span class="ErrorMessageSpan" id="ParentEmail_Error"></span>
                 @*==========================search Users Card====================*@
                 <div class="card mb-4" id="Div_Step1">
-
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                POST RESULTS
-                            </span>
-                        </h5>
+                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                        POST RESULTS
                     </div>
                     <div class="card-body">
                         <form id="FmSubjectsSearch">
@@ -59,7 +55,7 @@
                                 <div class="col">
                                     @*<input asp-for="InstanceSubjectId" class="form-control" id="formInstanceSubjectId" hidden />*@
                                     @*----------------------*@
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label asp-for="InstanceClassificationId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
                                         <div class="col-sm-4 ">
                                             <div class="position-relative">
@@ -71,7 +67,7 @@
                                         </div>
                                     </div>
                                     @*----------------------*@
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label asp-for="InstanceSubClassificationId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
                                         <div class="col-sm-4 ">
                                             <div class="position-relative">
@@ -83,7 +79,7 @@
                                         </div>
                                     </div>
                                     @*----------------------*@
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Subjects</label>
                                         <div class="col-sm-4 ">
                                             <div class="position-relative">
@@ -95,7 +91,7 @@
                                     </div>
 
                                     @*----------------------*@
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Exams</label>
                                         <div class="col-sm-4 ">
                                             <div class="position-relative">
@@ -106,7 +102,7 @@
                                         </div>
                                     </div>
                                     @*----------------------*@
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Exam Mode</label>
                                         <div class="col-sm-4 ">
                                             <div class="position-relative">
@@ -119,7 +115,7 @@
                                     </div>
                                     @*----------------------*@
 
-                                    <div class=" row mb-3">
+                                    <div class="row mb-2">
                                         <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">Sort By</label>
                                         <div class="col-sm-4 ">
                                             <div class="col mt-2">
@@ -133,15 +129,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        @*----------------------*@
-                                        @*========================================Buttons===========================*@
-                                        <div class="row justify-content-end">
-                                            <div class="col-sm-8">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" id="BtnRefresh" value="Clear">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnNextpagePostResultsByExcel_Step2" value="Go to step 2 of Post Results">Go to step 2 of Post Results</button>
-                                            </div>
-                                        </div>
+                                    @*----------------------*@
+                                    @*========================================Buttons===========================*@
+                                    <div class="col-sm-12 text-center">
+                                        <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnRefresh" value="Clear">Clear</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnNextpagePostResultsByExcel_Step2" value="Go to step 2 of Post Results">Go to step 2 of Post Results</button>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +144,7 @@
                 </div>
 
                 <!--Associated Count Table-->
-                @*===================Step 1 Searched Results===========================*@
+                @*=========== STEP 1 SEARCHED RESULTS ===========*@
                 <div id="Div_TblAssociatedCount" style="display:none">
                     <div class="card">
                         <div class="card-datatable table-responsive pt-0">
@@ -180,10 +174,7 @@
                     </div>
                 </div>
 
-
-
-
-                @*==============================This is Step 2 Card=============Searched Table==========================-*@
+                @*=========== THIS IS STEP 2 CARD ============= SEARCHED TABLE ===========*@
 
                 <div id="Div_Step2">
                     <div class="card" id="Div_TblExamSubjects" style="display:none">
@@ -192,12 +183,12 @@
                         </label>
                         <div class="card-datatable table-responsive pt-0">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <div class="card-header flex-column flex-md-row">
-                                    <div class="head-label text-center">
-                                        <h5 class="card-title mb-0">
-                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                        </h5>
-                                    </div>
+                                <div class="card-header bg-danger text-white text-header flex-column flex-md-row">
+                                    @*<div class="head-label text-center">
+                            <h5 class="card-title mb-0">*@
+                                    <span>YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>
+                                    @*</h5>
+                            </div>*@
                                 </div>
                                 <form id="Fm_TblUser">
                                     @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
@@ -217,40 +208,36 @@
                                         </tbody>
                                     </table>
 
-
-                                    @*========================================Buttons===========================*@
-                                    <div class="row justify-content-end">
-                                        <div class="col-sm-8">
-                                            <button type="button" class="btn btn-info waves-effect waves-light" id="BtnBackTo_Step1" onclick="BackTOStep(event)" value="Go Back to Step 1">Go Back to Step 1</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSave_Nextpage_Step3" value="Save & Go to Step 3">Save & Go to Step 3</button>
-                                        </div>
+                                    @*=========== BUTTONS ===========*@
+                                    <div class="col-sm-12 text-center">
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="BtnBackTo_Step1" onclick="BackTOStep(event)" value="Go Back to Step 1">Go Back to Step 1</button>
+                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSave_Nextpage_Step3" value="Save & Go to Step 3">Save & Go to Step 3</button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                @*==============================This is Step 3 Card=======================================-*@
-
+                @*=========== THIS IS STEP 3 CARD ===========*@
 
                 <div id="Div_Step3" style="display:none">
                     <div id="Div_ChooseOptionFile">
 
                         <!--card 1 in step 3-->
 
-                        <div class="card mb-4">
-                            <label id="DepartmentNameStep3" class="mx-auto form-label">
-                                @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
-                            </label>
-                            <div class="card-header d-flex align-items-center justify-content-between">
-                                <h5 class="mb-0">
-                                    <span>
-                                        CHOOSE OPTION TO SAVE
-                                    </span>
-                                </h5>
+                        <div class="card mb-3">
+                            <div class="card">
+                                <label id="DepartmentNameStep3" class="mx-auto form-label">
+                                    @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
+                                </label>
+                            </div>
+                            <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                                @*<h5 class="mb-0">
+                <span>*@
+                                CHOOSE OPTION TO SAVE
+                                @*</span>
+                </h5>*@
                             </div>
                             <div class="card-body">
                                 @*<form id="FmChooseOption">*@
@@ -286,9 +273,7 @@
                         </div>
                     </div>
                 </div>
-                @*=======================end========*@
-
-
+                @*=========== END ===========*@
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
     });
 }
 function handleAjax(method, url, data, successCallback, errorCallback) {
-    debugger;
+    //debugger;
     var ajaxOptions = {
         url: url,
         method: method,
@@ -27,7 +27,7 @@ function handleAjax(method, url, data, successCallback, errorCallback) {
 
 $(document).ready(function () {
     $('#RegisterAdmissiontbldiv').hide();
-    debugger;
+    //debugger;
     BindInstanceDropdown();
     BindAcadamiceyeardropdown();
     BindClassdropdown();
@@ -39,7 +39,7 @@ $(document).ready(function () {
 function Pageloadtbldata() {
     handleAjax('GET', "/Reports/Quroadmissionreportscounttbl", null,
         function (resp) {
-            debugger;
+            //debugger;
             loaddingimg.css('display', 'none');
             Bindsearchtbl(resp);           
         },
@@ -50,7 +50,7 @@ function Pageloadtbldata() {
 }
 function Bindsearchtbl(response) {
 
-    debugger;
+    //debugger;
     //var formattedDate = Dateformate();
 
     $("#Recordcountstbl").text(response.length);
@@ -74,7 +74,7 @@ function Bindsearchtbl(response) {
                     const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                     if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        debugger;
+                        //debugger;
                         // Set styles for the title (A1 cell)
                         const titleCell = $('c[r="A1"]', sheet);
                         if (titleCell && titleCell[0]) {
@@ -196,7 +196,7 @@ $('#Admissionsreportform').submit(function (event) {
 
     event.preventDefault();
     setTimeout(function () {
-        debugger;
+        //debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 
@@ -212,7 +212,7 @@ $('#Admissionsreportform').submit(function (event) {
 
             handleAjax('GET', "/Reports/Quroadmissionreportscounttbl", formData,
                 function (resp) {
-                    debugger;
+                    //debugger;
                     loaddingimg.css('display', 'none');
                     Bindsearchtbl(resp);
                     //$('#Confirmadmissionsdiv1').append(resp);
@@ -241,7 +241,7 @@ function BindClassdropdown() {
     }, true);
 }
 $("#ddlAcadamicyear").change(function () {
-    debugger;
+    //debugger;
     var selectedValue = $(this).val();
     if (selectedValue) {
         BindClassdropdown();
@@ -253,7 +253,7 @@ $("#ddlAcadamicyear").change(function () {
 //DATE COMPARING FUNCTION
 function DatesCompare(Sdate, Edate) {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#txtFromRegDate").val();
         var EnddateInput = $("#txtToRegDate").val();
 
@@ -301,7 +301,7 @@ $("#txtToRegDate").on("change", function () { DatesCompare("From date", "To date
 
 $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) {
     event.stopImmediatePropagation();
-    debugger;
+    //debugger;
     var parent = $(event.target).closest('tr');
     var Instanceid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Admissionsreporttbl').DataTable();
@@ -311,7 +311,7 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) 
 
     handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
         function (resp) {
-            debugger;
+            //debugger;
             loaddingimg.css('display', 'none');
             RegistartionDetails(resp);
             $('#RegisterAdmissiontbldiv').show();
@@ -346,7 +346,7 @@ function RegistartionDetails(response) {
                     const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                     if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        debugger;
+                        //debugger;
                         // Set styles for the title (A1 cell)
                         const titleCell = $('c[r="A1"]', sheet);
                         if (titleCell && titleCell[0]) {
@@ -475,7 +475,7 @@ function RegistartionDetails(response) {
 }
 $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) {
     event.stopImmediatePropagation();
-    debugger;
+    //debugger;
     var parent = $(event.target).closest('tr');
     var Instanceid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Admissionsreporttbl').DataTable();
@@ -485,7 +485,7 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) 
 
     handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
         function (resp) {
-            debugger;
+            //debugger;
             loaddingimg.css('display', 'none');
             AdmissionsRegistrationDetails(resp);
             $('#RegisterAdmissiontbldiv').show();
@@ -496,7 +496,7 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) 
     );
 })
 function AdmissionsRegistrationDetails(response) {
-    debugger;
+    //debugger;
     $("#Admissiontblcount").text(response.filteredList.length);
     var Statusvalue = response.userStatusValue;
 
@@ -520,7 +520,7 @@ function AdmissionsRegistrationDetails(response) {
                     const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
                     if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        debugger;
+                        //debugger;
                         // Set styles for the title (A1 cell)
                         const titleCell = $('c[r="A1"]', sheet);
                         if (titleCell && titleCell[0]) {

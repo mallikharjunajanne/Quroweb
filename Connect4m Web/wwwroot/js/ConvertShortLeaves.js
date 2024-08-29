@@ -39,7 +39,7 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
         event.preventDefault(); // prevent the form from submitting
         $(".ErrorMessageSpan").empty();
  
-        debugger;
+        //debugger;
 
         //var TableLength = $("#TblSearchEmployeesShortLeaves tbody tr").length;
         var CheckBoxcount = 0;
@@ -71,7 +71,7 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
             }
         });
 
-        debugger;
+        //debugger;
         //  var ErrorSpanText1 = $(".ErrorMessageSpan#Main_Span_Error").text();
         // var ErrorSpanText=$("#Main_Span_Error").text();
         if (CheckBoxcount < 1) {
@@ -92,10 +92,10 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
         }
 
        loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         //var formData = new FormData(this);
         var formData = new FormData($("#Fm_InTbl_SearchEmployeesShortLeaves")[0]);
-        debugger;
+        //debugger;
         // formData.delete('Row2');
         var bt = $("#BtnConvert").val();
         $.ajax({
@@ -138,14 +138,14 @@ $("#Fm_InTbl_SearchEmployeesShortLeaves").submit(function (event) {
 function CheckLeaveTypeEligibility_CalingFunction(RadioButtonId) {
     try {
         $(".ErrorMessageSpan").empty();
-        debugger;
+        //debugger;
         var UserId = $("#" + RadioButtonId).closest("tr").find("td:first").find("#TblInUserid").val();
         var LeaveTypeid = $("#" + RadioButtonId).val();
         $.ajax({
             url: "/Attendance/CheckLeaveTypeEligibility_CalingFunction?UserId=" + UserId + "&LeaveTypeid=" + LeaveTypeid,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
 
                 $("#Main_Span_Error").text(response);
                 if (response != "") {
@@ -166,7 +166,7 @@ function CheckLeaveTypeEligibility_CalingFunction(RadioButtonId) {
 function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId) {
 
     try {
-        debugger;
+        //debugger;
         if (val != 12) {
             event.preventDefault();
         }
@@ -181,7 +181,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
 
         if (InstanceRoleId === "" || Monthid === "") {
             $("#Main_Span_Error").text('Following fields have invalid data :');
-            debugger;
+            //debugger;
             if (Monthid === "") {
                 $("#Monthid_Span_Error").text('Month ');
             }
@@ -200,7 +200,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
             type: "GET",
             //  data: {values: Userid },
             success: function (response) {
-                debugger;
+                //debugger;
                 if (val != "6") {
                     $("#BtnConvert").prop("disabled", false);
                 }
@@ -218,7 +218,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
                     $("#Main_Span_Error").text("No Records Found");
                 }
                 else {
-                    debugger;
+                    //debugger;
                    // $("#CountOfRecords_SearchEmployeesShortLeaves").text("");
                    // $("#CountOfRecords_SearchEmployeesShortLeaves").html("YOUR SEARCH RESULTED <span class='number-circle'> " + response.length + "</span> RECORD(S).");
                     $("#Counts").text(response.length);
@@ -273,7 +273,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
                         // Allow only numbers (digits) by using the input event to restrict input
 
                         $("input[type='text'][id^='txtLeavesDeducted_']").on('input', function () {
-                            debugger;
+                            //debugger;
                             this.value = this.value.replace(/\D/g, '');
                         });
 
@@ -284,7 +284,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
                             var span = $('<span>', {
                                 class: 'RadioButtonclass',
                             });
-                            debugger;
+                            //debugger;
                             var input = $('<input>', {
                                 type: 'radio',
                                 id: 'RdblLeaveTypes_' + Checkboxidcount,
@@ -353,7 +353,7 @@ function TblLeaveTypesForconvertion_Calingfunction(event, val, EffectiveTableId)
 function GetUserName_BY_SelectRoleId_CallingFunction() {
 
     try {
-        debugger;
+        //debugger;
 
         var InstanceRoleId = $("#DdlRoles").val();
 
@@ -421,7 +421,7 @@ function FN_ClearValues(event, Formid) {
 //To check all check boxes
 $('#chkSelectAll').click(function () {
     try {
-        debugger;
+        //debugger;
         var checked = this.checked;
         $(':checkbox:not(:disabled)').prop("checked", checked);
     } catch (e) {

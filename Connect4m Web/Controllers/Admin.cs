@@ -1,4 +1,5 @@
-﻿using Connect4m_Web.Models.LMSproperties;
+﻿using Connect4m_Web.Models;
+using Connect4m_Web.Models.LMSproperties;
 using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,6 @@ using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class Admin : Controller
     {
         // Uri baseaddress = new Uri("https://localhost:44331/api/UsersScreens");
@@ -66,7 +66,69 @@ namespace Connect4m_Web.Controllers
 
             return xml;
         }
+        #region ADMIN MENU
+        public IActionResult AdminMenu()
+        {
+            List<LoginModel> items = new List<LoginModel>();
+            var InstanceId = Request.Cookies["INSTANCEID"];
+            var UserId = Request.Cookies["LoginUserId"];
+            using (var tempClient = _httpClientFactory.CreateClient())
+            {
+                string originalBaseAddress = client.BaseAddress.ToString();
+                tempClient.BaseAddress = new Uri(originalBaseAddress.Replace("/UsersScreens", "/ApplyStudentAttendance"));
+                LoginModel val = new LoginModel();
+                val.UserId = Convert.ToInt32(UserId);
+                val.RoleId = Convert.ToInt32(Request.Cookies["Roleid"]);
+                val.InstanceID = Convert.ToInt32(InstanceId);
+                val.CategoryId = 10;
 
+                string data11 = JsonConvert.SerializeObject(val);
+                StringContent content = new StringContent(data11, Encoding.UTF8, "application/json");              
+                HttpResponseMessage response1 = tempClient.PostAsync(tempClient.BaseAddress + "/GetAdminMenuItems_Modified", content).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    string data1 = response1.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<LoginModel>>(data1);
+                }
+            }
+            ViewBag.Menuitems = items;
+            return View();
+        }
+
+
+        public IActionResult AdminSubMenus(int categoryId)
+        {
+            List<LoginModel> items = new List<LoginModel>();
+            //int GroupId = categoryId;
+            //int RoleId= Convert.ToInt32(Request.Cookies["Roleid"]);
+            //string InstanceId = InstanceId;
+            //int MenuId = 1;
+            //string UserId = UserId;
+
+            using (var tempClient = _httpClientFactory.CreateClient())
+            {
+                string originalBaseAddress = client.BaseAddress.ToString();
+                tempClient.BaseAddress = new Uri(originalBaseAddress.Replace("/UsersScreens", "/ApplyStudentAttendance"));
+                LoginModel val = new LoginModel();
+                val.UserId = Convert.ToInt32(UserId);
+                val.RoleId = Convert.ToInt32(Request.Cookies["Roleid"]);
+                val.InstanceID = Convert.ToInt32(InstanceId);
+                val.CategoryId = categoryId;
+                val.MenuId = 1;
+
+
+                string data11 = JsonConvert.SerializeObject(val);
+                StringContent content = new StringContent(data11, Encoding.UTF8, "application/json");
+                HttpResponseMessage response1 = tempClient.PostAsync(tempClient.BaseAddress + "/GetAdminSubMenuItems", content).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    string data1 = response1.Content.ReadAsStringAsync().Result;
+                    items = JsonConvert.DeserializeObject<List<LoginModel>>(data1);
+                }
+            }
+            return Json(items);
+        }
+        #endregion
         //NEW MANAGE NOTICES START HERE
 
         #region MANAGE NOTICE HOME 
@@ -491,8 +553,8 @@ namespace Connect4m_Web.Controllers
         public IActionResult Noticeclassesbysubclassddl(int Classificationid)//ManageNotices_InstanceSubClassificationSearch
         {
             List<SubclassificationList> item = new List<SubclassificationList>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BindingNoticeclassesbysubclassddl?InstanceId=" + InstanceId + "&Classificationid=" + InstanceClassificationId + "&Createdby=" + UserId).Result;
-            //HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USPSMSTD_Subclassification?InstanceId=" + InstanceId + "&Classificationid=" + InstanceClassificationId + "&Createdby=" + UserId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BindingNoticeclassesbysubclassddl?InstanceId=" + InstanceId + "&Classificationid=" + Classificationid + "&Createdby=" + UserId).Result;
+        
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;

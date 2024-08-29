@@ -7,7 +7,8 @@
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
 
-<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Employee Attendence Posting</h4>
+<h4 class="mb-4 text-center">@*<span class="text-muted fw-light"> Admin Module/</span>*@EMPLOYEE ATTENDANCE POSTING</h4>
+@*<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Employee Attendence Posting</h4>*@
 
 <div class="row mb-2">
     <div class="col-md-12 col-lg-12 mb-3">
@@ -22,24 +23,22 @@
             </div>*@
 
             <div id="appendsearchsalaryattributeforroles">
-                <div class="demo-inline-spacing ">
-
-                    <span  id="updatesalaryattribute">  SEARCH ATTENDENCE</span>
+                <div class="card-header bg-danger text-white">
+                    <div class="demo-inline-spacing ">
+                        <span id="updatesalaryattribute" class="text-header">  SEARCH ATTENDENCE</span>
+                    </div>
                 </div>
                 <div class="card-body mb-2">
 
                     @*=============================  Form Start ================================*@
                     <form id="Serach_EAP" class="needs-validation was-validated" novalidate>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <div>
                             <div class="row">
                                 <div class="col">
                                     @*=====================        TEXT BOX                 =================*@
                                     <div class="row mb-3">
-                                        <div class="col-sm-3"></div>
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
+                                      
+                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
                                         <div class="col-sm-4 form-group">
                                             <div class="position-relative" id="Drop_Format_SEM_3">
                                                 @Html.DropDownListFor(
@@ -50,13 +49,13 @@
                                                 <span asp-validation-for="Month" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3"></div>
+                                       
                                     </div>
                                     @*=====================        TEXT BOX                 =================*@
                                     <div class="row mb-3">
-                                        <div class="col-sm-3"></div>
+                                       
 
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="year"></label>
+                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="year"></label>
                                         <div class="col-sm-4 form-group">
                                             <div class="position-relative" id="Drop_Format_SEM_3">
                                                 @Html.DropDownListFor(
@@ -67,13 +66,13 @@
                                                 <span asp-validation-for="year" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3"></div>
+                                       
                                     </div>
                                     @*=====================        TEXT BOX                 =================*@
                                     <div class="row mb-3">
-                                        <div class="col-sm-3"></div>
+                                       
 
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
+                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
                                         <div class="col-sm-4 form-group">
                                             <div class="position-relative" id="Drop_Format_SEM_3">
                                                 @Html.DropDownListFor(
@@ -84,13 +83,13 @@
                                                 <span asp-validation-for="RoleId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3"></div>
+                                       
                                     </div>
                                     @*=====================        TEXT BOX                 =================*@
                                     <div class="row mb-3">
-                                        <div class="col-sm-3"></div>
+                                       
 
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
+                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
                                         <div class="col-sm-4 form-group">
                                             <div class="position-relative" id="Drop_Format_SEM_3">
                                                 @Html.DropDownListFor(
@@ -101,13 +100,13 @@
                                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3"></div>
+                                       
                                     </div>
                                     @*=====================        TEXT BOX                 =================*@
                                     <div class="row mb-3">
-                                        <div class="col-sm-3"></div>
+                                       
 
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"></label>
+                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"></label>
                                         <div class="col-sm-4 form-group">
                                             <div class="position-relative" id="Drop_Format_SEM_3">
                                                 @Html.DropDownListFor(
@@ -117,30 +116,22 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-3"></div>
+                                       
                                     </div>
-
 
                                     @*=====================         BUTTONS                =================*@
 
-                                    <div class="row justify-content">
-                                        <div class="col-sm-4">
-                                        </div>
+                                    <div class="justify-content text-center">
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_ME" onclick="nextpage('SearchManageEmployees',null)">Previous Page</button>
 
-                                        <div class="col-sm-8">
-                                            <button type="button" class="btn btn-info waves-effect waves-light" id="backtopage_ME" onclick="nextpage('SearchManageEmployees',null)">Previous Page</button>
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform"onclick="clearfun('Serach_EAP')">Clear</button>
 
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblEAP">Get Attendance Form</button>
 
-                                            <button type="reset" class="btn btn-warning waves-effect waves-light" id="clearform">Clear</button>
-                                            <button type="submit" class="btn btn-success waves-effect waves-light" id="sub_tblEAP">Get Attendance Form</button>
-
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" id="Nextpage_ME" onclick="nextpage('SearchEmployeeDetails',null)">Next Page</button>
-
-                                        </div>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light  btn-sm" id="Nextpage_ME" onclick="nextpage('SearchEmployeeDetails',null)">Next Page</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </form>
                     @*=============================  Form End ================================*@
 

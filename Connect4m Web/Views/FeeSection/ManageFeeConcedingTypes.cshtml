@@ -11,15 +11,15 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-2 text-center">MANAGE FEE CONCEDING(DISCOUNT) TYPES </h4>
-        <span id="Commonerrormessage" class="text-danger"></span>
+        <h4 class="mb-2 text-center"><b>MANAGE FEE CONCEDING(DISCOUNT) TYPES</b> </h4>
+        <span id="Commonerrormessage" class="text-validation"></span>
         <div class="justify-content text-end">
             <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" onclick="lnkAddNew(event)">Create Fee Discount Type</button>
         </div>
         <div class="row mb-2" id="SearchMaindiv">
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white">SEARCH FEE DISCOUNT TYPES</div>
+                    <div class="card-header bg-danger text-white text-header">SEARCH FEE DISCOUNT TYPES</div>
                     <div class="card-body">
                         <div class="row col">
                             <form class="form theme-form" id="Searchfeedescounttypesform">
@@ -30,9 +30,9 @@
                                     </div>
                                 </div>
                                 <div class="justify-content text-center">
-                                    <button type="reset" class="btn btn-danger waves-effect waves-light" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
-                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsearch">Search</button>
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="clearForm('bankaccountsserform')" id="searbtnclear">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="btnsearch">Search</button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" onclick="nextpages('ManageFeeTypes',null)">Next Page</button>
                                 </div>
                             </form>
                         </div>
@@ -41,8 +41,8 @@
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white">
-                        YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
+                    <div class="card-header bg-danger text-white text-header">
+                        YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
                     </div>
                     <table class="table table-bordered" id="Discounttbl">
                         <thead class="table-dark">

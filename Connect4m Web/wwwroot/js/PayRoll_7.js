@@ -1,6 +1,33 @@
 ﻿
 //--------------------------------------  Generate PAyslips  for Employees   25-09-2023
 
+//-------------------------CLEAR FUNCTION PAYSLIP GENERATE FOR EMPLOYEE'S
+function PG_clearfun(Formid) {
+    var form = document.getElementById(Formid);
+    debugger;
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        //$('#Mobilenumbervalidationspid').text('');
+        //$('#Commonfperrormessage').text('');
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+        $("#dropdown_Months_PGEsearch option[value='']").prop('selected', true);
+        $("#dropdown_Years_PGEsearch option[value='']").prop('selected', true);
+        //$("#dropdown_Months_PGEsearch").prop('selected', false);
+        //$("#dropdown_Years_PGEsearch").prop('selected', false);
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}
+
+
+
 //--------------------------Search The Payslip Generate For Employees
 $(document).ready(function () {
     searchManageDetails();

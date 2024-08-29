@@ -95,13 +95,14 @@
                                 SubjectAssociated = item.SubjectAssociated == 1 ? "disabled" : null;
                             }
 
-                            <select class="select2 form-select select2-hidden-accessible" id="Subjectfor_MS" asp-for="editlist[icount].SubjectTypeId1" disabled="@SubjectAssociated" asp-items="@ViewBag.Subjectlist_MS" title="Subject Type"  required>
+                            <select class="select2 form-select select2-hidden-accessible" id="Subjectfor_MS" asp-for="editlist[icount].SubjectTypeId1" disabled="@SubjectAssociated" asp-items="@ViewBag.Subjectlist_MS" title="Subject Type"  required style="width:auto;">
                             </select>
                         </td>
                         <td>
                             <input type="text" value="@item.SubjectShortName1" class="form-control" title="Subject Short Name" />
                         </td>
-                        <td style=" overflow-y: scroll;" >
+                        @*<td style=" overflow-y: scroll;" >*@
+                        <td style=" overflow-y: scroll; width: 20%;" >
                             <div class="mentorlist-container" title="Allocate Mentor">
                                 <div class="mentorlist-columns">
                                     @foreach (var mentorlist in Model.mentors)
@@ -163,10 +164,10 @@
                         @sub.SubClassificationName
                     </td>
                     <!-- ... other table cells ... -->
-                    <td>
+                    <td style="width:12%;">
                         <input type="text" id="ShortCode" class="form-control" title="Subject Code" required />
                     </td>
-                    <td>
+                    <td style="width:12%;">
                         <input type="text" maxlength="2" id="SubjectOrder" oninput="restrictCharacters(this)" class="form-control SubjectorderCls" title="Subject Order" required />
                     </td>
                     <td>

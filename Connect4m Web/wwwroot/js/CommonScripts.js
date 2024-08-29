@@ -37,7 +37,7 @@ $('.alert button').click(function (event) {
 
 //----------------------------------------------------------------------------------   Common Ajax Function To all
 function CommonAjaxFunction(method, url, data, successCallback, errorCallback, hasFileUpload) {
-  // debugger;
+  //debugger;
     var ajaxOptions = {
         url: url,
         method: method,
@@ -168,7 +168,7 @@ function _formatDate(date) {
 function datescompare(event, start, end) {
     event.stopImmediatePropagation();
 
-    // debugger;
+    //debugger;
     try {
         var startDate = new Date(document.getElementById("StartDate").value);
         var endDate = new Date(document.getElementById("EndDate").value);
@@ -228,7 +228,7 @@ function datescomparepro(event, start, end) {
 //=============================================  Common function for select multipleselected list
 
 function Commoncheckallmultiplelist(event, formid, dropdownid,columnname) {
-    debugger;
+    //debugger;
     if ($(event.target).prop("checked")) {
         $("#" + formid + " #" + dropdownid + " option").prop("selected", true);
     } else {
@@ -239,7 +239,7 @@ function Commoncheckallmultiplelist(event, formid, dropdownid,columnname) {
 //=========================================================      Greaterthantoday
 
 function Greaterthantoday(id, errorid, parentid, columnname) {
-    debugger;
+    //debugger;
     try {
         var selectedDate = new Date(document.getElementById(id).value);
         var today = new Date();
@@ -256,8 +256,13 @@ function Greaterthantoday(id, errorid, parentid, columnname) {
 }
 
 
+//=========***** COMMON ERROR REDIRECT TO ACTION FUNCTION
+function handleError(error) {
+    console.error('An error occurred:', error); // Log the error for debugging purposes
 
-
+    // Redirect to the error page
+    window.location.href = '/Attendance/ErrorPage';
+}
 
 
 
@@ -287,3 +292,24 @@ function Greaterthantoday(id, errorid, parentid, columnname) {
 //    //ajaxOptions.contentType = 'application/json';
 //    // ajaxOptions.data = data;
 //}
+
+
+
+function clearfun(Formid) {
+    var form = document.getElementById(Formid);
+
+    if (form) {
+        // Use the reset method to clear the form
+        form.reset();
+        //$('#Mobilenumbervalidationspid').text('');
+        //$('#Commonfperrormessage').text('');
+        // Clear ASP.NET Core validation messages
+        var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
+        validationSpans.forEach(span => {
+            span.textContent = ''; // Clear validation messages
+        });
+
+    } else {
+        console.error("Form with id '" + formid + "' not found.");
+    }
+}

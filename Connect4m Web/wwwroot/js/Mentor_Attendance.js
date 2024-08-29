@@ -45,7 +45,7 @@ $("#Serach_MA").submit(function (event) {
             CommonAjaxFunction('GET', '/Rolewise/PostAttendanceSave', null, function (response) {
                 $("#GetMentorAttendenceAppend").html(response);
                 $("#Serach_MA #deletebutton #deleteinner").text("");
-                $("#Serach_MA #deletebutton #deleteinner").append('<button type="button" class="btn btn-danger waves-effect waves-light" value="Delete" id="deleteattendance">Delete</button> ');
+                $("#Serach_MA #deletebutton #deleteinner").append('<button type="button" class="btn btn-danger waves-effect waves-light btn-sm" value="Delete" id="deleteattendance">Delete</button> ');
                 /*<input type="button" value="Delete" class="btn btn-pill btn-outline-danger btn-air-warning" id="deleteattendance" />*/
                 searchManageMentorAttendence(Attendanceformdate,startdate,enddate);
 

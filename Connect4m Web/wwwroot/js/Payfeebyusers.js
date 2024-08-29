@@ -91,11 +91,11 @@ $(document).ready(function () {
 
 });
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    debugger;
+    //debugger;
     CallToAjax('GET', url,
         function (response) {
 
-            /*debugger;*/
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -107,7 +107,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 }
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-     debugger;
+     //debugger;
     dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -135,7 +135,7 @@ function Departmentbysubclassdd(Departmentvalue) {
 }
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-        /*debugger;*/
+        //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -150,7 +150,7 @@ function nextpages(url, data) {
 }
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
-        /* debugger;*/
+         //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -181,7 +181,7 @@ $('#Payfeebyuserssearchform').submit(function () {
 
         if (validationMessagesLength === 0 && validationMessages2.length === 0) {
             loaddingimg.css('display', 'block');
-            /* debugger;*/
+             //debugger;
             $('#Studentdetailsid').text('');
             $('#Studentfeedetailsscheduledornotspanid').text('');
 
@@ -195,7 +195,7 @@ $('#Payfeebyuserssearchform').submit(function () {
 
             handleAjax('POST', '/FeeSection/Payfeeforuserssearchtbl', formData,
                 function (response) {
-                    /*debugger;*/
+                    //debugger;
 
                     bindDatatable(response, submitButtonValue);
                     loaddingimg.css('display', 'none');
@@ -210,7 +210,7 @@ $('#Payfeebyuserssearchform').submit(function () {
 function bindDatatable(response, submitButtonValue) {
 
 
-    /* debugger;*/
+     //debugger;
     var table = $('#Searchpayfeeuserstbl').DataTable();
     table.destroy();
     if (submitButtonValue != "Search") {
@@ -241,7 +241,8 @@ function bindDatatable(response, submitButtonValue) {
             {
                 data: "FirstName",
                 render: function (data, type, row, meta) {
-                    return row.firstName;
+                   // return row.firstName;
+                    return `<a href="javascript:void(0)" onclick="handleClick('${row.userId}', '${row.firstName}','${row.classificationName}', '${row.subClassificationName}');" style="color: #2C2C2C;font-size: 14px;font-weight: bold;">${row.firstName}</a>`;
                 }
             },
             {
@@ -284,45 +285,56 @@ function bindDatatable(response, submitButtonValue) {
 
     });
 
-    table.on('draw', function () {
-        $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
-            'text-decoration': 'underline',
-            'font-weight': 'bold',
-            'cursor': 'pointer',
-            'color': 'blue'
-        });
-    });
-    $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
-        'text-decoration': 'underline',
-        'font-weight': 'bold',
-        'cursor': 'pointer',
-        'color': 'blue'
-    });;
+    //table.on('draw', function () {
+    //    $('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
+    //        'text-decoration': 'underline',
+    //        'font-weight': 'bold',
+    //        'cursor': 'pointer',
+    //        'color': 'blue'
+    //    });
+    //});
+    //$('#Searchpayfeeuserstbl').find('td:nth-child(1)').attr('title', 'Edit').css({
+    //    'text-decoration': 'underline',
+    //    'font-weight': 'bold',
+    //    'cursor': 'pointer',
+    //    'color': 'blue'
+    //});;
 
     loaddingimg.css('display', 'none');
 }
-$(document).on('click', '#Searchpayfeeuserstbl td:nth-child(1)', function (event) {
-    event.stopImmediatePropagation();
+//$(document).on('click', '#Searchpayfeeuserstbl_ td:nth-child(1)', function (event) {
+//    event.stopImmediatePropagation();
 
-    debugger;
+//    debugger;
+//    loaddingimg.css('display', 'block');
+
+//    $('#Studentdetails_Spid').text('');
+//    $('#SubmitvalidationMessage').text('');
+//    $('#Studentfeedetailsscheduledornotspanid').text('');
+
+//    var parent = $(event.target).closest('tr');
+//    var StudentUserId = $(parent).find('td').find('input[type="text"]').val();
+
+//    var StudentName = $(parent).find('td:eq(0)').text();
+//    var Studentdepartment = $(parent).find('td:eq(3)').text();
+//    var Studentclass = $(parent).find('td:eq(4)').text();
+
+//    //var table = $('#Searchpayfeeuserstbl').DataTable();
+//    //tabletargetpagetblSEMsearchresults = table.page.info().page;
+//    Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass);
+
+//})
+
+function handleClick(StudentUserId, StudentName, Studentdepartment, Studentclass) {
+    //debugger;
     loaddingimg.css('display', 'block');
-
     $('#Studentdetails_Spid').text('');
     $('#SubmitvalidationMessage').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
-
-    var parent = $(event.target).closest('tr');
-    var StudentUserId = $(parent).find('td').find('input[type="text"]').val();
-
-    var StudentName = $(parent).find('td:eq(0)').text();
-    var Studentdepartment = $(parent).find('td:eq(3)').text();
-    var Studentclass = $(parent).find('td:eq(4)').text();
-
-    //var table = $('#Searchpayfeeuserstbl').DataTable();
-    //tabletargetpagetblSEMsearchresults = table.page.info().page;
     Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass);
+}
 
-})
+
 function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclass) {
 
 
@@ -382,7 +394,7 @@ function Editfunction(StudentUserId, StudentName, Studentdepartment, Studentclas
 //function Userfeedetailstblfunction(previousduestbl, feedetialsbyuseridtbl, totalpayedamounttbl, StudentName) { //=====>>>>Old code(11)
 function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
     try {
-        debugger;
+        //debugger;
         $('#Quantitydivid').hide();
         //$('#Feedetailsusernamespanid').text(StudentName);//=====>>>>Old code(11)
         var feedetailtbl = feedetialsbyuseridtbl;
@@ -430,7 +442,7 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             //var cell4 = $('<td"></td>').css('text-align', 'center');
             //var firstNameSpan = $('<span hidden>').text(UsersDueFeetbls.concedingTypeId).attr('id', 'concedingTypeId');
             //cell4.append(firstNameSpan).append(displayIcon1Span);
-            var cell4 = $('<td id="concedingtypename4"></td>').css('text-align', 'center').text(UsersDueFeetbls.discountName);            
+            var cell4 = $('<td id="concedingtypename4"></td>').css('text-align', 'center').text(UsersDueFeetbls.discountName);
             var concedingTypeIdSpan = $('<span>').text(UsersDueFeetbls.concedingTypeId).attr('id', 'concedingTypespanid').hide();
             var Quantityvalue = $('<span>').text(UsersDueFeetbls.quantity).attr('id', 'quantityvalueid').hide();
             var Discountnamespan = $('<span>').text(UsersDueFeetbls.discountName).attr('id', 'discountnamespid').hide();
@@ -446,7 +458,7 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             } else {
                 cell5 = $('<td id="concedingamount5"></td>').css('text-align', 'center').text(UsersDueFeetbls.concedingAmount);
             }
-            
+
 
             var cell16 = $('<td id="Edit16"></td>')
                 .css({
@@ -473,7 +485,8 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
                 ////$('#Editfeeamountspanid').removeAttr('onclick').text('');
                 ///*$('#Editfeeamountspanid').text('');*/
                 cell16.text('');
-            } else {
+            }
+            else {
                 cell6 = $('<td id="payedAmount6"></td>').css('text-align', 'center').text(UsersDueFeetbls.payedAmount);
             }
 
@@ -485,7 +498,8 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
 
                 cell7 = $('<td id="dueAmount7"></td>').css('text-align', 'center').text("Nill");
 
-            } else {
+            }
+            else {
 
                 cell7 = $('<td id="dueAmount7"></td>').css('text-align', 'center').text(UsersDueFeetbls.dueAmount);
             }
@@ -495,7 +509,7 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
 
 
 
-            /* debugger;*/
+             //debugger;
             var Amount_TXTId = 'AmountTextbox_' + SNOID;
             var cell9 = $('<td id="amounttextbox9"></td>').css({
                 'text-align': 'center',
@@ -518,11 +532,9 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
 
 
             var cell10 = $('<td id="Searchfeetermsicon10"></td>')
-                .css('text-align', 'center')
+                .css({'text-align': 'center','cursor': 'pointer'})
                 .attr('onclick', 'Searchfeetermsiconfun("' + UsersDueFeetbls.feeTermId + '", "' + UsersDueFeetbls.userfeeactivityId + '")')
                 .text('');
-
-
             cell10.append(searchIcon);
             var InstallmentName_TXTId = 'InstallmentName_' + SNOID
             var cell11 = $('<td id="textarea11"></td>').css('text-align', 'center');
@@ -538,7 +550,7 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             var cell14 = $('<td hidden id="feeTermId14"></td>').text(UsersDueFeetbls.feeTermId);
             var cell15 = $('<td hidden id="userfeeactivityId15"></td>').text(UsersDueFeetbls.userfeeactivityId);
 
-            /* debugger;*/
+             //debugger;
             var cell17 = $('<td hidden id="instanceUserCode17"></td>').text(UsersDueFeetbls.instanceUserCode);
             var cell_18 = $('<td hidden id="classificationName18"></td>').text(UsersDueFeetbls.classificationName);
             var cell_19 = $('<td hidden id="subClassificationName19"></td>').text(UsersDueFeetbls.subClassificationName);
@@ -589,7 +601,7 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             payedamount += parseFloat(UsersDueFeetblsfooter.payedamount);
             dueAmount += parseFloat(UsersDueFeetblsfooter.dueAmount);
         });
-        debugger;
+        //debugger;
         // Update the table footer cells
         tfoot.append($('<tr></tr>')
             .append($('<td colspan="3"></td>').css('text-align', 'center').text('TOTAL'))
@@ -704,9 +716,9 @@ function Feetypedropdwonfunction(FeetypeId) {
                     const concedingTypespanid = row.cells[4].querySelector("#concedingTypespanid").textContent;
                     const quantityvalueid = row.cells[4].querySelector("#quantityvalueid").textContent;
 
-                    debugger;
+                    //debugger;
                     if (pfuQuantityList && pfuQuantityList.length > 0) {
-                        debugger;
+                        //debugger;
                         $('#QuantityAmount_TxtID').val(quantityvalueid);
                         $('#Quantityamountvaluesetfeewisetxtid').val(pfuQuantityList[0].amount);
                         $('#Quantitydivid').show();
@@ -725,7 +737,7 @@ function Feetypedropdwonfunction(FeetypeId) {
                         }
                     }
 
-                    debugger;
+                    //debugger;
                     if (displayIcon1Value != "1") {
                         document.getElementById("Span_IconId_Quantity").style.display = "none";
                     } else {
@@ -758,7 +770,7 @@ function Feetypedropdwonfunction(FeetypeId) {
                     break;
                 }
                 else {
-                    debugger;
+                    //debugger;
                     $('#FeeAmount_TxtID').val('');
                     $('#DueDate_TxtID').val('');
                     $('#Quantitydivid').show();
@@ -782,7 +794,7 @@ $('#Discount_TypeDDId').change(function () {
     //Feetypedropdwonfunction(ConcedingTypeId);
     handleAjax('GET', '/FeeSection/pfudiscounttypebydiscountamount', { ConcedingTypeId: ConcedingTypeId },
         function (response) {
-            debugger;
+            //debugger;
             $('#DiscountAmount_TXTID').text(response[0].text).val(response[0].text);
         },
         function (status, error) {
@@ -794,7 +806,7 @@ $('#Discount_TypeDDId').change(function () {
 //=====>>> << ** LEFT SIDE TERMS DROPDOWN AND SEARCH BUTTON CLICK TABLE DATA CHANGE ** Table id Studentfeedetailstbl>> <<=====
 
 $('#searchbtnterms').on("click", function () {
-    debugger;
+    //debugger;
     const SelectedFeeTermsids = $('#ddltermid').val();
     var userId = $('#Studentuseridspid').val();
 
@@ -810,7 +822,7 @@ function Searchfeetermsbtnclickfunction(userId, SelectedFeeTermsids) {
 
     handleAjax('GET', `/FeeSection/Getfeedetailsbyfeeterms?StudentUserId=${userId}&FeeTermIds=${SelectedFeeTermsids}`, null,
         function (response) {
-            debugger;
+            //debugger;
             //var Feetermsdropdownvalues = response[0].feetermdetialsbyuserId;
             //var previousduestbl = response[0].feedetialsbyuseridforpreviousdues;
             var feedetialsbyuseridtbl = response[0].feedetialsbyuserId;
@@ -845,7 +857,7 @@ function isNumber(event) {
 
 ///======>>> SET FEE AMOUNT
 function setFeeAmount(input) {
-    debugger;
+    //debugger;
     // Get the entered quantity from the input field
     var quantity = parseFloat(input.value) || 0;
     var Quantitywisesetfeeamounttxt = $('#Quantityamountvaluesetfeewisetxtid').val();
@@ -857,7 +869,7 @@ function setFeeAmount(input) {
 }
 function backToSearch(event) {
     event.preventDefault();
-    debugger;
+    //debugger;
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');
     $('#Studentuseridspid').val('');
@@ -887,7 +899,7 @@ function backToSearch(event) {
 }
 $('#Addfeeuserbtn').click(function () {
     if (AddFeeValidation()) {
-        debugger;
+        //debugger;
         $('#Update_SubmitvalidationMessage').text('');      
 
         var StudentuserId = $("#Studentuseridspid").val();
@@ -920,7 +932,7 @@ $('#Addfeeuserbtn').click(function () {
             type: 'POST',
             data: UpdateFee_SaveFeeData,
             success: function (response) {
-                debugger;
+                //debugger;
 
                 if (response == "1") {
                     $('#Update_SubmitvalidationMessage').text('Record Inserted Succesfully');
@@ -941,7 +953,7 @@ $('#Addfeeuserbtn').click(function () {
 });
 function AddFeeValidation() {
 
-    debugger;  
+    //debugger;  
     var buttonValue = $('#Addfeeuserbtn').val();
     
     var FeeTerm = $('#ddlFeetermid').val();
@@ -966,11 +978,11 @@ function AddFeeValidation() {
         hasError = true;
     }
     if (buttonValue == "Update") {
-        debugger;
+        //debugger;
         if (DiscountType !== "") {
             var FeeTypedropdownText = $('#ddlfeetype option:selected').text();
             var FeeTermdropdownText = $('#ddlFeetermid option:selected').text();           
-            debugger;
+            //debugger;
             const table = document.getElementById("Studentfeedetailstbl");
             const rows = table.getElementsByTagName("tr");
             for (let i = 1; i < rows.length; i++) {
@@ -1054,7 +1066,7 @@ function AddFeeValidation() {
 }
 function Payinstallmentsubbtn(event) {
     if (Validationchecking()) {
-        debugger;
+        //debugger;
         var index = 2;
         let validationFailed = false;
         var textboxValues = [];
@@ -1092,7 +1104,7 @@ function Payinstallmentsubbtn(event) {
         var AllTextBoxesValues = [];
 
         tableRows.each(function () {
-            debugger;
+            //debugger;
             var rowIds = TextboxIndex + 1;
             var textboxValues = $('#AmountTextbox_' + rowIds).val();
             AllTextBoxesValues.push(textboxValues);
@@ -1131,7 +1143,7 @@ function Payinstallmentsubbtn(event) {
 
 
 
-            debugger;
+            //debugger;
             var cell2Text = $(this).find('td:nth-child(2)').text().trim();
             var cell3Text = $(this).find('td:nth-child(3)').text().trim();
            // var cell4Value = parseFloat($(this).find('td:nth-child(4)').text().trim());
@@ -1165,7 +1177,7 @@ function Payinstallmentsubbtn(event) {
            // var PaidDueAmount = cell4Text - cell7Text;
             //var Totalfeeamounttominasediscountamount = cell4Value - cell6Value;
             //var Paidamountvaluetoduevalue = Totalfeeamounttominasediscountamount - cell7Value;
-            debugger;
+            //debugger;
             let cell4Number = parseFloat(cell4Text); 
            //let cell7Number = cell7Text ? parseFloat(cell7Text) : 0;
             let cell7Number = isNaN(parseFloat(cell7Text)) ? 0 : parseFloat(cell7Text);
@@ -1184,7 +1196,7 @@ function Payinstallmentsubbtn(event) {
             rowValues['InstallmentNameTextareaValue'] = InstallmentNameValue;
             tableData.push(rowValues);
 
-            debugger;
+            //debugger;
 
             formData.push({ name: "BankAccountId", value: Bankaccount });
             formData.push({ name: "PaymentModeId", value: PayementMode });
@@ -1241,14 +1253,14 @@ function Payinstallmentsubbtn(event) {
 
                // var Amount = textboxValues;
                 formData.push({ name: "Amount", value: textboxValues });
-                debugger;
+                //debugger;
                 $.ajax({
                     //url: '/FeeSection/PFU_AmountPay_Recipt',
                     url: '/FeeSection/Pfuuserfeeinstallment',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
-                        debugger;
+                       //debugger;
                         
                         $('#Errormessage').text('Fee paid Successfully ');
                         $('#Studentdetailsid').text('');
@@ -1268,6 +1280,7 @@ function Payinstallmentsubbtn(event) {
                         $('#Feedetailsupdateandedit_tablediv').hide();
                         
                         $('#Feereceipt_partailcontaindiv').append(response);                      
+                        $('#PayingRefundamountdivid').text('Paying Amount');
                     }
                 });
             }
@@ -1359,7 +1372,7 @@ $('#Pfuchallanbacktosearchbtn').click(function () {
 });
 $('#Pfuchallanbacktopayfeebtn').click(function () {
 
-    debugger;
+    //debugger;
 
     $('#Studentdetailsid').text('');
     $('#Studentfeedetailsscheduledornotspanid').text('');    
@@ -1394,7 +1407,7 @@ $('#Pfuchallanbacktopayfeebtn').click(function () {
 //==Fee Edit && Update Code Start
 
 function EditFeeAmount(feeTermId, userfeeactivityId) {
-    debugger;
+    //debugger;
 
     $('#Update_SubmitvalidationMessage').text('');
     $('#ErrorMessages_EditUsers').text('');
@@ -1421,7 +1434,7 @@ function EditFeeAmount(feeTermId, userfeeactivityId) {
         type: 'GET',
         data: Editformdata,
         success: function (response) {
-            debugger;
+            //debugger;
            
             //$('#Studentdetailsid').text('');
        
@@ -1462,7 +1475,7 @@ function PFU_TermsFeeTable_IN_Update(event) {
 
 
 
-    /*  debugger;*/
+      //debugger;
     var ErrorMessageValidation = true;
     var FeeAmountMessageValidation = true;
     var updatedRowCount = 0;
@@ -1522,7 +1535,7 @@ function PFU_TermsFeeTable_IN_Update(event) {
             return false;
         }
 
-        debugger;
+        //debugger;
         var PaidAmounts = + Amount_Txts;
         if (Amount_Txt != "" && Amount_Txt != "0.0" && Amount_Txt != "0") {
 
@@ -1550,7 +1563,7 @@ function PFU_TermsFeeTable_IN_Update(event) {
 
 
 
-    debugger;
+    //debugger;
 
     if (updatedRowCount > 1) {
 
@@ -1574,13 +1587,13 @@ function PFU_TermsFeeTable_IN_Update(event) {
 
     }
 
-    debugger;
+    //debugger;
 
     $.ajax({
         type: 'POST',
         url: '/FeeSection/PFU_FeeInstallments_BulkFeeUPDATE?UpdateData=' + JSON.stringify(UpdateData) + "&ChallanDetails=" + JSON.stringify(ChallanDetails), // Update with your actual controller and action names
         success: function (result) {
-            debugger;
+            //debugger;
             $('#Challan_partialView_Container').css({ 'display': 'block' });
             $('#Challan_partialView_Container').html(result);
         },
@@ -1597,7 +1610,7 @@ function PFU_TermsFeeTable_IN_Update(event) {
 function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
 
 
-    debugger;
+    //debugger;
     //exec stp_tblFeeInstallments_GetFeeDetialsByUserFeeId UserId=80781,FeeTermId=4582,UserFeeId1=417163
 
     var UserId = $('#Studentuseridspid').val();
@@ -1617,7 +1630,7 @@ function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
         type: 'GET',
         data: Editformdata,
         success: function (response) {
-            debugger;
+            //debugger;
             // Open a new window with the name "UserDetails"
             var newWindow = window.open('', 'UserDetails', 'width=600,height=600,scrollbars=yes,resizable=yes');
             //newWindow.document.write(response);
@@ -1693,7 +1706,7 @@ function Searchfeetermsiconfun(feeTermId, userfeeactivityId) {
 
 function nextpages(url, data) {
     return new Promise((resolve, reject) => {
-        /*debugger;*/
+        //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -1708,7 +1721,7 @@ function nextpages(url, data) {
 }
 function previouspages(url, data) {
     return new Promise((resolve, reject) => {
-        /* debugger;*/
+         //debugger;
 
         loaddingimg.css('display', 'block');
         handleAjax('GET', `/FeeSection/${url}`, data, (response) => {
@@ -1720,4 +1733,275 @@ function previouspages(url, data) {
             reject();
         }, false);
     });
+}
+
+
+function ConfirmRefundFee(event) {
+    //NEW CODE START HERE 
+    //debugger;
+    loaddingimg.css('display', 'none');
+    var confirmMessage = "Are you sure you want to Refund the amount? \n Click 'OK' to Refund, else click 'CANCEL' to stop Refund.";
+
+    if (confirm(confirmMessage)) {
+
+        if (RefundValidationchecking) {
+            //debugger;
+            var tableRows = $('#Studentfeedetailstbl tbody tr');
+            var EnterAmountValue;
+
+            const ChequeDDNo = $('#Chequetxtid').val();
+            const ChequeDDDates = $('#Chequedatedttxtid').val();
+            const ChequeDDBank = $('#Chequebanknametxtid').val();
+
+            let ChequeDDDate = "";
+            let CCDDType = "";
+
+            if (ChequeDDDates !== '') {
+                const [year, month, day] = ChequeDDDates.split('-');
+                CCDDType = `${day}/${month}/${year} 00:00:00`;
+                ChequeDDDate = `${ChequeDDDates} 00:00:00`;
+            }
+
+            const tableData = [];
+            let validationFailed = false;
+            var AllTextBoxesValues = [];
+            var TextboxIndex = 1;
+
+            var TextboxIndex = 1;
+            //var totalRowTextboxs = tableRows.length;
+            var AllTextBoxesValues = [];
+
+            tableRows.each(function () {
+                //debugger;
+                var rowIds = TextboxIndex + 1;
+                var textboxValues = $('#AmountTextbox_' + rowIds).val();
+                AllTextBoxesValues.push(textboxValues);
+                var InstallmentNameValue = $('#InstallmentName_' + rowIds).val();
+                TextboxIndex++;
+            });
+
+            var allEmpty = AllTextBoxesValues.every(function (value) {
+                return $.trim(value) === ""; // Trim and check if empty
+            });
+
+            if (allEmpty) {
+                $('#SubmitvalidationMessage').text('Please Enter the Amount in one of the Amount Field.');
+                return false;
+            }
+
+            if (validationFailed) {
+                return false;
+            }
+
+            //$('#Studentfeedetailstbl tbody tr').each(function (index) {
+            tableRows.each(function (index) {
+                const formData = new FormData();
+                const rowId = index + 2;
+
+                const Studentuseridspid = $('#Studentuseridspid').val();
+
+                const textboxValues = $('#AmountTextbox_' + rowId).val();
+                const InstallmentNameValue = $('#InstallmentName_' + rowId).val();
+
+                const cell2Text = $(this).find('td:nth-child(2)').text().trim();
+                const cell3Text = $(this).find('td:nth-child(3)').text().trim();
+                const cell4Text = $(this).find('td:nth-child(4)').text().trim();
+                const cell6Text = $(this).find('td:nth-child(6)').text().trim();
+                const cell7Text = $(this).find('td:nth-child(7)').text().trim();
+                const cell8Text = $(this).find('td:nth-child(8)').text().trim();
+                const cell9Text = $(this).find('td:nth-child(9)').text().trim();
+                const academicYearId_cell13Text = $(this).find('td:nth-child(13)').html().trim();
+                const feeTypeId_cell14Text = $(this).find('td:nth-child(14)').html().trim();
+                const feeTermId_cell15Text = $(this).find('td:nth-child(15)').html().trim();
+                const userfeeactivityId_cell16Text = $(this).find('td:nth-child(16)').html().trim();
+                const cell18Text = $(this).find('td:nth-child(18)').text().trim();
+                const Departmentcell19 = $(this).find('td:nth-child(19)').text().trim();
+                const Classnamecell20 = $(this).find('td:nth-child(20)').text().trim();
+                const Studentusernamecell21 = $(this).find('td:nth-child(21) #firstNameSpanId').text().trim();
+
+                const feeamountcellvalue = parseFloat(cell4Text);
+                const Discountamountcellvalue = parseFloat(cell6Text);
+                const Paidamountcellvalue = parseFloat(cell7Text);
+                const Dueamountcellvalue = cell8Text;
+
+                const cell4Number = parseFloat(cell4Text);
+                const cell7Number = isNaN(parseFloat(cell7Text)) ? 0 : parseFloat(cell7Text);
+                const PaidDueAmount = cell4Number - cell7Number;
+
+                if (textboxValues !== "") {
+                    const Inttextboxvalue = parseInt(textboxValues);
+                    if (Inttextboxvalue > 0) {
+                        if (cell6Text.toUpperCase() == "NILL") {
+                            if (cell7Text.toUpperCase() != "NILL") {
+                                //if (Inttextboxvalue > PaidDueAmount) {
+                                // if (Inttextboxvalue <= PaidDueAmount) {
+                                if (parseInt(textboxValues) <= parseInt(cell7Text)) {
+                                    EnterAmountValue = -textboxValues;
+
+                                    //$('#SubmitvalidationMessage').text(`FeeAmount should be less than paid, for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                                    //validationFailed = true;
+                                    //return false;
+                                }
+                                else {
+                                    $('#SubmitvalidationMessage').text(`Fee Amount cannot refund as he has no fee paid, for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                                    validationFailed = true;
+                                    return false;
+                                }
+                            }
+                            else {
+                                $('#SubmitvalidationMessage').text(`Fee Amount cannot refund as he has no fee paid, for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                                validationFailed = true;
+                                return false;
+                            }
+                        }
+                        else {
+                            $('#SubmitvalidationMessage').text(`You cannot refund amount as he paid full amount for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                            validationFailed = true;
+                            return false;
+                        }
+                    }
+                    else {
+                        $('#SubmitvalidationMessage').text(`Enter Valid FeeAmount for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                        validationFailed = true;
+                        return false;
+                    }
+
+
+                    formData.append('BankAccountId', $('#bankaccountsddl').val()||'');
+                    formData.append('PaymentModeId', $('#paymentmodeddl').val()||'');
+                    formData.append('Description', $('#descriptiontxtid').val()||'');
+                    formData.append('AcademicYearId', academicYearId_cell13Text);
+                    formData.append('FeeTermId', feeTermId_cell15Text);
+                    formData.append('FeeTypeId', feeTypeId_cell14Text);
+                    formData.append('UserFeeId1', userfeeactivityId_cell16Text);
+                    formData.append('ChequeDDNo', ChequeDDNo);
+                    formData.append('ChequeDDDate', ChequeDDDate);
+                    formData.append('ChequeDDBank', ChequeDDBank);
+                    formData.append('CCDDNameOfCard', ChequeDDNo);
+                    formData.append('CCDDType', CCDDType);
+                    formData.append('CCDDNameofIssuer', ChequeDDBank);
+                    formData.append('DueAmount', '');
+
+                    formData.append('InstallmentName', InstallmentNameValue);
+
+                    const CCDDNo = new Date().toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    formData.append('CCDDNo', CCDDNo);
+
+                    /*if (textboxValues !== "") {*/
+                        if (parseInt(cell8Text) <= 0) {
+                            $('#SubmitvalidationMessage').text(`No Due Amount for Term "${cell2Text}" and FeeType "${cell3Text}"`);
+                            validationFailed = true;
+                            return false;
+                        }
+
+                    const cell8Number = parseFloat(cell8Text);
+                    const enterAmountNumber = parseFloat(EnterAmountValue);
+                    const Challana_BalanceDue = cell8Number + enterAmountNumber;
+
+                    formData.append('Challana_TermName', cell2Text);
+                    formData.append('Challana_FeeType', cell3Text);
+                    formData.append('Challana_FeeAmount', feeamountcellvalue);
+                    formData.append('Challana_DiscountType', '');
+                    formData.append('Challana_DiscountAmount', Discountamountcellvalue);
+                    formData.append('Challana_PaidAmount', Paidamountcellvalue);
+                    //formData.append('Challana_PayingAmount', textboxValues);
+                    formData.append('Challana_PayingAmount', EnterAmountValue);
+                    formData.append('Challana_DueAmount', Dueamountcellvalue);
+                    // formData.append('Challana_BalanceDue', cell8Text - textboxValues);
+                    formData.append('Challana_BalanceDue', Challana_BalanceDue);
+                    formData.append('Challana_DueDate', cell9Text);
+                    formData.append('Challana_UserRegId', cell18Text);
+                    formData.append('Challana_ClassificationName', Departmentcell19);
+                    formData.append('Challana_subclassificationName', Classnamecell20);
+                    formData.append('Challana_UserName', Studentusernamecell21);
+                    //formData.append('Amount', textboxValues);
+                    formData.append('Amount', EnterAmountValue);
+                    formData.append('StudentUserid', Studentuseridspid);
+
+                        $.ajax({
+                            //url: '/FeeSection/Pfuuserfeeinstallment',
+                            url: '/FeeSection/Pfuuserfeerefundinstallment',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                if (response == "0") {
+                                    loaddingimg.css('display', 'none');
+                                } else {
+                                    $('#Errormessage').text('Fee Refund Successfully');
+                                    $('#Studentdetailsid').text('');
+                                    $('#ddltermid, #ddlFeetermid').empty().prop('selectedIndex', 0);
+                                    $('#MANAGEFEEDETAILSFORM')[0].reset();
+                                    $('#Searchuserfields_tabledatadiv1, #Userfeedetailsdiv2').hide();
+                                    $('#Feechallandiv').show();
+                                    $('#Feedetailsupdateandedit_tablediv').hide();
+                                    $('#Feereceipt_partailcontaindiv').append(response);
+                                    $('#PayingRefundamountdivid').text('Refund Amount');
+
+                                    loaddingimg.css('display', 'none');
+                                }
+                            }
+                        });
+                   /* }*/
+                }
+                //else {
+                //    $('#SubmitvalidationMessage').text('Enter Valid FeeAmount.');
+                //    validationFailed = true;
+                //    return false;
+                //}
+            });
+        }
+    }
+    loaddingimg.css('display', 'none');
+}
+
+function RefundValidationchecking() {
+    //debugger;
+    const dropdownValidationMessage = document.getElementById('Validationmsgspid');
+    const textValidationMessage = document.getElementById('SubmitvalidationMessage');
+    const lineBreak = document.createElement('br');
+    let isTextValid = true;
+    let isDropdownValid = true;
+
+    textValidationMessage.innerHTML = '';  // Clear text validation message
+    dropdownValidationMessage.innerHTML = ''; // Clear dropdown validation message
+
+    // Validation for dropdowns
+    const dropdownFields = [
+        //{ elementId: 'bankaccountsddl', displayId: 'bankaccountsddl', message: 'Please select a bank.' },
+        { elementId: 'paymentmodeddl', displayId: 'paymentmodeddl', message: 'Please select a payment mode.' }
+    ];
+
+    dropdownFields.forEach(({ elementId, displayId, message }) => {
+        const dropdown = document.getElementById(elementId);
+        const selectedValue = dropdown.value.trim();
+
+        if (!selectedValue) {
+            dropdownValidationMessage.appendChild(document.createTextNode(message));
+            dropdownValidationMessage.appendChild(lineBreak.cloneNode());
+            isDropdownValid = false;
+        }
+    });
+
+    // Validation for text inputs
+    const textFields = [
+        { elementIds: 'Chequetxtid', displayIds: 'Chequeddno', messages: 'Please enter Cheque/DD No.' },
+        { elementIds: 'Chequedatedttxtid', displayIds: 'Chequedddate', messages: 'Please enter Cheque/DD Date.' },
+        { elementIds: 'Chequebanknametxtid', displayIds: 'Chequenamlname', messages: 'Please enter Cheque/DD Bank Name.' }
+    ];
+
+    textFields.forEach(({ elementIds, displayIds, messages }) => {
+        const elements = document.getElementById(elementIds);
+        const values = elements.value.trim();
+
+        if (elements.style.display !== 'none' && values === '') {
+            textValidationMessage.appendChild(document.createTextNode(messages));
+            textValidationMessage.appendChild(lineBreak.cloneNode());
+            isTextValid = false;
+        }
+    });
+
+    const isValid = isDropdownValid && isTextValid;
+    return isValid;
 }

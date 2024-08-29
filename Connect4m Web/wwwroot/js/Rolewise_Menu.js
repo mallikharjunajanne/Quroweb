@@ -34,27 +34,53 @@ $(document).ready(function () {
                 });
 
                 var ChileMenu_Listlenth = ChileMenu_List.length;
-               // alert(ChileMenu_Listlenth);
-             //   debugger;
+                // alert(ChileMenu_Listlenth);
+                //debugger;
                 var Notparent = 0;
-                //  alert("hiiii");
-               // loaddingimg.css('display', 'block');
+                //alert("hiiii");
+                //loaddingimg.css('display', 'block');
+
+                //CODE CHANGED BY MALLIKHARJUNA THIS IS OLD CODE END HERE 
+                
                 $.each(menuData, function (index, item) {
-                   // loaddingimg.css('display', 'block');
+                    try {
+                        //loaddingimg.css('display', 'block');
+                        Notparent = 0;
 
-
-                    
-                    Notparent = 0;
-                  //  if (item.instanceMenuId !== 7223 && item.instanceMenuId !== 7291) {
-                    var li = $('<li class="menu-item">');
+                        //if (item.instanceMenuId !== 7223 && item.instanceMenuId !== 7291) {
+                        var li = $('<li class="menu-item">');
                         for (var i = 0; i < ChileMenu_Listlenth; i++) {
                             if (item.instanceMenuId === parseInt(ChileMenu_List[i].ParentMenuId)) {
-                              
                                 if (item.menuUrl !== "") {
+                                    //debugger;
 
-                                    var a = $('<a class="menu-link menu-toggle" href="javascript:void(0)"><i class="menu-icon tf-icons ti ti-layout-sidebar"></i><span>' + item.menuName + '</span></a>');
+                                    var a;
+                                    if (item.menuName.toUpperCase() == "ADMIN MODULE") {
+                                        a = $('<a class="menu-link" href="' + item.menuUrl + '">' +
+                                            '<img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/>' + '<span>' + item.menuName + '</span>' + '</a>');
+                               //a = $('<a class="menu-link" href="javascript:void(0)">'+'<img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/>' + '<span>' + item.menuName + '</span>' + '</a>');
+                                    }
+                                    else if (item.menuName.toUpperCase() == "REPORTS") {
+                                        a = $('<a class="menu-link" href="' + item.menuUrl + '">' +
+                                            '<img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/>' + '<span>' + item.menuName + '</span>' + '</a>');
+                              //a = $('<a class="menu-link" href="javascript:void(0)">' +'<img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/>' + '<span>' + item.menuName + '</span>' + '</a>');
+                                    }
+                                    else {
+                                        a = $('<a class="menu-link menu-toggle" href="javascript:void(0)">' +
+                                            '<img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/>' + '<span>' + item.menuName + '</span>' + '</a>');
+                                    }
+
+                                    /*---**** THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES START HERE ****---*/
+//var a = $('<a class="menu-link menu-toggle" href="javascript:void(0)"><i class="menu-icon tf-icons ti ti-layout-sidebar"></i><span>' + item.menuName + '</span></a>');
+                                    /*---**** THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES END HERE ****---*/
+
+                                    ///*---**** THIS COMMENT CODE IS MENU ITEMS WITH IMAGES START HERE ****---*/
+//var a = $('<a class="menu-link menu-toggle" href="javascript:void(0)"><img src="/' + item.imageUrl + '" alt="" height="15" width="15" class="menu-icon"/></i><span>' + item.menuName + '</span></a>');
+                                    ///*---**** THIS COMMENT CODE IS MENU ITEMS WITH IMAGES END HERE ****---*/
+
+
                                     li.append(a);
-                                  //  li.append('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
+                                    //  li.append('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
                                     var ul = $('<ul class="menu-sub">');
                                     for (var newval = i; newval < ChileMenu_Listlenth; newval++) {
                                         Notparent++;
@@ -67,24 +93,103 @@ $(document).ready(function () {
 
                                     li.append(ul);
                                     parentmenulist.append(li);
-                                   // console.log(li);
+                                    //console.log(li);
                                     i = ChileMenu_Listlenth;
                                 }
                             }
                         }
                         if (Notparent == 0) {
-                            if (item.menuUrl !== "" && item.parentMenuId=="") {
-                                var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');
+                            if (item.menuUrl !== "" && item.parentMenuId == "") {
+                                //debugger;
+
+                                /* THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES START HERE */
+                               var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');
+                                /* THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES END HERE */
+
+                                /* THIS COMMENT CODE IS MENU ITEMS WITH IMAGES  START HERE */
+                                //var a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="/' + item.imageUrl + '"  height="15" width="15" class="menu-icon"/><span>' + item.menuName + '</span></a>');
+                                /* THIS COMMENT CODE IS MENU ITEMS WITH IMAGES END HERE */
+
+
                                 li.append(a);
                                 parentmenulist.append(li);
                                 //console.log(li);
                             }
                         }
-                    //}
-                  //  loaddingimg.css('display', 'none');
-                    $("#loading1").css('display', 'none');
-
+                        //}
+                        //loaddingimg.css('display', 'none');
+                        $("#loading1").css('display', 'none');
+                    } catch (e) {
+                        //debugger;
+                        alert('An error occurred: ' + e.message);
+                    }
                 });
+
+                //CODE CHANGED BY MALLIKHARJUNA THIS IS OLD CODE END HERE 
+
+
+                //CODE CHANGED BY MALLIKHARJUNA THIS IS NEW CODE END HERE 
+                //$.each(menuData, function (index, item) {
+                //    // Initialize the Notparent variable
+                //    var Notparent = 0;
+                //    debugger;
+                //    // Create a list item
+                //    var li = $('<li class="menu-item">');
+
+                //    // Loop through ChileMenu_List to find child menus
+                //    for (var i = 0; i < ChileMenu_Listlenth; i++) {
+                //        if (item.instanceMenuId === parseInt(ChileMenu_List[i].ParentMenuId)) {
+                //            if (item.menuUrl !== "") {
+                //                // Create the menu link with icon and text
+                //                var a = $('<a class="menu-link menu-toggle" href="javascript:void(0)">' +
+                //                    '    <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>' +
+                //                    '    <span>' + item.menuName + '</span>' +
+                //                    '</a>');
+
+                //                li.append(a);
+
+                //                // Create a submenu list
+                //                var ul = $('<ul class="menu-sub">');
+                //                for (var newval = i; newval < ChileMenu_Listlenth; newval++) {
+                //                    Notparent++;
+                //                    if (item.instanceMenuId == parseInt(ChileMenu_List[newval].ParentMenuId)) {
+                //                        if (ChileMenu_List[newval].MenuUrl !== "") {
+                //                            ul.append('<li class="menu-item">' +
+                //                                '    <a class="menu-link" href="' + ChileMenu_List[newval].MenuUrl + '">' +
+                //                                '        ' + ChileMenu_List[newval].MenuName +
+                //                                '    </a>' +
+                //                                '</li>');
+                //                        }
+                //                    }
+                //                }
+                //                li.append(ul);
+                //                parentmenulist.append(li);
+                //                i = ChileMenu_Listlenth; // Exit loop
+                //            }
+                //        }
+                //    }
+
+                //    // If there are no child menus, create a single menu item
+                //    if (Notparent == 0) {
+                //        if (item.menuUrl !== "" && item.parentMenuId == "") {
+                //            var ImageName = item.imageUrl;
+
+                //            // Create a link with an image and text
+                //            var a = $('<a class="menu-link" href="' + item.menuUrl + '">' +
+                //                '    <div class="menu-icon" style="background-image: url(/' + item.imageUrl + '); height: 15px; width: 15px; background-size: cover; background-position: center;"></div>' +
+                //                '    <span>' + item.menuName + '</span>' +
+                //                '</a>');
+
+                //            li.append(a);
+                //            parentmenulist.append(li);
+                //        }
+                //    }
+
+                //    // Hide loading indicator
+                //    $("#loading1").css('display', 'none');
+                //});
+
+                //CODE CHANGED BY MALLIKHARJUNA THIS IS NEW CODE END HERE 
 
                 $(".toggle-nav").click(function () {
                     $('.nav-menu').css("left", "0px");
@@ -134,7 +239,8 @@ $(document).ready(function () {
                     });
                     jQuery('.submenu-content').hide();
 
-                } else if ($('#pageWrapper').hasClass('horizontal-wrapper')) {
+                }
+                else if ($('#pageWrapper').hasClass('horizontal-wrapper')) {
                     var contentwidth = jQuery(window).width();
                     if ((contentwidth) < '992') {
                         $('#pageWrapper').removeClass('horizontal-wrapper').addClass('compact-wrapper');
@@ -307,5 +413,3 @@ $(document).ready(function () {
    
 });
 
-
-$('#')

@@ -74,7 +74,7 @@ for (var ijk = 0; ijk < listItems.length; ijk++) {
 
 
 function captureFrame() {
-  //  debugger;
+  //debugger;
     var seekTime = seekTimes[currentIndex];
     var tolerance = 0.5; // Tolerance in seconds to capture frame near the desired time
 
@@ -179,7 +179,7 @@ var panel = document.getElementById('chapters-panel');
 var items = panel.getElementsByClassName('chapter-list');
 
 panel.addEventListener('mousemove', function (e) {
-   // //debugger;
+   //debugger;
     var selectedItems = panel.getElementsByTagName('li');
 
     // Determine if the mouse is moving over a selected item
@@ -274,7 +274,7 @@ function chapterstimer() {
     function hovercolor() {
 
         /* alert("hii");*/
-      // debugger;
+      //debugger;
         var videotime = video.currentTime;
        // console.log(videotime);
         setCookie("viewpoints", videotime, 1);
@@ -302,7 +302,7 @@ function chapterstimer() {
         }
        
         for (var ij = 0; ij < seektimearrys.length; ij++) {
-            // //debugger;
+            //debugger;
             if (ij == length - 1) {
                 $("#chapters-panel li").removeClass("hoverclass");
                 $("#chapters-panel li").css("background-color", "#f9f9f9");
@@ -410,7 +410,7 @@ function _Texttimer(questionpresentation) {
     var minute = 0;
     var sec = 10;
     var _interval = setInterval(function () {
-       /* //debugger;*/
+        //debugger;
         document.getElementById("timer").innerHTML = minute + ":" + sec;
 
 
@@ -549,7 +549,7 @@ $(document).on('click', '#textsubmit', function (event) {
 })
  
 function Calculatemarks() {
-  //  debugger;
+  //debugger;
 
     var result = "";
     var attempts = 0;
@@ -617,7 +617,7 @@ function Calculatemarks() {
 //==========================    Video and File View Poins
 
 function ViewVideoPoins() {
-    debugger;
+    //debugger;
     var SubjectVideoIdCookie = getCookie("SubjectVideoId");
     var ChapterIdCookie = getCookie("ChapterId");
     var viewpoints = getCookie("viewpoints");

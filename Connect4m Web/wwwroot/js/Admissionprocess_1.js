@@ -1,6 +1,6 @@
 ﻿// UPDATE && INSERT FUNCTION
 $('#NewAdmissionform').submit(function (event) {
-    debugger;
+    //debugger;
     event.preventDefault();
     $('#CommonErrorMessage').text('');
     $('#emailError').text('');
@@ -35,7 +35,7 @@ $('#NewAdmissionform').submit(function (event) {
                 State: Stateselectedtext,
                 RegistrationUserId: RegistrationUserId
             };
-            debugger;
+            //debugger;
             var ajaxOptions = {
                 url: actionUrl,
                 method: 'POST',
@@ -43,7 +43,7 @@ $('#NewAdmissionform').submit(function (event) {
                 processData: false, // Prevent jQuery from processing the data
                 contentType: false, // Prevent jQuery from setting contentType
                 success: function (resp) {
-                    debugger;
+                    //debugger;
                     if (resp.methodName === "Insert") {
                         if (resp.returnValue === "-2") {
                             loaddingimg.css('display', 'none');
@@ -86,7 +86,7 @@ $('#NewAdmissionform').submit(function (event) {
                     }
                 },
                 error: function (xhr, status, error) {
-                    debugger;
+                    //debugger;
                     loaddingimg.css('display', 'none');
                 }
             };

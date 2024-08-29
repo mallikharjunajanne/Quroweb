@@ -44,7 +44,7 @@ $(document).ready(function () {
 });
 
 function setTodayDate(startDateId, endDateId) {
-    debugger;
+    //debugger;
     var date = new Date();
     var day = date.getDate();
     var month = date.getMonth() + 1;
@@ -60,11 +60,11 @@ function setTodayDate(startDateId, endDateId) {
 }
 
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    debugger;
+    //debugger;
     CallToAjax('GET', url,
         function (response) {
 
-            debugger;
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -76,7 +76,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 }
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    debugger;
+    //debugger;
     dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -93,7 +93,7 @@ $('#Ddldepartment').change(function () {
     var ClassificationId = $('#Ddldepartment').val();
     //var SubClassificationId = $('#DdlSubClass').val();
     // var FilterTeachingSubjects = 0;
-    debugger;
+    //debugger;
     Departmentbysubclassdd(ClassificationId);
 });
 
@@ -103,7 +103,7 @@ function Departmentbysubclassdd(Departmentvalue) {
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#DdlSubClass';
             var dropdown = $(dropdownSelector);
             var valueField = 'value';
@@ -143,13 +143,13 @@ $('#DdlSubClass').change(function () {
 
 
 function Classwisestudentnames(Departmentvalue, SubClassificationId) {
-    debugger;
+    //debugger;
     $.ajax({
         url: '/Attendance/Classwisestudents?InstanceClassificationId=' + Departmentvalue + "&InstanceSubClassificationId=" + SubClassificationId,
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#Studentnamesddl';
             var dropdown = $(dropdownSelector);
             var valueField = 'value';
@@ -177,7 +177,7 @@ $('#Attendancedetailsform').on('submit', function () {
     event.preventDefault();
     event.stopImmediatePropagation();
     setTimeout(function () {
-        debugger;
+        //debugger;
         $('#ErrorMessage').text('');
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
@@ -200,7 +200,7 @@ $('#Attendancedetailsform').on('submit', function () {
 
             handleAjax('GET', url, formData,
                 function (response) {
-                    debugger;
+                    //debugger;
                     if (response == "0") {
                         window.scrollTo(0, 0);
                         $('#ErrorMessage').text('Your search returned 0 records.');                       
@@ -211,7 +211,7 @@ $('#Attendancedetailsform').on('submit', function () {
                     loaddingimg.css('display', 'none');
                 },
                 function (status, error) {
-                    debugger;
+                    //debugger;
                     console.error("Error fetching data:", error);
                     loaddingimg.css('display', 'none');
                 },
@@ -223,7 +223,7 @@ $('#Attendancedetailsform').on('submit', function () {
 
 
 function Clearfun(formid) {
-    debugger;
+    //debugger;
     $('#' + formid).find('input, select, textarea').val('');
     $('#' + formid).find('.field-validation-error').html('');
     $('#User_Attendance_Tbl').empty();

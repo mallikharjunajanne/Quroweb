@@ -31,10 +31,10 @@ $(document).ready(function () {
     );
 });
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
-    debugger;
+    //debugger;
     CallToAjax_Withoutdata('GET', url,
         function (response) {
-            debugger;
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -45,7 +45,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
     );
 }
 function populateDropdown(data, dropdownSelector, valueField, textField) {
-    debugger;
+    //debugger;
     var dropdown = $(dropdownSelector); 
     $.each(data, function (index, item) {
         dropdown.append($('<option>', {
@@ -56,14 +56,14 @@ function populateDropdown(data, dropdownSelector, valueField, textField) {
 }
 
 $("#Btnsearch").click(function () {
-    debugger;
+    //debugger;
 
     var formData = $('#Feedetailform').serialize();
     var Termids = $('#lstTerms').val();
     var url = "/Reports/ClassificationWiseFeeDetails";
     CallToAjax('GET', url, formData,
         function (response) {
-            debugger;
+           //debugger;
             var Responselist = response.mainlist;
             var FeeAmount = response.feeAmount;
             var FeeCollected = response.feeCollected;
@@ -93,7 +93,7 @@ $("#Btnsearch").click(function () {
     );
 });
 function bindorganisationfeesummary(response, headernames, columnnames, appendid, event, bcolor, onclickfun, startcolunmnindex, Termids) {
-    debugger;
+    //debugger;
     if (response.length > 0) {
         loaddingimg.css('display', 'block');
         var maintable = '<table id="Feetbldata" class="table table-hover table-bordered" >';
@@ -108,9 +108,9 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
         }
         maintable += "</tr></thead><tbody>";
         for (var i = 0; i < response.length; i++) {
-            debugger;
+            //debugger;
            // maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + ' <input type="text" value="' + response[i][columnnames[1]] + '" hidden style="display:none" readonly /></td>';
-            maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + '</td>';
+            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;">' + response[i][columnnames[0]] + '</a></td>';
 
             for (var j = startcolunmnindex; j < columnnames.length; j++) {
                 maintable += '<td>' + response[i][columnnames[j]] + '</td>';
@@ -128,7 +128,7 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
     loaddingimg.css('display', 'none');
 }
 function SubClassificationWiseFeeDetailsfun(InstanceClassificationId, termIds, event) {
-    debugger;
+    //debugger;
     var requestData = {
         SubClassificationId: InstanceClassificationId,
         FeeTermId: termIds
@@ -159,7 +159,7 @@ function SubClassificationWiseFeeDetailsfun(InstanceClassificationId, termIds, e
     );
 }
 function Userwisefeedetailsfun(InstanceClassificationId, termIds, event) {
-    debugger;
+    //debugger;
     var requestData = {
         SubClassificationId: InstanceClassificationId,
         FeeTermId: termIds
@@ -187,7 +187,7 @@ function Userwisefeedetailsfun(InstanceClassificationId, termIds, event) {
     );
 }1
 function ChallanGeneratedDetails(UserId, termIds, event) {
-    debugger;
+    //debugger;
     var requestData = {
         StudentUserid: UserId,
         FeeTermId: termIds
@@ -195,7 +195,7 @@ function ChallanGeneratedDetails(UserId, termIds, event) {
     var url = "/Reports/GetChallangenerateddetails";
     CallToAjax('GET', url, requestData,
         function (response) {
-            debugger;
+            //debugger;
             var removedElement = $(event).closest('tr').next('tr').find('td[colspan="6"]').closest('tr').remove();
             if (removedElement.length > 0) {
                
@@ -220,7 +220,7 @@ function ChallanGeneratedDetails(UserId, termIds, event) {
     );
 }
 function bindorganisationfeesummaryuserwisefeedetails(response, headernames, columnnames, appendid, event, bcolor, onclickfun, startcolunmnindex, Termids, UserId) {
-    debugger;
+    //debugger;
     if (response.length > 0) {
         loaddingimg.css('display', 'block');
         var maintable = '<table class="table table-hover table-bordered" >';
@@ -236,13 +236,12 @@ function bindorganisationfeesummaryuserwisefeedetails(response, headernames, col
         }
         maintable += "</tr></thead><tbody>";
         for (var i = 0; i < response.length; i++) {
-            debugger;
+            //debugger;
             //maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + ' <input type="text" value="' + response[i][columnnames[1]] + '" hidden style="display:none" readonly /></td>';
-            maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + '</td>';
+            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;">' + response[i][columnnames[0]] + '</a></td>';
 
             for (var j = startcolunmnindex; j < 6; j++) {
                 maintable += '<td>' + response[i][columnnames[j]] + '</td>';
-
             }
             if (response[i][columnnames[6]] === "1") {
                 maintable += '<td><span onclick="feedetailslnk(\'' + UserId + '\',\'' + response[i]['feeTermId'] + '\', \'' + response[i]['userfeeid'] + '\', this)">🔍</span></td>'; 
@@ -262,10 +261,9 @@ function bindorganisationfeesummaryuserwisefeedetails(response, headernames, col
         }
     }
     loaddingimg.css('display', 'none');
-
 }
 function feedetailslnk(Studentuserid, Feetermids, UserFeeId1) {
-    debugger;
+    //debugger;
     var requestData = {
         StudentUserid: Studentuserid,
         FeeTermId: Feetermids,
@@ -273,7 +271,7 @@ function feedetailslnk(Studentuserid, Feetermids, UserFeeId1) {
     };
     CallToAjax('GET', "/Reports/GetFeeDetialsByUserFeeId", requestData,
         function (response) {
-            debugger;
+            //debugger;
             var Resp = response;
             var RespCount = Resp.length;
             if (Resp.length != 0) {
@@ -366,7 +364,7 @@ function feedetailslnk(Studentuserid, Feetermids, UserFeeId1) {
 
 $(document).on('click', '#Exporttoexcellnk', function () {
 
-    debugger;
+    //debugger;
     var table1 = document.getElementById("Feetbldata");
     var table1Clone = table1.cloneNode(true);
 
@@ -380,14 +378,14 @@ $(document).on('click', '#Exporttoexcellnk', function () {
     //var cells = table1.getElementsByTagName("td");
     var cells = table1Clone.getElementsByTagName("td");
     for (var i = 0; i < cells.length; i++) {
-        debugger;
+        //debugger;
         cells[i].style.width = "180px";
         cells[i].style.border = "1px solid black";   
         cells[i].style.backgroundColor = "#f2f2f2";  
         cells[i].style.padding = "8px";              
     }
 
-    debugger;
+    //debugger;
     //var combinedHtml = table1Clone.outerHTML;
     //const blob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
     //saveAs(blob, 'Fee Details.xls');
@@ -418,7 +416,7 @@ $(document).on('click', '#Exporttoexcellnk', function () {
 });
 
 function Searchclearfun(formid) {
-    debugger;
+    //debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);
 
@@ -432,7 +430,8 @@ function Searchclearfun(formid) {
         });
         $('#Paymentoptionchangediv').hide();
 
-    } else {
+    }
+    else {
         console.error("Form with id '" + formid + "' not found.");
     }
 }

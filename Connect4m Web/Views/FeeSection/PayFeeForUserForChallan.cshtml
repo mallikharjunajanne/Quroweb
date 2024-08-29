@@ -8,14 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @*<style>
-            span.validation {
-                display: block;
-                color: red;
-            }
-        </style>
-
-        <link href="~/css/PayFee_Corrections.css" rel="stylesheet" />*@
+    @*<link href="~/css/PayFee_Corrections.css" rel="stylesheet" />*@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
@@ -24,138 +17,131 @@
         <span id="Errormessage" class="text-danger"></span>
         <span id="Studentdetailsid" class="text-dark"></span><input type="hidden" id="Studentuseridspid" />
         <div id="Searchuserfields_tabledatadiv1">
-            <h4 class="py-3 mb-4"><span class="text-muted fw-light">FeeSection /</span>PAY FEE BY USERS </h4>
+            <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">FeeSection /</span>*@PAY FEE BY USERS </h4>
             @*<<<<==== USER FEE PAYEMENT DETAILS SEARCH DIV START =====>>>*@
-            <div class="row mb-2">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">SEARCH USER</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <form class="form" id="Payfeebyuserssearchform">
-                                        <div class="row mb-2">
-                                            <label asp-for="InstanceUserCode" class="control-label col-sm-2 col-form-label text-end  space">Reg. No </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtinstanceusercodeid" asp-for="InstanceUserCode" class="form-control">
-                                            </div>
 
-                                            <label asp-for="UserName" class="control-label col-sm-2 col-form-label text-end space">User Name </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtusernameid" asp-for="UserName" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <label asp-for="FirstName" class="control-label col-sm-2 col-form-label text-end  space">First Name </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtfirstnameid" asp-for="FirstName" class="form-control">
-                                            </div>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span class="text-header">SEARCH USER</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row col">
+                            <form class="form" id="Payfeebyuserssearchform">
+                                <div class="row mb-2">
+                                    <label asp-for="InstanceUserCode" class="control-label col-sm-2 col-form-label text-end  space">Reg. No </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtinstanceusercodeid" asp-for="InstanceUserCode" class="form-control">
+                                    </div>
 
-                                            <label asp-for="LastName" class="control-label col-sm-2 col-form-label text-end  space">Last Name </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtlastnameid" asp-for="LastName" class="form-control">@*name="Bank_NameTXT_Name"*@
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Department </label>
-                                            <div class="col-sm-4">
-                                                <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
-                                                </select>
-                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-                                            </div>
-
-                                            <label asp-for="InstanceSubClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Class </label>
-                                            <div class="col-sm-4">
-                                                <select class="select2 form-select select2-hidden-accessible" id="DdlClass" asp-for="InstanceSubClassificationId">
-                                                </select>
-                                                <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <label asp-for="ParentName" class="control-label col-sm-2 col-form-label text-end  space">Parent Name </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtparentnameid" asp-for="ParentName" class="form-control">
-                                            </div>
-
-                                            <label asp-for="MobilePhone" class="control-label col-sm-2 col-form-label text-end  space">Mobile Number </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" asp-for="MobilePhone" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <label asp-for="PortalEmail" class="control-label col-sm-2 col-form-label text-end  space">Email ID </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txtportalemailid" asp-for="PortalEmail" class="form-control">
-                                            </div>
-
-                                            <label asp-for="StudentQuota" class="control-label col-sm-2 col-form-label text-end  space">Student Quota/Type </label>
-                                            <div class="col-sm-4">
-                                                <select class="select2 form-select select2-hidden-accessible" id="ddlstudentquota" asp-for="StudentQuota">
-                                                </select>
-                                                <span asp-validation-for="StudentQuota" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <label asp-for="ICNumber" class="control-label col-sm-2 col-form-label text-end  space">IC Number </label>
-                                            <div class="col-sm-4">
-                                                <input type="text" id="txticnumberid" asp-for="ICNumber" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-info waves-effect waves-light" onclick="previouspages('ManageFeeDetails',null)">Previous Page</button>
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="nextpages('FeeStatus',null)">Next Page</button>
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearFunction('Payfeebyuserssearchform')" id="BtnClear">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" value="Search" id="btnSearch">Search</button>
-                                                <button type="submit" class="btn btn-dark waves-effect waves-light" value="NoFee" id="Search_NoFeeUser">NoFee</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <label asp-for="UserName" class="control-label col-sm-2 col-form-label text-end space">User Name </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtusernameid" asp-for="UserName" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row mb-2">
+                                    <label asp-for="FirstName" class="control-label col-sm-2 col-form-label text-end  space">First Name </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtfirstnameid" asp-for="FirstName" class="form-control">
+                                    </div>
+
+                                    <label asp-for="LastName" class="control-label col-sm-2 col-form-label text-end  space">Last Name </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtlastnameid" asp-for="LastName" class="form-control">@*name="Bank_NameTXT_Name"*@
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Department </label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
+                                        </select>
+                                        <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
+                                    </div>
+
+                                    <label asp-for="InstanceSubClassificationId" class="control-label col-sm-2 col-form-label text-end  space">Class </label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 form-select select2-hidden-accessible" id="DdlClass" asp-for="InstanceSubClassificationId">
+                                        </select>
+                                        <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <label asp-for="ParentName" class="control-label col-sm-2 col-form-label text-end  space">Parent Name </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtparentnameid" asp-for="ParentName" class="form-control">
+                                    </div>
+
+                                    <label asp-for="MobilePhone" class="control-label col-sm-2 col-form-label text-end  space">Mobile Number </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" asp-for="MobilePhone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label asp-for="PortalEmail" class="control-label col-sm-2 col-form-label text-end  space">Email ID </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txtportalemailid" asp-for="PortalEmail" class="form-control">
+                                    </div>
+
+                                    <label asp-for="StudentQuota" class="control-label col-sm-2 col-form-label text-end  space">Student Quota/Type </label>
+                                    <div class="col-sm-4">
+                                        <select class="select2 form-select select2-hidden-accessible" id="ddlstudentquota" asp-for="StudentQuota">
+                                        </select>
+                                        <span asp-validation-for="StudentQuota" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label asp-for="ICNumber" class="control-label col-sm-2 col-form-label text-end  space">IC Number </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="txticnumberid" asp-for="ICNumber" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center">
+                                    <button type="reset" class="btn btn-info waves-effect waves-light btn-sm" onclick="previouspages('ManageFeeDetails',null)">Previous Page</button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" onclick="nextpages('FeeStatus',null)">Next Page</button>
+                                    <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" onclick="CommonClearFunction('Payfeebyuserssearchform')" id="BtnClear">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" value="Search" id="btnSearch">Search</button>
+                                    <button type="submit" class="btn btn-dark waves-effect waves-light btn-sm" value="NoFee" id="Search_NoFeeUser">NoFee</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <span id="Studentfeedetailsscheduledornotspanid" class="text-danger"></span>
-
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">
-                                <span>
-                                    YOUR SEARCH RESULTED:<span id="TableCount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
-                                </span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered" id="Searchpayfeeuserstbl">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>RegNo</th>
-                                        <th>Role</th>
-                                        <th>Department</th>
-                                        <th>Class</th>
-                                        <th id="mobilenumber">Mobile Number</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+            <span id="Studentfeedetailsscheduledornotspanid" class="text-validation"></span>
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span class="text-header">
+                            YOUR SEARCH RESULTED:<span id="TableCount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
+                        </span>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered" id="Searchpayfeeuserstbl">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>RegNo</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+                                    <th id="mobilenumber">Mobile Number</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div id="Userfeedetailsdiv2" style="display:none;">@*GetFeeTermDetialsByUser_DIVID*@
+        <div id="Userfeedetailsdiv2" style="display:none;">
+            @*GetFeeTermDetialsByUser_DIVID*@
         <div class="row mb-2" id="Getfeedetailsforuserwisemaindiv1">
             <span id="Update_SubmitvalidationMessage" class="text-danger"></span>
             <div class="row">
@@ -181,7 +167,7 @@
                                                 </div>
                                                 <div class="row justify-content text-center">
                                                     <div class="col-sm-12">
-                                                        <button type="button" class="btn btn-success waves-effect waves-light" value="Search" id="searchbtnterms">Search</button>@*UserFee_Details_SearchBtn*@
+                                                        <button type="button" class="btn btn-success waves-effect waves-light btn-sm" value="Search" id="searchbtnterms">Search</button>@*UserFee_Details_SearchBtn*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -311,9 +297,9 @@
                                                         </div>*@
                                                     <div class="row justify-content text-center">
                                                         <div class="col-sm-12">
-                                                            <button type="reset" class="btn btn-warning waves-effect waves-light" onclick="CommonClearfunction('MANAGEFEEDETAILSFORM')" id="BtnClear">Clear</button>
-                                                            <button type="button" class="btn btn-success waves-effect waves-light" id="Addfeeuserbtn" value="Submit">Submit</button>@*AddFeeByUser_Btn*@
-                                                            <button type="button" id="DeleteFeeByUser_Btn" class="btn btn-warning waves-effect waves-light" onclick="Dltfunction(event);">Delete</button>
+                                                            <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm" onclick="CommonClearfunction('MANAGEFEEDETAILSFORM')" id="BtnClear">Clear</button>
+                                                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Addfeeuserbtn" value="Submit">Submit</button>@*AddFeeByUser_Btn*@
+                                                            <button type="button" id="DeleteFeeByUser_Btn" class="btn btn-warning waves-effect waves-light btn-sm" onclick="Dltfunction(event);">Delete</button>
                                                         </div>
                                                     </div>
 
@@ -447,10 +433,10 @@
                             <div class="row justify-content text-center">
                                 <div class="col-sm-12">
 
-                                    <button type="button" class="btn btn-dark waves-effect waves-light" onclick="backToSearchfun(event)">Back To Search</button>
+                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" onclick="backToSearchfun(event)">Back To Search</button>
                                     @* <button type="submit" class="btn btn-dark waves-effect waves-light" onclick="backToSearch(event);">Back To Search</button>*@
-                                    <button type="button" class="btn btn-warning waves-effect waves-light">Refund</button>
-                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btnsubmit" onclick="Payinstallmentsubbtn(event)">Submit</button>@*onclick="AmountPaySubmitBtn(event);"*@
+                                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Refund</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="btnsubmit" onclick="Payinstallmentsubbtn(event)">Submit</button>@*onclick="AmountPaySubmitBtn(event);"*@
                                 </div>
                             </div>
                         </div>

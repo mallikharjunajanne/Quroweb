@@ -87,10 +87,12 @@ function SaveExams(event, FormId) {
         var DdlAcademicYearCreatePage = $("#DdlAcademicYearCreatePage1").val();
         var TxtExamNameCreatePage = $("#TxtExamNameCreatePage1").val();
         var TxtExamNameCreatePage1 = $("#TxtExamNameCreatePage").val();
-        if (DdlAcademicYearCreatePage === '' || TxtExamNameCreatePage === '' || $("input[type='radio'].check").is(':checked') == false) {
+        //if (DdlAcademicYearCreatePage === '' || TxtExamNameCreatePage === '' || $("input[type='radio'].check").is(':checked') == false) {
+        if (DdlAcademicYearCreatePage === " " || TxtExamNameCreatePage === '' || $("input[type='radio'].check").is(':checked') == false) {
             $("#Main_Span_Error").text('Following fields have invalid data :');
             window.scrollTo(0, 0);
-            if (DdlAcademicYearCreatePage === '') {
+            //if (DdlAcademicYearCreatePage === '') {
+            if (DdlAcademicYearCreatePage === ' ') {
                 $("#DdlAcademicYearCreatePage").text("Academic Year");
             }
             if (TxtExamNameCreatePage === '') {
@@ -120,9 +122,10 @@ function SaveExams(event, FormId) {
 //create new page function
 function CreateNewExams() {
     debugger;
-    
+    $("#loadingOverlay").show();
     performCrudOperationCommonFunction("POST", "/Examination/Create_Update_Pview_ManageExams", "FmExamsSearch", function (response) {
         debugger;
+        $("#loadingOverlay").hide();
         $('#DdlAcademicYearCreatePage1').empty();
         Acadamicyearddl(null);
         $("#MainSearchPage").hide();

@@ -11,13 +11,13 @@
 </head>
 <body>
     <div class="card">
-        <h5 class="card-header">
-            YOUR SEARCH RESULTED @Model.Count() RECORDS.
-        </h5>
+        <div class="card-header bg-danger text-header text-white">
+            <span class="text-header"> YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glow text-header">@Model.Count()</span> RECORDS.</span>
+        </div>
         <div class="card-datatable text-nowrap">
             <div class="table-responsive">
                 <div class="table-responsive text-nowrap">
-                    <table class="table" id="firstTable">
+                    <table class="table table-hover table-bordered no-footer dataTable" id="firstTable">
                         <thead class="table-dark">
                             <tr>
                                 <th>Student ID</th>
@@ -42,7 +42,7 @@
                                 <tr>
                                     <td>@item.hallticket</td>
                                     <td>
-                                        <span onclick="GetFeeinstallmentsfeedetailsbyuserid(@item.UserId,this)" style="color:blue; font-weight:bold; cursor:pointer;">
+                                        <span onclick="GetFeeinstallmentsfeedetailsbyuserid(@item.UserId,this)" style="color:black; font-weight:600; cursor:pointer;text-decoration:underline;">
                                             @item.Name
                                         </span>    
                                     </td>
@@ -104,9 +104,11 @@
 
                             }
 
-                            <tr>
-                                <td colspan="7"> <span style="color:green;">Fee Amount: @totalFeeAmount Discount :@totaldiscountamount Fee Collected:@CollectedAmount Balance:@BalanceAmounts</span></td>
-                            </tr>
+                        <tr>
+                            <td colspan="7">
+                                <span style="color:green;">Fee Amount: @totalFeeAmount Discount :@totaldiscountamount Fee Collected:@CollectedAmount Balance:@BalanceAmounts</span>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

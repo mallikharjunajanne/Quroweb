@@ -17,17 +17,14 @@
             @*=====================         BUTTONS                =================*@
 
             <div class="row justify-content">
-
-
                 <div class="col-sm-12" id="printbuttons">
-                    <button type="button" class="btn btn-info waves-effect waves-light" id="Backtosearchpayslip">Back To Search</button>
-                    <button type="button" class="btn btn-warning waves-effect waves-light">Send Email</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="Backtosearchpayslip">Back To Search</button>
+                    <button type="button" class="btn btn-warning waves-effect waves-light btn-sm">Send Email</button>
 
                     @{
                         if (FourthPaySliplList.AlreadyExists != "0")
                         {
-                            <button onclick="printPaySlip('PaySlip')" type="button" class="text-end btn btn-success waves-effect waves-light">Print</button>
-
+                            <button onclick="printPaySlip('PaySlip')" type="button" class="text-end btn btn-success waves-effect waves-light btn-sm">Print</button>
                         }
                     }
 

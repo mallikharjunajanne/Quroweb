@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 function SubmitLeaves(event) {
     try {
-        debugger;
+        //debugger;
         event.preventDefault();
         loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
@@ -25,7 +25,7 @@ function SubmitLeaves(event) {
                 CheckBoxcount++;             
             }
         });
-        debugger;
+        //debugger;
         if (CheckBoxcount < 1) {
             //$("#Main_Span_Error").text("Please select any one of the Employee to submit Leaves.");
             $('.alert-danger p').text("Please select any one of the Employee to submit Leaves.");
@@ -48,7 +48,7 @@ function SubmitLeaves(event) {
             contentType: false,
             processData: false,
             success: function (response) {
-                debugger;
+                //debugger;
 
                 if (response.message == "Records inserted successfully.") {
                     $("#BtnSubmit").prop('disabled', true);
@@ -82,7 +82,7 @@ function SubmitLeaves(event) {
 ////  To get Partial View of SearchLeaveTypePage
 function _TblAssignLeavesToStaffTblViewCalingFunction(event) {
     try {
-        debugger;
+        //debugger;
         event.preventDefault();
         loaddingimg.css('display', 'block');
         $(".ErrorMessageSpan").empty();
@@ -133,7 +133,7 @@ function _TblAssignLeavesToStaffTblViewCalingFunction(event) {
 
 function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
     try {
-        debugger;
+        //debugger;
         $("#ErrorMessageSpan").empty();
         var PayrollCategoryId = $("#" + buttonId).val();
         if (PayrollCategoryId == "") {
@@ -175,7 +175,7 @@ function DdlLmsSubCategory_Calingfunction(buttonId, EffectingDropdownid) {
 function DdlLmsCategory_Calingfunction() {
 
     try {
-        debugger;
+        //debugger;
         $("#ErrorMessageSpan").empty();
         $.ajax({
             url: "/Attendance/DdlLmsCategory_Calingfunction",
@@ -213,14 +213,14 @@ function FN_ClearValues(Formid) {
 
 //=====================clear a span
 function Spanclearfunction() {
-    debugger;
+    //debugger;
     $(".ErrorMessageSpan").empty();
 }
 
 //===================================This is for save and Update Leave in ManagePastDaysLeave Screen
 function SavePastDayseaves(event) {
     try {
-        debugger;
+        //debugger;
         event.preventDefault();
         window.scrollTo(0, 0);
         $(".ErrorMessageSpan").empty();
@@ -231,7 +231,7 @@ function SavePastDayseaves(event) {
 
         if (DdlDepartment === "" || DdlDepartment === "0" || DdlUser === "" || DdlLeaveType === "" /*|| $("#AllowPastDates_bool").is(":checked") == false*/) {
             $("#Main_Span_Error").text('Following fields have invalid data :');
-            debugger;
+            //debugger;
             if (DdlDepartment === "" || DdlDepartment === "0") {
                 $("#DdlDepartment_Span_Error").text('Department');
             }

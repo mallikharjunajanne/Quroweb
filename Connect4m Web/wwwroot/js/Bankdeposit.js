@@ -55,7 +55,7 @@ $(document).ready(function () {
 
 function Bankdeposittablebindingfun() {
     var formData = $('#BankdepositSearchForm').serialize();
-    /*debugger;*/
+    //debugger;
     TblCallToAjax('GET', '/Admin/ManageBankDeposittbl', formData,
         function (response) {
             // Assuming response contains data for DataTable binding
@@ -71,7 +71,7 @@ function Bankdeposittablebindingfun() {
 // Function to compare dates and show error message
 function DatesCompare(Sdate, Edate) {
     try {
-        /*debugger;*/
+        //debugger;
         var StartdateInput = $("#Startdatetxt").val();
         var EnddateInput = $("#Enddatetxt").val();
 
@@ -149,7 +149,7 @@ $('#BankdepositSearchForm').submit(function () {
 
 
 function Newdiposit() {
-    debugger;
+    //debugger;
     $('#Amountdepositdiv1').empty();
     handleAjax('GET', "/Admin/Insertmanagebankdeposit", null,
         function (resp) {
@@ -179,7 +179,7 @@ $('#Backtosearchlnk').click(function (e) {
 
 ///===>>> NEW BANK DEPOSIT FUNCTION CODE START
 $('#Bankdepositform').on('submit', function (event) {
-    debugger;
+    //debugger;
     event.preventDefault();
     event.stopPropagation();
     $('#Commoneerrormessage').text('');
@@ -205,11 +205,11 @@ $('#Bankdepositform').on('submit', function (event) {
             //    file = fileInput.files[0];
             //    formData.append('AttachedDocument', file);
             //}
-            debugger;
+            //debugger;
             var fileInput = document.getElementById('AttachedDocument');
             var file;
             if (fileInput.files.length > 0) {
-                debugger;
+                //debugger;
                 file = fileInput.files[0];
                 var fileName = file.name;
                 var fileExtension = fileName.split('.').pop().toLowerCase();
@@ -244,7 +244,7 @@ $('#Bankdepositform').on('submit', function (event) {
             //handleAjax('POST', "/Admin/Insertmanagebankdeposit?AttachedDocument=" + file, formData,
             handleAjax('POST', url, formData,
                 function (resp) {
-                    debugger;
+                    //debugger;
                     loaddingimg.css('display', 'none');
                     switch (resp) {
                         case 'FileExist':
@@ -279,13 +279,13 @@ $('#Bankdepositform').on('submit', function (event) {
 $(document).on('click', '#Bankdeposittblid td:nth-child(1)', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         event.stopImmediatePropagation();
         var parent = $(event.target).closest('tr');
         var spanValue = $(parent).find('td:first-child span').text();
         handleAjax('GET', "/Admin/Updatemanagebankdeposit?ManageBankdepositid=" + spanValue, null,
             function (resp) {
-                debugger;
+                //debugger;
                 $('#Amountdepositdiv1').empty();
                 loaddingimg.css('display', 'none');              
                 $('#Bankdipositdiv').hide();
@@ -314,7 +314,7 @@ function DateFormat() {
 
 //======>>>> TABLE DATA BINDING FUNCTION
 function Tabledatabindingfun(response) {
-   
+    //debugger;
     $("#Recordscount").text(response.length);
 
     // Clear the existing content of the table
@@ -324,9 +324,9 @@ function Tabledatabindingfun(response) {
     // Create the table element
     var table = document.createElement('table');
     table.id = 'Bankdeposittblid';
-    table.classList.add('lnks','table', 'table-hover', 'table-bordered', 'no-footer');
-    table.style.borderCollapse = 'collapse';
-    table.style.border = '1px solid black';
+    table.classList.add('table','table-bordered','no-footer','dataTable');
+    //table.style.borderCollapse = 'collapse';
+    //table.style.border = '1px solid black';
 
     // Create thead and append it to the table
     var thead = document.createElement('thead');
@@ -335,8 +335,8 @@ function Tabledatabindingfun(response) {
     ['Deposit ID', 'School Name', 'Deposit Amount', 'Bank Name', 'Branch Name', 'Account Number', 'Payment Mode', 'Deposit Date', 'Created Date'].forEach(function (headingText) {
         var th = document.createElement('th');
         th.textContent = headingText;
-        th.style.border = '1px solid black';
-        th.style.borderCollapse = 'collapse';
+        //th.style.border = '1px solid black';
+        //th.style.borderCollapse = 'collapse';
         trHead.appendChild(th);
     });
     thead.appendChild(trHead);
@@ -354,15 +354,29 @@ function Tabledatabindingfun(response) {
         var tr = document.createElement('tr');
         tr.classList.add(index % 2 === 0 ? 'even' : 'odd');
 
-        var firstCell = document.createElement('td');
-        var span = document.createElement('span');
-        span.textContent = row['feeDepositId']; // Assuming 'feeDepositId' is the property name        
-        span.setAttribute('data-fee-deposit-id', row['feeDepositId']);        
-        span.style.display = 'block';
-        firstCell.style.border = '1px solid black';
-        firstCell.style.borderCollapse = 'collapse';
-        firstCell.appendChild(span);
-        tr.appendChild(firstCell);
+        //var firstCell = document.createElement('td');
+        //var span = document.createElement('span');
+        //span.textContent = row['feeDepositId']; // Assuming 'feeDepositId' is the property name        
+        //span.setAttribute('data-fee-deposit-id', row['feeDepositId']);        
+        //span.style.display = 'block';
+        //firstCell.style.border = '1px solid black';
+        //firstCell.style.borderCollapse = 'collapse';
+        //firstCell.appendChild(span);
+        //tr.appendChild(firstCell);
+
+        var firstCell_ = document.createElement('td');
+        var anchor = document.createElement('a');
+        anchor.textContent = row['feeDepositId'];
+        anchor.setAttribute('href', 'javascript:void(0)');
+        anchor.setAttribute('data-fee-deposit-id', row['feeDepositId']);
+        anchor.style.color = '#2C2C2C';
+        anchor.style.fontSize = '14px';
+        anchor.style.fontWeight = 'bold';
+        //firstCell_.style.border = '1px solid black';
+        //firstCell_.style.borderCollapse = 'collapse';
+        firstCell_.appendChild(anchor);
+        tr.appendChild(firstCell_);
+
 
         ['schoolName', 'depositAmount', 'bankName', 'branchName', 'accountNumber', 'paymentMode', 'depositdate', 'createdDate'].forEach(function (propertyName) { // Corrected 'dipositDate' to 'depositDate'
             var td = document.createElement('td');
@@ -378,7 +392,7 @@ function Tabledatabindingfun(response) {
 
 //=====>>>> CLEAR FUNCTION
 function Clearform(formid) {
-    debugger;
+    //debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);
 
@@ -399,7 +413,7 @@ function Clearform(formid) {
     }
 }
 function InsertClearform(formid) {
-    debugger;
+    //debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);
 

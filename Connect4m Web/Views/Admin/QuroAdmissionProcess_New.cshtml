@@ -20,8 +20,9 @@
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb" id="Studentdetails">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">STUDENT DETAILS</h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        STUDENT DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -116,12 +117,9 @@
             </div>
             <div class="col-md-12 col-lg-12 mb" id="Fatherdetails">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                FATHER DETAILS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                        FATHER DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -166,12 +164,9 @@
             </div>
             <div class="col-md-12 col-lg-12 mb" id="Motherdetails">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                MOTHER DETAILS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header text-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        MOTHER DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -210,12 +205,9 @@
             </div>
             <div class="col-md-12 col-lg-12 mb" id="Addressdetails">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                ADDRESS DETAILS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                        ADDRESS DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -246,27 +238,27 @@
                                                 <option value="">-------select-------</option>
                                                 @foreach (var country in ViewBag.CountryNames)
                                                 {
-                                                @if (ViewBag.EditMode)
+                                                    @if (ViewBag.EditMode)
                                                     {
-                                                @if (Model.CountryName != null)
+                                                        @if (Model.CountryName != null)
                                                         {
                                                             if (country.Text == Model.CountryName)
                                                             {
-                                                <option value="@country.Value" selected="selected">@country.Text</option>
+                                                                <option value="@country.Value" selected="selected">@country.Text</option>
                                                             }
                                                             else
                                                             {
-                                                <option value="@country.Value">@country.Text</option>
+                                                                <option value="@country.Value">@country.Text</option>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                <option value="@country.Value">@country.Text</option>
+                                                            <option value="@country.Value">@country.Text</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                <option value="@country.Value">@country.Text</option>
+                                                        <option value="@country.Value">@country.Text</option>
                                                     }
                                                 }
                                             </select>
@@ -279,27 +271,27 @@
                                                 <option value="">-------select-------</option>
                                                 @foreach (var State in ViewBag.StateNames)
                                                 {
-                                                @if (ViewBag.EditMode)
+                                                    @if (ViewBag.EditMode)
                                                     {
-                                                @if (Model.StateName != null)
+                                                        @if (Model.StateName != null)
                                                         {
                                                             if (State.Text == Model.StateName)
                                                             {
-                                                <option value="@State.Value" selected="selected">@State.Text</option>
+                                                                <option value="@State.Value" selected="selected">@State.Text</option>
                                                             }
                                                             else
                                                             {
-                                                <option value="@State.Value">@State.Text</option>
+                                                                <option value="@State.Value">@State.Text</option>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                <option value="@State.Value">@State.Text</option>
+                                                            <option value="@State.Value">@State.Text</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                <option value="@State.Value">@State.Text</option>
+                                                        <option value="@State.Value">@State.Text</option>
                                                     }
                                                 }
                                             </select>
@@ -320,12 +312,9 @@
             </div>
             <div class="col-md-12 col-lg-12 mb" id="Contactdetails">
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                CONTACT DETAILS
-                            </span>
-                        </h5> <small class="text-muted float-end">* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                        CONTACT DETAILS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -353,10 +342,10 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-success waves-effect waves-light" id="Savebtn" value="Submit">Submit</button>
-            </div>
+        <div class="justify-content-center text-center">
+            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Savebtn" value="Submit">
+                Submit
+            </button>
         </div>
     </form>
 </body>

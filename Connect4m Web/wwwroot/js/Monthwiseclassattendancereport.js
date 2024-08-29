@@ -31,7 +31,7 @@ function handleAjax(method, url, data, successCallback, errorCallback, hasFileUp
 }
 
 $(document).ready(function () {
-    debugger;
+   //debugger;
    // CommonDropdownFunction("GET", "/Attendance/DepartmentsDropdown_Caliingfunction", "DdlDepartment", null, false)
     //fetchDataAndPopulateDropdown(
     //    '/Reports/MonthWisedepartmentdd',         // URL for data fetching
@@ -68,7 +68,7 @@ function GetDateFormats(date) {
 
 $('#Ddldepartment').change(function () {
     var selectedValues = $('#Ddldepartment').val();
-    debugger;
+    //debugger;
     Departmentbysubclassdd(selectedValues);   
 });
 
@@ -78,7 +78,7 @@ function Departmentbysubclassdd(Departmentvalue) {
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#DdlClass';
             var dropdown = $(dropdownSelector);
             var valueField = 'instanceSubclassificaitionId';
@@ -107,7 +107,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
     $('#Appendsmonthwiseattendancereportdiv').empty();
     event.preventDefault();
     event.stopImmediatePropagation();
-    debugger;
+    //debugger;
     setTimeout(function () {
         $('#Main_Span_Error').text('');
         var validationMessages = $('.field-validation-error');
@@ -144,7 +144,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
                     } else {
                         //bindDatatable(response); 
                         $('#Appendsmonthwiseattendancereportdiv').show();
-                        debugger;
+                        //debugger;
                         var Tabledatarepsonse = response.classwisemonthreport;
                         var Percentagedetails = response.percentagedetails;
                         var attendancesummarydetails = response.attendancesummary;
@@ -169,7 +169,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
                         var monthName = new Date(Date.UTC(year, monthIndex, 1)).toLocaleString('en', { month: 'short' });
                         var daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
 
-                       /* debugger;*/
+                        //debugger;
 
                         var firstRow = `<tr><td rowspan="2" align="center" style="border: 1px solid;">S.No.</td>
                                             <td rowspan="2" align="center" style="border: 1px solid;">Adm.No.</td>
@@ -219,7 +219,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
                             tableRow.append($('<td  style="border: 1px solid;">').text(rowData.admissionNumber));
                             tableRow.append($('<td  style="border: 1px solid;">').text(rowData.name));
 
-                            debugger;
+                            //debugger;
                             
                             dynamicColumns.forEach(function (columnValue, index) {
                                 // Count the occurrences of <br> tags in the columnValue                                
@@ -408,7 +408,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
                         tableBody.append(SummarydetailsRow);
 
 
-                        debugger;
+                        //debugger;
 
                         var classTeacherLabel = $('<label>').text('Class Teacher').appendTo('#AttendanceSignaturesdiv');
                         var classTeacherInput = $('<label>').text('_____________________').appendTo('#AttendanceSignaturesdiv');
@@ -450,7 +450,7 @@ $("#Monthlyattendanceformid").on('submit', function () {
 /*============********** MONTHLY ATTENDANCE REPORT PRINT **********==============*/
 $('#_monthwiseattendancereportPrint').on('click', function () {
     var printContents = $('#Printmonthwiseattendancereport').html();
-    debugger;
+    //debugger;
 
     // Create a new window to print the content
     var printWindow = window.open('', '_blank');
@@ -470,13 +470,13 @@ $('#_monthwiseattendancereportPrint').on('click', function () {
 $('#_MonthwiseattendancereportExportExcel').on('click', function () {
     var formattedDate = GetDateFormat();
 
-    debugger;
+    //debugger;
     var month = document.getElementById("selectedmonthid").textContent;
     var year = document.getElementById("SelectedYearid").textContent;
     var className = document.getElementById("Selectedepartmentspid").textContent;
     var section = document.getElementById("SelecteSectionspid").textContent;
     //var teachingDays = document.getElementById("Teaching_Days").textContent;
-    debugger;
+    //debugger;
     var Leaverelatedcontent = `<table>
     <tr>
         <td>
@@ -541,9 +541,9 @@ $('#_MonthwiseattendancereportExportExcel').on('click', function () {
 
     var cells = table1.getElementsByTagName("td");
     for (var i = 0; i < cells.length; i++) {
-        debugger;
+        //debugger;
         if (cells[i].style.display === "none") { // Check if the td element has the hidden attribute       
-            debugger;
+            //debugger;
             cells[i].remove();
 
         } else {           
@@ -586,7 +586,7 @@ $('#_MonthwiseattendancereportExportExcel').on('click', function () {
 //-----**Date Compare function**-------
 function DatesCompare(Sdate, Edate) {
     try {
-        debugger;
+        //debugger;
         var StartdateInput = $("#Startdatetxt").val();
         var EnddateInput = $("#Enddatetxt").val();
 
@@ -622,7 +622,7 @@ $("#Enddatetxt").on("change", function () { DatesCompare("Start Date", "End Date
 
 
 $('#SelectAllDepartmentsChk').change(function () {
-    debugger;
+    //debugger;
     if (this.checked) {
         $('#DdlDepartment option').prop('selected', true);
         var allValues = $('#DdlDepartment').val();
@@ -634,7 +634,7 @@ $('#SelectAllDepartmentsChk').change(function () {
 });
 
 $('#Selectallsubclasschk').change(function () {
-    debugger;
+   //debugger;
     if (this.checked) {
         $('#DdlClass option').prop('selected', true);
         // var allValues = $('#DdlClass').val();
@@ -647,7 +647,7 @@ $('#Selectallsubclasschk').change(function () {
 
 $('#DdlDepartment').change(function () {
     var selectedValues = $('#DdlDepartment').val();
-    debugger;
+    //debugger;
     //Departmentbysubclass(selectedValues);
     console.log(selectedValues);
 });
@@ -658,7 +658,7 @@ function Departmentbysubclass(Departmentvalue) {
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
-            debugger;
+            //debugger;
             var dropdownSelector = '#DdlClass';
             var dropdown = $(dropdownSelector);
             var valueField = 'instanceSubclassificaitionId';
@@ -684,7 +684,7 @@ function Departmentbysubclass(Departmentvalue) {
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {    
     CallToAjax_Withoutdata('GET', url,
         function (response) {
-            debugger;
+            //debugger;
             var dataToPopulate = Array.isArray(response) ? response : response[Responsevalues] || [];
             populateDropdown(dataToPopulate, dropdownSelector, valueField, textField);
         },
@@ -697,7 +697,7 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
 
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     var dropdown = $(dropdownSelector);
-    debugger;
+    //debugger;
     //dropdown.empty(); // Clear existing options
     dropdown.append($('<option>', {
         value: '',
@@ -744,7 +744,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
             var SerializeData = $('#Classswisetudentwiseattendancereport').serialize();
 
             var url = "/Reports/SectionwiseAttendanceReporttbldata";
-            debugger;
+            //debugger;
            
             handleAjax('GET', url, null,
                 function (resp) {
@@ -763,7 +763,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
             var urls = "/Reports/SearchsectionwiseAttendanceReporttbldata";
             handleAjax('GET', urls, SerializeData,
                 function (response) {
-                    debugger;
+                    //debugger;
 
                     var Tabledatarepsonse = response.attendancemonthreports;
                     var attendancesummarydetails = response.attendancemonthpercantage;
@@ -844,7 +844,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                         tableRow.append($('<td>').text(rowData.gender));
                         tableRow.append($('<td>').text(rowData.dateOfJoining));
 
-                        debugger;
+                        //debugger;
                         for (var index = 0; index <= daysInMonth; index++) {
                             var columnValue = dynamicColumns[index];
                             var cellHtml;
@@ -956,7 +956,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
                     tableBody.append(numberOfStudentsRow);
                     tableBody.append(Percentagerow);
 
-                    debugger;
+                    //debugger;
                    
                     var Summarydetails = attendancesummarydetails[0];
                     if (attendancesummarydetails.length > 0) {
@@ -1006,7 +1006,7 @@ $('#Classswisetudentwiseattendancereport').on('submit', function () {
 function Classwisesectionwiseattendancereportbinddata(response) {
     event.stopPropagation();
     
-    debugger;
+    //debugger;
 
     var fromDate = new Date(document.getElementById('Startdatetxt').value);
     var toDate = new Date(document.getElementById('Enddatetxt').value);   
@@ -1210,7 +1210,7 @@ function extractBackgroundColor(html) {
 
 //CLEAR FUNCTION
 function Clearform(formid) {
-    debugger;
+    //debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);
 
@@ -1218,6 +1218,7 @@ function Clearform(formid) {
         // Use the reset method to clear the form
         form.reset();
         $('#Appendsmonthwiseattendancereportdiv').empty();
+        $('#Main_Span_Error').text('');
         // Clear ASP.NET Core validation messages
         var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
         validationSpans.forEach(span => {

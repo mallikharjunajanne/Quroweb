@@ -10,7 +10,9 @@
     <div class="col-md-12 col-lg-12 mb-1">
         <span id="lblPostNoticeMsg" class="text-danger text-validation"></span>
         <div class="card mb-1">
-            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">POST NOTICE</div>
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                POST NOTICE
+            </div>
             <div class="card-body">
                 <div class="row mb-2">
                     <label class="control-label col-sm-2 col-form-label text-end space">Selected Notice</label>
@@ -88,7 +90,7 @@
                                 }
                             }
                             @*<input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="CheckAllUsers()" />
-                                <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>*@
+                        <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>*@
                         </div>
                     </div>
                 </div>
@@ -123,9 +125,9 @@
 
 
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                    <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
-                                    <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
-                                </div>*@
+                            <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
+                            <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
+                        </div>*@
                             @if (item.InstanceRoleId == 3)
                             {
                                 break;
@@ -162,9 +164,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                    <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
-                                    <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
-                                </div>*@
+                            <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
+                            <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
+                        </div>*@
                             @if (item.GroupId == 3)
                             {
                                 break;
@@ -197,9 +199,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                                    <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
-                                    <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
-                                </div>*@
+                            <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
+                            <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
+                        </div>*@
                             @if (item.InstanceClassificationId == 3)
                             {
                                 break;
@@ -232,9 +234,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                                    <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
-                                    <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
-                                </div>*@
+                            <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
+                            <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
+                        </div>*@
                             @if (item.InstanceSubClassificationId == 3)
                             {
                                 break;
@@ -247,8 +249,12 @@
         </div>
         <div id="PostNoticeAddinguserstable_Div" style="display: none;">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">
-                    YOUR HAVE SELECTED BELOW <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span> USER(S) TO POST THIS NOTICE.
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR HAVE SELECTED BELOW
+                    <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">
+                        0
+                    </span>
+                    USER(S) TO POST THIS NOTICE.
                 </div>
                 <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticeaddeduserstblid">
                     <thead class="table-dark">
@@ -274,7 +280,9 @@
         </div>
         <div id="SearchUser_AddUser_DivId_Postnotice" style="display: none;">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">SEARCH USERS TO POST NOTICE</div>
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                    SEARCH USERS TO POST NOTICE
+                </div>
                 <div class="card-body">
                     <form id="UpdatenoticeUserSeacrhform">
                         <div class="row mb-2">
@@ -346,15 +354,15 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-success waves-effect waves-light" id="btnSearchUsers">Search</button>
+                            <button class="btn btn-success waves-effect waves-light btn-sm" id="btnSearchUsers">Search</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">
+                <div class="card-header bg-danger text-white text-header">
                     YOUR SEARCH RESULTED
-                    <span id="SearchRecordsspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span>
+                    <span id="SearchRecordsspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">0</span>
                     RECORDS.
                 </div>
                 <table class="table table-bordered  table-responsive text-nowrap dataTable" id="UpdateNoticesearchuserstbl">
@@ -378,8 +386,8 @@
     </div>
     <div class="row justify-content text-center" id="PostnoticebtnDiv">
         <div class="col-12 BTNSCLASS">
-            <button class="btn btn-dark waves-effect waves-light" id="UpdatePostnoticeBacktosearchbtn">Back To Search</button>
-            <button class="btn btn-success waves-effect waves-light" id="UpdtePostnoticebtn">Post</button>
+            <button class="btn btn-dark waves-effect waves-light btn-sm" id="UpdatePostnoticeBacktosearchbtn">Back To Search</button>
+            <button class="btn btn-success waves-effect waves-light btn-sm" id="UpdtePostnoticebtn">Post</button>
         </div>
     </div>
 </div>
@@ -410,9 +418,9 @@
 
 <script>
     $(document).ready(function () {
-        /*debugger;*/
+        //debugger;
         if ($('#Selectallusers_Checkbox').prop('checked')) {
-            /*debugger;*/
+            //debugger;
             var selectAllCheckbox = document.getElementById('Selectallusers_Checkbox');
             var AllUserscheckboxes = document.querySelectorAll('.checkbox-item');
 
@@ -424,7 +432,7 @@
         }
         Searchbtnclick_Usersnoticetbldata();
         function Searchbtnclick_Usersnoticetbldata() {
-            debugger;
+            //debugger;
             loaddingimg.css('display', 'block');
             var userName = $('#Usernametxt').val() || '';
             var roleId = $('#Instanceroleddl').val() || '';
@@ -475,7 +483,7 @@
         }
 
         function bindDatatable(response) {
-            debugger;
+            //debugger;
             loaddingimg.css('display', 'block');
             //var UserstargetList = ViewBag.List.Targetenoticetbl[5];
 
@@ -493,7 +501,7 @@
             table.destroy();
             //$("#SearchRecordsspid").text(listvaluesCount);
             $("#AddedRecordscountspid").text(listvaluesCount);
-            debugger;
+            //debugger;
             var newTable = $("#Noticeaddeduserstblid").DataTable({
                 dom: '<"tops"lf>t<"bottom"ip>',
                 buttons: [],
@@ -608,13 +616,13 @@
 
     $("#Classificationddlid").change(function () {
         var ClassificationIds = $("#Classificationddlid").val();
-
+        //debugger;
         $.ajax({
             url: "/Admin/Noticeclassesbysubclassddl?Classificationid=" + ClassificationIds,
             // url: "/Admin/ManageNotices_InstanceSubClassificationSearch?InstanceClassificationId=" + ClassificationIds,
             type: "GET",
             success: function (response) {
-                debugger;
+                //debugger;
                 var Classificationdropdown = document.getElementById('Subclassddl');
                 Classificationdropdown.innerHTML = '<option value="">---Select a class---</option>';
                 response.forEach(function (subclassification) {
@@ -634,7 +642,7 @@
         UpdateSearchUsersnoticetabledata();
     });
    function UpdateSearchUsersnoticetabledata(){
-        debugger;
+        //debugger;
         loaddingimg.css('display', 'block');
         var userName = $('#Usernametxt').val() || '';
         var roleId = $('#Instanceroleddl').val() || '';
@@ -684,7 +692,7 @@
     }
 
     function Updatesearchtabledatabinding(response) {
-        debugger;
+        //debugger;
         loaddingimg.css('display', 'block');
         var listvaluesCount = response.length;
         var Twentystudentuserids;
@@ -703,7 +711,7 @@
         var table = $('#UpdateNoticesearchuserstbl').DataTable();
         table.destroy();
         $("#SearchRecordsspid").text(listvaluesCount);
-        debugger;
+        //debugger;
         var newTable = $("#UpdateNoticesearchuserstbl").DataTable({
             dom: '<"tops"lf>t<"bottom"ip>',
             buttons: [],
@@ -800,7 +808,7 @@
 
     //SINGLE USER ADD FUNCTION
     function UpdatenoticeAdduserclick(event, Studentuserid, instanceUserCode, Noofusers) {
-        debugger;
+        //debugger;
 
         loaddingimg.css('display', 'block');
         var currentIds = $('#ExcludeUserIdsUpdatespanid').val(); // Get current value from textbox
@@ -830,12 +838,12 @@
     // ADDED TABLE FUNCTION
     function UpdateAddusersdatatablefunction(response) {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         var table = $('#Noticeaddeduserstblid').DataTable();
         //var table = $('#Noticeaddeduserstbl').DataTable();
         table.destroy();
         $("#AddedRecordscountspid").text(response.length);
-        debugger;
+        //debugger;
         var newTable = $("#Noticeaddeduserstblid").DataTable({
        //var newTable = $("#Noticeaddeduserstbl").DataTable({
             dom: '<"top"lf>t<"bottom"ip>',
@@ -946,7 +954,7 @@
 
     //ADDED ALL USERS CHECKBOX CHECK FUNCTION
     function UpdateAllusersaddingcheckboxcallingfun(Studentuserid, Noofusers) {
-        debugger;
+        //debugger;
         loaddingimg.css('display', 'block');
         var currentIds = $('#ExcludeUserIdsUpdatespanid').val(); // Get current value from textbox
         var newIds = Studentuserid; // New value to add
@@ -974,7 +982,7 @@
     //WITHOUT SEARCH  TABLE REFRESHING FUNCTION
     function Searchbtn_withoutclick_Usersnoticetbldata(Studentuserid, Noofusers) {
         loaddingimg.css('display', 'block');
-        debugger;
+        //debugger;
         var userName = $('#Usernametxt').val() || '';
         var roleId = $('#Instanceroleddl').val() || '';
         var firstName = $('#Firstnametxt').val() || '';
@@ -1024,7 +1032,7 @@
 
     //REMOVE ADDED TABLE TO REMOVE FUNCTION
     function UpdatehandleTrashClick(Removestudentuserid) {
-        debugger;
+        //debugger;
         var Noofusers = 'OneTwoZero';
         var currentIds = $('#ExcludeUserIdsUpdatespanid').val();
         var Studentuserid;
@@ -1070,7 +1078,7 @@
             //No Selection Has Been Made. Please Select Any User
             $('#Commonerrormessage').text('');
             var $button = $(this);
-            debugger;
+            //debugger;
 
             //var allChecked = $('.Chkitem:checked').length === $('.Chkitem').length;
 
@@ -1185,7 +1193,7 @@
                     type: "POST",
                     data: datatosend,
                     success: function (response) {
-                        debugger;
+                        //debugger;
                         var Returnmessage = "";
 
                         if (response == "1") {
@@ -1196,7 +1204,7 @@
                             $button.prop('disabled', false);
                         }
                         else {
-                            debugger;
+                            //debugger;
                             var studentlist = response.studentlist;
                             var parentlist = response.parentlist;
                             //var studentcount= studentlist.length;
@@ -1204,7 +1212,7 @@
 
                             if ($('#SMSStudentChk1').prop('checked')) {
                                 if (studentlist.length > 0) {
-                                    debugger;
+                                    //debugger;
                                     Returnmessage += 'Notice Posted Successfully. ' + NotificationMessage + ' SMS sent successfully submitted To User(s). For Student(s): ';
                                     for (var i = 0; i < studentlist.length; i++) {
                                         if (studentlist[i] != null) {
@@ -1219,7 +1227,7 @@
                             }
                             if ($('#SMSParentChk2').prop('checked')) {
                                 if (parentlist.length > 0) {
-                                    debugger;
+                                    //debugger;
                                     Returnmessage += ' SMS sent successfully submitted To User(s). For Parent(s): ';
                                     for (var j = 0; j < parentlist.length; j++) {
                                         if (parentlist[i] != null) {
@@ -1234,7 +1242,7 @@
                             }
                             if ($('#MailStudentChk3').prop('checked')) {
                                 if (studentlist.length > 0) {
-                                    debugger;
+                                    //debugger;
                                     Returnmessage += 'Notice Posted Successfully. ' + NotificationMessage + ' Email successfully submitted To User(s). For Student(s): ';
                                     for (var i = 0; i < studentlist.length; i++) {
                                         if (studentlist[i] != null) {
@@ -1249,7 +1257,7 @@
                             }
                             if ($('#MailParentChk4').prop('checked')) {
                                 if (parentlist.length > 0) {
-                                    debugger;
+                                    //debugger;
                                     Returnmessage += ' Email successfully submitted To User(s). For Parent(s): ';
 
                                     for (var j = 0; j < parentlist.length; j++) {

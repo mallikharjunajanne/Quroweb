@@ -124,7 +124,7 @@
                                 <source src="Videos/movi" id="videosrc" type="video/mp4" />
                             </video>
 
-                            <div class="filename" id="filename" >
+                            <div class="filename" id="filename">
                                 <input type="file" id="video-upload" accept="video/*">
                                 @*<input type="file" id="file1" >
                                     <input type="file" id="file2" >*@
@@ -236,8 +236,8 @@
             </div>
         </div>
         <br />
-        <button id="add-one-more-video">Add One More Video</button>
-        <button id="save-all-videos">SAVE</button>
+        <button id="add-one-more-video" class="btn-sm">Add One More Video</button>
+        <button id="save-all-videos" class="btn-sm">SAVE</button>
     </div>
 
 </div>
@@ -267,34 +267,38 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-
-
-</head>
+<head></head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
 
-
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>Upload Lectures / Docs</h4>
+        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">/</span>Upload Lectures / Docs</h4>*@
+        <h4 class="mb-4 text-center">Upload Lectures / Docs</h4>
 
         <!-- Examples -->
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 @*<span class="ErrorMessageSpan"></span>*@
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
+                <div class="row justify-content">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-8 text-end">
+                        <a type="button" class="btn rounded-pill btn-info waves-effect waves-light btn-sm" href="/Videos/SearchUploadlecturedocs">  Search Upload Lecture Docs</a>
+                    </div>
+                </div>
+
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                SEARCH FOR SUBJECT TOOLS
-                            </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    <div class="card-header d-flex align-items-center justify-content-between bg-danger text-white text-header">
+                        @*<h5 class="mb-0">*@
+                        <span id="AddNewText_Span_CreatePage">
+                            SEARCH FOR SUBJECT TOOLS
+                        </span>
+                        @*</h5>*@ @*<small class="text-muted float-end">Default label</small>*@
                     </div>
 
 
                     @*=====================         BUTTONS                =================*@
 
-                    <div class="row justify-content">
+                    @*<div class="row justify-content">
                         <div class="col-sm-4">
                         </div>
 
@@ -302,7 +306,7 @@
                             <a type="button" class="btn rounded-pill btn-info waves-effect waves-light" href="/Videos/SearchUploadlecturedocs">  Search Upload Lecture Docs</a>
 
                         </div>
-                    </div>
+                    </div>*@
                     <input type="text" value="@ViewBag.updateknown" id="videosupdateknown" hidden style="display:none" />
 
                     <div class="card-body">
@@ -369,7 +373,7 @@
                                                             <i class="ti ti-x"></i>
                                                         </span>
                                                     </span>
-                                                   
+
                                                 </label>
                                                 <span asp-validation-for="UploadDocs" class="text-danger"></span>
                                             </div>
@@ -432,7 +436,7 @@
                                             <div class="col-sm-2"></div>
                                             <div class="col-sm-4">
 
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="submitButton">Save/Upload</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="submitButton">Save/Upload</button>
 
                                             </div>
                                         </div>
@@ -440,10 +444,10 @@
 
                                     </div>
                                 </div>
-                       
-                             </div>   
-                                
-                                </form>
+
+                            </div>
+
+                        </form>
                         @*=============================  Form End ================================*@
 
 
@@ -467,9 +471,6 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 </html>
 
@@ -807,7 +808,7 @@
         const fileInp = document.querySelector('#UploadDocuments');
         var filepathupdate = document.getElementById('filepathupdate').value;
         // alert(filePath)
-        debugger;
+        //debugger;
         try {
             if (filepathupdate != null) {
 

@@ -14,6 +14,11 @@ using Connect4m_Web.Views;
 using System.IO;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
 
 namespace Connect4m_Web.Controllers
 {
@@ -23,6 +28,9 @@ namespace Connect4m_Web.Controllers
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
         //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+
+        private readonly IMemoryCache _memoryCache;
+        private int loginCount = 0;
 
         private readonly IUserService _userService;
         private readonly int UserId;
@@ -308,11 +316,11 @@ namespace Connect4m_Web.Controllers
                     if (!string.IsNullOrEmpty(Lactypes))
                     {
                         string[] parts = Lactypes.Split('.');
-                        
+
                         int part0 = int.Parse(parts[0]);
-                        int part1=int.Parse(parts[1]);
-                        string fisrtvalue="";
-                        string Secoundvalue="";
+                        int part1 = int.Parse(parts[1]);
+                        string fisrtvalue = "";
+                        string Secoundvalue = "";
                         if (part0 > 0)
                         {
                             firstPart = part0;
@@ -321,9 +329,9 @@ namespace Connect4m_Web.Controllers
                         if (part1 > 1)
                         {
                             secondPart = part1;
-                            Secoundvalue= Convert.ToString(secondPart);
+                            Secoundvalue = Convert.ToString(secondPart);
                         }
-                        string LactypeValues= fisrtvalue + Secoundvalue;
+                        string LactypeValues = fisrtvalue + Secoundvalue;
                         DdlParentDetails.LacsType = LactypeValues;
                     }
 
@@ -556,7 +564,7 @@ namespace Connect4m_Web.Controllers
 
                         ViewBag.IsUserjoinedid = DdlUsersDetails.IsUserJoined;
                         //ModelState.Clear();
-                        
+
 
                         return View(DdlUsersDetails);
                     }
@@ -688,7 +696,7 @@ namespace Connect4m_Web.Controllers
         {
             try
             {
-              
+
 
                 //if (rolename.toupper().contains("student"))//identification is stundent or teachers
                 //{
@@ -826,14 +834,14 @@ namespace Connect4m_Web.Controllers
             val.InstanceID = InstanceId;
             List<MultipleDropDownList> MultipleDropDownList = CommonMethodobj.CommonListMethod<DropdownClass, MultipleDropDownList>(val, "/DdlBindingFunctions_CreateUsersinPayrollCategory_Calingfunction", client);
             if (MultipleDropDownList.Count > 0)
-            {              
+            {
                 ViewBag.DdlPayRoleCategoryList = MultipleDropDownList[0].DdlPayRoleCategoryList;
                 ViewBag.DdlLMSCategoryList = MultipleDropDownList[0].DdlLMSCategoryList;
                 ViewBag.DdlPayRoleCategoryIdList = new List<SelectListItem>();
                 ViewBag.DdlLMSSubCategoryIdList = new List<SelectListItem>();
                 ViewBag.testing = "Testing images";
             }
-          
+
             return View();
         }
 
@@ -1061,7 +1069,234 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
+        #region LOGIN PAGE 
+        //private int IncrementLoginCount(string username)
+        //{
 
+        //    // Retrieve the current login count from the cache
+        //    if (_memoryCache.TryGetValue(username, out loginCount))
+        //    {
+        //        // Increment the login count
+        //        loginCount++;
+        //    }
+        //    else
+        //    {
+        //        // If the user doesn't have a login count, initialize it to 1
+        //        loginCount = 1;
+        //    }
+
+        //    // Store the updated login count in the cache
+        //    _memoryCache.Set(username, loginCount);
+
+        //    return loginCount; // Return the updated login count
+        //}
+        //public async Task<string> GetPublicIpAddress()
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        var response = await client.GetStringAsync("https://api.ipify.org?format=json");
+        //        dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+        //        string ipAddress = result.ip;
+        //        return ipAddress;
+        //    }
+        //}
+
+        //public async Task<IActionResult> LoginPage()
+        //{
+        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    // ViewBag.Layout = "LoginPage";
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[AllowAnonymous]       
+        //public async Task<IActionResult> LoginPage(LoginModel val)
+        //{
+        //    //try
+        //    //{
+
+
+        //    //installed packeges 
+        //    //Microsoft.AspNetCore.Session
+        //    //Microsoft.AspNetCore.Authentication.Cookies
+
+
+        //    // var result = await _signInManager.PasswordSignInAsync(val.Username, val.Password, val.RememberMe, lockoutOnFailure: false);
+
+        //    if (val.Password == null || val.Username == null)
+        //    {
+        //        //ViewBag.ErrorMessage = "Invalid User ID/Password.";
+        //        //ViewBag.Layout = "LoginPage";
+        //        //return View();
+        //        return Json(0);
+        //    }
+
+        //    val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
+
+        //    //  return View();
+        //    val.CHK = "False"; //i gave default  . work on this   it is true when pagesubmission . when session exipire
+
+        //    // val.SubDomineName = "DEVELOP.CONNECT4M.COM";//it is temperory using //DATABASE NAME:-Dev_C4MProd
+        //    val.SubDomineName = "Quro.connect4m.com";//it is temperory using  //NEW DATABASE Name:C4MProd
+        //    //  val.SubDomineName = HtstpContext.Request.Host.Host.ToUpper();
+
+        //    //val.IPAddress = "183.82.116.209";
+        //    val.IPAddress = await GetPublicIpAddress();//to get IP address
+
+
+        //    // val.URL = "http://develop.connect4m.com";
+        //    //currentUrl
+        //    //val.URL = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + HttpContext.Request.QueryString;
+        //    val.URL = HttpContext.Request.GetDisplayUrl();
+
+
+        //    val.LoginAttempt = IncrementLoginCount(val.Username);
+        //    val.LoginStatus = 1;
+
+        //    List<LoginDetailsListModel> Value2 = new List<LoginDetailsListModel>();
+        //    string data = JsonConvert.SerializeObject(val);
+        //    StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        //    HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/LoginPage", content).Result;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string data1 = response.Content.ReadAsStringAsync().Result;
+        //        Value2 = JsonConvert.DeserializeObject<List<LoginDetailsListModel>>(data1);
+        //        if (Value2.Count > 0)
+        //        {
+        //            if (Value2[0].UserDetailsList.Count > 0 && Value2[0].UserDetailsList.Count > 0)
+        //            {
+        //                _memoryCache.Set(val.Username, 0);//set a login count is 0 with Username
+
+        //                Response.Cookies.Append("Instanceid", Value2[0].UserDetailsList[0].InstanceID.ToString());
+        //                Response.Cookies.Append("LoginUserId", Value2[0].UserDetailsList[0].UserId.ToString());
+        //                Response.Cookies.Append("InstanceClassificationId", Value2[0].UserDetailsList[0].InstanceClassificationId.ToString());
+        //                Response.Cookies.Append("InstanceSubClassificationId", Value2[0].UserDetailsList[0].InstanceSubClassificationId.ToString());
+        //                Response.Cookies.Append("Roleid", Value2[0].UserDetailsList[0].RoleId.ToString());
+        //                Response.Cookies.Append("StudentUserid", Value2[0].UserDetailsList[0].StudentUserid.ToString());
+        //                Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString().ToUpper());
+        //                Response.Cookies.Append("ThemeName", Value2[0].UserDetailsList[0].ThemeName.ToString());
+        //                Response.Cookies.Append("Quote", Value2[0].UserDetailsList[0].Quote.ToString());
+        //                //  Response.Cookies.Append("RoleName", Value2[0].UserDetailsList[0].RoleName.ToString());
+
+        //                int DelegationClasses = 1;// This for Arjun
+
+        //                Response.Cookies.Append("DelegationClasses", DelegationClasses.ToString());
+        //                Response.Cookies.Append("UserNameHeader_", Value2[0].UserDetailsList[0].FirstName.ToString() + " " + Value2[0].UserDetailsList[0].LastName.ToString()); Response.Cookies.Append("ChangePWOnLogin", Value2[0].UserDetailsList[0].ChangePWOnLogin.ToString());
+
+        //                var claims = new List<Claim>
+        //                {
+        //                    new Claim(ClaimTypes.Name, val.Username),
+        //                    new Claim(ClaimTypes.Role, "Admin")
+        //                };
+
+        //                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //                var authProperties = new AuthenticationProperties
+        //                {
+        //                    // Set additional properties if needed
+        //                };
+
+        //                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+        //                if (Value2[0]?.UserDetailsList[0]?.ChangePWOnLogin?.ToString() == "1")
+        //                {
+        //                    return Json("changepassword");
+        //                }
+        //                else
+        //                {
+        //                    return Json("correct");
+        //                }
+        //            }
+        //            //else
+        //            //{
+        //            //    //ViewBag.Layout = "LoginPage";
+        //            //    //ViewBag.ErrorMessage = "Invalid User ID/Password.";
+        //            //    //return View();
+        //            //    return Json(0);
+        //            //}
+        //        }
+        //        //else
+        //        //{
+        //        //    ViewBag.Layout = "LoginPage";
+        //        //    ViewBag.ErrorMessage = "Invalid User ID/Password.";
+        //        //    return View();
+        //        //}
+        //    }
+        //    //ViewBag.ErrorMessage = "Invalid User ID/Password.";
+        //    //return View();
+        //    return Json(0);
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    return Json(0);
+        //    //}
+        //}
+
+        //public async Task<IActionResult> LogoutPage()
+        //{
+        //    // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    // Redirect to the logout success page or wherever you prefer
+        //    //  await HttpContext.SignOutAsync();
+        //    // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //    return RedirectToAction("LoginPage", "Attendance");
+        //}
+
+        //public IActionResult AccessDenied()
+        //{
+        //    return View();
+        //}
+
+        //public IActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public IActionResult ChangePassword(LoginModel val)
+        //{
+        //    try
+        //    {
+        //        if (val.Password == null)
+        //        {
+        //            return Json(0);
+        //        }
+        //        if (Request.Cookies["ChangePWOnLogin"] != "1")
+        //        {
+        //            string vals = Request.Cookies["ChangePWOnLogin"];
+        //            return Json(1);
+        //        }
+        //        val.InstanceID = InstanceId;
+        //        val.UserId = UserId;
+        //        val.CreatedBy = UserId;
+
+
+        //        if (Request.Cookies["RoleName"] == "PARENT")
+        //        {
+        //            val.ParentFlag = 1;
+        //        }
+        //        else
+        //        {
+        //            val.ParentFlag = 0;
+        //        }
+
+        //        val.Password = HashUtility.HashData((val.Password).Trim());//this for convert code into Binary code
+        //        returnvalue = CommonMethodobj.CommonSaveMethod(val, "/ChangePassword", client);
+        //        if (returnvalue != "0")
+        //        {
+        //            return Json("correct");
+        //        }
+        //        else
+        //        {
+        //            return Json(0);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string message = ex.Message;
+        //        return Json(0);
+        //    }
+        //}
+
+        #endregion
 
     }
 }

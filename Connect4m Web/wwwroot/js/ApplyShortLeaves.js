@@ -43,10 +43,10 @@ $("#FmApplyShortLeave").submit(function (event) {
     var ToTimeHrs = $("#ToTimeHours").val();
     var ToTimeMinates = $("#ToTimeMinates").val();
     var Comments = $("#TxtAreaReason").val();
-    debugger;
+    //debugger;
     if (Date === "" || FromTimeHrs === "" || FromTimeMinates === undefined || ToTimeHrs === "" || ToTimeMinates === "" || Comments === "") {
         $("#Main_Span_Error").text('Following fields have invalid data :');
-        debugger;
+        //debugger;
         if (Date === "") {
             $("#Date_Span_Error").text('Date');
         }
@@ -72,7 +72,7 @@ $("#FmApplyShortLeave").submit(function (event) {
 
     // Calculate the time difference in minutes
     var timeDiff = (parseInt(ToTimeHrs) * 60 + parseInt(ToTimeMinates)) - (parseInt(FromTimeHrs) * 60 + parseInt(FromTimeMinates));
-    debugger;
+    //debugger;
     // Check if the time difference is greater than 15 minutes
     if (timeDiff < 15) {
        // $("#Main_Span_Error").text('Please select proper timings.');
@@ -88,7 +88,7 @@ $("#FmApplyShortLeave").submit(function (event) {
         loaddingimg.css('display', 'none');
         return;
     }
-    debugger;
+    //debugger;
     //var formData = new FormData(this);
    
     var formData = new FormData($("#FmApplyShortLeave")[0]);
@@ -170,7 +170,7 @@ function BackToDisplayShortLeaves() {
 }
 
 function FN_ClearValues(bUttonid, Formid, ListBoxId) {
-    debugger;
+    //debugger;
     document.getElementById(Formid).reset(); // Reset the form
     $("#TextareacountSPAN").text("500");
    // $('#' + ListBoxId).text('');
@@ -186,14 +186,14 @@ function TblMonthlyAppliedShortLeavesCount_SearchRecords_Calingfunction(event, v
 
     try {
     //val for loading page
-    debugger;
+    //debugger;
     if (val != 12) {
         event.preventDefault();
     }
-    debugger;
+    //debugger;
     if ($("#lnkShowMyPermissions").text() == "Hide My Short Leaves") {
 
-        debugger;
+        //debugger;
         //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
         $("#" + SearchRecords_Div).hide();
 
@@ -306,7 +306,7 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
 
     $(".ErrorMessageSpan").empty();
 
-    debugger;
+    //debugger;
     if (BTNtext == "View") {
         window.scrollTo(0, document.body.scrollHeight);
 
@@ -336,7 +336,7 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
                     var createdDate;
                     $.each(response, function (i, value122) {
                         $("#GetMyAppliedLeaves_Table_VIEW tbody").empty();
-                        debugger;
+                        //debugger;
                        $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text("VIEW STATUS (" + response.length + "  RECORD(S) FOUND).")
                        // $("#ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory").text(response.length)
                         createdDate = value122.createdDate;
@@ -395,11 +395,11 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
                 url: "/Attendance/Cancel_ShortLeavesOfStaff_CallingFun?Batchid=" + Batchid + "&submitButton=" + BTNtext,
                 type: "GET",
                 success: function (response) {
-                    debugger;
+                    //debugger;
                   //  $('#Main_Span_Error').text(response.message);
                     window.scrollTo(0, 0);
                     if (response.message == "Short Leave Cancelled Successfully") {
-                        debugger;
+                        //debugger;
                         TblAppliedShortLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedShortLeaves_SearchRecords', 'CountOfRecords_AppliedShortLeaves', 'AppliedShortLeaves_SearchRecords_Div');
 
                         //  GetMyAppliedLeaves_CallingMethod();
@@ -450,7 +450,7 @@ $('#TblAppliedShortLeaves_SearchRecords').on('click', 'td a', function () {
 function MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, GetMyAppliedLeaves_Table_VIEWid, countspanid, PrintBTNid, EffectiveTableid, HeadSpanNameid, Schoolname, SchoolAddress, TotalNoOfDays, PrintDetailsFormid, TotalDivId) {
 
     try {
-    debugger;
+    //debugger;
     $.ajax({
         url: "/Attendance/MyAppliedShortLeaves_PrintTable_CallingFun?Batchid=" + Batchid,
         type: "GET",
@@ -536,7 +536,7 @@ function MyAppliedShortLeaves_PrintTable_CallingFun(Batchid, printid_ForView, Ge
 function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, EffectiveTableid, RecordcountSpanId, SearchRecords_Div) {
     try {
     //val for loading page
-    debugger;
+    //debugger;
     if (val != 12) {
         event.preventDefault();
     }
@@ -544,7 +544,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
         url: "/Attendance/TblAppliedShortLeaves_SearchRecords_Calingfunction",//+"&values="+ queryString,
         type: "GET",
         success: function (response) {
-            debugger;
+            //debugger;
             $("#" + EffectiveTableid + " tbody").empty();
             if (response.length <= 0) {
                 //if ($("#TblApplied_SearchRecords tbody tr").length <= 0) {
@@ -618,7 +618,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                 $("#" + EffectiveTableid).show();
                 // $("#" + ExportExcelLink).show();
                 $("#Main_Span_Error").empty();
-                debugger;
+                //debugger;
                 $('#TblAppliedShortLeaves_SearchRecords_pagination').empty();
                 var table = $('#' + EffectiveTableid);
                 var tbody = table.find('tbody');
@@ -697,7 +697,7 @@ function TblAppliedShortLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                     // Update active class on current page link
                     $('.TblAppliedShortLeaves_SearchRecords_pagination_Class').removeClass('active');
                     $('.TblAppliedShortLeaves_SearchRecords_pagination_Class').eq(page - newStartIndex + 1).addClass('active').css('cursor', 'unset');;
-                    debugger;
+                    //debugger;
                     if (response.length < 11) {
                         $("#" + EffectiveTableid + " tfoot").hide();
                     }

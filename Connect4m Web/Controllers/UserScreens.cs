@@ -193,7 +193,7 @@ namespace Connect4m_Web.Controllers
             int IsWelcomePage = 1;
 
             List<BestPerformer> item = new List<BestPerformer>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ScbestPerformer?InstanceId=" + InstanceId+ "&Title="+ Title+ "&IsWelcomePage="+ IsWelcomePage).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ScbestPerformer?InstanceId=" + InstanceId+ "&Title="+ Title+ "&IsWelcomePage="+ IsWelcomePage+"&Createdby="+UserId).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -263,7 +263,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult BirthdaysByInstance()
         {
             List<BirthdaysByInstance> item = new List<BirthdaysByInstance>();   
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetUserbirthdays?InstanceId=" + InstanceId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetUserbirthdays?InstanceId=" + InstanceId+"&Createdby="+UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;

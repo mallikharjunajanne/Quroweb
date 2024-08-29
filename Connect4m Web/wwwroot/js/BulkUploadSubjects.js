@@ -5,7 +5,7 @@
 function _ViewSubjects(event, Id) {
     try {
         event.preventDefault();
-        debugger;
+        //debugger;
         $(".ErrorMessageSpan").empty();
         if (Id == "DdlClassForSingle" && $("#DdlClassForSingle").val() != "") {
             //  $("#ViewSubjectsSymbol").css("display","block")
@@ -29,12 +29,12 @@ function _ViewSubjects(event, Id) {
 
 //===============================values getting to edit
 function EditValuesGettingFunction(subjectId) {
-    debugger;
+   //debugger;
     $(".ErrorMessageSpan").empty();
     var data = { InstanceSubjectId: subjectId, Buttonname: "Update" };
     loaddingimg.css('display', 'block');
     performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
-        debugger;
+        //debugger;
         //  $("#UpdateManageSubjects").html(response);
         $("#SubjectSearchsDiv").hide();
         $("#UpdateManageSubjects").html(response);
@@ -51,14 +51,14 @@ function EditValuesGettingFunction(subjectId) {
 //This is for to upload a single deprtment and multiple deprtment
 // $("#RdlMultipleDept,#RdlSingleDept").off("click").on('click',function (event) {
 $(document).on("click", '#RdlMultipleDept,#RdlSingleDept', function (event) {
-    debugger;
+    //debugger;
     $(".ErrorMessageSpan").empty();
     var BtnName = $(this).attr("id");
     var data = { Buttonname: BtnName };
     loaddingimg.css('display', 'block');
 
     performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
-        debugger;
+        //debugger;
         //  $("#UpdateManageSubjects").html(response);
         $("#SubjectSearchsDiv").hide();
         $("#UpdateManageSubjects").html(response);
@@ -87,12 +87,12 @@ function CreateNewSubjects() {
         //    loaddingimg.css('display', 'none');
 
         $(".ErrorMessageSpan").empty();
-        debugger;
+        //debugger;
         var data = { Buttonname: "BtnCreateNew" };
         loaddingimg.css('display', 'block');
 
         performCrudOperationCommonFunction("GET", "/Examination/UpdateSubjects_PartialView", data, function (response) {
-            debugger;
+            //debugger;
             //  $("#UpdateManageSubjects").html(response);
             $("#SubjectSearchsDiv").hide();
             $("#CreateNewSubjects").html(response);
@@ -128,7 +128,7 @@ function BackTOSearhExams(event) {
 
 //=====================================Delete Subject
 function DeleteExamsById(InstanceSubjectId) {
-    debugger;
+    //debugger;
     // var UserId = $("#HdnUserId").val();
     var Deletemsg = "Subject";
     CommonDeleteFunctionNew(Deletemsg, "POST", "/Examination/DeleteSubject_CallingFunction?ButtonName=Delete&InstanceSubjectId=" + InstanceSubjectId, function (response) {
@@ -170,7 +170,7 @@ function DeleteExamsById(InstanceSubjectId) {
 
 //========CLEAR FUNCTION ON SEARCH SUBJECT SCREEN
 function Searchclearfun(formid) {
-    debugger;
+    //debugger;
     // Retrieve the form element by id
     var form = document.getElementById(formid);
 

@@ -19,7 +19,7 @@
 @if (@ViewBag.ScreenName == "ManageStaffLeave")
 {
     <div class="demo-inline-spacing">
-        <button class="btn rounded-pill btn-outline-info waves-effect" id="BtnAddNewLevels" onclick="BackTOSearhUserLeaves(event)">
+        <button class="btn rounded-pill btn-outline-info waves-effect btn-sm" id="BtnAddNewLevels" onclick="BackTOSearhUserLeaves(event)">
             Back to Search
         </button>
     </div>
@@ -230,10 +230,10 @@
                             @*--------------------------*@
                             <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                    <button type="submit" class="btn btn-success waves-effect waves-light" id="Submit_Request_BTN" name="submitButton" value="Submit Request">Submit Request</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Submit_Request_BTN" name="submitButton" value="Submit Request">Submit Request</button>
                                     @if (@ViewBag.ScreenName != "ManageStaffLeave")
                                     {
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="Save_as_Draft_BTN" name="submitButton" value="Save as Draft">Save as Draft</button>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light btn-sm" id="Save_as_Draft_BTN" name="submitButton" value="Save as Draft">Save as Draft</button>
                                     }
                                 </div>
                             </div>
@@ -371,8 +371,8 @@
                                         @*----------------------*@
                                         <div class="row justify-content-end">
                                             <div class="col-sm-8">
-                                                <button type="reset" class="btn btn-danger waves-effect waves-light" id="myForm_ClearBtn" onclick="FN_ClearValues1('myForm')" value="Clear">Clear</button>
-                                                <button type="submit" class="btn btn-success waves-effect waves-light" id="savebutton" value="Add Leaves To Cart">Add Leaves To Cart</button>
+                                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="myForm_ClearBtn" onclick="FN_ClearValues1('myForm')" value="Clear">Clear</button>
+                                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="savebutton" value="Add Leaves To Cart">Add Leaves To Cart</button>
                                             </div>
                                         </div>
                                         @*--------------------------*@
@@ -387,7 +387,7 @@
 
 
                         @*<a id="PrintBTN_IN_ApplyLeave" style="color: blue; font-weight: 800; cursor: pointer; margin-left: @margin; text-decoration: underline;" onclick="javascript:CallPrint('printDetails_Form_IN_ApplyLeave')"></a>*@
-                        <button class="btn rounded-pill btn-label-primary waves-effect" style="display:none" id="PrintBTN_IN_ApplyLeave" onclick="javascript:CallPrint('printDetails_Form_IN_ApplyLeave')">
+                        <button class="btn rounded-pill btn-label-primary waves-effect btn-sm" style="display:none" id="PrintBTN_IN_ApplyLeave" onclick="javascript:CallPrint('printDetails_Form_IN_ApplyLeave')">
                         </button>
                         <div class="card mb-4" id="accordionoc_Print">
                             <div class="card-header d-flex align-items-center justify-content-between">
@@ -585,7 +585,7 @@
                         </div>
 
                         @*<a id="PrintBTN" style="color: blue; font-weight: 800; cursor: pointer ; margin-left: @margin;  text-decoration: underline;" onclick="javascript:CallPrint('printDetails_Form')"></a>*@
-                        <button class="btn rounded-pill btn-label-primary waves-effect" style="display:none" id="PrintBTN" onclick="javascript:CallPrint('printDetails_Form')">
+                        <button class="btn rounded-pill btn-label-primary waves-effect btn-sm" style="display:none" id="PrintBTN" onclick="javascript:CallPrint('printDetails_Form')">
                         </button>
 
                         <div class="card mb-4" id="accordionoc_VIEW" style="display:none">

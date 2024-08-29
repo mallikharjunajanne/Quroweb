@@ -18,6 +18,7 @@ using System.IO;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OfficeOpenXml;
 
+
 namespace LMS_Module
 {
     public class Startup
@@ -64,7 +65,6 @@ namespace LMS_Module
                     policy.RequireRole("Admin"));
             });
 
-
             services.AddSingleton<HttpClientFactory>();
             services.AddHttpContextAccessor();
 
@@ -85,17 +85,62 @@ namespace LMS_Module
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            //If you need custom static files configuration, uncomment and adjust as needed
+             //app.UseStaticFiles(new StaticFileOptions
+             //{
+             //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "CustomStatic")),
+             //    RequestPath = "/CustomStatic"
+             //});
+
+            app.UseRouting();
+
+            // Ensure authentication comes before authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Attendance}/{action=LoginPage}/{id?}");
+            });
+
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "CustomStatic")),
+            //    RequestPath = "/CustomStatic"
 
+            //    //FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "CustomStatic")),
+            //    //RequestPath = ""
+            //});
+
+
+
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-           // ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            // ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             app.UseEndpoints(endpoints =>
             {
@@ -109,10 +154,11 @@ namespace LMS_Module
 
 
             pattern: "{controller=Attendance}/{action=LoginPage}/{id?}");//Recently Comment
+                                                                         // pattern: "{controller=Users}/{action=LoginPage}/{id?}");//Recently Comment
 
-            //pattern: "Users/{action=LoginPage}/{id?}",
-            //defaults: new { controller = "Attendance" });
-        });
+                 //pattern: "Users/{action=LoginPage}/{id?}",
+                 //defaults: new { controller = "Attendance" });
+             });
 
 
             //var licenseManagerType = typeof(System.ComponentModel.LicenseManager);
