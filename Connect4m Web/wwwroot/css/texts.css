@@ -35,7 +35,28 @@
 }
 
 .alert-danger {
-    color: #a94442;
+    color: #fff;
+    background-color: rgba(255, 56, 108, 0.9);
+    border-left: 0px solid #d9534f !important;
+    border-radius: 8px;
+    padding: 4px;
+    margin: 20px auto;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+    /*animation: slowMotionX 5s linear infinite alternate;*/
+
+    /* color: #a94442;
     background-color: rgba(255,56,108,0.8);
     border-color: #ebccd1;
     padding: 15px;
@@ -53,9 +74,8 @@
     top: 20%;
     left: 73%;
     transform: translate(-50%, -50%);
-    z-index: 9999;
-    /*    animation: slowMotionX 5s linear infinite alternate;
-*/
+    z-index: 9999;*/
+    /*animation: slowMotionX 5s linear infinite alternate;*/
 }
 
 @keyframes slowMotionX {
@@ -116,3 +136,67 @@
     display: inline-flex;
     gap: 9px;
 }
+
+
+
+
+/*IN THE IMAGE NAVIGATION, DISPLAY A LOGOUT BUTTON. CODE START HERE */
+.navigation {
+    width: 90%;
+}
+
+.logoutimg {
+    width: 37px;
+    border-radius: 50%;
+    float: left;
+    position: relative;
+}
+
+.logoutimg::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 12px; /*Size of the online indicator*/
+        height: 12px; /*Size of the online indicator */
+        border-radius: 50%;
+        background-color: green; /*Online color */
+        border: 2px solid white; /*Optional: add border to make it stand out*/
+        box-shadow: 0 0 0 2px white; /*Optional: adds a subtle glow effect*/
+    }
+
+.Logoutbutton {
+    text-decoration: none;
+    float: right;
+    padding: 0px;
+    color: black;
+    width: 38px;
+    background-color: transparent; /* Ensure no background color */
+    transition: width 0.35s;
+    overflow: hidden;
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+}
+
+.Logoutbutton:hover {
+        width: 100px;
+    }
+
+.Logoutbutton:hover .logout {
+            opacity: 0.9;
+        }
+
+.logout {
+    font-size: 0.8em;
+    font-family: 'Oswald', sans-serif;
+    margin-left: 4px; /* Space between image and text */
+    opacity: 0;
+    transition: opacity 0.45s;
+    font-weight: 900;
+}
+
+.Logoutbutton {
+    text-decoration: none;
+}
+
+/* IN THE IMAGE NAVIGATION, DISPLAY A LOGOUT BUTTON. CODE END HERE */

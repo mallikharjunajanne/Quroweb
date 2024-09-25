@@ -38,7 +38,7 @@ $("#FmUsersSearch").submit(function (event) {
                 $("#chkSelectAll").prop('checked', false);
             } else {
                 loaddingimg.css('display', 'none');
-                $('.alert-danger p').text("Pleae Enter All Required Fields");
+                $('.alert-danger p').text("Please enter all required fields.");
                 $(".alert-danger").show().delay(5000).fadeOut();
 
             }
@@ -198,7 +198,7 @@ $("#FmUsersSearchForMBA").submit(function (event) {
                 $("#chkSelectAll").prop('checked', false);
             } else {
                 loaddingimg.css('display', 'none');
-                $('.alert-danger p').text("Pleae Enter All Required Fields");
+                $('.alert-danger p').text("Please enter all required fields.");
                 $(".alert-danger").show().delay(5000).fadeOut();
 
             }

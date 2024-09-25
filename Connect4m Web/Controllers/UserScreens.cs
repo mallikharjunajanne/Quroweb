@@ -16,7 +16,6 @@ using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class UserScreens : Controller
     {
 
@@ -27,7 +26,7 @@ namespace Connect4m_Web.Controllers
         HttpClient client;
 
         private readonly IUserService _userService;
-        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        //==================  DECLARE THE PRIVATE VARIBLE FOR ASSIGNING THE VALUES FROM IUSERSERVICEINTERFACE(READ COOKIES)
         private readonly int UserId;
         private readonly int InstanceId;
         private readonly int InstanceClassificationId;
@@ -182,7 +181,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        #region SchoolWelcomePage
+        #region SCHOOL WELCOME PAGE
 
         // STUDENT
         public IActionResult BestPerformer()

@@ -25,14 +25,12 @@ $("#Serach_ER").submit(function (event) {
                 
             }, function (status, error) {
                 loaddingimg.css('display', 'none');
-
             }, false);
         }
         else {
-            $('.alert-danger p').text("Pleae Enter All Required Fields");
+            $('.alert-danger p').text("Please enter all required fields.");
             $(".alert-danger").show().delay(5000).fadeOut()
             loaddingimg.css('display', 'none');
-
         }
     }, 50);
 
@@ -198,7 +196,8 @@ function bindDatatableER(response) {
     }
     else {
         $('#dataforexpensivereport').css('display', 'none');
-        $('.alert-danger p').text("No Records Found...!");
+        //$('.alert-danger p').text("No Records Found...!");
+        $('.alert-danger p').text("No records available.");
         $(".alert-danger").show().delay(6000).fadeOut()
     }
     loaddingimg.css('display', 'none');

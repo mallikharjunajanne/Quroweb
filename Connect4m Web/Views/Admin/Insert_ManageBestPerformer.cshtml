@@ -8,9 +8,9 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <span id="Errormessages" class="text-danger"></span>
     <div class="card mb-4">
-        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
                 SAVE BEST PERFORMER
-            <small>* INDICATES MANDATORY FIELDS.</small>
+            <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
         </div>
         <div class="card-body">
             <div class="row">
@@ -67,24 +67,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content text-center">
-                            <div class="col-sm-12">
-                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="Insert_Clearbtn">Clear</button>
-                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Insert_BackToSearchbtn">BackToSearch</button>
-                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Insert_Savebtn">save</button>
-                            </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="Insert_Clearbtn">Clear</button>
+                            <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Insert_BackToSearchbtn">BackToSearch</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Insert_Savebtn">save</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div id="Addbestperformerdataaddingaccordionoc2">
         <div class="card mb-4">
-            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+            <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
                     SEARCH USERS TO ADD AS BEST PERFORMER
             </div>
             <div class="card-body">
@@ -114,7 +109,6 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" asp-for="PortalEmail" />
                                 </div>
-
                             </div>
 
                             <div class="row mb-2">
@@ -153,11 +147,12 @@
             </div>
         </div>
 
-
         <div class="col-md-12 col-lg-12 mb-3" id="Addbestperformerdataaddingtbl_accordionoc3">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">
-                    YOUR SEARCH RESULTED <span id="bestperformertbl_Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> 0 </span>  RECORDS.
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR SEARCH RESULTED
+                    <span id="bestperformertbl_Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header"> 0 </span>
+                    RECORDS.
                 </div>
                 <div id="#Addbestperformerdataaddingtbl_accordionoc3">
                     <div class="table-responsive text-nowrap">
@@ -175,7 +170,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

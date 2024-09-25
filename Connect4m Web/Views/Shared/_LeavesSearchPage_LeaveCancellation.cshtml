@@ -9,7 +9,7 @@
 *@
 @*==========================search LEAVES Card====================*@
 <div class="card mb-4">
-    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
             <span>
                 LEAVES SEARCH
             </span>
@@ -65,8 +65,8 @@
                     @*<input type="hidden" id="HdnLeaveDelegationId" name="LeaveDelegationId" />*@
                     @*--------------------------*@
                     <div class="text-center">
-                            <button type="reset" class="btn btn-danger waves-effect waves-light" id="BtnClearSearchForm" onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" value="Clear">Clear</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" id="BtnSearchId" value="Search">Search</button>                       
+                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClearSearchForm" onclick="FN_ClearValuesInLeavecancelllation('FmLeavesSearchPage_SearchDetails')" value="Clear">Clear</button>
+                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSearchId" value="Search">Search</button>                       
                     </div>
                     @*--------------------------*@
             
@@ -78,8 +78,12 @@
 
 @*-----GetSearchedRecords Result page*@
 <div class="card" id="TblLeavesSearchedResultPage_Div" style="display:none">
-    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
+    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+        <span>
+            YOUR SEARCH RESULTED 
+            <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+            RECORD(S).
+        </span>
     </div>
 
     <div class="table-responsive text-nowrap">
@@ -105,7 +109,6 @@
             <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
                 <div class="modal-content p-3 p-md-5">
                     <div class="modal-body">
-
                         <form class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
                             <button type="reset" onclick="document.getElementById('DivCancelComment').style.display='none'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <div class="text-center mb-4">

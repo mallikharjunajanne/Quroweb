@@ -20,8 +20,8 @@ using Connect4m_Web.Views;
 
 namespace Connect4m_Web.Controllers
 {
-    [Authorize]
-
+    //[Authorize]
+    //[Authorize(Policy = "EmployeeOnly")]
     public class Attendance : Controller
     {
         // Uri baseAddress = new Uri("https://localhost:44331/api/AttendanceCtr");
@@ -72,9 +72,6 @@ namespace Connect4m_Web.Controllers
             return xml;
         }
        
-        
-      
-
 
         //---this two methods are use many places so please dont touch 1.Get_SubClassificationNames_ByInstanceClassifications 2.Slot_by_subclassification
         public IActionResult Get_SubClassificationNames_ByInstanceClassifications(string InstanceId, string InstanceClassificationId)
@@ -162,12 +159,7 @@ namespace Connect4m_Web.Controllers
             list = CommonMethodobj.CommonListMethod<Changeactivity, Changeactivitytbl>(obj, "/Changeactivity", client);
             return Json(list);          
         }
-
-      
-
-       
-
-
+              
         //empty method please check once delete this method
         public IActionResult SlotidBy_Student_Names(string InstanceClassificationId, string InstanceSubClassificationId, string RoleId)
         {

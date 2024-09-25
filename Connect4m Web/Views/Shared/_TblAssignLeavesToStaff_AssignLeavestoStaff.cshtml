@@ -11,12 +11,13 @@
     <label class="form-check-label" for="CheckAll">Check All</label>
 </div>
 <div class="card">
-    <div class="card-header flex-column flex-md-row">
-        <div class="head-label text-center">
-            <h5 class="card-title mb-0">
-                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>
-            </h5>
-        </div>
+    <div class="card-header flex-column flex-md-row bg-danger text-header text-white">
+        @*<div class="head-label text-center">
+            <h5 class="card-title mb-0"><span></span></h5>
+        </div>*@
+        YOUR SEARCH RESULTED
+        <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">@Model.Count()</span>
+        RECORD(S).
     </div>
     @if (Model.Count > 0)
     {

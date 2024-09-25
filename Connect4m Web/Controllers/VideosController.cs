@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class VideosController : Controller
     {
 

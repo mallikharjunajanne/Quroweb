@@ -54,9 +54,8 @@ namespace Connect4m_Web.Controllers
         // public int UserId = 11337;
         // public int RoleId = 571;
         // public int StudentUserId = 29255;//-----Student Login
-
-
-        // public int InstanceId = 515;//------http://collegedev.connect4m.com/    CollegeAdmin
+        // public int InstanceId = 515;
+        // --http://collegedev.connect4m.com/    CollegeAdmin
        
         public IActionResult Index()
         {
@@ -98,9 +97,6 @@ namespace Connect4m_Web.Controllers
             return DropdownList;
         }
 
-
-
-
         //public static string DecryptString(string key, string cipherText)
         //{
         //    byte[] iv = new byte[16];
@@ -141,8 +137,8 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        //-----------------------------------------  01  ---------------------------CONFIGURE SALARY ATTRIBUTES--------------------------------------------------------------------------------------------------
-        #region
+        //---------------------------- 01 CONFIGURE SALARY ATTRIBUTES
+        #region CONFIGURE SALARY ATTRIBUTES
         public IActionResult SearchSalaryAttributes()
         {
             //--------------------------  Gettting Salary Attrubute  Master Id  Droppdown
@@ -183,8 +179,8 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        //---------------------------------------------------------------------------------------------------  Search Salary Attribute Json Type
 
+        //---------------------------- SEARCH SALARY ATTRUBUTE JSON TYPE
         public IActionResult SearchSalaryAttributesJson(int SalaryAttributeMasterId, int SalaryAttributeType, string SalaryAttributeName, string StartDate, string EndDate, int IsActive)
         {
             List<PayRollproperties> list = new List<PayRollproperties>();
@@ -199,7 +195,8 @@ namespace Connect4m_Web.Controllers
 
             return Json(list);
         }
-        //---------------------------------------------------------------------------------------------------  Delete SAlary Attribute
+
+        //---------------------------- DELETE SALARY ATTRIBUTE
         public IActionResult DeleteSAlaryAttribute(int InstanceSalaryAttributeId)
         {
 
@@ -229,9 +226,7 @@ namespace Connect4m_Web.Controllers
             return SalaryPayRollDependson;
         }
 
-
-
-        //------------------------------------------------------------- --------------------------------------  Create Salary Attributes
+        //---------------------------- Create Salary Attributes
         public IActionResult CreateSalaryAttribute(int InstanceSalaryAttributeId)
         {
             //--------------------------  Gettting Salary Attrubute  Master Id  Droppdown
@@ -299,14 +294,16 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
-        //------------------------------------------02------------------------- Manage Salary Attributes For Roles
-        #region
-        //-----------------------------------------------------------------------------   Search Salary Attributes For Roles
+
+        //---------------------------- 02 MANAGE SALARY ATTRIBUTES FOR ROLES
+        #region MANAGE SALARY ATTRIBUTES FOR ROLES
+        //---------------------------- SEARCH SALARY ATTRIBUTES FOR ROLES
         public IActionResult SearchSalaryAttributesForRoles()
         {
             return View();
         }
-        //----------------------------------------------------------------------------- Getting The Json Data  Search Salary Attributes For Roles
+       
+        //---------------------------- Getting The Json Data  Search Salary Attributes For Roles
         public IActionResult SearchSalaryAttributesForRolesJson(string RoleName,string RoleDescription)
         {
             List<SalaryAttributesforRoles> list = new List<SalaryAttributesforRoles>();
@@ -318,7 +315,8 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
-        //----------------------------------------------------------------------------- Getting The Json Data  Search Salary Attributes For Roles
+       
+        //---------------------------- Getting The Json Data  Search Salary Attributes For Roles
         public IActionResult CreateSalaryAttributesForRoles(int UserId, string RoleName,int SalaryAttributeId)
         {
             if (UserId != 0)
@@ -396,7 +394,8 @@ namespace Connect4m_Web.Controllers
             return Json(0);
            
         }
-        //--------------------------------------------------------------------------------------Check Is Percentage Or Salary Attribute
+       
+        //---------------------------- Check Is Percentage Or Salary Attribute
         public bool Checkispercentage(string SalaryAttributeMasterName)
         {
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Checkispercentage?InstanceId=" + InstanceId + "&SalaryAttributeMasterName="+ SalaryAttributeMasterName).Result;
@@ -409,7 +408,7 @@ namespace Connect4m_Web.Controllers
             return false;
         }
 
-        //----------------------------------------------------------------------------- Getting The Json Data  Search Salary Attributes For Roles
+        //---------------------------- Getting The Json Data  Search Salary Attributes For Roles
         public IActionResult GetindividualRecords(int userId)
         {
             if (userId == 0)
@@ -427,9 +426,10 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
         #endregion
-        //------------------------------------------03--------------------   Manage Category
-        #region
-        //-----------------------------------------------------------------------------   Search Manage Category
+      
+        //---------------------------- 03 Manage Category
+        #region MANAGE CATEGORY
+        //---------------------------- Search Manage Category
         public IActionResult SearchManageCatogory()
         {
             return View();
@@ -456,7 +456,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
-        //---------------------------------------------------------------------------------------------------  Delete SAlary Attribute
+        //---------------------------- Delete SAlary Attribute
         public IActionResult DeleteManageCategory(int PayrollCategoryId)
         {
 
@@ -473,7 +473,7 @@ namespace Connect4m_Web.Controllers
 
             return Json(0);
         }
-        //------------------------------------------------------------- --------------------------------------  Create Manage Category
+        //---------------------------- Create Manage Category
         public IActionResult CreateManageCategory(int PayrollCategoryId)
         {
            
@@ -542,13 +542,11 @@ namespace Connect4m_Web.Controllers
             return Json(0);
 
         }
-
-
         #endregion
 
-        //-----------------------------------------04---------------------   Manage  Sub Category
-        #region
-        //-----------------------------------------------------------------------------   Search  Manage Sub Category
+        //---------------------------- 04 MANAGE SUB CATEGORY
+        #region MANAGE SUB CATEGORY
+        //---------------------------- Category
         public IActionResult SearchManageSubCatogory()
         {
             return View();
@@ -575,7 +573,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
-        //---------------------------------------------------------------------------------------------------  Delete SAlary Attribute
+        //---------------------------- Delete SAlary Attribute
         public IActionResult DeleteManageSubCategory(int PayrollSubCategoryId)
         {
 
@@ -592,7 +590,7 @@ namespace Connect4m_Web.Controllers
 
             return Json(0);
         }
-        //------------------------------------------------------------- --------------------------------------  Create Manage Category
+        //---------------------------- Create Manage Category
         public IActionResult CreateManageSubCategory(int PayrollSubCategoryId)
         {
 
@@ -671,18 +669,11 @@ namespace Connect4m_Web.Controllers
             return Json(0);
 
         }
-
-
         #endregion
-        //------------------------------------------05--------------------   Manage Employees
-        #region
-        //-----------------------------------------------------------------------------   Search  Manage Sub Category
-
-
-
-
-
        
+        //---------------------------- 05 Manage Employees
+        #region MANAGE EMPLOYEES
+        //---------------------------- Search  Manage Sub Category
         public IActionResult SearchManageEmployees()
         {
             string[] parameter = new string[] { InstanceId.ToString() };
@@ -710,8 +701,8 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
-       
-        //------------------------------------------------------------- --------------------------------------  Create Manage Employees
+
+        //---------------------------- Create Manage Employees
         [HttpGet]
         public IActionResult CreateManageEmployees(int UserId)
         {
@@ -818,7 +809,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        //------------------------------------------------------------- --------------------------------------  Create Manage Salary Attributes For Employees
+        //---------------------------- Create Manage Salary Attributes For Employees
         [HttpGet]
         public IActionResult CreateManageEmployeesSalary(int SalaryAttributeId)
         {
@@ -853,7 +844,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        //--------------------------------------------------------------------        
+        //---------------------------- 
         [HttpPost]
         public IActionResult CreateManageEmployeesSalary(SalaryAttributesforRoles obj)
         {
@@ -893,7 +884,7 @@ namespace Connect4m_Web.Controllers
 
         }
 
-        //----------------------------------------------------------------------------- Getting The Json Data  Search Salary Attributes For Roles
+        //---------------------------- Getting The Json Data  Search Salary Attributes For Roles
         public IActionResult GetindividualRecordsEmployees()
         {
             
@@ -911,9 +902,9 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
-        //-----------------------------------------06---------------------  EMPLOYEE ATTENDANCE POSTING
-        #region
-        //-----------------------------------------------------------------------------   Search  Employee Attendence 
+        //---------------------------- 06 EMPLOYEE ATTENDANCE POSTING
+        #region EMPLOYEE ATTENDANCE POSTING
+        //---------------------------- Search  Employee Attendence 
         public IActionResult SearchEmployeeAttendence()
         {
 
@@ -935,9 +926,8 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-       
-        //--------------------------------------------------  Search Attendence
 
+        //---------------------------- Search Attendence
         public IActionResult GetEmployeeAttendenceJson(int RoleId, int InstanceClassificationId, string InstanceSubClassificationId, int Month, int year, /*string BioKey,*/ /*int LMSKey,*/ string CategoryId, string SubCategoryID)
 
         {
@@ -953,8 +943,7 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
-        //-------------------------------------------------------------------------  Getting Sub Classification
-
+        //---------------------------- Getting Sub Classification
         public IActionResult GetClassfor_EAP(string InstanceClassificationId)
         {
             List<SelectListItem> Subjecttoollist = new List<SelectListItem>();
@@ -968,7 +957,8 @@ namespace Connect4m_Web.Controllers
 
             return Json(Subjecttoollist);
         }
-        //-----------------------------------------------------------------------   Get The Attendence Of Employees
+        
+        //---------------------------- Get The Attendence Of Employees
         [HttpGet]
         public IActionResult GetEmployeeAttendence()
         {
@@ -983,7 +973,9 @@ namespace Connect4m_Web.Controllers
             };
 
             return View();
-        } //-----------------------------------------------------------------------   post The Attendence Of Employees
+        }
+        
+        //---------------------------- post The Attendence Of Employees
         [HttpPost]
         public IActionResult GetEmployeeAttendence(ManageEmployeeAttendenceList obj)
         {
@@ -1008,9 +1000,9 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        //-----------------------------------------07---------------------  PAYSLIP GENERATE FOR EMPLOYEE'S
-        #region
-        //-----------------------------------------------------------------------------   Search  Employee Details 
+        //---------------------------- 07 PAYSLIP GENERATE FOR EMPLOYEE'S
+        #region PAYSLIP GENERATE FOR EMPLOYEE'S
+        //---------------------------- Search  Employee Details 
         public IActionResult SearchEmployeeDetails()
         {
 
@@ -1055,9 +1047,7 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
-
-        //--------------------------------------------------   PaySlip Generation
-
+        //---------------------------- PaySlip Generation
         public IActionResult PaySlipGeneration(string UserId, string month,string monthtext, string year)
 
         {
@@ -1117,7 +1107,7 @@ namespace Connect4m_Web.Controllers
             }
 
         }
-        //===================================================    Payslip Insert (Click On Confirm)
+        //---------------------------- Payslip Insert (Click On Confirm)
 
         public IActionResult InsertPayslip(InsertPayslip obj) 
         {
@@ -1198,9 +1188,9 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        //-----------------------------------------08---------------------  SALARY REPORT
-        #region
-        //-----------------------------------------------------------------------------   Search  Salry Report 
+        //---------------------------- 08 SALARY REPORT
+        #region SALARY REPORT
+        //---------------------------- Search  Salry Report 
         public IActionResult SalaryReport()
         {
 
@@ -1329,18 +1319,6 @@ namespace Connect4m_Web.Controllers
 
         //    return Json(0);
         //}
-
-
         #endregion
-
-
-
     }
-
-
-
-
-
-
-
 }

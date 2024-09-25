@@ -6,16 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-
-
     <script src="~/js/ManageExams.js"></script>
+
     <script>
         $(document).ready(function () {
             GetAcadamicyearsddlbind();
@@ -55,18 +52,14 @@
 
 
         });
-
         var js = jQuery.noConflict(true);
-
     </script>
-
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@MANAGE EXAMS</h4>
+        @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Admin Module /</span>MANAGE EXAMS</h4>*@
+        <h4 class="mb-3 text-center">MANAGE EXAMS</h4>
         <div class="row mb-2">
-
-
             <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
             <span class="ErrorMessageSpan text-danger" id="DdlAcademicYearCreatePage"></span>
             <span class="ErrorMessageSpan text-danger" id="TxtExamNameCreatePage"></span>
@@ -77,16 +70,12 @@
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div id="MainSearchPage">
-                    @*==========================search result Card====================*@
+                    @*========================== SEARCH RESULT CARD ==========================*@
                     <div class="card mb-4">
-                        <div class="card-header d-flex align-items-center justify-content-between bg-danger text-white">
-                            <span>
-                                SEARCH EXAMS
-                            </span>
+                        <div class="card-header d-flex align-items-center justify-content-between bg-danger text-white text-header">
+                            SEARCH EXAMS
                         </div>
-
                         <div class="card-body">
-
                             <form id="FmExamsSearch" class="needs-validation was-validated" novalidate>
                                 <div class="row mb-2">
                                     <label class="col-sm-4 col-form-label text-end" for="basic-default-name">Academic Year :&nbsp;</label>
@@ -94,18 +83,18 @@
                                         <div class="position-relative">
                                             <select id='DdlAcademicYear' name="AcademicYearId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(""))">
                                                 @*<option value=''>---------Select--------</option>
-                                                <option value="1737">2016-2017</option>
-                                                <option value="1203">2015-2016</option>
-                                                <option value="761">2014-2015</option>
-                                                <option value="655">2013-2014</option>
-                                                <option value="534">2011-2012</option>
-                                                <option value="688">2009-2010</option>
-                                                <option value="689">2008-2009</option>
-                                                <option value="690">2007-2008</option>
-                                                <option value="694">2006-2007</option>
-                                                <option value="691">2005-2006</option>
-                                                <option value="692">2004-2005</option>
-                                                <option value="693">2003-2004</option>*@
+                                        <option value="1737">2016-2017</option>
+                                        <option value="1203">2015-2016</option>
+                                        <option value="761">2014-2015</option>
+                                        <option value="655">2013-2014</option>
+                                        <option value="534">2011-2012</option>
+                                        <option value="688">2009-2010</option>
+                                        <option value="689">2008-2009</option>
+                                        <option value="690">2007-2008</option>
+                                        <option value="694">2006-2007</option>
+                                        <option value="691">2005-2006</option>
+                                        <option value="692">2004-2005</option>
+                                        <option value="693">2003-2004</option>*@
                                             </select>
                                         </div>
                                     </div>
@@ -122,17 +111,19 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
-                    @*========================== Searched result table Card====================*@
+
+                    @*========================== SEARCHED RESULT TABLE CARD ==========================*@
                     <div id="Div_TblExamListData" style="display:none">
                         @*<div  id="MainSearchPage6">*@
                         <div class="card" id="SearchedTablePage">
                             <div class="card-datatable table-responsive pt-0">
                                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                    <div class="card-header bg-danger text-white">
-                                        <div class="head-label text-center">                                          
-                                            <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>                                          
+                                    <div class="card-header bg-danger text-header text-white">
+                                        <div class="head-label text-center">
+                                            YOUR SEARCH RESULTED
+                                            <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                                            RECORD(S).
                                         </div>
                                     </div>
                                     <form id="Fm_TblExamListData">
@@ -141,23 +132,15 @@
                                                 <tr>
                                                     <th>S NO</th>
                                                     <th>Exam Name</th>
-                                                    <th>
-                                                        Display Order
-                                                    </th>
-                                                    <th>
-                                                        Academic Year
-                                                    </th>
+                                                    <th>Display Order</th>
+                                                    <th>Academic Year</th>
                                                     <th>External Exam</th>
                                                     <th style="text-align:center">Delete</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                            </tbody>
-
+                                            <tbody></tbody>
                                         </table>
-
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -165,16 +148,12 @@
                     </div>
                 </div>
 
-                @*================================ create page Card==============================*@
-
+                @*========================== CREATE PAGE CARD ==========================*@
                 <div id="CreateNewExams">
 
                 </div>
-
             </div>
         </div>
     </div>
 </body>
 </html>
-
-

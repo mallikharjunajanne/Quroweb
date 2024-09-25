@@ -30,12 +30,10 @@
                 <div class="col-md-12 col-lg-12 mb-3">
 
                     <div id="DivUsersSearchPage">
-                        @*==========================search Users Card====================*@
+                        @*========================== SEARCH USERS CARD ==========================*@
                         <div class="card mb-4">
-
-                            <div class="card-header bg-danger text-white">SEARCH USERS</div>
+                            <div class="card-header bg-danger text-white text-header">SEARCH USERS</div>
                             <div class="card-body">
-
                                 <form id="FmUsersSearch" class="needs-validation was-validated" novalidate>
                                     <div class="row">
                                         <div class="col">
@@ -55,10 +53,7 @@
                                                 </div>
                                             </div>
 
-
                                             @*----------------------*@
-
-
                                             <div class="row mb-2">
                                                 <label class="col-sm-2 col-form-label text-end space" asp-for="RoleId" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
@@ -72,8 +67,8 @@
                                                     <input asp-for="AdmissionNumber" class="form-control" placeholder="Admission Number" />
                                                 </div>
                                             </div>
-                                            @*----------------------*@
 
+                                            @*----------------------*@
                                             <div class="row mb-2">
                                                 <label asp-for="FirstName" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
@@ -84,9 +79,8 @@
                                                     <input asp-for="LastName" class="form-control" placeholder="Last Name" />
                                                 </div>
                                             </div>
+
                                             @*----------------------*@
-
-
                                             <div class="row mb-2">
                                                 <label asp-for="InstanceClassificationId" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
@@ -115,7 +109,6 @@
                                                         <select id='DdlPickUpRoute' asp-for="RouteId" class="select2 form-select select2-hidden-accessible" onchange="CommonDropdownFunction('GET', '/Users/DdlPickUpStop_Calingfunction?RouteId=' + this.value, 'DdlPickUpStop', 'Please select a Stop', true)" asp-items="@(new SelectList(ViewBag.DdlPickUpRoute, "Value", "Text"))">
                                                             <option value=''>Select a Route</option>
                                                         </select>
-
                                                     </div>
                                                 </div>
                                                 <label asp-for="StopId" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
@@ -129,7 +122,6 @@
                                             </div>
 
                                             @*----------------------*@
-
                                             <div class="row mb-2">
                                                 <label asp-for="CollegeCode" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
@@ -147,9 +139,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             @*----------------------*@
                                             <div class="row mb-2">
-
                                                 <label asp-for="Transport" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="position-relative">
@@ -166,14 +158,12 @@
                                                 <label asp-for="PortalEmail" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <input type="email" asp-for="PortalEmail" class="form-control" placeholder="Email Address" />
-
                                                     <span asp-validation-for="PortalEmail" class="text-danger"></span>
                                                 </div>
                                             </div>
 
                                             @*----------------------*@
                                             <div class="row mb-2">
-
                                                 <label asp-for="IsActive" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
                                                     <div class="col mt-2">
@@ -183,10 +173,8 @@
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input " asp-for="IsActive" id="No" type="radio" name="IsActive" value="0" />
-
                                                             <label class="form-check-label" for="No"> No</label>
                                                         </div>
-
                                                     </div>
                                                 </div>
 
@@ -197,8 +185,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @*----------------------*@
 
+                                            @*----------------------*@
                                             <div class="row mb-2">
                                                 <label asp-for="MobilePhone" class="col-sm-2 col-form-label text-end space" for="basic-default-name"></label>
                                                 <div class="col-sm-4">
@@ -208,7 +196,6 @@
                                                 </div>
                                                 <label id="LblTcTaken" class="col-sm-2 col-form-label text-end space ClsTcTaken" style="display:none" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsTcTaken" style="display:none">
-
                                                     <div class="position-relative">
                                                         <select asp-for="TcTaken" id="DdlTcTaken" class="select2 form-select select2-hidden-accessible">
                                                             <option value="">---------Select---------</option>
@@ -221,8 +208,6 @@
                                             </div>
 
                                             @*----------------------*@
-
-
                                             <div class="row mb-2">
                                                 <label asp-for="FatherFirstName" class="col-sm-2 col-form-label text-end space ClsParentNameForStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsParentNameForStudent">
@@ -233,8 +218,8 @@
                                                     <input asp-for="FatherLastName" class="form-control ClsTxtParent" placeholder="Father Last Name" />
                                                 </div>
                                             </div>
-                                            @*----------------------*@
 
+                                            @*----------------------*@
                                             <div class="row mb-2">
                                                 <label asp-for="MotherFirstName" class="col-sm-2 col-form-label text-end space ClsParentNameForStudent" for="basic-default-name"></label>
                                                 <div class="col-sm-4 ClsParentNameForStudent">
@@ -245,6 +230,7 @@
                                                     <input asp-for="MotherLastName" class="form-control ClsTxtParent" placeholder="Mother Last Name" />
                                                 </div>
                                             </div>
+
                                             @*----------------------*@
 
                                             @*----------------------*@
@@ -287,6 +273,7 @@
                                                 </div>
 
                                             </div>
+
                                             @*----------------------*@
                                             <div class="row justify-content text-center">
                                                 <div class="col-sm-12">
@@ -298,16 +285,15 @@
                                         </div>
                                     </div>
                                 </form>
-
-
                             </div>
                         </div>
 
-
-                        @*========================== Searched Users table Card====================*@
+                        @*========================== SEARCHED USERS TABLE CARD ==========================*@
                         <div class="card" id="DivTblUserSearchresults" style="display:none">
-                            <div class="card-header bg-danger text-white">
-                               YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).
+                            <div class="card-header bg-danger text-white text-header">
+                                YOUR SEARCH RESULTED
+                                <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                                RECORD(S).
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="TblUserSearchresults" class="datatables-basic table dataTable no-footer dtr-column link">
@@ -327,13 +313,10 @@
                         </div>
                     </div>
 
-
-
-                    @*==========================Append General Tab, Parent Details Tab  Card====================*@
+                    @*========================== APPEND GENERAL TAB, PARENT DETAILS TAB CARD =========================*@
                     <div id="DivappendCreateNewUsers">
 
                     </div>
-
                 </div>
             </div>
         </div>

@@ -5,7 +5,9 @@
 
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
+</head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
         @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>ADMISSION REPORT</h4>*@
@@ -104,8 +106,10 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-12 col-lg-12 mb-3">
+            <button class="btn rounded-pill btn-info waves-effect waves-light btn-sm" id="SummaryreportExporttoexcel">
+                Export to excel
+            </button>
             <div class="card">
                 <div class="card-header bg-danger text-white text-header">
                     YOUR SEARCH RESULTED
@@ -114,7 +118,7 @@
                 </div>
                 <div class="table-responsive text-nowrap">
                     <table id="Admissionssummaryreporttbl" class="table table-bordered no-footer dataTable">
-                        <thead class="table-dark">
+                        <thead class="table-dark" id="Admissionssummaryreporttblthead">
                             <tr>
                                 <th>S. No.</th>
                                 <th>Registration Date</th>
@@ -135,23 +139,15 @@
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
-
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
-
-
 <script src="~/js/CommonScripts.js"></script>
 <script src="~/js/Admissionsummaryreport.js"></script>
 
@@ -160,4 +156,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-

@@ -21,12 +21,13 @@
 </head>
 <body data-screen-name="LeaveAllocation">
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@ALLOCATE LEAVES</h4>
+        @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Admin Module /</span>ALLOCATE LEAVES</h4>*@
+        <h4 class="mb-3 text-center">ALLOCATE LEAVES</h4>
         <div class="col-md-12 col-lg-12 mb-3">
 
-            @*==========================search result Card====================*@
+            @*========================== SEARCH RESULT CARD ==========================*@
             <div class="card mb-4" id="SearchPage">
-                <div class="card-header bg-danger text-white">SEARCH USERS TO ALLOCATE LEAVES</div>
+                <div class="card-header bg-danger text-white text-header">SEARCH USERS TO ALLOCATE LEAVES</div>
                 <div class="card-body">
                     <form id="FmAllocateLeavesSearch">
                         <div class="row">
@@ -69,11 +70,9 @@
                                     </div>
                                 </div>
 
-                                <div class="row justify-content-end">
-                                    <div class="col-sm-8">
-                                        <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClearSearchForm" onclick="FN_ClearValues('FmAllocateLeavesSearch')" value="Clear">Clear</button>
-                                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSearchId" onclick="SearchLeaveAllocationPartialViewFunction(event)" value="Search">Search</button>
-                                    </div>
+                                <div class="col-sm-12 text-center">
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClearSearchForm" onclick="FN_ClearValues('FmAllocateLeavesSearch')" value="Clear">Clear</button>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSearchId" onclick="SearchLeaveAllocationPartialViewFunction(event)" value="Search">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -81,18 +80,11 @@
                 </div>
             </div>
 
-
-
-
-
-            @*========================== Searched result table Card====================*@
-
+            @*========================== SEARCHED RESULT TABLE CARD ==========================*@
             <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
             <div id="TBLAllocateLeavesSearchedTypePageView_id_Div">
 
             </div>
-
-
         </div>
     </div>
 </body>

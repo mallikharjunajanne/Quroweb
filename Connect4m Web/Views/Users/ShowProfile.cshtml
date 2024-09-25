@@ -178,12 +178,12 @@
                                                 <div class="col-sm-8 mb-2">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class="btn btn-danger waves-effect waves-light btn-sm ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
                                                     }
                                                     else if (UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display: none !important" class="btn rounded-pill btn-outline-danger waves-effect ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display: none !important" class="btn btn-danger waves-effect waves-light btn-sm ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
                                                     }
                                                     else

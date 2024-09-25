@@ -47,7 +47,6 @@ namespace Connect4m_Web.Controllers
         }
 
         //===============================  Commonn Dropdown
-
         public List<SelectListItem> CommonDropdown(string methodname, string[] Parameters, string text, string value)
         {
             List<SelectListItem> DropdownList = new List<SelectListItem>();
@@ -69,9 +68,8 @@ namespace Connect4m_Web.Controllers
         }
 
 
-
-        #region Role Menu Insert and Update
-        //--------------------------------  Search Rolewise--menu
+        #region ROLE MENU INSERT AND UPDATE
+        //---------------------------- SEARCH ROLEWISE MENU
         public IActionResult SearchRolewise()
         {
             return View();
@@ -90,7 +88,7 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
-        //----------------------------  Delete  Roles
+        //---------------------------- DELETE ROLES
         public IActionResult DeleteRole(int InstanceRoleId)
         {
             HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/DeleteRoles?InstanceRoleId=" + InstanceRoleId).Result;
@@ -104,10 +102,9 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        //------------------------------------------------------------- --------------------------------------  Create Role
+        //---------------------------- CREATE ROLE
         public IActionResult CreateRole(int InstanceRoleId)
         {
-
             List<RoleMenu> list = new List<RoleMenu>();
             ParentRoleMenu parentlist = new ParentRoleMenu();
 
@@ -256,14 +253,7 @@ namespace Connect4m_Web.Controllers
             return Json(0);
         }
 
-
-
-
-
-
-
-        [HttpPost]
-        //    Update The Display Order 
+        [HttpPost]//UPDATE THE DISPLAY ORDER 
         public IActionResult UpdateDisplayOrder(RoleMenu obj)
         {
             obj.CreatedBy = UserId;
@@ -286,10 +276,9 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
+        #region  MENTOR ATTENDANCE POSTING (POST ATTENDANCE)
 
-        #region  Mentor Attendance Posting (Post Attendance)
-
-        //------------------------------------------------------------- --------------------------------------  Post Attendance
+        //----------------------------  POST ATTENDANCE
         public IActionResult PostAttendance()
         {
             string[] parameter = new string[] { InstanceId.ToString() };
@@ -304,7 +293,7 @@ namespace Connect4m_Web.Controllers
 
         }
 
-        //==========================  Get Mentor Attendance
+        //============================ GET MENTOR ATTENDANCE
         public IActionResult GetMentorAttendance(MentorAttedanceProp obj)
         {
             // obj.ErrorModuleName = "Rolewise/PostAttendanceSave";
@@ -334,7 +323,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        //=========================================   When Click On Save (post the mentor attendance)
+        //============================ WHEN CLICK ON SAVE (POST THE MENTOR ATTENDANCE)
         [HttpPost]
         public IActionResult PostAttendanceSave([FromBody] List<AttendanceData> obj)
         {
@@ -361,7 +350,7 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-        //==============================  Delete Thew Attendance  
+        //============================ DELETE THE ATTENDANCE  
         public IActionResult AttendanceDelete()
         {
             AttendanceDelete obj = new AttendanceDelete();
@@ -392,13 +381,11 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
         #endregion
 
+        #region MENTOR ATTENDANCE REGISTER
 
-        #region   Mentor Attendance Register
-
-        //------------------------------------------------------------- --------------------------------------  Search Attendance Register
+        //---------------------------- SEARCH ATTENDANCE REGISTER
         public IActionResult StaffAttendanceRegister()
         {
             List<SelectListItem> list5 = new List<SelectListItem>();
@@ -423,8 +410,6 @@ namespace Connect4m_Web.Controllers
 
         }
 
-
-
         [HttpPost]
         public IActionResult StaffAttendanceRegister(StaffAttendance obj)
         {
@@ -442,7 +427,6 @@ namespace Connect4m_Web.Controllers
 
             return Json(StudentNamesList);
         }
-
 
         public IActionResult StaffattendanceSearch()
         {

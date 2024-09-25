@@ -41,7 +41,7 @@ $("#Serach_Staffregister").submit(function (event) {
            
         }
         else {
-            $('.alert-danger p').text("Pleae Enter All Required Fields");
+            $('.alert-danger p').text("Please enter all required fields.");
             $(".alert-danger").show().delay(5000).fadeOut()
         }
     }, 50);

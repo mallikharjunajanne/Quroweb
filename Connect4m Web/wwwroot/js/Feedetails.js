@@ -63,16 +63,16 @@ $("#Btnsearch").click(function () {
     var url = "/Reports/ClassificationWiseFeeDetails";
     CallToAjax('GET', url, formData,
         function (response) {
-           //debugger;
+            debugger;
             var Responselist = response.mainlist;
-            var FeeAmount = response.feeAmount;
-            var FeeCollected = response.feeCollected;
-            var Discount = response.discount;
-            var Due = response.due;
+            var FeeAmount = response.feeAmount.toFixed(2);
+            var FeeCollected = response.feeCollected.toFixed(2);
+            var Discount = response.discount.toFixed(2);
+            var Due = response.due.toFixed(2);
             
             if (Responselist.length != 0) {
                 $('#Paymentoptionchangediv').show();
-                $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '  Fee Collected:' + FeeCollected + '  Discount:' + Discount + '  Due:' + Due);
+                $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
             }
             var RemoveElement = $(event).closest('tr').next('tr').find('td[colspan="7"]').closest('tr').remove();
             if (RemoveElement.length > 0) {

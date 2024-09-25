@@ -24,9 +24,8 @@ function Admissionsummaryreporttblfun() {
     );
 }
 
-
 $("#Acadamicyear_ddlid").change(function () {
-    //debugger;
+    
     // Get the selected value of the dropdown
     var selectedValue = $(this).val();
     if (selectedValue) {
@@ -34,8 +33,6 @@ $("#Acadamicyear_ddlid").change(function () {
     } else {
         $('#Class_ddl').empty();
     }
-    //// Log the selected value to the console (you can perform other actions here)
-    //console.log("Selected value:", selectedValue);
 });
 
 function ClassDropdownfun() {
@@ -57,9 +54,8 @@ function bindDatatables(response) {
     // Class Dropdown data function
     ClassDropdownfun();
 
-    //debugger;
     var formattedDate = Dateformate();
-    //debugger;
+    
     var table = $('#Admissionssummaryreporttbl').DataTable();
     table.destroy();
     //$("#Admissionreporttblcount").text(response.length);
@@ -108,13 +104,15 @@ function bindDatatables(response) {
                                 }
                             }
                         }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
+                    }
+                    else {
+                        console.error('Sheet or range not found.');
+                        // Log an error if the sheet or range is not found
                     }
                 }
             }
         ],
-
+      
         bProcessing: false,
         bLengthChange: true,
         /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
@@ -204,22 +202,10 @@ function bindDatatables(response) {
             {
                 data: "Status",
                 render: function (data, type, row, meta) {
-                    //var selectedStatus = getSelectedStatus();
-                    //if (selectedStatus === "0") {
-                    //    return 'Registered';
-                    //} else if (selectedStatus === "1") {
-                    //    return 'Admission Confirmed';
-                    //} else {
-                    //    if (row.status === "false") {
-                    //        return 'Admission Confirmed';
-                    //    } else if (row.status === "true") {
-                    //        return 'Registered';
-                    //    }
-                    //}
                     if (row.status === "false") {
-                        return 'Admission Confirmed';
-                    } else if (row.status === "true") {
                         return 'Registered';
+                    } else if (row.status === "true") {
+                        return 'Admission Confirmed';
                     }
                 }
             }
@@ -264,7 +250,6 @@ function getSelectedStatus() {
     return $('input[name="ApplicationStatus"]:checked').val();
 }
 
-
 // Function to compare dates and show error message
 function DatesCompare(Sdate, Edate) {
     try {
@@ -293,10 +278,7 @@ function DatesCompare(Sdate, Edate) {
 $("#FromRegistrationdatetxt").on("change", function () { DatesCompare("From date", "To date"); });
 $("#ToRegistrationdatetxt").on("change", function () { DatesCompare("From date", "To date"); });
 
-
-
-
-///===>>> New Admissionform Save Function code start
+//===>>> New Admissionform Save Function code start
 $('#Admissionsummaryreportform').submit(function (event) {
     //debugger;
     event.preventDefault();
@@ -312,8 +294,7 @@ $('#Admissionsummaryreportform').submit(function (event) {
 
 });
 
-
-///===>>> EXPORT TO EXCEL  BUTTON EVENT CODE START
+//===>>> EXPORT TO EXCEL  BUTTON EVENT CODE START
 $('#SummaryreportExporttoexcel').on('click', function () {
     //var formattedDate = Dateformate();
 
@@ -331,8 +312,7 @@ $('#SummaryreportExporttoexcel').on('click', function () {
     var table1 = document.getElementById("Admissionssummaryreporttbl");
     var table1Clone = table1.cloneNode(true);
 
-    table1Clone.style.borderCollapse = "collapse";
-   
+    table1Clone.style.borderCollapse = "collapse";   
 
     var cells = table1.getElementsByTagName("td");
     for (var i = 0; i < cells.length; i++) {      
@@ -358,7 +338,6 @@ $('#SummaryreportExporttoexcel').on('click', function () {
     table1.parentNode.replaceChild(table1Clone, table1);
 });
 
-
 function Dateformate() {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -368,7 +347,6 @@ function Dateformate() {
     var formattedDate = day + '-' + month + '-' + year;
     return formattedDate;
 }
-
 
 //=====>>>>>> COMMENTS 
 

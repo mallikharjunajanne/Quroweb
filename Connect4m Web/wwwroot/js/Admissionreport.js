@@ -9,6 +9,7 @@
         }
     });
 }
+
 function handleAjax(method, url, data, successCallback, errorCallback) {
     //debugger;
     var ajaxOptions = {
@@ -48,6 +49,7 @@ function Pageloadtbldata() {
         }
     );
 }
+
 function Bindsearchtbl(response) {
 
     //debugger;
@@ -192,6 +194,7 @@ function Bindsearchtbl(response) {
         fontWeight: 'bold'
     });
 }
+
 $('#Admissionsreportform').submit(function (event) {
 
     event.preventDefault();
@@ -225,21 +228,25 @@ $('#Admissionsreportform').submit(function (event) {
         //$("#Confirmadmissionsdiv1").empty();
     }, 50);
 });
+
 function BindInstanceDropdown() {
     CommonDropdownAjaxFunction("ddlInstances", "GET", "/Reports/GetInstancenamesDropdown", null, function (resp) {
         loaddingimg.css('display', 'none');
     }, true);
 }
+
 function BindAcadamiceyeardropdown() {
     CommonDropdownAjaxFunction("ddlAcadamicyear", "GET", "/Reports/GetAcademicYearDropdown", null, function (resp) {
         loaddingimg.css('display', 'none');
     }, true);
 }
+
 function BindClassdropdown() {
     CommonDropdownAjaxFunction("ddlClass", "GET", "/Reports/GetAllClass", null, function (resp) {
         loaddingimg.css('display', 'none');
     }, true);
 }
+
 $("#ddlAcadamicyear").change(function () {
     //debugger;
     var selectedValue = $(this).val();
@@ -301,17 +308,17 @@ $("#txtToRegDate").on("change", function () { DatesCompare("From date", "To date
 
 $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) {
     event.stopImmediatePropagation();
-    //debugger;
+    debugger;
     var parent = $(event.target).closest('tr');
     var Instanceid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Admissionsreporttbl').DataTable();
     //tabletargetpagetblSEMsearchresults = table.page.info().page;
-    
-    var data = { "InstanceId": Instanceid, "Userstatusvalue": "1" };
+    var ddlAcadamicyear = $('#ddlAcadamicyear').val();
+    var data = { "InstanceId": Instanceid, "Acadamicyearid": ddlAcadamicyear, "Userstatusvalue": "1" };
 
     handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
         function (resp) {
-            //debugger;
+            debugger;
             loaddingimg.css('display', 'none');
             RegistartionDetails(resp);
             $('#RegisterAdmissiontbldiv').show();
@@ -321,7 +328,9 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) 
         }
     );
 })
+
 function RegistartionDetails(response) {
+    debugger;
     $("#Registrationstblcount").text(response.filteredList.length);
     var Statusvalue = response.userStatusValue;
 
@@ -418,64 +427,65 @@ function RegistartionDetails(response) {
             {
                 data: "Registrationdate",
                 render: function (data, type, row, meta) {
-                    return row.registrationdate + '<input type="text" value=' + row.instanceUserCode + ' hidden/>'
+                    return row.registrationdate + '<input type="text" value=' + row.instanceUserCode + ' hidden/>';
                 }
             },
             {
                 data: "InstanceUserCode",
                 render: function (data, type, row, meta) {
-                    return row.instanceUserCode
+                    return row.instanceUserCode;
                 }
             },
             {
                 data: "Name",
                 render: function (data, type, row, meta) {
-                    return row.name
+                    return row.name;
                 }
             },
             {
                 data: "DOB",
                 render: function (data, type, row, meta) {
-                    return row.dob
+                    return row.dob;
                 }
             },
             {
                 data: "ClassApplied",
                 render: function (data, type, row, meta) {
-                    return row.classApplied
+                    return row.classApplied;
                 }
             },
             {
                 data: "FatherName",
                 render: function (data, type, row, meta) {
-                    return row.fatherName
+                    return row.fatherName;
                 }
             },
             {
                 data: "MotherName",
                 render: function (data, type, row, meta) {
-                    return row.motherName
+                    return row.motherName;
                 }
             },
             {
                 data: "Mobilenumber",
-                render: function (data, type, row, meta) {
-                    return row.mobilenumber
+                render: function (data, type, row, meta) {                    
+                    return row.mobilenumber;
                 }
             },
             {
                 data: "EmailId",
                 render: function (data, type, row, meta) {
-                    return row.emailId
+                    return row.emailId;
                 }
             }
         ]
     });
 
 }
+
 $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) {
     event.stopImmediatePropagation();
-    //debugger;
+    debugger;
     var parent = $(event.target).closest('tr');
     var Instanceid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Admissionsreporttbl').DataTable();
@@ -483,25 +493,27 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) 
 
     var data = { "InstanceId": Instanceid, "Userstatusvalue": "2" };
 
-    handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
+    //handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
+    handleAjax('GET', "/Reports/Adsreporttbl", data,
         function (resp) {
-            //debugger;
+            debugger;
             loaddingimg.css('display', 'none');
             AdmissionsRegistrationDetails(resp);
-            $('#RegisterAdmissiontbldiv').show();
+           
         },
         function (status, error) {
             loaddingimg.css('display', 'none');
         }
     );
 })
+
 function AdmissionsRegistrationDetails(response) {
-    //debugger;
+    
     $("#Admissiontblcount").text(response.filteredList.length);
     var Statusvalue = response.userStatusValue;
 
-    $('#Registrationstbldiv').show();
-    $('#Admissiontbldiv').hide();
+    $('#Admissiontbldiv').show();
+    $('#Registrationstbldiv').hide();
 
     var table = $('#RegistartionreportResultstbl').DataTable();
     table.destroy();
@@ -570,25 +582,18 @@ function AdmissionsRegistrationDetails(response) {
         scrollCollapse: true,
         paging: true,
         bPaginate: true,
-        //  stateSave:true,
+        //stateSave:true,
         //data: response,
         data: response.filteredList,
         columns: [
             {
-                targets: 0, // Assuming this is the column index where you want to display numbering
+                targets: 0,
                 render: function (data, type, row, meta) {
                     var currentPage = table.page.info().page;
                     var rowsPerPage = table.page.info().length;
                     return (0 * rowsPerPage) + meta.row + 1;
                 }
             },
-            //{
-            //    data: "InstanceId",
-            //    render: function (data, type, row, meta) {                   
-            //        //return row.registrationDate.split(' ')[0].replace(/-/g, '/');
-            //        return row.instanceId;
-            //    }
-            //},
             {
                 data: "Registrationdate",
                 render: function (data, type, row, meta) {
@@ -645,20 +650,14 @@ function AdmissionsRegistrationDetails(response) {
             },
             {
                 data: "DOJ",
-                render: function (data, type, row, meta) {
-                    // Check if row.doj exists and is not null or undefined
+                render: function (data, type, row, meta) {                   
                     if (row.doj && row.doj !== null && row.doj !== undefined) {
                         return row.doj;
                     } else {
                         return ""; 
                     }
                 }
-                //data: "DOJ",
-                //render: function (data, type, row, meta) {
-                //    return row.doj
-                //}
             }
         ]
     });   
 }
-

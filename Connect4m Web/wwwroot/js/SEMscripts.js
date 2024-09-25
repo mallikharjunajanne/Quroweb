@@ -425,7 +425,7 @@ $("#InsertSEM").submit(function (event) {  //--------------  #code_01
             ajaxaddexpenditure();
         }
         else {
-            $('.alert-danger p').text("Pleae Enter All Required Fields");
+            $('.alert-danger p').text("Please enter all required fields.");
             $(".alert-danger").show().delay(5000).fadeOut()
         }
            
@@ -495,7 +495,7 @@ $("#InsertSEM").submit(function (event) {  //--------------  #code_01
                     $('#InsertSEM #Save_SEM').val("Save");
                 }
                 else {
-                    $('.alert-danger p').text("Pleae Enter All Required Fields");
+                    $('.alert-danger p').text("Please enter all required fields.");
                     $(".alert-danger").show().delay(5000).fadeOut()
                 }
 

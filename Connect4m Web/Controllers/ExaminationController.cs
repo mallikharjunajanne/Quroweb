@@ -21,7 +21,6 @@ using Connect4m_Web.Views;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class ExaminationController : Controller
     {
         //Uri baseaddress = new Uri("https://localhost:44379/api/Examination");
@@ -144,9 +143,8 @@ namespace Connect4m_Web.Controllers
             return DropdownList;
         }
 
-
-
-        //--------------------------------------============================= Manage Exams Screen ===================------------------------------
+        //----------------------------  Manage Exams Screen
+        #region MANAGE EXAMS SCREEN
         public IActionResult TblExamListData(ExaminationModel obj, int Id)
         {
             //InitializeCookieValues();
@@ -175,7 +173,6 @@ namespace Connect4m_Web.Controllers
             return Json(lis);           
         }
 
-
         [HttpPost]
         public IActionResult ManageExams(ExaminationModel obj, int DeleteID, string ButtonName)
         {
@@ -201,11 +198,10 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+        #endregion
 
-
-        // -------------------=====================   MANAGE SUBJECTS   ===============================
-
-
+        //---------------------------- MANAGE SUBJECTS
+        #region MANAGE SUBJECTS
         public IActionResult UpdateManageSubjects(Models.SubClassifications obj, string Buttonname, string SubjectName)
         {
             try
@@ -229,7 +225,6 @@ namespace Connect4m_Web.Controllers
                 return View(0);
             }
         }
-
 
         public IActionResult Subclassfications_MS( int InstanceClassificationId, string SubjectName, string Buttonname)
         {
@@ -327,10 +322,10 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+        #endregion
 
-
-
-        // -------------------=====================   BULK UPLOAD SUBJECTS   ===============================
+        //---------------------------- BULK UPLOAD SUBJECTS
+        #region BULK UPLOAD SUBJECTS
         public IActionResult UpdateSubjects_PartialView(int InstanceSubjectId, string Buttonname)
         {
             //InitializeCookieValues();
@@ -390,8 +385,6 @@ namespace Connect4m_Web.Controllers
 
         }
 
-
-
         public IActionResult TblViewSubjectsList(SubjectModel obj,int InstanceClassificationId,int InstanceSubClassificationId)
         {
             //InitializeCookieValues();
@@ -435,7 +428,6 @@ namespace Connect4m_Web.Controllers
             // Use regular expression to check if the string contains non-digits
             return Regex.IsMatch(input, @"\D");
         }
-
 
         public IActionResult BulkUploadSubjects()
         {
@@ -836,9 +828,10 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
-
-        // -------------------=====================   MANAGE SUBJECTS ASSOCIATION   ===============================
-
+        #endregion
+        
+        //---------------------------- MANAGE SUBJECTS ASSOCIATION
+        #region MANAGE SUBJECTS ASSOCIATION
         public IActionResult SubjectTypesDropdown_Calingfunction(SubjectModel obj)
         {
             //InitializeCookieValues();
@@ -912,10 +905,10 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
+        #endregion
 
-        // -------------------=====================   MANAGE SUBJECTS ASSOCIATION FOR MBA   ===============================
-
-
+        //---------------------------- MANAGE SUBJECTS ASSOCIATION FOR MBA
+        #region MANAGE SUBJECTS ASSOCIATION FOR MBA
         public IActionResult ManageSubjectAssociationForMBA()
         {
             return View();
@@ -947,6 +940,6 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
-
+        #endregion
     }
 }

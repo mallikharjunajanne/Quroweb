@@ -21,12 +21,11 @@ using static Connect4m_Web.Models.Attendenceproperites.UserScreen;
 
 namespace Connect4m_Web.Controllers
 {
-    [Authorize]
+   [Authorize]
     public class Admin : Controller
     {
         // Uri baseaddress = new Uri("https://localhost:44331/api/UsersScreens");
         //HttpClient client;
-
 
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
@@ -67,6 +66,7 @@ namespace Connect4m_Web.Controllers
             return xml;
         }
         #region ADMIN MENU
+        [Authorize]
         public IActionResult AdminMenu()
         {
             List<LoginModel> items = new List<LoginModel>();
@@ -94,7 +94,6 @@ namespace Connect4m_Web.Controllers
             ViewBag.Menuitems = items;
             return View();
         }
-
 
         public IActionResult AdminSubMenus(int categoryId)
         {
@@ -916,11 +915,6 @@ namespace Connect4m_Web.Controllers
         #endregion
 
         //NEW MANAGE NOTICES END HERE
-
-
-
-
-
 
         #region Manage Notice 
 
@@ -3067,7 +3061,6 @@ namespace Connect4m_Web.Controllers
             }
         }
         #endregion
-
 
         #region ADMISSION MODULE
 

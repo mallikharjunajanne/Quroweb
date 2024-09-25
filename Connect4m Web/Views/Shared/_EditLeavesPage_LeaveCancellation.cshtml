@@ -30,8 +30,8 @@
 
 @*==========================Edit Leaves Card====================*@
 <div class="card mb-4" id="SearchPage">
-    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                UPDATE LEAVE
+    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+        UPDATE LEAVE
     </div>
     <div class="card-body">
         <form id="FmUpdateLeaves">
@@ -149,15 +149,11 @@
                     <input type="hidden" name="InputValue[0].RequestStatus" id="RequestStatus" style="display:none" />
                     <input style="display:none" id="AppliedLeavedays">
                     @*----------------------*@
-                    <div class="row justify-content-end">
-                        <div class="col-sm-8">
-                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="BtnBack" onclick="BackTOSearhUserLeavestypes(event)" value="Back To Search">Back To Search</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="savebutton" onclick="FmUpdateLeaves_CalingFunction(event)" value="Update Leave">Update Leave</button>
-                        </div>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="BtnBack" onclick="BackTOSearhUserLeavestypes(event)" value="Back To Search">Back To Search</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="savebutton" onclick="FmUpdateLeaves_CalingFunction(event)" value="Update Leave">Update Leave</button>
                     </div>
                     @*--------------------------*@
-
-
                 </div>
             </div>
         </form>

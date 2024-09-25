@@ -60,7 +60,7 @@ $("#FmUpdateSubjects").submit(function (event) {
                 }, true);
             } else {
                 loaddingimg.css('display', 'none');
-                $('.alert-danger p').text("Pleae Enter All Required Fields");
+                $('.alert-danger p').text("Please enter all required fields.");
                 $(".alert-danger").show().delay(5000).fadeOut();
             }
         }, 50);

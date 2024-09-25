@@ -5,7 +5,7 @@
 @model List<AttendanceModel>
 @{ if (Model != null && Model.FirstOrDefault()?.LeaveShortNamesDynamic != null)
     {
-        <label class="form-input text-danger ps-1">
+        <label class="form-input text-danger ps-1 text-validation">
             NOTE: Enter a value in first text box of any leave type, and check respective check box of leave type then the value will apply to all the text boxes.
         </label>
         <div class="card" id="DivTBLSearchedLeavesType">

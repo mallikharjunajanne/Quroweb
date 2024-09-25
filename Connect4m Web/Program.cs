@@ -9,6 +9,27 @@ using System.Threading.Tasks;
 
 namespace LMS_Module
 {
+    ////OLD CODE START HERE
+    //public class Program
+    //{
+    //    public static void Main(string[] args)
+    //    {
+    //        CreateHostBuilder(args).Build().Run();
+    //    }
+
+
+    //    public static IHostBuilder CreateHostBuilder(string[] args) =>
+    //        Host.CreateDefaultBuilder(args)
+    //            .ConfigureWebHostDefaults(webBuilder =>
+    //            {
+
+    //                webBuilder.UseStartup<Startup>();
+    //            });
+
+    //}
+    ////OLD CODE START HERE 
+
+    //NEW CODE START HERE 
     public class Program
     {
         public static void Main(string[] args)
@@ -16,16 +37,14 @@ namespace LMS_Module
             CreateHostBuilder(args).Build().Run();
         }
 
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                   
                     webBuilder.UseStartup<Startup>();
                 });
-   
     }
+    //NEW CODE START HERE 
 }
 //webBuilder.ConfigureKestrel(options =>
 //{

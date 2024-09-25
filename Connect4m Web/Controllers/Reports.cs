@@ -18,7 +18,6 @@ using Connect4m_Web.Views;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class Reports : Controller
     {
         //Uri baseAddress = new Uri("https://localhost:44331/api/AttendanceCtr");
@@ -32,7 +31,7 @@ namespace Connect4m_Web.Controllers
         HttpClient client;
 
         private readonly IUserService _userService;
-        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        //=====================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
         private readonly int UserId;
         private readonly int InstanceId;
         private readonly int InstanceClassificationId;
@@ -416,11 +415,10 @@ namespace Connect4m_Web.Controllers
 
             var result = new
             {
-                FilteredList = filteredList,
+                //FilteredList = filteredList,
+                FilteredList = list,
                 UserStatusValue = Userstatusvalues
             };
-
-            //return Json(result);
             return new JsonResult(result);
         }
         public IActionResult Adsreporttbl(UserScreen.Admissionreport obj)
@@ -428,7 +426,17 @@ namespace Connect4m_Web.Controllers
             obj.InstanceId = InstanceId;
             List<UserScreen.Admissionreport> list = new List<UserScreen.Admissionreport>();
             list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionreport>(obj, "/Admissionsummaryreport", client);
-            return Json(list);
+
+            var Userstatusvalues = obj.Userstatusvalue;
+            var filteredList = obj.Userstatusvalue == "1" ? list.Where(item => item.UserStatus == "Registered").ToList() : obj.Userstatusvalue == "2" ? list.Where(item => item.UserStatus == "Admission Confirmed").ToList() : list;
+
+            var result = new
+            {
+                //FilteredList = filteredList,
+                FilteredList = list,
+                UserStatusValue = Userstatusvalues
+            };
+            return new JsonResult(result);
         }
         #endregion
 

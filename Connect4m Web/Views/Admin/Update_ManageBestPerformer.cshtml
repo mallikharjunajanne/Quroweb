@@ -8,9 +8,9 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <span id="Errormessages" class="text-danger"></span>
     <div class="card mb-4">
-        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
             UPDATE BEST PERFORMER
-            <small>* INDICATES MANDATORY FIELDS.</small>
+            <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
         </div>
         <div class="card-body">
             <div class="row">
@@ -81,7 +81,7 @@
 
     <div class="col-12" id="Updateview_Addbestperformerdataaddingaccordionoc2">
         <div class="card mb-4">
-            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+            <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
                 SEARCH USERS TO ADD AS BEST PERFORMER
             </div>
             <div class="card-body" id="Updateview_Addbestperformerdataaddingaccordionoc2">
@@ -110,7 +110,6 @@
                             <input type="text" class="form-control" asp-for="PortalEmail" />
                         </div>
                     </div>
-
                     <div class="row mb-2">
                         <label class="control-label col-sm-2 col-form-label  text-end space">First Name</label>
                         <div class="col-sm-4">
@@ -137,24 +136,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row justify-content text-center">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="UV_Addingusers_Clearbtn">Clear</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Searchbtn">Search</button>
-                        </div>
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="UV_Addingusers_Clearbtn">Clear</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="Searchbtn">Search</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-
     <div class="col-md-12 col-lg-12 mb-3" id="Updateview_Addbestperformerdataaddingtbl_accordionoc3">
         <div class="card mb-4">
-            <div class="card-header bg-danger text-white">
+            <div class="card-header bg-danger text-white text-header">
                 YOUR SEARCH RESULTED
-                <span id="Updateview_bestperformertbl_Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"> 0 </span>
+                <span id="Updateview_bestperformertbl_Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header"> 0 </span>
                 RECORDS.
             </div>
             <div id="#Updateview_Addbestperformerdataaddingtbl_accordionoc3">

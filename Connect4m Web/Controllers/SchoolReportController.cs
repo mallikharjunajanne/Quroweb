@@ -47,9 +47,6 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
-
-
-
         //===============================  Commonn Dropdown
 
         public List<SelectListItem> CommonDropdown(string methodname, string[] Parameters, string text, string value)
@@ -71,10 +68,6 @@ namespace Connect4m_Web.Controllers
             }
             return DropdownList;
         }
-
-
-
-
 
         #region  SIMPLE EXPENSE SUMMARY REPORT
         public IActionResult SimpleExpenseReport()
@@ -374,7 +367,6 @@ namespace Connect4m_Web.Controllers
 
 
         #endregion
-
 
         #region  SCHOOL WISE ATTENDANCE REPORT
 

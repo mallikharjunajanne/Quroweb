@@ -1791,18 +1791,10 @@ namespace Connect4m_Web.Controllers
             //return Json(items);
             //return Json(items.Data);
         }
-       
+
         #endregion
 
-
-
-
-
-
-
-
-
-        /*----====TransferChallan Action Method Code Start ====----*/
+        #region TRANSFER CHALLAN 
         public IActionResult TransferChallan()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -1886,10 +1878,9 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        /*----====TransferChallan Action Method Code End ====----*/
+        #endregion
 
-
-        /*----====Fee Challana Reports Action Method Code Start ====----*/
+        #region FEE CHALLAN REPORT
         public IActionResult FeeReceiptNew()
         {
             var InstanceId = Request.Cookies["INSTANCEID"];
@@ -1974,7 +1965,7 @@ namespace Connect4m_Web.Controllers
             }
             return PartialView("_GetChellanaDetails", items);
         }
-        /*----==== Fee Challana Reports Action Method Code End ====----*/
+        #endregion
 
         [HttpGet]
         public IActionResult AutomaticChallanGeneration()
@@ -2038,7 +2029,6 @@ namespace Connect4m_Web.Controllers
             return Json(item);
 
         }
-
 
         public IActionResult GetPrevious_FeeTerm(string InstanceId, string AcademicYearId)
         {
@@ -2115,10 +2105,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-    
-
-
-        /*----====VIEW STUDENT ACCOUNT ACTION METHOD CODE START ====----*/
+        #region VIEW STUDENT ACCOUNT
         [HttpGet]
         public IActionResult ViewallChallandetailsTermwise()
         {
@@ -2157,7 +2144,7 @@ namespace Connect4m_Web.Controllers
             {
                 obj.StudentId = "";
             }
-            if (obj.InstanceSubClassificationId== "--Select Class--")
+            if (obj.InstanceSubClassificationId == "--Select Class--")
             {
                 obj.InstanceSubClassificationId = "";
             }
@@ -2187,11 +2174,11 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        public IActionResult Userwise_FeeInstallmentsReport(int UserId,int ChallanId, string StartDate)
+        public IActionResult Userwise_FeeInstallmentsReport(int UserId, int ChallanId, string StartDate)
         {
             List<ChallandetailsTermwise> Fee_installments_details = new List<ChallandetailsTermwise>();
 
-            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Userwise_InstallmentsReport?UserId=" + UserId+ "&InstanceId="+ InstanceId+ "&ChallanId="+ ChallanId+ "&StartDate="+ StartDate).Result;
+            HttpResponseMessage Response = client.GetAsync(client.BaseAddress + "/Userwise_InstallmentsReport?UserId=" + UserId + "&InstanceId=" + InstanceId + "&ChallanId=" + ChallanId + "&StartDate=" + StartDate).Result;
 
             if (Response.IsSuccessStatusCode)
             {
@@ -2202,57 +2189,48 @@ namespace Connect4m_Web.Controllers
 
             return View(Fee_installments_details);
         }
-        /*----====VIEW STUDENT ACCOUNT ACTION METHOD CODE START ====----*/
+        #endregion
 
-        /*----====Fee Challan Details ACTION METHOD CODE START ====----*/
+        #region FEE CHALLAN DETAILS
         [HttpGet]
         public IActionResult FeeChallanDetails()
         {
             return View();
         }
-        /*----====Fee Challan Details ACTION METHOD CODE END ====----*/
+        #endregion
 
-
-        /*----==== FeePeriodWiseReport  ACTION METHOD CODE START ====----*/
+        #region FEE PERIOD WISE REPORT
         [HttpGet]
         public IActionResult FeePeriodWiseReport()
         {
             return View();
         }
-        /*----==== FeePeriodWiseReport ACTION METHOD CODE END ====----*/
+        #endregion
 
-
-        /*----==== ChallanGenerateddates ACTION METHOD CODE START ====----*/
+        #region CHALLAN GENERATED DATES
         [HttpGet]
         public IActionResult ChallanGenerateddates()
         {
             return View();
         }
-        /*----==== ChallanGenerateddates ACTION METHOD CODE END ====----*/
+        #endregion
 
-
-        /*----==== ViewTermwisefeereportNew ACTION METHOD CODE START ====----*/
+        #region VIEW TERM WISE FEE REPORT NEW
         [HttpGet]
         public IActionResult ViewTermwisefeereportNew()
         {
             return View();
         }
-        /*----==== ViewTermwisefeereportNew ACTION METHOD CODE END ====----*/
+        #endregion
 
-
-        /*----==== UserWiseFeeDetails ACTION METHOD CODE START ====----*/
+        #region USER WISE FEE DETAILS
         [HttpGet]
         public IActionResult UserWiseFeeDetails()
         {
             return View();
         }
-        /*----==== UserWiseFeeDetails ACTION METHOD CODE END ====----*/
-
-
-
-
-
-
+        #endregion
+   
         //===>>> COMMON DROPDOWN METHOD
         [Authorize]
         public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
@@ -2274,7 +2252,6 @@ namespace Connect4m_Web.Controllers
             }
             return DropdownList;
         }
-
 
 
         //===>>> COMMON INSERT METHOD

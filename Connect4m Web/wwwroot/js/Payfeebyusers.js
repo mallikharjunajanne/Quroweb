@@ -601,15 +601,20 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
             payedamount += parseFloat(UsersDueFeetblsfooter.payedamount);
             dueAmount += parseFloat(UsersDueFeetblsfooter.dueAmount);
         });
-        //debugger;
+        debugger;
         // Update the table footer cells
         tfoot.append($('<tr></tr>')
-            .append($('<td colspan="3"></td>').css('text-align', 'center').text('TOTAL'))
-            .append($('<td></td>').css('text-align', 'center').text(totalAmount.toFixed(2)))
-            .append($('<td></td>').css('text-align', 'center').text(totalDueAmount.toFixed(2)))
-            .append($('<td></td>').css('text-align', 'center').text(ChalanaAmount.toFixed(2)))
-            .append($('<td></td>').css('text-align', 'center').text(payedamount.toFixed(2)))
-            .append($('<td></td>').css('text-align', 'center').text(Dueamounttotal.toFixed(2)))
+            .append($('<td colspan="3"></td>').css('text-align', 'center').text('TOTAL'))            
+            /*.append($('<td></td>').css('text-align', 'center').text(totalAmount.toFixed(2)))*/
+            /*.append($('<td></td>').css('text-align', 'center').text(totalDueAmount.toFixed(2)))*/
+            /*.append($('<td></td>').css('text-align', 'center').text(ChalanaAmount.toFixed(2)))*/
+            /*.append($('<td></td>').css('text-align', 'center').text(payedamount.toFixed(2)))*/
+            /*.append($('<td></td>').css('text-align', 'center').text(Dueamounttotal.toFixed(2)))*/
+            .append($('<td></td>').css('text-align', 'center').text(formatAmount(totalAmount)))
+            .append($('<td></td>').css('text-align', 'center').text(formatAmount(totalDueAmount)))
+            .append($('<td></td>').css('text-align', 'center').text(formatAmount(ChalanaAmount)))
+            .append($('<td></td>').css('text-align', 'center').text(formatAmount(payedamount)))
+            .append($('<td></td>').css('text-align', 'center').text(formatAmount(Dueamounttotal)))
             .append('<td></td>')
             .append('<td></td>')
             .append('<td></td>')
@@ -634,6 +639,12 @@ function Userfeedetailstblfunction(feedetialsbyuseridtbl, totalpayedamounttbl) {
         $('#FeePaid_ChallanaCreated_DivId').hide();
     }
 }
+function formatAmount(amount) {
+    return amount === 0 ? '' : amount.toFixed(2);
+}
+
+
+
 $('#DDlTermid').change(function () {
 
     var FeetermId = $('#ddlFeetermid').val();

@@ -15,7 +15,8 @@
 <body>
 
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Student Module /</span>*@STUDENT LEAVE DETAILS</h4>
+        @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Student Module /</span>STUDENT LEAVE DETAILS</h4>*@
+        <h4 class="mb-3 text-center">STUDENT LEAVE DETAILS</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <ul class="nav nav-pills" id="myTab" role="tablist">
@@ -29,9 +30,9 @@
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                         <div class="card mb-4" id="StudentAttendanceDetails_Card" style="display:none">
-                            <div class="card-header bg-danger text-white">                               
-                                        <span>ATTENDANCE DETAILS</span>
-                                        @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@                                  
+                            <div class="card-header bg-danger text-white">
+                                <span>ATTENDANCE DETAILS</span>
+                                @*<span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count()</span>  RECORD(S).</span>*@
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="StudentAttendanceDetails_Table" class="table table-hover table-bordered no-footer dataTable">
@@ -46,7 +47,6 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                         @*---------------------form code------------------------*@
@@ -64,8 +64,9 @@
                         <span class="ErrorMessageSpan" id="successMessage"></span>
 
                         <div class="card mb-4">
-                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                                <span>Apply Student Leave</span><small class="required">INDICATES REQUIRED FEILDS</small>
+                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                                <span>Apply Student Leave</span>
+                                <small class="text-header-small">* INDICATES REQUIRED FEILDS</small>
                             </div>
                             <div class="card-body">
                                 <form id="myForm">
@@ -194,10 +195,10 @@
                         <div class="card mb-4">
                             <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
                                 @*<div class="head-label text-center">
-                                    <h5 class="card-title mb-0">*@
-                                        @*<span id="CountOfRecords_StudentLeaves"></span>*@
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-                                    @*</h5>
+                                <h5 class="card-title mb-0">*@
+                                @*<span id="CountOfRecords_StudentLeaves"></span>*@
+                                <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                @*</h5>
                                 </div>*@
                             </div>
                             <div class="table-responsive text-nowrap">
@@ -220,8 +221,8 @@
                                         <tbody>
                                         </tbody>
                                         @*<tfoot>
-                                                <tr><td style="padding:0px" colspan="10"><p style="text-align: center; font-size: 11px; margin-top: 9px; margin-bottom: 9px;" id="StudentDataGetting_ID_Table_pagination"></p></td></tr>
-                                            </tfoot>*@
+                                            <tr><td style="padding:0px" colspan="10"><p style="text-align: center; font-size: 11px; margin-top: 9px; margin-bottom: 9px;" id="StudentDataGetting_ID_Table_pagination"></p></td></tr>
+                                        </tfoot>*@
                                     </table>
                                 </form>
                             </div>
@@ -240,9 +241,9 @@
 
                         <div class="card mb-4">
                             <div class="card-header bg-danger text-white">
-                                    <span>
-                                        LEAVE LEVEL SEARCH
-                                    </span>
+                                <span>
+                                    LEAVE LEVEL SEARCH
+                                </span>
                             </div>
                             <div class="card-body">
                                 <form>
@@ -283,13 +284,13 @@
                                                             {
                                                                 <option value="@item.Value">@item.Text</option>
                                                                 @*if (item.Value == "1737")
-                                                                    {
-                                                                        <option selected="selected" value="@item.Value">@item.Text</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@item.Value">@item.Text</option>
-                                                                    }*@
+                                                                {
+                                                                    <option selected="selected" value="@item.Value">@item.Text</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Value">@item.Text</option>
+                                                                }*@
                                                             }
                                                         </select>
                                                     </div>

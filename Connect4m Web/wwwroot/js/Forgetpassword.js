@@ -23,7 +23,7 @@ $('#Mobilenumbertxt').on('input', function () {
 
 
 
-$("#Forgetpasswordform").submit(function (event) {
+$("#Forgotpasswordform").submit(function (event) {
     debugger;
 
     loaddingimg.css('display', 'block');
@@ -33,7 +33,7 @@ $("#Forgetpasswordform").submit(function (event) {
     var formdata_CSA = $(this).serialize();
     $('#Mobilenumbervalidationspid').text("");
     $('#fperrormessage').text("");
-    var formElement = document.getElementById('Forgetpasswordform');
+    var formElement = document.getElementById('Forgotpasswordform');
     setTimeout(function () {
         debugger;
         var validationMessages = formElement.getElementsByClassName('field-validation-error');
@@ -82,8 +82,8 @@ $("#Forgetpasswordform").submit(function (event) {
             );
         }
         else {
-            $('.alert-danger p').text("Please Enter a All Required Fields.");
-            $(".alert-danger").show().delay(5000).fadeOut();
+            $('.alert-danger p').text("Please enter all required fields.");
+            $(".alert-danger").show().delay(4000).fadeOut();
             loaddingimg.css('display', 'none');
         }
     }, 50);
@@ -174,8 +174,8 @@ $("#Formforgetpassword").submit(function (event) {
                 );
             }
             else {
-                $('.alert-danger p').text("Please Enter a All Required Fields.");
-                $(".alert-danger").show().delay(5000).fadeOut();
+                $('.alert-danger p').text("Please enter all required fields.");
+                $(".alert-danger").show().delay(4000).fadeOut();
                 loaddingimg.css('display', 'none');
             }
         }, 50);

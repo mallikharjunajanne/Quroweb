@@ -1,4 +1,5 @@
 ﻿using Connect4m_Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Connect4m_Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -49,7 +51,6 @@ namespace Connect4m_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public IActionResult Privacy(ContactForm model)
         {
             if (ModelState.IsValid)
@@ -79,8 +80,6 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

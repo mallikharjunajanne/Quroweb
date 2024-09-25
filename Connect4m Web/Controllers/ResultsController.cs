@@ -29,12 +29,8 @@ namespace Connect4m_Web.Controllers
     [Authorize]
     public class ResultsController : Controller
     {
-      //  private string Controllername;
-
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
-
-
 
         private readonly IUserService _userService;
         private readonly int LoginUserId;
@@ -78,7 +74,7 @@ namespace Connect4m_Web.Controllers
         //    StudentUserid = Convert.ToInt32(Request.Cookies["StudentUserid"]);
         //}
 
-        // -------------------=====================   POST RESULTS  ===============================
+        //============================ POST RESULTS ============================ 
         #region POST RESULTS
         public IActionResult DdlSubjectTypes_Calingfunction(ResultsModel obj)
         {
@@ -1143,8 +1139,8 @@ namespace Connect4m_Web.Controllers
         #endregion
 
 
-        // -------------------=====================   POST RESULTS By Excel ===============================
-        #region
+        //============================ POST RESULTS By Excel ============================
+        #region POST RESULTS BY EXCEL
         public IActionResult PostResultsByExcel()
         {
             return View();
@@ -1194,9 +1190,6 @@ namespace Connect4m_Web.Controllers
                 return Json(new { success = false, message = "Something Error" });
             }
         }
-
-
-
         #endregion
 
     }

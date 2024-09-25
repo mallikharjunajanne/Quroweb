@@ -100,17 +100,35 @@ $(document).ready(function () {
                         }
                         if (Notparent == 0) {
                             if (item.menuUrl !== "" && item.parentMenuId == "") {
-                                //debugger;
+                                debugger;
 
                                 /* THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES START HERE */
-                               var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');
+                               /*var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');*/
                                 /* THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES END HERE */
 
                                 /* THIS COMMENT CODE IS MENU ITEMS WITH IMAGES  START HERE */
-                                //var a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="/' + item.imageUrl + '"  height="15" width="15" class="menu-icon"/><span>' + item.menuName + '</span></a>');
+                                var a;
+                                if (item.imageUrl !== "") {
+                                    var parts = item.imageUrl.split('/');
+                                    if (parts.length >= 2) {
+                                        a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="../Menuimages/' + parts[1] + '"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>');
+                                    }
+                                }
+                                else {
+                                    a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="' + item.imageUrl + '"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>');
+                                }
+
+                                //if (item.imageUrl == "Images/ApplyLeave.gif") {
+                                //    a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="../Images/ApplyLeave.gif"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>');
+                                //}
+                                //else if (item.imageUrl == "Images/admin-module.gif") { a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="../Images/admin-module.gif"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>'); }
+                                //else {
+                                //    a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="../' + item.imageUrl + '"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>');
+                                //}
+
+                                /*var a = $('<a class="menu-link" href="' + item.menuUrl + '"><img src="../Images/BlinkingArrow.gif"  alt="" height="15" width="15" class="menu-icon"/>' + item.menuName + '</a>');*/
+
                                 /* THIS COMMENT CODE IS MENU ITEMS WITH IMAGES END HERE */
-
-
                                 li.append(a);
                                 parentmenulist.append(li);
                                 //console.log(li);
@@ -412,4 +430,5 @@ $(document).ready(function () {
 // }
    
 });
+
 

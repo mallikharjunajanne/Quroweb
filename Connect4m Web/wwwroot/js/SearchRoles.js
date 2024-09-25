@@ -257,7 +257,7 @@ $("#Create_Role").submit(function (event) {
         }
         else {
             window.scrollTo(0, 150);
-            $('.alert-danger p').text("Pleae Enter All Required Fields");
+            $('.alert-danger p').text("Please enter all required fields.");
             $(".alert-danger").show().delay(5000).fadeOut()
             loaddingimg.css('display', 'none');
 

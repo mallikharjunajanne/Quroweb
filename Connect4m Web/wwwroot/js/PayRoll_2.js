@@ -233,7 +233,7 @@ $("#Insert_SAR").submit(function (event) {
             $('.alert-danger p').text("Please Assign Basic Attribute first");
             $(".alert-danger").show().delay(6000).fadeOut()
                 } else {
-            $('.alert-danger p').text("Pleae Enter All Required Fields");
+            $('.alert-danger p').text("Please enter all required fields.");
             $(".alert-danger").show().delay(5000).fadeOut()
                 }
           

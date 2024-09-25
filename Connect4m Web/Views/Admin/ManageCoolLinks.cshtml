@@ -20,7 +20,7 @@
                 <div class="col-md-12 col-lg-12 mb-3">
                     <span class="text-danger" id="UpdatevalidationMessage"></span>
                     <div class="card mb-4">
-                        <div class="card-header bg-danger text-white">
+                        <div class="card-header bg-danger text-white text-header">
                             SEARCH COOL LINKS
                         </div>
                         <div class="card-body">
@@ -43,11 +43,9 @@
                                         <textarea class="form-control" asp-for="Description" id="DescriptionTXT"></textarea>
                                     </div>
                                 </div>
-                                <div class="row justify-content text-center">
-                                    <div class="col-sm-12">
-                                        <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Clearcommonfunction('Coollinksearchform', 'UpdatevalidationMessage')" id="Clearcoollink_Btn">Clear</button>
-                                        <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Searchcoollink_Btn">Search</button>
-                                    </div>
+                                <div class="col-sm-12 text-center">
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Clearcommonfunction('Coollinksearchform', 'UpdatevalidationMessage')" id="Clearcoollink_Btn">Clear</button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Searchcoollink_Btn">Search</button>
                                 </div>
                             </form>
                         </div>
@@ -55,8 +53,8 @@
                 </div>
                 <div class="col-md-12 col-lg-12 mb-3">
                     <div class="card mb-4">
-                        <div class="card-header bg-danger text-white">
-                            YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow"></span> RECORDS.
+                        <div class="card-header bg-danger text-white text-header">
+                            YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
                         </div>
                         <div class="table-responsive text-nowrap">
                             <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
@@ -80,9 +78,9 @@
                     <span id="validation2" class="text-danger"></span>
                     <span id="validationMessage" class="text-danger"></span>
                     <div class="card mb-4">
-                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
                             SAVE COOL LINK
-                            <small>* INDICATES MANDATORY FIELDS.</small>
+                            <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -129,8 +127,8 @@
                     <span id="Updatevalidation2" class="text-danger"></span>
                     <span id="UpdateMessage" class="text-danger"></span>
                     <div class="card mb-4">
-                        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                            UPDATE COOL LINK <small>* INDICATES MANDATORY FIELDS.</small>
+                        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                            UPDATE COOL LINK <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -158,12 +156,10 @@
                                                 <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
+                                        <div class="col-sm-12 text-center">
                                                 <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="Delete_Upbtn">Delete</button>
                                                 <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Backtoseach_Upbtn">BackToSearch</button>
                                                 <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Updatecoollink_Btn">Update</button>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>

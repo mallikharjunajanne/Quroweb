@@ -5,76 +5,82 @@
     Layout = null;
 }
 
-        <div class="card" id="DivTBLSearchedLeavesType">
-            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="card-header bg-danger text-white">
-                    <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@Model.Count</span>  RECORD(S).</span>
-                </div>
-
-                <div class="card-datatable table-responsive pt-0">
-                    <table id="TblLeavesTypes_SearchRecords" class="table table-hover table-bordered no-footer dataTable link">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>S No</th>
-                                <th>Leave Type</th>
-                                <th style="text-align: center;">Short Name</th>
-                                <th style="text-align: center;">Carry Forward</th>
-                                <th style="text-align: center;">Past Days Leave Apply</th>
-                                <th style="text-align: center;">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{var i = 0; }
-                            @foreach (var item in Model)
-                            {
-                                i++;
-                                <tr id="Row@(i)">
-                                    <td>@i</td>
-                                    <td>
-                                        <a id="TBLLeavetype" onclick="EditValuesGettingFunction.call(this)">@item.Leavetype</a>
-                                        <input type="hidden" id="TBLLeavetypeid" value="@item.Leavetypeid" hidden>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        @item.ShortName
-                                    </td>
-                                    <td style="text-align:center;">
-                                        @if (@item.Carryforward == 1)
-                                        {
-                                            @:Yes
-                                        }
-                                        else
-                                        {@:No
-                                        }
-                                    </td>
-                                    <td style="text-align:center;">
-                                        @if (@item.AllowPastDates == 1)
-                                        {
-                                            @:Yes
-                                        }
-                                        else
-                                        {@:No
-                                        }
-                                    </td>
-                                    <td style="text-align:center;">
-                                        @if (@item.Leavetypeid != 122 && @item.Leavetypeid != 123)
-                                        {
-                                            <a class='ti ti-trash' id="TblDeleteBtn" onclick="DeleteLeaveTypesCallingFunction(@item.Leavetypeid)" title='Click to delete this record'></a>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                        @*<tfoot>
-                    <tr>
-                        <td style="padding:2px" colspan="5"><div style="text-align:center" id="TblLeavesTypes_SearchRecords_pagination">
-                             </div></td>
-                    </tr>
-                </tfoot>*@
-                    </table>
-
-                </div>
-            </div>
+<div class="card" id="DivTBLSearchedLeavesType">
+    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+        <div class="card-header bg-danger text-white text-header">
+            <span>
+                YOUR SEARCH RESULTED
+                <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">
+                    @Model.Count
+                </span>
+                RECORD(S).
+            </span>
         </div>
+
+        <div class="card-datatable table-responsive pt-0">
+            <table id="TblLeavesTypes_SearchRecords" class="table table-hover table-bordered no-footer dataTable link">
+                <thead class="table-dark">
+                    <tr>
+                        <th>S No</th>
+                        <th>Leave Type</th>
+                        <th style="text-align: center;">Short Name</th>
+                        <th style="text-align: center;">Carry Forward</th>
+                        <th style="text-align: center;">Past Days Leave Apply</th>
+                        <th style="text-align: center;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{var i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr id="Row@(i)">
+                            <td>@i</td>
+                            <td>
+                                <a id="TBLLeavetype" onclick="EditValuesGettingFunction.call(this)">@item.Leavetype</a>
+                                <input type="hidden" id="TBLLeavetypeid" value="@item.Leavetypeid" hidden>
+                            </td>
+                            <td style="text-align:center;">
+                                @item.ShortName
+                            </td>
+                            <td style="text-align:center;">
+                                @if (@item.Carryforward == 1)
+                                {
+                                    @:Yes
+                                }
+                                else
+                                {@:No
+                                }
+                            </td>
+                            <td style="text-align:center;">
+                                @if (@item.AllowPastDates == 1)
+                                {
+                                    @:Yes
+                                }
+                                else
+                                {@:No
+                                }
+                            </td>
+                            <td style="text-align:center;">
+                                @if (@item.Leavetypeid != 122 && @item.Leavetypeid != 123)
+                                {
+                                    <a class='ti ti-trash' id="TblDeleteBtn" onclick="DeleteLeaveTypesCallingFunction(@item.Leavetypeid)" title='Click to delete this record'></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                @*<tfoot>
+                    <tr>
+                    <td style="padding:2px" colspan="5"><div style="text-align:center" id="TblLeavesTypes_SearchRecords_pagination">
+                    </div>
+                    </td>
+                    </tr>
+                    </tfoot>*@
+            </table>
+        </div>
+    </div>
+</div>
 
 
 

@@ -130,30 +130,25 @@
                         <div class="mb-3">
                             <span id="errorSpan" style="color:red;display:block;">@ViewBag.ErrorMessage</span>
                             <label for="Username" class="form-label">Username</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="TxtUsername"
-                                   asp-for="Username"
-                                   placeholder="Enter your username"
-                                   autofocus />
+                            <input type="text" class="form-control" id="TxtUsername" asp-for="Username"placeholder="Enter your username"autofocus />
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
-                                <label class="form-label" for="password">Password</label>                               
+                                <label class="form-label" for="password">Password</label>
                             </div>
                             <div class="input-group input-group-merge">
-                                <input type="password"
-                                       class="form-control" id="TxtPassword"
-                                       asp-for="Password"
-                                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                <input type="password" class="form-control" id="TxtPassword"
+                                       asp-for="Password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                        aria-describedby="password" />
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                                <span asp-validation-for="Password" class="text-danger"></span>
+                                @*<span asp-validation-for="Password" class="text-danger"></span>*@
                             </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
                             <div class="text-end">
-                                <i class="fa fa-question-circle"></i><a href="Attendance/ForgetPassword"><small>Forget Password </small></a>
+                                <i class="fa fa-question-circle"></i>
+                                <a href="Attendance/ForgotPassword"><small> Forgot Password </small></a>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -173,7 +168,7 @@
                     </a>
                 </p>*@
 
-                    <div class="divider my-4">
+                    @*<div class="divider my-4">
                         <div class="divider-text">or</div>
                     </div>
 
@@ -189,7 +184,7 @@
                         <a href="javascript:;" class="btn btn-icon btn-label-twitter">
                             <i class="tf-icons fa-brands fa-twitter fs-5"></i>
                         </a>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <!-- /Login -->
@@ -321,7 +316,7 @@
                             window.location.href = "/Attendance/ChangePassword";
                         }
                         else {
-                            $('.alert-danger p').text("Please Enter Correct Username/Password.");
+                            $('.alert-danger p').text("Please enter the correct username and password.");
                             $(".alert-danger").show().delay(5000).fadeOut()
 
                           //  $("#errorSpan").text("Invalid User ID/Password.");
@@ -334,7 +329,7 @@
                     }, false);
                 }
                 else {
-                    $('.alert-danger p').text("Please Enter a All Required Fields.");
+                    $('.alert-danger p').text("Please enter all required fields.");
                     $(".alert-danger").show().delay(5000).fadeOut();
                     loaddingimg.css('display', 'None');
                 }

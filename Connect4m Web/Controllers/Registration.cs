@@ -15,12 +15,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
-
     public class Registration : Controller
     {
         // Uri baseAddress = new Uri("https://localhost:44331/api/Attendance");
         //Uri baseAddress = new Uri("http://192.168.1.142:98/api/FeeSctionCtr");
-       // HttpClient client;
+        // HttpClient client;
 
 
         private readonly HttpClientFactory _httpClientFactory;
@@ -50,8 +49,5 @@ namespace Connect4m_Web.Controllers
          
             return View();
         }
-
-        
-
     }
 }
