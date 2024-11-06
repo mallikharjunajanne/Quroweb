@@ -2703,6 +2703,21 @@ namespace Connect4m_Web.Controllers
             }
           
         }
+
+        public IActionResult EmployeeLeaveHistory(int Instanceid, int LeaveemployeeUserid)
+        {
+            List<StaffLeaveApprovalModel> Value2 = new List<StaffLeaveApprovalModel>();
+            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/EmployeeLeaveHistory?Instanceid=" + Instanceid + "&EmployeeUserid=" + LeaveemployeeUserid).Result;
+            if (response2.IsSuccessStatusCode)
+            {
+                string data2 = response2.Content.ReadAsStringAsync().Result;
+                Value2 = JsonConvert.DeserializeObject<List<StaffLeaveApprovalModel>>(data2);
+            }
+            ViewBag.FirstName = Value2[0].FirstName;
+            ViewBag.ClassificationName = Value2[0].ClassificationName;
+            ViewBag.listvalues = Value2;
+            return View();
+        }
         #endregion
 
         //==================== APPLY SHORT LEAVES MODULE ====================

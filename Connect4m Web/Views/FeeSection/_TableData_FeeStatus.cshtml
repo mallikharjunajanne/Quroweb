@@ -6,23 +6,23 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header bg-danger text-white">SMS CREDITS</div>
+        <div class="card-header bg-danger text-white text-header">SMS CREDITS</div>
         <div class="row mb-1">
             <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Total Credits</label>
             <div class="col-sm-4">
-                <label></label>
+                <label class="text-danger control-label col-form-label text-end">@ViewBag.TotalCredits</label>
             </div>
         </div>
         <div class="row mb-1">
             <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Used Credits</label>
             <div class="col-sm-4">
-                <label></label>
+                <label class="text-danger control-label col-form-label text-end">@ViewBag.UsedCredits</label>
             </div>
         </div>
         <div class="row mb-1">
             <label class="col-sm-4 col-form-label space text-end" for="basic-default-name">Remaining Credits</label>
             <div class="col-sm-4">
-                <label></label>
+                <label class="text-danger control-label col-form-label text-end">@ViewBag.RemCredits</label>
             </div>
         </div>
     </div>
@@ -34,31 +34,33 @@
         <div class="row">
             <div class="col-sm-2">
                 <input type="checkbox" class="form-check-input" id="chksmsstudent">
-                <label class="form-check-label" for="SmsToStudent" id="chksmsstudent">Sms To Student</label>
+                <label class="form-check-label" for="SmsToStudent" id="lblchksmsstudent">Sms To Student</label>
             </div>
             <div class="col-sm-2">
                 <input type="checkbox" class="form-check-input" id="chksmsparents">
-                <label class="form-check-label" for="SmsToStudent" id="chksmsparents">Sms To Parent</label>
+                <label class="form-check-label" for="SmsToStudent" id="lblchksmsparents">Sms To Parent</label>
             </div>
             <div class="col-sm-3">
                 <input type="checkbox" class="form-check-input" id="chkemailstudents">
-                <label class="form-check-label" for="SmsToStudent" id="chkemailstudents">Send Email To Students</label>
+                <label class="form-check-label" for="SmsToStudent" id="lblchkemailstudents">Send Email To Students</label>
             </div>
             <div class="col-sm-3">
                 <input type="checkbox" class="form-check-input" id="chkemailparents">
-                <label class="form-check-label" for="SmsToStudent" id="chkemailparents">Send Email To Parents</label>
+                <label class="form-check-label" for="SmsToStudent" id="lblchkemailparents">Send Email To Parents</label>
             </div>
             <div class="col-sm-3">
                 <input type="checkbox" class="form-check-input" id="chkCheckAll">
-                <label class="form-check-label" id="chkCheckAll">Check All</label>
+                <label class="form-check-label" id="lblchkCheckAll">Check All</label>
             </div>
         </div>
         <div class="card mb-4">
-            <div class="card-header bg-danger text-white">
-                    YOUR SEARCH RESULTED <span class="badge badge-center rounded-pill bg-primary bg-glow"> @ViewBag.ItemsCount </span> RECORDS FOR <span id="Typeoffspid" value="@ViewBag.ButtonName"> @ViewBag.ButtonName </span>.
+            <div class="card-header bg-danger text-white text-header">
+                YOUR SEARCH RESULTED
+                <span class="badge badge-center rounded-pill bg-primary bg-glow text-header"> @ViewBag.ItemsCount </span>
+                RECORDS FOR <span id="Typeoffspid" class="text-header" value="@ViewBag.ButtonName"> @ViewBag.ButtonName </span>.
             </div>
             <div class="table-responsive text-nowrap" id="Admissiontbldiv">
-                <table id="Feedetailstbl" class="table table-bordered">
+                <table id="Feedetailstbl" class="table table-bordered dataTable">
                     <thead class="table-dark">
                         <tr>
                             <th>Sl. No</th>
@@ -84,36 +86,36 @@
                         @{ int SNO_ = 1;}
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@SNO_</td>
-                            <td align="center" width="180px"><input type="checkbox" id="Check_Box_@item.Studentid" class="userCheckbox Userfeetypechk form-check-input " /></td>
-                            <td align="left">
-                                <span style="font-weight: 600; cursor: pointer; text-decoration: underline; color: blue; " class="user-info" onclick="navigateToUserInfoAction('@item.Studentid', 'div_@item.Studentid')" data-user-id="@item.Studentid">@item.StudentName</span>
-                                <div id="div_@item.Studentid" style="display:none;"></div>
-                            </td>
-                            <td>@item.Program</td>
-                            <td>@item.Batch</td>
-                            <td>@item.FeeAmount</td>
-                            <td>@(string.IsNullOrEmpty(item.ConcedingTypeName) ? "NA" : item.ConcedingTypeName)</td>
-                            <td>@(item.ConcedingAmount == 0 ? "Nill" : item.ConcedingAmount.ToString())</td>
-                            @*<td>@item.ConcedingTypeName</td>*@
-                            @*<td>@item.ConcedingAmount</td>*@
-                            <td>@item.FeePaid</td>
-                            <td>@item.DueAmount</td>
-                            <td>@item.StudentMobile</td>
-                            <td>@item.StudentSmsStatus</td>
-                            <td>@item.StudentEmail</td>
-                            <td>@item.ParentName</td>
-                            <td>@item.ParentPhone</td>
-                            <td>@item.ParentSmsStatus</td>
-                            <td>@item.ParentEmail</td>
-                        </tr>
+                            <tr>
+                                <td>@SNO_</td>
+                                <td align="center" width="180px"><input type="checkbox" id="Check_Box_@item.Studentid" class="userCheckbox Userfeetypechk form-check-input " /></td>
+                                <td align="left">
+                                    <span style="font-weight: 600; cursor: pointer; text-decoration: underline; color: blue; " class="user-info" onclick="navigateToUserInfoAction('@item.Studentid', 'div_@item.Studentid')" data-user-id="@item.Studentid">@item.StudentName</span>
+                                    <div id="div_@item.Studentid" style="display:none;"></div>
+                                </td>
+                                <td>@item.Program</td>
+                                <td>@item.Batch</td>
+                                <td>@item.FeeAmount</td>
+                                <td>@(string.IsNullOrEmpty(item.ConcedingTypeName) ? "NA" : item.ConcedingTypeName)</td>
+                                <td>@(item.ConcedingAmount == 0 ? "Nill" : item.ConcedingAmount.ToString())</td>
+                                @*<td>@item.ConcedingTypeName</td>*@
+                                @*<td>@item.ConcedingAmount</td>*@
+                                <td>@item.FeePaid</td>
+                                <td>@item.DueAmount</td>
+                                <td>@item.StudentMobile</td>
+                                <td>@item.StudentSmsStatus</td>
+                                <td>@item.StudentEmail</td>
+                                <td>@item.ParentName</td>
+                                <td>@item.ParentPhone</td>
+                                <td>@item.ParentSmsStatus</td>
+                                <td>@item.ParentEmail</td>
+                            </tr>
                             SNO_++;
                         }
                     </tbody>
                 </table>
                 <div class="text-center">
-                    <button class="btn btn-success waves-effect waves-light btn-sm" id="GoToStep2btn"> Go To Step2 </button>
+                    <button class="btn btn-success waves-effect waves-light btn-sm" id="GoToStep1btn"> Go To Step 1 </button>
                 </div>
             </div>
         </div>
@@ -121,7 +123,7 @@
 
     <div class="col-md-12 col-lg-12 mb-3" id="MessagecontentDiv2" style="display:none;">
         <div class="card mb-4">
-            <div class="card-header bg-danger text-white">TYPE MESSAGE</div>
+            <div class="card-header bg-danger text-white text-header">TYPE MESSAGE</div>
             <div class="card-body">
                 <div class="row">
                     <div class="row mb-2">
@@ -138,7 +140,8 @@
                     </div>
                     <div class="row justify-content-center text-center">
                         <div class="col-sm-12">
-                            <button class="btn btn-info waves-effect waves-light btn-sm" id="PreviewBtn">Preview</button>
+                            @*<button class="btn btn-info waves-effect waves-light btn-sm" id="btnPreview">Preview</button>*@
+                            <button class="btn btn-info waves-effect waves-light btn-sm" id="btnPreview">Preview</button>
                             <span class="Spantext" title="NOTE: Preview will come for selected users if they have Mobile Number and SmsStatus true.">
                                 <i>?</i>
                             </span>
@@ -147,6 +150,75 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    //SMS PREVIEW FOR STUDENTS TABLE CODE START
+    <div class="col-md-12 col-lg-12 mb-3" id="divPreviewofStudents" style="display:none;">
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white text-header">SMS PREVIEW FOR STUDENTS</div>
+            <div class="table-responsive text-nowrap" style="max-height: 300px; overflow-y: auto;">
+                <table id="tblStudentSMS" class="table table-bordered dataTable">
+                    <thead class="table-dark">
+                        <tr><th>Sl. No</th><th>SMS</th><th>Mobile Number</th><th>Sms Status</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    //SMS PREVIEW FOR STUDENTS TABLE CODE END
+
+    //SMS PREVIEW FOR PARENTS TABLE CODE START
+    <div class="col-md-12 col-lg-12 mb-3" id="divPreviewofParents" style="display:none;">
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white text-header">SMS PREVIEW FOR PARENTS</div>
+            <div class="table-responsive text-nowrap" style="max-height: 300px; overflow-y: auto;">
+                <table id="tblParentsSMS" class="table table-bordered dataTable">
+                    <thead class="table-dark">
+                        <tr><th>Sl. No</th><th>SMS</th><th>Mobile Number</th><th>Sms Status</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    //SMS PREVIEW FOR PARENTS TABLE CODE END
+
+
+    //EMAIL PREVIEW FOR STUDENTS TABLE CODE START
+    <div class="col-md-12 col-lg-12 mb-3" id="divPreviewofStudentsEmail" style="display:none;">
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white text-header">EMAIL PREVIEW FOR STUDENTS</div>
+            <div class="table-responsive text-nowrap" style="max-height: 300px; overflow-y: auto;">
+                <table id="tblStudentEmail" class="table table-bordered dataTable">
+                    <thead class="table-dark">
+                        <tr><th>Sl. No</th><th>Email</th><th>Email Id</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    //EMAIL PREVIEW FOR STUDENTS TABLE CODE END
+
+    //EMAIL PREVIEW FOR PARENTS TABLE CODE START
+    <div class="col-md-12 col-lg-12 mb-3" id="divPreviewofParentEmail" style="display:none;">
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white text-header">EMAIL PREVIEW FOR PARENTS</div>
+            <div class="table-responsive text-nowrap" style="max-height: 300px; overflow-y: auto;">
+                <table id="tblParentEmail" class="table table-bordered dataTable">
+                    <thead class="table-dark">
+                        <tr><th>Sl. No</th><th>Email</th><th>Email Id</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div> 
+    //EMAIL PREVIEW FOR PARENTS TABLE CODE END
+
+    <div class="text-center">
+        <button class="btn btn-success waves-effect waves-light btn-sm" id="btnPost" style="display:none;"> Send</button>
     </div>
 }
 else
@@ -165,9 +237,23 @@ else
     var selectedParentsmsStatus = [];
     var selectedStudentids = [];
 
-    $('#GoToStep2btn').click(function (e) {
+    $('#GoToStep1btn').click(function (e) {
         debugger;
         loaddingimg.css('display', 'block');
+
+        $('#divPreviewofStudents').hide();
+        $('#divPreviewofParents').hide();
+        $('#divPreviewofStudentsEmail').hide();
+        $('#divPreviewofParentEmail').hide();
+        $('#btnPost').hide();
+        $('#Subjecttxtid').val('');
+        $('#tblStudentSMS tbody').empty();
+        $('#tblParentsSMS tbody').empty();
+        $('#tblStudentEmail tbody').empty();
+        $('#tblParentEmail tbody').empty();
+
+
+
         $('#Commonerrormessage').text('');
         e.preventDefault();
         var tableCheckboxes = document.querySelectorAll('.userCheckbox');
@@ -179,14 +265,15 @@ else
             }
         }
 
-        if (!$('#chksmsstudent').prop('checked')&& !$('#chksmsparents').prop('checked')&& !$('#chkemailstudents').prop('checked')&& !$('#chkemailparents').prop('checked')) {
+        if (!$('#chksmsstudent').prop('checked') && !$('#chksmsparents').prop('checked') && !$('#chkemailstudents').prop('checked') && !$('#chkemailparents').prop('checked')) {
             $('#Commonerrormessage').text('Please make atleast one selection to send SMS or EMAIL.');
             $('html, body').animate({
                 scrollTop: $('#Commonerrormessage').offset().top
             }, 1000);
             loaddingimg.css('display', 'none');
 
-        } else if (!tableCheckboxesChecked) {
+        }
+        else if (!tableCheckboxesChecked) {
             $('#Commonerrormessage').text('Please select at least one student to send SMS or EMAIL.');
             $('html, body').animate({
                 scrollTop: $('#Commonerrormessage').offset().top
@@ -242,7 +329,702 @@ else
         }
     });
 
-    $('#PreviewBtn').click(function (e) {
+    $('#btnPreview').click(function () {
+
+        debugger;
+        loaddingimg.css('display', 'block');
+
+        $('#tblStudentSMS tbody').empty();
+        $('#tblParentsSMS tbody').empty();
+        $('#tblStudentEmail tbody').empty();
+        $('#tblParentEmail tbody').empty();
+
+        let strFeeTypesPreview = '';
+        let strFeeTypesParentsPreview = '';
+        var intCount = 0;
+        var intCount1 = 0;
+        var intCount2 = 0;
+        var intCount3 = 0;
+        var intCount4 = 0;
+        var MessageStudentsPhNo = "";
+        var MessageParentsPhNo = "";
+        var EmailstringStudents = "";
+        var EmailstringParents = "";
+        var ADMISSIONPROCESS_SMS = "ON";
+        var smsText = $('#Subjecttxtid').val().trim();
+        var Feetermsddltext = $('#Feetermsddl option:selected').text();
+        //var ButtonTypeoffspid=$('#Typeoffspid').val();
+        var ButtonTypeoffspid =$("#Typeoffspid").text().trim();
+
+        if ($('#chksmsstudent').is(':checked') || $('#chksmsparents').is(':checked') || $('#chkemailstudents').is(':checked') || $('#chkemailparents').is(':checked')) {
+            debugger;
+
+
+            // Iterate over each checkbox in the table
+            $('#Feedetailstbl tbody tr').each(function () {
+                let checkbox = $(this).find('td:eq(1) input[type="checkbox"].userCheckbox');
+                if (!checkbox.is(':checked')) {
+                    intCount++;
+                }
+            });
+
+            // Check if all checkboxes are unchecked
+            if (intCount === $('#Feedetailstbl tbody input[type="checkbox"].userCheckbox').length) {
+                var roleText = $('#Roleddl option:selected').text(); // Get the selected role text
+                $('#Commonerrormessage').text('Please Select At least One ' + roleText + ' to Send SMS or Email.');
+                $('#divPreviewofParents, #divPreviewofStudents, #divPreviewofStudentsEmail, #divPreviewofParentEmail').hide();
+                $('#btnPost').hide();
+                window.scrollTo(0, 0);
+                loaddingimg.css('display', 'none');
+                return; // Exit the function if no checkboxes are selected
+            }
+
+
+
+            // Check if the SMS text is empty
+            if (smsText === "") {
+                $('#Commonerrormessage').text('Please enter the text you want to send.');
+                $('#divPreviewofParents, #divPreviewofStudents, #divPreviewofStudentsEmail, #divPreviewofParentEmail').hide();
+                $('#btnPost').hide();
+                window.scrollTo(0, 0);
+                loaddingimg.css('display', 'none');
+                return; // Exit the function
+            }
+
+
+            // Build fee types preview string
+            $('.Feetypechk:checked').each(function () {
+                debugger;
+                if (strFeeTypesPreview === '') {
+                    strFeeTypesPreview = $(this).next('label').text(); // Get the label text
+                } else {
+                    strFeeTypesPreview += ',' + $(this).next('label').text();
+                }
+            });
+
+            $('.Feetypechk:checked').each(function () {
+                /*debugger;*/
+                if (strFeeTypesParentsPreview === '') {
+                    strFeeTypesParentsPreview = $(this).next('label').text(); // Get the label text
+                } else {
+                    strFeeTypesParentsPreview += ',' + $(this).next('label').text();
+                }
+            });
+
+            if ($('#chksmsstudent').is(':checked')) {
+
+                if (false)
+                {
+                    //function generatestudentMessage(type, name, term, feeAmount, paidAmount, dueAmount, discountAmount, discountType, smsText) {
+                    //    const discountInfo = discountType === "NA" ? "" : `, Alloted Discount is ${discountAmount} Under ${discountType}`;
+                    //    return `Dear ${name}, Fee Details of ${term} is ${feeAmount}${discountInfo}. You have paid ${paidAmount}. Due Amount is ${dueAmount}. ${smsText}`;
+                    //}
+
+                    //function generateParentMessage(role, studentName, termText, feeAmount, paidAmount, dueAmount, discountAmount, discountType, smsText) {
+                    //    const discountInfo = discountType === "NA" ? "" : `, Alloted Discount is ${discountAmount} Under ${discountType}`;
+                    //    return `Dear ${role}, your ward ${studentName} Fee Details of ${termText} is ${feeAmount}${discountInfo}. You had paid ${paidAmount}. Due Amount is ${dueAmount}. ${smsText}`;
+                    //}
+
+                    //function generateReminderMessage(role, termText, previewText, smsText) {
+                    //    return `Dear ${role}, This is to remind you to remit the Fee Amount of ${termText}-${previewText} ${smsText}. Please Ignore this message if paid.`;
+                    //}
+
+                    //$('#Feedetailstbl tbody tr').each(function () {
+                    //    let row = $(this);
+                    //    let StudentName = row.find('td:eq(2)').text().trim();
+                    //    let Program = row.find('td:eq(3)').text().trim();
+                    //    let Batch = row.find('td:eq(4)').text().trim();
+                    //    let FeeAmount = row.find('td:eq(5)').text().trim();
+                    //    let PaidAmount = row.find('td:eq(8)').text().trim();
+                    //    let DueAmount = row.find('td:eq(9)').text().trim();
+                    //    let StudentMobile = row.find('td:eq(10)').text().trim();
+                    //    let StudentSmsStatus = row.find('td:eq(11)').text().trim();
+                    //    let StudentEMail = row.find('td:eq(12)').text().trim();
+                    //    let ParentName = row.find('td:eq(13)').text().trim();
+                    //    let ParentSmsStatus = row.find('td:eq(15)').text().trim();
+                    //    let ParentEMail = row.find('td:eq(16)').text().trim();
+                    //    let DiscountType = row.find('td:eq(6)').text().trim();
+                    //    let DiscountAmount = row.find('td:eq(7)').text().trim();
+                    //    let ParentMobile = row.find('td:eq(14)').text().trim();
+
+                    //    let termText = Feetermsddltext.toUpperCase() === 'TERM' ? Feetermsddltext : 'Term ' + Feetermsddltext;
+
+                    //    if (StudentMobile && StudentSmsStatus.toUpperCase() === 'TRUE') {
+                    //        let MessageStudentsPhNo = generatestudentMessage(termText + '-' + strFeeTypesPreview, StudentName, FeeAmount, PaidAmount, DueAmount, DiscountAmount, DiscountType, smsText);
+
+                    //        $('#tblStudentSMS tbody').append(`<tr><td>${intCount1 + 1}</td><td>${MessageStudentsPhNo}</td><td>${StudentMobile}</td><td>${StudentSmsStatus}</td></tr>`);
+                    //        intCount1++;
+                    //    }
+
+                    //    if (StudentEMail) {
+                    //        let EmailstringStudents = generatestudentMessage(termText + '-' + strFeeTypesPreview, StudentName, FeeAmount, PaidAmount, DueAmount, DiscountAmount, DiscountType, smsText);
+
+                    //        $('#tblStudentEmail tbody').append(`<tr><td>${intCount3 + 1}</td><td>${EmailstringStudents}</td><td>${StudentEMail}</td></tr>`);
+                    //        intCount3++;
+                    //    }
+
+                    //    if (ParentMobile && ParentSmsStatus.toUpperCase() === 'TRUE') {
+                    //        let MessageParentsPhNo;
+                    //        if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                    //            if (ADMISSIONPROCESS_SMS.toUpperCase() === "ON") {
+                    //                MessageParentsPhNo = generateReminderMessage("Parent", termText, strFeeTypesParentsPreview, smsText);
+                    //            } else {
+                    //                MessageParentsPhNo = generateParentMessage("Parent", StudentName, termText + '-' + strFeeTypesParentsPreview, FeeAmount, PaidAmount, DueAmount, DiscountAmount, DiscountType, smsText);
+                    //            }
+                    //        } else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                    //            if (ADMISSIONPROCESS_SMS.toUpperCase() === "ON") {
+                    //                MessageParentsPhNo = generateReminderMessage("Parent", termText, strFeeTypesParentsPreview, smsText);
+                    //            } else {
+                    //                MessageParentsPhNo = generateParentMessage("Parent", StudentName, termText + '-' + strFeeTypesParentsPreview, FeeAmount, 0, DueAmount, DiscountAmount, DiscountType, smsText);
+                    //            }
+                    //        }
+
+                    //        // Create and append new row for SMS
+                    //        $('#tblParentsSMS tbody').append(`<tr><td>${intCount2 + 1}</td><td>${MessageParentsPhNo}</td><td>${ParentMobile}</td><td>${ParentSmsStatus}</td></tr>`);
+                    //        intCount2++;
+                    //    }
+
+                    //    if (ParentEMail) {
+                    //        let EmailstringParents;
+                    //        if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                    //            EmailstringParents = generateParentMessage("Parent", StudentName, termText + '-' + strFeeTypesPreview, FeeAmount, PaidAmount, DueAmount, DiscountAmount, DiscountType, smsText);
+                    //        } else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                    //            EmailstringParents = generateParentMessage("Parent", StudentName, termText + '-' + strFeeTypesParentsPreview, FeeAmount, 0, DueAmount, DiscountAmount, DiscountType, smsText);
+                    //        }
+
+                    //        // Create and append new row for Email
+                    //        $('#tblParentEmail tbody').append(`<tr><td>${intCount4 + 1}</td><td>${EmailstringParents}</td><td>${ParentEMail}</td></tr>`);
+                    //        intCount4++;
+                    //    }
+                    //});
+                }
+
+                $('#Feedetailstbl tbody tr').each(function () {
+                    //debugger;
+                    // Get specific column data (e.g., 0 for first column, 1 for second)
+                    let firstColumnData = $(this).find('td:eq(0)').text().trim();
+                    let secondColumnData = $(this).find('td:eq(1)').text().trim();
+                    let StudentName = $(this).find('td:eq(2)').text().trim();
+                    let Program = $(this).find('td:eq(3)').text().trim();
+                    let Batch = $(this).find('td:eq(4)').text().trim();
+                    let FeeAmount = $(this).find('td:eq(5)').text().trim();
+                    let DiscountType = $(this).find('td:eq(6)').text().trim();
+                    let DiscountAmount = $(this).find('td:eq(7)').text().trim();
+                    let PaidAmount = $(this).find('td:eq(8)').text().trim();
+                    let DueAmount = $(this).find('td:eq(9)').text().trim();
+                    let StudentMobile = $(this).find('td:eq(10)').text().trim();
+                    let StudentSmsStatus = $(this).find('td:eq(11)').text().trim();
+                    let StudentEMail = $(this).find('td:eq(12)').text().trim();
+                    let ParentName = $(this).find('td:eq(13)').text().trim();
+                    let ParentMobile = $(this).find('td:eq(14)').text().trim();
+                    let ParentSmsStatus = $(this).find('td:eq(15)').text().trim();
+                    let ParentEMail = $(this).find('td:eq(16)').text().trim();
+
+                    let isValidStudentMobile = /^\d{10}$/.test(StudentMobile) && /^[6-9]/.test(StudentMobile);
+                    let isValidParentMobile = /^\d{10}$/.test(ParentMobile) && /^[6-9]/.test(ParentMobile);
+
+                    if ($('#chksmsstudent').is(':checked')) {
+                        if (isValidStudentMobile) {
+                            if (StudentMobile !== '') {
+                                if (StudentSmsStatus.toUpperCase() === 'TRUE') {
+                                    if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                                        if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                            if (DiscountType === "NA") {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                            }
+                                            else {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                            }
+                                        }
+                                        else {
+                                            if (DiscountType === "NA") {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                            }
+                                            else {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                            }
+                                        }
+                                    }
+                                    else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                                        if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                            if (DiscountType === "NA") {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. Due Amount is  ${DueAmount}. ${smsText}`;
+                                            }
+                                            else {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount}.  Under  ${DiscountType} .Due Amount is ${DueAmount}.${smsText}`;
+                                            }
+                                        }
+                                        else {
+                                            if (DiscountType === "NA") {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}.Due Amount is ${DueAmount}.${smsText}`;
+                                            }
+                                            else {
+                                                MessageStudentsPhNo = `Dear ${StudentName}, Fee Details of Term  ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DueAmount} Under ${DiscountType}. Due Amount is ${DueAmount} .${smsText}`;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // Create a new row
+                                let NewStudentSMSRow = `<tr>
+                                        <td>${intCount1 + 1}</td>
+                                        <td>${MessageStudentsPhNo}</td>
+                                        <td>${StudentMobile}</td>
+                                        <td>${StudentSmsStatus}</td>
+                                      </tr>`;
+
+                                // Append the new row to the tbody of the target table
+                                $('#tblStudentSMS tbody').append(NewStudentSMSRow); // Replace #YourTargetTable with the actual table ID or class
+                                intCount1++;
+                            }
+                        }
+                    }
+
+                    if ($('#chksmsparents').is(':checked')) {
+                        if (isValidParentMobile) {
+                            if (ParentMobile !== '') {
+                                if (ParentSmsStatus.toUpperCase() === 'TRUE') {
+                                    if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                                        //if (getXMLNodeValueByKey("ADMISSIONPROCESS_SMS", getXMLConfigPath()).toUpperCase() === "ON") {
+                                        if (ADMISSIONPROCESS_SMS.toUpperCase() === "ON") {
+                                            if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                                MessageParentsPhNo = `Dear Parent, This is to remind you to remit the Fee Amount of ${Feetermsddltext}-${strFeeTypesParentsPreview} ${smsText}. Please Ignore this message if paid.`;
+                                            }
+                                            else {
+                                                MessageParentsPhNo = `Dear Parent, This is to remind you to remit the Fee Amount of ${Feetermsddltext}-${strFeeTypesParentsPreview} ${smsText}. Please Ignore this message if paid.`;
+                                            }
+                                        }
+                                        else {
+                                            if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                                if (DiscountType === "NA") {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}. You had paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+
+                                                else {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You had paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+
+                                            }
+                                            else {
+                                                if (DiscountType === "NA") {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of Term ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}. You had paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+                                                else {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of Term ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You had paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                                        if (ADMISSIONPROCESS_SMS.toUpperCase() === "ON") {
+                                            if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                                MessageParentsPhNo = `Dear Parent, This is to remind you to remit the Fee Amount of ${Feetermsddltext}-${strFeeTypesParentsPreview} ${smsText}. Please Ignore this message if paid.`;
+                                            }
+                                            else {
+                                                MessageParentsPhNo = `Dear Parent, This is to remind you to remit the Fee Amount of ${Feetermsddltext}-${strFeeTypesParentsPreview} ${smsText}. Please Ignore this message if paid.`;
+                                            }
+                                        }
+                                        else {
+                                            if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                                if (DiscountType === "NA") {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}. Due Amount is ${balanceAmount}. ${smsText}`;
+                                                }
+                                                else {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+                                            }
+
+                                            else {
+                                                if (DiscountType === "NA") {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of Term ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+                                                else {
+                                                    MessageParentsPhNo = `Dear Parent your ward ${StudentName} Fee Details of Term ${Feetermsddltext}-${strFeeTypesParentsPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. Due Amount is ${DueAmount}. ${smsText}`;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                // Create a new row
+                                let NewParentsSMSRow = `<tr>
+                                        <td>${intCount2 + 1}</td>
+                                        <td>${MessageParentsPhNo}</td>
+                                        <td>${ParentMobile}</td>
+                                        <td>${ParentSmsStatus}</td>
+                                      </tr>`;
+
+                                // Append the new row to the tbody of the target table
+                                $('#tblParentsSMS tbody').append(NewParentsSMSRow); // Replace #YourTargetTable with the actual table ID or class
+                                intCount2++;
+                            }
+                        }
+                    }
+
+                    if ($('#chkemailstudents').is(':checked')) {
+                        if (StudentEMail != '') {
+
+                            if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                                if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                    if (DiscountType === "NA") {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                }
+                                else {
+                                    if (DiscountType === "NA") {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                }
+                            }
+                            else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                                if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                    if (DiscountType === "NA") {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. Due Amount is  ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount}.  Under  ${DiscountType} .Due Amount is ${DueAmount}.${smsText}`;
+                                    }
+                                }
+                                else {
+                                    if (DiscountType === "NA") {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}.Due Amount is ${DueAmount}.${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringStudents = `Dear ${StudentName}, Fee Details of Term  ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DueAmount} Under ${DiscountType}. Due Amount is ${DueAmount} .${smsText}`;
+                                    }
+                                }
+                            }
+                            // Create a new row
+                            let NewStudentEmailRow = `<tr>
+                                        <td>${intCount3 + 1}</td>
+                                        <td>${EmailstringStudents}</td>
+                                        <td>${StudentEMail}</td>
+                                      </tr>`;
+
+                            // Append the new row to the tbody of the target table
+                            $('#tblStudentEmail tbody').append(NewStudentEmailRow); // Replace #YourTargetTable with the actual table ID or class
+                            intCount3++;
+                        }
+                    }
+
+                    if ($('#chkemailparents').is(':checked')) {
+                        if (ParentEMail != '') {
+                            debugger;
+                            if (ButtonTypeoffspid.toUpperCase() === "PARTIAL FEE") {
+                                if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                    if (DiscountType === "NA") {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                }
+                                else {
+                                    if (DiscountType === "NA") {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount} Under ${DiscountType}. You have paid ${PaidAmount}. Due Amount is ${DueAmount}. ${smsText}`;
+                                    }
+                                }
+                            }
+                            else if (ButtonTypeoffspid.toUpperCase() === "NO FEE") {
+                                if (Feetermsddltext.toUpperCase() === 'TERM') {
+                                    if (DiscountType === "NA") {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}. Due Amount is  ${DueAmount}. ${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DiscountAmount}.  Under  ${DiscountType} .Due Amount is ${DueAmount}.${smsText}`;
+                                    }
+                                }
+                                else {
+                                    if (DiscountType === "NA") {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of Term ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}.Due Amount is ${DueAmount}.${smsText}`;
+                                    }
+                                    else {
+                                        EmailstringParents = `Dear ${StudentName}, Fee Details of Term  ${Feetermsddltext}-${strFeeTypesPreview} is ${FeeAmount}, Alloted Discount is ${DueAmount} Under ${DiscountType}. Due Amount is ${DueAmount} .${smsText}`;
+                                    }
+                                }
+                            }
+
+                            // Create a new row
+                            let NewParentsEmailRow = `<tr>
+                                        <td>${intCount4 + 1}</td>
+                                        <td>${EmailstEmailstringParentsringStudents}</td>
+                                        <td>${ParentEMail}</td>
+                                      </tr>`;
+
+                            // Append the new row to the tbody of the target table
+                            $('#tblParentEmail tbody').append(NewParentsEmailRow); // Replace #YourTargetTable with the actual table ID or class
+                            intCount4++;
+                        }
+                    }
+
+                });
+
+                if ($('#tblStudentSMS tbody tr').length === 0) {
+                    $('#divPreviewofStudents').hide();
+                }
+                else {
+                    $('#divPreviewofStudents').show();
+                }
+
+                if ($('#tblParentsSMS tbody tr').length === 0) {
+                    $('#divPreviewofParents').hide();
+                }
+                else {
+                    $('#divPreviewofParents').show();
+                }
+
+                if ($('#tblStudentEmail tbody tr').length === 0) {
+                    $('#divPreviewofStudentsEmail').hide();
+                }
+                else {
+                    $('#divPreviewofStudentsEmail').show();
+                }
+
+                if ($('#tblParentEmail tbody tr').length === 0) {
+                    $('#divPreviewofParentEmail').hide();
+                }
+                else {
+                    $('#divPreviewofParentEmail').show();
+                }
+
+                //$('#divPreviewofStudents').show();
+                //$('#divPreviewofParents').show();
+                //$('#divPreviewofStudentsEmail').show();
+                //$('#divPreviewofParentEmail').show();
+                $('#btnPost').show();
+                loaddingimg.css('display', 'none');
+            }
+            else {
+                $('#divPreviewofStudents').hide();
+                $('#divPreviewofParents').hide();
+                $('#divPreviewofStudentsEmail').hide();
+                $('#divPreviewofParentEmail').hide();
+                $('#btnPost').hide();
+                loaddingimg.css('display', 'none');
+            }
+        }
+        else {
+            $('#Commonerrormessage').text('Please make atleast one selection to send SMS or EMAIL.');
+            window.scrollTo(0, 0);
+            loaddingimg.css('display', 'none');
+        }
+    });
+
+    $("#btnPost").click(function () {
+        debugger;
+        $('#Commonerrormessage').text('');
+        loaddingimg.css('display', 'block');
+
+        let SMSStudentsRowData=[];
+        let SMSParentsRowData=[];
+        let EmailStudentsRowData=[];
+        let EmailParentsRowData=[];
+
+        if ($('#divPreviewofStudents').is(':visible')) {
+            let headers = ['Sno', 'SMS', 'Mobile Number']; // Define your headers
+            debugger;
+            // Get the row data with the desired structure
+            let rows = $('#tblStudentSMS tbody tr').map(function (index) {
+                let smsText = $(this).find('td:eq(1)').text().trim(); // Assuming SMS is in the second column (index 1)
+                let mobileNumber = $(this).find('td:eq(2)').text().trim(); // Assuming Mobile Number is in the third column (index 2)
+                // Validate mobile number
+                //const isValidMobileNumber = /^6|7|8|9\d{8}$/.test(mobileNumber); // Check if it starts with 6-9 and has 10 digits
+                const isValidMobileNumber = /^[6-9]\d{9}$/.test(mobileNumber.toString());
+
+                if (isValidMobileNumber) {
+                    return {
+                        //Sno: index + 1, // Serial number (starting from 1)
+                        SMS: smsText,
+                        MobileNumber: mobileNumber
+                    };
+                }
+            }).get().filter(Boolean);
+
+            // Combine headers and row data
+            //SMSStudentsRowData.push({ headers: headers });
+            rows.forEach((row) => {
+                SMSStudentsRowData.push(row);
+            });
+        }
+
+        if ($('#divPreviewofParents').is(':visible')) {
+
+            // Get the row data with the desired structure
+            let rows = $('#tblParentsSMS tbody tr').map(function (index) {
+                let smsText = $(this).find('td:eq(1)').text().trim(); // Assuming SMS is in the second column (index 1)
+                let mobileNumber = $(this).find('td:eq(2)').text().trim(); // Assuming Mobile Number is in the third column (index 2)
+                const isValidParentMobileNumber = /^[6-9]\d{9}$/.test(mobileNumber.toString());
+
+                if (isValidParentMobileNumber) {
+                    return {
+                        //Sno: index, // Serial number
+                        SMS: smsText,
+                        MobileNumber: mobileNumber
+                    };
+                }
+
+            }).get().filter(Boolean);
+
+            // Combine headers and row data
+            rows.forEach((row) => {
+                SMSParentsRowData.push(row);
+            });
+        }
+
+        if ($('#divPreviewofStudentsEmail').is(':visible')) {
+
+            $('#tblStudentEmail tbody tr').each(function (index) {
+                let smsText = $(this).find('td:eq(1)').text().trim(); // Assuming SMS is in the second column (index 1)
+                let studentEmail = $(this).find('td:eq(2)').text().trim(); // Assuming Student Email is in the third column (index 2)
+
+                // Directly push the data into the array
+                EmailStudentsRowData.push({
+                    //Sno: index, // Serial number
+                    SMS: smsText,
+                    StudentEmail: studentEmail
+                });
+            });
+        }
+
+        if ($('#divPreviewofParentEmail').is(':visible')) {
+
+            // Get the row data with the desired structure
+            $('#tblParentEmail tbody tr').each(function (index) {
+                let smsText = $(this).find('td:eq(1)').text().trim(); // Assuming SMS is in the second column (index 1)
+                let studentEmail = $(this).find('td:eq(2)').text().trim(); // Assuming Student Email is in the third column (index 2)
+
+                // Directly push the data into the array
+                EmailParentsRowData.push({
+                    //Sno: index, // Serial number
+                    SMS: smsText,
+                    StudentEmail: studentEmail
+                });
+            });
+        }
+
+        let Datastring = {
+            SMSStudents: SMSStudentsRowData,
+            SMSParents: SMSParentsRowData,
+            EmailStudents: EmailStudentsRowData,
+            EmailParents: EmailParentsRowData
+        };
+        //let formData = new FormData();
+        //formData.append('SMSStudents', JSON.stringify(SMSStudentsRowData));
+        //formData.append('SMSParents', JSON.stringify(SMSParentsRowData));
+        //formData.append('EmailStudents', JSON.stringify(EmailStudentsRowData));
+        //formData.append('EmailParents', JSON.stringify(EmailParentsRowData));
+
+
+        let SMSStudentsRowDatas = JSON.stringify(SMSStudentsRowData);
+        let SMSParentsRowDatas = JSON.stringify(SMSParentsRowData);
+        let EmailStudentsRowDatas = JSON.stringify(EmailStudentsRowData);
+        let EmailParentsRowDatas = JSON.stringify(EmailParentsRowData);
+
+        // Construct the query string
+        let queryString = `SMSStudents=${SMSStudentsRowData.map(s => encodeURIComponent(s)).join('&SMSStudents=')}&` +
+            `SMSParents=${SMSParentsRowData.map(s => encodeURIComponent(s)).join('&SMSParents=')}&` +
+            `EmailStudents=${EmailStudentsRowData.map(s => encodeURIComponent(s)).join('&EmailStudents=')}&` +
+            `EmailParents=${EmailParentsRowData.map(s => encodeURIComponent(s)).join('&EmailParents=')}`;
+
+        debugger;
+        $.ajax({
+            url: '/FeeSection/Feestatuse_smsmailNotification?' + queryString,
+            method: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (response) {
+                // Handle the response
+                var message = '';
+                window.scrollTo(0, 500);
+                if (response == "1") {
+
+                    alert('An error occurred during the SMS sending process.');
+                    loaddingimg.css('display', 'none');
+
+                } else if (response == "-1") {
+                    // Error handling
+                }
+                loaddingimg.css('display', 'none');
+            },
+            error: function (xhr, status, error) {
+                // Error handling
+            }
+        });
+
+
+
+
+
+
+        //let formData = new FormData();
+        //formData.append('SMSStudents', new Blob([JSON.stringify(SMSStudentsRowData)], { type: "application/json" }));
+        //formData.append('SMSParents', new Blob([JSON.stringify(SMSParentsRowData)], { type: "application/json" }));
+        //formData.append('EmailStudents', new Blob([JSON.stringify(EmailStudentsRowData)], { type: "application/json" }));
+        //formData.append('EmailParents', new Blob([JSON.stringify(EmailParentsRowData)], { type: "application/json" }));
+
+        
+        //$.ajax({
+        //    url: '/FeeSection/Feestatuse_smsmailNotification?' + queryString,
+        //    //url: '/FeeSection/Feestatuse_smsmailNotification',
+        //    method: 'POST',
+        //    contentType: 'application/json',
+        //    //data: JSON.stringify({
+        //    //    SMSStudents: SMSStudentsRowData,
+        //    //    SMSParents: SMSParentsRowData,
+        //    //    EmailStudents: EmailStudentsRowData,
+        //    //    EmailParents: EmailParentsRowData
+        //    //}), // Send the data as a JSON string
+        //    //data: JSON.stringify(Datastring),
+        //    processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        //    contentType: false, // Let the browser set the content type
+        //    //data: formData,
+        //    success: function (response) {
+        //        debugger;
+        //        var message = '';
+        //        window.scrollTo(0, 500);
+        //        if (response == "1") {
+
+        //            if (chksmsstudent.checked) {
+        //                message = 'Student SMS sent successfully';
+        //            }
+        //            else if (chksmsparents.checked) {
+        //                message = 'Parent SMS sent successfully';
+        //            }
+        //            else if (chkemailstudents.checked) {
+        //                message = 'Student Email sent successfully';
+        //            }
+        //            else if (chkemailparents.checked) {
+        //                message = 'Parent Email sent successfully';
+        //            }
+
+        //            $('#Commonerrormessage').text(message);
+        //        }
+        //        else if (response == "-1") {
+        //            $('#Commonerrormessage').text('Something went wrong please try again.....!');
+        //        }
+        //        loaddingimg.css('display', 'none');
+        //    }
+        //});
+
+
+        loaddingimg.css('display', 'none');
+    });
+
+
+
+
+
+    $('#btnPreview_').click(function (e) {
         $('#Commonerrormessage').text('');
         loaddingimg.css('display', 'block');
         debugger;
@@ -257,7 +1039,7 @@ else
             Studentids: selectedStudentids,
         }
         console.log('Collected Data:', collectedData);
-       
+
         var Subject = $('#Subjecttxtid').val();
         if (typeof collectedData === 'undefined') {
             $('#Commonerrormessage').text('Please select at least one student to send SMS or EMAIL.');
@@ -265,7 +1047,7 @@ else
             loaddingimg.css('display', 'none');
             return;
         }
-        if (Subject =='') {
+        if (Subject == '') {
             $('#Commonerrormessage').text('Please enter the text you want to send.');
             window.scrollTo(0, 0);
             loaddingimg.css('display', 'none');
@@ -293,7 +1075,7 @@ else
                 window.scrollTo(0, 500);
                 if (response == "1") {
                     //var message = '';
-                   
+
                     if (chksmsstudent.checked) {
                         message = 'Student SMS sent successfully';
                     } else if (chksmsparents.checked) {
@@ -340,6 +1122,7 @@ else
 
     // Select All functionality
     $("#chkCheckAll").change(function () {
+        debugger;
         const isChecked = $(this).is(":checked");
         $(".Userfeetypechk").prop("checked", isChecked);
     });
@@ -355,7 +1138,6 @@ else
         }
     });
 
-    //
     $(document).on('click', '#exportToExcelButton', function () {
 
         debugger;
@@ -388,21 +1170,21 @@ else
 
         // Adding necessary HTML tags for Excel file
         var htmlToExport = `
-                <html>
-                <head>
-                    <meta charset="utf-8">
-                    <style>
-                        table { border-collapse: collapse; }
-                        th, td { border: 1px solid black; padding: 8px; }
-                        th { background-color: lightblue; }
-                        td { background-color: #f2f2f2; }
-                    </style>
-                </head>
-                <body>
-                    ${combinedHtml}
-                </body>
-                </html>
-            `;
+                                <html>
+                                <head>
+                                    <meta charset="utf-8">
+                                    <style>
+                                        table { border-collapse: collapse; }
+                                        th, td { border: 1px solid black; padding: 8px; }
+                                        th { background-color: lightblue; }
+                                        td { background-color: #f2f2f2; }
+                                    </style>
+                                </head>
+                                <body>
+                                    ${combinedHtml}
+                                </body>
+                                </html>
+                            `;
 
         const blob = new Blob([htmlToExport], { type: 'application/vnd.ms-excel' });
         saveAs(blob, 'Reports.xls');

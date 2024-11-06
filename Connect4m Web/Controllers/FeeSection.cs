@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using Connect4m_Web.Views;
 using Connect4m_Web.Models;
 
+using Newtonsoft.Json;
+
 namespace Connect4m_Web.Controllers
 {
     [Authorize]
@@ -27,7 +29,9 @@ namespace Connect4m_Web.Controllers
         private readonly HttpClientFactory _httpClientFactory;
         HttpClient client;
         private readonly IUserService _userService;
-        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        //========================================================== //
+        //Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        //========================================================== //
         private readonly int UserId;
         private readonly int InstanceId;
         private readonly int InstanceClassificationId;
@@ -1460,6 +1464,7 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
+       
         //_PFU_FeeInstallments_BulkFeeUPDATE
         //_PFU_PaidAmount_Edit_SingleUser
         //_PFU_AmountPay_Recipt
@@ -1623,14 +1628,60 @@ namespace Connect4m_Web.Controllers
         }
         public IActionResult Bindfeestatustbl(Feestatus feestatus)
         {
+            int TotalCredits = 0;
+            int UsedCredits = 0;
+            int RemCredits = 0;
+
             ViewBag.ButtonName = null;
             feestatus.InstanceId = InstanceId;
             feestatus.CreatedBy = UserId;
-            List<Feestatusdetails> list = CommonMethodobj.CommonListMethod<Feestatus, Feestatusdetails>(feestatus, "/Getfeestatustable", client);
+            string Credits = GetCredits();
+
+            List<Feestatusdetails> list = 
+                CommonMethodobj.CommonListMethod<Feestatus, Feestatusdetails>(feestatus, "/Getfeestatustable", client);
+            
+            if (Credits != "0")
+            {
+                var parts = Credits.Split(new[] { ", " }, StringSplitOptions.None);
+                string limitPart = parts[0].Substring("Limit: ".Length);
+                string usedPart = parts[1].Substring("Used: ".Length);
+                UsedCredits = int.Parse(usedPart);
+                TotalCredits = int.Parse(limitPart);                
+                RemCredits = TotalCredits - UsedCredits;
+            }
+            ViewBag.TotalCredits = TotalCredits;
+            ViewBag.UsedCredits = UsedCredits;
+            ViewBag.RemCredits = RemCredits;
             ViewBag.ButtonName = feestatus.Actionbuttonvalue.ToUpper();
             ViewBag.ItemsCount = list.Count(); 
             return PartialView("_TableData_FeeStatus", list);
         }
+
+        [HttpPost]
+        public IActionResult Feestatuse_smsmailNotification([FromQuery] string[] SMSStudents,[FromQuery] string[] SMSParents,[FromQuery] string[]EmailStudents,[FromQuery] string[] EmailParents)
+        //public IActionResult Feestatuse_smsmailNotification(NotificationRequest request)
+        {
+            // Deserialize the JSON strings into objects
+            var smsStudentsList = new List<SmsStudent>();
+            var smsParentsList = new List<SmsStudent>();
+            var emailStudentsList = new List<EmailStudent>();
+            var emailParentsList = new List<EmailStudent>();
+
+            // Deserialize the JSON strings into your respective objects
+            var smsStudentsCount = SMSStudents?.Length ?? 0;
+            var smsParentsCount = SMSParents?.Length ?? 0;
+            var emailStudentsCount = EmailStudents?.Length ?? 0;
+            var emailParentsCount = EmailParents?.Length ?? 0;
+
+            //var smsStudentsCount = request.SMSStudents?.Count ?? 0;
+            //var smsParentsCount = request.SMSParents?.Count ?? 0;
+            //var emailStudentsCount = request.EmailStudents?.Count ?? 0;
+            //var emailParentsCount = request.EmailParents?.Count ?? 0;
+
+            return Json("1");
+            //return Json("An error occurred during the SMS sending process.");
+        }
+
 
         [HttpGet]
         public IActionResult FeeStatus_ByIndividual(string FeeTermId, string Studentid)
@@ -1977,6 +2028,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.CreatedBy = CreatedBy;
             return View();
         }
+        
         [HttpPost]
         public IActionResult A_ChallanGeneration(AutomaticChallanGeneration requestData)
         {
@@ -2003,9 +2055,8 @@ namespace Connect4m_Web.Controllers
                 Console.WriteLine($"Error: {ex.Message}");
                 return Json(new { success = false, error = ex.Message });
             }
-
-            //return View();
         }
+        
         public IActionResult View_Edit_Challan_ViewId()
         {
             return PartialView("_View_Edit_Challan_ViewId");
@@ -2025,9 +2076,7 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-
             return Json(item);
-
         }
 
         public IActionResult GetPrevious_FeeTerm(string InstanceId, string AcademicYearId)
@@ -2042,9 +2091,9 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-
             return Json(item);
         }
+        
         public IActionResult Need_to_be_set_GETTerms(string InstanceId)
         {
             //exec stp_tblFeeTerms_GETTermsByInstanceId_currentyear @InstanceId=545
@@ -2057,9 +2106,7 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-
             return Json(item);
-
         }
 
         public IActionResult InstanceSubclassification(string InstanceId)
@@ -2074,9 +2121,7 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-
             return Json(item);
-
         }
 
         public IActionResult PreviousFeeTypes(string InstanceId, string FeeTermId)
@@ -2091,10 +2136,9 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 item = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
-
             return Json(item);
-
         }
+        
         /*----==== DROPDOWNS DATA BIND ACTION METHOD CODE END ====----*/
 
         public IActionResult FeeUploadnew()
@@ -2252,7 +2296,12 @@ namespace Connect4m_Web.Controllers
             }
             return DropdownList;
         }
-
+                
+        public string GetCredits()
+        {
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"/GetCredits?InstanceId={InstanceId}&Createdby={UserId}").Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : string.Empty;
+        }
 
         //===>>> COMMON INSERT METHOD
         public string CommonInsertingMethod<T>(T obj, string WebApiMethodname)
@@ -2268,7 +2317,6 @@ namespace Connect4m_Web.Controllers
             var returnval1 = response.Content.ReadAsStringAsync().Result;
             return "0";
         }
-
         public string ConvertAmountToWords(decimal amount)
         {
 
@@ -2331,6 +2379,5 @@ namespace Connect4m_Web.Controllers
 
             return words;
         }
-
     }
 }

@@ -11,9 +11,13 @@
 }
 
 $(document).ready(function () {
+
+    $('#chkSelectAll').prop('checked', false);
+
     debugger;
     Bindddls();
 });
+
 function Bindddls() {
     loaddingimg.css('display', 'block');
     $.ajax({
@@ -77,6 +81,7 @@ function Bindddls() {
     });
     loaddingimg.css('display', 'none');
 }
+
 $('#Feetermsddl').on("change", function () {
     debugger;
     loaddingimg.css('display', 'block');
@@ -120,6 +125,7 @@ $('#Feetermsddl').on("change", function () {
         }
     });
 });
+
 function validatePriceInput() {
     var inputField = document.getElementById('Pricetxtid');
     var inputValue = inputField.value;
@@ -132,6 +138,7 @@ function validatePriceInput() {
         inputField.value = cleanedValue;
     }
 }
+
 function previouspages(url, data) {
     debugger;
     return new Promise((resolve, reject) => {
@@ -150,6 +157,7 @@ function previouspages(url, data) {
 }
 
 function submitForm(Buttonvalue) {
+    debugger;
     $('#PartialContainer').empty();
     loaddingimg.css('display', 'block');
     setTimeout(function () {
@@ -193,6 +201,8 @@ function submitForm(Buttonvalue) {
                 Price: Pricetxtid,
                 Actionbuttonvalue: Actionbuttonname,
             };
+            $('#PartialContainer').empty();
+
             //$.ajax({
             //    url: '/FeeSection/Bindfeestatustbl',
             //    data: formData,
@@ -208,8 +218,6 @@ function submitForm(Buttonvalue) {
             //    }
             //});
 
-
-
             CallToAjax('POST', "/FeeSection/Bindfeestatustbl", formData,
                 function (resp) {
                     debugger;
@@ -222,8 +230,11 @@ function submitForm(Buttonvalue) {
                 },
             );
         }
+
         loaddingimg.css('display', 'none');
+
     }, 50);
+
     loaddingimg.css('display', 'none');
 }
 
@@ -259,7 +270,7 @@ $("#chkSelectAll").change(function () {
     $(".Feetypechk").prop("checked", isChecked);
 });
 
- // Uncheck master checkbox if any individual checkbox is unchecked
+// Uncheck master checkbox if any individual checkbox is unchecked
 $(document).on('change', '.Feetypechk', function () {
     if (!$(this).is(":checked")) {
         $("#chkSelectAll").prop("checked", false);

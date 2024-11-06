@@ -73,7 +73,9 @@ namespace Connect4m_Web.Controllers
         }
        
 
-        //---this two methods are use many places so please dont touch 1.Get_SubClassificationNames_ByInstanceClassifications 2.Slot_by_subclassification
+        //---this two methods are used many places so please dont touch
+        //1.Get_SubClassificationNames_ByInstanceClassifications
+        //2.Slot_by_subclassification
         public IActionResult Get_SubClassificationNames_ByInstanceClassifications(string InstanceId, string InstanceClassificationId)
         {          
             List<SelectListItem> value1 = new List<SelectListItem>();
@@ -162,8 +164,7 @@ namespace Connect4m_Web.Controllers
               
         //empty method please check once delete this method
         public IActionResult SlotidBy_Student_Names(string InstanceClassificationId, string InstanceSubClassificationId, string RoleId)
-        {
-            //var instanceid = Request.Cookies["INSTANCEID"];
+        {           
             List<PostAttendance> value1 = new List<PostAttendance>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Slot_By_StudentNames?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&RoleId=" + RoleId).Result;
             if (response.IsSuccessStatusCode)
@@ -181,7 +182,28 @@ namespace Connect4m_Web.Controllers
         [HttpGet] 
         public IActionResult PostAttendance()
         {
+
             string roleName = Request.Cookies["RoleName"];
+            int TotalCredits = 0;
+            int UsedCredits = 0;
+            int RemCredits = 0;
+            string Credits = GetCredits();
+            
+
+            if (Credits != "0" && Credits !="")
+            {
+                var parts = Credits.Split(new[] { ", " }, StringSplitOptions.None);
+                string limitPart = parts[0].Substring("Limit: ".Length);
+                TotalCredits = int.Parse(limitPart);
+
+                string usedPart = parts[1].Substring("Used: ".Length);
+                UsedCredits = int.Parse(usedPart);
+
+                RemCredits = TotalCredits - UsedCredits;
+            }
+            ViewBag.TotalCredits = TotalCredits;
+            ViewBag.UsedCredits = UsedCredits;
+            ViewBag.RemCredits = RemCredits;
             ViewBag.rolename = roleName;
 
             return View();
@@ -464,6 +486,24 @@ namespace Connect4m_Web.Controllers
         public IActionResult FastAttendance()
         {
             string roleName = Request.Cookies["RoleName"];
+            int TotalCredits = 0;
+            int UsedCredits = 0;
+            int RemCredits = 0;
+            string Credits = GetCredits();
+            if (Credits != "0")
+            {
+                var parts = Credits.Split(new[] { ", " }, StringSplitOptions.None);
+                string limitPart = parts[0].Substring("Limit: ".Length);
+                TotalCredits = int.Parse(limitPart);
+
+                string usedPart = parts[1].Substring("Used: ".Length);
+                UsedCredits = int.Parse(usedPart);
+
+                RemCredits = TotalCredits - UsedCredits;
+            }
+            ViewBag.TotalCredits = TotalCredits;
+            ViewBag.UsedCredits = UsedCredits;
+            ViewBag.RemCredits = RemCredits;
             ViewBag.rolename = roleName;
             return View();
         }
@@ -1042,6 +1082,13 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
+
+     
+        public string GetCredits()
+        {
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"/GetCredits?InstanceId={InstanceId}&Createdby={UserId}").Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : string.Empty;
+        }
 
         public string CommonInsertingMethod<T>(T obj, string WebApiMethodname)
         {

@@ -343,7 +343,29 @@ namespace Connect4m_Web.Controllers
                     item = JsonConvert.DeserializeObject<studentstaffleaves>(data);
                 }
 
-                ViewBag.leavetypes = item.leavetypes;
+                // Clean LeaveType data by removing HTML tags
+                var cleanedLeaveTypes = item.leavetypes.Select(lt => RemoveHtmlTags(lt.LeaveType)).ToList();
+
+                // Clean LeaveType for each item in leavetypes using the RemoveHtmlTags function
+                var cleanedLeaveType = item.leavetypes.Select(lt => new leavetypes
+                {
+                    LeaveTypeId = lt.LeaveTypeId,
+                    ShortName = lt.ShortName,
+                    LeaveType = RemoveHtmlTags(lt.LeaveType), // Clean the LeaveType string
+                    ApplicableFor = lt.ApplicableFor,
+                    Total = lt.Total,
+                    DaysUsed = lt.DaysUsed,
+                    Approved = lt.Approved,
+                    InProcess = lt.InProcess,
+                    Available = lt.Available,
+                    AvailableLink = RemoveAnchorTags(lt.AvailableLink)
+                }).ToList();
+
+
+                // Pass the cleaned LeaveType list to the view
+                ViewBag.leavetypes = cleanedLeaveType;
+
+                //ViewBag.leavetypes = item.leavetypes;
                 ViewBag.studentstaffleavescount = item.studentstaffleavescount;
                 ViewBag.studentwithdrawal = item.studentwithdrawal;
                 ViewBag.leavestatus = item.leavestatus;
@@ -354,6 +376,50 @@ namespace Connect4m_Web.Controllers
                 int items = 0;
                 return Json(items);                             
             }
+        }
+        public string RemoveAnchorTags(string input)
+        {
+            // Regular expression to remove the <a> tag and nested <u> tag content.
+            string pattern = @"<a[^>]*>(.*?)<\/a>";
+
+            // Remove the anchor tags and the content inside it (preserving inner text).
+            string result = System.Text.RegularExpressions.Regex.Replace(input, pattern, "$1");
+
+            // Optionally remove any remaining tags such as <font>, <b>, <i>, etc.
+            result = System.Text.RegularExpressions.Regex.Replace(result, "<[^>]*?>", string.Empty);
+
+            return result;
+        }
+
+        // Function to remove HTML tags
+        private string RemoveHtmlTags(string input)
+        {
+            // Step 1: Remove <a> tags and everything inside them (including the <a> and </a> tags themselves)
+            string withoutAnchorTags = System.Text.RegularExpressions.Regex.Replace(input, @"<a[^>]*>.*?<\/a>", string.Empty);
+
+            // Step 2: Remove other HTML tags (e.g., <font>, <b>, <i>, etc.)
+            string withoutHtmlTags = System.Text.RegularExpressions.Regex.Replace(withoutAnchorTags, "<[^>]*?>", string.Empty);
+
+            // Step 3: Decode HTML entities (like &nbsp; to regular spaces)
+            string decoded = System.Web.HttpUtility.HtmlDecode(withoutHtmlTags);
+
+            // Step 4: Remove unwanted text like 'Lapsed: 1', including any leading/trailing spaces or newline characters
+            string cleaned = System.Text.RegularExpressions.Regex.Replace(decoded, @"\s*Lapsed\s*[:\r\n]*\s*\d*\s*", string.Empty);
+
+            // Optional: Further clean any extra spaces or newlines
+            cleaned = System.Text.RegularExpressions.Regex.Replace(cleaned, @"\s+", " ").Trim();
+
+            return cleaned;
+
+
+            //// Remove HTML tags
+            //string withoutHtmlTags = System.Text.RegularExpressions.Regex.Replace(input, "<[^>]*?>", string.Empty);
+
+            //// Decode HTML entities (e.g., &nbsp; becomes a space)
+            //string decoded = System.Web.HttpUtility.HtmlDecode(withoutHtmlTags);
+
+            //return decoded;
+            //return System.Text.RegularExpressions.Regex.Replace(input, "<[^>]*?>", string.Empty); // Regex to remove HTML tags
         }
         public IActionResult Absenteestudentsfortheday()
         {

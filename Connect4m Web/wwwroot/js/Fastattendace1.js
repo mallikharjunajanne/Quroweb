@@ -14,8 +14,6 @@
     $.ajax(ajaxOptions);
 }
 
-
-
 $(document).ready(function () {
 
     var Rolename = $('#FAROLENAMESPANID').val().toUpperCase();
@@ -66,7 +64,7 @@ function Classificationddlbind() {
 
 }
 function Slotsddlbind() {
-   // debugger;
+    debugger;
     $.ajax({
         url: '/Attendance/FastAttendancegetSlots',
         type: 'GET',
@@ -227,6 +225,3 @@ $("#Fastattendanceform").on('submit', function () {
     }, 50);
     loaddingimg.css('display', 'none');
 });
-
-
-

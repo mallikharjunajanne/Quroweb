@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-12 col-lg-12 mb-3">
             <div class="card mb-4">
-                <div class="card-header bg-danger text-white">FEE STATUS DETAILS</div>
+                <div class="card-header bg-danger text-white text-header">FEE STATUS DETAILS</div>
                 <div class="card-body">
                     <form id="Searchform" enctype="multipart/form-data">
                         <div class="row">
@@ -125,6 +125,7 @@
 
 <script>
     $("#InstanceClassificationId_DD").on("change", SendDepartmentid_BY_ClassDropdown);
+
     function SendDepartmentid_BY_ClassDropdown() {
         const INCselectedValue = $("#InstanceClassificationId_DD").val();
         //const Instanceid = $("#Instance_TxtId").val();
@@ -142,7 +143,9 @@
                 console.error("Error:", error);
             });
     }
+
     $('#AcademicYearId_DD').on("change", SendAcademicYearid_BY_FeetermDropdown)
+
     function SendAcademicYearid_BY_FeetermDropdown() {
         const AcademicYearId = $('#AcademicYearId_DD').val();
         //const InstanceId = $('#Instance_TxtId').val();
@@ -161,6 +164,7 @@
             });
 
     }
+
     $('#FeeTermId_DD').on("change", function () {
         /*debugger;*/
         const AcademicYearId = $('#AcademicYearId_DD').val();

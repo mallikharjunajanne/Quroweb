@@ -411,9 +411,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
     #endregion
 
     #region FEE STATUS
-    public class Feestatus:Commonproperties
+    public class Feestatus : Commonproperties
     {
-        [Required(ErrorMessage ="Role is required")]
+        [Required(ErrorMessage = "Role is required")]
         public int RoleId { get; set; }
         public int ClassificationId { get; set; }
         public int SubclassificationId { get; set; }
@@ -457,6 +457,26 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string FeeAmount { get; set; }
         public string FeeType { get; set; }
     }
+
+    public class NotificationRequest
+    {
+        public List<SmsStudent> SMSStudents { get; set; }
+        public List<SmsStudent> SMSParents { get; set; }
+        public List<EmailStudent> EmailStudents { get; set; }
+        public List<EmailStudent> EmailParents { get; set; }
+    }
+    public class SmsStudent
+    {
+        public string SMS { get; set; }
+        public string MobileNumber { get; set; }
+    }    
+    public class EmailStudent
+    {
+        public string SMS { get; set; }
+        public string StudentEmail { get; set; }
+    }
+    
+
     public class RequestedDataModel:Commonproperties
     {
         public string CollectedData { get; set; }

@@ -268,7 +268,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
             if (TCtakenCheckedValue === "1" && IsActiveCheckedValue === "1") {
 
                 $(".passwordfor").find('.ErrorMessageSpan').addClass('error2');
-                $(".passwordfor").find('.ErrorMessageSpan').text("Selected Criteria should be : Is Active as No and TC issued as Yes / Is Active as Yes and TC issued as as No.");
+                $(".passwordfor").find('.ErrorMessageSpan').text("Selected Criteria should be : Is Active as No and TC issued as Yes / Is Active as Yes and TC issued as No.");
                 loaddingimg.css('display', 'none');
                 return false;
 
@@ -284,7 +284,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
             if (TCtakenCheckedValue === "0" && IsActiveCheckedValue === "0") {
 
                 $(".passwordfor").find('.ErrorMessageSpan').addClass('error2');
-                $(".passwordfor").find('.ErrorMessageSpan').text("Selected Criteria should be : Is Active as No and TC issued as Yes / Is Active as Yes and TC issued as as No.");
+                $(".passwordfor").find('.ErrorMessageSpan').text("Selected Criteria should be : Is Active as No and TC issued as Yes / Is Active as Yes and TC issued as No.");
                 loaddingimg.css('display', 'none');
                 return false;
 

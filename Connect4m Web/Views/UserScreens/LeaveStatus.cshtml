@@ -82,6 +82,7 @@
                 {
                     <tr>
                         <td class="Waitingtbltrtd">@item_4.LeaveType</td>
+                       
                         <td class="Waitingtbltrtd">@item_4.FromDate</td>
                         <td class="Waitingtbltrtd">@item_4.ToDate</td>
                         <td class="Waitingtbltrtd">@item_4.LeaveDays</td>
@@ -113,19 +114,26 @@
 
             @{
                 var Countthree = ViewBag.leavetypes.Count;
+                // Define the function to remove HTML tags from a string
+                //string RemoveHtmlTags(string input)
+                //{
+                //    var output = System.Text.RegularExpressions.Regex.Replace(input, "<[^>]*?>", String.Empty);
+                //    return output;
+                //}
             }
             @if (Countthree != 0)
             {
                 @foreach (var item_2 in ViewBag.leavetypes)
                 {
-                    <tr>
-                        <td class="Waitingtbltrtd">@item_2.LeaveType</td>
-                        <td class="Waitingtbltrtd">@item_2.Total</td>
-                        <td class="Waitingtbltrtd">@item_2.DaysUsed</td>
-                        <td class="Waitingtbltrtd">@item_2.Approved</td>
-                        <td class="Waitingtbltrtd">@item_2.InProcess</td>
-                        <td class="Waitingtbltrtd">@item_2.Available</td>
-                    </tr>
+        <tr>
+            <td class="Waitingtbltrtd">@item_2.LeaveType</td>
+            @*<td class="Waitingtbltrtd">@RemoveHtmlTags(item_2.LeaveType)</td>*@
+            <td class="Waitingtbltrtd">@item_2.Total</td>
+            <td class="Waitingtbltrtd">@item_2.DaysUsed</td>
+            <td class="Waitingtbltrtd">@item_2.Approved</td>
+            <td class="Waitingtbltrtd">@item_2.InProcess</td>
+            <td class="Waitingtbltrtd">@item_2.Available</td>
+        </tr>
                 }
             }
             else

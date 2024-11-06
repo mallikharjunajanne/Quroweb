@@ -49,7 +49,7 @@ namespace Connect4m_Web.Controllers
             //  client = _httpClientFactory.CreateClient();
             _httpClientFactory = httpClientFactory;
             string apiBaseAddress = configuration["AppSettings:ApiBaseAddress"];
-           client = _httpClientFactory.CreateClient();
+            client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(apiBaseAddress + "/LMS");
 
             //=======================================================  Assigning the values ti=o the the private varible
@@ -64,16 +64,10 @@ namespace Connect4m_Web.Controllers
 
         }
 
-      
-
-
-
-
         //public int InstanceId = 515;
         //public int UserId = 217606;
         //public int RoleId = 4629;
         //public int StudentUserId = 29255;//-----Student Login
-
 
         public IActionResult Login()
         {
@@ -84,10 +78,8 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        //*********************************************************************     Learning Management System   *************
-
-        #region
-       
+        //############################### // LEARNING MANAGEMENT SYSTEM //############################### //
+        #region LEARNING MANAGEMENT SYSTEM 
 
         public IActionResult Chapter_wise_Video_playing()
         {
@@ -98,9 +90,7 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
-
-        //*********************    Getting  CLASS NAMES
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // GETTING CLASS NAMES  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GetClassnames(string ClassificationIds)
         {
             List<SelectListItem> Classlist = new List<SelectListItem>();
@@ -114,7 +104,8 @@ namespace Connect4m_Web.Controllers
 
             return Json(Classlist);
         }
-        //*********************    Getting SUBJECT NAMES
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // GETTING SUBJECY NAMES //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GetSubjectnames(string ClassificationIds, string InstanceSubClassificationId)
         {
             List<SelectListItem> Subjectlist = new List<SelectListItem>();
@@ -129,7 +120,7 @@ namespace Connect4m_Web.Controllers
             return Json(Subjectlist);
         }
 
-        //*********************    Getting SUBJECT  TOOL NAMES
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // GETTING SUBJECT TOOL NAMES //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GetSubjecttoolnames(string InstanceSubjectsId)
         {
             List<SelectListItem> Subjecttoollist = new List<SelectListItem>();
@@ -143,15 +134,14 @@ namespace Connect4m_Web.Controllers
 
             return Json(Subjecttoollist);
         }
-        //***********************************************   Upload Lecture Docs   
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // UPLOAD LECTURE DOCS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult UploadLecturedocs(int videoId)
         {
 
             try
             {
-
-
                 //*********************    Getting department
 
                 List<SelectListItem> Departmentlist = new List<SelectListItem>();
@@ -219,9 +209,6 @@ namespace Connect4m_Web.Controllers
             }
             // ViewBag.dropdownlist = "1215";
             return View();
-
-
-
         }
 
         [HttpPost]
@@ -331,7 +318,7 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        //***********************************************************  Upload Docs Only In  Lms Module
+        //***********************************************************  UPLOAD DOCS ONLY IN LMS MODULE 
         public IActionResult UploadDocsOnly(LMSVideoscs obj, string Duration, IFormFile UploadDocuments)
         {
             obj.InstanceId = InstanceId;
@@ -396,9 +383,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        //**********************************************  Search Upload Lecture Doc's
-
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // SEARCH UPLOAD LECTURE DOC'S //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult SearchUploadlecturedocs()
         {
             List<SelectListItem> Departmentlist = new List<SelectListItem>();
@@ -420,11 +405,10 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-
         public IActionResult SearchUploadlecturedocsjson(string ClassificationIds, string InstanceSubClassificationId, string InstanceSubjectsId, int IsVideoUploaded, string SubjectsToolId, int uploaded)
         {
             List<Uploaddocs> list = new List<Uploaddocs>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchUploadlecturedocs?InstanceId=" + InstanceId + "&ClassificationIds=" + ClassificationIds + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&InstanceSubjectsId=" + InstanceSubjectsId + "&IsVideoUploaded=" + IsVideoUploaded + "&InstanceSubjectsToolIds=" + SubjectsToolId + "&uploaded=" + uploaded+"&Createdby="+UserId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchUploadlecturedocs?InstanceId=" + InstanceId + "&ClassificationIds=" + ClassificationIds + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&InstanceSubjectsId=" + InstanceSubjectsId + "&IsVideoUploaded=" + IsVideoUploaded + "&InstanceSubjectsToolIds=" + SubjectsToolId + "&uploaded=" + uploaded + "&Createdby=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -433,15 +417,12 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
-
-
-
-        //-----------------------------------------------------------------------------------Delete Upload Lecture Docs
-        public IActionResult DeleteUploadlecturedocs(int VideoId,int isvideo)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // DELETE UPLOAD LECTURE DOCS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public IActionResult DeleteUploadlecturedocs(int VideoId, int isvideo)
 
         {
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DeleteUPloadlecturedocs?InstanceId=" + InstanceId + "&VideoId=" + VideoId + "&CreatedBy=" + UserId+ "&isvideo="+isvideo).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DeleteUPloadlecturedocs?InstanceId=" + InstanceId + "&VideoId=" + VideoId + "&CreatedBy=" + UserId + "&isvideo=" + isvideo).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -453,8 +434,6 @@ namespace Connect4m_Web.Controllers
 
             return Json(0);
         }
-
-
 
         public IActionResult OpenFile(string filename)
         {
@@ -520,10 +499,7 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
-
-        //***********************************************************************   View Lecture Docs
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // VIEW LECTURE DOCS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ViewLectureDocs()
         {
 
@@ -536,7 +512,7 @@ namespace Connect4m_Web.Controllers
 
             }
             int? Value = 0;
-            if (list.Count==0)// Added by arjun
+            if (list.Count == 0)// Added by arjun
             {
                 if (list[0].ViewLectureDocs.Count() > 0)
                 {
@@ -548,7 +524,7 @@ namespace Connect4m_Web.Controllers
                     Value = list[0].ViewLectureDocs2[0].InstanceClassificationId;
                 }
             }
-           
+
             //int Value = list[0].ViewLectureDocs[0].InstanceClassificationId;
             //HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/GetallViewvideopoints?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + list[0].ViewLectureDocs[0].InstanceClassificationId + "&InstanceSubClassificationId=" + 0 + "&SubjectId=" + 0).Result;
             HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/GetallViewvideopoints?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + Value + "&InstanceSubClassificationId=" + 0 + "&SubjectId=" + 0).Result;
@@ -575,8 +551,8 @@ namespace Connect4m_Web.Controllers
                 double averagePercentage = (sumOfPercentages / list3.Count);
 
 
-               // var val = (sumOfViewspoints / sumOfTotalpoints) * 100;
-                if(averagePercentage == 0 || double.IsNaN(averagePercentage))
+                // var val = (sumOfViewspoints / sumOfTotalpoints) * 100;
+                if (averagePercentage == 0 || double.IsNaN(averagePercentage))
                 {
                     ViewBag.GetallViewvideopoints = 0.00;
                 }
@@ -596,10 +572,7 @@ namespace Connect4m_Web.Controllers
 
         }
 
-
-
-        //***********************************************************************   View Lecture Docs Sub
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // VIEW LECTURE DOCS SUB //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ViewLectureDocsSub(int InstanceClassificationId, int InstanceSubClassificationId)
         {
 
@@ -615,8 +588,8 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        //***********************************************************************   View Lecture Docs Sub
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // VIEW LECTURE DOCS SUB //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ViewLectureDocsSubVideos(int InstanceClassificationId, int InstanceSubClassificationId, int SubjectId)
         {
             Response.Cookies.Append("VLD_InstanceClassificationId", InstanceClassificationId.ToString());
@@ -624,8 +597,8 @@ namespace Connect4m_Web.Controllers
             Response.Cookies.Append("VLD_SubjectId", SubjectId.ToString());
             //-------------  Gettting Vide o View Points
 
-           
-                List<ViewLectureDocsMainsub> list = new List<ViewLectureDocsMainsub>();
+
+            List<ViewLectureDocsMainsub> list = new List<ViewLectureDocsMainsub>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ViewLectureDocsSubVideos?InstanceId=" + InstanceId + "&UserId=" + StudentUserId + "&InstanceClassificationId=" + InstanceClassificationId + "&InstanceSubClassificationId=" + InstanceSubClassificationId + "&SubjectId=" + SubjectId).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -644,7 +617,7 @@ namespace Connect4m_Web.Controllers
 
                 string data2 = response2.Content.ReadAsStringAsync().Result;
                 list3 = JsonConvert.DeserializeObject<List<VideoViewpoints>>(data2);
-               // list2.GroupBy(item => item.SubjectVideoId); 
+                // list2.GroupBy(item => item.SubjectVideoId); 
 
 
 
@@ -661,8 +634,7 @@ namespace Connect4m_Web.Controllers
 
         }
 
-        //***********************************************************************   List of Chapters , Questions And Answers
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // LIST OF CHAPTERS , QUESTIONS AND ANSWERS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ListChaptersQuestionsAnswers(int SubjectVideoId, int type)
         {
 
@@ -677,7 +649,7 @@ namespace Connect4m_Web.Controllers
             {
                 //  ViewBag.pdfcheckvalue = "1215";
 
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PDFView?SubjectVideoId=" + SubjectVideoId + "&InstanceId=" + InstanceId+"&Createdby="+UserId).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/PDFView?SubjectVideoId=" + SubjectVideoId + "&InstanceId=" + InstanceId + "&Createdby=" + UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -707,8 +679,10 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        //----------------------------------------------------------------------------------------------------  Insering REsults In Video Playing
-        #region
+       
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // INSERTING RESULTS IN VIDEO PLAYING //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        #region INSERTING RESULTS IN VIDEO PLAYING
+
         public IActionResult ResultsInserting(int SubjectVideoId, int TotalQuestions, int NumberOfAttempts, string YourAnswer, string ActualAnswer, string DisplayName, string ActualMarks)
         {
             LMSQuRsults obj = new LMSQuRsults();
@@ -743,10 +717,12 @@ namespace Connect4m_Web.Controllers
             return Json(0);
 
         }
+
         #endregion
 
-        //----------------------------------------------------------------------------------------------------  Insering REsults In Video Playing
-        #region
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // INSERTING RESULTS IN VIDEO PLAYING //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        #region INSERTING RESULTS IN VIDEO PLAYING
+
         public int PdfsInserting(int SubjectVideoId, string PdfName, string PdfPath)
         {
             GeneratedPdfs obj = new GeneratedPdfs();
@@ -776,18 +752,12 @@ namespace Connect4m_Web.Controllers
             return 0;
 
         }
+
         #endregion
 
+        #region RESULTS SHOWS BY SUBJECTWISE
 
-
-
-
-
-
-
-        #region
-        //----------------------------------------------------------------------------------------------------  REsults Shows By SubjectWise
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // RESULTS SHOWS BY SUBJECTWISE //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GettingResults()
         {
             List<LMSQuRsults> list = new List<LMSQuRsults>();
@@ -813,20 +783,20 @@ namespace Connect4m_Web.Controllers
 
             return View(list);
         }
+       
         #endregion
 
 
-        //----------------------------------------------------------------------------------------------------  Insering Note In Video Playing
-
-        public IActionResult InsertingNotes( WriteaNotesInsering obj2)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // INSERTING NOTE IN VIDEO PLAYING //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public IActionResult InsertingNotes(WriteaNotesInsering obj2)
         {
             WriteaNotes obj = new WriteaNotes();
 
-            obj.TimeHours = obj2. TimeHours;
-            obj.TimeMinutes = obj2. TimeMinutes;
-            obj.TimeSeconds = obj2. TimeSeconds;
+            obj.TimeHours = obj2.TimeHours;
+            obj.TimeMinutes = obj2.TimeMinutes;
+            obj.TimeSeconds = obj2.TimeSeconds;
             obj.NotesId = obj2.NotesId;
-            obj.NotesDescription = obj2. NotesDescription;
+            obj.NotesDescription = obj2.NotesDescription;
             obj.UserId = UserId;
             obj.SubjectVideoId = obj2.subjectvideoid;
             obj.InstanceId = InstanceId;
@@ -848,8 +818,8 @@ namespace Connect4m_Web.Controllers
             return Json(0);
 
         }
-        //*************************************************************************    List Of Notes in Video playing
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // LIST OF NOTES IN VIDEO PLAYING //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ListofNotes(int SubjectVideoId)
         {
             List<WriteaNotes> list = new List<WriteaNotes>();
@@ -865,8 +835,8 @@ namespace Connect4m_Web.Controllers
 
             return View(list);
         }
-        //*************************************************************************    Delete Notes
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // DELETE NOTES //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult DeleteNotes(int NoteId)
         {
             WriteaNotes obj = new WriteaNotes();
@@ -893,8 +863,7 @@ namespace Connect4m_Web.Controllers
             return Json(0);
         }
 
-        //----------------------------------------------------- Convert To Pdf (notes)
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // CONVERT TO PDF (NOTES) //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GeneratePdf(int SubjectVideoId, string pdfdisplayname)
         {
             string classname = Request.Cookies["VLD_ClassificationName"];
@@ -947,8 +916,7 @@ namespace Connect4m_Web.Controllers
             return File(pdfBytes, "application/pdf", pdfdisplayname + ".pdf");
         }
 
-        //****************************************************  Getting All Pdf's
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // GETTING ALL PDF'S //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ListofPdfs()
         {
             //  GeneratedPdfs obj = new GeneratedPdfs();
@@ -971,51 +939,47 @@ namespace Connect4m_Web.Controllers
             return View(list);
         }
 
-        //****************************************************  Insering View Points
-
-        public IActionResult InsertVideoVewpoins(int SubjectVideoId,double Viewspoints,double TotalPoins,int ChapterId)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // INSERTING VIEW POINTS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public IActionResult InsertVideoVewpoins(int SubjectVideoId, double Viewspoints, double TotalPoins, int ChapterId)
         {
             try
             {
-                
-           
-            VideoViewpoints obj = new VideoViewpoints();
 
-            obj.InstanceId = InstanceId;
-            obj.StudentUserId = StudentUserId;
-            obj.UserId = UserId;
-            obj.InstanceClassificationId = Convert.ToInt32(Request.Cookies["VLD_InstanceClassificationId"]);
-            obj.InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["VLD_InstanceSubClassificationId"]);
-            obj.SubjectId = Convert.ToInt32(Request.Cookies["VLD_SubjectId"]);
-            obj.SubjectVideoId = SubjectVideoId;
-            obj.Viewspoints =Convert.ToInt32( Viewspoints);
-            obj.TotalPoins = Convert.ToInt32(TotalPoins);
-            obj.ChapterId = ChapterId;
 
-          //  List<GeneratedPdfs> list = new List<GeneratedPdfs>();
-            string jsonData = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/InsertVideoVewpoins", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-               int  list = JsonConvert.DeserializeObject<int>(data);
-                return Json(list);
+                VideoViewpoints obj = new VideoViewpoints();
 
-            }
+                obj.InstanceId = InstanceId;
+                obj.StudentUserId = StudentUserId;
+                obj.UserId = UserId;
+                obj.InstanceClassificationId = Convert.ToInt32(Request.Cookies["VLD_InstanceClassificationId"]);
+                obj.InstanceSubClassificationId = Convert.ToInt32(Request.Cookies["VLD_InstanceSubClassificationId"]);
+                obj.SubjectId = Convert.ToInt32(Request.Cookies["VLD_SubjectId"]);
+                obj.SubjectVideoId = SubjectVideoId;
+                obj.Viewspoints = Convert.ToInt32(Viewspoints);
+                obj.TotalPoins = Convert.ToInt32(TotalPoins);
+                obj.ChapterId = ChapterId;
+
+                //  List<GeneratedPdfs> list = new List<GeneratedPdfs>();
+                string jsonData = JsonConvert.SerializeObject(obj);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/InsertVideoVewpoins", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = response.Content.ReadAsStringAsync().Result;
+                    int list = JsonConvert.DeserializeObject<int>(data);
+                    return Json(list);
+
+                }
                 return Json(0);
             }
             catch
             {
                 return Json(0);
             }
-           
+
         }
 
-
-
-
-        //**********************************************  Course content
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // COURSE CONTENT //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult Coursecontents()
         {
@@ -1074,21 +1038,14 @@ namespace Connect4m_Web.Controllers
             //return View(list);
         }
 
-
-
-        //**********************************************  Creat Notes
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // CREATE NOTES //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult Createnotes()
         {
             return View();
         }
 
-
-
-
-
-        //**********************************************  Manage Subject Tools For Searching Option
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // MANAGE SUBJECT TOOLS FOR SEARCHING OPTIONS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult Insertsubjecttool(int InstanceSubjectToolId)
 
@@ -1109,6 +1066,7 @@ namespace Connect4m_Web.Controllers
             }
             return View();
         }
+
         [HttpPost]
         public IActionResult Insertsubjecttool(Managesubjecttools obj, int update)
         {
@@ -1150,8 +1108,8 @@ namespace Connect4m_Web.Controllers
 
 
         }
-        //----------------------------------------------------------------------    Mana    ge subject Tools
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // MANAGE SUBJECT TOOLS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult Managesubjecttools()
         {
@@ -1187,8 +1145,7 @@ namespace Connect4m_Web.Controllers
         }
 
 
-        //********************************************************************************************    Manage subjects  --------------------
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // MANAGE SUBJECTS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         [HttpGet]
         public IActionResult Managesubjects()
         {
@@ -1204,8 +1161,8 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        //-------------------------------------------------------------------------  Getting Class Name For Manage Subjects
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // GETTING CLASS NAME FOR MANAGE SUBJECTS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult GetClassfor_MS(string InstanceClassificationId)
         {
             List<SelectListItem> Subjecttoollist = new List<SelectListItem>();
@@ -1220,8 +1177,7 @@ namespace Connect4m_Web.Controllers
             return Json(Subjecttoollist);
         }
 
-        //--------------------------------------------------------------------------------------------------------   Search Manage Subjects
-
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // SEARCH MANAGE SUBJECTS //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult Searchsubjects(string SubjectName, string SubjectCode, int ClassificationId, int SubClassificationId)
 
         {
@@ -1236,6 +1192,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
+        
         public IActionResult UpdateManageSubjects()
         {
             List<SubClassifications> list = new List<SubClassifications>();
@@ -1249,6 +1206,7 @@ namespace Connect4m_Web.Controllers
 
             return View(list);
         }
+        
         public IActionResult Subclassfications_MS(int InstanceClassificationId)
         {
             string RoleName = "TEACHER,CLASS TEACHER";
@@ -1301,16 +1259,17 @@ namespace Connect4m_Web.Controllers
             return View(viewModel);
 
         }
+
         #endregion
 
-        //*************************************************************   Simple Expense Management   **************************
+        //############################### // SIMPLE EXPENSE MANAGEMENT //############################### //
 
-      public SEMproperitesSub GettingAcademicFees(int FinancialYearId)
+        public SEMproperitesSub GettingAcademicFees(int FinancialYearId)
         {
             //------------------------------------------------------   Getting Remaing Fees and     Fees Collected
 
             SEMproperitesSub list2 = new SEMproperitesSub();
-            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/Feeremainingamount?InstanceId=" + InstanceId + "&FinancialYearId=" + FinancialYearId).Result;
+            HttpResponseMessage response2 = client.GetAsync(client.BaseAddress + "/Feeremainingamount?InstanceId=" + InstanceId + "&FinancialYearId=" + FinancialYearId + "&CreatedBy=" + UserId).Result;
             if (response2.IsSuccessStatusCode)
             {
                 string data = response2.Content.ReadAsStringAsync().Result;
@@ -1320,23 +1279,21 @@ namespace Connect4m_Web.Controllers
             return list2;
         }
 
-
-
         public IActionResult SimpleExpenseManagement()
         {
             //------------------------------------------------------   Getting Found Source Names
             Commonclass obj = new Commonclass();
             ViewBag.Years = obj.GetYears();
             List<SelectListItem> list1 = new List<SelectListItem>();
-            HttpResponseMessage response1 = client.GetAsync(client.BaseAddress + "/Foundsourcename?InstanceId=" + InstanceId ).Result;
+            HttpResponseMessage response1 = client.GetAsync(client.BaseAddress + "/Foundsourcename?InstanceId=" + InstanceId).Result;
             if (response1.IsSuccessStatusCode)
             {
                 string data = response1.Content.ReadAsStringAsync().Result;
                 list1 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-              
+
             }
             ViewBag.FoundSource = list1;
-           
+
 
             // ----------------------                                 getting  Payment Mode
 
@@ -1352,12 +1309,12 @@ namespace Connect4m_Web.Controllers
 
             // ----------------------                            getting  Academic Years
             List<SelectListItem> list4 = new List<SelectListItem>();
-            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/AcademicYear?InstanceId="+ InstanceId).Result;
+            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/AcademicYear?InstanceId=" + InstanceId).Result;
             if (response4.IsSuccessStatusCode)
             {
                 string data = response4.Content.ReadAsStringAsync().Result;
                 list4 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
-            
+
             }
             ViewBag.FinancialYear = list4;
 
@@ -1398,12 +1355,12 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
-        // ----------------------   Search All Gov Found Recieved
-
-        public IActionResult SearchtblGovFundRecieved( int FundRecievedFromId, /*int FinancialYearId,*/ double Amount, int PaymentModeId, int YearId, int MonthId, string VendorName, string VendorCategory,string Paymentdate,string Approvals )
+        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // SEARCH ALL GOV FOUND RECIEVED //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public IActionResult SearchtblGovFundRecieved(int FundRecievedFromId, /*int FinancialYearId,*/ double Amount, int PaymentModeId, int YearId, int MonthId, string VendorName, string VendorCategory, string Paymentdate, string Approvals)
         {
             //------------------------------------------------------   Getting Remaing Fees and     Fees Collected
-            if(Approvals== "undefined")
+            if (Approvals == "undefined")
             {
                 Approvals = null;
             }
@@ -1414,7 +1371,7 @@ namespace Connect4m_Web.Controllers
             //int FinancialYearId = 3007;
 
             List<SEMtblGovFundRecieved> list = new List<SEMtblGovFundRecieved>();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchtblGovFundRecieved?InstanceId=" + InstanceId + "&FundRecievedFromId=" + FundRecievedFromId+ "&FinancialYearId="+ FinancialYearId + "&Amount="+ Amount+ "&PaymentModeId="+ PaymentModeId+ "&YearId="+ YearId+ "&MonthId="+ MonthId + "&VendorName="+ VendorName+ "&VendorCategory="+ VendorCategory + "&PaymentDate=" + Paymentdate+ "&Approvals="+Approvals).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/SearchtblGovFundRecieved?InstanceId=" + InstanceId + "&FundRecievedFromId=" + FundRecievedFromId + "&FinancialYearId=" + FinancialYearId + "&Amount=" + Amount + "&PaymentModeId=" + PaymentModeId + "&YearId=" + YearId + "&MonthId=" + MonthId + "&VendorName=" + VendorName + "&VendorCategory=" + VendorCategory + "&PaymentDate=" + Paymentdate + "&Approvals=" + Approvals).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -1424,8 +1381,8 @@ namespace Connect4m_Web.Controllers
             return Json(list);
         }
 
-        //---------------------------------------------------  Add New Type Of expenditure
-        public IActionResult AddExpenditure(int GovFundId,int partial)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // ADD NEW TYPE OF EXPENDITURE //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        public IActionResult AddExpenditure(int GovFundId, int partial)
         {
             //------------------------------------------------------   Getting Found Source Names
 
@@ -1475,13 +1432,13 @@ namespace Connect4m_Web.Controllers
             }
             ViewBag.Vendorcategory = list6;
 
-            if (GovFundId !=0)
+            if (GovFundId != 0)
             {
-            
-                HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/ListUpdateExpenditure?InstanceId=" + InstanceId+ "&GovFundId="+GovFundId+ "&CreatedBy="+UserId).Result;
+
+                HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/ListUpdateExpenditure?InstanceId=" + InstanceId + "&GovFundId=" + GovFundId + "&CreatedBy=" + UserId).Result;
                 if (response4.IsSuccessStatusCode)
                 {
-                  
+
                     string data = response4.Content.ReadAsStringAsync().Result;
                     SEMtblGovFundRecieved list4 = JsonConvert.DeserializeObject<SEMtblGovFundRecieved>(data);
                     //     var cheqdate=  Convert.ToDateTime(list4.ChequeDDDate);
@@ -1497,6 +1454,7 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
+       
         [HttpPost]
         public IActionResult AddExpenditure(SEMtblGovFundRecieved obj, IFormFile DocName)
         {
@@ -1547,25 +1505,30 @@ namespace Connect4m_Web.Controllers
 
             return Json(0);
         }
-        ////----------------------------------------------  Delete Expenditure 
+       
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // DELETE EXPENDITURE //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// 
         public IActionResult DeleteExpenditure(int GovFundId)
         {
-          
-            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/DeleteExpenditure?InstanceId=" + InstanceId + "&GovFundId=" + GovFundId+ "&CreatedBy="+UserId).Result;
+
+            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/DeleteExpenditure?InstanceId=" + InstanceId + "&GovFundId=" + GovFundId + "&CreatedBy=" + UserId).Result;
             if (response4.IsSuccessStatusCode)
             {
 
                 string data = response4.Content.ReadAsStringAsync().Result;
                 int list4 = JsonConvert.DeserializeObject<int>(data);
-               
+
                 return Json(list4);
             }
 
 
             return Json(0);
         }
-        #region
-        //----------------------------------------------------- Admin Approvls By     Simple Expenive Management   
+
+
+        //############################### // SIMPLE EXPENSIVE MANAGEMENT //############################### //
+        #region SIMPLE EXPENSIVE MANAGEMENT
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // Admin Approvls By     Simple Expenive Management //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//   
         public IActionResult AdminApprovals()
         {
 
@@ -1621,11 +1584,10 @@ namespace Connect4m_Web.Controllers
 
         }
 
-
-        public IActionResult SEMAdminApprovals(int GovFundId,int Approvals,string AprovalDescription)
+        public IActionResult SEMAdminApprovals(int GovFundId, int Approvals, string AprovalDescription)
         {
 
-            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/SEMAdminApprovals?InstanceId=" + InstanceId + "&GovFundId=" + GovFundId + "&Approvals=" + Approvals+ "&AprovalDescription="+ AprovalDescription).Result;
+            HttpResponseMessage response4 = client.GetAsync(client.BaseAddress + "/SEMAdminApprovals?InstanceId=" + InstanceId + "&GovFundId=" + GovFundId + "&Approvals=" + Approvals + "&AprovalDescription=" + AprovalDescription).Result;
             if (response4.IsSuccessStatusCode)
             {
 
@@ -1641,7 +1603,7 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult GetApprovalComments(int GovFundId)
         {
-            string[] Parameters = new string[] { InstanceId.ToString() ,GovFundId.ToString()};
+            string[] Parameters = new string[] { InstanceId.ToString(), GovFundId.ToString() };
             List<SelectListItem> DropdownList = new List<SelectListItem>();
             CommonDropdown obj = new CommonDropdown();
             obj.procedurename = "GetApprovalComments";
@@ -1659,12 +1621,15 @@ namespace Connect4m_Web.Controllers
             return Json(DropdownList);
 
         }
-        //---------------------------------------------------       Simple Expensive  Report
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ // Simple Expensive  Report //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         public IActionResult ExpensiveReport()
         {
             return View();
         }
-        public IActionResult ExpensiveReportList(string Approval,DateTime FromDate, DateTime Todate, string ExpenditureType)
+
+        public IActionResult ExpensiveReportList(string Approval, DateTime FromDate, DateTime Todate, string ExpenditureType)
         {
             ExpensiveReport list = new ExpensiveReport();
 
@@ -1693,7 +1658,7 @@ namespace Connect4m_Web.Controllers
             {
 
                 string data = response4.Content.ReadAsStringAsync().Result;
-                 list = JsonConvert.DeserializeObject<ExpensiveReport>(data);
+                list = JsonConvert.DeserializeObject<ExpensiveReport>(data);
 
                 return Json(list);
             }
@@ -1703,9 +1668,5 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
-
-
-
     }
-
 }

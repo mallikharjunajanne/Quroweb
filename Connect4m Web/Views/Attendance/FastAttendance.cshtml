@@ -15,7 +15,10 @@
             <span id="ErrorMessage" class="text-danger text-validation"></span>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">SEARCH FOR STUDENTS<small>* INDICATES MANDATORY FIELD</small></div>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        SEARCH FOR STUDENTS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
+                    </div>
                     <div class="card-body">
                         <form id="Fastattendanceform" enctype="multipart/form-data">
                             <input type="hidden" id="FAROLENAMESPANID" value="@ViewBag.rolename" />
@@ -37,9 +40,13 @@
                                                 <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <label asp-for="InstanceClassificationId" class="control-label col-sm-2 col-form-label text-end required space">Total Credits</label>
+                                        <label class="control-label col-sm-2 col-form-label text-end space">
+                                            Total Credits
+                                        </label>
                                         <div class="col-sm-2">
-                                            <span class="text-danger">2562</span>
+                                            <label class="text-danger control-label col-form-label text-end " id="Totallimit">
+                                                @ViewBag.TotalCredits
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -51,9 +58,13 @@
                                                 <span asp-validation-for="InstanceSubClassificationId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <label class="control-label col-sm-2 col-form-label text-end required space">Used Credits</label>
+                                        <label class="control-label col-sm-2 col-form-label text-end space">
+                                            Used Credits
+                                        </label>
                                         <div class="col-sm-2">
-                                            <span class="text-danger">2562</span>
+                                            <label class="text-danger control-label col-form-label text-end " id="Used">
+                                                @ViewBag.UsedCredits
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -66,14 +77,20 @@
                                             </div>
                                         </div>
 
-                                        <label class="control-label col-sm-2 col-form-label text-end required space">Remaining Credits</label>
+                                        <label class="control-label col-sm-2 col-form-label text-end space">
+                                            Remaining Credits
+                                        </label>
                                         <div class="col-sm-2">
-                                            <span class="text-danger">2562</span>
+                                            <label class="text-danger control-label col-form-label text-end">
+                                                @ViewBag.RemCredits
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="row justify-content text-center">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="btnSearch">Get Attendance Form</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="btnSearch">
+                                                Get Attendance Form
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

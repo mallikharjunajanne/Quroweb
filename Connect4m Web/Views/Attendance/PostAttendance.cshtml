@@ -25,7 +25,9 @@
                             <input type="hidden" id="ROLENAMESPANID" value="@ViewBag.rolename" />
                             <div id="Admin_Lg_Div_id">
                                 <div class="row mb-3">
-                                    <label asp-for="StartDate" id="RlStartdate" class="control-label col-sm-3 col-form-label text-end required space">StartDate</label>
+                                    <label asp-for="StartDate" id="RlStartdate" class="control-label col-sm-3 col-form-label text-end required space">
+                                        StartDate
+                                    </label>
                                     <div class="col-sm-4">
                                         <input type="date" id="StartDateid" asp-for="StartDate" class="form-control">
                                         <span id="Roldisplaydate" class="form-control" style="display:none;"></span>
@@ -33,7 +35,9 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3" id="Rlenddate">
-                                    <label asp-for="EndDate" class="control-label col-sm-3 col-form-label text-end required space">EndDate </label>
+                                    <label asp-for="EndDate" class="control-label col-sm-3 col-form-label text-end required space">
+                                        EndDate
+                                    </label>
                                     <div class="col-sm-4">
                                         <input type="date" id="EndDateid" asp-for="EndDate" class="form-control">
                                         <span asp-validation-for="EndDate" class="text-danger"></span>
@@ -41,7 +45,9 @@
                                 </div>
 
                                 <div class="row mb-3" id="Rldepartment">
-                                    <label asp-for="InstanceClassificationId" class="control-label col-sm-3 col-form-label text-end required space">Department</label>
+                                    <label asp-for="InstanceClassificationId" class="control-label col-sm-3 col-form-label text-end required space">
+                                        Department
+                                    </label>
                                     <div class="col-sm-4">
                                         <div class="position-relative">
                                             <select class="select2 form-select select2-hidden-accessible" id="Ddldepartment" asp-for="InstanceClassificationId">
@@ -50,12 +56,18 @@
                                         </div>
                                     </div>
 
-                                    <label class="control-label col-sm-3 col-form-label text-end space">Total Credits </label>
-                                    <label class="control-label col-sm-2 col-form-label text-danger">1795561.0</label>
-                                    
+                                    <label class="control-label col-sm-3 col-form-label text-end space">
+                                        Total Credits
+                                    </label>
+                                    <label class="control-label col-sm-2 col-form-label text-danger">
+                                        @ViewBag.TotalCredits
+                                    </label>
+
                                 </div>
                                 <div class="row mb-3" id="Rlclass">
-                                    <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-3 col-form-label text-end required space">Class</label>
+                                    <label asp-for="InstanceSubclassificaitionId" class="control-label col-sm-3 col-form-label text-end required space">
+                                        Class
+                                    </label>
                                     <div class="col-sm-4">
                                         <div class="position-relative">
                                             <select class="select2 form-select select2-hidden-accessible" id="DdlSubClass" asp-for="InstanceSubclassificaitionId">
@@ -64,8 +76,12 @@
                                         </div>
                                     </div>
 
-                                    <label class="control-label col-sm-3 col-form-label text-end space">Used Credits </label>
-                                    <label class="control-label col-sm-2 col-form-label text-danger">1794778.0</label>
+                                    <label class="control-label col-sm-3 col-form-label text-end space">
+                                        Used Credits
+                                    </label>
+                                    <label class="control-label col-sm-2 col-form-label text-danger">
+                                        @ViewBag.UsedCredits
+                                    </label>
                                 </div>
 
                                 <div class="row mb-3">
@@ -78,8 +94,12 @@
                                         </div>
                                     </div>
 
-                                    <label class="control-label col-sm-3 col-form-label text-end space">Remaining Credits </label>
-                                    <label class="control-label col-sm-2 col-form-label text-danger">783</label>
+                                    <label class="control-label col-sm-3 col-form-label text-end space">
+                                        Remaining Credits
+                                    </label>
+                                    <label class="control-label col-sm-2 col-form-label text-danger">
+                                        @ViewBag.RemCredits
+                                    </label>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="control-label col-sm-3 col-form-label text-end"></label>
