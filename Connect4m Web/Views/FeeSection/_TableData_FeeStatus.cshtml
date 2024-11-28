@@ -758,7 +758,7 @@ else
                             // Create a new row
                             let NewParentsEmailRow = `<tr>
                                         <td>${intCount4 + 1}</td>
-                                        <td>${EmailstEmailstringParentsringStudents}</td>
+                                        <td>${EmailstringParents}</td>
                                         <td>${ParentEMail}</td>
                                       </tr>`;
 
@@ -918,30 +918,48 @@ else
             SMSParents: SMSParentsRowData,
             EmailStudents: EmailStudentsRowData,
             EmailParents: EmailParentsRowData
-        };
-        //let formData = new FormData();
-        //formData.append('SMSStudents', JSON.stringify(SMSStudentsRowData));
-        //formData.append('SMSParents', JSON.stringify(SMSParentsRowData));
-        //formData.append('EmailStudents', JSON.stringify(EmailStudentsRowData));
-        //formData.append('EmailParents', JSON.stringify(EmailParentsRowData));
-
-
+       };
+     
         let SMSStudentsRowDatas = JSON.stringify(SMSStudentsRowData);
         let SMSParentsRowDatas = JSON.stringify(SMSParentsRowData);
         let EmailStudentsRowDatas = JSON.stringify(EmailStudentsRowData);
         let EmailParentsRowDatas = JSON.stringify(EmailParentsRowData);
 
         // Construct the query string
-        let queryString = `SMSStudents=${SMSStudentsRowData.map(s => encodeURIComponent(s)).join('&SMSStudents=')}&` +
-            `SMSParents=${SMSParentsRowData.map(s => encodeURIComponent(s)).join('&SMSParents=')}&` +
-            `EmailStudents=${EmailStudentsRowData.map(s => encodeURIComponent(s)).join('&EmailStudents=')}&` +
-            `EmailParents=${EmailParentsRowData.map(s => encodeURIComponent(s)).join('&EmailParents=')}`;
+        let queryString = `SMSStudents=${encodeURIComponent(SMSStudentsRowDatas)}&` +
+            `SMSParents=${encodeURIComponent(SMSParentsRowDatas)}&` +
+            `EmailStudents=${encodeURIComponent(EmailStudentsRowDatas)}&` +
+            `EmailParents=${encodeURIComponent(EmailParentsRowDatas)}`;
 
+        //let queryString = `SMSStudents=${SMSStudentsRowData.map(s => encodeURIComponent(s)).join('&SMSStudents=')}&` +
+        //    `SMSParents=${SMSParentsRowData.map(s => encodeURIComponent(s)).join('&SMSParents=')}&` +
+        //    `EmailStudents=${EmailStudentsRowData.map(s => encodeURIComponent(s)).join('&EmailStudents=')}&` +
+        //    `EmailParents=${EmailParentsRowData.map(s => encodeURIComponent(s)).join('&EmailParents=')}`;
+
+
+        var data = {
+            Parentmail: EmailParentsRowData,
+            _Parentsms: SMSParentsRowData,
+            _Studentmail: EmailStudentsRowData,
+            _Studentsms: SMSStudentsRowData
+
+
+            //_Studentsms: SMSStudentsRowData,
+            //_Parentsms: SMSParentsRowData,
+            //_Studentmail: EmailStudentsRowData,
+            //_Parentmail: EmailParentsRowData
+        };
+
+        // Debugging the data before sending
+        console.log("Sending data:", JSON.stringify(data));
         debugger;
         $.ajax({
-            url: '/FeeSection/Feestatuse_smsmailNotification?' + queryString,
+            //url: '/FeeSection/Feestatuse_smsmailNotification?' + queryString,
+            url: '/FeeSection/Feestatuse_smsmailNotification',
             method: 'POST',
             contentType: 'application/x-www-form-urlencoded',
+            //contentType: 'application/json',  // JSON payload
+            data: JSON.stringify(data),  // Convert data object to JSON string
             success: function (response) {
                 // Handle the response
                 var message = '';

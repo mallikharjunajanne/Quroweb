@@ -782,6 +782,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Userstatusvalue { get; set; }
             public string DOJ { get; set; }
             public string UserStatus { get; set; }
+            public string AdmNo { get; set; }
         }
         public class Admissionsummaryreport : Admissionreport
         {

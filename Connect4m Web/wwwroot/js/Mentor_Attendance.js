@@ -21,7 +21,7 @@ var Attendanceformdate;
 
 $("#Serach_MA").submit(function (event) {
     event.preventDefault();
-    //debugger;
+    debugger;
    // alert("hii");
     $(".errorofallemployeeattendence").text("");
 
@@ -150,12 +150,116 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                         data: "Columns",
                         render: function (data, type, row, meta) {
                             var checkboxcheck = row.columns[k] == "1";
-                            if (row.columns[k] == "") {
-                                $("#tblMAsearchresults thead tr").find('th:eq(' + (4 + k) + ')').css('color', 'red');
+                            //if (row.columns[k] == "") {
+                            //    $("#tblMAsearchresults thead tr").find('th:eq(' + (4 + k) + ')').css('color', 'red');
+
+                            //    //---START
+                            //    return '<select class="select2 form-select select2-hidden-accessible">' +
+                            //        '<option value="option1">Option 1</option>' +
+                            //        '<option value="option2">Option 2</option>' +
+                            //        '<option value="option3">Option 3</option>' +
+                            //        '</select>';
+                            //    //---END
+                            //}
+                            //return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + '  ' + (checkboxcheck ? 'checked' : ' ') + ' />';
+                            //New code Start Here
+
+                            // Handle the case when row.columns[k] is an empty string or "0" - checkbox is unchecked
+                            if (row.columns[k] == "" || row.columns[k] == "0") {
+                                $("#tblMAsearchresults thead tr").find('th:eq(' + (4 + k) + ')').css('color', 'red');  // Optional, style the header
+
+                                // Return the checkbox, unchecked
+                                return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + ' />';
                             }
+                            // Handle the case when row.columns[k] is "1" - checkbox is checked
+                            else if (row.columns[k] == "1") {
+                                return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + ' checked />';
+                            }
+                            // Handle the case when row.columns[k] is a number (not "", "0", or "1") - show a dropdown
+                            else {
+                               
+
+                                // Create the dropdown element
+                                var dropdownHtml = '<select class="select2 form-select select2-hidden-accessible" id="dropdown-' + meta.row + '-' + meta.col + '">';
+
+                                // Initial dropdown placeholder HTML
+                                dropdownHtml += '<option value="">Loading...</option>'; // Add a default option while loading
+
+                                // Insert the loading dropdown into the cell immediately
+                                $('#dropdown-' + meta.row + '-' + meta.col).closest('td').html(dropdownHtml);
+                                // Ajax request to fetch data for dropdown options
+                                $.ajax({
+                                    url: '/Rolewise/Getstaffleavetypesddl',  // Replace with your API endpoint
+                                    type: 'GET',  // You can change this to 'POST' if needed
+                                    success: function (response) {
+                                        // Assuming the response is an array of options
+                                        var finalDropdownHtml = '<select class=" " id="dropdown-' + meta.row + '-' + meta.col + '">';
+
+                                        // Add options to the dropdown from the response
+                                        response.forEach(function (option) {
+                                            // Check if the value of row.columns[k] matches the option value
+                                            var selected = (row.columns[k] == option.value) ? 'selected' : '';
+
+                                            // Append the option to the dropdown, marking it as selected if the condition is met
+                                            finalDropdownHtml += '<option value="' + option.value + '" ' + selected + '>' + option.text + '</option>';
+                                        });
+
+                                        // Close the select tag after appending options
+                                        finalDropdownHtml += '</select>';
+
+                                        // After appending options, update the dropdown HTML in the cell
+                                        $('#dropdown-' + meta.row + '-' + meta.col).closest('td').html(finalDropdownHtml);
+
+                                        // Initialize select2 (if needed)
+                                        $('#dropdown-' + meta.row + '-' + meta.col).select2();
+                                    },
+                                    error: function (error) {
+                                        console.error('Error loading dropdown options:', error);
+
+                                        // If the request fails, show an error message in the dropdown
+                                        var errorHtml = '<select class="select2 form-select select2-hidden-accessible" id="dropdown-' + meta.row + '-' + meta.col + '">';
+                                        errorHtml += '<option value="">Error loading data</option>';
+                                        errorHtml += '</select>';
+                                        $('#dropdown-' + meta.row + '-' + meta.col).closest('td').html(errorHtml);
+                                    }
+                                });
+                                // Return a placeholder dropdown with a loading option while data is being fetched
+                                return dropdownHtml + '</select>';
 
 
-                            return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + '  ' + (checkboxcheck ? 'checked' : ' ') + ' />';
+                                //$.ajax({
+                                //    url: '/Rolewise/Getstaffleavetypesddl',  // Replace with your API endpoint
+                                //    type: 'GET',  // You can change this to 'POST' if needed
+                                //    success: function (response) {
+                                //        // Assuming the response is an array of options
+                                //        response.forEach(function (option) {
+                                //            debugger;
+                                //            // Check if the value of row.columns[k] matches the option value
+                                //            var selected = (row.columns[k] == option.value) ? 'selected' : '';
+
+                                //            // Append the option to the dropdown, marking it as selected if the condition is met
+                                //            dropdownHtml += '<option value="' + option.value + '" ' + selected + '>' + option.label + '</option>';
+                                //        });
+
+                                //        // Close the select tag after appending options
+                                //        dropdownHtml += '</select>';
+
+                                //        // After appending options, initialize select2 (if needed)
+                                //        $('#dropdown-' + meta.row + '-' + meta.col).select2();
+
+                                //        // Update the cell with the new dropdown
+                                //        $('#dropdown-' + meta.row + '-' + meta.col).closest('td').html(dropdownHtml);
+                                //    },
+                                //    error: function (error) {
+                                //        console.error('Error loading dropdown options:', error);
+                                //    }
+                                //});
+
+                                //// Return the initial placeholder dropdown HTML
+                                //return dropdownHtml + '</select>';
+
+                            }
+                            //New code End Here
                         }
                     }))
 
@@ -189,7 +293,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
 $(document).on('click', '#attendencetable #attendenceposting', function (event) {
     event.stopImmediatePropagation();
     loaddingimg.css('display', 'block');
-
+    debugger;
     var Attendancedataparent = [];
 
     $("#tblMAsearchresults tbody tr").each(function (i, parentRow) {
@@ -199,9 +303,27 @@ $(document).on('click', '#attendencetable #attendenceposting', function (event) 
         };
 
         $("#tblMAsearchresults thead th").each(function (j, th) {
+            //if (j >= 4 && j < $("#tblMAsearchresults thead th").length) {
+            //    var isChecked = $(parentRow).find('td:eq(' + j + ') input[type="checkbox"]').prop('checked');
+            //    Attendancedatachild.Ispresent.push(isChecked ? "1" : "0");
+            //}
+
             if (j >= 4 && j < $("#tblMAsearchresults thead th").length) {
-                var isChecked = $(parentRow).find('td:eq(' + j + ') input[type="checkbox"]').prop('checked');
-                Attendancedatachild.Ispresent.push(isChecked ? "1" : "0");
+                // Find the input in the current cell
+                var input = $(parentRow).find('td:eq(' + j + ') input[type="checkbox"], td:eq(' + j + ') select');
+
+                // Check if the input is a checkbox
+                if (input.is('input[type="checkbox"]')) {
+                    var isChecked = input.prop('checked');
+                    Attendancedatachild.Ispresent.push(isChecked ? "1" : "0");
+                }
+                // Check if the input is a dropdown (select)
+                else if (input.is('select')) {
+                    var selectedValue = input.val();
+                    // You can add logic here to handle the selected value
+                    // For example, if you want to store it as a "1" or "0" based on the value, you can check the selected value
+                    Attendancedatachild.Ispresent.push(selectedValue); // Or apply any logic if needed
+                }
             }
         });
 

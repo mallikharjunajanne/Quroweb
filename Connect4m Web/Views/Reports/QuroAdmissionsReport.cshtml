@@ -6,11 +6,16 @@
 
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
+</head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
         @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>ADMISSIONS SUMMARY REPORT</h4>*@
-        <h4 class="mb-4 text-center">ADMISSIONS SUMMARY REPORT</h4>
+        <h4 class="mb-4 text-center text-header">ADMISSIONS SUMMARY REPORT</h4>
+
+        @* REGISTRATION USERDETAILS_GET REGISTRATION SUMMARY  MAIN TABLE CODE START HERE *@
+
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12">
                 <span class="text-danger" id="Commonerrormessage"></span>
@@ -61,7 +66,7 @@
         </div>
         <div class="col-md-12 col-lg-12">
             <div class="text-right">
-                <a href="Javascript:void(0);" id="Admissionreportexporttoexcel">Export to Excel</a>
+                <button id="Admissionreportexporttoexcel" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Export to Excel</button>
             </div>
             <div class="card mb-2">
                 <div class="card-header bg-danger text-white text-header">
@@ -73,8 +78,8 @@
                             <tr>
                                 <th>S. No.</th>
                                 <th>Instance</th>
-                                <th>Registration(s) Count</th>
-                                <th>Admission(s) Count</th>
+                                <th style="font-style: italic; font-weight: bold; color: blanchedalmond;">Registration(s) Count</th>
+                                <th style="font-style: italic; font-weight: bold; color: blanchedalmond;">Admission(s) Count</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -82,20 +87,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-lg-12 mb-3" id="Registrationstbldiv" style="display:none;">
+
+        @* REGISTRATION USERDETAILS_GET REGISTRATION SUMMARY  MAIN TABLE CODE END HERE *@
+
+
+        @* REGISTRATIONS REPORT TABLE DATA BINDING START HERE *@
+        <div class="col-md-12 col-lg-12" id="Registrationstbldiv" style="display:none;">
             <div class="text-right">
-                <a href="Javascript:void(0);" id="Admissionreportexcel">Export to Excel</a>
+                <button id="Registrationstblexporttoexcelbtn" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Export to Excel</button>
             </div>
             <div class="card mb-4">
                 <div class="card-header bg-danger text-header text-white text-header">
                     YOUR SEARCH RESULTED
-                    <span id="Registrationstblcount" class="badge badge-center rounded-pill bg-primary bg-glow text-header text-header">
-                        0
-                    </span>
+                    <span id="Registrationstblcount" class="badge badge-center rounded-pill bg-primary bg-glow text-header text-header">0</span>
                     RECORDS.
                 </div>
                 <div class="table-responsive text-nowrap">
-                    <table id="AdmissionreportResultstbl" class="table table-bordered no-footer dataTable">
+                    <table id="RegistartionreportResultstbl" class="table table-bordered no-footer dataTable">
                         <thead class="table-dark">
                             <tr>
                                 <th>S. No.</th>
@@ -115,22 +123,25 @@
                 </div>
             </div>
         </div>
+        @* REGISTRATIONS REPORT TABLE DATA BINDING END HERE *@
 
+
+        @* ADMISSIONS REPORT TABLE DATA BINDING START HERE *@
         <div class="col-md-12 col-lg-12" id="Admissiontbldiv" style="display:none;">
             <div class="text-right">
-                <a href="Javascript:void(0);" id="">Export to Excel</a>
+                <button id="Admissionstblexporttoexcelbtn" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Export to Excel</button>
             </div>
-            <div class="card mb-2">
+            <div class="card mb-4">
                 <div class="card-header bg-danger text-white text-header">
                     YOUR SEARCH RESULTED
                     <span id="Admissiontblcount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
                     RECORDS.
                 </div>
                 <div class="table-responsive text-nowrap">
-                    <table id="RegistartionreportResultstbl" class="table table-bordered no-footer dataTable">
+                    <table id="AdmissionreportResultstbl" class="table table-bordered no-footer dataTable">
                         <thead class="table-dark">
                             <tr>
-                                <th> S. No.</th>
+                                <th>S. No.</th>
                                 <th>Registration Date</th>
                                 <th>Reg No</th>
                                 <th>Name</th>
@@ -148,16 +159,16 @@
                 </div>
             </div>
         </div>
+        @* ADMISSIONS REPORT TABLE DATA BINDING END HERE *@
+
     </div>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
-
 <script src="~/js/CommonScripts.js"></script>
 <script src="~/js/Admissionreport.js"></script>

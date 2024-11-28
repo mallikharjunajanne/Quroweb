@@ -131,7 +131,7 @@ function TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, val, Effectiv
                             "<td>" + DeligationRecord + " </td>" +
 
                             // "<td>" + viewfiles + "</td>" +
-                            "<td style='text-align:center;' ><a style='cursor: pointer;' class='badge rounded-pill bg-label-primary' id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'>Approve/Reject</a><input  type='hidden' id='StaffId' value='" + Value2.staffId + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceId' value='" + Value2.instanceId + "' /><input  type='hidden' id='BatchId' value='" + Value2.batchId + "' /></td>" +
+                            "<td style='text-align:center;' ><a style='cursor: pointer;' class='badge rounded-pill bg-label-primary' id='ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject'>Approve/Reject</a><input  type='hidden' id='StaffId' value='" + Value2.staffId + "' /><input  type='hidden' id='InstanceClassificationId' value='" + Value2.instanceClassificationId + "' /><input  type='hidden' id='InstanceId' value='" + Value2.instanceId + "' /><input  type='hidden' id='BatchId' value='" + Value2.batchId + "' /><input  type='hidden' id='Fromdateid' value='" + Value2.fromdateString + "' /><input  type='hidden' id='Todateid' value='" + Value2.todateString + "' /></td>" +
                             "</tr>"
                         );
                     });
@@ -484,6 +484,8 @@ function BackTOSearhLevels(event) {
         TblAppliedStaffLeaves_SearchRecords_Calingfunction(event, '1', 'TblAppliedStaffLeaves_SearchRecords', 'Counts', 'ExportExcelLink_ApproveReject', 'ctl00_ContentPlaceHolder1_txtSearchFromDate', 'ctl00_ContentPlaceHolder1_txtSearchToDate', 'FmAppliedStaffLeaves_SearchRecords_Div')
 
 
+        $("#Fromdateid_Popup").val('');//----
+        $("#Todateid_Popup").val('');//----
         $("#BatchId_Popup").val('');
         $("#StaffId_Popup").val('');
         $("#InstanceClassificationId_Popup").val('');
@@ -531,7 +533,7 @@ function FN_ClearValues(valuefornotclear, Formid) {
 $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnkApproveReject', function (event) {
     try {
         event.preventDefault();
-
+        debugger;
         loaddingimg.css('display', 'block');
         $("#ErrorMessageSpan").empty();
         $("#TblAppliedLeavesHistory_SearchRecords").show();
@@ -540,6 +542,8 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
         var InstanceId = $(this).closest('tr').find('td').find("#InstanceId").val();
         var BatchId = $(this).closest('tr').find('td').find("#BatchId").val();
         var InstanceClassificationId = $(this).closest('tr').find('td').find("#InstanceClassificationId").val();
+        var Fromdateid = $(this).closest('tr').find('td').find("#Fromdateid").val();
+        var Todateid = $(this).closest('tr').find('td').find("#Todateid").val();
         //  var TblApplied_SearchRecords_Tr_Id = $(this).closest('tr').attr('id');
 
         $.ajax({
@@ -550,6 +554,8 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
                 $("#ApproveReject_Submitbuttonpage_Div").show();
                 $("#TXTareaRemarks_Popup").val('');
                 $("#StaffUserName").text('');
+                $("#Fromdateid_Popup").val('');//--
+                $("#Todateid_Popup").val('');//--
                 $("#BatchId_Popup").val('');
                 $("#StaffId_Popup").val('');
                 $("#InstanceClassificationId_Popup").val('');
@@ -560,6 +566,8 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
 
 
                 $("#StaffUserName").text(StaffUserName);
+                $("#Fromdateid_Popup").val(Fromdateid);//--
+                $("#Todateid_Popup").val(Todateid);//--
                 $("#BatchId_Popup").val(BatchId);
                 $("#StaffId_Popup").val(StaffId);
                 $("#InstanceClassificationId_Popup").val(InstanceClassificationId);
@@ -660,6 +668,15 @@ function LeaveApproval_Save(event, submitButtonName) {
             $(".alert-danger").show().delay(6000).fadeOut();
             return;
         }
+
+        //alert($("#BatchId_Popup").val());
+        //alert($("#StaffId_Popup").val());
+        //alert($("#InstanceClassificationId_Popup").val());
+        //alert($("#InstanceId_Popup").val());
+        //alert($("#LeaveTypeId_Popup").val());
+        //alert($("#Fromdateid_Popup").val());
+        //alert($("#Todateid_Popup").val());
+
         var formData = new FormData($("#Fm_ApproveandReject_PopUp")[0]);
         // setTimeout(function () {
         loaddingimg.css('display', 'block');
@@ -880,12 +897,17 @@ function ViewEmployeeLeavesHistiry(Instanceid, Userid) {
             success: function (response) {
                 debugger;
                 $(".ErrorMessageSpan").empty();
-                var newWindow = window.open("", "_blank");
+                var newWindow = window.open("", "_blank", "width=800,height=600");
                 if (newWindow) {
-                    // Write the response content into the new window
-                  /*  newWindow.document.write('<html><head><title>Employee Leave History</title></head><body>');*/
+                    // Extract only the table content (assuming the table is within a specific class or ID)
+                    //var tableContent = $(response).find('#myTabContent').html(); // Adjust the selector as needed
+
+                    // Write just the table content into the new window
+                    newWindow.document.write('<html><head><title>Employee Leave History</title></head><body>');
+                   
+                    //newWindow.document.write(tableContent); // Write the response content to the new window
                     newWindow.document.write(response); // Write the response content to the new window
-                    /*newWindow.document.write('</body></html>');*/
+                    newWindow.document.write('</body></html>');
                 }
                 else {
                     alert("Pop-up blocked. Please allow pop-ups for this site.");
@@ -898,11 +920,9 @@ function ViewEmployeeLeavesHistiry(Instanceid, Userid) {
             }
         });
 
-    } catch (e) {
+    }
+    catch (e) {
         loaddingimg.css('display', 'none');
         $("#Main_Span_Error").text("Something Error");
     }
-
-    EmployeeLeaveHistory
-    alert('ViewEmployeeLeavesHistory This function is working....! Values are ' + Instanceid + ', ' + Userid);
 }

@@ -9,13 +9,14 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-2 text-center"> ATTENDANCE DETAILS </h4>
+        <h4 class="mb-2 text-center text-header"> ATTENDANCE DETAILS </h4>
         <span class="text-danger" id="Commoneerrormessage"></span>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-2">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                        SEARCH FOR STUDENTS <small>* INDICATES MANDATORY FIELD</small>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        SEARCH FOR STUDENTS
+                        <small class="text-header-small">* INDICATES MANDATORY FIELD</small>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -68,7 +69,7 @@
             </div>
             <div class="col-md-12 col-lg-12 mb-2" id="Printdiv2">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
                         ATTENDANCE SUMMARY
                     </div>
                     <div class="table-responsive text-nowrap">
@@ -123,7 +124,7 @@
         $('#Commoneerrormessage').text('');
         loaddingimg.css('display', 'block');
 
-        var AcademicYearid=$('#DdAcademicYearid').val();
+        var AcademicYearid = $('#DdAcademicYearid').val();
         var formData = $('#attendancesummaryform').serialize();
 
         TblCallToAjax('GET', '/Attendance/AttendanceSummarytbl?AcademicYear=' + AcademicYearid, formData,
@@ -131,7 +132,7 @@
                 if (response.length > 0) {
                     Tabledatabindingfun(response);
                 } else {
-                    $('#Commoneerrormessage').text('Unfortunately, we couldn'+"'"+'t find any matching records.Please reach out to your school for further assistance.');
+                    $('#Commoneerrormessage').text('Unfortunately, we couldn' + "'" + 't find any matching records.Please reach out to your school for further assistance.');
                     loaddingimg.css('display', 'none');
                 }
             },
@@ -166,7 +167,7 @@
             //stateSave:true,
             data: response,
             columns: [
-                {                  
+                {
                     data: "Subjectslotname",
                     render: function (data, type, row, meta) {
                         return row.subjectslotname
@@ -219,7 +220,7 @@
         loaddingimg.css('display', 'none');
     }
     $('#SummaryPrint').on('click', function () {
-        var printContents =$('#Printdiv2').prop('outerHTML');
+        var printContents = $('#Printdiv2').prop('outerHTML');
         var departmentContent = $('#Departmenttxt').text();
         var classContent = $('#Classtxt').text();
         var printWindow = window.open('', '_blank');

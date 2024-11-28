@@ -191,10 +191,14 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
         //var IsActiveCheckedValue = $("input[type='radio'][name='IsActive']:checked").val();
         var ChkIsUserJoined = document.getElementById("ChkIsUserJoined");
         var value;
-        if (ChkIsUserJoined.checked) {
+        var value1;
+        if (ChkIsUserJoined && ChkIsUserJoined.checked) {
+        //if (ChkIsUserJoined.checked) {
             value = "1";
+            value1 = true;
         } else {
             value = "0";
+            value1 = false;
         }
         const radioButtons = document.querySelectorAll('input[name="IsActive"]');
         let IsActiveCheckedValue = '';
@@ -306,6 +310,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                 formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                 formData.append("ScreenName", $("#HdnScreenName").val());
                 formData.append("IsUserJoined", value);
+                formData.append("IsUserJoinedbool", value1);
                 var ControllerName;
                 debugger;
                 if (formId == "FmGeneralInfoTab") {
@@ -372,6 +377,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                     formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                     formData.append("ScreenName", $("#HdnScreenName").val());
                     formData.append("IsUserJoined", value);
+                    formData.append("IsUserJoinedbool", value1);
                     var ControllerName;
                     debugger;
                     if (formId == "FmGeneralInfoTab") {
@@ -444,6 +450,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
                     formData.append("ButtonName", $("#BtnSaveFormInGeneralInfo").val());
                     formData.append("ScreenName", $("#HdnScreenName").val());
                     formData.append("IsUserJoined", value);
+                    formData.append("IsUserJoinedbool", value1);
                     var ControllerName;
                     debugger;
                     if (formId == "FmGeneralInfoTab") {

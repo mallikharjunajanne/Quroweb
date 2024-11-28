@@ -68,37 +68,133 @@
     }, 50);
 });
 
-
-function Showimage(fileName,Instanceid) {
-    //D:\QuroConnect4m\Quroweb\Connect4m Web\wwwroot\Bankdepositdoc\Instanceid879\Quro logo.jpeg
-
-    //debugger;
-    //const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
-    //window.open(filePath, '_blank');
-
-    const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
-
-    // Create a new image element
-    const img = new Image();
-
-    // Set up the onload and onerror event handlers
-    img.onload = function () {
-        // If image loads successfully, open it in a new tab
-        window.open(filePath, '_blank');
-    };
-
-    img.onerror = function () {
-        // If image fails to load, show an alert
-        alert('Image is not available.');
-    };
-    // Set the src to start loading the image
-    img.src = filePath;
-}
-
-
 function Imagedlt() {
     $('#Documentiddiv').hide();
     $('#AttachedDocument').show();
     //document.getElementById('AttachedDocument').value = ''; // Clear file input value
     //document.getElementById('imagePreviewContainer').innerHTML = ''; // Clear image preview
 }
+
+function Showimage(fileName, Instanceid) {
+    debugger;
+    // Construct the file path
+    const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
+
+    // Get the popup and the container inside the modal where the file will be displayed
+    const popup = document.getElementById("popup");
+    const fileContainer = document.getElementById("popup-file-container");
+
+    // Get the file extension to determine if it's an image or PDF
+    const fileExtension = fileName.split('.').pop().toLowerCase();
+
+    // Clear any previous content in the file container
+    fileContainer.innerHTML = '';
+
+    // Handle image files
+    if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') {
+        // Create an image element and set the source
+        const img = new Image();
+        img.src = filePath;
+
+        // When the image is loaded, show it in the popup
+        img.onload = function () {
+            fileContainer.appendChild(img);
+            popup.style.display = "flex"; // Show the popup modal
+        };
+
+        // Handle image loading error
+        img.onerror = function () {
+            alert('Image could not be loaded. Please check the file path.');
+        };
+    }
+    // Handle PDF files
+    else if (fileExtension === 'pdf') {
+        // Create an iframe element to show the PDF
+        const iframe = document.createElement('iframe');
+        iframe.src = filePath;
+        iframe.frameBorder = '0';
+
+        // Append the iframe to the container
+        fileContainer.appendChild(iframe);
+        popup.style.display = "flex"; // Show the popup modal
+    } else {
+        alert('Unsupported file type.');
+    }
+}
+
+// Close the popup
+function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none"; // Hide the popup
+}
+
+
+//function Showimage_(fileName,Instanceid) {
+//    //D:\QuroConnect4m\Quroweb\Connect4m Web\wwwroot\Bankdepositdoc\Instanceid879\Quro logo.jpeg
+
+//    debugger;
+//    //const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
+//    //window.open(filePath, '_blank');
+
+//    const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
+
+//    // Create a new image element
+//    const img = new Image();
+
+//    // Set the src attribute of the image to trigger the loading
+//    img.src = filePath;
+
+//    // Set up the onload and onerror event handlers
+//    img.onload = function () {
+//        // If image loads successfully, open it in a new tab
+//        window.open(filePath, '_blank');
+//    };
+
+//    img.onerror = function () {
+//        // If image fails to load, show an alert
+//        alert('Image is not available.');
+//    };
+//    // Set the src to start loading the image
+//    img.src = filePath;
+//}
+
+
+
+
+
+//function _Showimage(fileName, Instanceid) {
+//    debugger;
+//    // Construct the file path
+//    const filePath = `/Bankdepositdoc/Instanceid${Instanceid}/${fileName}`;
+
+//    // Get the popup and image elements
+//    const popup = document.getElementById("popup");
+//    const popupImage = document.getElementById("popup-image");
+
+//    // Create a new image object to check if the image exists
+//    const img = new Image();
+
+//    // Set the image source to load
+//    img.src = filePath;
+
+//    // Set up the onload event to show the image in the popup
+//    img.onload = function () {
+//        // If the image is loaded successfully, update the image source in the modal
+//        popupImage.src = filePath;
+//        popup.style.display = "flex"; // Show the popup modal
+//    };
+
+//    // Set up the onerror event if the image fails to load
+//    img.onerror = function () {
+//        alert("Image not available. Please check the image path and server permissions.");
+//    };
+
+//    // Optionally log the path for debugging
+//    console.log("Loading image from path:", filePath);
+//}
+
+// Close the popup
+//function _closePopup() {
+//    const popup = document.getElementById("popup");
+//    popup.style.display = "none"; // Hide the popup
+//}

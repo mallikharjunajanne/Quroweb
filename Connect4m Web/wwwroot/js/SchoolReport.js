@@ -30,8 +30,7 @@ $("#Searchexpensereport").submit(function (event) {
 });
 
 
-//===================== Data Append To thee Table
-
+//===================== Appending Data to the Table =====================
 function bindDatatablesummary(response) {
 
     //debugger;
@@ -120,14 +119,9 @@ $(document).on('click', '#printdetailesummary', function () { printsummary("Tbls
 
 
 
-//================================  Excel
-
-//=============================================================================  Export Excel  (Expense Report)
-
-
-
-
-    function ExportExcelsummary(id) {
+//===================== EXCEL =====================
+//===================== EXPORT EXCEL  (EXPENSE REPORT) =====================
+function ExportExcelsummary(id) {
 
     
     var formattedDate = GetDateFormat();
@@ -289,16 +283,9 @@ $(document).on('click', '#printdetailesummary', function () { printsummary("Tbls
     });
 };
 
-
-
-
-//==================================================  Print
-//=============================================================================  Click On Print ( Summary Report)
-
-
-
-
-    function printsummary(id) {
+//===================== PRINT =====================
+//===================== CLICK ON PRINT (SUMMARY REPORT) =====================
+function printsummary(id) {
 
     
     var formattedDate = GetDateFormat();
@@ -348,15 +335,8 @@ $(document).on('click', '#printdetailesummary', function () { printsummary("Tbls
 }
 
 
-
-
-
-//**************************** Oraganisation  fee summary 03-01-24  **********************************************************
-
-
-
-
-//========================================  Click On Check Box For Select All in the Select tag
+//**************************** ORGANIZATION FEE SUMMARY - 03-01-24 **********************************
+//===================== CLICK ON CHECK BOX FOR SELECT ALL IN THE SELECT TAG =====================
 $("#Searchfeesummary #Select_All").click(function (event) {
    
     Commoncheckallmultiplelist(event, "Searchfeesummary", "dropdown_LOCATION");
@@ -369,17 +349,12 @@ $("#Searchfeesummary #Select_Allinstances").click(function (event) {
    
     Commoncheckallmultiplelist(event, "Searchfeesummary", "dropdown_Instances");
 });
-
 $("#SearchSchoolattendance #Select_Allsch").click(function (event) {
 
     Commoncheckallmultiplelist(event, "SearchSchoolattendance", "dropdown_SchInstance");
 })
 
-
-//---------------------------------------    For sub Location
-
-
-
+//===================== FOR SUB LOCATION =====================
 function Sublocation(valid,appendid,displaydiv,methodname,text,value,errror,errorbox) {
     loaddingimg.css('display', 'block');
     debugger;
@@ -427,18 +402,10 @@ function Sublocation(valid,appendid,displaydiv,methodname,text,value,errror,erro
     }
 }
 
-
-
-
-
-
-//===================================  Submit the  Report fee summary
+//===================== SUBMIT THE REPORT FEE SUMMARY =====================
 var _reportstartdate;
 var _reportenddate;
 var orgfeesummary;
-
-
-
 
 $("#Searchfeesummary").submit(function (event) {
     event.preventDefault();
@@ -508,7 +475,8 @@ $("#Searchfeesummary").submit(function (event) {
     loaddingimg.css('display', 'none');
 
 })
-//==================================================   second table
+
+//===================== SECOND TABLE =====================
 function bindsecondtable(id, event) {
     debugger;
     loaddingimg.css('display', 'block');
@@ -541,7 +509,7 @@ function bindsecondtable(id, event) {
 
 }
 
-//==================================================   Third table
+//===================== THIRD TABLE =====================
 function bindthirdtable(id, event) {
     debugger;
     loaddingimg.css('display', 'block');
@@ -574,8 +542,7 @@ function bindthirdtable(id, event) {
 
 }
 
-
-//==================================================   Fourth table
+//===================== FOURTH TABLE =====================
 function bindfourthtable(id, event) {
     debugger;
     loaddingimg.css('display', 'block');
@@ -615,13 +582,7 @@ function bindfourthtable(id, event) {
 
 }
 
-
-
-
-
-
-//==================================================   Bind Pocket money details
-
+//===================== BIND POCKET MONEY DETAILS =====================
 function bindpockettable() {
     debugger; 
     
@@ -643,7 +604,6 @@ function bindpockettable() {
 
 }
 
-
 function bindorganisationfeesummary(response, headernames, columnnames, appendid, event,bcolor,onclickfun,startcolunmnindex,linkexceptlastrow,linkallfalse,Class) {
     debugger;
    // try {
@@ -651,7 +611,7 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
         if (response.length > 0) {
 
             loaddingimg.css('display', 'block');
-            var maintable = '<table class="table table-hover table-bordered" >';
+            var maintable = '<table class="table table-hover table-bordered dataTable" >';
             if (bcolor) {
                 maintable += '<thead  style="background-color:' + bcolor + '" ><tr>';
             }
@@ -703,17 +663,12 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
 
 
 
+//**************************** SCHOOL WISE ATTENDANCE REPORT  (05-01-2024) **********************************
 
-//********************************************* SCHOOL WISE ATTENDANCE REPORT  (05-01-2024) **************************************
-
-//===============================================  date Compare
-
-
+//===================== DATE COMPARE =====================
 $("#SearchSchoolattendance #startdate").on("change", function () { Greaterthantoday("startdate", ".compare", ".col-sm-5", "Attendance From date") });
 
-
 var _schstartdate;
-
 $("#SearchSchoolattendance").submit(function (event) {
     event.preventDefault();
      debugger;
@@ -754,8 +709,7 @@ $("#SearchSchoolattendance").submit(function (event) {
    
 })
 
-//--------------------------------------------------      School Attendance Report Sub
-
+//===================== SCHOOL ATTENDANCE REPORT SUB =====================
 function bindschoolattendancereportsub(id,event) {
     debugger;
     //var formdata = new FormData();
@@ -787,16 +741,12 @@ function bindschoolattendancereportsub(id,event) {
 }
 
 
-
-
 $(document).on('click', '#exportexcelschoolattendance', function () { ExportExcelschoolsattendanceDetails("schoosattendancedetails", _schstartdate,) });
 
 $(document).on('click', '#exportexcelschoolattendancereportsub', function () { ExportExcelschoolwiseattendance("appendallschoolattendanceSub",_schstartdate,) });
 
 
-
-//========================    Export Excel for Schools Attendance Details
-
+//===================== EXPORT EXCEL FOR SCHOOLS ATTENDANCE DETAILS =====================
 function ExportExcelschoolsattendanceDetails(id,attendancedate) {
 
 
@@ -1063,8 +1013,7 @@ function ExportExcelschoolwiseattendance(id, attendancedate) {
     });
 };
 
-
-//Clear Button function adding by arjun
+//Clear Button function added by Arjun
 function clearForm(formId) {
     debugger;
     var form = document.getElementById(formId);
@@ -1073,11 +1022,13 @@ function clearForm(formId) {
         $('#sublocationdisplay').hide();
         $('#instancesdisplay').hide();
         $('#appendallfeesummary').empty();
+        //NEWLY ADDED
+        $('#appendallschoolattendance').empty();
+        $('#appendallschoolattendanceSubout').empty();
         var validationSpans = form.querySelectorAll('span[data-valmsg-for]');
         validationSpans.forEach(span => {
             span.textContent = ''; // Clear validation messages
         });
         $('.compare').text('');
-        
     }
 }

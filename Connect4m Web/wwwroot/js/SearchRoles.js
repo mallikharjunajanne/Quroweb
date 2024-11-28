@@ -1,5 +1,5 @@
 ﻿
-
+// This function runs when the DOM is fully loaded
 $(document).ready(function () {
     if ($("#SearchRoleWise").css('display')=='block') {
         searchRoles();
@@ -14,15 +14,19 @@ try {
 catch {
     var tabletargetpagetblSEMsearchresults = 0;
 }
-//===============================
 
+
+
+// Attach a click event listener to the element with ID 'sub_tblMR' inside '#Serach_MR'
 $(document).on('click', '#Serach_MR #sub_tblMR', function () {
+    // Reset the target page for the search results to the first page (page 0)
     tabletargetpagetblSEMsearchresults = 0;
-    searchRoles();
 
+     // Call the searchRoles function to initiate the search operation
+    searchRoles();
 })
 
-//==========================================================  Search Roles 
+//============== SEARCH ROLES 
 function searchRoles() {
 
    // document.getElementById("loading").style.display = "block";
@@ -148,7 +152,8 @@ function searchRoles() {
         loaddingimg.css('display', 'none');
     }
 }
-//----------------------------------------------------------- Click on Create Role 
+
+//============== CLICK ON CREATE ROLE
 $(document).on('click', '#addnewRoleformanage', function (event) {
     event.stopImmediatePropagation();
     loaddingimg.css('display', 'block');
@@ -166,8 +171,7 @@ $(document).on('click', '#addnewRoleformanage', function (event) {
 
 })
 
-//-------------------------------------------      delete Roles   
-
+//============== DELETE ROLES
 $(document).on('click', '#tblMRsearchresults .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
     //debugger;
@@ -182,7 +186,8 @@ $(document).on('click', '#tblMRsearchresults .fa-trash-o', function (event) {
         searchRoles();
     });
 })
-//----------------------------------------------------------------  Check Box Click to get Parent Role Menu
+
+//============== Check Box Click to get Parent Role Menu
 $(document).on('click', '.Rolecheckbox input[type=checkbox]', function (event) {
     event.stopImmediatePropagation();
     //debugger;
@@ -198,7 +203,8 @@ $(document).on('click', '.Rolecheckbox input[type=checkbox]', function (event) {
         }
     }
 })
-//==================================================================================  Click On Save
+
+//============== Click On Save
 $("#Create_Role").submit(function (event) {
 
        //  event.stopImmediatePropagation();
@@ -266,13 +272,15 @@ $("#Create_Role").submit(function (event) {
 
 })
 
-//-------------------------------- Check Role Availabilty 
+//============== Check Role Availabilty
 $(document).on('click', '#Create_Role #Checkroleavailability', function (event) {
     event.stopImmediatePropagation();
     checkroleavailabilty();
 });
+
 //=================
 $(Document).on('change', '#Create_Role #RoleNamecheck', function () { checkroleavailabilty(); });
+
 //================
 function checkroleavailabilty() {
     document.getElementById("loading").style.display = "block";
@@ -315,7 +323,7 @@ function checkroleavailabilty() {
 
 //====================================
 
-//========================================================== Bind the  Display Oder data to table  
+//==============  Bind the  Display Oder data to table
 function DisplayOrder() {
 
     loaddingimg.css('display', 'block');
@@ -342,18 +350,19 @@ function DisplayOrder() {
         //  alert("hi1");
 
         var newTable = $("#tblDisplayOrder").DataTable({
-            dom: 'Bfrtip',
+            dom: '<"top"lf>t<"bottom"ip>',
+            bLengthChange: false,
+            bfilter: true,
+            bPaginate: false,
 
-
+            //dom: 'Bfrtip',
             bProcessing: false,
-            bLengthChange: true,
-          
-            bfilter: false,
+            //bLengthChange: true,
+            //bfilter: false,
             bSort: false,
             searching: false,
-           
             paging: false,
-            bPaginate: true,
+            //bPaginate: true,
             buttons: [],
             data: response,
             columns: [
@@ -405,7 +414,7 @@ function DisplayOrder() {
         
     }
 }
-//========================   Back To search
+//============== Back To search
 $(document).on('click','#dispalyordersupdate #BacktoMenusorders', function (event) {
     event.stopImmediatePropagation();
    // debugger;
@@ -418,7 +427,9 @@ $(document).on('click','#dispalyordersupdate #BacktoMenusorders', function (even
 
     loaddingimg.css('display', 'none');
    // searchRoles();
-});//========================   Back To search
+});
+
+//============== Back To search
 $(document).on('click','#dispalyordersupdate #backtosearch_CRorder', function (event) {
     event.stopImmediatePropagation();
    // debugger;
@@ -432,7 +443,7 @@ $(document).on('click','#dispalyordersupdate #backtosearch_CRorder', function (e
     searchRoles();
 });
 
-//========================   Back To search
+//============== Back To search
 $(document).on('click', '#Create_Role #backtosearch_CR', function (event) {
     event.stopImmediatePropagation();
     // debugger;
@@ -448,8 +459,7 @@ $(document).on('click', '#Create_Role #backtosearch_CR', function (event) {
 
 
 
-//=========================================================================  Click on Table Second Column
-
+//============== CLICK ON TABLE SECOND COLUMN
 $(document).on('click', '#tblMRsearchresults td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
     var parent = $(event.target).closest('tr');
@@ -473,7 +483,8 @@ $(document).on('click', '#tblMRsearchresults td:nth-child(2)', function (event) 
     }, false);
    
 })
-//=================================================================  cLICK oN uPDATE fOR  Display Order
+
+//============== CLICK ON UPDATE FOR DISPLAY ORDER
 $(document).on('click', '#dispalyordersupdate #Update_CR', function (event) {
     event.stopImmediatePropagation();
     loaddingimg.css('display', 'block');
@@ -567,7 +578,7 @@ $(document).on('click', '#dispalyordersupdate #Update_CR', function (event) {
 
 })
 
-//=========================================  Record  Delete Successfully
+//============== RECORD DELETE SUCCESSFULLY
 $(document).on('click', '#Create_Role #clearform', function (event) {
     event.stopImmediatePropagation();
     if ($('#Create_Role #clearform').val() == "Delete") {

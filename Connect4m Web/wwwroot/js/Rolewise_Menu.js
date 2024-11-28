@@ -100,7 +100,7 @@ $(document).ready(function () {
                         }
                         if (Notparent == 0) {
                             if (item.menuUrl !== "" && item.parentMenuId == "") {
-                                debugger;
+                                /*debugger;*/
 
                                 /* THIS COMMENT CODE IS MENU ITEMS WITHOUT IMAGES START HERE */
                                /*var a = $('<a class="menu-link" href="' + item.menuUrl + '"><i class="menu-icon tf-icons ti ti-smart-home"></i><span>' + item.menuName + '</span></a>');*/

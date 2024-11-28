@@ -36,7 +36,7 @@
     <div class="flex-grow-1 container-p-y container-xxl">
 
         @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">User Module /</span>POST RESULTS</h4>*@
-        <h4 class="mb-3 text-center">POST RESULTS</h4>
+        <h4 class="mb-3 text-center text-header">POST RESULTS</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -45,7 +45,7 @@
                 <span class="ErrorMessageSpan" id="ParentEmail_Error"></span>
                 @*==========================search Users Card====================*@
                 <div class="card mb-4" id="Div_Step1">
-                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+                    <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between text-header">
                         POST RESULTS
                     </div>
                     <div class="card-body">
@@ -149,7 +149,7 @@
                     <div class="card">
                         <div class="card-datatable table-responsive pt-0">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <div class="card-header flex-column flex-md-row">
+                                <div class="card-header flex-column flex-md-row text-header">
                                     <div class="head-label text-center">
                                         <h5 class="card-title mb-0">
                                             <span>COUNT OF STUDENTS IN OPTIONAL SUBJECT IS NOT EQUAL TO THE TOTAL STRENGTH OR SELECT ALL THE SUBJECTS IN AN ELECTIVE TO POST THE RESULT</span>
@@ -183,12 +183,12 @@
                         </label>
                         <div class="card-datatable table-responsive pt-0">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <div class="card-header bg-danger text-white text-header flex-column flex-md-row">
-                                    @*<div class="head-label text-center">
-                            <h5 class="card-title mb-0">*@
-                                    <span>YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>
-                                    @*</h5>
-                            </div>*@
+                                <div class="card-header bg-danger text-white text-header flex-column flex-md-row text-header">
+                                    <span>
+                                        YOUR SEARCH RESULTED
+                                        <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                                        RECORD(S).
+                                    </span>
                                 </div>
                                 <form id="Fm_TblUser">
                                     @*<table id="LeaveLevels_SearchRecords_Table" class="table table-responsive tableid">*@
@@ -232,12 +232,8 @@
                                     @*Step 1 Selection:JUNIOR-PROGRAM-II - A,Md-Term*@
                                 </label>
                             </div>
-                            <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
-                                @*<h5 class="mb-0">
-                <span>*@
+                            <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between text-header">
                                 CHOOSE OPTION TO SAVE
-                                @*</span>
-                </h5>*@
                             </div>
                             <div class="card-body">
                                 @*<form id="FmChooseOption">*@
@@ -267,7 +263,6 @@
                                 @*</form>*@
                             </div>
                         </div>
-
 
                         <div id="Div_UploadingType">
                         </div>

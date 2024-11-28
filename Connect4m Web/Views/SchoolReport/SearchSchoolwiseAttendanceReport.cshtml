@@ -11,15 +11,15 @@
         <button type="button" class="btn rounded-pill btn-label-primary waves-effect btn-sm" id="exportexcelschoolattendance">Export Excel</button>
     </div>
 
-    <h5 class="card-title mb-0">
+    <div class="card-header bg-danger text-white text-header">
         <span id="CountOfRecords_LeaveLevels">
             YOUR SEARCH RESULTED
-            <span id="Counts" class="number-circle">@((Model != null ? Model.Count() - 1 : 0))</span>
+            <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">@((Model != null ? Model.Count() - 1 : 0))</span>
             RECORD(S).
         </span>
-    </h5>
+    </div>
 
-    <table class=" table table-hover table-bordered" id="schoosattendancedetails">
+    <table class="table table-hover table-bordered dataTable" id="schoosattendancedetails">
         <thead class="table-hover table-dark">
             <tr>
                 <th>

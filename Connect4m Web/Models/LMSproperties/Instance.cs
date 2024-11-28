@@ -68,11 +68,6 @@ namespace Connect4m_Web.Models.LMSproperties
 
         
     }
-
-
-
-
-
     public class Instance
     {
         public int InstanceId { get; set; }
@@ -85,16 +80,16 @@ namespace Connect4m_Web.Models.LMSproperties
     }
     public class CommonDropdown
     {
-        public string[]  Parameters { get; set; }
+        public string[] Parameters { get; set; }
         public string procedurename { get; set; }
         public string text { get; set; }
         public string value { get; set; }
     }
-    public class CommonDropdown2:CommonDropdown
+    public class CommonDropdown2 : CommonDropdown
     {
         public List<string> Extraparameters { get; set; }
     }
-        public class SubClassifications
+    public class SubClassifications
     {
         public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
@@ -121,7 +116,7 @@ namespace Connect4m_Web.Models.LMSproperties
     {
         public int AuditTrailId { get; set; }
         public string AuditKey { get; set; }
-       
+
         [Display(Name = "Current Value")]
         public string CurrentValue { get; set; }
         [Display(Name = "Previous Value")]
@@ -133,8 +128,6 @@ namespace Connect4m_Web.Models.LMSproperties
         [Display(Name = "Current Value CreateDate")]
         public string CurrentValueCreateDate { get; set; }
     }
-
-
     public static class FileHelper
     {
         public static string GetFileExtension(string fileName)
@@ -165,10 +158,6 @@ namespace Connect4m_Web.Models.LMSproperties
     {
         public string ApiBaseAddress { get; set; }
     }
-
-
-
-
 
     //----------------------------------------   Creating Class For CommonMethods of all
     public class Commonclass

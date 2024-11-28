@@ -7,8 +7,9 @@
 
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
-        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-            UPDATE NOTICE <small>* INDICATES MANDATORY FIELDS.</small>
+        <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+            UPDATE NOTICE
+            <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
         </div>
         <div class="card-body">
             <form id="Updatenoticetypeform" enctype="multipart/form-data">
@@ -24,7 +25,7 @@
                             }
                         </select>
                         <span asp-validation-for="ENoticeTypeId" class="text-danger Validation"></span>
-                        <input type="hidden" asp-for="ENoticeId" class="form-control" id="Enoticetxtid"/>
+                        <input type="hidden" asp-for="ENoticeId" class="form-control" id="Enoticetxtid" />
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -39,7 +40,7 @@
                 <div class="row mb-2">
                     <label class="control-label col-sm-2 col-form-label text-end space"> <b>NOTE </b></label>
                     <div class="col-sm-10">
-                         Invalid Characters in sending SMS: % & < >
+                        Invalid Characters in sending SMS: % & < >
                         Some Characters like ` ~ ^ + $ may not deliver properly to all mobiles.
                         Messages sent between 9PM and 9AM will be delivered after 9AM
                     </div>

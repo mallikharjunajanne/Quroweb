@@ -8,7 +8,7 @@
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="card mb-4">
         <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-        <span class="text-header">BRIEF DETAILS</span>
+            <span class="text-header">BRIEF DETAILS</span>
         </div>
         <div class="card-body">
             <div class="row">
@@ -30,21 +30,21 @@
                         <div class="col-sm-6">
                             <label class="control-label col-sm-6 col-form-label">
                                 @{
-                                        int Presentcount = 0;
-                                        int AbsentCounts = 0;
+                                    int Presentcount = 0;
+                                    int AbsentCounts = 0;
                                 }
 
                                 @foreach (var present in ViewBag.UserAttendance)
-                                        {
-                                @if (present.Present == "1")
-                                        {
+                                {
+                                    @if (present.Present == "1")
+                                    {
                                         Presentcount++;
-                                        }
-                                        else
-                                        {
+                                    }
+                                    else
+                                    {
                                         AbsentCounts++;
-                                        }
-                                        }
+                                    }
+                                }
                                 @Presentcount
                             </label>
                         </div>
@@ -56,9 +56,9 @@
                         <div class="col-sm-6">
                             <label class="control-label col-sm-12 col-form-label">
                                 @{
-                                        int totalRecords = (int)ViewBag.Records;
-                                        double percentage = (double)@Presentcount / totalRecords * 100;
-                                        string color = percentage >= 70 ? "green" : "red";
+                                    int totalRecords = (int)ViewBag.Records;
+                                    double percentage = (double)@Presentcount / totalRecords * 100;
+                                    string color = percentage >= 70 ? "green" : "red";
                                 }
 
                                 <span style="color: @color;">
@@ -66,13 +66,13 @@
                                 </span>
 
                                 @if (percentage >= 70)
-                                        {
-                                <span style="color: green;">(Required attendance is 70% or above)</span>
-                                        }
-                                        else
-                                        {
-                                <span style="color: red;">(Required attendance is below 70%)</span>
-                                        }
+                                {
+                                    <span style="color: green;">(Required attendance is 70% or above)</span>
+                                }
+                                else
+                                {
+                                    <span style="color: red;">(Required attendance is below 70%)</span>
+                                }
                             </label>
                         </div>
                     </div>

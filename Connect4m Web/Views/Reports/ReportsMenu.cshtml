@@ -24,10 +24,10 @@
                 display: flex;
                 align-items: center;
         }
-        li.list-item:hover {
+       /* li.list-item:hover {
             background-color: black !important;
             border-radius: 3px;
-        }
+        }*/
         .list-icon {
             width: 20px; /* Fixed size for icons */
             height: 20px;
@@ -36,15 +36,16 @@
         .text-color {
             color: black;
             font-size: 10pt;
+            cursor: pointer;
         }
-        .text-color:hover {
+       /* .text-color:hover {
             color: white;
-        }
+        }*/
     </style>
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">Reports Area</h4>
+        <h4 class="mb-3 text-center text-header">REPORTS AREA</h4>
         <div class="row mb-2">
             @for (var i = 0; i < ViewBag.Menuitems.Count; i += 2)
             {
@@ -55,15 +56,15 @@
                         <div class="col-sm-6">
                             <div class="card mb-4">
                                 <div class="card-header bg-danger text-white">
-                                    <span class="text-header text-uppercase" id="Menuitems_@j" title="@item.CategoryId">
+                                    <span class="text-header text-uppercase Reportmenu" id="Menuitems_@j" title="@item.CategoryId">
                                         @item.CategoryName
                                     </span>
                                 </div>
-                           
+
                                 <div class="">
                                     <div id="menuList_@j">
 
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,13 +78,15 @@
     <script>
         $(document).ready(function () {
             debugger;
-            $('.text-header').each(function () {
+            $('.Reportmenu').each(function () {
                 // Get the title attribute value
                 var categoryId = $(this).attr('title');
 
                 // Optionally, you can also get other information like the text
                 var categoryName = $(this).text();
+                //alert(categoryName);
                 var menuListId = $(this).attr('id').replace('Menuitems_', 'menuList_');
+                
                 // Send the title value to the server using AJAX
                 $.ajax({
                     url: '/Reports/ReportsSubMenus', // Your action method URL
@@ -117,10 +120,10 @@
                         $.each(menuItems, function (index, item) {
                             $ul.append(
                                 `<li class="list-item">
-                                    <a class="list-link" href="${item.menuUrl}">
-                                        <span class="text-color">${item.menuName}</span>
-                                    </a>
-                                </li>`
+                                            <a class="list-link" href="${item.menuUrl}">
+                                                <span class="text-color">${item.menuName}</span>
+                                            </a>
+                                        </li>`
                             );
                         });
 

@@ -4,9 +4,6 @@
     Layout = null;
 }
 
-
-
-
 <div class="justify-content text-end">
     <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="exportexcelsummary">Export Excel</button>
     <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="printsummary">Print</button>
@@ -14,7 +11,7 @@
 <div class="card" id="datatable1">
 
     @*<h5 class="card-header">Dark Table head</h5>*@
-    <div class="card-header bg-danger text-white">
+    <div class="card-header bg-danger text-white text-header">
         <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
     </div>
     <div class="table-responsive text-nowrap">
@@ -27,7 +24,8 @@
         </table>
     </div>
 </div>
-@{if (ViewBag.summaryid == 2)
+@{
+    if (ViewBag.summaryid == 2)
     {
         <div class="justify-content text-end">
             <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="exportexceldetailesummary">Export Excel</button>
@@ -36,7 +34,7 @@
         <div class="card" id="datatable2">
 
             @*<h5 class="card-header">Dark Table head</h5>*@
-            <div class="card-header bg-danger text-white">
+            <div class="card-header bg-danger text-white text-header">
                 <span id="CountOfRecords_LeaveLevels">YOUR SEARCH RESULTED <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
             </div>
 
@@ -48,10 +46,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                     </tbody>
-
                 </table>
-
-
             </div>
         </div>
     }

@@ -130,7 +130,9 @@
                         <div class="mb-3">
                             <span id="errorSpan" style="color:red;display:block;">@ViewBag.ErrorMessage</span>
                             <label for="Username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="TxtUsername" asp-for="Username"placeholder="Enter your username"autofocus />
+                            <div class="input-group input-group-merge">
+                                <input type="text" class="form-control" id="TxtUsername" asp-for="Username" placeholder="Enter your username" autofocus />
+                            </div>
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
 

@@ -387,8 +387,14 @@ $('#Postattendaceformid').on('submit', function () {
         } else {
             $('#Errormessage').text('');
         }
-
-
+        debugger;
+        const startDateInputvalue = document.getElementById("StartDateid");
+        const endDateInput = document.getElementById("EndDateid");
+        if (!validateDateRange(startDateInputvalue, endDateInput)) {
+            //event.preventDefault(); // Prevent form submission
+            $('#Errormessage').text('you cannot select start date less than Effective Date');
+            return false;
+        }
 
 
         var validationMessagesLength = validationMessages.length;
@@ -795,4 +801,17 @@ function Showchangeactivity(Key, Attendanceid, TableName) {
         },
         true
     );
+}
+
+
+function validateDateRange(startDateInput, endDateInput) {
+    debugger;
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+    // Check if the start date is later than the end date
+    if (startDate > endDate) {
+        return false; // Invalid date range
+    }
+    return true; // Valid date range
 }

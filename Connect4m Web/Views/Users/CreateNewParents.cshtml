@@ -55,12 +55,12 @@
                         <div class="col-sm-4 ">
                             @if (UpdateIdentification == "UpdateDetails")
                             {
-                            <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                                <img src="@ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
                             }
                             @*else
-                            {
-                            <img src="/ParentPhotos/@ViewBag.instanceid/  @ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
-                            }*@
+                                {
+                                <img src="/ParentPhotos/@ViewBag.instanceid/  @ViewBag.PhotoNameFullName" alt="" id="ImgPhotoDisplay" height="100" width="100" />
+                                }*@
                         </div>
                     </div>
 
@@ -535,90 +535,90 @@
     @if (ViewBag.isParentTable == 1)
     {
         @*=============================================LOGIN INFORMATION Card=================================*@
-<div class="card mb-4 ClsLoginInfoCard">
-    <div class="card-header bg-danger text-white text-header">
-        LOGIN INFORMATION
-        <span class="required float-end text-header-small"> INDICATES REQUIRED FIELDS</span>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-                @*----------------------*@
-                <div class="row mb-3 ">
-                    <label asp-for="UserName" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
-                    <div class="col-sm-4 ">
-                        <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.identityUserName">
-                    </div>
-                </div>
-                @*----------------------*@  @*----------------------*@
-                <div class="row mb-3 ">
-                    <label asp-for="Password" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
-                    <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
-                    <div class="col-sm-4 ">
-                        <input asp-for="Password" id="Password" class="form-control" placeholder="Password" required />
-                        <span asp-validation-for="Password" class="text-danger "></span>
-                    </div>
-                </div>
-                @*----------------------*@
-                <div class="row mb-3 ">
-                    <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
-                    <div class="col-sm-4 ">
-                        <input asp-for="ConfirmPassword" id="ConPassword" class="form-control" placeholder="Confirm Password" required />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger "></span>
-                    </div>
-                </div>
-                @*----------------------*@
-                <div class="row mb-3 ">
-                    <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
-                    <div class="col-sm-4 ">
-                        <div class="position-relative">
-                            <select id='DdlPickUpStop' asp-for="SecurityQuestionId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))" required>
-                                <option value=''>---------Select---------</option>
-                            </select>
-                            <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                @*----------------------*@
-                <div class="row mb-3 ">
-                    <label asp-for="Answer" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
-                    <div class="col-sm-4 ">
-                        <input asp-for="Answer" class="form-control" placeholder="Answer" required />
-                        <span asp-validation-for="Answer" class="text-danger "></span>
-                    </div>
-                </div>
-
-                @*----------------------*@
-
-                <div class="mb-3 row">
-                    <label asp-for="IsActive" class="col-sm-4 col-form-label  text-end" for="basic-default-name">Is Enabled</label>
-                    <div class="col-sm-4">
-                        <div class="col mt-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input " asp-for="IsActive" id="YesIsActive" type="radio" name="IsActive" value="1" checked="checked" />
-                                <label class="form-check-label" for="YesIsActive">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input " asp-for="IsActive" id="NoIsActive" type="radio" name="IsActive" value="0" />
-                                <label class="form-check-label" for="NoIsActive"> No</label>
+        <div class="card mb-4 ClsLoginInfoCard">
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                LOGIN INFORMATION
+                <span class="required float-end text-header-small"> INDICATES REQUIRED FIELDS</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label asp-for="UserName" class="col-sm-4 col-form-label  text-end" for="basic-default-name"></label>
+                            <div class="col-sm-4 ">
+                                <input type="text" readonly="" class="form-control-plaintext" value="@ViewBag.identityUserName">
                             </div>
                         </div>
-                    </div>
-                </div>
-                @*----------------------*@
-                <div class="row mb-3 ">
-                    <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
-                    <div class="col-sm-4 ">
-                        <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" />
-                        <label>Need to change password on login</label>
-                    </div>
-                </div>
-                @*----------------------*@
+                        @*----------------------*@  @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label asp-for="Password" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                            <div style="display:none"> <input type="hidden" value="@ViewBag?.identitypassword" id="IdentityPassword" readonly /></div>
+                            <div class="col-sm-4 ">
+                                <input asp-for="Password" id="Password" class="form-control" placeholder="Password" required />
+                                <span asp-validation-for="Password" class="text-danger "></span>
+                            </div>
+                        </div>
+                        @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label asp-for="ConfirmPassword" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                            <div class="col-sm-4 ">
+                                <input asp-for="ConfirmPassword" id="ConPassword" class="form-control" placeholder="Confirm Password" required />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger "></span>
+                            </div>
+                        </div>
+                        @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label asp-for="SecurityQuestionId" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                            <div class="col-sm-4 ">
+                                <div class="position-relative">
+                                    <select id='DdlPickUpStop' asp-for="SecurityQuestionId" class="select2 form-select select2-hidden-accessible" asp-items="@(new SelectList(ViewBag.DdlSecurityQuestionList, "Value", "Text"))" required>
+                                        <option value=''>---------Select---------</option>
+                                    </select>
+                                    <span asp-validation-for="SecurityQuestionId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label asp-for="Answer" class="col-sm-4 col-form-label  text-end required" for="basic-default-name"></label>
+                            <div class="col-sm-4 ">
+                                <input asp-for="Answer" class="form-control" placeholder="Answer" required />
+                                <span asp-validation-for="Answer" class="text-danger "></span>
+                            </div>
+                        </div>
 
+                        @*----------------------*@
+
+                        <div class="mb-3 row">
+                            <label asp-for="IsActive" class="col-sm-4 col-form-label  text-end" for="basic-default-name">Is Enabled</label>
+                            <div class="col-sm-4">
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input " asp-for="IsActive" id="YesIsActive" type="radio" name="IsActive" value="1" checked="checked" />
+                                        <label class="form-check-label" for="YesIsActive">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input " asp-for="IsActive" id="NoIsActive" type="radio" name="IsActive" value="0" />
+                                        <label class="form-check-label" for="NoIsActive"> No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*----------------------*@
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"></label>
+                            <div class="col-sm-4 ">
+                                <input type="checkbox" asp-for="ChangePwOnLogin" class="form-check-input" />
+                                <label>Need to change password on login</label>
+                            </div>
+                        </div>
+                        @*----------------------*@
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
     }
 
     @*================================= Buttons ==================  *@

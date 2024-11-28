@@ -697,7 +697,16 @@ namespace Connect4m_Web.Controllers
             try
             {
 
-
+                //ViewBag.isuserjoined= val.IsUserJoined;
+                ViewBag.isuserjoined= val.IsUserJoinedbool;
+                if (val.IsUserJoinedbool == true)
+                {
+                    val.IsUserJoined = "1";
+                }
+                else
+                {
+                    val.IsUserJoined = "0";
+                }
                 //if (rolename.toupper().contains("student"))//identification is stundent or teachers
                 //{
                 //    val.rolename = "student";

@@ -1,4 +1,4 @@
-﻿//------------Manage Holidays Insert Function code Start
+﻿// ------------ MANAGE HOLIDAYS INSERT FUNCTION CODE START ------------
 function DataCallToAjax(method, url, data, successCallback, errorCallback) {
     $.ajax({
         url: url,
@@ -82,17 +82,28 @@ $('#Insertholiday').submit(function (event) {
         function (response) {
             debugger; 
             if (response == "0") {
+
                 $('#Inserterrormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
-            } else if (response == "2") {
-                $('#Inserterrormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
-            } else if (response == "") {
-                $('#Savebtn, #Clearbtn').prop('disabled', true);                
-                $('#Inserterrormessage').text('Record inserted successfully.');
-            } else if (response=="-1") {
-                $('#Inserterrormessage').text('Something went wrong please try again.');
-            }else{
-                $('#Inserterrormessage').text('Something went wrong please try again.');
+
             }
+            else if (response == "-1") {
+
+                //$('#Inserterrormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
+                $('#Inserterrormessage').text('Start Date can not be greater than End Date.');
+
+            }
+            else {
+                Holidaysbindingfun();
+                $('#Savebtn, #Clearbtn').prop('disabled', true);
+                $('#Inserterrormessage').text('Record inserted successfully.');
+
+
+            }
+            //else if (response == "-1") {
+            //    $('#Inserterrormessage').text('Something went wrong please try again.');
+            //}else{
+            //    $('#Inserterrormessage').text('Something went wrong please try again.');
+            //}
         }, function (status, error) {
 
         },
@@ -111,21 +122,16 @@ $('#Clearbtn').click(function () {
     $('#Insertholiday')[0].reset();
 });
 
-//------------Manage Holidays Insert Function code End
-
-
-
+// ------------ MANAGE HOLIDAYS INSERT FUNCTION CODE END ------------
 
 
 //----------Edit Holiday Method code
-
-//----------Main Table Main Screen Code 
-
 $(document).ready(function () {
 
    Holidaysbindingfun();
 });
 
+//TABLE DATA BINDING CODE START HERE
 function Holidaysbindingfun() {
     debugger;
     tableajax('GET', '/Admin/ManageHolidaysTabledata', null,
@@ -178,8 +184,6 @@ $('#addnewmanageholidays').click(function () {
 });
 
 
-
-
 //-----------------DataTable Data Dinding Function
 function bindDatatable(response) {
 
@@ -190,35 +194,100 @@ function bindDatatable(response) {
     $("#Holidays_Recordscount").text(response.length);
 
     var newTable = $("#ManageHolidaystbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'print',
-                text: '<i class="fa-solid fa-print"></i>Print',
-                title: 'Quro School Holidays List',
-                className: 'btn btn-primary',
-                titleAttr: 'Print' // Tooltip for accessibility
-            },
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fa fa-file-excel-o"></i>Export to Excel',
-                title: 'Quro School Holidays List', // Custom title for Excel export
-                className: 'btn btn-success'
-            }
-        ],
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
         bProcessing: false,
-        bLengthChange: true,
-        /*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
-        bfilter: false,
-        bSort: true,
+        bLengthChange: false,
+        //lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],
+        bfilter: true,
+        bSort: false,
         searching: false,
         //scrollX: true,
         //scrollY: '400px',
-        /* scrollCollapse: true,*/
+        //scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
+        pageLength: 10,
+        //stateSave:true,
         data: response,
+
+
+
+        //dom: 'Bfrtip',
+        //buttons: [
+        //    {
+        //        extend: 'print',
+        //        text: '<i class="fa-solid fa-print"></i>Print',
+        //        title: 'Holidays List',
+        //        className: 'btn btn-primary',
+        //        titleAttr: 'Print' // Tooltip for accessibility
+        //    },
+        //    {
+        //        extend: 'excelHtml5',
+        //        text: '<i class="fa fa-file-excel-o"></i>Export to Excel',
+        //        title: 'Holidays List', // Custom title for Excel export
+        //        className: 'btn btn-success',
+        //        exportOptions: {
+        //            columns: [0, 1, 2, 3] // Export columns 1, 2, 3, and 4 (0-based index)
+        //        },
+        //        customize: function (xlsx) {
+        //            // Get the worksheet
+        //            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+        //            // Add borders to all cells
+        //            var cells = $('row c', sheet);
+        //            cells.each(function () {
+        //                $(this).attr('s', '25'); // Apply border style
+        //            });
+
+        //            // Set custom column widths (in Excel style)
+        //            // Columns 1, 2, 3, and 4 (0-based index)
+        //            var columnWidths = [
+        //                { column: 'A', width: 20 }, // Column 1
+        //                { column: 'B', width: 25 }, // Column 2
+        //                { column: 'C', width: 30 }, // Column 3
+        //                { column: 'D', width: 25 }  // Column 4
+        //            ];
+
+        //            // Set the column widths
+        //            columnWidths.forEach(function (col) {
+        //                var colElement = $('col [min="' + col.column + '"]', sheet);
+        //                colElement.attr('width', col.width);
+        //            });
+
+        //            // Set custom headers (if needed)
+        //            var headerRow = $('row', sheet).first();
+        //            headerRow.find('c').each(function (index) {
+        //                // You can customize the header text or styles here if needed
+        //                if (index === 0) {
+        //                    $(this).text('Holiday Name'); // Example header customization
+        //                }
+        //                if (index === 1) {
+        //                    $(this).text('Start Date');
+        //                }
+        //                if (index === 2) {
+        //                    $(this).text('End Date');
+        //                }
+        //                if (index === 3) {
+        //                    $(this).text('Holiday Type');
+        //                }
+        //            });
+        //        }
+        //    },
+        //],
+        //bProcessing: false,
+        //bLengthChange: true,
+        ///*  lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+        //bfilter: false,
+        //bSort: true,
+        //searching: false,
+        ////scrollX: true,
+        ////scrollY: '400px',
+        ///* scrollCollapse: true,*/
+        //paging: true,
+        //bPaginate: true,
+        ////  stateSave:true,
+        //data: response,
         columns: [
 
             //{
@@ -351,7 +420,6 @@ function bindDatatable(response) {
             //}
         ]
 
-
     });
    
     table.on('draw', function () {
@@ -369,6 +437,7 @@ function bindDatatable(response) {
         fontWeight: 'bold'
     });
 }
+
 function GetDateFormat() {
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -398,8 +467,6 @@ function Clearform(formid) {
         console.error("Form with id '" + formid + "' not found.");
     }
 }
-
-
 
 $(document).on('click', '#ManageHolidaystbl .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
@@ -460,6 +527,7 @@ function Editholiday(Holidayid) {
 
 $('#UpdateHoliday').submit(function (event) {
     event.preventDefault();
+    loaddingimg.css('display', 'block');
     $('#HolidaytypeSpid').text('');
     debugger;
     if (!$(this).valid()) {
@@ -482,20 +550,28 @@ $('#UpdateHoliday').submit(function (event) {
         function (response) {
             debugger;
             if (response == "0") {
+                loaddingimg.css('display', 'none');
                 $('#Updateerrormessage').text('Holiday Already Exists Between these Dates Or Holiday Name Already Exists');
-            } else if (response == "2") {
+            }
+            else if (response == "2") {
+                loaddingimg.css('display', 'none');
                 $('#Updateerrormessage').text('You cannot update restricted holiday because restricted holiday applied by the staff.');
-            } else if (response == "1") {
+            }
+            else if (response == "1") {
+                loaddingimg.css('display', 'none');
                 $('#Updateerrormessage').text('Record updated successfully.');
                 $('#Dltbtn, #CEFTHbtn,#Updatebtn').prop('disabled', true);
-            } else {
+            }
+            else {
+                loaddingimg.css('display', 'none');
                 $('#Updateerrormessage').text('Something went wrong please try again.');
             }
-
-        }, function (status, error) {
-
+        },
+        function (status, error) {
+            loaddingimg.css('display', 'none');
         },
         true);
+    loaddingimg.css('display', 'none');
 });
 
 $('#Dltbtn').click(function () {
@@ -526,7 +602,6 @@ $('#Dltbtn').click(function () {
     //});
 })
 
-
 $('#BackToSearchUbtn').click(function () {
     location.reload();
     $('#Updateerrormessage').text('');
@@ -535,7 +610,6 @@ $('#BackToSearchUbtn').click(function () {
     $('#Manageholidays_Updatediv3').empty();
 })
 
-
 function Deletefun(HolidayId) {
     var confirmed = confirm("Are you sure you want to delete Holiday?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
     var data = { HolidayId: HolidayId };
@@ -543,9 +617,11 @@ function Deletefun(HolidayId) {
         DataCallToAjax('GET', '/Admin/Delete_Holiday', data,
             function (response) {
                 debugger;
+                location.reload();
                 if (response == "1") {
                     $('#Dltbtn, #CEFTHbtn, #Updatebtn').prop('disabled', true);
                     $('#Errormessage').text('Record deleted successfully.');
+                   
                     Holidaysbindingfun();
                 } else if (response == "") {
                     $('#Errormessage').text('Something went wrong please try again.');
@@ -560,10 +636,7 @@ function Deletefun(HolidayId) {
     }
 }
 
-
-
-
-//---=========****####========= CREATE EXECPTION FOR TO HOLLIDAYS USERS POSTING BUTTON AFTER VIEW IN CODE =========####****=========---------------
+// ------------ CREATE EXCEPTION FOR HOLIDAY USERS POSTING BUTTON AFTER VIEW IN CODE ------------
 
 $('#CEFTHbtn').click(function () {
     $('#Updateerrormessage').text('');
@@ -600,7 +673,6 @@ $('#BacktoSearchinpostuserbtn').click(function () {
 
 });
 
-
 function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, ClscheckboxSelector, SclcheckboxSelector) {
     var checkboxValues = {};
     var selectors = [
@@ -630,7 +702,8 @@ function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, Clscheckbo
     });
     return checkboxValues;
 }
-$('#PostSmsMailbtn').on('click', function () {   
+
+$('#PostSmsMailbtn').on('click', function () {
     debugger;
     var HolidayId= $('#HolidayidlblId').val();  
     var ForAll; 
@@ -694,3 +767,261 @@ $('#PostSmsMailbtn').on('click', function () {
     });
 });
 
+// Holidays Export to excel code This Event its not used
+$('#lnkExportExcel_').on('click', function () {
+
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#Year option:selected').text();
+    if (selectedText === "---------Select---------" || selectedText === "") {
+        selectedText = "";
+    } else {
+        selectedText = `Year : ${selectedText}`;
+    }
+
+    // Get today's date
+    var today = new Date();
+
+    // Array of month names
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Get day, month and year
+    var day = today.getDate();
+    var month = months[today.getMonth()]; // Get the month as a string
+    var year = today.getFullYear();
+
+    // Format the date in dd MMM yyyy format
+    var formattedDate = `${day < 10 ? '0' + day : day} ${month} ${year}`;
+
+    // Use the formatted date
+     //`Report Taken On : ${formattedDate}`;
+
+    // Header Content (to include title and session year)
+    var headerContent = `
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h4 style="margin: 0;">Holidays List</h4>
+        <h4 style="margin: 0;">Quro Schools</h4>
+        <h4 style="margin: 0;">${selectedText}</h4>
+        <h4 style="margin: 0;">Report Taken On : ${formattedDate}</h4>
+    </div>`;
+
+    // Clone the original table
+    var table1 = document.getElementById("ManageHolidaystbl");
+    var table1Clone = table1.cloneNode(true); // Clone the table
+
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
+    }
+
+    // Apply border and width to all table cells
+    var cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].style.border = "1px solid black";  // Add border to each cell
+        cells[i].style.padding = "3px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "20px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "3px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This is a system generated report contains confidential information intended for a specific individual and a purpose. Any unauthorized use, copying, or distribution of this report is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'HolidaysList.xls'); // Trigger file download
+});
+
+// HOLIDAYS EXPORT TO EXCEL
+$('#lnkExportExcel').on('click', function () {
+
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#Year option:selected').text();
+    if (selectedText === "---------Select---------" || selectedText === "") {
+        selectedText = "";
+    } else {
+        selectedText = `Year : ${selectedText}`;
+    }
+
+    // Get today's date
+    var today = new Date();
+
+    // Array of month names
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Get day, month, and year
+    var day = today.getDate();
+    var month = months[today.getMonth()]; // Get the month as a string
+    var year = today.getFullYear();
+
+    // Format the date in dd MMM yyyy format
+    var formattedDate = `${day < 10 ? '0' + day : day} ${month} ${year}`;
+
+    // Header Content (to include title and session year)
+    var headerContent = `
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h4 style="margin: 0;">Holidays List</h4>
+        <h4 style="margin: 0;">Quro Schools</h4>
+        <h4 style="margin: 0;">${selectedText}</h4>
+        <h4 style="margin: 0;">Report Taken On : ${formattedDate}</h4>
+    </div>`;
+
+    // Clone the original table
+    var table1 = document.getElementById("ManageHolidaystbl");
+    var table1Clone = table1.cloneNode(true); // Clone the table
+
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
+    }
+
+    // Remove the "Delete" column in both the header and the table body
+    // 1. Remove "Delete" column header
+    var headerCells = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headerCells.length; i++) {
+        if (headerCells[i].innerText.trim() === "Delete") {
+            // Remove the "Delete" header column
+            for (var j = 0; j < table1Clone.rows.length; j++) {
+                table1Clone.rows[j].deleteCell(i); // Remove the "Delete" column from all rows
+            }
+            break; // Exit the loop after deleting the "Delete" column header
+        }
+    }
+    // 2. Remove the "Delete" column in each row of the table body
+    var rows = table1Clone.getElementsByTagName("tr");
+    for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        if (cells.length > 0) {  // Skip the header row
+            // Loop to find the last column or the "Delete" column based on its index
+            for (var j = 0; j < cells.length; j++) {
+                if (cells[j].innerText.trim() === "Delete") {
+                    rows[i].deleteCell(j); // Delete the "Delete" column cell in each row
+                    break; // Exit the loop after deleting the "Delete" column
+                }
+            }
+        }
+    }
+
+    // Apply border and width to all table cells
+    var cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].style.border = "1px solid black";  // Add border to each cell
+        cells[i].style.padding = "3px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "20px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "3px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This is a system generated report contains confidential information intended for a specific individual and a purpose. Any unauthorized use, copying, or distribution of this report is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'HolidaysList.xls'); // Trigger file download
+});
+
+// HOLIDAYS PRINT EVENT CODE START HERE
+$(document).on('click', '#lnkprint', function (event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#Year option:selected').text();
+    if (selectedText === "---------Select---------" || selectedText === "") {
+        selectedText = "";
+    } else {
+        selectedText = `Year : ${selectedText}`;
+    }
+    // Get today's date
+    var today = new Date();
+
+    // Array of month names
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Get day, month, and year
+    var day = today.getDate();
+    var month = months[today.getMonth()]; // Get the month as a string
+    var year = today.getFullYear();
+
+    // Format the date in dd MMM yyyy format
+    var formattedDate = `${day < 10 ? '0' + day : day} ${month} ${year}`;
+
+
+    //debugger;
+    var tabledata1 = document.getElementById("ManageHolidaystbl");
+    // var tabledata2 = document.getElementById("ctl00_ContentPlaceHolder1_tblBusInfo");
+    var printContent = '</body></html><table width="100%" align="center" style="text-align:center"><tbody><tr><td colspan="34" align="center" style="background-color:Lightgray;color:Black; ">HolidaysList</td></tr>' +
+        '<tr><td colspan="34" align="center" style="background-color:Lightgray; color: Black; "><b><u>Quro Schools</u></b></td></tr>' +
+        '<tr><td colspan="34" align="center" style="background-color:Lightgray;color:Black; ">' + selectedText + '</td></tr>' +
+        '<tr><td colspan="34" align="center" style="background-color:Lightgray;color:Black; "> Report On : ' + formattedDate + '</td></tr>' +
+        '<tr><td colspan="34"></td></tr>' +
+        '<tr><td colspan="34"><table width="100%" align="center" cellspacing="0" cellpadding="0" style="text-align:left; border:1px solid #dfdfdf; font-size:10px; font-family: verdana, arial, helvetica, sans-serif; font-weight:normal;"><tbody><tr>' +
+        '<th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">S NO</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">Holiday Name</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">Holiday Type</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">Start Date</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">End Date</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">Number of Days</th><th style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">Status</th>';
+    
+
+    printContent += '</tr >';
+    for (var i = 1; i < tabledata1.rows.length; i++) {
+        printContent += '<tr style="height:24px; border:1px solid #000000;">';
+        var row = tabledata1.rows[i];
+        for (var j = 0; j < row.cells.length; j++) {
+            printContent += '<td style="height:24px; padding-left:4px; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf;">' + row.cells[j].innerText + '</td>';
+
+        }
+        printContent += '</tr>';
+    }
+    printContent += '</tbody></table></td></tr><tr><td colspan="2" align="left"></td></tr>';
+   
+    printContent += '<tr><td colspan="6" align="center" style="background-color:Lightgray;color:Black;">This is a system generated report contains confidential information intended for a specific individual and a purpose.  Any unauthorized use, copying, or distribution of this report is strictly prohibited.</td></tr>';
+    printContent += '</tbody></table></body></html>';
+    printContent += '</tr>';
+
+    var printWindow = window.open("", "_blank");
+    printWindow.document.open();
+    //  printWindow.document.write("<html><head><title>Simple Expense  </title></head><body><h3 style='margin-left:28%;padding: 4px;text-decoration: underline;'>Simple Expense Management Voucher</h3>");
+
+    printWindow.document.write(printContent);
+    // printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.print();
+})

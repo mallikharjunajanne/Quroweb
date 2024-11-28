@@ -2011,6 +2011,7 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult Insert_Holiday(Manageholidays obj)
         {
@@ -2047,8 +2048,14 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 model = JsonConvert.DeserializeObject<Manageholidays>(data);
             }
+            model.HolidayId = model.HolidayId;
+            model.Sdate =Convert.ToDateTime(model.StartDate);
+            model.Sdate =Convert.ToDateTime(model.StartDate);
+            model.Edate = Convert.ToDateTime(model.EndDate);
+            model.HolidayName = model.HolidayName;
+            model.HType = int.Parse(model.HolidayType);
             ViewBag.Items = model;
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -2878,6 +2885,7 @@ namespace Connect4m_Web.Controllers
             
             return View();
         }
+       
         [HttpPost]
         public IActionResult Insertmanagebankdeposit(Bankdeposit obj)
         {
@@ -2885,7 +2893,9 @@ namespace Connect4m_Web.Controllers
             {
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
-
+                obj.BankName = "HDFC Bank";
+                obj.Branchname= "Marredpally";
+                obj.Accountnumber= "99998367009696";
                 var Documentattachement = obj.AttachedDocument;
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 999999);
@@ -2993,7 +3003,9 @@ namespace Connect4m_Web.Controllers
             {
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
-
+                obj.BankName = "HDFC Bank";
+                obj.Branchname = "Marredpally";
+                obj.Accountnumber = "99998367009696";
                 var Documentattachement = obj.AttachedDocument;
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 999999);

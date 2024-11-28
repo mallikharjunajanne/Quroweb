@@ -269,13 +269,14 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
     <div class="card" id="DivUsersSearchedTbl">
         <div class="card-datatable table-responsive pt-0">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="card-header bg-danger text-white text-header flex-column flex-md-row">
-                    @*<div class="head-label text-center">
-                        <h5 class="card-title mb-0">*@
-                    <span>YOUR SEARCH RESULTED  <span class="badge badge-center rounded-pill bg-primary bg-glow text-header">@UsersCount</span>  RECORD(S).</span>
-                    @*</h5>
-                        </div>*@
-                </div>@if (UsersCount > 0)
+                <div class="card-header bg-danger text-white text-header flex-column flex-md-row text-header">
+                    <span>
+                        YOUR SEARCH RESULTED
+                        <span class="badge badge-center rounded-pill bg-primary bg-glow text-header">@UsersCount</span>
+                        RECORD(S).
+                    </span>
+                </div>
+                @if (UsersCount > 0)
                 {
                     <table id="TblUsersSearched" class="datatables-basic table dataTable no-footer dtr-column table table-bordered no-footer dataTable">
                         <thead class="table-dark">
@@ -358,9 +359,9 @@ else if (ViewBag.MarksUploadtype == "UploadWithOutExcelFile")
                                         OptionalSubjectcount++;
                                     }
                                     @*@for (int i = 1; i <= Subjectcount; i++)
-                                        {
-                                            <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
-                                        }*@
+                                {
+                                    <td><input type="text" value="@item.GetType().GetProperty($"column{i}").GetValue(item, null)" /></td>
+                                }*@
                                 </tr>
                             }
                         </tbody>

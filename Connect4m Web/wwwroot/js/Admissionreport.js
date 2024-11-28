@@ -32,13 +32,14 @@ $(document).ready(function () {
     BindInstanceDropdown();
     BindAcadamiceyeardropdown();
     BindClassdropdown();
-    Pageloadtbldata();
-
-
+    //Pageloadtbldata();
 });
 
-function Pageloadtbldata() {
-    handleAjax('GET', "/Reports/Quroadmissionreportscounttbl", null,
+//#region MAIN TABLE DATA CODE START
+function Pageloadtbldata() { 
+    var ddlAcadamicyear = $('#ddlAcadamicyear').val();
+    var dataToSend = {"Acadamicyearid": ddlAcadamicyear };
+    handleAjax('GET', "/Reports/Quroadmissionreportscounttbl", dataToSend,
         function (resp) {
             //debugger;
             loaddingimg.css('display', 'none');
@@ -61,72 +62,78 @@ function Bindsearchtbl(response) {
     var table = $('#Admissionscounttbl').DataTable();
     table.destroy();
 
+    var selectedText = $('#ddlAcadamicyear option:selected').text();
+    if (selectedText === "Select Academic Year" || selectedText === "") {
+        selectedText = "";
+    }
+
     var newTable = $("#Admissionscounttbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excel',
-                text: 'Export To Excel',
-                title: 'Manage Admissions',
-                messageTop: 'Quro Schools',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Adjust column indexes based on your DataTable
-                },
-                customize: function (xlsx) {
-                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
 
-                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        //debugger;
-                        // Set styles for the title (A1 cell)
-                        const titleCell = $('c[r="A1"]', sheet);
-                        if (titleCell && titleCell[0]) {
-                            titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
-                        }
+        //dom: 'Bfrtip',
+        //buttons: [
+        //    {
+        //        extend: 'excel',
+        //        text: 'Export To Excel',
+        //        title: 'Admission Summary Report',
+        //        messageTop: 'Quro Schools/For the Session : ',
+        //        exportOptions: {
+        //            columns: [0, 1, 2, 3] // Adjust column indexes based on your DataTable
+        //        },
+        //        customize: function (xlsx) {
+        //            const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                        // Set styles for the messageTop (A2 cell)
-                        const messageTopCell = $('c[r="A2"]', sheet);
-                        if (messageTopCell && messageTopCell[0]) {
-                            messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
-                        }
+        //            if (sheet && sheet.sheetData && sheet.sheetData[0]) {
+        //                //debugger;
+        //                // Set styles for the title (A1 cell)
+        //                const titleCell = $('c[r="A1"]', sheet);
+        //                if (titleCell && titleCell[0]) {
+        //                    titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
+        //                }
 
-                        const DateCell = $('c[r="A3"]', sheet);
-                        if (DateCell && DateCell[0]) {
-                            DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
-                        }
+        //                // Set styles for the messageTop (A2 cell)
+        //                const messageTopCell = $('c[r="A2"]', sheet);
+        //                if (messageTopCell && messageTopCell[0]) {
+        //                    messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
+        //                }
 
-                        const range = sheet.sheetData[0].attributes['!ref'].value;
-                        const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
+        //                const DateCell = $('c[r="A3"]', sheet);
+        //                if (DateCell && DateCell[0]) {
+        //                    DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
+        //                }
 
-                        for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
-                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
-                            for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
-                                const cellRef = colLetter + row;
-                                const cell = $('c[r="' + cellRef + '"]', sheet);
-                                if (cell && cell[0]) {
-                                    // Add black border to data cells
-                                    cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
-                                }
-                            }
-                        }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
-                    }
-                }
-            }
-        ],
+        //                const range = sheet.sheetData[0].attributes['!ref'].value;
+        //                const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
+
+        //                for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
+        //                    const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
+        //                    for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
+        //                        const cellRef = colLetter + row;
+        //                        const cell = $('c[r="' + cellRef + '"]', sheet);
+        //                        if (cell && cell[0]) {
+        //                            // Add black border to data cells
+        //                            cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
+        //                        }
+        //                    }
+        //                }
+        //            } else {
+        //                console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
+        //            }
+        //        }
+        //    }
+        //],
         bProcessing: false,
-        bLengthChange: true,
-        /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+        bLengthChange: false,
         pageLength: 20,
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         scrollX: true,
         scrollY: '400px',
         scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
+        bPaginate: false,
         data: response,
         columns: [
             {
@@ -195,6 +202,71 @@ function Bindsearchtbl(response) {
     });
 }
 
+$('#Admissionreportexporttoexcel').on('click', function () {
+
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#ddlAcadamicyear option:selected').text();
+    if (selectedText === "Select Academic Year" || selectedText === "") {
+        selectedText = "";
+    }
+
+    // Header Content (to include title and session year)
+    var headerContent = `
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h4 style="margin: 0;">Admission Summary Report</h4>
+        <h4 style="margin: 0;">Quro Schools</h4>
+        <h4 style="margin: 0;">For the Session: ${selectedText}</h4>
+    </div>`;
+
+    // Clone the original table
+    var table1 = document.getElementById("Admissionscounttbl");
+    var table1Clone = table1.cloneNode(true); // Clone the table
+
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
+    }
+
+    // Apply border and width to all table cells
+    var cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].style.border = "1px solid black";  // Add border to each cell
+        cells[i].style.padding = "5px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "30px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "5px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This report contains confidential information intended solely for the recipient. Unauthorized use, copying, or distribution is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'AdmissionsSummaryReport.xls'); // Trigger file download
+});
+//#endregion
+
 $('#Admissionsreportform').submit(function (event) {
 
     event.preventDefault();
@@ -229,16 +301,53 @@ $('#Admissionsreportform').submit(function (event) {
     }, 50);
 });
 
+//#region DDLS BINDING FUNCTIONS CODE START
 function BindInstanceDropdown() {
-    CommonDropdownAjaxFunction("ddlInstances", "GET", "/Reports/GetInstancenamesDropdown", null, function (resp) {
+    CommonDropdownmultipleAjaxFunction("ddlInstances", "GET", "/Reports/GetInstancenamesDropdown", null, function (resp) {
         loaddingimg.css('display', 'none');
     }, true);
 }
 
 function BindAcadamiceyeardropdown() {
-    CommonDropdownAjaxFunction("ddlAcadamicyear", "GET", "/Reports/GetAcademicYearDropdown", null, function (resp) {
-        loaddingimg.css('display', 'none');
-    }, true);
+    //CommonDropdownAjaxFunction("ddlAcadamicyear", "GET", "/Reports/GetAcademicYearDropdown", null, function (resp) {
+    //    loaddingimg.css('display', 'none');
+    //}, true);
+
+    loaddingimg.css('display', 'block');
+    $.ajax({
+        url: '/Reports/GetAcademicYearDropdown',
+        type: 'GET',
+        success: function (response) {
+            debugger;
+
+            var Academicyearddlid = $('#ddlAcadamicyear');
+            Academicyearddlid.empty();
+
+            Academicyearddlid.append($('<option>').val('').text('Select Academic Year'));
+            response.sort(function (a, b) {
+                var textA = a.text.toUpperCase();
+                var textB = b.text.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            response.forEach(function (item) {
+                var option = $('<option>').val(item.value).text(item.text);
+                // Set the 'selected' attribute for the 2024-2025 year only
+                if (item.text === '2024-2025') {
+                    option.prop('selected', true);
+                }
+                Academicyearddlid.append(option);
+            });
+
+           
+            // After loading options, call your function
+            Pageloadtbldata();
+        },
+        error: function (xhr, status, error) {
+            errorCallback(xhr.status, error);
+        }
+    });
+    loaddingimg.css('display', 'none');
+
 }
 
 function BindClassdropdown() {
@@ -304,8 +413,10 @@ function DatesCompare(Sdate, Edate) {
 // DATES INPUT CHANGE EVENT
 $("#txtFromRegDate").on("change", function () { DatesCompare("From date", "To date"); });
 $("#txtToRegDate").on("change", function () { DatesCompare("From date", "To date"); });
+//#endregion
 
 
+//#region REGISTARTION Code
 $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) {
     event.stopImmediatePropagation();
     debugger;
@@ -321,7 +432,8 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(3)', function (event) 
             debugger;
             loaddingimg.css('display', 'none');
             RegistartionDetails(resp);
-            $('#RegisterAdmissiontbldiv').show();
+            $('#Registrationstbldiv').show();
+            $('#Admissiontbldiv').hide();
         },
         function (status, error) {
             loaddingimg.css('display', 'none');
@@ -334,79 +446,78 @@ function RegistartionDetails(response) {
     $("#Registrationstblcount").text(response.filteredList.length);
     var Statusvalue = response.userStatusValue;
 
-    $('#Registrationstbldiv').show();
-    $('#RegistartionreportResultstbl').hide();
+    //$('#Registrationstbldiv').show();
+    //$('#Admissiontbldiv').hide();
 
-    var table = $('#AdmissionreportResultstbl').DataTable();
+    var table = $('#RegistartionreportResultstbl').DataTable();
     table.destroy();
 
-    var newTable = $("#AdmissionreportResultstbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excel',
-                text: 'Export To Excel',
-                title: 'Manage Admissions',
-                messageTop: 'Quro Schools',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Adjust column indexes based on your DataTable
-                },
-                customize: function (xlsx) {
-                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
+    var newTable = $("#RegistartionreportResultstbl").DataTable({
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
+        //dom: 'Bfrtip',
+        //buttons: [
+        //    {
+        //        extend: 'excel',
+        //        text: 'Export To Excel',
+        //        title: 'Manage Admissions',
+        //        messageTop: 'Quro Schools',
+        //        exportOptions: {
+        //            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Adjust column indexes based on your DataTable
+        //        },
+        //        customize: function (xlsx) {
+        //            const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        //debugger;
-                        // Set styles for the title (A1 cell)
-                        const titleCell = $('c[r="A1"]', sheet);
-                        if (titleCell && titleCell[0]) {
-                            titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
-                        }
+        //            if (sheet && sheet.sheetData && sheet.sheetData[0]) {
+        //                //debugger;
+        //                // Set styles for the title (A1 cell)
+        //                const titleCell = $('c[r="A1"]', sheet);
+        //                if (titleCell && titleCell[0]) {
+        //                    titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
+        //                }
 
-                        // Set styles for the messageTop (A2 cell)
-                        const messageTopCell = $('c[r="A2"]', sheet);
-                        if (messageTopCell && messageTopCell[0]) {
-                            messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
-                        }
+        //                // Set styles for the messageTop (A2 cell)
+        //                const messageTopCell = $('c[r="A2"]', sheet);
+        //                if (messageTopCell && messageTopCell[0]) {
+        //                    messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
+        //                }
 
-                        const DateCell = $('c[r="A3"]', sheet);
-                        if (DateCell && DateCell[0]) {
-                            DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
-                        }
+        //                const DateCell = $('c[r="A3"]', sheet);
+        //                if (DateCell && DateCell[0]) {
+        //                    DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
+        //                }
 
-                        const range = sheet.sheetData[0].attributes['!ref'].value;
-                        const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
+        //                const range = sheet.sheetData[0].attributes['!ref'].value;
+        //                const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
 
-                        for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
-                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
-                            for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
-                                const cellRef = colLetter + row;
-                                const cell = $('c[r="' + cellRef + '"]', sheet);
-                                if (cell && cell[0]) {
-                                    // Add black border to data cells
-                                    cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
-                                }
-                            }
-                        }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
-                    }
-                }
-            }
-        ],
+        //                for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
+        //                    const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
+        //                    for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
+        //                        const cellRef = colLetter + row;
+        //                        const cell = $('c[r="' + cellRef + '"]', sheet);
+        //                        if (cell && cell[0]) {
+        //                            // Add black border to data cells
+        //                            cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
+        //                        }
+        //                    }
+        //                }
+        //            } else {
+        //                console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
+        //            }
+        //        }
+        //    }
+        //],
         bProcessing: false,
-        bLengthChange: true,
-        /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+        bLengthChange: false,
         pageLength: 20,
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         scrollX: true,
         scrollY: '400px',
         scrollCollapse: true,
         paging: true,
-        bPaginate: true,
-        //  stateSave:true,
-        //data: response,
+        bPaginate: false,
         data: response.filteredList,
         columns: [
             {
@@ -481,8 +592,91 @@ function RegistartionDetails(response) {
         ]
     });
 
+    //table.on('draw', function () {
+    //    $('#RegistartionreportResultstbl').find('td:nth-child(3)').attr('title', 'Edit').attr('title', 'Edit').css({
+    //        color: 'black',
+    //        'text-decoration': 'underline',
+    //        cursor: 'pointer',
+    //        fontWeight: 'bold'
+    //    });
+    //});
+   
+    //$('#RegistartionreportResultstbl').find('td:nth-child(3)').attr('title', 'Edit').attr('title', 'Edit').css({
+    //    color: 'black',
+    //    'text-decoration': 'underline',
+    //    cursor: 'pointer',
+    //    fontWeight: 'bold'
+    //});
+  
 }
 
+$('#Registrationstblexporttoexcelbtn').on('click', function () {
+
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#ddlAcadamicyear option:selected').text();
+    if (selectedText === "Select Academic Year" || selectedText === "") {
+        selectedText = "";
+    }
+
+    // Header Content (to include title and session year)
+    var headerContent = `
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h4 style="margin: 0;">Registration user Details Report</h4>
+        <h4 style="margin: 0;">Quro Schools</h4>
+        <h4 style="margin: 0;">For the Session: ${selectedText}</h4>
+    </div>`;
+
+    // Clone the original table
+    var table1 = document.getElementById("RegistartionreportResultstbl");
+    var table1Clone = table1.cloneNode(true); // Clone the table
+
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
+    }
+
+    // Apply border and width to all table cells
+    var cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].style.border = "1px solid black";  // Add border to each cell
+        cells[i].style.padding = "5px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "30px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "5px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This report contains confidential information intended solely for the recipient. Unauthorized use, copying, or distribution is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'RegUserDetailsReport.xls'); // Trigger file download
+});
+
+//#endregion
+
+//#region ADMISSION Code
 $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) {
     event.stopImmediatePropagation();
     debugger;
@@ -493,13 +687,13 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) 
 
     var data = { "InstanceId": Instanceid, "Userstatusvalue": "2" };
 
-    //handleAjax('GET', "/Reports/Registrations_Admissionstbl", data,
     handleAjax('GET', "/Reports/Adsreporttbl", data,
         function (resp) {
             debugger;
             loaddingimg.css('display', 'none');
-            AdmissionsRegistrationDetails(resp);
-           
+            AdmissionsRegistrationDetails(resp);          
+            $('#Admissiontbldiv').show();
+            $('#Registrationstbldiv').hide();
         },
         function (status, error) {
             loaddingimg.css('display', 'none');
@@ -508,82 +702,81 @@ $(document).on('click', '#Admissionscounttbl td:nth-child(4)', function (event) 
 })
 
 function AdmissionsRegistrationDetails(response) {
-    
+    debugger;
     $("#Admissiontblcount").text(response.filteredList.length);
     var Statusvalue = response.userStatusValue;
 
-    $('#Admissiontbldiv').show();
-    $('#Registrationstbldiv').hide();
+    //$('#Admissiontbldiv').show();
+    //$('#Registrationstbldiv').hide();
 
-    var table = $('#RegistartionreportResultstbl').DataTable();
+    var table = $('#AdmissionreportResultstbl').DataTable();
     table.destroy();
-    var newTable = $("#RegistartionreportResultstbl").DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excel',
-                text: 'Export To Excel',
-                title: 'Manage Admissions',
-                messageTop: 'Quro Schools',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Adjust column indexes based on your DataTable
-                },
-                customize: function (xlsx) {
-                    const sheet = xlsx.xl.worksheets['sheet1.xml'];
+    var newTable = $("#AdmissionreportResultstbl").DataTable({
+        dom: '<"tops"lf>t<"bottom"ip>',
+        buttons: [],
+        //dom: 'Bfrtip',
+        //buttons: [
+        //    {
+        //        extend: 'excel',
+        //        text: 'Export To Excel',
+        //        title: 'Manage Admissions',
+        //        messageTop: 'Quro Schools',
+        //        exportOptions: {
+        //            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Adjust column indexes based on your DataTable
+        //        },
+        //        customize: function (xlsx) {
+        //            const sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                    if (sheet && sheet.sheetData && sheet.sheetData[0]) {
-                        //debugger;
-                        // Set styles for the title (A1 cell)
-                        const titleCell = $('c[r="A1"]', sheet);
-                        if (titleCell && titleCell[0]) {
-                            titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
-                        }
+        //            if (sheet && sheet.sheetData && sheet.sheetData[0]) {
+        //                //debugger;
+        //                // Set styles for the title (A1 cell)
+        //                const titleCell = $('c[r="A1"]', sheet);
+        //                if (titleCell && titleCell[0]) {
+        //                    titleCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Manage Admissions</div></v:textbox>';
+        //                }
 
-                        // Set styles for the messageTop (A2 cell)
-                        const messageTopCell = $('c[r="A2"]', sheet);
-                        if (messageTopCell && messageTopCell[0]) {
-                            messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
-                        }
+        //                // Set styles for the messageTop (A2 cell)
+        //                const messageTopCell = $('c[r="A2"]', sheet);
+        //                if (messageTopCell && messageTopCell[0]) {
+        //                    messageTopCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">Quro Schools</div></v:textbox>';
+        //                }
 
-                        const DateCell = $('c[r="A3"]', sheet);
-                        if (DateCell && DateCell[0]) {
-                            DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
-                        }
+        //                const DateCell = $('c[r="A3"]', sheet);
+        //                if (DateCell && DateCell[0]) {
+        //                    DateCell[0].innerHTML = '<v:rect fillcolor="black" /><v:textbox><div style="color: white;">For the Session :' + Selectedyear + '</div></v:textbox>';
+        //                }
 
-                        const range = sheet.sheetData[0].attributes['!ref'].value;
-                        const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
+        //                const range = sheet.sheetData[0].attributes['!ref'].value;
+        //                const dataRows = range.split(':')[1].split('')[1]; // Get the range of data rows
 
-                        for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
-                            const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
-                            for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
-                                const cellRef = colLetter + row;
-                                const cell = $('c[r="' + cellRef + '"]', sheet);
-                                if (cell && cell[0]) {
-                                    // Add black border to data cells
-                                    cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
-                                }
-                            }
-                        }
-                    } else {
-                        console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
-                    }
-                }
-            }
-        ],
+        //                for (let col = 0; col < 11; col++) { // Assuming 11 columns (0 to 10), adjust as needed
+        //                    const colLetter = String.fromCharCode(65 + col); // Convert column index to Excel column letter
+        //                    for (let row = 2; row <= dataRows; row++) { // Start from row 2 (excluding header)
+        //                        const cellRef = colLetter + row;
+        //                        const cell = $('c[r="' + cellRef + '"]', sheet);
+        //                        if (cell && cell[0]) {
+        //                            // Add black border to data cells
+        //                            cell[0].innerHTML = '<style>td{border: 1px solid black; background-color: white;}</style>' + cell[0].innerHTML;
+        //                        }
+        //                    }
+        //                }
+        //            } else {
+        //                console.error('Sheet or range not found.'); // Log an error if the sheet or range is not found
+        //            }
+        //        }
+        //    }
+        //],
         bProcessing: false,
-        bLengthChange: true,
-        /* lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "ALL"]],*/
+        bLengthChange: false,
         pageLength: 20,
-        bfilter: false,
-        bSort: true,
+        bfilter: true,
+        bSort: false,
         searching: false,
         scrollX: true,
         scrollY: '400px',
         scrollCollapse: true,
-        paging: true,
-        bPaginate: true,
-        //stateSave:true,
-        //data: response,
+        paging: true,        
+        bPaginate: false,        
         data: response.filteredList,
         columns: [
             {
@@ -659,5 +852,87 @@ function AdmissionsRegistrationDetails(response) {
                 }
             }
         ]
-    });   
+    });
+    //table.on('draw', function () {
+    //    $('#AdmissionreportResultstbl').find('td:nth-child(3)').attr('title', 'Edit').attr('title', 'Edit').css({
+    //        color: 'black',
+    //        'text-decoration': 'underline',
+    //        cursor: 'pointer',
+    //        fontWeight: 'bold'
+    //    });
+    //});
+
+    //$('#AdmissionreportResultstbl').find('td:nth-child(3)').attr('title', 'Edit').attr('title', 'Edit').css({
+    //    color: 'black',
+    //    'text-decoration': 'underline',
+    //    cursor: 'pointer',
+    //    fontWeight: 'bold'
+    //});
+
 }
+
+$('#Admissionstblexporttoexcelbtn').on('click', function () {
+
+    debugger;
+    // Get selected academic year
+    var selectedText = $('#ddlAcadamicyear option:selected').text();
+    if (selectedText === "Select Academic Year" || selectedText === "") {
+        selectedText = "";
+    }
+
+    // Header Content (to include title and session year)
+    var headerContent = `
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h4 style="margin: 0;">Admission user Details Report</h4>
+        <h4 style="margin: 0;">Quro Schools</h4>
+        <h4 style="margin: 0;">For the Session: ${selectedText}</h4>
+    </div>`;
+
+    // Clone the original table
+    var table1 = document.getElementById("AdmissionreportResultstbl");
+    var table1Clone = table1.cloneNode(true); // Clone the table
+
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
+    }
+
+    // Apply border and width to all table cells
+    var cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].style.border = "1px solid black";  // Add border to each cell
+        cells[i].style.padding = "5px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "30px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "5px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This report contains confidential information intended solely for the recipient. Unauthorized use, copying, or distribution is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'AdmissionUserDetailsReport.xls'); // Trigger file download
+});
+
+//#endregion

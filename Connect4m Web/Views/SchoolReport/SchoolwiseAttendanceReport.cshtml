@@ -13,23 +13,18 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-
-
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports/</span> School Wise Attendance Report</h4>
+        <h4 class="mb-4 text-center text-header">@*<span class="text-muted fw-light">Reports/</span>*@ SCHOOL WISE ATTENDANCE REPORT</h4>
 
         <!-- Examples -->
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 @*<a id="BtnCreateNewSubjects" class="text-end" onclick="CreateNewSubjects()">Create Subject</a>*@
                 <div class="card mb-4">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span id="AddNewText_Span_CreatePage">
-                                SCHOOL WISE ATTENDANCE REPORT
-                            </span>
-                        </h5> @*<small class="text-muted float-end">Default label</small>*@
+                    <div class="card-header bg-danger text-white text-header">
+                        <span id="AddNewText_Span_CreatePage">
+                            SCHOOL WISE ATTENDANCE REPORT
+                        </span>
                     </div>
-
 
                     <div class="card-body">
                         @*=============================  Form Start ================================*@
@@ -41,7 +36,7 @@
 
                                         <div class="row mb-3" id="summaryradio">
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                             </div>
                                             <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="SchInstance"></label>
 
@@ -65,7 +60,7 @@
                                         @*==================== =================*@
                                         <div class="row mb-3">
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-1">
                                             </div>
                                             <label class="col-sm-3 col-form-label text-end" for="basic-default-name" asp-for="AttendanceFromdate"></label>
 
@@ -81,15 +76,11 @@
 
                                         @*==================== =================*@
 
-
-
-
-
                                         <div class="row justify-content-end">
                                             <div class="col-sm-5">
                                             </div>
                                             <div class="col-sm-7">
-                                                <button type="reset" class="btn btn-warning waves-effect waves-light btn-sm">Clear</button>
+                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" onclick="clearForm('SearchSchoolattendance')">Clear</button>
                                                 <button type="submit" class="btn btn-success waves-effect waves-light btn-sm">Search</button>
                                             </div>
                                         </div>
@@ -102,8 +93,6 @@
                     </div>
                 </div>
 
-
-
             </div>
 
         </div>
@@ -113,21 +102,23 @@
 
         <div id="appendallschoolattendanceSubout" class="card" style="display:none">
             <div class="demo-inline-spacing">
-                <button type="button" class="btn rounded-pill btn-label-primary waves-effect btn-sm" id="exportexcelschoolattendancereportsub">Export Excel</button>
-
+                <button type="button" class="btn rounded-pill btn-label-primary waves-effect btn-sm" id="exportexcelschoolattendancereportsub">
+                    Export Excel
+                </button>
             </div>
-            <h5 class="card-title mb-0">
-                <span id="CountOfRecords_schoolwiseatte">YOUR SEARCH RESULTED <span id="Counts" class="number-circle"></span> RECORD(S).</span>
-            </h5>
+            <div class="card-header bg-danger text-white text-header">
+                <span id="CountOfRecords_schoolwiseatte" class="text-header">
+                    YOUR SEARCH RESULTED
+                    <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>
+                    RECORD(S).
+                </span>
+            </div>
 
             <div id="appendallschoolattendanceSub">
 
             </div>
-
-
         </div>
-
-    </div>
+        </div>
 
     
 </body>

@@ -14,11 +14,8 @@
     @*<script src="~/js/LeaveCancellation.js"></script>*@
 </head>
 <body>
-
-
-
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Admin Module /</span>*@MANAGE COMPENSATORY LEAVES</h4>
+        <h4 class="mb-3 text-center text-header">MANAGE COMPENSATORY LEAVES</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
@@ -40,8 +37,12 @@
 
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="card">
-                            <div class="card-header bg-danger text-white">                              
-                                        <span>EMPLOYEE COMPENSATORY LEAVES STATUS HAVING  &nbsp;<span id="TblLeavesSummeryCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>                                  
+                            <div class="card-header bg-danger text-white">
+                                <span class="text-header">
+                                    EMPLOYEE COMPENSATORY LEAVES STATUS HAVING
+                                    <span id="TblLeavesSummeryCounts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
+                                    RECORD(S).
+                                </span>
                             </div>
 
                             <div class="table-responsive text-nowrap" id="DivTblLeavesSummery" style="display:none">
@@ -77,10 +78,8 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                         <div class="card mb-4">
-                            <div class="card-header bg-danger text-white">
-                                <span>
-                                    COMPENSATORY LEAVES SEARCH
-                                </span>
+                            <div class="card-header bg-danger text-white text-header">
+                                COMPENSATORY LEAVES SEARCH
                             </div>
 
                             <div class="card-body">
@@ -89,7 +88,7 @@
                                         <div class="col">
 
                                             @*--------------------------*@
-                                            <div  class="row mb-2">
+                                            <div class="row mb-2">
                                                 <label class="col-sm-4 col-form-label  text-end" for="basic-default-name">Department</label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
@@ -101,7 +100,7 @@
                                                 </div>
                                             </div>
                                             @*--------------------------*@
-                                            <div  class="row mb-2">
+                                            <div class="row mb-2">
                                                 <label class="col-sm-4 col-form-label  text-end" for="basic-default-name">Employee</label>
                                                 <div class="col-sm-4 ">
                                                     <div class="position-relative">
@@ -130,8 +129,12 @@
 
                         @*-----GetSearchedRecords Result page*@
                         <div class="card">
-                            <div class="card-header bg-danger text-white text-header">                              
-                                        <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>                                  
+                            <div class="card-header bg-danger text-white text-header">
+                                <span class="text-header">
+                                    YOUR SEARCH RESULTED
+                                    <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                                    RECORD(S).
+                                </span>
                             </div>
                             <div class="table-responsive text-nowrap" id="DivTblcompensatoryLeaves_SearchedRecords" style="display:none">
                                 <table id="TblcompensatoryLeaves_SearchedRecords" class="table table-hover table-bordered no-footer dataTable link">
@@ -168,88 +171,89 @@
                     <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="card mb-4">
                             <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
-                                <span>MANAGE COMPENSATORY LEAVES</span>
-                               <small class="text-header-small"> * INDICATES REQUIRED FIELDS</small>
+                                <span class="text-header">MANAGE COMPENSATORY LEAVES
+                                    <small class="text-header-small"> * INDICATES REQUIRED FIELDS</small>
+                                </span>
                             </div>
                             <div class="card-body">
-                                <form id="FmAddCompensatory">                                   
-                                            @*--------------------------*@
-                                            <div  class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Department</label>
-                                                <div class="col-sm-4 ">
-                                                    <div class="position-relative">
-                                                        <select id='DdlDepartment_save' class="select2 form-select select2-hidden-accessible" name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee_save','0','selectname')" asp-items="@(new SelectList(""))">
-                                                            <option value=''>Select a Department</option>
-                                                        </select>
-                                                        @*<span asp-validation-for="InstanceClassificationId" class=" text-danger "></span>*@
-                                                    </div>
-                                                </div>
+                                <form id="FmAddCompensatory">
+                                    @*--------------------------*@
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Department</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='DdlDepartment_save' class="select2 form-select select2-hidden-accessible" name="InstanceClassificationId" onchange="AppliedEmployeeNames_Caliingfunction(this.id,'DdlEmployee_save','0','selectname')" asp-items="@(new SelectList(""))">
+                                                    <option value=''>Select a Department</option>
+                                                </select>
+                                                @*<span asp-validation-for="InstanceClassificationId" class=" text-danger "></span>*@
                                             </div>
-                                            @*--------------------------*@
-                                            <div  class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Employee</label>
-                                                <div class="col-sm-4 ">
-                                                    <div class="position-relative">
-                                                        <select id='DdlEmployee_save' class="select2 form-select select2-hidden-accessible" name="UserId" asp-items="@(new SelectList(""))" disabled>
-                                                            <option value=''>Select a Employee</option>
-                                                        </select>
-                                                        @*<span asp-validation-for="UserId" class=" text-danger "></span>*@
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Employee</label>
+                                        <div class="col-sm-4 ">
+                                            <div class="position-relative">
+                                                <select id='DdlEmployee_save' class="select2 form-select select2-hidden-accessible" name="UserId" asp-items="@(new SelectList(""))" disabled>
+                                                    <option value=''>Select a Employee</option>
+                                                </select>
+                                                @*<span asp-validation-for="UserId" class=" text-danger "></span>*@
 
-                                                    </div>
-                                                </div>
                                             </div>
-                                            @*--------------------------*@
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
 
-                                            <div  class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Compensate Date</label>
-                                                <div class="col-sm-4 ">
-                                                    <input type="date" class="form-control" id="txtCompensateDate" name="Fromdate" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Compensate Date')" />
-                                                    <span class="compare text-danger"></span>
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Compensate Date</label>
+                                        <div class="col-sm-4 ">
+                                            <input type="date" class="form-control" id="txtCompensateDate" name="Fromdate" oninput="compareDatesNotGreaterThanTodayById(this.getAttribute('id'), 'Compensate Date')" />
+                                            <span class="compare text-danger"></span>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <div class="row mb-2">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Type</label>
+                                        <div class="col-sm-4">
+                                            <div class="col mt-2">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input check" id="Full_Day" type="radio" name="Daystype" value="0" />
+                                                    <label class="form-check-label" for="Full_Day">Full Day</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input check" id="Half_Day" type="radio" name="Daystype" value="1" />
+                                                    <label class="form-check-label" for="Half_Day"> Half Day</label>
                                                 </div>
                                             </div>
-                                            @*--------------------------*@
-                                            <div  class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Type</label>
-                                                <div class="col-sm-4">
-                                                    <div class="col mt-2">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input check" id="Full_Day" type="radio" name="Daystype" value="0" />
-                                                            <label class="form-check-label" for="Full_Day">Full Day</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input check" id="Half_Day" type="radio" name="Daystype" value="1" />
-                                                            <label class="form-check-label" for="Half_Day"> Half Day</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*--------------------------*@
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
 
-                                            <div  class="row mb-2" id="DaySession" style="display:none">
-                                                <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Session</label>
-                                                <div class="col-sm-4">
-                                                    <div class="col mt-2">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input check1" id="RdnMorning" type="radio" name="Daysession" value="1" />
-                                                            <label class="form-check-label" for="RdnMorning">Morning</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input check1" id="RdnAfternoon" type="radio" name="Daysession" value="2" />
-                                                            <label class="form-check-label" for="RdnAfternoon">Afternoon</label>
-                                                        </div>
-                                                    </div>
+                                    <div class="row mb-2" id="DaySession" style="display:none">
+                                        <label class="col-sm-4 col-form-label  text-end required" for="basic-default-name">Day Session</label>
+                                        <div class="col-sm-4">
+                                            <div class="col mt-2">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input check1" id="RdnMorning" type="radio" name="Daysession" value="1" />
+                                                    <label class="form-check-label" for="RdnMorning">Morning</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input check1" id="RdnAfternoon" type="radio" name="Daysession" value="2" />
+                                                    <label class="form-check-label" for="RdnAfternoon">Afternoon</label>
                                                 </div>
                                             </div>
-                                            @*--------------------------*@
-                                            <input type="hidden" name="Leavetypeid" id="CompOffLeaveID" />
-                                            @*--------------------------*@
-                                            <div class="row justify-content-end">
-                                                <div class="col-sm-8">
-                                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClearform" onclick="FN_ClearValues('FmAddCompensatory', 'DdlEmployee_save',this.value)" value="Clear">Clear</button>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSaveId" onclick="SaveCompensatoryleaves(event)" value="Save">Save</button>
-                                                </div>
-                                            </div>
-                                            @*--------------------------*@                                   
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
+                                    <input type="hidden" name="Leavetypeid" id="CompOffLeaveID" />
+                                    @*--------------------------*@
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-8">
+                                            <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="BtnClearform" onclick="FN_ClearValues('FmAddCompensatory', 'DdlEmployee_save',this.value)" value="Clear">Clear</button>
+                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="BtnSaveId" onclick="SaveCompensatoryleaves(event)" value="Save">Save</button>
+                                        </div>
+                                    </div>
+                                    @*--------------------------*@
                                 </form>
                             </div>
                         </div>
@@ -264,8 +268,6 @@
         </div>
 
     </div>
-
-
 </body>
 </html>
 

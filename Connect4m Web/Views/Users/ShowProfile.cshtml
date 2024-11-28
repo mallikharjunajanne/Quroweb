@@ -18,7 +18,7 @@
     <div class="flex-grow-1 container-p-y container-xxl">
 
         <!--<h4 class="mb-4 text-center">-->@*<span class="text-muted fw-light">Admin Module /</span>*@<!--MY PROFILE</h4>-->
-        <h4 class="mb-4 text-center">MY PROFILE</h4>
+        <h4 class="mb-4 text-center text-header">MY PROFILE</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -178,12 +178,16 @@
                                                 <div class="col-sm-8 mb-2">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class="btn btn-danger waves-effect waves-light btn-sm ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
+                                                    <a class="btn btn-danger waves-effect waves-light btn-sm ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>  
+                                                    @*<a class="btn btn-danger waves-effect waves-light btn-sm ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>*@
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
                                                     }
                                                     else if (UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display: none !important" class="btn btn-danger waves-effect waves-light btn-sm ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span>
+                                                    <a style="display: none !important" class="btn btn-danger waves-effect waves-light btn-sm ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                    @*<a style="display: none !important" class="btn btn-danger waves-effect waves-light btn-sm ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>*@
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
                                                     }
                                                     else
@@ -601,12 +605,15 @@
                                                 <div class="col-sm-4 ">
                                                     @if (ViewBag.PhotoName != "" && ViewBag.PhotoName != null && UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span><a class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span id="SpnPhotoName" class="ClsFileName">@ViewBag.PhotoName</span>
+                                                        <a class="btn btn-danger waves-effect waves-light btn-sm ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>@*<a class=" btn rounded-pill btn-outline-danger waves-effect ClsFileName" onclick="DeletePhoto_CallingFunction()">Delete</a>*@
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" style="display:none" />
                                                     }
                                                     else if (UpdateIdentification == "UpdateDetails")
                                                     {
-                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span><a style="display: none !important" class="btn rounded-pill btn-outline-danger waves-effect ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        <span style="display:none" class="ClsFileName" id="SpnPhotoName">@ViewBag.PhotoName</span>
+                                                        <a style="display: none !important" class="btn btn-danger waves-effect waves-light btn-sm ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>
+                                                        @*<a style="display: none !important" class="btn rounded-pill btn-outline-danger waves-effect ClsFileName " onclick="DeletePhoto_CallingFunction()">Delete</a>*@
                                                         <input type="file" asp-for="Photo" id="FlPhoto" class="form-control" />
                                                     }
                                                     else

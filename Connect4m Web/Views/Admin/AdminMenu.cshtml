@@ -12,15 +12,15 @@
         }
 
         ul.list-container {
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-wrap: wrap; /* Allow items to wrap to new lines */
+            gap: 10px; /* Space between items */
             /*padding: 0;*/
             padding: 1;
             margin: 0;
             list-style-type: none;
         }
 
-        ul.list-container li.list-item {
+            ul.list-container li.list-item {
                 box-sizing: border-box;
                 margin-bottom: 10px; /* Space below each item */
                 display: flex;
@@ -41,10 +41,10 @@
         .text-color {
             color: black;
             font-size: 10pt;
-            cursor:pointer;
+            cursor: pointer;
         }
 
-            /*.text-color:hover {
+        /*.text-color:hover {
                 color: white;
             }*/
     </style>
@@ -52,7 +52,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-3 text-center">Admin Area</h4>
+        <h4 class="mb-3 text-center text-header">ADMIN AREA</h4>
         <div class="row mb-2">
             @for (var i = 0; i < ViewBag.Menuitems.Count; i += 3)
             {
@@ -63,14 +63,14 @@
                         <div class="col-sm-4">
                             <div class="card mb-4">
                                 <div class="card-header bg-danger text-white">
-                                    <span class="text-header text-uppercase" id="Menuitems_@j" title="@item.CategoryId">
+                                    <span class="text-header text-uppercase Adminmenu" id="Menuitems_@j" title="@item.CategoryId">
                                         @item.CategoryName
                                     </span>
                                 </div>
                                 <div class="">
                                     <div id="menuList_@j">
 
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
     <script>
         $(document).ready(function () {
             debugger;
-            $('.text-header').each(function () {
+            $('.Adminmenu').each(function () {
                 // Get the title attribute value
                 var categoryId = $(this).attr('title');
 
@@ -108,17 +108,17 @@
                         $menuListDiv.empty();
 
                         // Create a new <ul> element
-                       /*var $ul = $('<ul class="py-1"></ul>');*/
+                        /*var $ul = $('<ul class="py-1"></ul>');*/
                         var $ul = $('<ul class="list-container"></ul>');
 
                         // Append each menu item to the <ul>
                         $.each(menuItems, function (index, item) {
                             $ul.append(
                                 `<li class="list-item">
-                                    <a class="list-link" href="${item.menuUrl}">
-                                        <span class="text-color">${item.menuName}</span>
-                                    </a>
-                                </li>`
+                                            <a class="list-link" href="${item.menuUrl}">
+                                                <span class="text-color">${item.menuName}</span>
+                                            </a>
+                                        </li>`
                             );
                         });
                         //$.each(menuItems, function (index, item) {

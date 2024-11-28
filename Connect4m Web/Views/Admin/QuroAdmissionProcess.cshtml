@@ -10,20 +10,19 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Admin /</span>MANAGE ADMISSIONS</h4>*@
-        <h4 class="mb-4 text-center">MANAGE ADMISSIONS</h4>
+        <h4 class="mb-2 text-center text-header">MANAGE ADMISSIONS</h4>
         <div class="text-left">
             <span id="CommonErrorMessage" class="text-validation"></span>
         </div>
         <div class="row mb-2" id="SearchAdmissionsDiv">
             <div class="text-end">
-                <a href="javascript:void(0);" onclick="Newadmission()">Create New Application</a>
+                <a href="javascript:void(0);" onclick="Newadmission()" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">
+                    Create New Application
+                </a>
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
-                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
-                        SEARCH USERS
-                    </div>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">SEARCH USERS</div>
                     <div class="card-body">
                         <form id="AdmissionsSearchform" enctype="multipart/form-data">
                             <div class="row">
@@ -84,9 +83,10 @@
                 <div class="card">
                     <div class="card-header bg-danger text-white text-header">
                         YOUR SEARCH RESULTED
-                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
+                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                        RECORDS.
                     </div>
-                    <div class="links table-responsive text-nowrap" id="Admissiontbldiv">                       
+                    <div class="links table-responsive text-nowrap" id="Admissiontbldiv">
                         <table id="Admissionstbl" class="table table-hover table-bordered no-footer dataTable">
                             <thead class="table-dark">
                                 <tr>

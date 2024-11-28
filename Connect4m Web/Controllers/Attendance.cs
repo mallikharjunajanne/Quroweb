@@ -208,6 +208,7 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
+       
         public IActionResult AttendanceClassification()//PostAttendance Classification
         {
             List<SelectListItem> value = new List<SelectListItem>();
@@ -219,6 +220,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(value);
         }
+        
         public IActionResult AttendanceSubclass(int InstanceClassificationId)
         {
             List<ManageSubClassification> Subclassli = new List<ManageSubClassification>();
@@ -230,6 +232,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(Subclassli);
         }
+        
         public IActionResult Attendanceslot(string ClassificationId, int SubClassificationId, int FilterTeachingSubjects)
         {
             List<ManageSlots> Value2 = new List<ManageSlots>();
@@ -252,6 +255,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(Value2);
         }
+        
         public IActionResult Deleteattendance(Attendancepost obj)
         {
             obj.InstanceId = InstanceId;
@@ -266,6 +270,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(item);
         }
+       
         public ActionResult GetAttedanceDetails(Attendancepost obj)
         {
             //public ActionResult GetAttedanceDetails(string StartDate, string EndDate, string InstanceClassificationId, string InstanceSubClassificationId, string SubjectSlotID, string ViewBagMyData)//Get_attendance
@@ -507,6 +512,7 @@ namespace Connect4m_Web.Controllers
             ViewBag.rolename = roleName;
             return View();
         }
+       
         public IActionResult FastAttendanceClassification()
         {
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -518,6 +524,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }
+       
         public IActionResult FastAttendancegetSlots()
         {
             List<FastAttendance> listvalues = new List<FastAttendance>();
@@ -529,6 +536,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }
+       
         public IActionResult FastAttendancegetSubclass(int InstanceClassificationId)
         {
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -625,6 +633,7 @@ namespace Connect4m_Web.Controllers
         }
 
         [HttpPost]
+       
         public ActionResult FastAttendance(List<FastAttendance> objList)
         {
             string Data = string.Empty;
@@ -679,6 +688,7 @@ namespace Connect4m_Web.Controllers
         {     
             return View();
         }
+        
         public IActionResult Attendancedetailsdepartment()
         {
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -690,6 +700,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }      
+        
         public IActionResult AttendancedetailsSubClass(int InstanceClassificationId)
         {
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -701,6 +712,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }       
+       
         public IActionResult AttendancedetailsSlot()
         {
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -712,6 +724,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }
+        
         public IActionResult Get_Attendance_Details_Tbl(detailsattendance obj)
         {
             obj.InstanceId = InstanceId;
@@ -740,6 +753,7 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+        
         public IActionResult Get_SubClassificationNames(int InstanceClassificationId)
         {            
             List<SelectListItem> listvalues = new List<SelectListItem>();
@@ -751,6 +765,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(listvalues);
         }
+        
         public IActionResult Classwisestudents(int InstanceClassificationId, int InstanceSubClassificationId)
         {
             
@@ -765,6 +780,7 @@ namespace Connect4m_Web.Controllers
 
             return Json(list);
         }
+        
         public IActionResult Get_Attendance_Summary_Details(int Studentuserid)
         {
             List<Attendance_Summary> value = new List<Attendance_Summary>();
@@ -797,6 +813,7 @@ namespace Connect4m_Web.Controllers
             list = CommonMethodobj.CommonListMethod<AttendancePost, SelectListItem>(obj, "/Departmentddl", client);
             return Json(list);
         }
+        
         public IActionResult Facultynamesdd()
         {
             AttendancePost obj = new AttendancePost();
@@ -808,6 +825,7 @@ namespace Connect4m_Web.Controllers
             list = CommonMethodobj.CommonListMethod<AttendancePost, Facultynames>(obj, "/Facultynamesddl", client);
             return Json(list);
         }
+        
         public IActionResult AttendancepostingdepartmentbySubclass(int InstanceClassificationId)
         {
             AttendancePost obj = new AttendancePost();
@@ -819,6 +837,7 @@ namespace Connect4m_Web.Controllers
             list = CommonMethodobj.CommonListMethod<AttendancePost, SelectListItem>(obj, "/Classddl", client);
             return Json(list);
         }
+        
         public IActionResult Attendancepostingdepartmentbyslot(int InstanceSubClassificationId, int InstanceClassificationId)
         {
             AttendancePost obj = new AttendancePost();
@@ -832,6 +851,7 @@ namespace Connect4m_Web.Controllers
             list =CommonMethodobj.CommonListMethod<AttendancePost, SelectListItem>(obj, "/Departmentbyslots", client);
             return Json(list);
         }       
+        
         public ActionResult AttendancePosting_Tbl(AttendancePost obj)
         {
             obj.InstanceId = InstanceId;
@@ -887,6 +907,7 @@ namespace Connect4m_Web.Controllers
             }
             return View();
         }
+        
         public string CheckAnyHoliday(DateTime Startdate)
         {
             AttendancePost obj = new AttendancePost();
@@ -1022,6 +1043,7 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+        
         public IActionResult AttendanceSummarytbl(string AcademicYear)
         {
             studentsummary obj = new studentsummary();

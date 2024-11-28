@@ -8,7 +8,7 @@
 
 
 <div class="col-md-12 col-lg-12 mb-3">
-    <span id="Inserterrormessage" class="text-danger"></span>
+    <span id="Inserterrormessage" class="text-validation"></span>
     <div class="card mb-4">
         <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
             SAVE HOLIDAYS
@@ -44,19 +44,19 @@
                         <label class="control-label col-sm-4 col-form-label required text-end space">Holiday Type</label>
                         <div class="col-sm-6" style="display:flex;">
                             <div class="form-check col-4">
-                                <input name="default-radio-1" class="form-check-input" type="radio" value="1" id="defaultRadio1" asp-for="HType">
+                                <input name="HType" class="form-check-input" type="radio" value="1" id="defaultRadio1" asp-for="HType">
                                 <label class="form-check-label" for="defaultRadio1">
                                     Holidays
                                 </label>
                             </div>
                             <div class="form-check col-4">
-                                <input name="default-radio-1" class="form-check-input" type="radio" value="2" id="defaultRadio2" asp-for="HType">
+                                <input name="HType" class="form-check-input" type="radio" value="2" id="defaultRadio2" asp-for="HType">
                                 <label class="form-check-label" for="defaultRadio2">
                                     Week-Ends
                                 </label>
                             </div>
                             <div class="form-check col-8">
-                                <input name="default-radio-1" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
+                                <input name="HType" class="form-check-input" type="radio" value="3" id="defaultRadio3" asp-for="HType">
                                 <label class="form-check-label" for="defaultRadio3">
                                     Restricted Holidays
                                 </label>

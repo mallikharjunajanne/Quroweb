@@ -12,8 +12,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Admin /</span>MANAGE HOLIDAYS </h4>*@
-        <h4 class="mb-3 text-center">MANAGE HOLIDAYS </h4>
+        <h4 class="mb-3 text-center text-header">MANAGE HOLIDAYS </h4>
         <div class="row mb-2">
             <div class="col-sm-12 text-end" id="Manageholidays_Heaingmaindiv0">
                 <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="addnewmanageholidays">
@@ -104,7 +103,13 @@
                     </div>
                 </div>
                 <div id="ManageHolidaystbl_containerdivId">
-                    <span id="Errormessage" class="text-danger"></span>
+                    <span id="Errormessage" class="text-validation"></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button id="lnkExportExcel" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">
+                            Export to Excel
+                        </button>
+                        <button id="lnkprint" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Print</button>
+                    </div>
                     <div class="card mb-4">
                         <div class="card-header bg-danger text-white text-header">
                             YOUR SEARCH RESULTED

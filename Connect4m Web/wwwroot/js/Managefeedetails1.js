@@ -354,3 +354,45 @@ function Discountfeedetailsinserting() {
         $('#Commonerrormessage').html("Please enter Due Date.");
     }
 }
+
+function ShowChangeActivity(UserFeeActivityId) {
+
+    debugger;
+    try {
+
+        debugger;
+        $(".Commonerrormessage").empty();        
+        loaddingimg.css('display', 'block');
+      
+        $.ajax({
+            url: "/FeeSection/ViewChangeActivity?UserFeeActivityId=" + UserFeeActivityId,
+            type: "GET",
+            //data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                debugger;
+                $(".Commonerrormessage").empty();
+                var newWindow = window.open("", "_blank", "width=800,height=600");
+                if (newWindow) {                    
+                    // Write just the table content into the new window
+                    newWindow.document.write('<html><head><title>View Change Activity</title></head><body>');
+                    newWindow.document.write(response); // Write the response content to the new window
+                    newWindow.document.write('</body></html>');
+                }
+                else {
+                    alert("Pop-up blocked. Please allow pop-ups for this site.");
+                }
+                loaddingimg.css('display', 'none');
+            },
+            error: function (xhr, status, error) {
+                loaddingimg.css('display', 'none');
+                $("#Commonerrormessage").text("Something Error");
+            }
+        });
+    }
+    catch (e) {
+        loaddingimg.css('display', 'none');
+        $("#Commonerrormessage").text("Something Error");
+    }
+}

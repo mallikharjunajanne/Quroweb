@@ -469,13 +469,25 @@ namespace Connect4m_Web.Models.Attendenceproperites
     {
         public string SMS { get; set; }
         public string MobileNumber { get; set; }
-    }    
+    }
     public class EmailStudent
     {
         public string SMS { get; set; }
         public string StudentEmail { get; set; }
     }
-    
+
+    public class Datamodel
+    {
+        public List<EmailStudent> Parentmail { get; set; }
+        public List<SmsStudent> _Parentsms { get; set; }
+        public List<EmailStudent> _Studentmail { get; set; }
+        public List<SmsStudent> _Studentsms { get; set; }
+        //public List<SmsStudent> _Studentsms { get; set; }
+        //public List<EmailStudent> _Studentmail { get; set; }
+        //public List<SmsStudent> _Parentsms { get; set; }
+        //public List<EmailStudent> _Parentmail { get; set; }
+    }
+
 
     public class RequestedDataModel:Commonproperties
     {

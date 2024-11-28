@@ -127,4 +127,18 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string CollegeHostel { get; set; }
         public string Gender { get; set; }
     }
+    
+    public class ChangeActivityRequest : InstanceCommonproperties
+    {
+        public int SourceId { get; set; }
+        public string AuditKey { get; set; }
+        public string TableName { get; set; }
+        public string PreviousValue{ get; set; }
+        public string PreviousValueCreatedBy{ get; set; }
+        public string CurrentValueCreatedBy { get; set; }
+        public string CurrentValuecreateddate { get; set; }
+
+        public int AuditTrailId { get; set; }
+        public string CurrentValue { get; set; }
+    }
 }

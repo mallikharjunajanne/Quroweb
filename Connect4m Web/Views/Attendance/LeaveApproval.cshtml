@@ -1,6 +1,4 @@
 ﻿
-
-
 @{
     ViewData["Title"] = "LeaveApproval";
 }
@@ -58,14 +56,26 @@
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
 
-        <h4 class="mb-3 text-center">@*<span class="text-muted fw-light">Staff Module /</span>*@LEAVE APPROVAL</h4>
+        <h4 class="mb-3 text-center text-header">LEAVE APPROVAL</h4>
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <ul class="nav nav-pills" id="myTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Approve /Reject</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Approved & Rejected Leaves</a></li>
-                    <li class="nav-item"><a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Leave Requested</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">
+                            Approve /Reject
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="lnkApproved_Rejected_callingFun(event)" id="profile-tabs" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                            Approved & Rejected Leaves
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " onclick="lnkLeaveRequested_callingFun(event)" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">
+                            Leave Requested
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     @*------------------------------Tab code end----*@
@@ -80,15 +90,15 @@
 
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-
-
                         <div id="TabApprove_Reject">
                             <div class="card mb-4">
+
                                 <div class="card-header bg-danger text-white">
                                     <span class="text-header">
                                         SEARCH EMPLOYEE
                                     </span>
                                 </div>
+
                                 <div class="card-body">
                                     <form id="ApproveReject_Form">
 
@@ -154,33 +164,29 @@
                                     <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow"></span>  RECORD(S).</span>
                                     @*<span id="Counts">No Records</span> *@
                                 </div>
-                                @*<div class="table-responsive text-nowrap">*@
-                                <table id="TblAppliedStaffLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
-                                    @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
-                                    <thead class="table-dark">
-                                        <tr>
-                                            @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
-                                            <th>Employee Name</th>
-                                            <th>Department</th>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>Leave Type</th>
-                                            <th>Reason</th>
-                                            <th>No. of Days/Total Time</th>
-                                            <th>Requested Date</th>
-                                            <th>Delegation Record</th>
-                                            <th>Approve/Reject</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-
-                                </table>
-
-                                @*</div>*@
+                                <div class="table-responsive text-nowrap">
+                                    <table id="TblAppliedStaffLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
+                                        @*<table id="TblAppliedStaffLeaves_SearchRecords" class="table table-responsive  tableid">*@
+                                        <thead class="table-dark">
+                                            <tr>
+                                                @*<tr align="left" style="color:Black;background-color:#E8E8E8;font-size:11px;font-weight:normal;height:25px;">*@
+                                                <th>Employee Name</th>
+                                                <th>Department</th>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Type</th>
+                                                <th>Reason</th>
+                                                <th>No. of Days/Total Time</th>
+                                                <th>Requested Date</th>
+                                                <th>Delegation Record</th>
+                                                <th>Approve/Reject</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-
-
 
                         </div>
 
@@ -236,6 +242,8 @@
                                             <input type="hidden" name="InstanceClassificationId" id="InstanceClassificationId_Popup" />
                                             <input type="hidden" name="InstanceId" id="InstanceId_Popup" />
                                             <input type="hidden" name="LeaveTypeId" id="LeaveTypeId_Popup" />
+                                            <input type="hidden" name="FromdateString" id="Fromdateid_Popup" />
+                                            <input type="hidden" name="TodateString" id="Todateid_Popup" />
 
 
                                             @*--------------------------*@
@@ -253,6 +261,7 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                     @*-------------tab 1-----------------div code end----*@
 
@@ -269,12 +278,15 @@
                             </div>
                             <div class="card-body">
                                 <form id="ApproveRejectCompleted_Form">
+
                                     <div class="row">
                                         <div class="col">
 
                                             @*--------------------------*@
                                             <div class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> From Date</label>
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">
+                                                    From Date
+                                                </label>
                                                 <div class="col-sm-4 ">
                                                     <input id="ctl00_ContentPlaceHolder1_txtSearchFromDate" type="date" class="form-control" />
                                                 </div>
@@ -282,7 +294,9 @@
                                             @*--------------------------*@
 
                                             <div class="row mb-2">
-                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name"> To Date</label>
+                                                <label class="col-sm-4 col-form-label  text-end " for="basic-default-name">
+                                                    To Date
+                                                </label>
                                                 <div class="col-sm-4 ">
                                                     <input id="ctl00_ContentPlaceHolder1_txtSearchToDate" type="date" class="form-control" />
                                                 </div>
@@ -325,6 +339,7 @@
                             <div id="ApprovedLeaves_SearchRecords_Div" style="display:none">
                                 <label class="form-label mt-auto col-form-label">APPROVED LEAVES</label>
                                 <div class="card mb-4">
+
                                     <div class="card-header bg-danger text-white">
                                         @*<span id="SpanApprovedLeavesNumRecords"> No Data Found.</span>*@
                                         <span class="text-header">
@@ -333,7 +348,9 @@
                                             RECORD(S).
                                         </span>
                                     </div>
+
                                     <div class="table-responsive text-nowrap">
+
                                         @*<table id="TblApprovedLeaves_SearchRecords" border="1" class="table  tableid" style="border-collapse:collapse">*@
                                         <table id="TblApprovedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
                                             <thead class="table-dark">
@@ -358,10 +375,6 @@
                                 </div>
                             </div>
 
-
-
-
-
                             @*-======================-----Rejected Leaves----==============================*@
 
                             <div id="RejectedLeaves_SearchRecords_Div" style="display:none">
@@ -377,7 +390,9 @@
                                         </div>
                                     </div>
                                     <div class="table-responsive text-nowrap">
+
                                         @*<table id="TblRejectedLeaves_SearchRecords" class="table table-responsive tableid" border="1" style="border-collapse:collapse">*@
+
                                         <table id="TblRejectedLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
                                             <thead class="table-dark">
                                                 <tr>
@@ -400,8 +415,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
 
                         </div>
                     </div>

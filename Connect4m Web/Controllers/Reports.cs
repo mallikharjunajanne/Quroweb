@@ -55,7 +55,7 @@ namespace Connect4m_Web.Controllers
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
-        #region ReportsMenu
+        #region REPORTS MENU
         public IActionResult ReportsMenu()
         {
             List<LoginModel> items = new List<LoginModel>();
@@ -143,10 +143,13 @@ namespace Connect4m_Web.Controllers
             decimal Discount = model.Sum(item => item.discount);
             decimal Balance = model.Sum(item => item.Balance);
 
+            int TotalAmountSetInt = (int)TotalAmountSet;
+            //int AmountSet_ = (int)AmountSet;
             var result = new
             {
                 Mainlist = model,
-                FeeAmount = TotalAmountSet,
+                //FeeAmount = TotalAmountSet,
+                FeeAmount = AmountSet,
                 FeeCollected = AmountPaid,
                 Discount = Discount,
                 Due = Balance
@@ -402,12 +405,15 @@ namespace Connect4m_Web.Controllers
         public IActionResult Quroadmissionreportscounttbl(UserScreen.Admissionreport obj)
         {
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/GetRegistrationSummary", client);
             return Json(list);
         }
         public IActionResult Registrations_Admissionstbl(UserScreen.Admissionreport obj)
         {
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Acadamicyearid = null;
             List<UserScreen.Admissionsummaryreport> list = CommonMethodobj.CommonListMethod<UserScreen.Admissionreport, UserScreen.Admissionsummaryreport>(obj, "/Admissionsummaryreport", client);
 
             var Userstatusvalues = obj.Userstatusvalue;
@@ -429,11 +435,12 @@ namespace Connect4m_Web.Controllers
 
             var Userstatusvalues = obj.Userstatusvalue;
             var filteredList = obj.Userstatusvalue == "1" ? list.Where(item => item.UserStatus == "Registered").ToList() : obj.Userstatusvalue == "2" ? list.Where(item => item.UserStatus == "Admission Confirmed").ToList() : list;
-
+            var filteredLists = list.Where(item => !string.IsNullOrWhiteSpace(item.AdmNo)).ToList();
             var result = new
             {
                 //FilteredList = filteredList,
-                FilteredList = list,
+                //FilteredList = list,
+                FilteredList = filteredLists,
                 UserStatusValue = Userstatusvalues
             };
             return new JsonResult(result);

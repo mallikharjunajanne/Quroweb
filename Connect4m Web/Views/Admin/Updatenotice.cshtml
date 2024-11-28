@@ -90,7 +90,7 @@
                                 }
                             }
                             @*<input class="form-check-input" type="checkbox" id="Selectallusers_Checkbox" value="Select all users" onclick="CheckAllUsers()" />
-                        <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>*@
+                                <label class="form-check-label" style="font: 12px arial; color: blue; ">Select all users</label>*@
                         </div>
                     </div>
                 </div>
@@ -125,9 +125,9 @@
 
 
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                            <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
-                            <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
-                        </div>*@
+                                    <input id="chklstRole_@Rolesno" class="form-check-input checkbox-item checkbox-Name Role_checkbox Chkitem" type="checkbox" name="rolecheckbox" value="@item.InstanceRoleId" />
+                                    <label style="font: 11px arial;color: #000000;" class="Checkbox-Name-label" id="@item.RoleName">@item.RoleName</label>
+                                </div>*@
                             @if (item.InstanceRoleId == 3)
                             {
                                 break;
@@ -164,9 +164,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                            <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
-                            <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
-                        </div>*@
+                                    <input id="Grplstchk_@Grpsno" class="form-check-input checkbox-item Grp_checkbox Chkitem" type="checkbox" name="Grpcheckbox" value="@item.GroupId" />
+                                    <label style="font: 11px arial;color: #000000;">@item.GroupName</label>
+                                </div>*@
                             @if (item.GroupId == 3)
                             {
                                 break;
@@ -199,9 +199,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
-                            <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
-                            <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
-                        </div>*@
+                                    <input id="Clslstchk_@Cls" class="form-check-input checkbox-item Cls_checkbox Chkitem" type="checkbox" name="Clscheckbox" value="@item.InstanceClassificationId" />
+                                    <label style="font: 11px arial;color: #000000;">@item.ClassificationName</label>
+                                </div>*@
                             @if (item.InstanceClassificationId == 3)
                             {
                                 break;
@@ -234,9 +234,9 @@
                                 </div>
                             }
                             @*<div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
-                            <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
-                            <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
-                        </div>*@
+                                    <input id="Sclschk_@Scl" class="form-check-input checkbox-item Scl_Checkbox Chkitem" type="checkbox" name="Sclcheckbox" value="@item.InstanceSubClassificationId" />
+                                    <label style="font: 11px arial;color: #000000;">@item.SubClassificationName</label>
+                                </div>*@
                             @if (item.InstanceSubClassificationId == 3)
                             {
                                 break;
@@ -251,9 +251,7 @@
             <div class="card mb-4">
                 <div class="card-header bg-danger text-white text-header">
                     YOUR HAVE SELECTED BELOW
-                    <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">
-                        0
-                    </span>
+                    <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows text-header">0</span>
                     USER(S) TO POST THIS NOTICE.
                 </div>
                 <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticeaddeduserstblid">
@@ -641,7 +639,8 @@
         //Searchbtnclick_Usersnoticetbldata();
         UpdateSearchUsersnoticetabledata();
     });
-   function UpdateSearchUsersnoticetabledata(){
+
+    function UpdateSearchUsersnoticetabledata() {
         //debugger;
         loaddingimg.css('display', 'block');
         var userName = $('#Usernametxt').val() || '';
@@ -1332,7 +1331,7 @@
         return checkboxValues;
     }
 
-    //BACK TO SEARCH 
+    //BACK TO SEARCH
     $('#UpdatePostnoticeBacktosearchbtn').click(function () {
         $('#Commonerrormessage').text('');
         window.location.reload();

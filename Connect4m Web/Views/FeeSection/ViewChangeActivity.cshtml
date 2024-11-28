@@ -1,0 +1,64 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.Managequote
+@{
+    ViewData["Title"] = "View Change Activity";
+    //Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <div class="row mb-2">
+            <div class="col-md-12 col-lg-12 mb-3">
+                <div class="tab-content" id="myTabContent">
+                    <label class="col-sm-12 col-form-label text-center" for="basic-default-name">View Change Activity</label>
+                    <div class="card" id="FmAppliedStaffLeaves_SearchRecords_Div" style="">
+                        <div class="card-header bg-danger text-white">
+                            @*<span class="text-header">
+                                Total Number of Records :
+                                <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header"> @ViewBag.listvalues.Count </span>
+                            </span>*@
+                        </div>
+                        <table class="table table-hover table-bordered no-footer dataTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Sl. No</th>
+                                    <th>Key</th>
+                                    <th>Current</th>
+                                    <th>Previous</th>
+                                    <th>Changed By</th>
+                                    <th>Previously Changed By</th>
+                                    <th>Changed On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int Index = 1;
+                                }
+                                @foreach (var item in ViewBag.listvalues)
+                                {
+                                    <tr>
+                                        <td>@Index</td>
+                                        <td>@item.AuditKey</td>
+                                        <td>@item.CurrentValue</td>
+                                        <td>@item.PreviousValue</td>
+                                        <td>@item.PreviousValueCreatedBy</td>
+                                        <td>@item.CurrentValueCreatedBy</td>
+                                        <td>@item.CurrentValuecreateddate</td>
+                                    </tr>
+                                    Index++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

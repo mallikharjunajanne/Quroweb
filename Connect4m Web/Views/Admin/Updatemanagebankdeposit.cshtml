@@ -5,6 +5,61 @@
     Layout = null;
 }
 
+<style>
+    .popup {
+       display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0%;
+        /*left: 10%;*/
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Style for the image container inside the modal */
+    .popup-content {
+        max-width: 100%;
+        max-height: 81%;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        overflow: auto;
+        width: 61%;
+        margin-left: 20%;
+    }
+
+
+    /* Close button for the popup */
+    .close-btn {
+       /* position: absolute;*/
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+        color: black;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Style for the image */
+    .popup-content img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Style for the PDF iframe */
+    .popup-content iframe {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+
 <div class="col-md-12 col-lg-12 mb-3">
     <div class="text-right">
         <a href="" id="Backtosearchlnk" class="btn btn-label-linkedin waves-effect btn-sm">Back to Search</a>
@@ -19,9 +74,14 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label space required text-end" for="basic-default-name">Payment Mode</label>
                     <div class="col-sm-4">
-                        @Html.DropDownListFor(x => x.Paymentmodeid, new SelectList(ViewBag.PaymentModeddl, "Value", "Text"),
-                        "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "Paymentmodeidddl", @style = "color:black;", @required = "required" })
-                        @*<select id="Paymentmodeidddl" asp-for="Paymentmodeid" class="form-select"></select>*@
+                        @*@Html.DropDownListFor(x => x.Paymentmodeid, new SelectList(ViewBag.PaymentModeddl, "Value", "Text"),
+                        "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "Paymentmodeidddl", @style = "color:black;", @required = "required" })*@
+                        <select id="Paymentmodeidddl" asp-for="Paymentmodeid" class="form-select">
+                            @foreach (var item in ViewBag.PaymentModeddl)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
                         <span asp-validation-for="Paymentmodeid" class="text-danger"></span>
                         <input type="hidden" asp-for="FeeDepositId" id="Feedeposittxtid" />
                     </div>
@@ -43,19 +103,19 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label space required text-end" for="basic-default-name">Bank Name </label>
                     <div class="col-sm-4">
-                        <input type="text" asp-for="BankName" class="form-control" id="BankNametxt" name="BankName" autocomplete="off" />
+                        <input type="text" asp-for="BankName" class="form-control" id="BankNametxt" name="BankName" autocomplete="off" value="HDFC Bank" readonly />
                         <span asp-validation-for="BankName" class="text-danger"></span>
                     </div>
                     <label class="col-sm-2 col-form-label space required text-end">Branch Name </label>
                     <div class="col-sm-4">
-                        <input type="text" asp-for="Branchname" class="form-control" id="Branchnametxt" name="Branchname" autocomplete="off" />
+                        <input type="text" asp-for="Branchname" class="form-control" id="Branchnametxt" name="Branchname" autocomplete="off" value="Marredpally" readonly />
                         <span asp-validation-for="Branchname" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <label for="FirstName" class="col-sm-2 col-form-label space required text-end">Account Number</label>
                     <div class="col-sm-4">
-                        <input type="text" asp-for="Accountnumber" class="form-control" id="Accountnumbertxt" name="Accountnumber" autocomplete="off" />
+                        <input type="text" asp-for="Accountnumber" class="form-control" id="Accountnumbertxt" name="Accountnumber" autocomplete="off" value="99998367009696" readonly />
                         <span asp-validation-for="Accountnumber" class="text-danger"></span>
                     </div>
                     <label class="col-sm-2 col-form-label space text-end">Document </label>
@@ -93,6 +153,20 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+@*<div class="popup" id="popup">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <img id="popup-image" src="" alt="Image" />
+    </div>
+</div>*@
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <div id="popup-file-container"></div>
     </div>
 </div>
 

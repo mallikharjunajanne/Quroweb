@@ -58,7 +58,7 @@
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
         @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Admin Module /</span>MANAGE EXAMS</h4>*@
-        <h4 class="mb-3 text-center">MANAGE EXAMS</h4>
+        <h4 class="mb-3 text-center text-header">MANAGE EXAMS</h4>
         <div class="row mb-2">
             <span class="ErrorMessageSpan text-danger" id="Main_Span_Error"></span>
             <span class="ErrorMessageSpan text-danger" id="DdlAcademicYearCreatePage"></span>
@@ -66,7 +66,9 @@
             <span class="ErrorMessageSpan text-danger" id="RdoExamFor"></span>
             <div class="text-end">
                 @*<a id="BtnCreateNewExams" class="BTNCreateNew Undeline ClsCreateNewLink" style="display:block" onclick="CreateNewExams()">Create Exam</a>*@
-                <button id="BtnCreateNewExams" class="btn btn-label-linkedin waves-effect btn-sm" style="display:block" onclick="CreateNewExams()">Create Exam</button>
+                <button id="BtnCreateNewExams" class="btn btn-label-linkedin waves-effect btn-sm" style="display:block" onclick="CreateNewExams()">
+                    Create Exam
+                </button>
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
                 <div id="MainSearchPage">
@@ -120,7 +122,7 @@
                             <div class="card-datatable table-responsive pt-0">
                                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                                     <div class="card-header bg-danger text-header text-white">
-                                        <div class="head-label text-center">
+                                        <div class="head-label text-center text-header">
                                             YOUR SEARCH RESULTED
                                             <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
                                             RECORD(S).

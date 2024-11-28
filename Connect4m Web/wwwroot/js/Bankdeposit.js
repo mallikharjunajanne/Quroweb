@@ -15,7 +15,8 @@
         ajaxOptions.contentType = false;
         ajaxOptions.processData = false;
         ajaxOptions.data = data;
-    } else {
+    }
+    else {
         ajaxOptions.data = JSON.stringify(data);
         ajaxOptions.contentType = 'application/json; charset=utf-8';
         ajaxOptions.processData = false;
@@ -279,7 +280,7 @@ $('#Bankdepositform').on('submit', function (event) {
 $(document).on('click', '#Bankdeposittblid td:nth-child(1)', function (event) {
     try {
         loaddingimg.css('display', 'block');
-        //debugger;
+        debugger;
         event.stopImmediatePropagation();
         var parent = $(event.target).closest('tr');
         var spanValue = $(parent).find('td:first-child span').text();
@@ -314,7 +315,7 @@ function DateFormat() {
 
 //======>>>> TABLE DATA BINDING FUNCTION
 function Tabledatabindingfun(response) {
-    //debugger;
+    debugger;
     $("#Recordscount").text(response.length);
 
     // Clear the existing content of the table
@@ -354,28 +355,41 @@ function Tabledatabindingfun(response) {
         var tr = document.createElement('tr');
         tr.classList.add(index % 2 === 0 ? 'even' : 'odd');
 
-        //var firstCell = document.createElement('td');
-        //var span = document.createElement('span');
-        //span.textContent = row['feeDepositId']; // Assuming 'feeDepositId' is the property name        
-        //span.setAttribute('data-fee-deposit-id', row['feeDepositId']);        
-        //span.style.display = 'block';
-        //firstCell.style.border = '1px solid black';
-        //firstCell.style.borderCollapse = 'collapse';
-        //firstCell.appendChild(span);
-        //tr.appendChild(firstCell);
+        //var firstCell_ = document.createElement('td');
+        //var anchor = document.createElement('a');
+        //anchor.textContent = row['feeDepositId'];
+        //anchor.setAttribute('href', 'javascript:void(0)');
+        //anchor.setAttribute('data-fee-deposit-id', row['feeDepositId']);
+        //anchor.style.color = '#2C2C2C';
+        //anchor.style.fontSize = '14px';
+        //anchor.style.fontWeight = 'bold';
+        ////firstCell_.style.border = '1px solid black';
+        ////firstCell_.style.borderCollapse = 'collapse';
+        //firstCell_.appendChild(anchor);
+        //tr.appendChild(firstCell_);
 
-        var firstCell_ = document.createElement('td');
-        var anchor = document.createElement('a');
-        anchor.textContent = row['feeDepositId'];
-        anchor.setAttribute('href', 'javascript:void(0)');
-        anchor.setAttribute('data-fee-deposit-id', row['feeDepositId']);
-        anchor.style.color = '#2C2C2C';
-        anchor.style.fontSize = '14px';
-        anchor.style.fontWeight = 'bold';
-        //firstCell_.style.border = '1px solid black';
-        //firstCell_.style.borderCollapse = 'collapse';
+
+        var firstCell_ = document.createElement('td');  // Create a new table cell
+        var anchor = document.createElement('a');  // Create an anchor tag
+        anchor.setAttribute('href', 'javascript:void(0)');  // Set the href attribute
+        anchor.setAttribute('data-fee-deposit-id', row['feeDepositId']);  // Add custom attribute
+        anchor.style.color = '#2C2C2C';  // Set anchor text color
+        anchor.style.fontSize = '14px';  // Set font size
+        anchor.style.fontWeight = 'bold';  // Set font weight
+        // Create the span element
+        var span = document.createElement('span');
+        span.textContent = row['feeDepositId'];  // Set the text content of the span to feeDepositId
+
+        // Append the span inside the anchor tag
+        anchor.appendChild(span);
+
+        // Append the anchor inside the table cell
         firstCell_.appendChild(anchor);
+
+        // Append the table cell to the row
         tr.appendChild(firstCell_);
+
+
 
 
         ['schoolName', 'depositAmount', 'bankName', 'branchName', 'accountNumber', 'paymentMode', 'depositdate', 'createdDate'].forEach(function (propertyName) { // Corrected 'dipositDate' to 'depositDate'
@@ -412,6 +426,7 @@ function Clearform(formid) {
         console.error("Form with id '" + formid + "' not found.");
     }
 }
+
 function InsertClearform(formid) {
     //debugger;
     // Retrieve the form element by id
@@ -439,47 +454,102 @@ function InsertClearform(formid) {
 //$('#Amountdepositdivexporttoexcel, #AmountdepositExportToExcel').on('click', function () {
 $('#AmountdepositExportToExcel').on('click', function () {
 
+    debugger;
     var formattedDate = DateFormat();
 
     var startDate = $('#Startdatetxt').val();
     var endDate = $('#Enddatetxt').val();
 
     var headerContent = `
-            <div style="display: grid; grid-template-columns: repeat(18, 1fr);">
+            <div style="display: grid; grid-template-columns: repeat(18, 1fr); background-color: #C2BEC0;">
                 <div style="grid-column: 1 / span 18;">
                      <h5 style="margin: 0; text-align: center;">Fee Amount Deposit </h5>
                      <h5 style="margin: 0; text-align: center;">Report On:${formattedDate}</h5>
                      <h5 style="margin: 0; text-align: center;">Start Date: ${startDate.replace('/', '-')}</h5>
                      <h5 style="margin: 0; text-align: center;">End Date: ${endDate.replace('/', '-')}</h5>
                 </div>
-            </div>`;
+            </div>`;   
 
+    // Clone the original table
     var table1 = document.getElementById("Bankdeposittblid");
-    var table1Clone = table1.cloneNode(true);
-    //table1Clone.style.borderCollapse = "collapse";
-    table1Clone.style.border = "1px solid black";
+    var table1Clone = table1.cloneNode(true); // Clone the table
 
-    var cells = table1.getElementsByTagName("td");
-    for (var i = 0; i < cells.length; i++) {     
-        cells[i].textContent = cells[i].textContent.trim();
-        //cells[i].style.borderCollapse = "collapse";
-        cells[i].style.border = "1px solid black";     
+    // Apply table styles (borders and cell widths)
+    table1Clone.style.borderCollapse = "collapse";  // Collapse borders between cells
+
+    // Remove all <input type="text"> elements to prevent them from being exported
+    var inputs = table1Clone.getElementsByTagName("input");
+    while (inputs.length > 0) {
+        inputs[0].parentNode.removeChild(inputs[0]);
     }
 
-    var FooterContent = `
-      <div style="grid-column: 1 / span 10; background-color: #e0e0e0; padding: 20px; border-radius: 5px;">
-        <p style="margin: 0; text-align: center;font-size: 9px;">This report contains confidential information intended solely for the recipient. Unauthorized use, copying, or distribution is strictly prohibited.</p>
-      </div>
-      `;
-    document.body.appendChild(table1Clone);
+    // Remove the "Delete" column in both the header and the table body
 
-    var combinedHtml = headerContent + table1Clone.outerHTML + FooterContent;
-    //var combinedHtml = headerContent + table1Clone.outerHTML;
+    // 1. Remove "Delete" column header
+    var headerCells = table1Clone.getElementsByTagName("th");
+    var deleteColumnIndex = -1;
+    for (var i = 0; i < headerCells.length; i++) {
+        if (headerCells[i].innerText.trim() === "Delete") {
+            deleteColumnIndex = i;  // Get the index of the "Delete" column header
+            headerCells[i].parentNode.deleteCell(i); // Remove the "Delete" column header
+            break;  // Exit the loop after deleting the "Delete" column header
+        }
+    }
 
-    const blob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
-    saveAs(blob, 'FeeAmountDepositReport.xls');
+    // 2. Remove the "Delete" column from each row in the table body
+    var rows = table1Clone.getElementsByTagName("tr");
+    for (var i = 0; i < rows.length; i++) {
+        var cells_ = rows[i].getElementsByTagName("td");
+        if (cells_.length > 0) {  // Skip the header row
+            if (deleteColumnIndex !== -1 && cells_.length > deleteColumnIndex) {
+                rows[i].deleteCell(deleteColumnIndex); // Remove the "Delete" column from the row
+            }
+        }
+    }
 
-    // Replace the original table with the cloned table in the document
-    table1.parentNode.replaceChild(table1Clone, table1);
+    // Process the account number column to ensure it's treated as text
+    for (var i = 0; i < rows.length; i++) {
+        var cells1 = rows[i].getElementsByTagName("td");
+        if (cells1.length > 0) {          
 
+            // Let's assume the account number is in the 1st column (index 0) or change as needed
+            var accountCell = cells1[5];  // Example, change index if needed
+            var accountNumber = accountCell.textContent.trim();
+            accountCell.textContent = "'" + accountNumber;  // Prepend single quote to ensure it's treated as text
+        }
+    }
+
+
+    // Apply border and width to all table cells
+    var _cells = table1Clone.getElementsByTagName("td");
+    for (var i = 0; i < _cells.length; i++) {
+        _cells[i].style.border = "1px solid black";  // Add border to each cell
+        _cells[i].style.padding = "3px";            // Add padding for better readability
+    }
+
+    // Apply styles to table headers (th)
+    var headers = table1Clone.getElementsByTagName("th");
+    for (var i = 0; i < headers.length; i++) {
+        headers[i].style.height = "20px";               // Set header row height
+        headers[i].style.textAlign = "center";         // Center-align text in header
+        headers[i].style.padding = "3px";             // Add padding for readability
+        headers[i].style.border = "1px solid black"; // Add border to each cell
+        headers[i].style.color = "#000000";         // Set text color (e.g., black) for the header text
+        headers[i].style.fontWeight = "bold";      // Optional: Make the header text bold
+    }
+
+    // Define the footer content (optional)
+    var footerContent = `
+    <div style="text-align: center; margin-top: 20px; font-size: 10px; color: gray;">
+        <p style="margin: 0;">This is a system generated report contains confidential information intended for a specific individual and a purpose. Any unauthorized use, copying, or distribution of this report is strictly prohibited.</p>
+    </div>`;
+
+    // Combine the header, table, and footer content into a single HTML string
+    var combinedHtml = headerContent + table1Clone.outerHTML + footerContent;
+
+    // Convert the combined HTML content to an Excel-compatible format (using the HTML table)
+    var excelBlob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+    // Use the FileSaver.js library to save the Blob as an Excel file
+    saveAs(excelBlob, 'FeeAmountDepositReport.xls'); // Trigger file download
 });

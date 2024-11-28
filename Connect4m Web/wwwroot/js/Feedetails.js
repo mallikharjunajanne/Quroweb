@@ -21,7 +21,7 @@ function CallToAjax(method, url, data, successCallback, errorCallback) {
 }
 
 $(document).ready(function () {
-    
+
     fetchDataAndPopulateDropdown(
         '/Reports/Gettermnamesdd',            // URL for data fetching
         '#lstTerms',                          // Dropdown selector
@@ -30,6 +30,7 @@ $(document).ready(function () {
         'termnames'                           // Response value return class name
     );
 });
+
 function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textField, Responsevalues) {
     //debugger;
     CallToAjax_Withoutdata('GET', url,
@@ -44,9 +45,10 @@ function fetchDataAndPopulateDropdown(url, dropdownSelector, valueField, textFie
         }
     );
 }
+
 function populateDropdown(data, dropdownSelector, valueField, textField) {
     //debugger;
-    var dropdown = $(dropdownSelector); 
+    var dropdown = $(dropdownSelector);
     $.each(data, function (index, item) {
         dropdown.append($('<option>', {
             value: item[valueField],
@@ -69,34 +71,49 @@ $("#Btnsearch").click(function () {
             var FeeCollected = response.feeCollected.toFixed(2);
             var Discount = response.discount.toFixed(2);
             var Due = response.due.toFixed(2);
-            
-            if (Responselist.length != 0) {
-                $('#Paymentoptionchangediv').show();
-                $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
+
+            //if (Responselist.length != 0) {
+            if (Responselist.length == 0) {
+                //$('#Paymentoptionchangediv').show();
+                //$('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
+                $('#Feesummarytbls').hide();
+                $('#Feesummarytblamountcountspid').text('');
             }
             var RemoveElement = $(event).closest('tr').next('tr').find('td[colspan="7"]').closest('tr').remove();
             if (RemoveElement.length > 0) {
 
-            } else {
+            }
+            else {
                 var headernames = [];
                 headernames.push("Department", "Fee Amount(DR)", "Discount", "Fee Collected(CR)", "Due(DR)");
 
                 var columnnames = [];
                 columnnames.push("classificaitionName", "instanceClassificaitionId", "amountSet", "discount", "amountPaid", "balance");
-
-                 bindorganisationfeesummary(Responselist, headernames, columnnames, "#Feesummarytbls", null, null, "SubClassificationWiseFeeDetailsfun", 2, Termids); //Main Code
+                if (Responselist.length == 0) {
+                    $('#Paymentoptionchangediv').show();
+                    $('#Feesummarytblamountcountspid').text('');
+                    /*$('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);*/
                 }
+                else {
+                    $('#Feesummarytbls').show();
+                    $('#Paymentoptionchangediv').show();
+                    $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
+                }
+
+                bindorganisationfeesummary(Responselist, headernames, columnnames, "#Feesummarytbls", null, null, "SubClassificationWiseFeeDetailsfun", 2, Termids); //Main Code
+            }
         },
         function (status, error) {
             console.error("Error fetching data:", error);
         }
     );
 });
+
 function bindorganisationfeesummary(response, headernames, columnnames, appendid, event, bcolor, onclickfun, startcolunmnindex, Termids) {
     //debugger;
     if (response.length > 0) {
         loaddingimg.css('display', 'block');
-        var maintable = '<table id="Feetbldata" class="table table-hover table-bordered" >';
+        var maintable = '<table id="Feetbldata" class="table table-hover table-bordered dataTable" >';
         if (bcolor) {
             maintable += '<thead  style="background-color:' + bcolor + '" ><tr>';
         }
@@ -109,8 +126,8 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
         maintable += "</tr></thead><tbody>";
         for (var i = 0; i < response.length; i++) {
             //debugger;
-           // maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + ' <input type="text" value="' + response[i][columnnames[1]] + '" hidden style="display:none" readonly /></td>';
-            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;">' + response[i][columnnames[0]] + '</a></td>';
+            // maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + ' <input type="text" value="' + response[i][columnnames[1]] + '" hidden style="display:none" readonly /></td>';
+            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;text-decoration: underline;font-weight: bold;">' + response[i][columnnames[0]] + '</a></td>';
 
             for (var j = startcolunmnindex; j < columnnames.length; j++) {
                 maintable += '<td>' + response[i][columnnames[j]] + '</td>';
@@ -127,6 +144,7 @@ function bindorganisationfeesummary(response, headernames, columnnames, appendid
     }
     loaddingimg.css('display', 'none');
 }
+
 function SubClassificationWiseFeeDetailsfun(InstanceClassificationId, termIds, event) {
     //debugger;
     var requestData = {
@@ -149,8 +167,8 @@ function SubClassificationWiseFeeDetailsfun(InstanceClassificationId, termIds, e
                 var columnnames = [];
                 columnnames.push("subClassificaitionName", "instanceSubClassificaitionId", "subClassificaitionAmountSet", "subClassificaitiondiscount", "subClassificaitionAmountPaid", "subClassificaitionBalance");
 
-                             bindorganisationfeesummary(response, headernames, columnnames, null, event, null, 'Userwisefeedetailsfun', 2, termIds);
-               // bindOrganisationFeeSummaryUserWiseFeeDetails(response, headernames, columnnames, null, event, null, 'Userwisefeedetailsfun', 2, termIds);
+                bindorganisationfeesummary(response, headernames, columnnames, null, event, null, 'Userwisefeedetailsfun', 2, termIds);
+                // bindOrganisationFeeSummaryUserWiseFeeDetails(response, headernames, columnnames, null, event, null, 'Userwisefeedetailsfun', 2, termIds);
             }
         },
         function (status, error) {
@@ -158,6 +176,7 @@ function SubClassificationWiseFeeDetailsfun(InstanceClassificationId, termIds, e
         }
     );
 }
+
 function Userwisefeedetailsfun(InstanceClassificationId, termIds, event) {
     //debugger;
     var requestData = {
@@ -170,7 +189,8 @@ function Userwisefeedetailsfun(InstanceClassificationId, termIds, event) {
             var removedElement = $(event).closest('tr').next('tr').find('td[colspan="6"]').closest('tr').remove();
             if (removedElement.length > 0) {
                 
-            } else {
+            }
+            else {
                 var headernames = [];
                 headernames.push("Student Name", "Fee Amount(DR)", "Discount", "Fee Collected(CR)", "Due(DR)");
 
@@ -185,7 +205,8 @@ function Userwisefeedetailsfun(InstanceClassificationId, termIds, event) {
             console.error("Error fetching data:", error);
         }
     );
-}1
+}
+
 function ChallanGeneratedDetails(UserId, termIds, event) {
     //debugger;
     var requestData = {
@@ -198,17 +219,18 @@ function ChallanGeneratedDetails(UserId, termIds, event) {
             //debugger;
             var removedElement = $(event).closest('tr').next('tr').find('td[colspan="6"]').closest('tr').remove();
             if (removedElement.length > 0) {
-               
-            } else {
+
+            }
+            else {
                 var Resp = response[0].challangenerateddetailstbl1;
                 if (Resp.length != 0) {
                     // return;
 
                     var headernames = [];
-                    headernames.push("Term", "Fee Type", "Fee Amount(DR)", "Discount", "Fee Collected(CR)", "Due(DR)","");
+                    headernames.push("Term", "Fee Type", "Fee Amount(DR)", "Discount", "Fee Collected(CR)", "Due(DR)", "");
 
                     var columnnames = [];
-                    columnnames.push("termName", "feeType", "feeAmount", "concedingAmount", "payedAmount", "dueAmount","displayIcon1");
+                    columnnames.push("termName", "feeType", "feeAmount", "concedingAmount", "payedAmount", "dueAmount", "displayIcon1");
 
                     bindorganisationfeesummaryuserwisefeedetails(Resp, headernames, columnnames, null, event, null, null, 1, termIds, UserId);
                 }
@@ -219,6 +241,7 @@ function ChallanGeneratedDetails(UserId, termIds, event) {
         }
     );
 }
+
 function bindorganisationfeesummaryuserwisefeedetails(response, headernames, columnnames, appendid, event, bcolor, onclickfun, startcolunmnindex, Termids, UserId) {
     //debugger;
     if (response.length > 0) {
@@ -238,7 +261,7 @@ function bindorganisationfeesummaryuserwisefeedetails(response, headernames, col
         for (var i = 0; i < response.length; i++) {
             //debugger;
             //maintable += '<tr><td class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: #7367f0 !important; cursor: pointer;">' + response[i][columnnames[0]] + ' <input type="text" value="' + response[i][columnnames[1]] + '" hidden style="display:none" readonly /></td>';
-            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;">' + response[i][columnnames[0]] + '</a></td>';
+            maintable += '<tr><td><a href="javascript:void(0);" class="appendinsidetable" onclick="' + onclickfun + '(\'' + response[i][columnnames[1]] + '\',\'' + Termids + '\', this)" style="color: black !important;text-decoration: underline;font-weight: bold;">' + response[i][columnnames[0]] + '</a></td>';
 
             for (var j = startcolunmnindex; j < 6; j++) {
                 maintable += '<td>' + response[i][columnnames[j]] + '</td>';
@@ -262,6 +285,7 @@ function bindorganisationfeesummaryuserwisefeedetails(response, headernames, col
     }
     loaddingimg.css('display', 'none');
 }
+
 function feedetailslnk(Studentuserid, Feetermids, UserFeeId1) {
     //debugger;
     var requestData = {
@@ -370,9 +394,9 @@ $(document).on('click', '#Exporttoexcellnk', function () {
 
     var headers = table1Clone.getElementsByTagName("th");
     for (var i = 0; i < headers.length; i++) {
-        headers[i].style.border = "1px solid black";   
+        headers[i].style.border = "1px solid black";
         headers[i].style.backgroundColor = "lightblue";
-        headers[i].style.padding = "15px";             
+        headers[i].style.padding = "15px";
     }
 
     //var cells = table1.getElementsByTagName("td");
@@ -380,9 +404,9 @@ $(document).on('click', '#Exporttoexcellnk', function () {
     for (var i = 0; i < cells.length; i++) {
         //debugger;
         cells[i].style.width = "180px";
-        cells[i].style.border = "1px solid black";   
-        cells[i].style.backgroundColor = "#f2f2f2";  
-        cells[i].style.padding = "8px";              
+        cells[i].style.border = "1px solid black";
+        cells[i].style.backgroundColor = "#f2f2f2";
+        cells[i].style.padding = "8px";
     }
 
     //debugger;

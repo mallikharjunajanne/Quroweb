@@ -12,7 +12,7 @@
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
         @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Staff Module /</span>CONVERT SHORT LEAVES TO LEAVES</h4>*@
-        <h4 class="mb-3 text-center"><b>CONVERT SHORT LEAVES TO LEAVES</b></h4>
+        <h4 class="mb-3 text-center text-header">CONVERT SHORT LEAVES TO LEAVES</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
 
@@ -24,7 +24,7 @@
                 <div class="card mb-4">
                     <div class="card-header bg-danger text-header text-white d-flex align-items-center justify-content-between">
                         SEARCH FOR EMPLOYEES
-                        <small class="text-validation text-white">* INDICATES REQUIRED FIELDS</small>
+                        <small class="text-header-small">* INDICATES REQUIRED FIELDS</small>
                     </div>
                     <div class="card-body">
                         <form id="FmSearchEmployeesShortLeaves">
@@ -92,14 +92,17 @@
                 @*-----------------------------searched result table--------------------*@
 
                 <div class="card" id="DivSearchedTablePage" style="display:none">
-                    <div class="card-header flex-column flex-md-row">
-                        <div class="head-label text-center">
-                            <h5 class="card-title mb-0">
+                    <div class="card-header bg-danger text-header text-white d-flex align-items-center justify-content-between">
+                        @*<div class="head-label text-center ">
+                            <h5 class="card-title mb-0">*@
                                 @*<span id="CountOfRecords_SearchEmployeesShortLeaves">No Records</span>*@
-                                <span>YOUR SEARCH RESULTED &nbsp;<span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
-
-                            </h5>
-                        </div>
+                                <span>
+                                    YOUR SEARCH RESULTED &nbsp;
+                                    <span id="Counts" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
+                                    RECORD(S).
+                                </span>
+                            @*</h5>
+                        </div>*@
                     </div>
 
                     <form id="Fm_InTbl_SearchEmployeesShortLeaves">

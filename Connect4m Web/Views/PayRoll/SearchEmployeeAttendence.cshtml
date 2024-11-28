@@ -7,7 +7,7 @@
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
 
-<h4 class="mb-4 text-center">@*<span class="text-muted fw-light"> Admin Module/</span>*@EMPLOYEE ATTENDANCE POSTING</h4>
+<h4 class="mb-4 text-center text-header">EMPLOYEE ATTENDANCE POSTING</h4>
 @*<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Employee Attendence Posting</h4>*@
 
 <div class="row mb-2">
@@ -15,12 +15,12 @@
 
         <div class="card mb-4">
             @*<div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">
-                    <span id="AddNewText_Span_CreatePage">
-                        EMPLOYEE ATTENDANCE POSTING
-                    </span>
-                </h5>
-            </div>*@
+                    <h5 class="mb-0">
+                        <span id="AddNewText_Span_CreatePage">
+                            EMPLOYEE ATTENDANCE POSTING
+                        </span>
+                    </h5>
+                </div>*@
 
             <div id="appendsearchsalaryattributeforroles">
                 <div class="card-header bg-danger text-white">
@@ -33,105 +33,105 @@
                     @*=============================  Form Start ================================*@
                     <form id="Serach_EAP" class="needs-validation was-validated" novalidate>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="row">
-                                <div class="col">
-                                    @*=====================        TEXT BOX                 =================*@
-                                    <div class="row mb-3">
-                                      
-                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.Month,
-                                            new SelectList(ViewBag.Months, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_Month_EAP", @style = "color:black;", @required = "required" })
+                        <div class="row">
+                            <div class="col">
+                                @*=====================        TEXT BOX                 =================*@
+                                <div class="row mb-3">
 
-                                                <span asp-validation-for="Month" class="text-danger"></span>
-                                            </div>
+                                    <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="Month"></label>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="position-relative" id="Drop_Format_SEM_3">
+                                            @Html.DropDownListFor(
+                                       x => x.Month,
+                                        new SelectList(ViewBag.Months, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_Month_EAP", @style = "color:black;", @required = "required" })
+
+                                            <span asp-validation-for="Month" class="text-danger"></span>
                                         </div>
-                                       
                                     </div>
-                                    @*=====================        TEXT BOX                 =================*@
-                                    <div class="row mb-3">
-                                       
 
-                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="year"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.year,
-                                            new SelectList(ViewBag.Years, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_year_EAP", @style = "color:black;", @required = "required" })
+                                </div>
+                                @*=====================        TEXT BOX                 =================*@
+                                <div class="row mb-3">
 
-                                                <span asp-validation-for="year" class="text-danger"></span>
-                                            </div>
+
+                                    <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="year"></label>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="position-relative" id="Drop_Format_SEM_3">
+                                            @Html.DropDownListFor(
+                                       x => x.year,
+                                        new SelectList(ViewBag.Years, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_year_EAP", @style = "color:black;", @required = "required" })
+
+                                            <span asp-validation-for="year" class="text-danger"></span>
                                         </div>
-                                       
                                     </div>
-                                    @*=====================        TEXT BOX                 =================*@
-                                    <div class="row mb-3">
-                                       
 
-                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.RoleId,
-                                            new SelectList(ViewBag.RoleId, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_RoleId_EAP", @style = "color:black;", @required = "required" })
+                                </div>
+                                @*=====================        TEXT BOX                 =================*@
+                                <div class="row mb-3">
 
-                                                <span asp-validation-for="RoleId" class="text-danger"></span>
-                                            </div>
+
+                                    <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="RoleId"></label>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="position-relative" id="Drop_Format_SEM_3">
+                                            @Html.DropDownListFor(
+                                       x => x.RoleId,
+                                        new SelectList(ViewBag.RoleId, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_RoleId_EAP", @style = "color:black;", @required = "required" })
+
+                                            <span asp-validation-for="RoleId" class="text-danger"></span>
                                         </div>
-                                       
                                     </div>
-                                    @*=====================        TEXT BOX                 =================*@
-                                    <div class="row mb-3">
-                                       
 
-                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.InstanceClassificationId,
-                                            new SelectList(ViewBag.Department, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceClassificationId_EAP", @style = "color:black;", @required = "required" })
+                                </div>
+                                @*=====================        TEXT BOX                 =================*@
+                                <div class="row mb-3">
 
-                                                <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
-                                            </div>
+
+                                    <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceClassificationId"></label>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="position-relative" id="Drop_Format_SEM_3">
+                                            @Html.DropDownListFor(
+                                       x => x.InstanceClassificationId,
+                                        new SelectList(ViewBag.Department, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceClassificationId_EAP", @style = "color:black;", @required = "required" })
+
+                                            <span asp-validation-for="InstanceClassificationId" class="text-danger"></span>
                                         </div>
-                                       
                                     </div>
-                                    @*=====================        TEXT BOX                 =================*@
-                                    <div class="row mb-3">
-                                       
 
-                                        <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"></label>
-                                        <div class="col-sm-4 form-group">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-                                                @Html.DropDownListFor(
-                                           x => x.InstanceSubClassificationId,
-                                            new SelectList(ViewBag.SubDepartment, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceSubClassificationId_EAP", @style = "color:black;", @disabled = true })
+                                </div>
+                                @*=====================        TEXT BOX                 =================*@
+                                <div class="row mb-3">
 
-                                            </div>
+
+                                    <label class="col-sm-4 col-form-label text-end" for="basic-default-name" asp-for="InstanceSubClassificationId"></label>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="position-relative" id="Drop_Format_SEM_3">
+                                            @Html.DropDownListFor(
+                                       x => x.InstanceSubClassificationId,
+                                        new SelectList(ViewBag.SubDepartment, "Value", "Text"),
+                                       "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "insertdropdown_InstanceSubClassificationId_EAP", @style = "color:black;", @disabled = true })
+
                                         </div>
-                                       
                                     </div>
 
-                                    @*=====================         BUTTONS                =================*@
+                                </div>
 
-                                    <div class="justify-content text-center">
-                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_ME" onclick="nextpage('SearchManageEmployees',null)">Previous Page</button>
+                                @*=====================         BUTTONS                =================*@
 
-                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform"onclick="clearfun('Serach_EAP')">Clear</button>
+                                <div class="justify-content text-center">
+                                    <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_ME" onclick="nextpage('SearchManageEmployees',null)">Previous Page</button>
 
-                                            <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblEAP">Get Attendance Form</button>
+                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform" onclick="clearfun('Serach_EAP')">Clear</button>
 
-                                            <button type="button" class="btn btn-primary waves-effect waves-light  btn-sm" id="Nextpage_ME" onclick="nextpage('SearchEmployeeDetails',null)">Next Page</button>
-                                    </div>
+                                    <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblEAP">Get Attendance Form</button>
+
+                                    <button type="button" class="btn btn-primary waves-effect waves-light  btn-sm" id="Nextpage_ME" onclick="nextpage('SearchEmployeeDetails',null)">Next Page</button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                     @*=============================  Form End ================================*@
 
@@ -140,18 +140,18 @@
         </div>
 
     </div>
-    </div>
+</div>
 
 
-    <div id="GetEmployeeAttendenceAppend">
+<div id="GetEmployeeAttendenceAppend">
 
-    </div>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+</div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 
-    <script src="~/js/PayRoll_6.js"></script>
+<script src="~/js/PayRoll_6.js"></script>

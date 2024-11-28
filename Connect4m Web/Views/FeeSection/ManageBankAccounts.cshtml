@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-2 text-center"><b>MANAGE BANK ACCOUNTS</b></h4>
+        <h4 class="mb-2 text-center text-header">MANAGE BANK ACCOUNTS</h4>
         <span id="Commonerrormessage" class="text-validation"></span>
         <div class="justify-content text-end">
             <button class="btn btn-label-linkedin waves-effect btn-sm" onclick="lnkAddNew(event)">Create Bank Account</button>
@@ -46,7 +46,9 @@
             <div class="col-md-12 col-lg-12 mb-3">
                 <div class="card mb-4">
                     <div class="card-header bg-danger text-white text-header">
-                        SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
+                        SEARCH RESULTED
+                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
+                        RECORDS.
                     </div>
                     <table id="Bankaccountstbl" class="table table-bordered">
                         <thead class="table-dark">

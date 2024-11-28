@@ -13,16 +13,12 @@ namespace Connect4m_Web.Models
     //{
     //    public List<string> ParamStrings { get; set; }
     //}
-
-   
-
-
-
     public class YourDataModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
+    
     public class SubjectEditValuesListModel : CommonClass
     {
         public List<SubjectModel> EditValuesList { get; set; }
@@ -36,6 +32,7 @@ namespace Connect4m_Web.Models
         //  public string RoleName { get; set; }
         public string MentorRoles { get; set; }
     }
+    
     public class Subjects
     {
         public string SubjectName { get; set; }
@@ -78,6 +75,7 @@ namespace Connect4m_Web.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
+    
     public class AttendanceModel
     {
         public List<int> List_UserId { get; set; }
@@ -102,7 +100,6 @@ namespace Connect4m_Web.Models
         public string PayrollCategoryName { get; set; }
         public int PayrollCategoryId { get; set; }
 
-
         public string CurrentValueCreatedBy { get; set; }
         public string PreviousValueCreatedBy { get; set; }
         public string EditEligibleReturnValue { get; set; }
@@ -111,7 +108,6 @@ namespace Connect4m_Web.Models
         public string TableName { get; set; }
         public string CurrentValue { get; set; }
         public string PreviousValue { get; set; }
-
         public string AuditKey { get; set; }
         public string SourceId { get; set; }
         public bool Carryforward_bool { get; set; }
@@ -140,28 +136,23 @@ namespace Connect4m_Web.Models
         public int Batchid { get; set; }
         public int Userjoined { get; set; }
         public int InstanceID { get; set; }
+
         [Required]
         public int UserId { get; set; }
+        
         [Required]
         public int InstanceClassificationId { get; set; }
       
-
         public int InstanceSubClassificationId { get; set; }
-        
-
         public string ClassName { get; set; }
-    
-
         public string ClassidString { get; set; }
         public int Classid { get; set; }
-       
-
         public string StudentName { get; set; }
        
         [Display(Name ="Student")]
         public int Studentid { get; set; }
-        
         public string Leavetype { get; set; }
+
         [Display(Name = "Leave type")]
         public int Leavetypeid { get; set; }
        
@@ -240,45 +231,30 @@ namespace Connect4m_Web.Models
 
 
         //---MY SAVED LEAVES
-
-
         public string LeaveReason { get; set; }
-
         public string  LeaveFromdate { get; set; }
-
         public string  LeaveTodate { get; set; }
-
         public double LeaveNoOfDays { get; set; }
-
         public string LeaveStatus { get; set; }
+
 
         //---MY APPLIED LEAVES  
         public string LeaveAppliedDate { get; set; }
-
         public string LeaveNoOfDays1 { get; set; }
 
         //-------------APPLY LEAVE DETAILS
-
-
         public string LeaveCancelledFlag { get; set; }
         public string Leavetype2 { get; set; }
         public string ShortDescriptionforLeave_Reason { get; set; }
-
         public bool marriagechecking { get; set; }
         public int marriagechecking_Int { get; set; }
-
-
         public string marriagechecking_String { get; set; }
         public string Daysession { get; set; }
-
         public string Daysessionname { get; set; }
         public string Dayname { get; set; }
 
         public string RequestStatus { get; set; }
-
         public string deleteProp { get; set; }
-
-
         public string submitBStudentLeaveDetailsIDutton { get; set; }
         public string submitButton { get; set; }
 
@@ -286,18 +262,14 @@ namespace Connect4m_Web.Models
         //====this is for 	ATTENDANCE DETAILS  in apply student leaves
 
         public double Totalpresents { get; set; }
-
         public double TotalAbsents { get; set; }
-
         public double PresentPercentage { get; set; }
         public double AbsentsPercentage { get; set; }
 
         //====this is for 	ATTENDANCE DETAILS   stp_tblStudentLeaveDetails_TotalByUserId  in apply student leaves
 
         public double Total { get; set; }
-
         public double Pending { get; set; }
-
         public double Approved { get; set; }
         public double Rejected { get; set; }
 
@@ -310,50 +282,34 @@ namespace Connect4m_Web.Models
         public string FirstName { get; set; }
         public string Mobilephone { get; set; }
         public string NotifierEmail { get; set; }
-
         public string NotifierName { get; set; }
-
         public string LevelEmailIDs { get; set; }
         public string NotifierLeavedetails { get; set; }
         //----------------
 
 
         public DateTime CreatedDate { get; set; }
-
         public string Submittedby { get; set; }
         public string AssignedTo { get; set; }
-
-
         public string Comments { get; set; }
-
         public string Approvalstatus { get; set; }
-
         public string OverallRequestStatus { get; set; }
-
 
 
         //----print details in View status
 
         public string Department { get; set; }
-
         public string DateofJoin { get; set; }
-
         public string Submittedto { get; set; }
-
         public string InstanceName { get; set; }
-
         public string Address { get; set; }
-
         public int NextLevelUserID { get; set; }
-
-
     }
+   
     public class FormDataModel
     {
         public DateTime  TogridDate { get; set; }
-
         public DateTime  FromgridDate { get; set; }
-
         public string TogridDate_Sting { get; set; }
 
         public string FromgridDate_String { get; set; }
@@ -398,16 +354,13 @@ namespace Connect4m_Web.Models
         public string FirstName { get; set; }
         public string InstanceUserCode { get; set; }
         public int InstanceRoleId { get; set; }
-
         public int InstanceDesignationId { get; set; }
         public int CreatedBy { get; set; }
 
         public int LeaveLevelId { get; set; }
-
         public string submitButton { get; set; }
 
     }
-
 
     public class StudentLeaveApprovalModel
     {
@@ -483,33 +436,21 @@ namespace Connect4m_Web.Models
         public String DisplayApprovalLink { get; set; }
     }
 
-
     public class StaffLeaveApprovalModel
     {
-
         public int InstanceId { get; set; }
         public int LeaveTypeId { get; set; }
         public int InstanceClassificationId { get; set; }
-
-
         public string ClassificationName { get; set; }
-
         public int Userid { get; set; }
-
         public int Status { get; set; }
-
         public int Departmentid { get; set; }
-
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public string StaffName { get; set; }
         public int StaffId { get; set; }
 
-
         public string Name { get; set; }
-
 
         public string LeaveType { get; set; }
         public string Comments { get; set; }
@@ -528,13 +469,8 @@ namespace Connect4m_Web.Models
         public DateTime Fromdate { get; set; }
         public DateTime Todate { get; set; }
 
-
-
         public string Username { get; set; }
-
         public string Approved_Regected_Date { get; set; }
-
-
         public string LeaveNoOfDays { get; set; }
         public string LeaveStatus { get; set; }
         //public Double NoOfDays { get; set; }
@@ -546,7 +482,6 @@ namespace Connect4m_Web.Models
 
         public int CreatedBy { get; set; }
         public int AttendanceTypeId { get; set; }
-
         public string submitButtonName { get; set; }
         public DateTime AttendanceDate { get; set; }
 
@@ -558,24 +493,18 @@ namespace Connect4m_Web.Models
         public string ApprovedDate { get; set; }
         public string RejectedDate { get; set; }
 
-
-
         public int LeaveApplicationId { get; set; }
         public string Daysession { get; set; }
         public int BatchId { get; set; }
         public int RoleID { get; set; }
         public int NextLevelUserID { get; set; }
         public string DelegationRecord { get; set; }
-
         public string NotifierEmail { get; set; }
-
         public string NotifierName { get; set; }
-
         public string LevelEmailIDs { get; set; }
         public string NotifierLeavedetails { get; set; }
         public string ApprovedRejectedProp { get; set; }
         public int InstanceSubClassificationId { get; set; }
-
         public string SubClassificationName { get; set; }
         public string ApprovalStatus { get; set; }
     }
@@ -583,17 +512,16 @@ namespace Connect4m_Web.Models
     public class LeaveTypesModel
     {
         public int LeaveTypeId { get; set; }
-
         public string LeaveType { get; set; }
-
     }
+    
     public class ConvertShortLeavesModel_ListValues
     {
         public List<AttendanceModel> AttendanceModel_Data { get; set; }
-
-       // public List<AttendanceModel> _ViewChangeActivitiesList { get; set; }
+        // public List<AttendanceModel> _ViewChangeActivitiesList { get; set; }
         public List<LeaveTypesModel> Leavetypes_List { get; set; }
     }
+    
     public class LeaveDelegationModel
     {
         public int LMSSubCategoryId { get; set; }
@@ -601,8 +529,6 @@ namespace Connect4m_Web.Models
         public string  InstanceUserCode { get; set; }
         public string Mobilephone { get; set; }
         public string DateOfJoining { get; set; }
-
-
         public int DelegationFromUserId { get; set; }
         public int DelegationToUserId { get; set; }
         public string BtnName { get; set; }
@@ -619,12 +545,8 @@ namespace Connect4m_Web.Models
         public int Userid { get; set; }
         public int InstanceID { get; set; }
         public int InstanceClassificationId { get; set; }
-
         public int InstanceDesignationId { get; set; }
         public int DelegationId { get; set; }
-
-
-
         public string FirstName { get; set; }
         public string DelegationFromUserName { get; set; }
         public string DelegationToUserName { get; set; }
@@ -661,8 +583,6 @@ namespace Connect4m_Web.Models
         [Required(ErrorMessage="Please Upload a File")]
         public IFormFile SubjectExelFile { get; set; }
 
-
-
         public string UserIdString { get; set; }
         public int SubjectAssociated { get; set; }
         [Required(ErrorMessage = "The Subject is Required")]
@@ -687,26 +607,21 @@ namespace Connect4m_Web.Models
         public List<int> bFlag { get; set; }
         public string SubjectTypeName { get; set; }
 
-
-
         [Required(ErrorMessage = "The Subject Code is Required")]
         public string SubjectCode { get; set; }
         public List<string> SubjectCodeList { get; set; }
         public int ProgramType { get; set; }
         public List<int> SubjectTypeId { get; set; }
-
         public List<string> SubjectTypeIdString { get; set; }
         public List<string> UserIdList { get; set; }
         public List<int> IsInternal { get; set; }
         public List<int> InstanceSubClassificationIdList { get; set; }
         public List<int> InstanceClassificationIdList { get; set; }
         public List<int> IncludeInTotal { get; set; }
-
         public List<string> IncludeInTotalStringList { get; set; }
         public List<string> AttendanceRequired { get; set; }
         public List<string> MentorIds { get; set; }
         public List<string> TotalPeriods { get; set; }
-
         public List<int> DisplayOrder { get; set; }
         public List<string> SubjectShortName { get; set; }
         public List<string> SubjectNameList { get; set; }
@@ -717,7 +632,6 @@ namespace Connect4m_Web.Models
         public int InstanceClassificationId { get; set; }
         public string ClassificationName { get; set; }
         public int ProgramType { get; set; }
-
         public int InstanceSubClassificationId { get; set; }
         public string SubClassificationName { get; set; }
         public string DisplayOrder { get; set; }
@@ -726,27 +640,24 @@ namespace Connect4m_Web.Models
         public string Text { get; set; }
         public string Value { get; set; }
     }
+    
     public class Mentors
     {
         public string MentorName { get; set; }
         public string Qulification { get; set; }
         public int MentorUsertid { get; set; }
     }
+    
     public class Subclassfications_MS
     {
         public List<SubClassifications> subclassfication { get; set; }
         public List<Mentors> mentors { get; set; }
         public List<SubjectModel> editlist { get; set; }
-
         public List<SubClassifications> SubjectTypes { get; set; }
-
         public string RoleName { get; set; }
         public int InstanceID { get; set; }
         public int InstanceClassificationId { get; set; }
-       
-
     }
-
 
     public class Instance
     {
@@ -757,8 +668,6 @@ namespace Connect4m_Web.Models
         public int RoleId { get; set; }
         public int CreatedBy { get; set; }
     }
-
-
 
     //----------------------------------------   Creating Class For CommonMethods of all
 
@@ -794,8 +703,8 @@ namespace Connect4m_Web.Models
         [Required]
         [RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=]).{8,10}$", ErrorMessage = "Password must be 8 to 10 characters long and include at least one digit, one lowercase letter, one uppercase letter, and one special character.")]
         public string Password { get; set; }
-        [Required]
 
+        [Required]
         [Compare("Password", ErrorMessage = "The password and Confirm password do not match.")]
         public string ConfirmPassword { get; set; }
         public string SubDomineName { get; set; }
@@ -814,18 +723,13 @@ namespace Connect4m_Web.Models
         public string DoubleLogin { get; set; }
         public int ThemeId { get; set; }
         public string RoleName { get; set; }
-
         public string ChangePWOnLogin { get; set; }
-
         public int ParentFlag { get; set; }
-
-
         public string Mobilenumber { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int MenuId { get; set; }
     }
-
 
     public class SidebarViewModel
     {
@@ -865,6 +769,7 @@ namespace Connect4m_Web.Models
         [Compare("Password", ErrorMessage = "The password and Confirm password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
     public class ForgotPasswordResponse
     {
         public List<Forgotdetails> UserLogins { get; set; }
@@ -877,5 +782,4 @@ namespace Connect4m_Web.Models
             Returnerrormessage = new List<string>();
         }
     }
-
 }

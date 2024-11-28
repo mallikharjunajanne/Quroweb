@@ -7,15 +7,15 @@
 <head></head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        <h4 class="mb-1 text-center">AMOUNT DEPOSIT SCREEN</h4>
+        <h4 class="text-center text-header">AMOUNT DEPOSIT SCREEN</h4>
         <span id="Commoneerrormessage" class="text-validation"></span>
         <div class="row mb-2" id="Bankdipositdiv">
-            <div class="col-sm-12 text-end mb-2">
+            <div class="col-sm-12 text-end">
                 <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" onclick="Newdiposit()">
                     Enter New Deposit
                 </button>
             </div>
-            <div class="col-md-12 col-lg-12 mb-3">
+            <div class="col-md-12 col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header bg-danger text-white text-header">SEARCH</div>
                     <div class="card-body">
@@ -50,17 +50,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-12 mb-3">
-                <div id="Amountdepositdivexporttoexcel">
-                    <a href="javascript:void(0)" id="AmountdepositExportToExcel" onclick="Exporttoexcelfun();" class="text-end">
-                        Export to Excel
-                    </a>
+            <div class="col-md-12 col-lg-12">
+                <div id="Amountdepositdivexporttoexcel" class="text-right">
+                    <a href="javascript:void(0)" id="AmountdepositExportToExcel" onclick="Exporttoexcelfun();" 
+                       class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Export to Excel</a>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header bg-danger text-white text-header">
-                        TOTAL NUMBER OF
-                        <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>
-                        RECORDS
+                        TOTAL NUMBER OF <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS
                     </div>
                     <div class="table-responsive text-nowrap card-datatable " id="Bankdeposittbldivid"></div>
                 </div>

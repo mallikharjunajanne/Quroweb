@@ -7,7 +7,7 @@
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
 
 
-<div class="card-header d-flex align-items-center justify-content-between">
+<div class="card-header d-flex align-items-center justify-content-between text-header">
     <h5 class="mb-0">
         <span id="AddNewText_Span_CreatePage">
             MANAGE SALARY ATTRIBUTES FOR ROLES
@@ -98,7 +98,7 @@
                         </div>
                         <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Salary"></label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="number" asp-for="Salary" required >
+                            <input class="form-control" type="number" asp-for="Salary" required>
                             <span asp-validation-for="Salary" class="text-danger"></span>
                         </div>
                         @if (Model?.DISPLAYICON_AMOUNT == "1")
@@ -239,9 +239,13 @@
 @*=============================  TABLE START ================================*@
 
 <div class="card">
-    
+
     <h6 class="card-title mb-0">
-        <span>TOTAL NO. OF RECORDS <span id="totalrecords_Tranctions_SAR_insert" class="badge badge-center rounded-pill bg-primary bg-glow">0</span> RECORD(S).</span>
+        <span class="text-header">
+            TOTAL NO. OF RECORDS
+            <span id="totalrecords_Tranctions_SAR_insert" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
+            RECORD(S).
+        </span>
     </h6>
     <div class="table-responsive text-nowrap">
         <table id="tblSARinsertresults" class="link table table-hover table-bordered ">
@@ -279,7 +283,7 @@
     </div>
 </div>
 @*=============================  TABLE END ================================*@
-         
+
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 @section Scripts {

@@ -10,8 +10,7 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-        @*<h4 class="py-3 mb-4"><span class="text-muted fw-light">Reports /</span>ADMISSION REPORT</h4>*@
-        <h4 class="mb-4 text-center">ADMISSION REPORT</h4>
+        <h4 class="mb-4 text-center text-header">ADMISSION REPORT</h4>
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
                 <span class="text-danger" id="Commonerrormessage"></span>
@@ -83,11 +82,11 @@
                                             <div class="col-sm-6">
                                                 <div class="col mt-2">
                                                     <div class="form-check form-check-inline">
-                                                        <input asp-for="ApplicationStatus" class="form-check-input check" id="radioinline1" type="radio" name="ApplicationStatus" value="0" required="">
+                                                        <input asp-for="ApplicationStatus" class="form-check-input check" id="radioinline1" type="radio" name="ApplicationStatus" value="0">
                                                         <label class="form-check-label" for="radioinline1">Registered</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input asp-for="ApplicationStatus" class="form-check-input check" id="radioinline2" type="radio" name="ApplicationStatus" value="1" required="">
+                                                        <input asp-for="ApplicationStatus" class="form-check-input check" id="radioinline2" type="radio" name="ApplicationStatus" value="1">
                                                         <label class="form-check-label" for="radioinline2"> Admission Confirmed</label>
                                                     </div>
                                                 </div>

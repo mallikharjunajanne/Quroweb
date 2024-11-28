@@ -15,6 +15,7 @@
     <div class="text-right">
         <span data-value="@ViewBag.Returnmessage" id="Insert_Updatespanid" style="display:block;"></span>
         <a href="" id="Backtosearchlnk">Back to Search</a>
+        <button id="Backtosearchlnk" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Back to Search</button>
     </div>
     <form id="NewAdmissionform" enctype="multipart/form-data">
         <div class="row mb-2">
@@ -40,7 +41,7 @@
                                         <label class="col-sm-4 col-form-label space required text-end">Name of the child</label>
                                         <div class="col-sm-2">
                                             <input type="text" asp-for="FirstName" class="col-sm-3 form-control" id="txtFirstName" placeholder="FirstName" autocomplete="off" />
-                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            <span asp-validation-for="FirstName" class="text-danger" style="font-size:13px;"></span>
                                             <input type="hidden" asp-for="RegistrationUserId" class="col-sm-3 form-control" id="txtRegistrationUserId" />
                                         </div>
                                         <div class="col-sm-2">
@@ -48,7 +49,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="text" asp-for="LastName" class="col-sm-3 form-control" id="txtLastName" placeholder="LastName" autocomplete="off" />
-                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                            <span asp-validation-for="LastName" class="text-danger" style="font-size:13px;"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">

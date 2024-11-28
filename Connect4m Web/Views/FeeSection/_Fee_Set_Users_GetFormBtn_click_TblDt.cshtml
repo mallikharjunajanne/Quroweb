@@ -166,20 +166,23 @@
                     </tr>
                 </thead>
                 <tbody id="SetFeeForUser_tbody">
-                    @{int Sno = 1;}
+                    @{
+                        int Sno = 1;
+                        //int i = 0; // Initialize the index
+                    }
                     @foreach (var group in groupedUsers)
                     {
                         var user = group.First();
-                        <tr style="background-color:#DDDEDF;">
-                            <td>@Sno</td>
-                            <td>@user.FirstName</td>
-                            <td hidden id="UserId">@user.UserId</td>
-                            <td hidden id="FeeTypeid">@user.FeeTypeid</td>
-                            <td hidden id="ConcedingAmount">@user.ConcedingAmount</td>
-                            <td hidden id="DueDate">
-                                @user.DueDate
+                    <tr style="background-color:#DDDEDF;">
+                        <td>@Sno</td>
+                        <td>@user.FirstName</td>
+                        <td hidden id="UserId">@user.UserId</td>
+                        <td hidden id="FeeTypeid">@user.FeeTypeid</td>
+                        <td hidden id="ConcedingAmount">@user.ConcedingAmount</td>
+                        <td hidden id="DueDate">
+                            @user.DueDate
 
-                                <script>
+                            <script>
 
                                 $(document).ready(function () {
                                     var formattedDate = formatDate("@user.DueDate");
@@ -194,59 +197,79 @@
                                     }
                                     return "";
                                 }
-                                </script>
-                            </td>
+                            </script>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(user.InstanceUserCode))
+                            {
+                                @user.InstanceUserCode
+                            }
+                            else
+                            {
+                                @Html.Raw("--")
+                            }
+                        </td>
+
+                        @if (!string.IsNullOrEmpty(user.RouteName))
+                        {
+                            <td class="hideable">@user.RouteName</td>
+                        }
+                        else
+                        {
+                            <td class="hideable" style="display: none;"></td>
+                        }
+                        @if (!string.IsNullOrEmpty(user.StopName))
+                        {
+                            <td class="hideable">@user.StopName</td>
+                        }
+                        else
+                        {
+                            <td class="hideable" style="display: none;"></td>
+                        }
+
+                        @{
+                            int i = 0; // Initialize the index
+                        }
+                        @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
+                        {
+                            var matchingUser = group.FirstOrDefault(u => u.FeeTypeid == feeType);
+                            var displayIcon = matchingUser?.DisplayIcon ?? "";
+                            var displayIcons = "";
+                            //var displayIcons = matchingUser?.DisplayIcon[i] ?? "";
+                            @if (i == 0)
+                            {
+                                displayIcons = matchingUser?.DisplayIcon ?? "";
+                            }
+                            else
+                            {
+                                var DisplayIcon_= $"DisplayIcon{i}";
+                                var propertyValue = matchingUser?.GetType().GetProperty(DisplayIcon_)?.GetValue(matchingUser);
+                                displayIcons = propertyValue?.ToString() ?? "";
+                                //displayIcons = matchingUser?.GetType().GetProperty(DisplayIcon_)?.GetValue(DisplayIcon_);
+                                //displayIcons = matchingUser?.DisplayIcon_;
+                            }
+                            //var displayIcons = matchingUser?.DisplayIcon[i].ToString() ?? "";
+
+                            var inputId = $"txtFA_{user.UserId}_{feeType}_{user.FirstName}";
+                            var textareaId = $"textarea_{user.UserId}_{feeType}_{user.FirstName}";
+
                             <td>
-                                @if (!string.IsNullOrEmpty(user.InstanceUserCode))
-                                {
-                                    @user.InstanceUserCode
-                                }
-                                else
-                                {
-                                    @Html.Raw("--")
-                                }
+                                <div style="display: flex;">
+                                    <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext form-control" style="height: 27px; width: 40%;" @*style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;"*@ oninput="validateNumberInput(this)" />
+                                    @*@if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")*@
+                                    @if (!string.IsNullOrEmpty(displayIcons) && displayIcons == "1")
+                                    {
+                                        <span class="search-icon" onclick="ShowChangeActivity('@matchingUser.userfeeactivityId')">🔍</span>
+                                    }
+                                    <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
+                                    <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
+                                    <textarea class="form-control" id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
+                                </div>
                             </td>
+                            //i++;
+                        }
 
-                            @if (!string.IsNullOrEmpty(user.RouteName))
-                            {
-                                <td class="hideable">@user.RouteName</td>
-                            }
-                            else
-                            {
-                                <td class="hideable" style="display: none;"></td>
-                            }
-                            @if (!string.IsNullOrEmpty(user.StopName))
-                            {
-                                <td class="hideable">@user.StopName</td>
-                            }
-                            else
-                            {
-                                <td class="hideable" style="display: none;"></td>
-                            }
-
-                            @foreach (var feeType in Model.FeeTypeCheckedFeetypeids)
-                            {
-                                var matchingUser = group.FirstOrDefault(u => u.FeeTypeid == feeType);
-                                var displayIcon = matchingUser?.DisplayIcon ?? "";
-
-                                var inputId = $"txtFA_{user.UserId}_{feeType}_{user.FirstName}";
-                                var textareaId = $"textarea_{user.UserId}_{feeType}_{user.FirstName}";
-
-                                <td>
-                                    <div style="display: flex;">
-                                        <input type="text" id="@inputId" data-feetype="@feeType" value="@(matchingUser?.FeeAmount ?? "")" maxlength="8" onpaste="return false" class="Inputtext form-control"style="height: 27px; width: 40%;" @*style="width: 29%; margin-left: 12px; margin-top: 8px; height: 26px;"*@ oninput="validateNumberInput(this)" />
-                                        @if (!string.IsNullOrEmpty(displayIcon) && displayIcon == "1")
-                                        {
-                                            <span class="search-icon">🔍</span>
-                                        }
-                                        <input type="hidden" id="PaidAmount_Txtid_@feeType" value="@(matchingUser?.PaidAmount ?? "")" class="PaidAmount_Input" />
-                                        <input type="hidden" id="FeeTypeid_Txtid" value="@feeType" class="FeeTypeid_Input" />
-                                        <textarea class="form-control" id="@textareaId" maxlength="250" style=" margin-left: @(displayIcon == "1" ? "81px" : "100px"); height:37px;width:46%;" oninput="limitTextareaCharacters(this, 250); updateCharacterCount(this, 'charCount_@textareaId', 250)">@matchingUser?.Comments</textarea>
-                                    </div>
-                                </td>
-                            }
-
-                        </tr>
+                    </tr>
                         Sno++;
                     }
                 </tbody>

@@ -384,6 +384,7 @@ $("#txtDOB").on("change", DateofbirtDateCompare);
 
 ///===>> Create New Application function start
 function Newadmission() {
+    loaddingimg.css('display', 'block');
     $('#ManageadmissionsContainerdiv1').empty();
     handleAjax('GET', "/Admin/QuroAdmissionProcess_New", null,
         function (resp) {

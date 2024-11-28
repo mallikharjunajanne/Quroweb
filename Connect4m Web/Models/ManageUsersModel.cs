@@ -45,6 +45,7 @@ namespace Connect4m_Web.Models
         public string DISPLAYDATEOFJOINING { get; set; }
 
         public string IS_UserJoineds { get; set; }
+        public bool IsUserJoinedbool { get; set; }
         [Required]
         [Display(Name= "Relation")]
         public string Relationship { get; set; }

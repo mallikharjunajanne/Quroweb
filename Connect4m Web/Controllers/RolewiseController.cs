@@ -158,6 +158,8 @@ namespace Connect4m_Web.Controllers
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
+            obj.RoleDescirption = obj.RoleDescirption ?? "";
+
             string commaSeparatedIds = string.Join(",", obj.AuthMenuIds);
 
             string jsonData = JsonConvert.SerializeObject(obj);
@@ -278,6 +280,8 @@ namespace Connect4m_Web.Controllers
 
         #region  MENTOR ATTENDANCE POSTING (POST ATTENDANCE)
 
+        //exec STP_GetStaffLeaveTypes @InstanceID=879  
+
         //----------------------------  POST ATTENDANCE
         public IActionResult PostAttendance()
         {
@@ -285,7 +289,7 @@ namespace Connect4m_Web.Controllers
 
             ViewBag.Department = CommonDropdown("GetDepartment", parameter, "ClassificationName", "InstanceClassificationId");    /* new List<SelectListItem>();//---------------------  Getting  Department*/
             ViewBag.Slots = CommonDropdown("GetSlots", parameter, "SlotName", "SlotId");         /* new List<SelectListItem>();//---------------------  Getting  Slots*/
-            ViewBag.Mentors = new List<SelectListItem>();  
+            ViewBag.Mentors = new List<SelectListItem>();
             //  CommonDropdown("GetRoleEAP", parameter, "SlotName", "SlotId");  /* new List<SelectListItem> { new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" }, new SelectListItem { Value = "123", Text = "sree" } };//----------------*/
             ViewBag.instancceidME = InstanceId;
 
@@ -318,6 +322,7 @@ namespace Connect4m_Web.Controllers
             }
             return Json(list);
         }
+
         public IActionResult PostAttendanceSave()
         {
             return View();
@@ -379,6 +384,20 @@ namespace Connect4m_Web.Controllers
             {
                 return Json(0);
             }
+        }
+
+        public IActionResult Getstaffleavetypesddl()
+        {
+            List<CommonDropdown> list = new List<CommonDropdown>();
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Getstaffleavetypesddl?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<CommonDropdown>>(data);
+                return Json(list);
+            }
+            return Json(list);
         }
 
         #endregion
@@ -447,13 +466,13 @@ namespace Connect4m_Web.Controllers
                 list5 = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
             ViewBag.Months = list5;//----------------------------------  Get Months
-         //   Commonclass obj = new Commonclass();
-          //  ViewBag.Years = obj.GetYears();//-------------------------  Get Years
+                                   //   Commonclass obj = new Commonclass();
+                                   //  ViewBag.Years = obj.GetYears();//-------------------------  Get Years
 
             string[] parameter = new string[] { InstanceId.ToString() };
             ViewBag.instancceidME = InstanceId.ToString();
             ViewBag.Department = CommonDropdown("GetDepartment", parameter, "ClassificationName", "InstanceClassificationId");    /* new List<SelectListItem>();//---------------------  Getting  Department*/
-          
+
             ViewBag.EmployeeNames = new List<SelectListItem>();
             return View();
 
@@ -466,7 +485,7 @@ namespace Connect4m_Web.Controllers
         {
             List<StaffMonthLeave> StudentNamesList = new List<StaffMonthLeave>();
             obj.InstanceId = InstanceId;
-         
+
             obj.Year = DateTime.Now.Year.ToString();
             obj.EndYear = DateTime.Now.Year.ToString();
 

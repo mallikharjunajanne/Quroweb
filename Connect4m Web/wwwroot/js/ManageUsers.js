@@ -219,7 +219,8 @@ function RoleOnChangeFunctionInGeneralTab(Roleid, IsEmpty) {
         debugger;
         //if (!IsEmpty) {
         if ($("#BtnUpdateIdentification").val() != "UpdateDetails") {
-            $("#ChkIsUserJoined").prop("checked", false);
+            //$("#ChkIsUserJoined").prop("checked", false);//27-11-2024 Before Code
+            $("#ChkIsUserJoined").prop("checked", true);//27-11-2024 TO Now
             //$(".ClsSessionStudent").val("");
             //$(".ClsClear").val("");
             $(".ClsClear").val("");

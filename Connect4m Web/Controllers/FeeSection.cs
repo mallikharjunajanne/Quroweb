@@ -792,6 +792,22 @@ namespace Connect4m_Web.Controllers
             return Json(Feetypeslist);
         }
 
+        public IActionResult ViewChangeActivity(int UserFeeActivityId)
+        {
+            ChangeActivityRequest obj = new ChangeActivityRequest();
+            obj.AuditKey = "FeeAmount";
+            obj.TableName = "tblUserFee";
+            obj.SourceId = UserFeeActivityId;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+
+            List<ChangeActivityRequest> Value2 =
+                CommonMethodobj.CommonListMethod<ChangeActivityRequest, ChangeActivityRequest>(obj, "/FeeChangeActivityRequest", client);
+
+            ViewBag.listvalues = Value2;
+            return View();
+        }
+
         #endregion
 
         #region PAY FEE FOR USERS === Payfeeforuser
@@ -1657,30 +1673,41 @@ namespace Connect4m_Web.Controllers
             return PartialView("_TableData_FeeStatus", list);
         }
 
+        //[HttpPost]
+        //public IActionResult Feestatuse_smsmailNotification([FromQuery] string[] SMSStudents,[FromQuery] string[] SMSParents,[FromQuery] string[] EmailStudents,[FromQuery] string[] EmailParents)
+        ////public IActionResult Feestatuse_smsmailNotification(NotificationRequest request)
+        //{
+        //    //// Deserialize the JSON strings into objects
+        //    //var smsStudentsList = new List<SmsStudent>();
+        //    //var smsParentsList = new List<SmsStudent>();
+        //    //var emailStudentsList = new List<EmailStudent>();
+        //    //var emailParentsList = new List<EmailStudent>();
+
+        //    //// Deserialize the JSON strings into your respective objects
+        //    //var smsStudentsCount = SMSStudents?.Length ?? 0;
+        //    //var smsParentsCount = SMSParents?.Length ?? 0;
+        //    //var emailStudentsCount = EmailStudents?.Length ?? 0;
+        //    //var emailParentsCount = EmailParents?.Length ?? 0;
+        //    //string smsStudentsOutput = string.Join(", ", SMSStudents);
+        //    //Console.WriteLine("SMSStudents: " + smsStudentsOutput);
+        //    //Console.WriteLine("SMSStudents: " + string.Join(", ", SMSStudents));
+        //    //Console.WriteLine("SMSParents: " + string.Join(", ", SMSParents));
+        //    //Console.WriteLine("EmailStudents: " + string.Join(", ", EmailStudents));
+        //    //Console.WriteLine("EmailParents: " + string.Join(", ", EmailParents));
+
+
+        //    return Json("1");
+        //    //return Ok(new { SmsStudentsList = smsStudentsOutput });
+        //    //return Json("An error occurred during the SMS sending process.");
+        //}
+
+
         [HttpPost]
-        public IActionResult Feestatuse_smsmailNotification([FromQuery] string[] SMSStudents,[FromQuery] string[] SMSParents,[FromQuery] string[]EmailStudents,[FromQuery] string[] EmailParents)
-        //public IActionResult Feestatuse_smsmailNotification(NotificationRequest request)
+        public  IActionResult Feestatuse_smsmailNotification(Datamodel datamodel)
         {
-            // Deserialize the JSON strings into objects
-            var smsStudentsList = new List<SmsStudent>();
-            var smsParentsList = new List<SmsStudent>();
-            var emailStudentsList = new List<EmailStudent>();
-            var emailParentsList = new List<EmailStudent>();
-
-            // Deserialize the JSON strings into your respective objects
-            var smsStudentsCount = SMSStudents?.Length ?? 0;
-            var smsParentsCount = SMSParents?.Length ?? 0;
-            var emailStudentsCount = EmailStudents?.Length ?? 0;
-            var emailParentsCount = EmailParents?.Length ?? 0;
-
-            //var smsStudentsCount = request.SMSStudents?.Count ?? 0;
-            //var smsParentsCount = request.SMSParents?.Count ?? 0;
-            //var emailStudentsCount = request.EmailStudents?.Count ?? 0;
-            //var emailParentsCount = request.EmailParents?.Count ?? 0;
-
             return Json("1");
-            //return Json("An error occurred during the SMS sending process.");
         }
+
 
 
         [HttpGet]

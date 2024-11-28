@@ -2685,8 +2685,12 @@ namespace Connect4m_Web.Controllers
             obj.submitButtonName = submitButtonName ;
             //check this
             obj.DelegationFlag = 0;
-           obj.DelegationFrom = 0;
-           
+            obj.DelegationFrom = 0;
+            DateTime fromdate_=Convert.ToDateTime(obj.FromdateString);
+            DateTime todate_ = Convert.ToDateTime(obj.TodateString);
+            obj.Fromdate = fromdate_;
+            obj.Todate = todate_;
+
             string data = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
