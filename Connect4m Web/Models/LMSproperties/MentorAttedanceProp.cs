@@ -77,8 +77,12 @@ namespace Connect4m_Web.Models.LMSproperties
         public List<string> Ispresent { get; set; }
         public string SubjectSlotID { get; set; }
         public DateTime startdate { get; set; }
-
-
+        public string studentPhno { get; set; }
+        public string StudentSMS { get; set; }
+        public string MentorName { get; set; }
+        public string DepartmentClassNames { get; set; }
+        public string SlotName { get; set; }
+        public bool checkboxStatus { get; set; }
 
     }
     public class AttendanceDelete : Instance

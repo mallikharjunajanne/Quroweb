@@ -1,40 +1,36 @@
 ﻿@*@model SchoolConnect4M_WebApi.Models.RoleProp*@
 
 @{
-    ViewData["Title"] = "SearchRolewise";
+    ViewData["Title"] = "Manage Role";
 }
 
 @*<link href="~/css/CommonStyle.css" rel="stylesheet" />
 <link href="~/assets/css/vendors/font-awesome.css" rel="stylesheet" />*@
 
-
-
-@*<div class="card accordion-item active">
-        <h2 class="accordion-header d-flex align-items-center">
-            <button type="button" class="accordion-button table-dark" data-bs-toggle="collapse" data-bs-target="#accordionWithIcon-1" aria-expanded="true" >
-                <i class="ti ti-star ti-xs me-2"></i>
-                Header Option 1
-            </button>
-        </h2>
-
-        <div id="accordionWithIcon-1" class="accordion-collapse collapse show" style="">
-            <div class="accordion-body">
-                Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi
-                bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears
-                marshmallow pastry pie.
-            </div>
-        </div>
-    </div>*@
-
-
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+      /*  .form-control {
+            font-family: Nunito, sans-serif;
+            border: 1px solid #b4b4b4;
+            border-top-color: rgb(180, 180, 180);
+            border-right-color: rgb(180, 180, 180);
+            border-bottom-color: rgb(180, 180, 180);
+            border-left-color: rgb(180, 180, 180);
+            border-radius: 10px !important;
+            width: 100%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }*/
+    </style>
+</head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
         <div id="SearchRoleWise">
             <div class="row mb-2">
-                @*<h4 class="mb-3 text-center"><span class="text-muted fw-light">Admin Module /</span> MANAGE ROLE</h4>*@
                 <h4 class="mb-3 text-center text-header">MANAGE ROLE</h4>
                 <div class="text-end">
                     <button id="addnewRoleformanage" class="btn btn-label-linkedin waves-effect btn-sm">Create Role</button>
@@ -99,14 +95,14 @@
                         </div>
                     </div>
                 </div>
-                @*</div>*@
+               
 
                 @*=============================  TABLE START ================================*@
 
                 <div class="col-md-12 col-lg-12 mb-3">
 
                     <div class="card mb-4">
-                        @*<div class="card">*@
+                       
 
                         <div class="card-header bg-danger text-white text-header">
                             <span>

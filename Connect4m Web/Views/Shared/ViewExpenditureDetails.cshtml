@@ -80,10 +80,6 @@
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">
-
-
-
-
         <!-- Examples -->
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
@@ -109,9 +105,9 @@
                                             <div class="col-sm-4">
                                                 <div class="position-relative" id="dropdown">
                                                     @Html.DropDownListFor(
-                                               x => x.TypeofExpenditure,
-                                                new SelectList(ViewBag.FoundSource, "Value", "Text"),
-                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_FoundSource_SEM", @style = "color:black;", @disabled = true })
+x => x.TypeofExpenditure,
+ new SelectList(ViewBag.FoundSource, "Value", "Text"),
+"-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_FoundSource_SEM", @style = "color:black;", @disabled = true })
 
                                                 </div>
                                             </div>
@@ -129,9 +125,9 @@
                                             <div class="col-sm-4">
                                                 <div class="position-relative" id="dropdown">
                                                     @Html.DropDownListFor(
-                                               x => x.YearId,
-                                                new SelectList(ViewBag.Years, "Value", "Text"),
-                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Year_SEM", @style = "color:black;", @disabled = true })
+x => x.YearId,
+ new SelectList(ViewBag.Years, "Value", "Text"),
+"-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Year_SEM", @style = "color:black;", @disabled = true })
 
 
                                                 </div>
@@ -141,9 +137,9 @@
                                             <div class="col-sm-4">
                                                 <div class="position-relative" id="dropdown">
                                                     @Html.DropDownListFor(
-                                               x => x.MonthId,
-                                                new SelectList(ViewBag.Months, "Value", "Text"),
-                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Month_SEM", @style = "color:black;", @disabled = true })
+x => x.MonthId,
+ new SelectList(ViewBag.Months, "Value", "Text"),
+"-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Month_SEM", @style = "color:black;", @disabled = true })
 
 
                                                 </div>
@@ -163,9 +159,9 @@
                                             <div class="col-sm-4">
                                                 <div class="position-relative" id="dropdown">
                                                     @Html.DropDownListFor(
-                                               x => x.PaymentMode,
-                                                new SelectList(ViewBag.PaymentMode, "Value", "Text"),
-                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_PaymentMode_SEM", @style = "color:black;", @disabled = true })
+x => x.PaymentMode,
+ new SelectList(ViewBag.PaymentMode, "Value", "Text"),
+"-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_PaymentMode_SEM", @style = "color:black;", @disabled = true })
 
                                                 </div>
                                             </div>
@@ -246,9 +242,9 @@
                                             <div class="col-sm-4">
                                                 <div class="position-relative" id="dropdown">
                                                     @Html.DropDownListFor(
-                                               x => x.VendorCategory,
-                                                new SelectList(ViewBag.Vendorcategory, "Value", "Text"),
-                                              "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Vendor_SEM", @style = "color:black;", @disabled = true })
+x => x.VendorCategory,
+ new SelectList(ViewBag.Vendorcategory, "Value", "Text"),
+"-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Vendor_SEM", @style = "color:black;", @disabled = true })
 
                                                 </div>
                                             </div>
@@ -265,12 +261,27 @@
 
                                             <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="DocName"></label>
                                             <div class="col-sm-4">
-                                                <input asp-for="DocName" class="form-control" type="file" id="DocmentName" accept=".doc, .docx, .pdf, .jpeg, .jpg, .png, .gif">
-                                                @{ if (Model != null && Model.DocNameEdit != "")
-                                                    {
-                                                        <input asp-for="DocNameEdit" class="form-control" type="text" readonly id="DocNameEdit" />
+                                                @*<input asp-for="DocName" class="form-control" type="file" id="DocmentName" accept=".doc, .docx, .pdf, .jpeg, .jpg, .png, .gif">*@
+                                                @*@{ if (Model != null && Model.DocNameEdit != "")
+                                {
+                                <input asp-for="DocNameEdit" class="form-control" type="text" readonly id="DocNameEdit" />
+                                }
+                                }*@
 
-                                                    } }
+                                                @{
+                                                    if (Model != null && Model.DocNameEdit != "")
+                                                    {
+                                                        <input asp-for="DocNameEdit" class="form-control-plaintext" type="text" readonly id="DocNameEdit" style="display:none;" />
+                                                        <a class="badge rounded-pill bg-label-info" href="/SEMdocs/@Model.DocNameEdit" target="_blank" style="cursor:pointer;" id="docLink">@Model.DocNameEdit</a>
+                                                        <button class="btn btn-danger waves-effect waves-light btn-sm" id="DeleteButton" type="button">Delete</button>
+                                                        <input asp-for="DocName" class="form-control" type="file" id="DocmentName_" accept=".doc, .docx, .pdf, .jpeg, .jpg, .png, .gif" style="display:none;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="DocNameEdit" class="form-control" type="file" id="DocNameEdit" accept=".doc, .docx, .pdf, .jpeg, .jpg, .png, .gif" style="display:block;" />
+                                                    }
+                                                }
+
                                             </div>
 
                                             <label class="col-sm-2 col-form-label text-end" for="basic-default-name" asp-for="Description"></label>
@@ -278,36 +289,16 @@
                                                 <textarea asp-for="Description" class="form-control" disabled rows="10" style="height: 85px; border: 1px solid #00000021;"></textarea>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
-
-
                         </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         @*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
                         @*<script src="~/lib/jquery/dist/jquery.js"></script>
-
                             <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
                             @section Scripts {
-                                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
                             }*@
                         @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
                         <footer @*style=" filter: drop-shadow(2px 4px 6px black);"*@ style="margin-left:1px !important" id="footer">
@@ -317,20 +308,29 @@
                                         <p style="margin-left: auto; background-color: #121451 !important; /* margin: 10px; */ padding: 20px; color: white; text-align: center; font-weight: 900;">Copyright 2023 © ADS SOFTEK Pvt.Ltd All rights reserved.</p>
                                     </div>
                                     @*<div class="col-md-6">
-                                            <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
-                                        </div>*@
+                        <p class="pull-right mb-0">Hand crafted & made with <i class="fa fa-heart font-secondary"></i></p>
+                    </div>*@
                                 </div>
                             </div>
                         </footer>
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
-        </div>
+    </div>
 
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#DeleteButton").click(function () {
+            // Hide the <a> tag and the Delete button
+            $("#docLink").hide();
+            $(this).hide(); // Hide the delete button
+
+            // Show the file input
+            //$("#DocmentName").show();
+            $("#DocmentName_").show();
+        });
+    });
+</script>

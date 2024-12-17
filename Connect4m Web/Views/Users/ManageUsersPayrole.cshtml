@@ -6,12 +6,8 @@
 }
 
 
-<div class="card-header d-flex align-items-center justify-content-between text-header">
-    <h5 class="mb-0">
-        <span>
-            PAY ROLE INFORMATION
-        </span>
-    </h5><small class="required float-end"> INDICATES REQUIRED FIELDS</small>
+<div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
+    <span>PAY ROLE INFORMATION</span><small class="text-header-small"> * INDICATES REQUIRED FIELDS</small>
 </div>
 <div class="card-body">
     <div class="row">
@@ -22,7 +18,10 @@
                 <label asp-for="Category" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
                 <div class="col-sm-4 ClsDivTeachers">
                     <div class="position-relative">                        
-                        <select id='DdlCategory' asp-for="Category" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlPayRoleCategory_Calingfunction?Id=' + this.value, 'DdlSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryList , "Value", "Text" ))" required>
+                        @*<select id='DdlCategory' asp-for="Category" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlPayRoleCategory_Calingfunction?Id=' + this.value, 'DdlSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryList , "Value", "Text" ))" required>
+                            <option value=''>------Select------</option>
+                        </select>*@
+                        <select id='DdlCategory' asp-for="Category" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlPayRoleCategory_Calingfunction?Id=' + this.value, 'DdlSubCategory', '------Select------', false)" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryList , "Value", "Text" ))" required>
                             <option value=''>------Select------</option>
                         </select>
                         <span asp-validation-for="Category" class="text-danger"></span>
@@ -31,7 +30,10 @@
                 <label asp-for="SubCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
                 <div class="col-sm-4 ClsDivTeachers">
                     <div class="position-relative">
-                        <select id='DdlSubCategory' asp-for="SubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryIdList,"Value","Text"))" disabled required>
+                        @*<select id='DdlSubCategory' asp-for="SubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryIdList,"Value","Text"))" disabled required>
+                            <option value=''>------Select------</option>
+                        </select>*@ 
+                        <select id='DdlSubCategory' asp-for="SubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlPayRoleCategoryIdList,"Value","Text"))" required>
                             <option value=''>------Select------</option>
                         </select>
                         <span asp-validation-for="SubCategory" class="text-danger"></span>
@@ -44,7 +46,10 @@
                 <label asp-for="LMSCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
                 <div class="col-sm-4 ClsDivTeachers">
                     <div class="position-relative">
-                        <select id='DdlLMSCategory' asp-for="LMSCategory" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlLMSCategory_Calingfunction?Id=' + this.value, 'DdlLMSSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlLMSCategoryList, "Value", "Text" ))" required>
+                        @*<select id='DdlLMSCategory' asp-for="LMSCategory" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlLMSCategory_Calingfunction?Id=' + this.value, 'DdlLMSSubCategory', '------Select------', true)" asp-items="@(new SelectList(ViewBag.DdlLMSCategoryList, "Value", "Text" ))" required>
+                            <option value=''>------Select------</option>
+                        </select>*@
+                        <select id='DdlLMSCategory' asp-for="LMSCategory" class="select2 form-select select2-hidden-accessible  ClsClear" onchange="CommonDropdownFunction('GET', '/Users/DdlLMSCategory_Calingfunction?Id=' + this.value, 'DdlLMSSubCategory', '------Select------', false)" asp-items="@(new SelectList(ViewBag.DdlLMSCategoryList, "Value", "Text" ))" required>
                             <option value=''>------Select------</option>
                         </select>
                         <span asp-validation-for="LMSCategory" class="text-danger"></span>
@@ -53,7 +58,10 @@
                 <label asp-for="LMSSubCategory" class="col-sm-2 col-form-label  text-end required ClsDivTeachers" for="basic-default-name"></label>
                 <div class="col-sm-4 ClsDivTeachers">
                     <div class="position-relative">
-                        <select id='DdlLMSSubCategory' asp-for="LMSSubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlLMSSubCategoryIdList,"Value","Text"))" disabled required>
+                        @*<select id='DdlLMSSubCategory' asp-for="LMSSubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlLMSSubCategoryIdList,"Value","Text"))" disabled required>
+                            <option value=''>------Select------</option>
+                        </select>*@
+                        <select id='DdlLMSSubCategory' asp-for="LMSSubCategory" class="select2 form-select select2-hidden-accessible  ClsClear DdlCascadDropdowns" asp-items="@(new SelectList(ViewBag.DdlLMSSubCategoryIdList,"Value","Text"))" required>
                             <option value=''>------Select------</option>
                         </select>
                         <span asp-validation-for="LMSSubCategory" class="text-danger"></span>

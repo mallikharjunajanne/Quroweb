@@ -1,6 +1,6 @@
 ﻿@model Connect4m_Web.Models.AttendanceModel
 @{
-    ViewData["Title"] = "ApplyStudentLeave";
+    ViewData["Title"] = "Apply Leave";
 }
 
 
@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>@ViewData["Title"]</title>
     @*<link href="~/Themes/assets/css/StyleSheets/ApplyStudentLeave.css" rel="stylesheet" />*@
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 
@@ -193,11 +194,11 @@
                         </div>
                         @*=========================== searched table---------------------------------------*@
                         <div class="card mb-4">
-                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
                                 @*<div class="head-label text-center">
                                 <h5 class="card-title mb-0">*@
                                 @*<span id="CountOfRecords_StudentLeaves"></span>*@
-                                <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_StudentLeaves" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>
                                 @*</h5>
                                 </div>*@
                             </div>

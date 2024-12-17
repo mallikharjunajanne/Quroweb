@@ -595,7 +595,7 @@ $(document).on('click', '#ctl00_ContentPlaceHolder1_TblApplied_SearchRecords_lnk
 
                         $("#LeaveTypeId_Popup").val(Value2.leaveTypeId);
                         if (Value2.attachedFileName != "") {
-                            viewfiles = " <a class='badge rounded-pill bg-label-info' href='/LeavesDoc/" + Value2.attachedFileName + "'  target='_blank' style='cursor:pointer;'>View</a >";
+                            viewfiles = " <a class='badge rounded-pill bg-label-info' href='/LeavesDoc" + Value2.attachedFileName + "'  target='_blank' style='cursor:pointer;'>View</a >";
                         }
                         else {
                             viewfiles = " ";

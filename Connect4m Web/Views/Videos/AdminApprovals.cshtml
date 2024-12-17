@@ -1,9 +1,6 @@
-﻿
-@model Connect4m_Web.Models.LMSproperties.SEMproperitesSub
-
+﻿@model Connect4m_Web.Models.LMSproperties.SEMproperitesSub
 @{
     ViewData["Title"] = "AdminApprovals";
-
 }
 @*<link href="~/Datatable/jquery.dataTables.css" rel="stylesheet" />*@
 @*<link href="~/css/Managesubjecttools.css" rel="stylesheet" />*@
@@ -134,6 +131,7 @@
             background-color: #2d830f;
             padding: 8px;
         }
+
     .SEMapprovals img, .SEMapprovalsafter img {
         height: 20px;
         width: 20px;
@@ -158,7 +156,7 @@
                 <div class="form-group col-sm-2">
                     <label class="control-label  space">Approvals</label>
                 </div>
-               
+
                 <div class="col-sm-4 form-group" style="display:flex">
                     <div class="form-check form-check-primary ">
                         <input class="form-check-input" name="Approvalsradio" type="radio" value="1" id="approva" checked>
@@ -171,37 +169,37 @@
                             Reject
                         </label>
                     </div>
-                    </div>
-
-
-
-
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-2"></div>
-                    <div class="form-group col-sm-2">
-                        <label class="control-label  space">Comments</label>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <textarea></textarea>
-                        @*<textarea class="form-control" rows="10" style="height:85px"></textarea>*@
-                    </div>
-                    <div class="col-sm-4"></div>
-                  
-                   
-
-                    <div class="row justify-content">
-                        <div class="col-sm-6">
-                        </div>
-
-                        <div class="col-sm-6">
-                      
-                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="submitapprovals">Submit</button>
-
-                        </div>
-                    </div>
-
                 </div>
+
+
+
+
+                <div class="col-sm-4"></div>
+                <div class="col-sm-2"></div>
+                <div class="form-group col-sm-2">
+                    <label class="control-label  space">Comments</label>
+                </div>
+                <div class="form-group col-sm-4">
+                    <textarea></textarea>
+                    @*<textarea class="form-control" rows="10" style="height:85px"></textarea>*@
+                </div>
+                <div class="col-sm-4"></div>
+
+
+
+                <div class="row justify-content">
+                    <div class="col-sm-6">
+                    </div>
+
+                    <div class="col-sm-6">
+
+                        <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="submitapprovals">Submit</button>
+
+                    </div>
+                </div>
+
             </div>
+        </div>
 
         <footer @*style=" filter: drop-shadow(2px 4px 6px black);"*@ style="margin-left:1px !important">
             <div>
@@ -213,15 +211,14 @@
                 </div>
             </div>
         </footer>
-    
 
-</div>
+
+    </div>
 </div>
 <!DOCTYPE html>
 <html>
 <head>
-
-
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <div class="flex-grow-1 container-p-y container-xxl">

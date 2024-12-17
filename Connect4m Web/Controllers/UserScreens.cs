@@ -2,7 +2,9 @@
 using Connect4m_Web.Models.LMSproperties;
 using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -52,6 +54,32 @@ namespace Connect4m_Web.Controllers
         }
         CommanMethodClass CommonMethodobj = new CommanMethodClass();
 
+        //===============================  Commonn Dropdown
+        public List<SelectListItem> CommonDropdown(string methodname, string[] Parameters, string text, string value)
+        {
+            List<SelectListItem> DropdownList = new List<SelectListItem>();
+            CommonDropdown obj = new CommonDropdown();
+            obj.procedurename = methodname;
+            obj.Parameters = Parameters;
+            obj.text = text;
+            obj.value = value;
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/" + methodname, content).Result;
+            //  HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/"+methodname+"?Parameters=" + Parameters + "&text=" + text + "&value=" + value).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                DropdownList = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
+            }
+            return DropdownList;
+        }
+        public string GetCredits()
+        {
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"/GetCredits?InstanceId={InstanceId}&Createdby={UserId}").Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : string.Empty;
+        }
+        //===============================  Commonn Dropdown
         public IActionResult SchoolWelcomePage()
         {
             try
@@ -512,5 +540,273 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
+
+        #region POST ATTENDANCE NEW
+
+        public IActionResult PostAttendance()
+        {
+            // Initialize parameter array with InstanceId converted to string
+            string[] parameter = new string[] { InstanceId.ToString(), UserId.ToString() ,"1"};
+
+            // Retrieve the 'RoleName' cookie value from the request to determine the user role
+            string roleName = Request.Cookies["RoleName"];
+
+            // Declare variables to store credit information (Total, Used, Remaining)
+            int TotalCredits = 0, UsedCredits = 0, RemCredits = 0;
+
+            // Call GetCredits() function to retrieve the credits as a string
+            string Credits = GetCredits();
+
+            if (roleName.ToUpper()== "CLASS TEACHER")
+            {
+                ViewBag.Department = Teacher_attendanceclassification();
+            }
+            else
+            {
+                // Populate the 'Department' dropdown using a helper method to fetch the list of departments
+                // The method CommonDropdown fetches the data from the database and binds it to the dropdown
+                ViewBag.Department = CommonDropdown("GetDepartment", parameter, "ClassificationName", "InstanceClassificationId");
+            }
+
+            // Check if the Credits string is valid and not empty or "0"
+            if (!string.IsNullOrEmpty(Credits) && Credits != "0")
+            {
+                // Split the Credits string into two parts (Limit and Used) based on the delimiter ", "
+                var parts = Credits.Split(new[] { ", " }, StringSplitOptions.None);
+
+                // Extract and parse the TotalCredits (Limit) from the first part of the string
+                TotalCredits = int.Parse(parts[0].Substring("Limit: ".Length));
+
+                // Extract and parse the UsedCredits from the second part of the string
+                UsedCredits = int.Parse(parts[1].Substring("Used: ".Length));
+
+                // Calculate the Remaining Credits by subtracting UsedCredits from TotalCredits
+                RemCredits = TotalCredits - UsedCredits;
+            }
+
+            // Assign the calculated or default values to the ViewBag for use in the view
+            ViewBag.TotalCredits = TotalCredits;  // Total available credits
+            ViewBag.UsedCredits = UsedCredits;    // Credits already used
+            ViewBag.RemCredits = RemCredits;      // Remaining credits
+
+            // Pass the role name to the ViewBag to display the user's role (if needed in the view)
+            ViewBag.rolename = roleName;
+
+            // Return the view to render the page with the populated data
+            return View();
+        }
+
+
+        #region METHOD FOR BINDING DROPDOWNS WITHOUT TEACHER LOGIN START
+        public IActionResult DepartmentbySubclass(int InstanceClassificationId)
+        {
+            var response = client.GetAsync($"{client.BaseAddress}/Getsubclass?InstanceId={InstanceId}&InstanceClassificationId={InstanceClassificationId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var data = response.Content.ReadAsStringAsync().Result;
+                var Subclassli = JsonConvert.DeserializeObject<List<ManageSubClassification>>(data);
+                return Json(Subclassli);
+            }
+            return Json(new List<ManageSubClassification>());
+        }
+        public IActionResult Attendanceslot(string ClassificationId, int SubClassificationId, int FilterTeachingSubjects)
+        {
+            int loginUserid = FilterTeachingSubjects == 1 ? UserId : default;
+
+            var response = client.GetAsync($"{client.BaseAddress}/Getslotbysubclass?InstanceId={InstanceId}&ClassificationId={ClassificationId}&SubClassificationId={SubClassificationId}&FilterTeachingSubjects={FilterTeachingSubjects}&UserID={loginUserid}").Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = response.Content.ReadAsStringAsync().Result;
+                var Value2 = JsonConvert.DeserializeObject<List<ManageSlots>>(data);
+                return Json(Value2);
+            }
+
+            return Json(new List<ManageSlots>());
+        }
+
+        #endregion
+
+        #region METHOD FOR BINDING TEACHER LOGIN DROPDOWNS START
+        private List<SelectListItem> Teacher_attendanceclassification()
+        {
+            List<Teacherportalattendanceclassification> li = new List<Teacherportalattendanceclassification>();
+            int DelegationClasses = 1;
+
+            // Make the API call
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetClassesByTeacher?InstanceId=" + InstanceId + "&UserId=" + UserId + "&DelegationClasses=" + DelegationClasses).Result;
+            // Check if the response is successful
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                li = JsonConvert.DeserializeObject<List<Teacherportalattendanceclassification>>(data);
+            }
+            else
+            { // Handle the case where the API call fails
+              // You can log an error or return an empty list as a fallback
+                return new List<SelectListItem>();
+            }
+
+            // Use LINQ to transform the data into SelectListItem format
+            var items = li.Select(item => new SelectListItem
+            {
+                Value = item.INSTANCECLASSIFICATIONID.ToString(),
+                Text = item.CLASSIFICATIONNAME.ToString()
+            }).ToList();
+
+            // Optionally, if you need subject items as well:
+            var itemsubject = li.Select(item => new SelectListItem
+            {
+                Value = item.InstanceSubClassificationId.ToString(),
+                Text = item.SubClassificationName.ToString()
+            }).ToList();
+
+            // You can return both lists or just one depending on your requirement.
+            // For now, returning the 'items' list:
+            return items;
+        }
+
+        public IActionResult Teacher_attendancesubclassification()
+        {
+            List<Teacherportalattendanceclassification> li = new List<Teacherportalattendanceclassification>();
+            int DelegationClasses = 1;
+            HttpResponseMessage CL_Response = client.GetAsync(client.BaseAddress + "/GetClassesByTeacher?InstanceId=" + InstanceId + "&UserId=" + UserId + "&DelegationClasses=" + DelegationClasses).Result;
+            if (CL_Response.IsSuccessStatusCode)
+            {
+                string data = CL_Response.Content.ReadAsStringAsync().Result;
+                li = JsonConvert.DeserializeObject<List<Teacherportalattendanceclassification>>(data);
+            }
+            int licount = li.Count();
+            var items = new List<SelectListItem>();
+            var itemsubject = new List<SelectListItem>();
+            for (int i = 0; i < licount; i++)
+            {
+                items.Add(new SelectListItem { Value = li[i].INSTANCECLASSIFICATIONID.ToString(), Text = li[i].CLASSIFICATIONNAME.ToString() });
+                itemsubject.Add(new SelectListItem { Value = li[i].InstanceSubClassificationId.ToString(), Text = li[i].SubClassificationName.ToString() });
+            }
+            return Json(itemsubject);
+        }
+
+        #endregion
+
+        public IActionResult PostAttendanceSave()
+        {
+            return View();
+        }
+
+        //============================ WHEN CLICK ON SAVE (POST THE MENTOR ATTENDANCE)
+        //[HttpPost]
+        ////public IActionResult PostAttendanceSave([FromBody] List<ClassAttendanceData> obj)
+        ////public IActionResult PostAttendanceSave([FromBody] List<ClassAttendanceData> Attendances)
+        //public IActionResult PostAttendanceSave_(IFormCollection form)
+        //{
+        [HttpPost]  // Ensure this attribute is added to indicate the method handles POST requests
+        public IActionResult PostAttendanceSave_(IFormCollection form)
+        {
+
+            try
+            {
+                var attendancesJson = form["Attendances"];
+                var attendances = JsonConvert.DeserializeObject<List<ClassAttendanceData>>(attendancesJson);
+
+                if (attendances == null || !attendances.Any())
+                {
+                    return BadRequest("Invalid attendance data.");
+                }
+
+                //string date = "9/12/2024"; // Date in MM/dd/yyyy format
+                //DateTime dateTime = DateTime.ParseExact(date, "M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+                //Console.WriteLine(dateTime.ToString("dd/MM/yyyy"));  // Output: 09/12/2024
+
+
+                if (attendances != null && attendances.Any())
+                {
+                    attendances[0].InstanceId = InstanceId;
+                    attendances[0].CreatedBy = UserId;
+                   // attendances[0].NotificationDate = Convert.ToDateTime(Request.Cookies["Attendancestartdate"]);
+                    //attendances[0].SlotId = Convert.ToInt32(Request.Cookies["Attendanceslotid"]);
+                    string jsonData = JsonConvert.SerializeObject(attendances);
+                    StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/StudentAttendancePosting", content).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string data = response.Content.ReadAsStringAsync().Result;
+                        int list = JsonConvert.DeserializeObject<int>(data);
+                        return Json(list);
+                    }
+                }
+                return Json(0);
+            }
+            catch
+            {
+                return Json(0);
+            }
+        }
+
+        //============================ GET STUDENT ATTENDANCE
+        public IActionResult GetStudentAttendance(Studentattendancepost obj)
+        {
+            Response.Cookies.Append("Attendancestartdate", obj.StartDate.ToString());
+            Response.Cookies.Append("Attendanceslotid", obj.SubclassificaitionId.ToString());
+            Response.Cookies.Append("Attendance_InstanceClassificationId", obj.Departments.ToString());
+            Response.Cookies.Append("AttendanceEndDate", obj.EndDate.ToString());
+            obj.CreatedBy = UserId;
+            obj.InstanceId = InstanceId;
+            obj.SaturdayHoliday = 0;
+            obj.SundayHoliday = 1;
+            //obj.RoleName = "TEACHER,CLASS TEACHER";
+            string jsonData = JsonConvert.SerializeObject(obj);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            List<AttendanceDetailsResponse> list = new List<AttendanceDetailsResponse>();
+
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/GetStudentAttendanceDetails", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<AttendanceDetailsResponse>>(data);
+                return Json(list);
+            }
+            return Json(list);
+        }
+        public string GenerateShowChangeActivityColumstringColumnString(DateTime StDate, DateTime EDate, int SubjectSlotID)
+        {
+            StringBuilder columnStringBuilder = new StringBuilder();
+            int totalDays = (EDate - StDate).Days + 1;
+
+            //Append the columns for the provided dates 
+            int count = 0;
+            for (int i = 0; i < totalDays; i++)
+            {
+                DateTime currentDate = StDate.AddDays(i);
+                string convertedDate = currentDate.ToString("dd'/'MM'/'yyyy");
+                int columnNumber = i + 1;
+                columnStringBuilder.AppendFormat("[{0}] as column{1},[dbo].[fn_Get_AttendanceActivity](UserId," + SubjectSlotID + ",'" + convertedDate + "',NULL) as DisplayIcon{1},[dbo].[fn_Get_AttendanceId](UserId," + SubjectSlotID + ",'{0}',NULL) as AttendanceId{1},", convertedDate, columnNumber);
+                count++;
+            }
+            int leng = 7 - count;
+            for (int i = count + 1; i <= 7; i++)
+            {
+                columnStringBuilder.AppendFormat("NULL as column{0},0 as DisplayIcon{0},NULL as AttendanceId{0},", i);
+            }
+
+            return columnStringBuilder.ToString();
+        }
+
+        public IActionResult Getstaffleavetypesddl()
+        {
+            List<CommonDropdown> list = new List<CommonDropdown>();
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetAttendanceTypesddl?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                list = JsonConvert.DeserializeObject<List<CommonDropdown>>(data);
+                return Json(list);
+            }
+            return Json(list);
+        }
+        #endregion
+
     }
 }

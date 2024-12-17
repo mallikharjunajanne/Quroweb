@@ -1,232 +1,221 @@
 ﻿@model Connect4m_Web.Models.LMSproperties.ManageEmployeessearch
 @{
-    ViewData["Title"] = "SearchManageEmployees";
+    ViewData["Title"] = "Manage Employees";
     Layout = null;
 }
 
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        #appendinsertmanagecategory {
+            display: none
+        }
+    </style>
+    @*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
+</head>
+<body>
+    <h4 class="mb-3 text-center text-header">MANAGE EMPLOYEES</h4>
+    <div class="row mb-2">
+        <div class="col-md-12 col-lg-12 mb-3">
+            @*<span id="AddNewText_Span_CreatePage">MANAGE EMPLOYEES</span>*@
+            <div class="demo-inline-spacing text-end">
+                <button type="button" class="btn rounded-pill btn-info waves-effect waves-light btn-sm" id="addnewmanageemployeesbtn">
+                    Create New Employee
+                </button>
+            </div>
+            <div id="appendsearchmanageemployees">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white text-header">EMPLOYEE DETAILS</div>
+                    <div class="card-body mb-2">
 
+                        @*=============================  Form Start ================================*@
+                        <form id="Serach_ME">
+                            <div>
+                                <div class="row">
+                                    <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforME" hidden />
 
-<style>
-    #appendinsertmanagecategory {
-        display: none
-    }
-</style>
-@*<link href="~/css/CommonStyle.css" rel="stylesheet" />*@
+                                    <div class="col">
+                                        @*=====================        TEXT BOX                 =================*@
 
+                                        <div class="row mb-3">
 
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">User Name</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="UserNamesearch">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Role</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="Drop_Format_SEM_3">
 
+                                                    @Html.DropDownListFor(
+                                               x => x.RoleId,
+                                                new SelectList(ViewBag.RoleId, "Value", "Text"),
+                                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_RoleId_MEsearch", @style = "color:black;" })
 
+                                                </div>
+                                            </div>
 
-@*<h4 class="py-3 mb-4"><span class="text-muted fw-light"> Admin Module/</span>Manage Employees</h4>*@
-<h4 class="mb-3 text-center text-header">MANAGE EMPLOYEES</h4>
-
-<div class="row mb-2">
-    <div class="col-md-12 col-lg-12 mb-3">
-
-
-        @*<div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">
-                <span id="AddNewText_Span_CreatePage">
-                    MANAGE EMPLOYEES
-                </span>
-            </h5>
-        </div>*@
-        <div class="demo-inline-spacing text-end">
-            <button type="button" class="btn rounded-pill btn-info waves-effect waves-light btn-sm" id="addnewmanageemployeesbtn">
-                Create New Employee
-            </button>
-        </div>
-        <div id="appendsearchmanageemployees">
-            <div class="card mb-4">
-                <div class="card-header bg-danger text-white text-header">EMPLOYEE DETAILS</div>
-                <div class="card-body mb-2">
-
-                    @*=============================  Form Start ================================*@
-                    <form id="Serach_ME">
-                        <div>
-                            <div class="row">
-                                <input type="text" value="@ViewBag.instancceidME" class="form-control" id="InstanceidforME" hidden />
-
-                                <div class="col">
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">User Name</label>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" id="UserNamesearch">
                                         </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Role</label>
-                                        <div class="col-sm-4">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
+                                        @*=====================        TEXT BOX                 =================*@
 
-                                                @Html.DropDownListFor(
-                                           x => x.RoleId,
-                                            new SelectList(ViewBag.RoleId, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_RoleId_MEsearch", @style = "color:black;" })
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">First Name</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="FirstNamesearch">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Last Name</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="LastNamesearch">
+                                            </div>
+
+                                        </div>
+                                        @*=====================        TEXT BOX                 =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Designation</label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                                    @Html.DropDownListFor(
+                                               x => x.DesignationId,
+                                                new SelectList(ViewBag.DesignationId, "Value", "Text"),
+                                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_DesignationId_MEsearch", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Employee.No</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="AdmissionNumbersearch">
+                                            </div>
+
+                                        </div>
+                                        @*=====================        TEXT BOX                 =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Category</label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                                    @Html.DropDownListFor(
+                                               x => x.Category,
+                                                new SelectList(ViewBag.Category, "Value", "Text"),
+                                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Category_MEsearch", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Sub Category</label>
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                                    @Html.DropDownListFor(
+                                               x => x.SubCategory,
+                                                new SelectList(ViewBag.SubCategory, "Value", "Text"),
+                                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_SubCategory_MEsearch", @style = "color:black;opacity:0.5;", @disabled = true })
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        @*=====================        TEXT BOX                 =================*@
+
+                                        <div class="row mb-3">
+
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
+
+                                            <div class="col-sm-4">
+                                                <div class="position-relative" id="Drop_Format_SEM_3">
+
+                                                    @Html.DropDownListFor(
+                                               x => x.Department,
+                                                new SelectList(ViewBag.Department, "Value", "Text"),
+                                               "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Department_MEsearch", @style = "color:black;" })
+
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label text-end" for="basic-default-name"></label>
+                                            <div class="col-sm-4">
 
                                             </div>
-                                        </div>
-
-                                    </div>
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">First Name</label>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" id="FirstNamesearch">
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Last Name</label>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" id="LastNamesearch">
-                                        </div>
-
-                                    </div>
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Designation</label>
-
-                                        <div class="col-sm-4">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-
-                                                @Html.DropDownListFor(
-                                           x => x.DesignationId,
-                                            new SelectList(ViewBag.DesignationId, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_DesignationId_MEsearch", @style = "color:black;" })
-
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Employee.No</label>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" id="AdmissionNumbersearch">
-                                        </div>
-
-                                    </div>
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Category</label>
-
-                                        <div class="col-sm-4">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-
-                                                @Html.DropDownListFor(
-                                           x => x.Category,
-                                            new SelectList(ViewBag.Category, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Category_MEsearch", @style = "color:black;" })
-
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Sub Category</label>
-                                        <div class="col-sm-4">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-
-                                                @Html.DropDownListFor(
-                                           x => x.SubCategory,
-                                            new SelectList(ViewBag.SubCategory, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_SubCategory_MEsearch", @style = "color:black;opacity:0.5;", @disabled = true })
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    @*=====================        TEXT BOX                 =================*@
-
-                                    <div class="row mb-3">
-
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name">Department</label>
-
-                                        <div class="col-sm-4">
-                                            <div class="position-relative" id="Drop_Format_SEM_3">
-
-                                                @Html.DropDownListFor(
-                                           x => x.Department,
-                                            new SelectList(ViewBag.Department, "Value", "Text"),
-                                           "-------select-------", new { @class = "select2 form-select select2-hidden-accessible", @id = "dropdown_Department_MEsearch", @style = "color:black;" })
-
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-2 col-form-label text-end" for="basic-default-name"></label>
-                                        <div class="col-sm-4">
 
                                         </div>
 
-                                    </div>
+                                        @*=====================         BUTTONS                =================*@
 
-                                    @*=====================         BUTTONS                =================*@
-
-                                    <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)">Previous Page</button>
-                                        <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
-                                        <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblME">Search</button>
-                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)">Next Page</button>
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-sm" id="backtopage_ME" onclick="nextpage('SearchManageSubCatogory',null)">Previous Page</button>
+                                            <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="clearform">Clear</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="sub_tblME">Search</button>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" id="Nextpage_ME" onclick="nextpage('SearchEmployeeAttendence',null)">Next Page</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    @*=============================  Form End ================================*@
+                        </form>
+                        @*=============================  Form End ================================*@
 
+                    </div>
+                    @*=============================  TABLE START ================================*@
                 </div>
-                @*=============================  TABLE START ================================*@
+
+                <div class="card">
+                    <div class="card-header bg-danger text-white text-header">
+                        YOUR SEARCH RESULTS
+                        <span id="totalrecords_Tranctions_ME" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
+                        RECORD(S).
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table id="tblMEsearchresults" class="link table table-hover table-bordered ">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>
+                                        S.No
+                                    </th>
+                                    <th>
+                                        S.No
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Emp.No
+                                    </th>
+                                    <th>
+                                        Category
+                                    </th>
+                                    <th>
+                                        Sub Category
+                                    </th>
+                                    <th>
+                                        Department
+                                    </th>
+                                    <th>
+                                        Gross Salary
+                                    </th>
+                                    <th>
+                                        Date of Joining
+                                    </th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                @*=============================  TABLE END ================================*@
             </div>
+            <div id="appendinsertmanageemployees">
 
-            <div class="card">
-                <div class="card-header bg-danger text-white text-header">
-                    YOUR SEARCH RESULTS
-                    <span id="totalrecords_Tranctions_ME" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>
-                    RECORD(S).
-                </div>
-                <div class="table-responsive text-nowrap">
-                    <table id="tblMEsearchresults" class="link table table-hover table-bordered ">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>
-                                    S.No
-                                </th>
-                                <th>
-                                    S.No
-                                </th>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Emp.No
-                                </th>
-                                <th>
-                                    Category
-                                </th>
-                                <th>
-                                    Sub Category
-                                </th>
-                                <th>
-                                    Department
-                                </th>
-                                <th>
-                                    Gross Salary
-                                </th>
-                                <th>
-                                    Date of Joining
-                                </th>
-
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
             </div>
-            @*=============================  TABLE END ================================*@
-        </div>
-        <div id="appendinsertmanageemployees">
-
         </div>
     </div>
-</div>
 
-                                                
+</body>
+</html>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -1673,38 +1673,28 @@ namespace Connect4m_Web.Controllers
             return PartialView("_TableData_FeeStatus", list);
         }
 
-        //[HttpPost]
-        //public IActionResult Feestatuse_smsmailNotification([FromQuery] string[] SMSStudents,[FromQuery] string[] SMSParents,[FromQuery] string[] EmailStudents,[FromQuery] string[] EmailParents)
-        ////public IActionResult Feestatuse_smsmailNotification(NotificationRequest request)
-        //{
-        //    //// Deserialize the JSON strings into objects
-        //    //var smsStudentsList = new List<SmsStudent>();
-        //    //var smsParentsList = new List<SmsStudent>();
-        //    //var emailStudentsList = new List<EmailStudent>();
-        //    //var emailParentsList = new List<EmailStudent>();
 
-        //    //// Deserialize the JSON strings into your respective objects
-        //    //var smsStudentsCount = SMSStudents?.Length ?? 0;
-        //    //var smsParentsCount = SMSParents?.Length ?? 0;
-        //    //var emailStudentsCount = EmailStudents?.Length ?? 0;
-        //    //var emailParentsCount = EmailParents?.Length ?? 0;
-        //    //string smsStudentsOutput = string.Join(", ", SMSStudents);
-        //    //Console.WriteLine("SMSStudents: " + smsStudentsOutput);
-        //    //Console.WriteLine("SMSStudents: " + string.Join(", ", SMSStudents));
-        //    //Console.WriteLine("SMSParents: " + string.Join(", ", SMSParents));
-        //    //Console.WriteLine("EmailStudents: " + string.Join(", ", EmailStudents));
-        //    //Console.WriteLine("EmailParents: " + string.Join(", ", EmailParents));
-
-
-        //    return Json("1");
-        //    //return Ok(new { SmsStudentsList = smsStudentsOutput });
-        //    //return Json("An error occurred during the SMS sending process.");
-        //}
-
-
+        // This method handles sending fee due reminders via SMS and email.
+        // It accepts a DataModel object containing the SMS and email details for students and parents, then processes and sends the notifications accordingly.
         [HttpPost]
-        public  IActionResult Feestatuse_smsmailNotification(Datamodel datamodel)
+        public  IActionResult Feestatuse_smsmailNotification([FromBody] DataModel dataModel)
         {
+            if (dataModel == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+            // Access data like:
+            var smsStudents = dataModel.SMSStudents;            // List of SMS Students
+            var smsParents = dataModel.SMSParents;             // List of SMS Parents
+            var emailStudents = dataModel.EmailStudents;      // List of Email Students
+            var emailParents = dataModel.EmailParents;       // List of Email Parents
+            dataModel.InstanceId = InstanceId;
+            dataModel.CreatedBy = UserId;
+
+            string Returnvalue = CommonInsertingMethod(dataModel, "/SendFeeReminder");
+
+            // For now, just return success:
             return Json("1");
         }
 
@@ -1725,40 +1715,7 @@ namespace Connect4m_Web.Controllers
             return PartialView("_FeeStatus_ByIndividual", list);
         }
 
-        [HttpPost]
-        public IActionResult FeeStatus_SmsMails(string CollectedData, string Subject,string Typeoff,Boolean StudentSMSChk,Boolean ParentSMSChk, Boolean StudentEmailChk, Boolean ParentEmailChk)
-        {
-            
-            var decodedCollectedData = System.Web.HttpUtility.UrlDecode(CollectedData);
-            var collectedData = Newtonsoft.Json.JsonConvert.DeserializeObject<CommunicationData>(decodedCollectedData);
-
-            RequestedDataModel requestedData = new RequestedDataModel();
-            requestedData.Subject = Subject;
-            requestedData.InstanceId = InstanceId;
-            requestedData.CreatedBy= UserId;
-            if (Typeoff == " PARTIAL FEE ")
-            {
-                requestedData.Typeoff = "PARTIALFEE";
-            }
-            else if (Typeoff == " NO FEE ")
-            {
-                requestedData.Typeoff = "NOFEE";
-            }
-            requestedData.Studentphonenumbers = String.Join(",", collectedData.studentMobileNumbers);
-            requestedData.Parentphonenumbers = String.Join(",", collectedData.parentMobileNumbers);
-            requestedData.Studentemails = String.Join(",", collectedData.studentEmails);
-            requestedData.Parentemails = String.Join(",", collectedData.parentEmails);
-            requestedData.Studentsmsstatus = String.Join(",", collectedData.Studentsmsstatus);
-            requestedData.Parentsmsstatus = String.Join(",", collectedData.Parentsmsstatus);
-            requestedData.Studentids = String.Join(",", collectedData.Studentids);
-            requestedData.StudentSMSChk = StudentSMSChk;
-            requestedData.ParentSMSChk = ParentSMSChk;
-            requestedData.StudentEmailChk = StudentEmailChk;
-            requestedData.ParentEmailChk = ParentEmailChk;
-
-            string Returnvalue = CommonInsertingMethod(requestedData, "/FeestatusSendingsmsemails");
-            return Json(Returnvalue);
-        }
+        
 
         #endregion
 

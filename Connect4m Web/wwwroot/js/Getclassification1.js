@@ -9,17 +9,23 @@ $(document).ready(function () {
 
         //**** ====== *** CLASS TEACHER DROPDOWNS DATA BIND FUNCTION CODE *** ====== ****//
 
-        $('#Rlenddate').remove();
+        $('#Rlenddate').hide();
+        //$('#Rlenddate').remove();
         //$('#Rldepartment').remove();
         //$('#Rlclass').remove();
-        $('#StartDateid').remove();
+        //$('#StartDateid').remove();
         $('#RlStartdate').text('Date');
 
 
-        var currentDate = new Date();
-        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        var dateString1 = currentDate.toLocaleDateString(undefined, options);
-        $("#Roldisplaydate").text(dateString1);
+        //var currentDate = new Date();
+        //var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        //var dateString1 = currentDate.toLocaleDateString(undefined, options);
+        //$("#Roldisplaydate").text(dateString1);
+        // Display current date in dd-mm-yyyy format
+        $("#Roldisplaydate").text(getFormattedDate()).show();  // Use previously defined getFormattedDate function
+        $("#StartDateid").text(getFormattedDate()).hide();  // Use previously defined getFormattedDate function
+        $("#EndDateid").text(getFormattedDate()).hide();  // Use previously defined getFormattedDate function
+
         $("#Roldisplaydate").show();
 
 
@@ -91,6 +97,10 @@ $(document).ready(function () {
 
         $('#Roldisplaydate').remove();
         $('#Ddldepartment').empty();
+        var Dateformate = getDateFormatted();
+        $('#StartDateid').val(getDateFormatted());
+        $('#EndDateid').val(Dateformate);    // Use .val() for input fields
+
 
         //======>>> Classification Dropdown
         fetchDataAndPopulateDropdown(
@@ -121,6 +131,29 @@ $(document).ready(function () {
 
 });
 
+function getFormattedDate() {
+    var currentDate = new Date();
+
+    // Get day, month, and year
+    var day = String(currentDate.getDate()).padStart(2, '0'); // Ensures 2-digit day
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Ensures 2-digit month
+    var year = currentDate.getFullYear();
+
+    // Format the date as dd-mm-yyyy
+    return day + '-' + month + '-' + year;
+}
+
+function getDateFormatted() {
+    var currentDate = new Date();
+
+    // Get day, month, and year
+    var day = String(currentDate.getDate()).padStart(2, '0'); // Ensures 2-digit day
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Ensures 2-digit month
+    var year = currentDate.getFullYear();
+
+    // Format the date as dd-mm-yyyy
+    return year + "-" + month + "-" + day;
+}
 
 $(document).on('change', '#ddlInstanceClassificationSearch', function () {
     var selectedValues = $(this).val();

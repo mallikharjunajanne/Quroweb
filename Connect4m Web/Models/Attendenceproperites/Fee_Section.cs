@@ -458,38 +458,23 @@ namespace Connect4m_Web.Models.Attendenceproperites
         public string FeeType { get; set; }
     }
 
-    public class NotificationRequest
-    {
-        public List<SmsStudent> SMSStudents { get; set; }
-        public List<SmsStudent> SMSParents { get; set; }
-        public List<EmailStudent> EmailStudents { get; set; }
-        public List<EmailStudent> EmailParents { get; set; }
-    }
-    public class SmsStudent
+    public class SMSData
     {
         public string SMS { get; set; }
-        public string MobileNumber { get; set; }
+        public string MobileNumber { get; set; } // For SMS Students and SMS Parents
+        public string StudentEmail { get; set; } // For Email Students and Email Parents
+        public int Studentuserid { get; set; }
+        public int Parentuserid { get; set; }
     }
-    public class EmailStudent
+    public class DataModel:Commonproperties
     {
-        public string SMS { get; set; }
-        public string StudentEmail { get; set; }
+        public List<SMSData> SMSStudents { get; set; }
+        public List<SMSData> SMSParents { get; set; }
+        public List<SMSData> EmailStudents { get; set; }
+        public List<SMSData> EmailParents { get; set; }
     }
 
-    public class Datamodel
-    {
-        public List<EmailStudent> Parentmail { get; set; }
-        public List<SmsStudent> _Parentsms { get; set; }
-        public List<EmailStudent> _Studentmail { get; set; }
-        public List<SmsStudent> _Studentsms { get; set; }
-        //public List<SmsStudent> _Studentsms { get; set; }
-        //public List<EmailStudent> _Studentmail { get; set; }
-        //public List<SmsStudent> _Parentsms { get; set; }
-        //public List<EmailStudent> _Parentmail { get; set; }
-    }
-
-
-    public class RequestedDataModel:Commonproperties
+    public class RequestedDataModel : Commonproperties
     {
         public string CollectedData { get; set; }
         public string Subject { get; set; }

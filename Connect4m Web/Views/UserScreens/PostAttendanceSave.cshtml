@@ -1,0 +1,133 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.Feechallanareport
+@{
+    ViewData["Title"] = "View Receipt Invoice";
+    Layout = null;
+}
+
+
+
+<style>
+    /* Container to hold the checkbox and image */
+    .checkbox-container {
+        text-align: center; /* Center the checkbox and the image */
+    }
+
+    /* Image styling */
+    .details-image {
+        cursor: pointer;
+    }
+
+    /* Styling the checkbox */
+    .form-check-input {
+        margin-bottom: 5px; /* Adds space between the checkbox and the image */
+    }
+    /* Container to hold the image and dropdown */
+    .dropdown-container {
+        text-align: center; /* Center the content */
+        /*padding: 5px;*/ /* Optional: adds some padding for better spacing */
+    }
+    .spcomments {
+        text-wrap: wrap;
+        font-size: 12px;
+    }
+</style>
+
+<div class="row mb-2">
+    <div class="col-md-12 col-lg-12 mb-0">
+        <div class="card">
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                <span class="text-header">NOTE</span>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label text-center text-green-lbl">Green Date</label>
+                        <div class="col-sm-9 mb-1 col-form-label text-green-lbl">--Indicates attendance already posted.</div>
+
+                        <label class="col-sm-2 col-form-label text-center text-lbl">Red Date</label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--Indicates attendance not yet posted (if any withdrawal applied students are there in a class)</div>
+
+                        <label class="col-sm-2 col-form-label text-center "><img src="~/Images_IMP/AuditIcon.png" /></label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--Indicates Attendance modified.</div>
+
+                        <label class="col-sm-2 col-form-label text-center"><img src="~/Images_IMP/details_open.png" /></label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--To post Special Attendance click on this icon, a dropdown will display.</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label text-center"><img src="~/Images_IMP/tick_16.png" /></label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--Indicates Send Sms is true.</div>
+
+                        <label class="col-sm-2 col-form-label text-center"><img src="~/Images_IMP/cross.png" /></label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--Indicates Send Sms is false.</div>
+
+                        <label class="col-sm-2 col-form-label text-center"><img src="~/Images_IMP/exclaim.png" /></label>
+                        <div class="col-sm-10 mb-1 col-form-label text-lbl">--Indicates Parent Data is not available.</div>
+
+                        <label class="col-sm-2 col-form-label text-center text-red-lbl ">Red Color</label>
+                        <div class="col-sm-10 mb-1 col-form-label text-red-lbl text-red-lbl">--Student Name with Red colour indicates that attendance posting date is greater than student last date of attendance.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <input type="checkbox" class="form-check-input checkbox_animated" id="_chkSMSStudent">
+        <label class="form-check-label " for="SmsToStudent" id="_chkSMSStudent_">Sms To Student</label>
+    </div>
+    <div class="col-sm-3">
+        <input type="checkbox" class="form-check-input checkbox_animated" id="_chkSMSParent">
+        <label class="form-check-label " for="SmsToParent" id="_chkSMSParent_">Sms To Parent</label>
+    </div>
+    <div class="col-sm-3">
+        <input type="checkbox" class="form-check-input checkbox_animated" id="_chkEmailStudent">
+        <label class="form-check-label " for="EmailToStudent" id="_chkEmailStudent_">Send Email To Students</label>
+    </div>
+    <div class="col-sm-3">
+        <input type="checkbox" class="form-check-input checkbox_animated" id="_chkEmailParents">
+        <label class="form-check-label " for="EmailToParent" id="_chkEmailParents_">Send Email To Parents</label>
+    </div>
+    <div class="col-sm-3">
+        <input type="checkbox" class="form-check-input checkbox_animated" id="_checkallattendance">
+        <label class="form-check-label " for="CheckAll" id="_checkallattendance_">Check All</label>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-danger text-white">
+        <span class="text-header">
+            YOUR SEARCH RESULTED
+            <span class="badge badge-center rounded-pill bg-primary bg-glows text-header" id="totalrecords_Tranctions_MA">0</span>
+            RECORDS.
+        </span>
+    </div>
+    <div class="table-responsive text-nowrap" id="Printattendancereport">
+        <div class="row">
+            <div class="row mb-1 col-sm-12 text-right">
+                <label class="control-label col-sm-6 col-form-label text-end space">  Department Class </label>
+                <div class="col-sm-4 text-right">
+                    <label id="Selecteddepartmentclassnamesdiv" class="control-label col-sm-6 col-form-label"></label>
+                </div>
+            </div>
+        </div>
+        @*<div class="table-responsive text-nowrap" id="attendencetable">*@
+        <div class="text-nowrap" id="attendencetable">
+            <table class="table table-bordered" id="tblSTsearchresults">
+                <thead class="table-dark">
+                    <tr>
+                        <th>SNO</th>
+                        <th>Name</th>
+                        <th>Reg.No</th>
+                        <th>Student Sms Status</th>
+                        <th>Parent Sms Status</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*<input type="button" value="Submit" class="btn btn-pill btn-outline-success btn-air-success" id="attendenceposting" style="background-color: #1a68ff;color: white;" />*@
+@*<button id="attendenceposting" class="btn btn-pill btn-outline-success btn-air-success btn-sm">Submit</button>*@

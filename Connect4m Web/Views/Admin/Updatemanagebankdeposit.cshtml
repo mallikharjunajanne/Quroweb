@@ -120,7 +120,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label space text-end">Document </label>
                     <div class="col-sm-4">
-                        @if (ViewBag.Documentname != null)
+                        @if (ViewBag.Documentname != null && ViewBag.Documentname != "")
                         {
                             <div id="Documentiddiv">
                                 <span style=" text-decoration: underline; color: blue; cursor: pointer;" onclick="Showimage('@ViewBag.Documentname','@ViewBag.instanceid')">
@@ -155,14 +155,6 @@
         </div>
     </div>
 </div>
-
-@*<div class="popup" id="popup">
-    <div class="popup-content">
-        <button class="close-btn" onclick="closePopup()">×</button>
-        <img id="popup-image" src="" alt="Image" />
-    </div>
-</div>*@
-
 <div class="popup" id="popup">
     <div class="popup-content">
         <button class="close-btn" onclick="closePopup()">×</button>

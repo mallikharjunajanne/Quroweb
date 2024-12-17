@@ -974,6 +974,7 @@ function stp_tblStudentApplyLeave_SelectById_ByAdmin(Studentid) {
 
                 if (value122.attachdocument != "") {
                     //viewfiles = " <a href='/LeavesDoc/" + value122.attachdocument + "'  target='_blank'><font color='blue'><u style='font-weight:700;'>View</u></font></a >";
+                    /*viewfiles = " <a class='badge rounded-pill bg-info bg-glow' href='/LeavesDoc/" + value122.attachdocument + "'  target='_blank'>View</a >";*/
                     viewfiles = " <a class='badge rounded-pill bg-info bg-glow' href='/LeavesDoc/" + value122.attachdocument + "'  target='_blank'>View</a >";
                       }
                 else {

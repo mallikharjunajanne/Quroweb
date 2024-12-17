@@ -74,7 +74,7 @@ function searchManageCategory() {
 
                 {
                     extend: 'print',
-                    title: 'SMANAGE CATEGORY REPORT',
+                    title: 'MANAGE CATEGORY REPORT',
                     message: "Report On: " + formattedDate,
                     exportOptions: {
                         columns: [1, 2]

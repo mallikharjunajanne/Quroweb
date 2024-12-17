@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -1290,5 +1291,124 @@ namespace Connect4m_Web.Models.Attendenceproperites
         //NOTICE POST CLASS END
 
         #endregion
+
+        #region POST ATTENDANCE
+        public class Studentattendancepost:Commonproperties
+        {
+
+            [Display(Name = "Start Date")]
+            [Required]
+            [DataType(DataType.Date)]
+            public DateTime StartDate { get; set; }
+
+            [Display(Name = "End Date")]
+            [Required]
+            [DataType(DataType.Date)]
+            public DateTime EndDate { get; set; }
+
+            [Display(Name = "Department")]
+            [Required(ErrorMessage = "Department is required")]
+            public string Departments { get; set; }
+            public string ClassificationName { get; set; }
+
+            [Display(Name = "Class")]
+            [Required(ErrorMessage = "Class is required")]
+            public string SubclassificaitionId { get; set; }
+            public string SubClassificationName { get; set; }
+
+            
+            [Required(ErrorMessage = "Slot is required")]
+            public int InstancesubjectId { get; set; }
+            public string SubjectName { get; set; }
+            public bool ShowChangeActivity { get; set; }
+            public int SundayHoliday { get; set; }
+            public int SaturdayHoliday { get; set; }
+        }
+        public class Teacherportalattendanceclassification 
+        {
+            public int INSTANCECLASSIFICATIONID { get; set; }
+            public string CLASSIFICATIONNAME { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string SubClassificationName { get; set; }
+        }        
+        public class AttendanceDetailsResponse : Commonproperties
+        {
+            public string AttendanceValidationStatusMessage { get; set; }
+            public List<HolidayToStopAttendancePosting> HolidayList { get; set; }
+            public List<StudentAttedancePropList> StudentAttendanceDetails { get; set; }
+        }
+        public class StudentAttedancePropList
+        {
+            public List<string> UserIdlist { get; set; }
+            public List<string> Firstname { get; set; }
+            public List<string> StudentPhno { get; set; }
+            public List<string> InstanceUserId { get; set; }
+            public List<string> AdmissionNumber { get; set; }
+            public List<string> Is_Userjoined { get; set; }
+            public List<string> UserName { get; set; }
+            public List<string> StudentSMS { get; set; }
+            public List<string> StudentEmail { get; set; }
+            public List<string> CollegeHostel { get; set; }
+            public List<string> ParentName { get; set; }
+            public List<string> ParentPhNo { get; set; }
+            public List<string> ParentEmail { get; set; }
+            public List<string> ParentSMS { get; set; }
+            public List<string> ParentExists { get; set; }
+            public List<string> Columns { get; set; }
+            public List<string> DisplayIcons { get; set; }
+            public List<string> AttendanceIds { get; set; }
+            public List<string> SplAttenanceComments { get; set; }
+            public List<string> ParentId { get; set; }
+            public List<string> LastDateofAttendance { get; set; }
+            public List<string> ColorChangeFlag { get; set; }
+
+        }
+        public class HolidayToStopAttendancePosting
+        {
+            public string HolidayName { get; set; }
+            public DateTime HolidayDate { get; set; }
+        }
+        
+        public class ClassAttendanceData: Commonproperties
+        {
+            public string StudentAttendanceUserId { get; set; }
+            public string StudentName { get; set; }
+            public string StudentPhno { get; set; }
+            public string StudentSMS { get; set; }
+            public string StudentEmail { get; set; }
+            public string ParentId { get; set; }
+            public string ParentName { get; set; }
+            public string ParentPhno { get; set; }
+            public string ParentSMS { get; set; }
+            public string ParentEmail { get; set; }
+            public List<string> Ispresent { get; set; }  // List of attendance status (1 or 0)
+            public List<string> Comments { get; set; }
+            public List<string> AttendanceDate { get; set; }
+            public List<string> Leavetypetext { get; set; }          
+            public int DepartmentId { get; set; }
+            public string DepartmentName { get; set; }
+            public int SubclassId { get; set; }
+            public string SubclassName { get; set; }
+            public int SlotId { get; set; }
+            public string SlotName { get; set; }
+            public string LastDateofAttendance { get; set; }
+            
+            
+            public bool StudentSmschk { get; set; }
+            public bool StudentEmailchk { get; set; }
+            public bool ParentSmschk { get; set; }
+            public bool ParentEmailchk { get; set; }
+
+            public string NotificationSubject { get; set; }
+        }
+
+
+
+        #endregion
+        public class ManageSlots
+        {
+            public int InstancesubjectId { get; set; }
+            public string SubjectName { get; set; }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model Connect4m_Web.Models.AttendanceModel
-@{//var marginbtn="";
-    ViewData["Title"] = "ApplyStaffLeave";
+@{   //var marginbtn="";
+    //ViewData["Title"] = "ApplyStaffLeave";
+    ViewData["Title"] = "Apply Leave";
     var margin = "";
     if (@ViewBag.ScreenName == "ManageStaffLeave")
     {
@@ -24,6 +25,7 @@
 }
 <html>
 <head>
+    <title>@ViewData["Title"]</title>
     @*<link href="~/Themes/assets/css/StyleSheets/ApplyStaffLeave.css" rel="stylesheet" />*@
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 </head>

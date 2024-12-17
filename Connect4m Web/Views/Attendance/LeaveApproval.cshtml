@@ -1,12 +1,10 @@
-﻿
-@{
-    ViewData["Title"] = "LeaveApproval";
+﻿@{
+    ViewData["Title"] = "Leaves Approval";
 }
-
-
 <!DOCTYPE html>
 <html>
 <head>
+    <title>@ViewData["Title"]</title>
     @*<link href="~/Themes/assets/css/StyleSheets/LeaveApproval.css" rel="stylesheet" />*@
     @*<link href="~/Themes/assets/css/StyleSheets/LoadingSpinner.css" rel="stylesheet" />*@
 
@@ -60,6 +58,7 @@
 
         <div class="row mb-2">
             <div class="col-md-12 col-lg-12 mb-3">
+
                 <ul class="nav nav-pills" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" onclick="lnkApproveReject_callingFun(event)" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">
@@ -77,16 +76,16 @@
                         </a>
                     </li>
                 </ul>
+
+                @* ------------------------------ Tab Code Start ------------------------------ *@
                 <div class="tab-content" id="myTabContent">
-                    @*------------------------------Tab code end----*@
 
-                    @*--------------tab 1----------------div code start----*@
 
+                    @* -------------- Tab 1 - Div Code Start -------------- *@
                     <span class="ErrorMessageSpan" id="Main_Span_Error"></span>
                     <span class="ErrorMessageSpan" id="Fromdate_Span_Error"></span>
                     <span class="ErrorMessageSpan" id="Todate_Span_Error"></span>
                     <span class="ErrorMessageSpan" id="Leaveselected_Span_Error"></span>
-
 
                     <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
@@ -263,11 +262,10 @@
                         </div>
 
                     </div>
-                    @*-------------tab 1-----------------div code end----*@
+                    @* -------------- Tab 1 - Div Code End -------------- *@
 
 
-
-                    @*-------------------tab 2-----------div code start----*@
+                    @* -------------- Tab 2 - Div Code Start -------------- *@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                         <div class="card mb-4">
@@ -418,14 +416,10 @@
 
                         </div>
                     </div>
+                    @* -------------- Tab 2 - Div Code End -------------- *@
 
 
-
-                    @*---------------------tab 2---------div code end----*@
-
-
-
-                    @*---------------------tab 3---------div code start----*@
+                    @* -------------- Tab 3 - Div Code Start -------------- *@
                     <div class="tab-pane fade  " id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
                         <div class="card mb-4">
@@ -487,7 +481,7 @@
                         @*Searched Records*@
 
                         @*<a id="ExportExcelLink_LeaveRequested" class="ExportExcelLink" onclick="ExportExcelLink('TblLeaveRequested_SearchRecords','LeavesRequested')" style="font-weight: bold; color: blue;text-decoration:underline; cursor: pointer; letter-spacing: 0px; font-size: 11px; ">Export to Excel</a>
-                            <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
+                <a id="LeaveRequested_SearchRecordsPrintBTN" class="PrintBtnClass" style="color: blue; font-weight: 600; cursor: pointer; letter-spacing: 0px; margin-left: 85%; text-decoration: underline;" onclick="javascript:CallPrint('LeaveRequested_SearchRecords_Div')"></a>*@
 
                         <div class="card" id="LeaveRequested_SearchRecords_Div">
                             <div class="card-header bg-danger text-white">
@@ -518,19 +512,19 @@
                                     <tbody>
                                     </tbody>
                                     @*<tfoot>
-                                            <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
+                                <tr><td style="padding:2px" colspan="10"><div style="text-align:center" id="TblLeaveRequested_pagination"></div></td></tr>
 
-                                        </tfoot>*@
+                            </tfoot>*@
                                 </table>
 
                             </div>
                         </div>
 
                     </div>
-                    @*----------------------tab 3--------div code end----*@
+                    @* -------------- Tab 3 - Div Code END -------------- *@
 
-                    @*----------------------------Tab code start-----*@
                 </div>
+                @* ------------------------------ Tab Code End ------------------------------ *@
             </div>
         </div>
     </div>

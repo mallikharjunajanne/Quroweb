@@ -367,7 +367,7 @@ $("#FmGeneralInfoTab,#FmShowProfile").submit(function (event) {
 
             }
             else if (SelectedRolename.toUpperCase() != 'STUDENT') {
-                              
+
                 debugger;
                 if (validationIds.includes('AdmissionNumberNewtxtid-error') && validationIds.includes('TCNumber-error') && validationIds.includes('DtTCdate-error') && validationMessages.length <= 3) {
                     loaddingimg.css('display', 'block');

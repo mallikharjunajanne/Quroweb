@@ -140,9 +140,27 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                         data: "StudentSMS",
 
                         render: function (data, type, row, meta) {
-                            var iconSrc = row.studentSMS == "1" ? "/Images_IMP/cross.png" : "/Images_IMP/tick_16.png";
-                            return '<img src="' + iconSrc + '" title="' + row.studentPhno + '" />';
+                            //var iconSrc = row.studentSMS == "1" ? "/Images_IMP/cross.png" : "/Images_IMP/tick_16.png";
+                            //return '<img src="' + iconSrc + '" title="' + row.studentPhno + '" /><input id="_mentoruserphno" type="textbox" value=' + row.studentPhno + ' hidden style="display:none" />';
 
+                            // Set the icon based on studentSMS value
+                            var iconSrc = row.studentSMS == "1" ? "/Images_IMP/cross.png" : "/Images_IMP/tick_16.png";
+
+                            // Conditionally render the input field for studentPhno if it's not empty
+                            var hiddenInputPhno = row.studentPhno ? '<input id="_mentoruserphno" type="text" value="' + row.studentPhno + '" hidden style="display:none" />' : '';
+
+                            // Add the hidden input for studentSMS
+                            var hiddenInputSMS = row.studentSMS ? '<input id="_studentSMS" type="text" value="' + row.studentSMS + '" hidden style="display:none" />' : '';
+                            var hiddenInputfirstname = '<input id="_MentorName" type="text" value="' + row.firstname[0] + '" hidden style="display:none" />';
+
+                            return '<img src="' + iconSrc + '" title="' + row.studentPhno + '" />' + hiddenInputPhno + hiddenInputSMS + hiddenInputfirstname;
+
+
+                            //var iconSrc = row.studentSMS == "1" ? "/Images_IMP/cross.png" : "/Images_IMP/tick_16.png";
+
+                            //// Conditionally render the input field if studentPhno is not empty
+                            //var hiddenInput = row.studentPhno ? '<input id="_mentoruserphno" type="text" value="' + row.studentPhno + '" hidden style="display:none" />' : '';
+                            //return '<img src="' + iconSrc + '" title="' + row.studentPhno + '" />' + hiddenInput;
 
                         }
                     },
@@ -152,15 +170,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                             var checkboxcheck = row.columns[k] == "1";
                             //if (row.columns[k] == "") {
                             //    $("#tblMAsearchresults thead tr").find('th:eq(' + (4 + k) + ')').css('color', 'red');
-
-                            //    //---START
-                            //    return '<select class="select2 form-select select2-hidden-accessible">' +
-                            //        '<option value="option1">Option 1</option>' +
-                            //        '<option value="option2">Option 2</option>' +
-                            //        '<option value="option3">Option 3</option>' +
-                            //        '</select>';
-                            //    //---END
-                            //}
+                            
                             //return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + '  ' + (checkboxcheck ? 'checked' : ' ') + ' />';
                             //New code Start Here
 
@@ -176,8 +186,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                                 return '<input type="checkbox" class="form-check-input" value=' + row.attendanceIds[k] + ' checked />';
                             }
                             // Handle the case when row.columns[k] is a number (not "", "0", or "1") - show a dropdown
-                            else {
-                               
+                            else {                               
 
                                 // Create the dropdown element
                                 var dropdownHtml = '<select class="select2 form-select select2-hidden-accessible" id="dropdown-' + meta.row + '-' + meta.col + '">';
@@ -225,39 +234,6 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                                 });
                                 // Return a placeholder dropdown with a loading option while data is being fetched
                                 return dropdownHtml + '</select>';
-
-
-                                //$.ajax({
-                                //    url: '/Rolewise/Getstaffleavetypesddl',  // Replace with your API endpoint
-                                //    type: 'GET',  // You can change this to 'POST' if needed
-                                //    success: function (response) {
-                                //        // Assuming the response is an array of options
-                                //        response.forEach(function (option) {
-                                //            debugger;
-                                //            // Check if the value of row.columns[k] matches the option value
-                                //            var selected = (row.columns[k] == option.value) ? 'selected' : '';
-
-                                //            // Append the option to the dropdown, marking it as selected if the condition is met
-                                //            dropdownHtml += '<option value="' + option.value + '" ' + selected + '>' + option.label + '</option>';
-                                //        });
-
-                                //        // Close the select tag after appending options
-                                //        dropdownHtml += '</select>';
-
-                                //        // After appending options, initialize select2 (if needed)
-                                //        $('#dropdown-' + meta.row + '-' + meta.col).select2();
-
-                                //        // Update the cell with the new dropdown
-                                //        $('#dropdown-' + meta.row + '-' + meta.col).closest('td').html(dropdownHtml);
-                                //    },
-                                //    error: function (error) {
-                                //        console.error('Error loading dropdown options:', error);
-                                //    }
-                                //});
-
-                                //// Return the initial placeholder dropdown HTML
-                                //return dropdownHtml + '</select>';
-
                             }
                             //New code End Here
                         }
@@ -295,13 +271,25 @@ $(document).on('click', '#attendencetable #attendenceposting', function (event) 
     loaddingimg.css('display', 'block');
     debugger;
     var Attendancedataparent = [];
+    var DepartmentClassNames = $('#dropdown_Department_MA option:selected').text();
+    var SlotName = $('#dropdown_Slots_MA option:selected').text();
+    var isChecked = $('#_chkSMSStudent').prop('checked');
+    var checkboxStatus = isChecked ? true : false;
+
 
     $("#tblMAsearchresults tbody tr").each(function (i, parentRow) {
         var Attendancedatachild = {
             'AttendUserId': $(parentRow).find("#_mentoruserIdlist").val(),
-            'Ispresent': []
+            'Ispresent': [],
+            'studentPhno': $(parentRow).find("#_mentoruserphno").val(),
+            'StudentSMS': $(parentRow).find("#_studentSMS").val(),
+            'MentorName': $(parentRow).find("#_MentorName").val(),
+            'DepartmentClassNames': DepartmentClassNames,
+            'SlotName': SlotName,
+            'checkboxStatus': checkboxStatus,
         };
 
+        debugger;
         $("#tblMAsearchresults thead th").each(function (j, th) {
             //if (j >= 4 && j < $("#tblMAsearchresults thead th").length) {
             //    var isChecked = $(parentRow).find('td:eq(' + j + ') input[type="checkbox"]').prop('checked');

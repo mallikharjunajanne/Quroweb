@@ -682,7 +682,7 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-        #region   ATTENDANCE DETAILS 
+        #region ATTENDANCE DETAILS 
         [HttpGet]
         public IActionResult AttendanceDetails()
         {     
@@ -1105,7 +1105,9 @@ namespace Connect4m_Web.Controllers
 
         #endregion
 
-     
+
+       
+
         public string GetCredits()
         {
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + $"/GetCredits?InstanceId={InstanceId}&Createdby={UserId}").Result;

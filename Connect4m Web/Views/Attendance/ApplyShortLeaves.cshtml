@@ -1,12 +1,14 @@
 ﻿
 @{
-    ViewData["Title"] = "ApplyShortLeaves";
+    //ViewData["Title"] = "ApplyShortLeaves";
+    ViewData["Title"] = "Apply Short Leave/Permission";
 }
 
 
 <!DOCTYPE html>
 <html>
 <head>
+    <title>@ViewData["Title"]</title>
     @*<link href="~/Themes/assets/css/StyleSheets/ApplyShortLeaves.css" rel="stylesheet" />*@  
 
 
@@ -79,13 +81,13 @@
                     </button>
 
                     <div class="card mb-4" id="accordionoc_VIEW" style="display:none">
-                        <div class="card-header flex-column flex-md-row">
-                            <div class="head-label text-center">
-                                <h5 class="card-title mb-0">
-                                    <span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span>
-                                    @*<span>VIEW STATUS ( &nbsp;<span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S) FOUND).</span>*@
-                                </h5>
-                            </div>
+                        <div class="card-header bg-danger text-white flex-column flex-md-row">
+                            @*<div class="head-label text-center">
+                                <h5 class="card-title mb-0">*@
+                            <span class="text-header" id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory"></span>
+                            @*<span>VIEW STATUS ( &nbsp;<span id="ctl00_ContentPlaceHolder1_lblMyLeavesStatusHistory" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S) FOUND).</span>*@
+                            @*</h5>
+                                </div>*@
                         </div>
 
                         <div class="table-responsive text-nowrap">
@@ -253,7 +255,7 @@
                             </div>
                             <div class="card-header bg-danger text-white flex-column flex-md-row">
                                 @*<span id="CountOfRecords_MonthlyAppliedShortLeaves">No Records</span>*@
-                                <span>YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_MonthlyAppliedShortLeaves" class="badge badge-center rounded-pill bg-primary bg-glow">0</span>  RECORD(S).</span>
+                                <span class="text-header">YOUR SEARCH RESULTED &nbsp;<span id="CountOfRecords_MonthlyAppliedShortLeaves" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span>  RECORD(S).</span>
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table id="TblMonthlyAppliedShortLeaves_SearchRecords" class="table table-hover table-bordered no-footer dataTable">
@@ -283,12 +285,9 @@
                 @*-------------------------------------Apply Short Leave-----page start------------------*@
 
                 <div class="card mb-4" id="DivApplyShortLeavePage" style="display:none">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">
-                            <span>
-                                APPLY SHORT LEAVE
-                            </span>
-                        </h5><small class="required">INDICATE REQUIRED FEILDS</small>
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span class="text-header">APPLY SHORT LEAVE</span>
+                        <small class="text-header-small"> * INDICATE REQUIRED FEILDS</small>
                     </div>
 
                     <div class="card-body">

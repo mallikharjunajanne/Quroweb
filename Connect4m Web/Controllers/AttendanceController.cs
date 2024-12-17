@@ -1707,6 +1707,7 @@ namespace Connect4m_Web.Controllers
                     }
                 }
             }
+            
             List<FormDataModel> tableDataList;
 
             // Check if tableData is null before deserialization
@@ -1720,7 +1721,8 @@ namespace Connect4m_Web.Controllers
          else
             {
                 // Deserialize the table data
-               /* List<FormDataModel>*/ tableDataList = JsonConvert.DeserializeObject<List<FormDataModel>>(tableData);
+               /* List<FormDataModel>*/ 
+                tableDataList = JsonConvert.DeserializeObject<List<FormDataModel>>(tableData);
 
                 // Convert datetime values to DateTime objects
                 foreach (var item in tableDataList)
@@ -1735,27 +1737,27 @@ namespace Connect4m_Web.Controllers
                 AttendanceModel_Data = InputValue,
                 tableDataList_Data = tableDataList
             };
-         
-            
 
-                for (int i = 0; i < length; i++)
-                {
-                    InputValue[i].InstanceID = InstanceId12;
+
+
+            for (int i = 0; i < length; i++)
+            {
+                InputValue[i].InstanceID = InstanceId12;
                 InputValue[i].Text = ScreenName;
                 InputValue[i].UserId = Userid;
-                    InputValue[i].CreatedBy = LoginUserId;
-                    InputValue[i].InstanceClassificationId = InstanceClassificationId;
-                    if (InputValue[i].file != null)
-                    {
-                        InputValue[i].attachdocument = InputValue[i].file.FileName;
-                    }
+                InputValue[i].CreatedBy = LoginUserId;
+                InputValue[i].InstanceClassificationId = InstanceClassificationId;
+                if (InputValue[i].file != null)
+                {
+                    InputValue[i].attachdocument = InputValue[i].file.FileName;
+                }
 
-                    InputValue[i].AllowPastDaysLeaveType = 0;
-                    InputValue[i].AllowPastDaysFlagUser = 0;
-                    //this for mailsending
-                    InputValue[i].NextLevelUserID = 0;
+                InputValue[i].AllowPastDaysLeaveType = 0;
+                InputValue[i].AllowPastDaysFlagUser = 0;
+                //this for mailsending
+                InputValue[i].NextLevelUserID = 0;
 
-                    InputValue[i].submitButton = submitButton;
+                InputValue[i].submitButton = submitButton;
 
                 //i changed here  --1
                 //if (InputValue[i].RequestStatus == null && InputValue[i].RequestStatus == "")
@@ -1764,14 +1766,14 @@ namespace Connect4m_Web.Controllers
                     if (submitButton == "Submit Request")
                     {
                         InputValue[i].RequestStatus = "Submitted";
-                    }               
+                    }
                     else
                     {
                         InputValue[i].RequestStatus = "Saved";
                     }
                 }
-                }
-            
+            }
+
             HttpResponseMessage response1000;
           
             if (submitButton == "Save as Draft" || submitButton == "Submit Request" || submitButton=="Delete")
@@ -1851,6 +1853,42 @@ namespace Connect4m_Web.Controllers
                 {
                     string data1 = response1000.Content.ReadAsStringAsync().Result;
                     string message1 = data1;
+
+                    //=====>>>>ADDED NEW CODE START HERE
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (InputValue[i].file != null && InputValue[i].file.Length > 0)
+                        {
+                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc");
+
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+
+
+                            string path1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc/" + InputValue[i].InstanceID + "");
+                            if (!Directory.Exists(path1))
+                                Directory.CreateDirectory(path1);
+
+
+                            string path12 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/LeavesDoc/" + InputValue[i].InstanceID + "/" + InputValue[i].UserId + "");
+                            if (!Directory.Exists(path12))
+                                Directory.CreateDirectory(path12);
+                            string fileName_ = Path.GetFileName(InputValue[i].file.FileName);
+                            string fileExtension = Path.GetExtension(fileName_).ToLower();
+                            string filename = InputValue[i].InstanceID + "/" + InputValue[i].UserId + "/" + InputValue[i].file.FileName;
+                            string fileNameWithPath = Path.Combine(path, filename);
+
+                            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                            {
+                                InputValue[i].file.CopyTo(stream);
+                            }
+                        }
+                    }
+
+                    //=====>>>>ADDED NEW CODE END HERE
+
+
+
                     return Json(new { success = true, message = message1, ButtonName = submitButton });
                 }
                 return Json(new { success = false, message = "Error", ButtonName = submitButton });

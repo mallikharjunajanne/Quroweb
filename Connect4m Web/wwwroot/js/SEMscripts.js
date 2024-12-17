@@ -6,7 +6,7 @@
 
 //const { debug } = require("node:util");
 
-//----------  Change The Academic Year To get Fees 
+// Change the academic year to retrieve the corresponding fees
 $(document).ready(function () {
     if ($('#appendsearchexpansives').css('display') !== 'none') {
         searchTransactions();
@@ -30,13 +30,15 @@ $(document).ready(function () {
         }
     }
 })
-//--------------------------- Getting Academic Fees
+
+// Getting the academic fees for the specified year/semester
 $(document).on('change', '#tblSEMfees #Drop_Format_SEM_3', function (event) {
     event.stopImmediatePropagation();
     var tableid = $('#tblSEMfees');
     var yearval = $(this).find('#dropdown_FinancialYear_SEM').val();
     gettingfees(tableid, yearval);
 });
+
 function gettingfees(tableid, yearval) {
 
     
@@ -44,7 +46,7 @@ function gettingfees(tableid, yearval) {
         url: '/Videos/GettingAcademicFees?FinancialYearId=' + yearval,
         type: 'GET',
         success: function (response) {
-          //  debugger;
+            debugger;
             $(tableid).find('#SEM_FeeCollected').text(response.feeCollected);
           //  $(tableid).find('#SEM_Transfered').text(response.transfered);
             $(tableid).find('#DebitedAmount').text(response.debitedAmount);
@@ -63,7 +65,8 @@ function gettingfees(tableid, yearval) {
         }
     })
 }
-//-----------------------------  Search Gov Found Transactions
+
+// Searching for government-funded transactions
 $(document).on('click', '#SerachSEM #sub_tblSEM', function (event) {
     event.stopImmediatePropagation();
     searchTransactions();
@@ -78,7 +81,6 @@ try {
 catch {
     var tabletargetpagetblSEMsearchresults = 0;
 }
-
 
 function searchTransactions() {
 
@@ -319,8 +321,7 @@ function searchTransactions() {
     }
 }
 
-
-//-------------------------------------------------------  Payment Mode Change In Expenditure Details
+// Changing the payment mode in the expenditure details
 $(document).on('click', '#tblSEMsearchresults #SEMView_document', function (even) {
     even.stopImmediatePropagation();
     var fileextens = "SEMdocs/";
@@ -331,12 +332,7 @@ $(document).on('click', '#tblSEMsearchresults #SEMView_document', function (even
 
 })
 
-
-
-
-//-------------------------------------------------------  Payment Mode Change In Expenditure Details
-
-
+// Updating the payment mode in the expenditure details
 $(document).on('change', '#InsertSEM #dropdown_PaymentMode_SEM', function (event) {
 
     event.stopImmediatePropagation();
@@ -344,6 +340,7 @@ $(document).on('change', '#InsertSEM #dropdown_PaymentMode_SEM', function (event
     dropdownchangeSEM(paymentmodeval)
    
 })
+
 function dropdownchangeSEM(paymentmodeval) {
     document.getElementById("loading").style.display = "block";
 
@@ -379,10 +376,7 @@ function dropdownchangeSEM(paymentmodeval) {
 
 }
 
-
-
-
-//-------------------------------------------------------insert Expenditure Details
+// Inserting expenditure details
 var formdata_SEM;
 //var formData_SEM_add;
 var expenditurename ;
@@ -505,7 +499,7 @@ $("#InsertSEM").submit(function (event) {  //--------------  #code_01
 
     })
 
-//--------------------------------------------------Click On  Add New Ependiture 
+// Click on "Add New Expenditure"
 $(document).on('click', '#addnewexpenditurebtn', function (event) {
     event.stopImmediatePropagation();
     var table = $('#tblSEMsearchresults').DataTable();
@@ -514,8 +508,8 @@ $(document).on('click', '#addnewexpenditurebtn', function (event) {
     insertupdateSEM(0);
 
 })
-//------  Click On Back To Search
 
+// Click on "Back to Search"
 $(document).on('click', '#backtosearch_SEM', function (event) {
     event.stopImmediatePropagation();
   
@@ -526,7 +520,8 @@ $(document).on('click', '#backtosearch_SEM', function (event) {
    
 
 })
-//-------------------------------------   Click For Update in the list(table)
+
+// Click to update an entry in the list (table)
 $(document).on('click', '#tblSEMsearchresults td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
 
@@ -572,7 +567,8 @@ function insertupdateSEM(GovFundId) {
 
 
 }
-//--------------------------  Clear The Form   
+
+// Clear the form fields
 $(document).on('click', '#InsertSEM #clearform', function (event) {
    
   
@@ -590,8 +586,7 @@ $(document).on('click', '#InsertSEM #clearform', function (event) {
     $('#InsertSEM').find('textarea').val('');
 })
 
-//-------------------------------------------delete Expenditure    
-
+// Delete the expenditure entry
 $(document).on('click', '#tblSEMsearchresults .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
     var table = $('#tblSEMsearchresults').DataTable();
@@ -626,15 +621,11 @@ $(document).on('click', '#tblSEMsearchresults .fa-trash-o', function (event) {
     });
 
 })
-//-----------------------------------------------------------   Print The Expenditures 
 
 
-
-
-
-
+// Print the expenditure details
 //$("#appendprint_SEM #Print_SEM").click(function (event) {
-    $(document).on('click', '#appendprint_SEM #Print_SEM', function (event) {
+$(document).on('click', '#appendprint_SEM #Print_SEM', function (event) {
         event.stopImmediatePropagation();
     event.preventDefault();
     var data = formdata_SEM.split('&').reduce(function (acc, curr) {
@@ -680,17 +671,7 @@ $(document).on('click', '#tblSEMsearchresults .fa-trash-o', function (event) {
     printWindow.print();
 })
 
-
-
-
-
-
-
-
-
-
-//-------------------------------------------                 View Expenditure Detaills
-
+// View the expenditure details
 $(document).on('click', '#tblSEMsearchresults #SEM_Expendituredetails', function (event) {
     event.stopImmediatePropagation();
     var parent = $(event.target).closest('tr');
@@ -707,8 +688,8 @@ $(document).on('click', '#tblSEMsearchresults #SEM_Expendituredetails', function
     //    }
     //})
 })
-//-------------------------- Radio Button Change
 
+// Change the selected radio button
 //$(document).on('click', '#radioaddexpenditure input[name=ExpenditureType]:checked', function (event) {
 //    event.stopImmediatePropagation;
 //    $('#InsertSEM #clearform').prop('disabled', false);
@@ -727,8 +708,7 @@ $(document).on('click', '#tblSEMsearchresults #SEM_Expendituredetails', function
 
 //})
 
-//-----------------------------View Comments
-
+// View the comments
 $(document).on('click', '#tblSEMsearchresults td:nth-child(9) .SEMapprovalsafter .fa-eye', function (event) {
 
     event.stopImmediatePropagation();
@@ -762,4 +742,14 @@ $(document).on('click', '#tblSEMsearchresults td:nth-child(9) .SEMapprovalsafter
 $(document).on('click', '#close-popup', function (event) {
     event.stopImmediatePropagation();
     $('#popupContainerapprovals').css('display', 'none');
+});
+
+$("#DeleteButton").click(function () {
+    // Hide the <a> tag and the Delete button
+    $("#docLink").hide();
+    $(this).hide(); // Hide the delete button
+
+    // Show the file input
+    //$("#DocmentName").show();
+    $("#DocmentName_").show();
 });

@@ -1463,7 +1463,8 @@ namespace Connect4m_Web.Controllers
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 999999);
 
-                var filename = randomNumber + DocName.FileName;
+                //var filename_ = randomNumber + DocName.FileName;
+                var filename = DocName.FileName;
                 var fileName = Path.GetFileName(filename);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SEMdocs", fileName);
                 string uploads = Path.Combine("wwwroot/SEMdocs", fileName);
