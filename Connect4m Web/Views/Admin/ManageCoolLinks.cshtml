@@ -12,167 +12,71 @@
     <div class="flex-grow-1 container-p-y container-xxl">
         <h4 class="mb-1 text-center text-header">MANAGE COOL LINKS </h4>
         <div class="row mb-2">
-            <div class="row justify-content" id="Manageholidays_Heaingmaindiv0">
-                <div class="col-sm-12 text-end mb-2">
-                    <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="CreateNewCoolllink_Btn"> Create Cool Link </button>
-                </div>
+            <span id="Validationmessage" class="text-danger text-header"></span>
+            <div class="text-end" id="Manageholidays_Heaingmaindiv0">
+                <button type="button" class="btn btn-label-linkedin waves-effect btn-sm" id="Addnewcoolinkbtn"> Create Cool Link </button>
             </div>
-            <div id="SearchCoollinkView">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <span class="text-danger" id="UpdatevalidationMessage"></span>
-                    <div class="card mb-4">
-                        <div class="card-header bg-danger text-white text-header">
-                            SEARCH COOL LINKS
-                        </div>
-                        <div class="card-body">
-                            <form id="Coollinksearchform">
-                                <div class="row mb-1">
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Cool Link Name</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" asp-for="LinkName" id="LinkNameTXT" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Cool Link URL</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" asp-for="LinkURL" id="LinkURLTXT" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
-                                    <div class="col-sm-4">
-                                        <textarea class="form-control" asp-for="Description" id="DescriptionTXT"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 text-center">
-                                    <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Clearcommonfunction('Coollinksearchform', 'UpdatevalidationMessage')" id="Clearcoollink_Btn">Clear</button>
-                                    <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Searchcoollink_Btn">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <div class="card mb-4">
-                        <div class="card-header bg-danger text-white text-header">
-                            YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
-                        </div>
-                        <div class="table-responsive text-nowrap">
-                            <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>SNO</th>
-                                        <th>Cool Link Name</th>
-                                        <th>Cool Link URL</th>
-                                        <th>Description</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="CreateNew_CoollinkView" style="display:none;">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <span id="validation2" class="text-danger"></span>
-                    <span id="validationMessage" class="text-danger"></span>
-                    <div class="card mb-4">
-                        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
-                            SAVE COOL LINK
-                            <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col" id="ManageHolidaysMaindivId">
-                                    <form id="MyForm" enctype="multipart/form-data">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link Name</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" asp-for="LinkName" id="S_LinkNameTxt" class="form-control" />
-                                                <span asp-validation-for="LinkName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link URL</label>
-                                            <div class="col-sm-4">
-                                                <input type="url" asp-for="LinkURL" id="S_LinkURLTxt" class="form-control" />
-                                                <span asp-validation-for="LinkURL" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
-                                            <div class="col-sm-4">
-                                                <textarea asp-for="Description" id="S_DescriptionTxt" class="form-control"></textarea>
-                                                <span asp-validation-for="Description" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content text-center">
-                                            <div class="col-sm-12">
-                                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" id="Clear_savebtn">Clear</button>
-                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Backtoseach_savebtn">BackToSearch</button>
-                                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="savecoollink_btn">Save</button>
-                                            </div>
-                                        </div>
-                                    </form>
+
+            <div id="Searchcontainerdiv">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white text-header">SEARCH COOL LINKS</div>
+                    <div class="card-body">
+                        <form id="Searchform">
+                            <div class="row mb-1">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Cool Link Name</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="Name" id="Linknametxt" class="form-control" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="CoollinkUpdateView" style="display:none;">
-                <div class="col-md-12 col-lg-12 mb-3">
-                    <span id="Updatevalidation2" class="text-danger"></span>
-                    <span id="UpdateMessage" class="text-danger"></span>
-                    <div class="card mb-4">
-                        <div class="card-header bg-danger text-white text-header d-flex align-items-center justify-content-between">
-                            UPDATE COOL LINK <small class="text-header-small">* INDICATES MANDATORY FIELDS.</small>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col" id="ManageHolidaysMaindivId">
-                                    <form id="UpdateForm" enctype="multipart/form-data">
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link Name</label>
-                                            <div class="col-sm-4">
-                                                <input type="hidden" asp-for="CoollinkId" value="" id="CoollinkIdEditTxt" class="form-control" />
-                                                <input type="text" asp-for="LinkName" id="linkNameEditTxt" class="form-control" />
-                                                <span asp-validation-for="LinkName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label required text-end space">Cool Link URL</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" asp-for="LinkURL" id="LinkURLEditTxt" class="form-control" />
-                                                <span asp-validation-for="LinkName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <label class="control-label col-sm-4 col-form-label  text-end space">Description</label>
-                                            <div class="col-sm-4">
-                                                <textarea asp-for="Description" id="DescriptionEditTxt" class="form-control"></textarea>
-                                                <span asp-validation-for="Description" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 text-center">
-                                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="Delete_Upbtn">Delete</button>
-                                                <button type="button" class="btn btn-dark waves-effect waves-light btn-sm" id="Backtoseach_Upbtn">BackToSearch</button>
-                                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Updatecoollink_Btn">Update</button>
-                                        </div>
-                                    </form>
+                            <div class="row mb-1">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Cool Link URL</label>
+                                <div class="col-sm-4">
+                                    <input type="text" asp-for="Url" id="Linkurltxt" class="form-control" />
                                 </div>
                             </div>
-                        </div>
+                            <div class="row mb-1">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Description</label>
+                                <div class="col-sm-4">
+                                    <textarea class="form-control" asp-for="Description" id="Descriptiontxt"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <button type="reset" class="btn btn-danger waves-effect waves-light btn-sm" onclick="Clearfun('Searchform', 'Validationmessage')" id="Clearcoollink_Btn">Clear</button>
+                                <button type="button" class="btn btn-success waves-effect waves-light btn-sm" id="Searchbtn">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white text-header">
+                        YOUR SEARCH RESULTED <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table id="Coollinkstbl_id" class="table table-hover table-bordered no-footer">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>Cool Link Name</th>
+                                    <th>Cool Link URL</th>
+                                    <th>Description</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+            <div id="Addnewlinkscontainerdiv"></div>
         </div>
     </div>
 </body>
 </html>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script> <!-- jQuery -->
+<script src="~/lib/jquery-validation/jquery.validate.min.js"></script> <!-- jQuery Validation -->
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> <!-- jQuery Unobtrusive Validation -->
 <script src="~/js/Coollinks.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

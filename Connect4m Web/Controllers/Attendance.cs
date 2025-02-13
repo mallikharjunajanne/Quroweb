@@ -913,6 +913,7 @@ namespace Connect4m_Web.Controllers
             AttendancePost obj = new AttendancePost();
             obj.StartDate = Startdate;
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             List<AttendancePost> list = CommonMethodobj.CommonListMethod<AttendancePost, AttendancePost>(obj, "/CheckAnyHoliday", client);
             if (list != null && list.Count > 0)
             {

@@ -1,0 +1,161 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen._ManageNotice
+@{
+    ViewData["Title"] = "Manage Notices";
+}
+
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Unified Style for All Buttons */
+        #AddnewSMSNNotices, #AddnewSMS, #Addnotice {
+            background-color: #007bff;
+            color: black;
+            border: 2px solid #007bff;
+            /*padding: 2px 10px;*/
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+            /* Hover Effect */
+            #AddnewSMSNNotices:hover, #AddnewSMS:hover, #Addnotice:hover {
+                background-color: #0056b3; /* Darker blue on hover */
+                border-color: #0056b3; /* Darker border on hover */
+            }
+
+            /* Active State */
+            #AddnewSMSNNotices:active, #AddnewSMS:active, #Addnotice:active {
+                background-color: #004085; /* Even darker blue on click */
+                border-color: #004085; /* Darker border on click */
+                transform: scale(0.98); /* Slight shrink effect when clicked */
+            }
+
+            /* Focus Effect */
+            #AddnewSMSNNotices:focus, #AddnewSMS:focus, #Addnotice:focus {
+                outline: none; /* Remove default focus outline */
+                box-shadow: 0 0 0 4px rgba(38, 143, 255, 0.5); /* Glow effect on focus */
+            }
+    </style>
+</head>
+<body>
+    <div class="flex-grow-1 container-p-y container-xxl">
+        <h4 class="mb-3 text-center text-header">MANAGE NOTICES</h4>
+        <div class="col-sm-12 text-end">
+            <a href="javascript:void(0);" id="Addnotice" class="btn btn-outline-primary btn-xs">Create Notice</a>
+            |
+            <a href="javascript:void(0);" id="AddnewSMS" class="btn btn-outline-primary btn-xs">Create SMS</a>
+            |
+            <a href="javascript:void(0);" id="AddnewSMSNNotices" class="btn btn-outline-primary btn-xs">Create Notice and SMS</a>
+        </div>
+        <span class="Validation text-danger" id="validationErrorMessage"></span>
+        <div class="row mb-2" id="divSearchResults">
+            <div class="col-md-12 col-lg-12 mb-2">
+                <div class="card">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
+                        <span class="text-header">SEARCH NOTICES</span>
+                        @*<small class="text-header-small">* INDICATES MANDATORY FIELD</small>*@
+                    </div>
+                    <div class="card-body" id="searchFieldsDiv">
+                        <form id="SMNForm">
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Notice Type</label>
+                                <div class="col-sm-4">
+                                    <select class="form-select select2 form-select select2-hidden-accessible" id="ddlNoticeTypeSearch"></select>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Notice Subject</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="txtNoticeSubjectSearch" class="form-control" />@*SubjectTXT*@
+                                </div>
+                            </div>
+                            <div class="row mb-2" id="Startdateparent">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Start Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="txtStartDateSearch" class="form-control" />@*StartDateTXT*@
+                                </div>
+                            </div>
+                            <div class="row mb-2" id="Enddateparent">
+                                <label class="control-label col-sm-4 col-form-label text-end space">End Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="txtExpiryDateSearch" class="form-control" />@*EndDateTXT*@
+                                    <span id="Ermsgsp" class="text-danger Validation"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label  text-end "></label>
+                                <div class="col-sm-6">
+                                    <input id="chkSMSTemplate checkbox-primary" class="form-check-input checkbox-item Scl_Checkbox" type="checkbox" name="IsSMSTemplate" value="0" />
+                                    <label class="col-sm-4">SMS Template</label>
+                                </div>
+                            </div>
+                            <div class="justify-content-center text-center">
+                                <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" id="btnClearSearch">@*Noticebtnclear*@Clear</button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light btn-sm" id="btnSearch">@*Noticesearchbtn*@Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="searchNoticesResultsTableDiv">
+                <span class="Validation text-danger" id="validationErrorMessage1"></span>
+                <a href="javascript:void(0)" id="lnkexporttoexcel">Export To Excel</a>
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white align-items-center justify-content-between text-header">
+                        YOUR SEARCH RESULTED <span id="searchResultsCount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">0</span> RECORDS.
+                    </div>
+                    <table class="table table-bordered no-footer dataTable" id="SearchResultstbl">
+                        @*ManageNoticetbl*@
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 5%;">SNO</th>
+                                <th style="width: 30%;">Notice Subject</th>
+                                <th>End Date(Expiry Date)</th>
+                                <th>Posted</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="create-notice-container"></div>
+        <div id="create-sms-container"></div>
+        <div id="create-notice-and-sms-container"></div>
+        <div id="post-notice-email-sms-container"></div>
+        <div id="save-and-post-notice-container"></div>
+
+        @*<div id="createNoticeContainer"></div>
+        <div id="createSMSContainer"></div>
+        <div id="createNoticeAndSMSContainer"></div>
+        <div id="postNoticeEmailSMSContainer"></div>
+        <div id="saveAndPostNoticeContainer"></div>*@
+
+        @*<div id="Addnotice_div1"></div>
+        <div id="Addsms_div2"></div>
+        <div id="Addnoticeandsms_div3"></div>
+        <div id="Postnoticemailsmsdiv"></div>
+        <div id="ManageNotices_CreateSMS_SaveandPostbtnclick_PostNoticeDiv_id"></div>*@
+
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+
+<script src="~/js/_Managenotice.js"></script>
+<script src="~/js/CommonScripts.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

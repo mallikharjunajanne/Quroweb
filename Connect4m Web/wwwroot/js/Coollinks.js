@@ -28,36 +28,22 @@ function DataCallToAjax(method, url, data, successCallback, errorCallback) {
     });
 }
 
-
-$(document).ready(function () {    
- 
-    ManageCoollinksfun();  
+$(document).ready(function () {
+    $('#Addnewlinkscontainerdiv').empty();
+    tblSearchcallingfun();
 });
 
-$("#Searchcoollink_Btn").click(function () {
-    $('#DeleteMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-
-    var LinkName = $("#LinkNameTXT").val();
-    var LinkURL = $("#LinkURLTXT").val();
-    var Description = $("#DescriptionTXT").val();
-
-    ManageCoollinksfun();
+$("#Searchbtn").click(function () {
+    $('#Validationmessage').text('');
+    tblSearchcallingfun();
 });
-function ManageCoollinksfun() {
-    var LinkName = $("#LinkNameTXT").val();
-    var LinkURL = $("#LinkURLTXT").val();
-    var Description = $("#DescriptionTXT").val();
-    //debugger;
-    var dataToSend = {
-        LinkName: LinkName,
-        LinkURL: LinkURL,
-        Description: Description
-    };
-    //{ LinkName: LinkName, LinkURL: LinkURL, Description: Description },
 
-    DataCallToAjax('GET', '/Admin/ManageCoolLinks_Tabledata', dataToSend,
+function tblSearchcallingfun() {
+    var LinkName = $("#Linknametxt").val();
+    var LinkURL = $("#Linkurltxt").val();
+    var Description = $("#Descriptiontxt").val();
+    var dataToSend = {Name: LinkName,Url: LinkURL,Description: Description};
+    DataCallToAjax('GET', '/Admin/BindCoollinkstbl', dataToSend,
         function (response) {
             bindDatatable(response);
         }, function (status, error) {
@@ -65,6 +51,7 @@ function ManageCoollinksfun() {
         }
     );
 }
+
 function bindDatatable(response) {
     
     //debugger;
@@ -97,15 +84,15 @@ function bindDatatable(response) {
                 }
             },
             {
-                data: "LinkName",
+                data: "Name",
                 render: function (data, type, row, meta) {
-                  return row.linkName
+                  return row.name
                 }
             },
             {
-                data: "LinkURL",
+                data: "Url",
                 render: function (data, type, row, meta) {
-                 return row.linkURL + '<input type="text" value=' + row.coollinkId + ' hidden/>'
+                 return row.url + '<input type="text" value=' + row.id + ' hidden/>'
                 }
             },
             {
@@ -115,7 +102,7 @@ function bindDatatable(response) {
                 }
             },
             {
-                data: "CoollinkId",
+                data: "Id",
                 render: function (data, type, row, meta) {
                     return '<i class="fa fa-trash-o" style="color:red;font-size: 23px;cursor: pointer;" title="Delete"></i>'
                 }
@@ -134,294 +121,129 @@ function bindDatatable(response) {
         fontWeight: 'bold'
     });
 }
-function Clearcommonfunction(Formid, ErrorMessageSpanId) {
-    //debugger;
+
+function Clearfun(Formid, ErrorMessageSpanId) {
     document.getElementById(Formid).reset(); // Reset the form 
     document.getElementById(ErrorMessageSpanId).innerText = '';
-
-    $('#DeleteMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-    ManageCoollinksfun();
+    tblSearchcallingfun();
 }
-$('#CreateNewCoolllink_Btn').click(function () {
 
-    $('#DeleteMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-    $('#LinkNameTXT').val('');
-    $('#LinkURLTXT').val('');
-    $('#DescriptionTXT').val('');
-
-
-    $('#S_LinkNameTxt').val('');
-    $('#S_LinkURLTxt').val('');
-    $('#S_DescriptionTxt').val('');
-
-
-    $('#Coollinks_PartailConatiner').hide();
-    $('#SearchCoollinkView').hide();
-    $('#CreateNew_CoollinkView').show();
-    $('#CoollinkUpdateView').hide();
+//Add new coollinks appending function start
+$('#Addnewcoolinkbtn').click(function () {
+    debugger;
+    $('#Addnewlinkscontainerdiv').empty();
+    var Idtxt = $('Idtxt').val();
+    DataCallToAjax('GET', '/Admin/InsertCoollink?Id=' + Idtxt, null,
+        function (response) {
+            debugger;
+            $('#Searchcontainerdiv').hide();
+            $('#Addnewlinkscontainerdiv').html(response);
+            loaddingimg.css('display', 'none');
+        },
+        function (status, error) {
+            loaddingimg.css('display', 'none');
+        }
+    );
 });
 
-$('#Backtoseach_savebtn').click(function () {
+$('#Insertform').submit(function (event) {
+    // Prevent the default form submission
+    event.preventDefault();
+    debugger;
 
-    $('#UpdatevalidationMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-    $('#CreateNew_CoollinkView').hide();
-    $('#CoollinkUpdateView').hide();
-    $('#Coollinks_PartailConatiner').show();
-    ManageCoollinksfun();
-    //ManageCoollinks();
-
-    $('#SearchCoollinkView').show();
-    $('#savecoollink_btn, #Clear_savebtn').prop('disabled', false);
+    var Id = $("#Idtxt").val();
+    var LinkName = $("#Nametxt").val();
+    var LinkURL = $("#Urltxt").val();
+    var Description = $("#Descriptiontxt").val();
+    if (isValidURL(LinkURL)) {
+        var dataToSend = { Id: Id, Name: LinkName, Url: LinkURL, Description: Description };
+        DataCallToAjax('POST', '/Admin/InsertCoollink', dataToSend,
+            function (response) {
+                if (response == "0") {
+                    $('#Validationmessage').text("Cool Link with Name " + '"' + LinkName + '"' + " already exists.");
+                } else if (response == "") {
+                    $('#Validationmessage').text("Somthing Went wrong...!");
+                } else {
+                    $('#Validationmessage').text("Record inserted successfully.");
+                    $('#Insertbtn, #Clearbtn').prop('disabled', true);
+                }
+            },
+            function (status, error) {
+                // Handle error if needed
+            }
+        );
+    }
+    else {
+        //console.log('URL is not valid');
+        $('#Validationmessage').text('Invalid URL. Please enter a valid URL starting with http:// or https://.');
+    }
 });
 
-$('#Clear_savebtn').click(function () {
-
-    $('#UpdatevalidationMessage').text('');
-    $('#validation2').text('');
-    $('#validationMessage').text('');
-    $('#S_InstanceIdTxt').val('');
-    $('#S_LinkNameTxt').val('');
-    $('#S_LinkURLTxt').val('');
-    $('#S_DescriptionTxt').val('');
-
-});
 function isValidURL(url) {
     let urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
     // Test the URL against the regex pattern
     return urlPattern.test(url);
 }
-$('#savecoollink_btn').click(function () {
 
-    //debugger;
-    var LinkName = $('#S_LinkNameTxt').val();
-    var LinkURL = $('#S_LinkURLTxt').val();
-    var Description = $('#S_DescriptionTxt').val();
-    if (SaveValidation()) {
-        $('#validation2').text('');
-        $('#validationMessage').text('');
-        if (isValidURL(LinkURL)) {
-            //console.log('URL is valid');
-            var dataToSend = {
-                LinkName: LinkName,
-                LinkURL: LinkURL,
-                Description: Description
-            };
-           
-            DataCallToAjax('POST', '/Admin/CoolLinks_INSERT', dataToSend,
-                function (response) {
-                    if (response == "0") {
-                        $('#validationMessage').text("Cool Link with Name " + '"' + LinkName + '"' + " already exists.");
-                    } else if (response = "") {
-                        $('#validationMessage').text("Somthing Went wrong...!");
-                    } else {
-                        $('#validationMessage').text("Record inserted successfully.");
-                        $('#savecoollink_btn, #Clear_savebtn').prop('disabled', true);
-                    }
-                }, function (status, error) {
+$('#Backtosearchbtn').click(function () {
 
-                }
-            );
-        }
-        else {
-            //console.log('URL is not valid');
-            $('#validationMessage').text('Invalid URL. Please enter a valid URL starting with http:// or https://.');
-        }
-    }
+    $('#Validationmessage').text('');
+    $('#Addnewlinkscontainerdiv').empty();
+    $('#Searchcontainerdiv').show();
+    tblSearchcallingfun();    
+
+    //===>>>
+    //$('#UpdatevalidationMessage').text('');
+    //$('#validationMessage').text('');
+    //$('#validation2').text('');
+    //$('#CreateNew_CoollinkView').hide();
+    //$('#CoollinkUpdateView').hide();
+    //$('#Coollinks_PartailConatiner').show();
+    //tblSearchcallingfun();
+    //$('#SearchCoollinkView').show();
+    //$('#savecoollink_btn, #Clear_savebtn').prop('disabled', false);
 });
-function SaveValidation() {
-    //debugger;
-    
-    var LinkName = $('#S_LinkNameTxt').val();
-    var LinkURL = $('#S_LinkURLTxt').val();
-    var Description = $('#S_DescriptionTxt').val();
 
-    var validationMessage = "";
-    var hasError = false;
-
-    if (LinkName === "") {
-        validationMessage += "Cool Link Name<br>";
-        hasError = true;
-    }
-
-    if (LinkURL === "") {
-        validationMessage += "Cool Link URL<br>";
-        hasError = true;
-    }
-
-    if (hasError) {
-        $('#validation2').html("Following fields have invalid data :<br>");
-        $("#validationMessage").html(validationMessage);
-        return false;
-    } else {
-        $("#validationMessage").html("");
-        return true;
-    }
-}
+// Begin the code for editing the record (Edit functionality)
 $(document).on('click', '#Coollinkstbl_id td:nth-child(2)', function (event) {
     event.stopImmediatePropagation();
-    //debugger;
+    debugger;
     var parent = $(event.target).closest('tr');
     var Coollinkid = $(parent).find('td').find('input[type="text"]').val();
     var table = $('#Coollinkstbl_id').DataTable();
     tabletargetpagetblSEMsearchresults = table.page.info().page;
     EditCoolinkFunction(Coollinkid);
 })
+
 function EditCoolinkFunction(Coollinkid) {
-    $('#UpdateForm')[0].reset();
-    $('#UpdateMessage').text('');
-
-    $('#Delete_Upbtn, #Updatecoollink_Btn').prop('disabled',false);
-
+    $('#Validationmessage').text('');
     $.ajax({
-        url: "/Admin/CoolLinks_Edit?CoollinkId=" + Coollinkid,
+        url: "/Admin/EditCoollink?CoollinkId=" + Coollinkid,
         type: "GET",
         success: function (response) {
-
-            $('#CoollinkUpdateView').show();
-            $('#CreateNew_CoollinkView').hide();
-            $('#SearchCoollinkView').hide();
-            $('#Coollinks_PartailConatiner').hide();
-
-
-            $('#CoollinkIdEditTxt').val(response[0].coollinkId);
-            $('#InstanceIdEditTxt').val(response[0].instanceId);
-            $('#linkNameEditTxt').val(response[0].linkName);
-            $('#LinkURLEditTxt').val(response[0].linkURL);
-            $('#DescriptionEditTxt').val(response[0].description);
+            $('#Searchcontainerdiv').hide();
+            $('#Addnewlinkscontainerdiv').html(response);            
         }
-
     });
 }
+
 $(document).on('click', '#Coollinkstbl_id .fa-trash-o', function (event) {
     event.stopImmediatePropagation();
     var confirmed = confirm("Are you sure you want to delete Coollink?\nClick 'OK' to delete, or 'Cancel' to stop deleting.");
     if (confirmed) {
-        $("#UpdatevalidationMessage").text('');
+        $("#Validationmessage").text('');
         //debugger;
         var Coollinkid = $(this).closest('tr').find('input[type="text"]').val();
         var table = $('#Coollinkstbl_id').DataTable();
         var tabletargetpagetblSEMsearchresults = table.page.info().page;
         $.ajax({
-            url: "/Admin/CoolLinks_DELETE?CoollinkId=" + Coollinkid,
-            type: "POST",
-            success: function (response) {
-              
-                window.scroll(0, 500);
-                ManageCoollinksfun();
-                $("#UpdatevalidationMessage").text('Record deleted successfully.');
-            }
-        });
-    }
-});
-$("#Delete_Upbtn").click(function () {
-
-    var CoollinkId = $("#CoollinkIdEditTxt").val();
-
-    if (confirm('Are you sure you want to delete the cool link?\nClick' + '"' + 'OK' + '"' + 'to delete or ' + '"' + 'Cancel' + '"' + ' to stop deleting.')) {
-
-        $.ajax({
-            url: "/Admin/CoolLinks_DELETE?CoollinkId=" + CoollinkId,
+            url: "/Admin/DeleteCoollink?CoollinkId=" + Coollinkid,
             type: "POST",
             success: function (response) {
                 window.scroll(0, 500);
-                ManageCoollinksfun();
-                $('#CreateNew_CoollinkView').hide();
-                $('#SearchCoollinkView').show();
-                $('#CoollinkUpdateView').hide();
-                $('#linkNameEditTxt').val('');
-                $('#LinkURLEditTxt').val('');
-                $('#DescriptionEditTxt').val('');
-                $('#CoollinkIdEditTxt').val('');
-                $("#UpdatevalidationMessage").text('Record deleted successfully.');
-            }
-
-        });
-    }
-});
-$('#Backtoseach_Upbtn').click(function () {
-
-
-    $('#UpdatevalidationMessage').text('');
-    $('#Updatevalidation2').text('');
-    $('#DeleteMessage').text('');
-    $('#validationMessage').text('');
-    $('#validation2').text('');
-    $('#CreateNew_CoollinkView').hide();
-    $('#CoollinkUpdateView').hide();
-    $('#Coollinks_PartailConatiner').show();
-    //ManageCoollinks();
-    ManageCoollinksfun();
-    $('#SearchCoollinkView').show();
-
-});
-$('#Updatecoollink_Btn').click(function () {
-    //debugger;
-    var LinkName = $('#linkNameEditTxt').val();
-
-    if (UpdateValidation()) {
-        var Updatedata = $("#UpdateForm").serialize();
-        $('#Updatevalidation2').text('');
-        $('#UpdateMessage').text('');
-        $.ajax({
-            url: "/Admin/CoolLinks_UPDATE",
-            data: Updatedata,
-            type: "POST",
-            success: function (response) {
-                if (response == "1") {
-                    $('#SearchCoollinkView').hide();
-                    $('#CreateNew_CoollinkView').hide();
-                    $('#CoollinkUpdateView').show();
-                    $('#Coollinks_PartailConatiner').hide();
-                    $('#UpdateMessage').text("Record Updated successfully.");
-                    $('#Updatecoollink_Btn, #Delete_Upbtn').prop('disabled', true);   
-                } else {
-                    $('#UpdateMessage').text("Record Update unsuccessfully " + '"' + LinkName + '"');
-                }
+                tblSearchcallingfun();
+                $("#Validationmessage").text('Record deleted successfully.');
             }
         });
     }
-
 });
-function UpdateValidation() {
-    var InstanceId = $('#InstanceIdEditTxt').val();
-    var LinkName = $('#linkNameEditTxt').val();
-    var LinkURL = $('#LinkURLEditTxt').val();
-    var Description = $('#DescriptionEditTxt').val();
-    var CoollinkIdEditTxt = $('#CoollinkIdEditTxt').val();
-
-
-    var validationMessage = "";
-    var hasError = false;
-
-    if (LinkName === "") {
-        validationMessage += "Cool Link Name<br>";
-        hasError = true;
-    }
-
-    if (LinkURL === "") {
-        validationMessage += "Cool Link URL<br>";
-        hasError = true;
-    }
-
-    //const isValidUrl = (url: string): boolean => {
-    //    const urlRegex = /^((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/g;
-    //    const result = url.match(urlRegex);
-
-    //    return result !== null;
-    //};
-
-    if (hasError) {
-        $('#Updatevalidation2').html("Following fields have invalid data :<br>");
-        $("#UpdatevalidationMessage").html(validationMessage);
-        return false;
-    } else {
-        $("#UpdatevalidationMessage").html("");
-        return true;
-    }
-}

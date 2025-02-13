@@ -780,7 +780,8 @@ $('#SchedulerSubmitbtn').click(function () {
             $('#Scheduleerrormessage').text('Set the Start Date and End Date for the Notice');
             return;
         }
-    } else {
+    }
+    else {
         $('#Scheduleerrormessage').text('Select The Type');
         return;
     }
@@ -801,21 +802,25 @@ $('#SchedulerSubmitbtn').click(function () {
                             $('#Scheduleerrormessage').text("Set Time Should be greater than current time");
                             return;
                         }
-                    } else {
+                    }
+                    else {
                         if (selectedHour === '0' || selectedMinute === '0') {
                             $('#Scheduleerrormessage').text("Set the Time For the SMS");
                             return;
                         }
                     }
-                } else {
+                }
+                else {
                     $('#Scheduleerrormessage').text('Set Date Should not be less than today.');
                     return;
                 }
-            } else {
+            }
+            else {
                 $('#Scheduleerrormessage').text('SMS Schedule date Should be in between Start Date and End Date');
                 return;
             }
-        } else {
+        }
+        else {
             $('#Scheduleerrormessage').text('Please give SMS Schedule date.');
             return;
         }

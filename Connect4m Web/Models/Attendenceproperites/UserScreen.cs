@@ -10,7 +10,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
 {
     public class UserScreen
     {
-        public class Insatnceids
+        public class  Insatnceids
         {
             public int InstanceId { get; set; }
             public int UserId { get; set; }
@@ -48,20 +48,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int ForAll { get; set; }
             public string Methodname { get; set; }
         }
-        public class ManageClassification : Insatnceids
-        {
-            public int InstanceClassificationId { get; set; }
-            [Required(ErrorMessage = "Department is required")]
-            public string ClassificationName { get; set; }
-            public string ClassificationDescription { get; set; }
-            public string Description { get; set; }
-            [Required(ErrorMessage = "Attendance Effective Date is required")]
-            public DateTime? StartDate { get; set; }
-            [Required(ErrorMessage = "Attendance End Date is required")]
-            public DateTime? EndDate { get; set; }
-            public int ProgramTypeId { get; set; }
-            public int AllowedDialougeCount { get; set; }
-        }
+       
+        
+
         public class ManageSubClassification : Insatnceids
         {
             [Required(ErrorMessage = "Class is required")]
@@ -115,65 +104,8 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int CategoryTypeId { get; set; }
             public int AssetTypeId { get; set; }
         }
-        public class BestPerformer : Insatnceids
-        {
-            public int PerformerId { get; set; }
-            [Required]
-            public string Title { get; set; }
-            public string FirstName { get; set; }
-            //public string UserId { get; set; }
-            public string Description { get; set; }
-            [Required]
-            public string DisplayUntill { get; set; }
-            public string IsEvent { get; set; }
-            public string InstanceUserCode { get; set; }
-            public string ClassificationName { get; set; }
-            public string ClassificationHeader { get; set; }
-            public string IsWelcomePage { get; set; }
-            public string Eventphotos { get; set; }
-            public DateTime? DisplayUntill_ { get; set; }
-            public string LastName { get; set; }
-            public string InstanceClassificationId { get; set; }
-            public string InstanceSubClassificationId { get; set; }
-            public string AdmissionNumber { get; set; }
-            public string TcTaken { get; set; }
-            public string RouteId { get; set; }
-            public string StopId { get; set; }
-            public string UserName { get; set; }
-            public string RoleName { get; set; }
-            public string RoleID { get; set; }
-            public string LabBatchId { get; set; }
-            public string PortalEmail { get; set; }
-            public string MobilePhone { get; set; }
-            public string SearchDateType { get; set; }
-            public string SearchEndDate { get; set; }
-            public string SearchStartDate { get; set; }
-            public string MotherLastName { get; set; }
-            public string FatherLastName { get; set; }
-            public string MotherFirstName { get; set; }
-            public string FatherFirstName { get; set; }
-            public string DesignationId { get; set; }
-            public string IsActive { get; set; }
-            public string Transport { get; set; }
-            public string CollegeHostel { get; set; }
-            public string Gender { get; set; }
-            public string StudentQuota { get; set; }
-            public string CollegeCode { get; set; }
-            public IFormFile EventPhoto { get; set; }
-            public string BestperformerUserId { get; set; }
-            public List<ClassificationList> ClassificationList { get; set; }
-            public List<SubclassificationList> SubclassificationList { get; set; }
-            public List<RoleList> RoleList { get; set; }
-        }
-        public class Managequote : Insatnceids
-        {
-            public int QuoteId { get; set; }
-            [Required]
-            public string Quote { get; set; }
-            public string DisplayDate { get; set; }
-            [Required]
-            public DateTime? DisplayDate_ { get; set; }
-        }
+       
+        
         public class studentstaffleaves
         {
             public List<StudentleaveName> StudentleaveName { get; set; }
@@ -228,7 +160,111 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ClassificationName { get; set; }
             public string SubclassificationName { get; set; }
         }
-        public class EventsClander : Insatnceids
+        
+        public class Posted_Questions : StudentleaveName
+        {
+            public string AssignedTold { get; set; }
+            public string InstanceQuestiondId { get; set; }
+            public string Description { get; set; }
+            public string DocumentName { get; set; }
+            public string Question { get; set; }
+            public string CreatedDate { get; set; }
+        }
+
+        #region CoolLinks
+        public class CoolLinks : Commonproperties
+        {
+            public int Id { get; set; }
+
+            [Required]
+            public string Name { get; set; }
+
+            [Required]
+            public string Url { get; set; }
+            public string Description { get; set; }
+        }
+        #endregion
+
+        #region MANAGE BEST PERFORMERS
+
+        public class BestPerformer : Commonproperties
+        {
+            public int PerformerId { get; set; }
+            [Required]
+            public string Title { get; set; }
+            public string FirstName { get; set; }
+            //public string UserId { get; set; }
+            public string Description { get; set; }
+            [Required]
+            public string DisplayUntill { get; set; }
+            public string IsEvent { get; set; }
+            public string InstanceUserCode { get; set; }
+            public string ClassificationName { get; set; }
+            public string ClassificationHeader { get; set; }
+            public string IsWelcomePage { get; set; }
+            public string Eventphotos { get; set; }
+            public DateTime? DisplayUntill_ { get; set; }
+            public string LastName { get; set; }
+            public string InstanceClassificationId { get; set; }
+            public string InstanceSubClassificationId { get; set; }
+            public string AdmissionNumber { get; set; }
+            public string TcTaken { get; set; }
+            public string RouteId { get; set; }
+            public string StopId { get; set; }
+            public string UserName { get; set; }
+            public string RoleName { get; set; }
+            public string RoleID { get; set; }
+            public string LabBatchId { get; set; }
+            public string PortalEmail { get; set; }
+            public string MobilePhone { get; set; }
+            public string SearchDateType { get; set; }
+            public string SearchEndDate { get; set; }
+            public string SearchStartDate { get; set; }
+            public string MotherLastName { get; set; }
+            public string FatherLastName { get; set; }
+            public string MotherFirstName { get; set; }
+            public string FatherFirstName { get; set; }
+            public string DesignationId { get; set; }
+            public string IsActive { get; set; }
+            public string Transport { get; set; }
+            public string CollegeHostel { get; set; }
+            public string Gender { get; set; }
+            public string StudentQuota { get; set; }
+            public string CollegeCode { get; set; }
+            public IFormFile EventPhoto { get; set; }
+            public string BestperformerUserId { get; set; }
+            public List<ClassificationList> ClassificationList { get; set; }
+            public List<SubclassificationList> SubclassificationList { get; set; }
+            public List<RoleList> RoleList { get; set; }
+        }
+
+        #endregion
+
+        #region MANAGE CLASSIFICATION
+
+        public class ManageClassification : Commonproperties
+        {
+            public int InstanceClassificationId { get; set; }
+
+            [Required(ErrorMessage = "Department is required")]
+            public string ClassificationName { get; set; }
+            public string ClassificationDescription { get; set; }
+            public string Description { get; set; }
+
+            [Required(ErrorMessage = "Attendance Effective Date is required")]
+            public DateTime? StartDate { get; set; }
+
+            [Required(ErrorMessage = "Attendance End Date is required")]
+            public DateTime? EndDate { get; set; }
+            public int ProgramTypeId { get; set; }
+            public int AllowedDialougeCount { get; set; }
+        }
+
+        #endregion
+
+        #region MANAGE CALENDAR
+
+        public class EventsClander : Commonproperties
         {
             public int EventId { get; set; }
             public string eventdate { get; set; }
@@ -243,25 +279,25 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime dateofevent { get; set; }
             public int MonthId { get; set; }
         }
-        public class Posted_Questions : StudentleaveName
-        {
-            public string AssignedTold { get; set; }
-            public string InstanceQuestiondId { get; set; }
-            public string Description { get; set; }
-            public string DocumentName { get; set; }
-            public string Question { get; set; }
-            public string CreatedDate { get; set; }
-        }
-        public class CoolLinks : Insatnceids
-        {
-            public int CoollinkId { get; set; }
-            public string LinkName { get; set; }
-            public string LinkURL { get; set; }
 
-            [Required(ErrorMessage = "Description")]
-            public string Description { get; set; }
+        #endregion
 
+        #region MANAGE QUOTE
+
+        public class Managequote : Commonproperties
+        {
+            public int QuoteId { get; set; }
+            [Required]
+            public string Quote { get; set; }
+            public string DisplayDate { get; set; }
+            [Required]
+            public DateTime? DisplayDate_ { get; set; }
         }
+
+        #endregion
+
+
+
         public class Worksheetsdata
         {
             public string Subject { get; set; }
@@ -426,7 +462,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<ClassificationList> ClassificationList { get; set; }
             public List<SubclassificationList> SubclassificationList { get; set; }
             public List<RouteList> RouteList { get; set; }
-            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
+            public List<List<HolidayTargetTable>> HolidayTargetTbl { get; set; }
             //public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
 
             //====>> Api Properties and web properties  comparing           
@@ -485,15 +521,15 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public int UserId_CO { get; set; }
             public string UserName_CO { get; set; }
         }
-        public class HolidaytargetTbl
-        {
-            public string HolidayTargetId { get; set; }
-            public string HolidayId { get; set; }
-            public string Value { get; set; }
-            public string AuthTypeId { get; set; }
-            public string ForAll { get; set; }
+        //public class HolidaytargetTbl
+        //{
+        //    public string HolidayTargetId { get; set; }
+        //    public string HolidayId { get; set; }
+        //    public string Value { get; set; }
+        //    public string AuthTypeId { get; set; }
+        //    public string ForAll { get; set; }
 
-        }
+        //}
         //public class ENoticetargetTbl
         //{
         //    public string ENoticeTargetId { get; set; }
@@ -739,7 +775,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<ClassificationList> ClassificationList { get; set; }
             public List<SubclassificationList> SubclassificationList { get; set; }
             public List<RouteList> RouteList { get; set; }
-            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
+            public List<List<HolidayTargetTable>> HolidayTargetTbl { get; set; }
             public List<List<Targetenoticetbl>> ENoticeTargetTbl { get; set; }
             public string Returnmessage { get; set; }
         }
@@ -898,7 +934,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public DateTime? FromRegistrationdate { get; set; }
             public DateTime? ToRegistrationdate { get; set; }
         }
-        public class ConfirmAdmissionProcesstbl
+        public class ConfirmAdmissionProcesstbl: ClassSectionddl
         {
             public int? RegistrationUserid { get; set; }
             public string RegistrationNumber { get; set; }
@@ -914,6 +950,14 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string ClassificationId { get; set; }
             public Boolean ChkEnabled { get; set; }
             public string UserName { get; set; }
+            public string DateOfJoining { get; set; }
+        }
+        public class ClassSectionddl: Insatnceids
+        {
+            public string ClassId { get; set; }
+            public string ClassName { get; set; }
+            public string Instancesubclassificationid { get; set; }
+            public string SubclassificationName { get; set; }
         }
         #endregion
 
@@ -1132,7 +1176,7 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public List<ClassificationList> ClassificationList { get; set; }
             public List<SubclassificationList> SubclassificationList { get; set; }
             public List<RouteList> RouteList { get; set; }
-            public List<List<HolidaytargetTbl>> HolidayTargetTbl { get; set; }
+            public List<List<HolidayTargetTable>> HolidayTargetTbl { get; set; }
             //public List<List<ENoticetargetTbl>> ENoticeTargetTbl { get; set; }
             public List<List<Targetenoticetbl>> Targetenoticetbl { get; set; }
             public string Returnmessage { get; set; }
@@ -1178,9 +1222,9 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Subject { get; set; }
 
             [Required(ErrorMessage = "Startdate is required")]
-            public DateTime SDate { get; set; }
+            public DateTime Startdate { get; set; }
             [Required(ErrorMessage = "Enddate is required")]
-            public DateTime ExDate { get; set; }
+            public DateTime Expirydate { get; set; }
 
         }
 
@@ -1248,38 +1292,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string Parentsms { get; set; }
             public string Studentmail { get; set; }
             public string Parentmail { get; set; }
-
-
-
-
-            //public int ENoticeId { get; set; }
-            //public int ForAll { get; set; }
-            //public string[] RoleIds { get; set; }
-            //public string[] GroupIds { get; set; }
-            //public string[] ClassificationIds { get; set; }
-            //public string[] SubClassificationIds { get; set; }
-            //public string[] UserIds { get; set; }
-            //public string SendSMS { get; set; }
-            //public string SendEMail { get; set; }
-            //public string IncludeParents { get; set; }
-
-            //public string DMLTYPE { get; set; }
-            //public string NotificationSubject { get; set; }
-            //public string Action { get; set; }
-            //public int NoticeTypeId { get; set; }
-            //public string NoticeTypeName { get; set; }
-            //public int IsParent { get; set; }
-            //public int ParentId { get; set; }
-            //public DateTime? NotifcationDate { get; set; }
-            //public string NotificationMessage { get; set; }
-            //public int SendEmailForstudents { get; set; }
-            //public int SendEmailForParents { get; set; }
-
-            //public string Studentsms { get; set; }
-            //public string Parentsms { get; set; }
-            //public string Studentmail { get; set; }
-            //public string Parentmail { get; set; }
-
         }
         public class ExistingSmsmailsdetails
         {
@@ -1368,7 +1380,6 @@ namespace Connect4m_Web.Models.Attendenceproperites
             public string HolidayName { get; set; }
             public DateTime HolidayDate { get; set; }
         }
-        
         public class ClassAttendanceData: Commonproperties
         {
             public string StudentAttendanceUserId { get; set; }
@@ -1401,10 +1412,342 @@ namespace Connect4m_Web.Models.Attendenceproperites
 
             public string NotificationSubject { get; set; }
         }
+        #endregion
 
 
+
+        #region  MANAGE NOTICE LAST TRY
+        public class _ManageNotice : Commonproperties
+        {
+            public int Enoticeid { get; set; }
+            public string Subject { get; set; }
+            public string CategoryName { get; set; }
+            public string Isposted { get; set; }
+            public string Startdate { get; set; }
+            public string Expirydate { get; set; }
+            public int IsSMSTemplate { get; set; }
+            public int GetAll { get; set; }
+        }
+        public class _ManagenoticeExporttoexcel
+        {
+            public string Subject { get; set; }
+            public string IsPosted { get; set; }
+            public string ExpiryDate { get; set; }
+            public string RepeatSMStoparents { get; set; }
+        }
+
+        #region 
+        public class NoticeTemplateDetails : Commonproperties
+        {
+            [Required(ErrorMessage = "Expiration Date is required.")]
+            public DateTime ExpiryDate { get; set; }
+
+            [Required(ErrorMessage = "Start Date is required.")]
+            public DateTime StartDate { get; set; }
+
+            public DateTime? TemplateStartDate { get; set; }
+            public DateTime? TemplateEndDate { get; set; }
+            public string Subject { get; set; }
+            public string NoticeDescription { get; set; }
+            public string DocumentName { get; set; }
+            public string DocumentSize { get; set; }
+            public int DisplayOrder { get; set; }
+            public string Icon { get; set; }
+            public string DisplayOnLogin { get; set; }
+            public int IsGlobal { get; set; }
+            public int NoticeTypeId { get; set; }
+            public int NoticeId { get; set; }
+            public string CreatedDate { get; set; }
+            public string Category { get; set; }
+            public string IsPostedVersion { get; set; }
+            public string ExpiryDateString { get; set; }
+            public string IsPosted { get; set; }
+            public bool IsSmsTemplate { get; set; }
+            public int GetAll { get; set; }
+            public string Username { get; set; }
+            public int RoleId { get; set; }
+            public string InstanceRoleId { get; set; }
+            public string InstanceUserCodes { get; set; }
+            public string PortalEmail { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int InstanceClassificationId { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string RouteId { get; set; }
+            public int CollegeHostel { get; set; }
+            public string MultiAdmissionNumber { get; set; }
+            public string ExcludedUserIds { get; set; }
+            public string DataModificationType { get; set; }
+            public int SendSms { get; set; }
+            public int SendEmail { get; set; }
+            public int IncludeParents { get; set; }
+            public int ApplyToAll { get; set; }
+            public string NotificationSubject { get; set; }
+            public string RoleName { get; set; }
+            public string MobilePhone { get; set; }
+            public string NotificationMessage { get; set; }
+            public int NoticeType { get; set; }
+            public string NoticeTypeName { get; set; }
+            public DateTime? NotificationDate { get; set; }
+            public int IsParent { get; set; }
+
+            // SMS-related Properties
+            public string SmsTextInXml { get; set; }
+            public string SmsSender { get; set; }
+            public string Action { get; set; }
+
+            // Arrays for filtering and targeting
+            public string[] RoleIds { get; set; }
+            public string[] GroupIds { get; set; }
+            public string[] ClassificationIds { get; set; }
+            public string[] SubClassificationIds { get; set; }
+            public string[] UserIds { get; set; }
+
+            // Lists for related data
+            public List<RoleList> Roles { get; set; }
+            public List<RoleList> RolesByInstanceId { get; set; }
+            public List<GroupList> Groups { get; set; }
+            public List<ClassificationList> Classifications { get; set; }
+            public List<SubclassificationList> SubClassifications { get; set; }
+            public List<RouteList> Routes { get; set; }
+            public List<List<HolidayTargetTable>> HolidayTargets { get; set; }
+            //public List<List<TargetNoticeTable>> TargetNotices { get; set; }
+
+            // Return message for API response or status
+            public string ReturnMessage { get; set; }
+        }
+        
+        public class addusersfornoticedata : Commonproperties
+        {
+            public string UserName { get; set; }
+            public int RoleId { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int InstanceClassificationId { get; set; }
+            public string InstanceUserCode { get; set; }
+            public string PortalEmail { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string RouteId { get; set; }
+            public int CollegeHostel { get; set; }
+            public string ExcludeUserIds { get; set; }
+            public string MultiAdmissionNumber { get; set; }
+            public string InstanceUserCodes { get; set; }
+            public string FatherName { get; set; }
+            public string ClassificationName { get; set; }
+            public string AdmissionNumber { get; set; }
+            public string SubClassificationName { get; set; }
+            public string StaffMobilePhone { get; set; }
+            public string RoleName { get; set; }
+            public string NoOfUsers { get; set; }
+
+            public string UserIds { get; set; }
+
+        }
+        
+        public class NoticeTableData : Commonproperties
+        {
+            public int Studentuserid { get; set; }
+            public string UserName { get; set; }
+            public int RoleId { get; set; }
+            public string InstanceUserCode { get; set; }
+            public string InstanceUserCodes { get; set; }
+            public string PortalEmail { get; set; }
+            public string FirstName { get; set; }
+            public string FatherName { get; set; }
+            public string ClassificationName { get; set; }
+            public string AdmissionNumber { get; set; }
+            public string SubClassificationName { get; set; }
+            public string StaffMobilePhone { get; set; }
+            public string RoleName { get; set; }
+            public string LastName { get; set; }
+            public int InstanceClassificationId { get; set; }
+            public int InstanceSubClassificationId { get; set; }
+            public string RouteId { get; set; }
+            public int CollegeHostel { get; set; }
+            public string MultiAdmissionNumber { get; set; }
+            public string ExcludeUserIds { get; set; }
+            public string StudentMobilePhone { get; set; }
+            public string ParentMobilePhone { get; set; }
+        }
+
+        public class NoticeSenderService : Commonproperties
+        {
+            // Unique Identifier for the Notice
+            public int NoticeId { get; set; }
+
+            // Indicates if the notice is for all users (0 - No, 1 - Yes)
+            public bool IsForAll { get; set; }
+
+            // Arrays of IDs for Roles, Groups, Classifications, and SubClassifications
+            public int[] RoleIds { get; set; }
+            public int[] GroupIds { get; set; }
+            public int[] ClassificationIds { get; set; }
+            public int[] SubClassificationIds { get; set; }
+
+            // User IDs who will receive the notice
+            public int[] UserIds { get; set; }
+
+            // SMS and Email sending flags
+            public bool SendSMS { get; set; }
+            public bool SendEmail { get; set; }
+
+            // Include Parents flag (true/false)
+            public bool IncludeParents { get; set; }
+
+            // DML operation type (CRUD operations)
+            public string DMLTYPE { get; set; }
+
+            // Subject of the notice
+            public string NotificationSubject { get; set; }
+            public string NotificationMessage { get; set; }
+            public int Noticetypeid { get; set; }
+            public string Noticetypename { get; set; }
+
+            // SMS and Email flags for students and parents (true/false)
+            public bool IsStudentSmsEnabled { get; set; }
+            public bool IsParentSmsEnabled { get; set; }
+            public bool IsStudentEmailEnabled { get; set; }
+            public bool IsParentEmailEnabled { get; set; }
+        }
+
+        public class NoticeSmsEmailStatus
+        {
+            public List<string> parentlist { get; set; }
+            public List<string> studentlist { get; set; }
+        }
+        
+        public class SMSchedulingTimeParameters:Commonproperties
+        {
+            public int SCHEDULERID { get; set; }
+            public int ENOTICEID { get; set; }
+            public string DMLTYPE { get; set; }
+            public string TYPE { get; set; }
+            public DateTime SENDDATE { get; set; }
+            public DateTime SENDTIME { get; set; }
+            public DateTime SMSSENDDATE { get; set; }
+            public DateTime Startdate { get; set; }
+            public DateTime Enddate { get; set; }
+            public int WHATTOSENT { get; set; }
+            public string RECEIVEDXML { get; set; }
+            public string SMSType { get; set; }
+        }
 
         #endregion
+
+        #region NOTICE
+        public class Createnotice : Commonproperties
+        {
+            [Required(ErrorMessage = "Notice Type is required")]
+            public int ENoticetypeid { get; set; }
+
+            [Required(ErrorMessage = "Notice Subject is required")]
+            public string Subject { get; set; }
+
+            [Required(ErrorMessage = "Start date can not be blank.")]
+            public DateTime StartDate { get; set; }
+
+            [Required(ErrorMessage = "End date can not be blank.")]
+            [EndDateValidation(ErrorMessage = "End date must be greater than Start date.")]
+            public DateTime ExpiryDate { get; set; }
+
+            public int DisplayOrder { get; set; }
+            public int ENoticeId { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string ShowInLogin { get; set; }
+            public string DocSize { get; set; }
+            public string DisplayIcon { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public IFormFile AttachedDocument { get; set; }
+
+            public string SMSTextInXML { get; set; }
+            public string Action { get; set; }
+            public string SMSFromText { get; set; }
+            public string NoticeTypetext { get; set; }
+            public string DMLTYPE { get; set; }
+            public int CountFlag { get; set; }
+        }
+
+        public class EndDateValidation : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                var model = (Createnotice)validationContext.ObjectInstance;
+
+                // If End Date is less than or equal to Start Date
+                if (model.ExpiryDate <= model.StartDate)
+                {
+                    return new ValidationResult("End date must be greater than Start date.");
+                }
+                return ValidationResult.Success;
+            }
+        }
+        #endregion
+
+        #region SMS
+        public class Createsms : Commonproperties
+        {
+
+            //[Required(ErrorMessage = "Startdate is required")]
+            //public DateTime SDate { get; set; }
+            //[Required(ErrorMessage = "Enddate is required")]
+            //public DateTime ExDate { get; set; }
+
+
+            // Template-related properties
+            public int TemplateMasterPK { get; set; }
+            public string TemplateDescription { get; set; }
+            public int NumberOfParameters { get; set; } // Changed to PascalCase
+
+            // Attribute-related properties
+            public string AttributeName { get; set; }
+            public string AttributeType { get; set; }
+
+            // Length-related property, renamed to Length
+            public string Length { get; set; } // PascalCase and more descriptive
+
+            // Display-related properties
+            public string DisplayIcon { get; set; }
+            public string Subject { get; set; }
+
+            // Date-related properties with validation
+            [Required(ErrorMessage = "Start Date is required")]
+            public DateTime StartDate { get; set; } // Renamed to StartDate (PascalCase)
+
+            [Required(ErrorMessage = "End Date is required")]
+            public DateTime EndDate { get; set; } // Renamed to EndDate (PascalCase)
+        }
+
+        public class InsertSmsTemplateService : Commonproperties
+        {
+            public int ENoticeId { get; set; }
+            public string ENoticeTypeId { get; set; }
+            public string Subject { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime ExpiryDate { get; set; }
+            public int DisplayOrder { get; set; }
+            public string ENoticeDescription { get; set; }
+            public string NoticeDocument { get; set; }
+            public string ShowInLogin { get; set; }
+            public string DocSize { get; set; }
+            public string DisplayIcon { get; set; }
+            public int IsGlobalNotice { get; set; }
+            public IFormFile AttachedDocument { get; set; }
+            public int CountFlag { get; set; }
+            public string NoticeTypetext { get; set; }
+        }
+        #endregion 
+
+        #endregion
+        public class HolidayTargetTable
+        {
+            public string HolidayTargetId { get; set; }
+            public string HolidayId { get; set; }
+            public string Value { get; set; }
+            public string AuthTypeId { get; set; }
+            public string ForAll { get; set; }
+
+        }
         public class ManageSlots
         {
             public int InstancesubjectId { get; set; }

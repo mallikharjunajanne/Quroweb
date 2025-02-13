@@ -400,6 +400,7 @@ namespace Connect4m_Web.Controllers
         #region ADMISSION SUMMARY REPORT
         public IActionResult QuroAdmissionsReport()
         {
+            ViewBag.Instanceddl=GetInstancenamesDropdown();
             return View();
         }
         public IActionResult Quroadmissionreportscounttbl(UserScreen.Admissionreport obj)

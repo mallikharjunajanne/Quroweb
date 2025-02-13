@@ -98,7 +98,7 @@
                                 @*<input type="checkbox" asp-for="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" disabled />*@
                                 @if (ViewBag.IsUserjoinedid == "True")
                                 {
-                                    <input type="checkbox" asp-for="IsUserJoined" name="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" checked />
+                                    <input type="checkbox" asp-for="IsUserJoined" name="IsUserJoined" id="ChkIsUserJoined" class="form-check-input ClsClear" checked disabled/>
                                 }
                                 else if (ViewBag.IsUserjoinedid == "False")
                                 {

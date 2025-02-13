@@ -2,6 +2,7 @@
 using Connect4m_Web.Models.LMSproperties;
 using Connect4m_Web.Views;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -1164,7 +1166,7 @@ namespace Connect4m_Web.Controllers
 
             //return Json(items);
         }
-        //public IActionResult Managenotices_saveNposting(TemplateDetails_SMS obj, NoticeTypes objs)
+       
         public IActionResult Managenotices_saveNposting(ENoticeTypes obj)
         {
             try
@@ -1271,7 +1273,6 @@ namespace Connect4m_Web.Controllers
             }
         }
 
-
         public IActionResult Selecteduserdelete(string Userids)
         {
             string item = "";
@@ -1299,6 +1300,7 @@ namespace Connect4m_Web.Controllers
             return Json(li);
         }
 
+        
 
 
         #endregion
@@ -1888,84 +1890,66 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
-        public IActionResult ManageCoolLinks_Tabledata(string LinkName, string LinkURL, string Description)
+
+        public IActionResult BindCoollinkstbl(CoolLinks links)
         {
-            List<CoolLinks> item = new List<CoolLinks>();
+            List<CoolLinks> list = new List<CoolLinks>();
+            links.InstanceId = InstanceId;
+            links.CreatedBy = UserId;
+            list = CommonMethodobj.CommonListMethod<CoolLinks, CoolLinks>(links, "/GetCoolLinks", client);
+            return Json(list);
+        }
 
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_coollinks?InstanceId=" + InstanceId + "&LinkName=" + LinkName + "&LinkURL=" + LinkURL + "&Description=" + Description).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<CoolLinks>>(data);
-            }
-            //return PartialView("_ManageCoolLinks_Tabledata", item);
-            return Json(item);
+        public IActionResult InsertCoollink(int? CoollinkId)
+        {
+            return View();
         }
 
         [HttpPost]
-        public IActionResult CoolLinks_INSERT(CoolLinks obj)
+        public IActionResult InsertCoollink(CoolLinks obj)
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_CoolLinks_INSERT", content).Result;
-
-            string items = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            return Json(items);
+            string Returnvalue = CommonInsertingMethod(obj, "/Insertcoollink");
+            return Json(Returnvalue);
         }
 
         [HttpPost]
-        public IActionResult CoolLinks_DELETE(int CoollinkId)
+        public IActionResult DeleteCoollink(int CoollinkId)
         {
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_CoolLinks_DELETE?CoollinkId=" + CoollinkId).Result;
-            string item = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<string>(data);
-            }
-            return Json(item);
+            CoolLinks obj = new CoolLinks();
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.Id = CoollinkId;
+            string Returnvalue = CommonInsertingMethod(obj, "/Deletecoollink");
+            return Json(Returnvalue);
         }
 
         [HttpGet]
-        public IActionResult CoolLinks_Edit(int CoollinkId)
+        public IActionResult EditCoollink(int CoollinkId)
         {
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/USP_CoolLinks_Edit?CoollinkId=" + CoollinkId).Result;
-            List<CoolLinks> item = new List<CoolLinks>();
+            CoolLinks links = new CoolLinks();
+            links.Id = CoollinkId;
+            links.InstanceId = InstanceId;
+            links.CreatedBy = UserId;
+            string data1 = JsonConvert.SerializeObject(links);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Editcoollink", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                item = JsonConvert.DeserializeObject<List<CoolLinks>>(data);
+                links = JsonConvert.DeserializeObject<CoolLinks>(data);
             }
-            return Json(item);
+            return View(links);
         }
 
         [HttpPost]
-        public IActionResult CoolLinks_UPDATE(CoolLinks obj)
+        public IActionResult UpdateCoollink(CoolLinks obj)
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/USP_CoolLinks_UPDATE", content).Result;
-
-            string items = "";
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = JsonConvert.DeserializeObject<string>(data2);
-            }
-
-            return Json(items);
+            string Returnvalue = CommonInsertingMethod(obj, "/Updatecoollink");
+            return Json(Returnvalue);
         }
 
 
@@ -2131,58 +2115,38 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
-        public IActionResult ManageQuoteTabledata(Managequote obj)
-        {
-            List<Managequote> items = new List<Managequote>();
-            try
-            {
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageQuote_tbl?InstanceId=" + InstanceId + "&Quote=" + obj.Quote + "&DisplayDate=" + obj.DisplayDate).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string data = response.Content.ReadAsStringAsync().Result;
-                    items = JsonConvert.DeserializeObject<List<Managequote>>(data);
-                }
 
-                ViewBag.Holidayslist = items;
-                ViewBag.Holidayslistcount = items.Count();
-                return Json(items);
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
-                return View();
-            }
+        public IActionResult ManageQuoteTabledata(Managequote quotes)
+        {
+            List<Managequote> list = new List<Managequote>();
+            quotes.InstanceId = InstanceId;
+            quotes.CreatedBy = UserId;
+            quotes.Quote = quotes.Quote;
+            quotes.DisplayDate = quotes.DisplayDate;
+            list = CommonMethodobj.CommonListMethod<Managequote, Managequote>(quotes, "/GetManagequotetbl", client);
+            return Json(list);
         }
+
         [HttpGet]
         public IActionResult Insert_Quote()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Insert_Quote(Managequote obj)
         {
-            string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageQuote_Insert", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-            }
-            ViewBag.List = items;
-            return Json(items);
-            //return View();
+            string Returnvalue = CommonInsertingMethod(obj, "/Insertmanagequote");
+            return Json(Returnvalue);
         }
+
         [HttpGet]
         public IActionResult Update_Quote(int Quoteid)
         {
-
             Managequote model = new Managequote();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Edit_ManageQuote?Quoteid=" + Quoteid).Result;
-
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -2190,35 +2154,24 @@ namespace Connect4m_Web.Controllers
             }
             return View(model);
         }
+       
         [HttpPost]
         public IActionResult Update_Quote(Managequote obj)
         {
-            string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/ManageQuote_Update", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-            }
-            ViewBag.List = items;
-            return Json(items);
+            string Returnvalue = CommonInsertingMethod(obj, "/Updatemanagequote");
+            return Json(Returnvalue);
         }
+
         public IActionResult Delete_Quote(int QuoteId)
         {
-            string items = "";
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Delete_ManageQuote?QuoteId=" + QuoteId).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                items = data;
-            }
-
-            return Json(items);
+            Managequote obj = new Managequote();
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.QuoteId = QuoteId;
+            string Returnvalue = CommonInsertingMethod(obj, "/DeleteManagequote");
+            return Json(Returnvalue);
         }
 
         #endregion
@@ -2236,10 +2189,7 @@ namespace Connect4m_Web.Controllers
             List<EventsClander> items = new List<EventsClander>();
             try
             {
-                obj.InstanceId = InstanceId;
-
-
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/CalendarEvents?InstanceId=" + InstanceId + "&EventTitle=" + obj.EventTitle + "&EventDate=" + obj.dateofevent + "&MonthId=" + obj.MonthId).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/CalendarEvents?InstanceId=" + InstanceId + "&EventTitle=" + obj.EventTitle + "&EventDate=" + obj.dateofevent + "&MonthId=" + obj.MonthId+ "&Createdby="+ UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -2310,7 +2260,6 @@ namespace Connect4m_Web.Controllers
             return Json(items);
         }
 
-
         public IActionResult Delete_Calendar(int EventId)
         {
             string items = "";
@@ -2333,30 +2282,17 @@ namespace Connect4m_Web.Controllers
             return View();
         }
 
-        public IActionResult ManageClassificationTabledata(ManageClassification obj)
+        public IActionResult ManageClassificationTabledata(ManageClassification classification)
         {
-            List<ManageClassification> items = new List<ManageClassification>();
             try
             {
-                obj.InstanceId = InstanceId;
-                if (obj.ClassificationDescription == null)
-                {
-                    obj.ClassificationDescription = "";
-                }
-                if (obj.ClassificationName == null)
-                {
-                    obj.ClassificationName = "";
-                }
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/ManageClassification_tbl?InstanceId=" + InstanceId + "&ClassificationDescription=" + obj.ClassificationDescription + "&ClassificationName=" + obj.ClassificationName + "&CreatedBy=" + UserId).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string data = response.Content.ReadAsStringAsync().Result;
-                    items = JsonConvert.DeserializeObject<List<ManageClassification>>(data);
-                }
-
-                ViewBag.Holidayslist = items;
-                ViewBag.Holidayslistcount = items.Count();
-                return Json(items);
+                List<ManageClassification> classificationslist = new List<ManageClassification>();
+                classification.InstanceId = InstanceId;
+                classification.CreatedBy = UserId;
+                classification.ClassificationDescription ??= "";
+                classification.ClassificationName ??= "";
+                classificationslist = CommonMethodobj.CommonListMethod<ManageClassification, ManageClassification>(classification, "/Getmanageclassificationtbl", client);
+                return Json(classificationslist);
             }
             catch (Exception)
             {
@@ -2370,33 +2306,22 @@ namespace Connect4m_Web.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Insert_Classification(ManageClassification obj)
         {
-            string items = "";
-            obj.ProgramTypeId = 0;
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Classification_Insert", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-            }
-            ViewBag.List = items;
-            return Json(items);
-
+            obj.ProgramTypeId = 0;
+            string Returnvalue = CommonInsertingMethod(obj, "/Insertclassification");
+            return Json(Returnvalue);
         }
 
         [HttpGet]
         public IActionResult Update_Classification(int InstanceClassificationId)
         {
-            //exec stp_tblInstanceHolidays_SELECT @HolidayId=3454
             ManageClassification model = new ManageClassification();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Edit_Classification?InstanceClassificationId=" + InstanceClassificationId).Result;
-
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/EditClassification?InstanceClassificationId=" + InstanceClassificationId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -2409,39 +2334,25 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult Update_Classification(ManageClassification obj)
         {
-            string items = "";
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
-            string data1 = JsonConvert.SerializeObject(obj);
-            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Classification_Update", content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string data2 = response.Content.ReadAsStringAsync().Result;
-                items = data2;
-            }
-            ViewBag.List = items;
-            return Json(items);
+            string Returnvalue = CommonInsertingMethod(obj, "/Updateclassification");
+            return Json(Returnvalue);
         }
-
 
         public IActionResult Delete_Classification(int InstanceClassificationId)
         {
-            string items = "";
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Delete_Classification?InstanceClassificationId=" + InstanceClassificationId).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = response.Content.ReadAsStringAsync().Result;
-                items = data;
-            }
-
-            return Json(items);
+            ManageClassification obj = new ManageClassification();
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.InstanceClassificationId = InstanceClassificationId;
+            string Returnvalue = CommonInsertingMethod(obj, "/Deleteclassification");
+            return Json(Returnvalue);
         }
 
         #endregion
 
-        #region  MANAGE BEST PERFORMERS ////=====
+        #region  MANAGE BEST PERFORMERS
 
         public IActionResult ManageBestPerformer()
         {
@@ -2461,7 +2372,7 @@ namespace Connect4m_Web.Controllers
                     obj.IsWelcomePage = default;
                 }
 
-                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_tbl?InstanceId=" + InstanceId + "&Title=" + obj.Title + "&IsWelcomePage=" + obj.IsWelcomePage + "&CreatedBy=" + UserId).Result;
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Getbestperformertbl?InstanceId=" + InstanceId + "&Title=" + obj.Title + "&IsWelcomePage=" + obj.IsWelcomePage + "&CreatedBy=" + UserId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -2487,7 +2398,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Adding_BestPerformer_dds()
         {
             BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_dds?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetBestPerformerddls?InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -2502,7 +2413,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Adding_BestPerformer_Subclassification_dd(int InstanceClassificationId)
         {
             BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BestPerformer_Subclassification_dds?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId + "&CreatedBy=" + UserId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Getbestperformerclassficationddlbysubclassddl?InstanceId=" + InstanceId + "&InstanceClassificationId=" + InstanceClassificationId + "&CreatedBy=" + UserId).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -2580,7 +2491,7 @@ namespace Connect4m_Web.Controllers
 
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Managebestperformer_Insert", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Insertbestperformer", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
@@ -2595,7 +2506,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Update_ManageBestPerformer(int PerformerId)
         {
             BestPerformer model = new BestPerformer();
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_Edit?PerformerId=" + PerformerId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/EditBestperformer?PerformerId=" + PerformerId).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -2650,7 +2561,7 @@ namespace Connect4m_Web.Controllers
 
             string data1 = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Managebestperformer_Update", content).Result;
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/UpdateBestperformer", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 string data2 = response.Content.ReadAsStringAsync().Result;
@@ -2661,7 +2572,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult Delete_ManageBestPerformer(int PerformerId)
         {
             string items = "";
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Managebestperformer_Delete?PerformerId=" + PerformerId).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/DeleteBestperformer?PerformerId=" + PerformerId).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -3078,32 +2989,32 @@ namespace Connect4m_Web.Controllers
 
         #region MANAGE ADMISSIONS
         public IActionResult QuroAdmissionProcess()
-        {           
+        {
             return View();
-        } 
+        }
         public IActionResult GetInstancenamesDropdown()
         {
             string[] parameter2 = new string[] { InstanceId.ToString() };
             List<SelectListItem> lis = new List<SelectListItem>();
             lis = CommonDropdownData("BindInstancesDropdown", parameter2, "InstanceName", "InstanceId");
             return Json(lis);
-        }           
+        }
         public IActionResult GetAcademicYearDropdown()
         {
             string[] parameter2 = new string[] { InstanceId.ToString() };
             List<SelectListItem> lis = new List<SelectListItem>();
             lis = CommonDropdownData("BindAcademicYearDropdown", parameter2, "Years", "AcademicYearId");
             return Json(lis);
-        }      
+        }
         public IActionResult GetAllClass()
         {
             string[] parameter2 = new string[] { InstanceId.ToString() };
             List<SelectListItem> lis = new List<SelectListItem>();
             lis = CommonDropdownData("BindClassDropdown", parameter2, "ClassName", "ClassId");
             return Json(lis);
-        }      
+        }
         public IActionResult GetAllcountrys()
-        {         
+        {
             List<SelectListItem> li = new List<SelectListItem>();
             HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/BindcountryDropdown").Result;
             if (response.IsSuccessStatusCode)
@@ -3112,7 +3023,7 @@ namespace Connect4m_Web.Controllers
                 li = JsonConvert.DeserializeObject<List<SelectListItem>>(data);
             }
             //List<SelectListItem> lis= li.Where(item => item.Text.Contains("96") && item.Value == "96").ToList();
-            List<SelectListItem> lis= li.Where(item => item.Value == "96").ToList();
+            List<SelectListItem> lis = li.Where(item => item.Value == "96").ToList();
             return Json(lis);
         }
         public IActionResult GetStatesddl(int CountryId)
@@ -3126,9 +3037,10 @@ namespace Connect4m_Web.Controllers
         {
             obj.InstanceId = InstanceId;
             obj.CreatedBy = UserId;
+            obj.InstanceUserCode = obj.InstanceUserCode;
             List<AdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<AdmissionProcesstbl, AdmissionProcesstbl>(obj, "/BindAdmissiontbl", client);
             return Json(list);
-        }      
+        }
         public IActionResult QuroAdmissionProcess_New(int? RegistrationUserId)
         {
             AdmissionProcess obj = new AdmissionProcess();
@@ -3136,7 +3048,7 @@ namespace Connect4m_Web.Controllers
             List<SelectListItem> Classli = CommonDropdownData("BindClassDropdown", new[] { instanceIdString }, "ClassName", "ClassId");
             List<SelectListItem> countryList = GetFilteredCountryList("96");
             List<SelectListItem> Statenamesli = CommonDropdownData("BindStatesDropdown", new[] { "96" }, "StateName", "StateId");
-            if(RegistrationUserId == null)
+            if (RegistrationUserId == null)
             {
                 ViewBag.Returnmessage = "SaveMethod";
                 ViewBag.EditMode = false;
@@ -3149,7 +3061,9 @@ namespace Connect4m_Web.Controllers
             {
                 obj.InstanceId = InstanceId;
                 obj.RegistrationUserId = RegistrationUserId;
-                List<AdmissionProcess> list = CommonMethodobj.CommonListMethod<AdmissionProcess, AdmissionProcess>(obj, "/Edit_admission", client);
+                obj.CreatedBy = UserId;
+                List<AdmissionProcess> list
+                    = CommonMethodobj.CommonListMethod<AdmissionProcess, AdmissionProcess>(obj, "/EditAdmissionDetails", client);
                 ViewBag.Returnmessage = "UpdateMethod";
                 obj = list.FirstOrDefault();
                 ViewBag.EditMode = true;
@@ -3180,11 +3094,11 @@ namespace Connect4m_Web.Controllers
         {
             //try
             //{
-                obj.InstanceId = InstanceId;
-                obj.CreatedBy = UserId;
-                obj.AcademicYear = DateTime.Now.Date.Year.ToString();
-                string Returnvalue = CommonInsertingMethod(obj, "/Insert_admission");
-                return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.AcademicYear = DateTime.Now.Date.Year.ToString();
+            string Returnvalue = CommonInsertingMethod(obj, "/InsertAdmissionDetails");
+            return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
             //}
             //catch (Exception ex)
             //{
@@ -3201,22 +3115,23 @@ namespace Connect4m_Web.Controllers
                 obj.InstanceId = InstanceId;
                 obj.CreatedBy = UserId;
                 obj.AcademicYear = DateTime.Now.Year.ToString();
-                string Returnvalue = CommonInsertingMethod(obj, "/Update_admission");
+                string Returnvalue = CommonInsertingMethod(obj, "/UpdateAdmissionDetails");
+
+                //1216 Something went wrong 
+                //-2 === //User already exists.
+                //If lngUpdatereturn > 0 Then
+                //    lblMsg.Text = "Data Updated Successfully."
+                //    btnApplnSubmit.Enabled = False
+                //Else
+                //    lblMsg.Text = strRecordUpdationError
+                ////End If
+                //If lngreturn = "-2" Then
+                //    lblMsg.Text = "User already exists."
+                //ElseIf lngreturn<> "" Then
+                //   regNo = lngreturn
+                //    lblMsg.Text = "Data inserted Successfully."
 
                 return Json(new { ReturnValue = Returnvalue, MethodName = "Update" });
-
-                //List<ExaminationModel> list = CommonMethodobj.CommonListMethod<ExaminationModel, ExaminationModel>(obj, "/TblExamListData", client);
-                //returnvalue = CommonSaveMethod(obj, "/BulkUploadSubjects");
-                //if (returnvalue != "0")
-                //{
-                //    return Json(new { success = true, message = returnvalue });
-                //    //return Json(returnvalue);
-                //}
-                //else
-                //{
-                //    return Json(new { success = false, message = "Something Error" });
-                //}
-                //return Json(Returnvalue);
             }
             catch (Exception ex)
             {
@@ -3242,12 +3157,14 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult ManageQuroAdmissionstbl(Confirmadmissions obj)
         {
+            List<ConfirmAdmissionProcesstbl> list;
+            List<ConfirmAdmissionProcesstbl> ClassSectionddllist;
             obj.InstanceId = InstanceId;
-            obj.CreatedBy = UserId;            
-            List<ConfirmAdmissionProcesstbl> list = CommonMethodobj.CommonListMethod<Confirmadmissions, ConfirmAdmissionProcesstbl>(obj, "/Confirmadmissionstbl", client);
+            obj.CreatedBy = UserId;
+            list = CommonMethodobj.CommonListMethod<Confirmadmissions, ConfirmAdmissionProcesstbl>(obj, "/Confirmadmissionstbl", client);
 
-
-
+            ClassSectionddllist = CommonMethodobj.CommonListMethod<Confirmadmissions, ConfirmAdmissionProcesstbl>(obj, "/GetClassSectionddl", client);
+            ViewBag.classsectionddl = ClassSectionddllist;
             string[] parameter2 = new string[] { InstanceId.ToString() }; //InstanceId.ToString(),
             List<SelectListItem> li = new List<SelectListItem>();
             li = CommonDropdownData("BindClassificationDropdown", parameter2, "ClassificationName", "InstanceClassificationId");
@@ -3255,13 +3172,414 @@ namespace Connect4m_Web.Controllers
 
             string[] parameter3 = new string[] { InstanceId.ToString(),obj.ClassId.ToString() }; //InstanceId.ToString(),
             List<SelectListItem> Subclassli = new List<SelectListItem>();
-            li = CommonDropdownData("BindSubclassificationDropdown", parameter3, "ClassificationName", "InstanceClassificationId");
+            Subclassli = CommonDropdownData("BindSubclassificationDropdown", parameter3, "ClassificationName", "InstanceClassificationId");
             ViewBag.SubClassificationdropdown = Subclassli;
 
             return View(list);
         }
 
+        public IActionResult ConfirmAdmissionInsertion(ConfirmAdmissionProcesstbl confirmAdmission)
+        {
+            int Instanceid=confirmAdmission.InstanceId;
+            int UpdatedBy = confirmAdmission.UserId;
+            string AdmissionNo = confirmAdmission.AdmNo;
+            string ExpectedJoiningDAte = confirmAdmission.DateOfJoining;
+            int? RegistrationUserid = confirmAdmission.RegistrationUserid;
+            string SubClassificationID = confirmAdmission.Instancesubclassificationid;
+            string UserName = confirmAdmission.UserName;
+            
+            string Returnvalue = CommonInsertingMethod(confirmAdmission, "/CheckAndConfirmAdmissions");
+            //return Json(new { ReturnValue = Returnvalue, MethodName = "Insert" });
+
+            //CheckAndConfirmAdmissions // Api calling method name 
+            return Json("1216");
+        }
+
         #endregion
+
+        #endregion
+
+
+        #region MANAGE NOTICE LAST TRY
+        public IActionResult Manage_Notices()
+        {           
+            return View();
+        }
+        
+        public IActionResult _bindCategoryddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString() , UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("BindCategoryddl", parameter2, "CategoryName", "CategoryId");
+            return Json(li);
+        }
+        
+        public IActionResult _bindManagenoticetbl(_ManageNotice obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.GetAll = 0;
+            List<_ManageNotice> list = CommonMethodobj.CommonListMethod<_ManageNotice, _ManageNotice>(obj, "/BindEnoticetbl", client);
+            return Json(list);
+        }
+        
+        public IActionResult _ManagenoticetblExporttoexcel(_ManageNotice obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            List<_ManagenoticeExporttoexcel> list = CommonMethodobj.CommonListMethod<_ManageNotice, _ManagenoticeExporttoexcel>(obj, "/EnoticetblExporttoexcel", client);
+            return Json(list);
+        }
+              
+        public IActionResult _DeleteNotice(int ENoticeId)
+        {
+            _ManageNotice obj = new _ManageNotice();
+            obj.Enoticeid = ENoticeId;
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            string Returnvalue = CommonInsertingMethod(obj, "/EnoticeDelete");
+            return Json(Returnvalue);
+        }
+
+        #region Create SMS and Notice Scheduling - Save and Post SMS
+
+        [HttpPost]
+        public IActionResult _SaveAndPostSMSSchedulingNotice(Createnotice _senderService)
+        {
+            try
+            {
+                // Set required properties
+                _senderService.InstanceId = InstanceId;
+                _senderService.CreatedBy = UserId;
+
+                // Set additional properties
+                _senderService.DisplayOrder = 2;
+                _senderService.CountFlag = 2;
+                _senderService.ShowInLogin = "0";
+                _senderService.IsGlobalNotice = 0;
+
+                var documentAttachment = _senderService.AttachedDocument;
+
+                // Handle file attachment if provided
+                if (_senderService.ENoticeId == 0 && documentAttachment != null)
+                {
+                    string fileName = SaveDocument(documentAttachment);
+                    if (string.IsNullOrEmpty(fileName))
+                    {
+                        return Json("File already exists");
+                    }
+                    _senderService.NoticeDocument = fileName;
+                    _senderService.DocSize = Path.GetFileNameWithoutExtension(fileName);
+                    _senderService.AttachedDocument = null; // Reset to prevent errors
+                }
+                else
+                {
+                    _senderService.NoticeDocument = null;
+                    _senderService.AttachedDocument = null;
+                }                
+
+                // Prepare for API call
+                ViewBag.Subject = _senderService.Subject;
+                ViewBag.StartDate = _senderService.StartDate;
+                ViewBag.EndDate = _senderService.ExpiryDate;
+
+                var content = new StringContent(JsonConvert.SerializeObject(_senderService), Encoding.UTF8, "application/json");
+                var response = client.PostAsync(client.BaseAddress + "/Postsmsmailnoticetemplate", content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var items = JsonConvert.DeserializeObject<NoticeTemplateDetails>(response.Content.ReadAsStringAsync().Result);
+                    ViewBag.List = items;                    
+                    return View();
+                }
+                return Json("Error in inserting data");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing the request. Please try again later.");
+                return View();
+            }
+        }
+
+        #endregion
+
+        #region CREATE NOTICE
+
+        public IActionResult _Createnotice()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            ViewBag.viewbaglistvalues = CommonDropdownData("BindCategoryddl", parameter2, "CategoryName", "CategoryId");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult _Createnotice(Createnotice _createnotice)
+        {
+            Random random = new Random();
+
+            _createnotice.InstanceId = InstanceId;
+            _createnotice.CreatedBy = UserId;
+            var documentAttachment = _createnotice.AttachedDocument;
+
+            int randomNumber = random.Next(1000, 999999);
+
+            if (documentAttachment != null)
+            {
+                string fileName = SaveDocument(documentAttachment);
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    return Json("File already exists");
+                }
+                _createnotice.AttachedDocument = null; // Reset to prevent errors
+                _createnotice.NoticeDocument = fileName;
+                _createnotice.DocSize = randomNumber.ToString(); // Set DocSize to the random number
+            }
+
+            string Returnvalue = CommonInsertingMethod(_createnotice, "/SaveNotice");
+            return Json(Returnvalue);
+        }
+
+        private string SaveDocument(IFormFile documentAttachment)
+        {
+            try
+            {
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Managenoticesdocs", $"Instanceid{InstanceId}");
+                Directory.CreateDirectory(folderPath);
+
+                string fileName = Path.GetFileName(documentAttachment.FileName);
+                string filePath = Path.Combine(folderPath, fileName);
+
+                // Check if the file already exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    return null; // Return null if file exists
+                }
+
+                // Save the document
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    documentAttachment.CopyTo(fileStream);
+                }
+
+                return fileName; // Return file name if saved successfully
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw;
+            }
+        }
+        #endregion
+
+        #region CREATE SMS
+        public IActionResult _Createsms()
+        {
+            Createsms createsms = new Createsms();
+            createsms.InstanceId = InstanceId;
+            createsms.CreatedBy = UserId;
+            List<Createsms> list= CommonMethodobj.CommonListMethod<Createsms, Createsms>(createsms, "/_Bindsmstemplatestbl", client);
+            ViewBag.SMSTemplates = list;            
+            return View();
+        }
+
+        public IActionResult GetTemplateDetails(int TemplateMasterPK)
+        {
+            Createsms obj = new Createsms();
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
+            obj.TemplateMasterPK = TemplateMasterPK;
+            List<Createsms> list= CommonMethodobj.CommonListMethod<Createsms, Createsms>(obj, "/_GetInstanceTemplateDetails", client);
+            return Json(list);            
+        }
+
+        [HttpPost]
+        public IActionResult _SaveAndPostSMSNotice(InsertSmsTemplateService templateService)
+        {
+            templateService.DisplayOrder = 1;
+            templateService.InstanceId = InstanceId;
+            templateService.CreatedBy = UserId;
+            templateService.NoticeDocument = templateService.NoticeDocument ?? string.Empty;
+            templateService.DocSize = default;
+            templateService.ShowInLogin = "0";
+            templateService.IsGlobalNotice = 0;
+
+            ViewBag.Subject = templateService.Subject;
+            ViewBag.StartDate = templateService.StartDate;
+            ViewBag.EndDate = templateService.ExpiryDate;
+
+            var content = new StringContent(JsonConvert.SerializeObject(templateService), Encoding.UTF8, "application/json");
+            //var response = client.PostAsync(client.BaseAddress + "/Postnoticesmstemplates_Insert", content).Result;
+            var response = client.PostAsync(client.BaseAddress + "/InsertSMSNoticeTemplate", content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var items = JsonConvert.DeserializeObject<NoticeTemplateDetails>(response.Content.ReadAsStringAsync().Result);
+                ViewBag.List = items;
+                //return Json('1');
+                return View();
+            }
+
+            return Json("1");
+        }
+
+        public IActionResult SMSSchedulerInsert(SMSchedulingTimeParameters _senderService)
+        {
+            string items = string.Empty;
+
+            _senderService.WHATTOSENT = 1;
+
+            string data1 = JsonConvert.SerializeObject(_senderService);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+            client.Timeout = TimeSpan.FromMinutes(2);
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/InsertNoticeNotifications", content).Result;//Notice_Notificationsinsert_
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+                int Postnoticereturnvalue = int.Parse(items);
+            }
+            return View();
+        }
+
+
+        #region SMS Template Posting, Email, and SMS Sending
+
+        public IActionResult GetNoticeClassificatinddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("bindnoticeClassificationddl", parameter2, "CategoryName", "CategoryId");
+            return Json(li);
+        }
+
+        public IActionResult GetNoticeClassesbySubClass(int Classificationid)
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString(), Classificationid.ToString() };
+            List<SelectListItem> li = CommonDropdownData("bindnoticeclassesbysubclassddl", parameter2, "SubClassificationName", "InstanceSubClassificationId");
+            return Json(li);
+        }
+
+        public IActionResult Searchaddusersfornoticedata(addusersfornoticedata addusersfornoticedata)
+        {
+            addusersfornoticedata.InstanceId = InstanceId;
+            addusersfornoticedata.CreatedBy = UserId;
+            List<NoticeTableData> list =CommonMethodobj.CommonListMethod<addusersfornoticedata, NoticeTableData>(addusersfornoticedata, "/GetUsersNoticetbldata", client);
+            return Json(list);
+        }
+
+        public IActionResult GetUsersaddnotice(string UserIds, string Noofusers)
+        {
+            addusersfornoticedata addusersfornoticedata = new addusersfornoticedata();
+            addusersfornoticedata.InstanceId = InstanceId;
+            addusersfornoticedata.CreatedBy = UserId;
+            addusersfornoticedata.UserIds = UserIds;
+            addusersfornoticedata.NoOfUsers = Noofusers;
+            List<NoticeTableData> list= CommonMethodobj.CommonListMethod<addusersfornoticedata, NoticeTableData>(addusersfornoticedata, "/GetUsersaddtonotice", client);
+            return Json(list);
+        }
+
+        public IActionResult SelectUsersForNotice(string UserIds, string Noofusers)
+        {
+            addusersfornoticedata addusersfornoticedata = new addusersfornoticedata();
+            addusersfornoticedata.InstanceId = InstanceId;
+            addusersfornoticedata.CreatedBy = UserId;
+            addusersfornoticedata.UserIds = UserIds;
+            addusersfornoticedata.NoOfUsers = Noofusers;
+            List<NoticeTableData> list= CommonMethodobj.CommonListMethod<addusersfornoticedata, NoticeTableData>(addusersfornoticedata, "/GetUsersaddtonotice", client);
+            return Json(list);
+        }
+
+        public IActionResult RemoveUsersFromNotice(string UserIds, string Noofusers)
+        {
+            addusersfornoticedata addusersfornoticedata = new addusersfornoticedata();
+            addusersfornoticedata.InstanceId = InstanceId;
+            addusersfornoticedata.CreatedBy = UserId;
+            addusersfornoticedata.UserIds = UserIds;
+            addusersfornoticedata.NoOfUsers = Noofusers;
+            List<NoticeTableData> list= CommonMethodobj.CommonListMethod<addusersfornoticedata, NoticeTableData>(addusersfornoticedata, "/GetUsersaddtonotice", client);
+            return Json(list);
+        }
+
+        [HttpPost]
+        public IActionResult SendNoticeWithEmailAndSMS(NoticeSenderService _senderService)
+        {
+            string items = string.Empty;
+
+            _senderService.DMLTYPE = "GETRECORDS";
+            _senderService.NotificationSubject = "Notices";
+            _senderService.InstanceId = InstanceId;
+            _senderService.CreatedBy = UserId;
+
+            string data1 = JsonConvert.SerializeObject(_senderService);
+            StringContent content = new StringContent(data1, Encoding.UTF8, "application/json");
+
+            // Set a timeout for the HttpClient
+            //client.Timeout = TimeSpan.FromSeconds(30); // Set a 30-second timeout (you can adjust the time)
+            client.Timeout = TimeSpan.FromMinutes(2);
+            HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/InsertNoticeNotifications", content).Result;//Notice_Notificationsinsert_
+            if (response.IsSuccessStatusCode)
+            {
+                string data2 = response.Content.ReadAsStringAsync().Result;
+                items = JsonConvert.DeserializeObject<string>(data2);
+                int Postnoticereturnvalue = int.Parse(items);
+            }
+            return Json("-1");
+        }
+
+        //Click the save button to trigger this action method, which will call the API action method to save the timing settings.
+        //SMSScheduler
+        #endregion
+
+
+        #endregion
+
+        #region CREATE NOTICE && SMS
+
+        public IActionResult _Createnoticesms()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            ViewBag.viewbaglistvalues = CommonDropdownData("BindCategoryddl", parameter2, "CategoryName", "CategoryId");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult _Createnoticesms(Createnotice _createnotice)
+        {
+            Random random = new Random();
+
+            _createnotice.InstanceId = InstanceId;
+            _createnotice.CreatedBy = UserId;
+            var documentAttachment = _createnotice.AttachedDocument;
+
+            int randomNumber = random.Next(1000, 999999);
+
+            if (documentAttachment != null)
+            {
+                string fileName = SaveDocument(documentAttachment);
+
+                // Get the file size in bytes
+                FileInfo fileInfo = new FileInfo(fileName);
+                long fileSizeInBytes = fileInfo.Length;
+
+                // Convert to KB and store in float (if needed)
+                float fileSizeInKB = (float)(fileSizeInBytes / 1024.0);  // Convert bytes to KB
+                float fileSizeInMB = (float)(fileSizeInKB / 1024.0);     // Convert KB to MB
+
+                string docsize = Convert.ToString(fileSizeInMB);
+
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    return Json("File already exists");
+                }
+                _createnotice.AttachedDocument = null; // Reset to prevent errors
+                _createnotice.NoticeDocument = fileName;
+                //_createnotice.DocSize = randomNumber.ToString(); // Set DocSize to the random number
+                _createnotice.DocSize = docsize; // Set DocSize to the random number
+            }
+
+            string Returnvalue = CommonInsertingMethod(_createnotice, "/SaveNotice");
+            return Json(Returnvalue);
+        }
+        
+        #endregion
+
 
         #endregion
 
@@ -3270,15 +3588,19 @@ namespace Connect4m_Web.Controllers
             string returnval = "";           
             string data = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+            client.Timeout = TimeSpan.FromMinutes(2);
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + WebApiMethodname, content).Result;
             if (response.IsSuccessStatusCode)
             {
                 return returnval = response.Content.ReadAsStringAsync().Result;
             }
             var returnval1 = response.Content.ReadAsStringAsync().Result;
-            return "0";
+            HttpStatusCode statusCode = response.StatusCode;
+            string returnmessage = statusCode.ToString();
+           //return "0";
+            return returnmessage;
         }
-
+ 
         [Authorize]
         public List<SelectListItem> CommonDropdownData(string methodname, string[] Parameters, string text, string value)
         {

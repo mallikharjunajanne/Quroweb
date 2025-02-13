@@ -45,7 +45,7 @@ $('#ConfirmAdmissions_searchform').submit(function (event) {
 
     event.preventDefault();
     setTimeout(function () {
-
+        debugger;
         var validationMessages = $('.field-validation-error');
         var validationMessages2 = $('.error2');
 

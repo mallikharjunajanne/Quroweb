@@ -33,9 +33,13 @@
                         <div class="col-sm-6">
                             <select class="form-select" id="ddlInstanceSubclassification">
                                 <option value="">--Select--</option>
-                                @foreach (var ddlclass in ViewBag.SubClassificationdropdown)
+                                @*@foreach (var ddlclass in ViewBag.SubClassificationdropdown)
                                 {
                                     <option value="@ddlclass.Value">@ddlclass.Text</option>
+                                }*@
+                                @foreach (var ddlclass in ViewBag.classsectionddl)
+                                {
+                                    <option value="@ddlclass.Instancesubclassificationid">@ddlclass.SubclassificationName</option>
                                 }
                             </select>
                         </div>
@@ -46,6 +50,7 @@
     </div>
 </div>
 <div class="col-md-12 col-lg-12 mb-3">
+    <span id="ValidationMessage" class="text-validation"></span>
     <div class="table-responsive text-nowrap">
         <input type="checkbox" class="form-check-input" id="chkCheckAll" name="chkCheckAll">
         <label>Select All</label>
@@ -55,10 +60,9 @@
                 <span id="Recordscount" class="badge badge-center rounded-pill bg-primary bg-glow text-header">@Model.Count</span> RECORDS.
             </div>
             <div class="table-responsive text-nowrap">
-                <div class="dataTables_wrapper no-footer">
-                    @*<table id="Admissiontbl" class="datatables-basic table no-footer dtr-column dataTable">*@
-                    <table id="Admissiontbl" class="table table-hover table-bordered no-footer dataTable">
-                        <thead class="table-dark">
+                <div class="dataTables_wrapper no-footer" id="Confirmadmissiontable">
+                    <table id="tbladmissionsearchresults" class="table table-hover table-bordered no-footer dataTable">
+                       <thead class="table-dark">
                             <tr>
                                 <th>Select</th>
                                 <th>Registration Date</th>
@@ -80,27 +84,20 @@
                             {
                                 <tr>
                                     <td>
-
-                                        <input type="checkbox" class="form-check-input" @(item.ChkEnabled ? "" : "disabled") />
-                                        @*@if (item.ChkEnabled == true)
-                                    {
-                                        <input type="checkbox" class="form-check-input" />
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" class="form-check-input" disabled />
-                                    }*@
+                                        <input type="checkbox" id="chkSelect" class="form-check-input" @(item.ChkEnabled ? "" : "disabled") />
+                                        @*@if (item.ChkEnabled == true){<input type="checkbox" class="form-check-input" />}
+                                            else{<input type="checkbox" class="form-check-input" disabled />}*@
                                     </td>
                                     <td>@item.RegistrationDate.ToString("dd-MM-yyyy").Replace("-", "/")</td>
-                                    <td>@item.RegistrationNumber</td>
-                                    <td>@item.StudentName</td>
-                                    <td>@item.DOB.ToString("dd-MM-yyyy").Replace("-", "/")</td>
+                                    <td><input type="hidden" id="txtRegistrationNumber" value="@item.RegistrationNumber"/>@item.RegistrationNumber</td>
+                                    <td><input type="hidden" id="txtUserName" value="@item.UserName" />@item.StudentName</td>
+                                    <td><input type="hidden" id="txtRegistrationUserid" value="@item.RegistrationUserid" />@item.DOB.ToString("dd-MM-yyyy").Replace("-", "/")</td>
                                     <td>@item.ClassApplied</td>
                                     <td>@item.FatherName</td>
                                     <td>@item.MotherName</td>
                                     <td>@item.Mobilenumber</td>
                                     <td>@item.EmailId</td>
-                                    <td><input type="date" class="form-control" /></td>
+                                    <td><input type="date" class="form-control" id="txtDateOfJoining" value="@item.DateOfJoining"/></td>
                                     <td><select id="ddlSubclassification" class="form-select"></select></td>
                                     <td><input type="text" id="txtAdmissionnumber" class="form-control" /></td>
                                 </tr>
@@ -108,7 +105,9 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="13" style="text-align:center;"><button class="btn btn-success waves-effect waves-light btn-sm" id="Submitbtn">Confirm Admission</button></td>
+                                <td colspan="13" style="text-align:center;">
+                                    <button class="btn btn-success waves-effect waves-light btn-sm" id="btnAddtoProfile">Confirm Admission</button>
+                                </td>
                             </tr>
                         </tfoot>
                     </table>

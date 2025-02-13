@@ -747,7 +747,6 @@ $('#Postnoticebtn').click(function () {
     }
 });
 
-
 function Getcheckboxvalues(RolecheckboxSelector, GrpcheckboxSelector, ClscheckboxSelector, SclcheckboxSelector) {
     var checkboxValues = {};
     var selectors = [

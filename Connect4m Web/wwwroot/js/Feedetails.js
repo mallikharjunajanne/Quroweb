@@ -97,7 +97,8 @@ $("#Btnsearch").click(function () {
                 else {
                     $('#Feesummarytbls').show();
                     $('#Paymentoptionchangediv').show();
-                    $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
+                    //$('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee Collected:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
+                    $('#Feesummarytblamountcountspid').text('Fee Amount(DR):' + FeeAmount + '   Fee collected for active students:' + FeeCollected + '   Discount:' + Discount + '   Due:' + Due);
                 }
 
                 bindorganisationfeesummary(Responselist, headernames, columnnames, "#Feesummarytbls", null, null, "SubClassificationWiseFeeDetailsfun", 2, Termids); //Main Code

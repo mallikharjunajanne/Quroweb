@@ -268,7 +268,7 @@ namespace Connect4m_Web.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;               
                 item = JsonConvert.DeserializeObject<List<CoolLinks>>(data);
             }
-            item = item.OrderBy(link => link.LinkName).ToList();
+            item = item.OrderBy(link => link.Name).ToList();
             return PartialView("_Coollinks", item);
           
         }

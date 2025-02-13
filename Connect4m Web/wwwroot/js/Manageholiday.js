@@ -104,7 +104,8 @@ $('#Insertholiday').submit(function (event) {
             //}else{
             //    $('#Inserterrormessage').text('Something went wrong please try again.');
             //}
-        }, function (status, error) {
+        },
+        function (status, error) {
 
         },
         true);

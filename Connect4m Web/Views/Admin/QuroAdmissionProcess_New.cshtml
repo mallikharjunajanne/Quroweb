@@ -15,7 +15,7 @@
     <div class="text-right">
         <span data-value="@ViewBag.Returnmessage" id="Insert_Updatespanid" style="display:block;"></span>
         <a href="" id="Backtosearchlnk">Back to Search</a>
-        <button id="Backtosearchlnk" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Back to Search</button>
+        @*<button id="Backtosearchlnk" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Back to Search</button>*@
     </div>
     <form id="NewAdmissionform" enctype="multipart/form-data">
         <div class="row mb-2">
@@ -70,11 +70,11 @@
                                         <div class="col-sm-6">
                                             <div class="col mt-2">
                                                 <div class="form-check form-check-inline">
-                                                    <input asp-for="Gender" class="form-check-input check" id="radioinline1" type="radio" name="Gnd" value="0">
+                                                    <input asp-for="Gender" class="form-check-input check" id="radioinline1" type="radio" name="Gender" value="0">
                                                     <label class="form-check-label" for="radioinline1">Male</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input asp-for="Gender" class="form-check-input check" id="radioinline2" type="radio" name="Gnd" value="1">
+                                                    <input asp-for="Gender" class="form-check-input check" id="radioinline2" type="radio" name="Gender" value="1">
                                                     <label class="form-check-label" for="radioinline2"> Female</label>
                                                 </div>
                                                 <span asp-validation-for="Gender" class="text-danger"></span>
@@ -241,9 +241,9 @@
                                                 {
                                                     @if (ViewBag.EditMode)
                                                     {
-                                                        @if (Model.CountryName != null)
+                                                        @if (Model.Country != null)
                                                         {
-                                                            if (country.Text == Model.CountryName)
+                                                            if (country.Value == Model.Country|| country.Text == Model.Country)
                                                             {
                                                                 <option value="@country.Value" selected="selected">@country.Text</option>
                                                             }
@@ -274,9 +274,9 @@
                                                 {
                                                     @if (ViewBag.EditMode)
                                                     {
-                                                        @if (Model.StateName != null)
+                                                        @if (Model.State != null)
                                                         {
-                                                            if (State.Text == Model.StateName)
+                                                            if (State.Value == Model.State || State.Text == Model.State)
                                                             {
                                                                 <option value="@State.Value" selected="selected">@State.Text</option>
                                                             }

@@ -81,6 +81,9 @@
                 </div>
             </div>
             <div class="col-md-12 col-lg-12 mb-3">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button id="_lnkExportExcel" class="btn rounded-pill btn-info waves-effect waves-light btn-sm">Export to Excel</button>
+                </div>
                 <div class="card">
                     <div class="card-header bg-danger text-white text-header">
                         YOUR SEARCH RESULTED
@@ -131,5 +134,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-

@@ -35,14 +35,14 @@ namespace Connect4m_Web.Views
             string data = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + WebApiMethodname, content).Result;
-            
+
             if (response.IsSuccessStatusCode)
             {
                 string data1 = response.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<List<TOutput>>(data1);
             }
             //  below is to find error
-              var errorContent = response.Content.ReadAsStringAsync().Result;
+            var errorContent = response.Content.ReadAsStringAsync().Result;
             return new List<TOutput>();
         }
 

@@ -1,0 +1,487 @@
+﻿@model Connect4m_Web.Models.Attendenceproperites.UserScreen.NoticeTemplateDetails
+@{
+    ViewData["Title"] = "_SaveAndPostSMSSchedulingNotice";
+    Layout = null;
+}
+<style>
+    .checkbox-style {
+        width: 20px; /* Adjust the width of the checkbox */
+        height: 20px; /* Adjust the height of the checkbox */
+        accent-color: #4CAF50; /* Set the color of the checkbox when checked */
+        border-radius: 5px; /* Optional: Rounds the corners */
+    }
+
+        .checkbox-style:checked {
+            background-color: #4CAF50; /* Change the background when checked */
+            border-color: #4CAF50; /* Change the border color when checked */
+        }
+
+    .checkbox-labels {
+        font: 13px Georgia;
+        color: blue;
+        cursor: pointer; /* Optional: Changes the cursor to a pointer when hovering over the label */
+    }
+
+        .checkbox-labels:hover {
+            color: #007bff; /* Optional: Change color when hovering over the label */
+        }
+
+    .checkbox-label {
+        font: 13px Georgia;
+        color: #333333;
+        cursor: pointer; /* Optional: Changes the cursor to a pointer when hovering over the label */
+    }
+
+        .checkbox-label:hover {
+            color: #007bff; /* Optional: Change color when hovering over the label */
+        }
+
+    /* Main styling for the warning note */
+    .notice-note {
+        font-size: 14px; /* Slightly larger font for readability */
+        background-color: #f8d7da; /* Light red background */
+        color: #721c24; /* Dark red text for danger */
+        border: 1px solid #f5c6cb; /* Light red border to match background */
+        padding: 10px 15px; /* Padding around text */
+        display: flex; /* Align icon and text */
+        align-items: flex-start; /* Align vertically */
+        border-radius: 5px; /* Rounded corners */
+        margin-top: 5px; /* Small margin for spacing */
+    }
+
+        .notice-note i {
+            margin-right: 10px; /* Space between the icon and text */
+            font-size: 18px; /* Icon size */
+        }
+
+    .notice-heading {
+        font-size: 16px; /* Larger font for the heading */
+        color: #721c24; /* Dark red heading text */
+        font-weight: bold; /* Make the heading stand out */
+        margin-bottom: 5px; /* Add space below the heading */
+    }
+
+    .notice-note span {
+        line-height: 1.4; /* Improve line height for readability */
+        font-family: Arial, sans-serif; /* Clean and readable font */
+    }
+
+    /* Optional hover effect for interaction */
+    .notice-note:hover {
+        background-color: #f1b0b7; /* Slightly lighter background on hover */
+        cursor: pointer; /* Indicate the note is clickable */
+    }
+
+    /* Ensure the text is not too close to the heading */
+    .notice-note .notice-heading + i,
+    .notice-note .notice-heading + i + span {
+        margin-top: 5px; /* Add space between heading and other elements */
+    }
+
+    .Anddiv {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: #666;
+        margin-top: 15px;
+        padding: 10px 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+<div class="row mb-2">
+    <div class="col-md-12 col-lg-12 mb-3">
+        <span id="validationErrorMessage4" class="text-danger text-header"></span>
+        <div class="row">
+            <div class="col-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                        SMS CREDITS
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-6 col-form-label text-end space">Total Credits </label>
+                            <div class="col-sm-4">
+
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-6 col-form-label text-end space">Used Credits</label>
+                            <div class="col-sm-4">
+
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-6 col-form-label text-end space">Remaining Credits</label>
+                            <div class="col-sm-4">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between  text-header">
+                        SCHEDULE SMS
+                    </div>
+                    <div class="">
+                        <div style="text-align:center;">
+                            <span id="validationErrorMessage5" class="text-danger text-validation"> </span>
+                        </div>
+                        <form id="SCHEDULESMSFORMID">
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Type</label>
+                                <div class="col-sm-4">
+                                    <select id="onceDailyTypeSelector" class="form-select select2 form-select select2-hidden-accessible">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Daily</option>
+                                        <option value="2">Once</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="dailyTextContainer" class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Date</label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="datetxtid" class="form-control" />
+                                    <input type="hidden" value="@ViewBag.StartDate" id="Startdatetxt" />
+                                    <input type="hidden" value="@ViewBag.EndDate" id="Enddatetxt" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-4 col-form-label text-end space">Time</label>
+                                <div class="col-sm-4" style=" display: flex; column-gap: 10px;">
+                                    <select class="form-select select2 form-select select2-hidden-accessible" id="TimeHoursddl">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                    <select class="form-select select2 form-select select2-hidden-accessible" id="Timeminutesddl">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center BTNSCLASS">
+                                <button type="button" id="SchedulerClearbtn" class="btn btn-danger waves-effect waves-light btn-sm">Clear</button>
+                                <button type="button" id="SchedulerSubmitbtn" class="btn btn-success waves-effect waves-light btn-sm">Save</button>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-1 col-form-label text-end"></label>
+                                <div class="col-sm-10">
+                                    <div class="notice-note danger-note">
+                                        <h5 class="notice-heading">Note1:</h5>
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        <span>
+                                            If you select Type as "Daily", the Date Field has no effect as the SMS
+                                            will be sent to the users from the Notice Start Date to End Date.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <label class="control-label col-sm-1 col-form-label text-end"></label>
+                                <div class="col-sm-10">
+                                    <div class="notice-note danger-note">
+                                        <h5 class="notice-heading">Note2:</h5>
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        <span>
+                                            To send scheduled messages to parents, please select the "Send SMS to Parents"
+                                            option given below.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-2">
+            <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                POST NOTICE
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <label class="control-label col-sm-2 col-form-label text-end space">Selected Notice </label>
+                    <div class="col-sm-10">
+                        <label class="control-label col-form-label" id="Notificationmessagelbl">@ViewBag.Subject</label>
+                        <input type="hidden" id="_ENoticetxtid" value="@ViewBag.List.NoticeId" />
+                        <input type="hidden" id="_Noticetypeidtxt" value="@ViewBag.ENoticetypeid" />
+                        <input type="hidden" id="_Noticetypetxt" value="@ViewBag.NoticeTypetext" />
+                        <input type="hidden" id="_Noticetypedescription" value="@ViewBag.ENoticeDescription" />
+                    </div>
+                </div>
+                <div class="card-body" style=" padding: 2px;">
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label text-end"></label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="chkSMSStudent" class="checkbox-style" value="" /> @*SMSStudentChk1*@
+                                <label class="checkbox-labels">Send SMS</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="chkSMSParent" class="checkbox-style" value="" />    @*SMSParentChk2*@
+                                <label class="checkbox-labels">Send SMS to Parents</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="chkEmailStudent" class="checkbox-style" value="" /> @*MailStudentChk3*@
+                                <label class="checkbox-labels">Send EMail</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="chkEmailParent" class="checkbox-style" value="" />  @*MailParentChk4*@
+                                <label class="checkbox-labels">Send EMail to Parents</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label text-end "></label>
+                        <div class="col-sm-7">
+                            <div class="form-check form-check-inline col-4">
+                                <input type="checkbox" id="checkAllUsers" class="checkbox-style" onclick="funCheckAllUsers()" />
+                                <label class="checkbox-labels">Select all users</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label text-end space" style="margin: 6% 0%;">Role</label>
+                        <div class="col-sm-10">
+                            @{
+                            var Rolesno = 0;
+                            var Grpsno = 0;
+                            var Cls = 0;
+                            var Scl = 0;
+                            }
+                            @foreach (var item in ViewBag.List.Roles)
+                            {
+                            <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                <input type="checkbox" id="chklstRole_@Rolesno" name="rolecheckbox" class="checkbox-style checkbox-item checkbox-Name Role_checkbox Chkitem" value="@item.InstanceRoleId" />
+                                <label class="checkbox-label" id="@item.RoleName">@item.RoleName</label>
+                            </div>
+                            @if (item.InstanceRoleId == 3)
+                            {
+                            break;
+                            }
+                            Rolesno++;
+                            }
+                            <div class="form-check form-check-inline col-12" style=" margin-right: 0rem;">
+                                <input type="checkbox" id="Selectallstaffrole" class="checkbox-style checkbox-item" onclick="Handleselectallstaffrolecheckbox();" />
+                                <label class="checkbox-labels">Select all Staff Role</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2 text-center Anddiv">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label  text-end space" style="margin: 6% 0%;">Group</label>
+                        <div class="col-10 rowcol" style="margin-right: -3rem;">
+                            @foreach (var item in ViewBag.List.Groups)
+                            {
+                            <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                <input type="checkbox" id="Grplstchk_@Grpsno" name="Grpcheckbox" class="checkbox-style checkbox-item Grp_checkbox Chkitem" value="@item.GroupId" />
+                                <label class="checkbox-label">@item.GroupName</label>
+                            </div>
+                            @if (item.GroupId == 3)
+                            {
+                            break;
+                            }
+                            Grpsno++;
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2 text-center Anddiv">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label  text-end space" style="margin: 6% 0%;">Department</label>
+                        <div class="col-10 rowcol" style="margin-right: -3rem;">
+                            @foreach (var item in ViewBag.List.Classifications)
+                            {
+                            <div class="form-check form-check-inline col-4" style=" margin-right: 0rem;">
+                                <input type="checkbox" id="Clslstchk_@Cls" name="Clscheckbox" class="checkbox-style checkbox-item Cls_checkbox Chkitem" value="@item.InstanceClassificationId" />
+                                <label class="checkbox-label">@item.ClassificationName</label>
+                            </div>
+                            @if (item.InstanceClassificationId == 3)
+                            {
+                            break;
+                            }
+                            Cls++;
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12 mb-2 text-center Anddiv">
+                        <label>AND</label>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-sm-2 col-form-label  text-end space" style="margin: 6% 0%;">Class</label>
+                        <div class="col-10" style="margin-right: -3rem;">
+                            @foreach (var item in ViewBag.List.SubClassifications)
+                            {
+                            <div class="form-check form-check-inline col-4" style=" margin-right: -3rem;">
+                                <input type="checkbox" id="Sclschk_@Scl" name="Sclcheckbox" class="checkbox-style checkbox-item Scl_Checkbox Chkitem" value="@item.InstanceSubClassificationId" />
+                                <label class="checkbox-label">@item.SubClassificationName</label>
+                            </div>
+                            @if (item.InstanceSubClassificationId == 3)
+                            {
+                            break;
+                            }
+                            Scl++;
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="PostNoticeAddinguserstable_Div" style="display: none;">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR HAVE SELECTED BELOW <span id="AddedRecordscountspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span> USER(S) TO POST THIS NOTICE.
+                </div>
+                <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticeaddeduserstbl">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Admission Number</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Class</th>
+                            <th>Email</th>
+                            <th>Student/Staff Mobile No.</th>
+                            <th>Parent Mobile No.</th>
+                            <th>Father Name</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                </table>
+                <input type="hidden" id="excludeUserIds" readonly style="display:none;" />
+            </div>
+        </div>
+
+        <div id="Adduserstopostnotice_Div">
+            <a href="#" id="addUsersLink" onclick="PostNoticeaddusertogglediv(); return false;">
+                Search and add users to post this notice
+            </a>
+        </div>
+
+        <div id="searchUserAddUserToPostNotice" style="display: none;">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between text-header">
+                    SEARCH USERS TO POST NOTICE
+                </div>
+                <div class="card-body">
+                    <form id="noticeUserSearchForm">
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-2 col-form-label text-end space">User Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Usernametxt" asp-for="Username" class="form-control" />
+                            </div>
+                            <label class="control-label col-sm-2 col-form-label text-end space">Role</label>
+                            <div class="col-sm-4">
+                                <select asp-for="InstanceRoleId" id="Instanceroleddl" class="form-select select2 form-select select2-hidden-accessible">
+                                    <option value="">------Select------</option>
+                                    @foreach (var Roleitem in ViewBag.List.RolesByInstanceId)
+                                    {
+                                    <option id="@Roleitem.InstanceRoleId" value="@Roleitem.InstanceRoleId">@Roleitem.RoleName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-2 col-form-label text-end space">Reg. No</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Instanceusercodetxt" class="form-control" asp-for="InstanceUserCodes" />
+                            </div>
+                            <label class="control-label col-sm-2 col-form-label text-end space">Email ID</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Emailtxt" class="form-control" asp-for="PortalEmail" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-2 col-form-label text-end space">First Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Firstnametxt" class="form-control" asp-for="FirstName" />
+                            </div>
+                            <label class="control-label col-sm-2 col-form-label text-end space">Last Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="Lastnametxt" class="form-control" asp-for="LastName" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-2 col-form-label text-end space">Department</label>
+                            <div class="col-sm-4">
+                                <select asp-for="InstanceClassificationId" id="Classificationddl" class="form-select select2 form-select select2-hidden-accessible">
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-2 col-form-label text-end space">Class</label>
+                            <div class="col-sm-4">
+                                <select asp-for="InstanceSubClassificationId" id="Subclassddl" class="form-select select2 form-select select2-hidden-accessible">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="control-label col-sm-2 col-form-label text-end space">Route Name</label>
+                            <div class="col-sm-4">
+                                <select id="Routeddl" asp-for="RouteId" class="form-select select2 form-select select2-hidden-accessible">
+                                    <option value="">------Select------</option>
+                                    @foreach (var Roleitem in ViewBag.List.Routes)
+                                    {
+                                    <option id="@Roleitem.RouteId" value="@Roleitem.RouteId">@Roleitem.RouteName</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-2 col-form-label text-end space">Staying in Hostel </label>
+                            <div class="col-sm-4">
+                                <select asp-for="CollegeHostel" id="Collegehostelddl" class="form-select select2 form-select select2-hidden-accessible">
+                                    <option value="">------Select------</option>
+                                    <option value="0">Yes</option>
+                                    <option value="1">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success waves-effect waves-light btn-sm" id="btnSearchUsers">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white text-header">
+                    YOUR SEARCH RESULTED
+                    <span id="SearchRecordsspid" class="badge badge-center rounded-pill bg-primary bg-glows"></span>
+                    RECORDS.
+                </div>
+                <table class="table table-bordered  table-responsive text-nowrap dataTable" id="Noticesearchuserstbl">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Select User</th>
+                            <th>Name</th>
+                            <th>Admission Number</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Class</th>
+                            <th>Email</th>
+                            <th>Student/Staff Mobile No.</th>
+                            <th>Parent Mobile No.</th>
+                            <th>Father Name</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content text-center" id="PostnoticebtnDiv">
+            <div class="col-sm-12 BTNSCLASS">
+                <button id="PostnoticeBacktosearchbtn" class="btn btn-dark waves-effect waves-light btn-sm">Back</button>
+                <button id="btnPostNotice" class="btn btn-success waves-effect waves-light btn-sm">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/js/_Managenotice4.js"></script>

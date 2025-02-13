@@ -442,6 +442,7 @@ $("#InsertSEM").submit(function (event) {  //--------------  #code_01
             success: function (res) {
                 var tableid = $('#tblSEMfees');
                 var yearval = $(this).find('#dropdown_FinancialYear_SEM').val();
+                debugger;
                 gettingfees(tableid, yearval);
                 if (res == "1") {
 
