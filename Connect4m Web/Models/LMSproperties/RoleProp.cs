@@ -65,6 +65,7 @@ namespace Connect4m_Web.Models.LMSproperties
     public class AftercreteRole
     {
         public int InstanceId { get; set; }
+        public int CreatedBy { get; set; }
         public string Roleid { get; set; }
         public string MenuId { get; set; }
     }

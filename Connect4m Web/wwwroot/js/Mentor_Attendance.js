@@ -144,7 +144,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                             //return '<img src="' + iconSrc + '" title="' + row.studentPhno + '" /><input id="_mentoruserphno" type="textbox" value=' + row.studentPhno + ' hidden style="display:none" />';
 
                             // Set the icon based on studentSMS value
-                            var iconSrc = row.studentSMS == "1" ? "/Images_IMP/cross.png" : "/Images_IMP/tick_16.png";
+                            var iconSrc = row.studentSMS == "1" ? "/Images_IMP/tick_16.png" : "/Images_IMP/cross.png";
 
                             // Conditionally render the input field for studentPhno if it's not empty
                             var hiddenInputPhno = row.studentPhno ? '<input id="_mentoruserphno" type="text" value="' + row.studentPhno + '" hidden style="display:none" />' : '';
@@ -167,6 +167,7 @@ function searchManageMentorAttendence(data, startdate, enddate) {
                     ...Array.from({ length: countofdates }, (_, k) => ({
                         data: "Columns",
                         render: function (data, type, row, meta) {
+                            debugger;
                             var checkboxcheck = row.columns[k] == "1";
                             //if (row.columns[k] == "") {
                             //    $("#tblMAsearchresults thead tr").find('th:eq(' + (4 + k) + ')').css('color', 'red');

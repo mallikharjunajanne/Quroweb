@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Connect4m_Web.Models.Attendenceproperites;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -41,32 +42,32 @@ namespace Connect4m_Web.Models.LMSproperties
         public List<CreditDebitreport> Listtwo { get; set; }
     }
 
-    public class FeeSummaryReporttw
+    public class FeeSummaryReporttw:Commonproperties
     {
         public string Instances { get; set; }
-
        
         public string StartDate { get; set; }
    
         public string EndDate { get; set; }
     }
 
-        public class FeeSummaryReport
+    public class FeeSummaryReport
     {
         public int Instance { get; set; }
+        public int CreatedBy { get; set; }
         [Required]
         [DisplayName("Locations")]
         public string Location { get; set; }
-         [Required]
+        [Required]
         [DisplayName("Sub Locations")]
         public string SubLocation { get; set; }
-         [Required]
+        [Required]
         [DisplayName("Instances")]
         public List<string> Instances { get; set; }
-       
+
         [DisplayName("Start Date")]
         public string StartDate { get; set; }
- 
+
         [DisplayName("End Date")]
         public string EndDate { get; set; }
 

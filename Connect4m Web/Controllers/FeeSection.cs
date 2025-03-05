@@ -1480,7 +1480,103 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
-       
+
+        #region PAY FEE CORRECTIONS
+
+        public IActionResult PayFeeForUserChallan()
+        {            
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult _Pfudepartmentddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("GetPfudepartmentddl", parameter2, "ClassificationName", "InstanceClassificationId");
+            return Json(li);
+        }
+
+        [Authorize]
+        public IActionResult _PfuStudentquotaddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("GetPfustudentquotadd", parameter2, "StudentQuotaName", "StudentQuotaId");
+            return Json(li);
+        }
+
+        [Authorize]
+        public IActionResult _PfuPaymentddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("GetPfustudentquotadd", parameter2, "Mode", "PaymentModeId");
+            return Json(li);
+        }
+
+        [Authorize]
+        public IActionResult _Pfubankaccountsddl()
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString() };
+            List<SelectListItem> li = CommonDropdownData("Getpfubankaccountsddl", parameter2, "Mode", "PaymentModeId");
+            return Json(li);
+        }
+
+
+        [Authorize]
+        public IActionResult _PfuSubClassddl(int InstanceClassificationId)
+        {
+            string[] parameter2 = new string[] { InstanceId.ToString(), UserId.ToString(), InstanceClassificationId.ToString()};
+            List<SelectListItem> li = CommonDropdownData("GetPfusubclass", parameter2, "Mode", "PaymentModeId");
+            return Json(li);
+        }
+
+
+        [Authorize]
+        public IActionResult bindPfutbl(Userpayfeecorrections obj)
+        {
+            obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;           
+            List<Payfeecorrectionstbl> list = CommonMethodobj.CommonListMethod<Userpayfeecorrections, Payfeecorrectionstbl>(obj, "/GetPfcsearchusers", client);
+            return Json(list);
+        }
+
+        [Authorize]
+        public IActionResult GetPfcuserwisefeedetails(int StudentUserId)
+        {
+            PFCfeedetailstbl itesmode = new PFCfeedetailstbl();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetPfcuserwisefedetailsedit?UserId=" + StudentUserId + "&InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                itesmode = JsonConvert.DeserializeObject<PFCfeedetailstbl>(data);
+            }
+            return Json(itesmode);
+        }
+
+
+        [Authorize]
+        public IActionResult GetPfcfeedetailsbyfeetermstbl(int Studentuserid, string FeeTermIds)
+        {
+            if (FeeTermIds == "null")
+            {
+                FeeTermIds = default;
+            }
+            PFCfeedetailstbl Items = new PFCfeedetailstbl();
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Pfcuserswisetabledata?UserId=" + Studentuserid + "&FeeTermIds=" + FeeTermIds + "&InstanceId=" + InstanceId + "&CreatedBy=" + UserId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                Items = JsonConvert.DeserializeObject<PFCfeedetailstbl>(data);
+            }
+            return Json(Items);
+        }
+
+        #endregion
+
+
+
+
+
         //_PFU_FeeInstallments_BulkFeeUPDATE
         //_PFU_PaidAmount_Edit_SingleUser
         //_PFU_AmountPay_Recipt

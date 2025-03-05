@@ -255,7 +255,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult PocketMoneyDetails(FeeSummaryReport obj)
         {
             obj.Instance = InstanceId;
-         
+            obj.CreatedBy = UserId;
             string jsonData = JsonConvert.SerializeObject(obj);
             List<PocketMoney> list = new List<PocketMoney>();
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -281,6 +281,7 @@ namespace Connect4m_Web.Controllers
         public IActionResult FeeEntityInstanceSummaryone(FeeSummaryReport obj)
         {
             obj.Instance = InstanceId;
+            obj.CreatedBy = UserId;
             List<feesummaryone> list = new List<feesummaryone>();
             string jsonData = JsonConvert.SerializeObject(obj);
            
@@ -300,10 +301,8 @@ namespace Connect4m_Web.Controllers
 
         public IActionResult FeeEntityInstanceSummarytwo(FeeSummaryReporttw obj)
         {
-            //FeeSummaryReport obj = new FeeSummaryReport();
-            //obj.Instance =Instance;
-            //obj.StartDate = StartDate;
-            //obj.EndDate = EndDate;
+            obj.InstanceId =InstanceId;
+            obj.CreatedBy = UserId;
             List<feesummarytwo> list = new List<feesummarytwo>();
             string jsonData = JsonConvert.SerializeObject(obj);
            
@@ -317,7 +316,6 @@ namespace Connect4m_Web.Controllers
               
                 return Json(list);
             }
-
             return Json(list);
         }
         //========================  FeeEntityInstanceSummary  ( 3rd Table )

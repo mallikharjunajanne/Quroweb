@@ -35,7 +35,7 @@ namespace Connect4m_Web.Controllers
 
         private readonly IUserService _userService;
 
-        //==========================================================  Declare The Private Varible for assigning the values from IUserServiceinterface(Read Cookies)
+        // ========================================================== Declare Private Variable for Storing Values from IUserService Interface (Read Cookies)
         private readonly int UserId;
         private readonly int InstanceId;
         private readonly int InstanceClassificationId;
@@ -131,6 +131,7 @@ namespace Connect4m_Web.Controllers
 
             return columnStringBuilder.ToString();
         }
+
         //Create Show Change Activity Columnstring parameter  Method       
         public string GenerateShowChangeActivityColumstringColumnString(DateTime StDate, DateTime EDate, int SubjectSlotID)
         {
@@ -155,6 +156,7 @@ namespace Connect4m_Web.Controllers
 
             return columnStringBuilder.ToString();
         }
+
         public IActionResult Changeactivitytblattendance(Changeactivity obj)
         {
             List<Changeactivitytbl> list = new List<Changeactivitytbl>();
@@ -176,6 +178,7 @@ namespace Connect4m_Web.Controllers
 
             return View();
         }
+
         //Attendance Summery Method Code End
 
         #region POST ATTENDACNE PostAttendance
@@ -405,9 +408,6 @@ namespace Connect4m_Web.Controllers
             //return Json(itemss);
 
         }
-
-
-
 
         #region TEACHER LOGIN DROPDOWN DATA BINDING METHODS
         public IActionResult Teacher_attendanceclassification()
@@ -1105,9 +1105,6 @@ namespace Connect4m_Web.Controllers
         }
 
         #endregion
-
-
-       
 
         public string GetCredits()
         {

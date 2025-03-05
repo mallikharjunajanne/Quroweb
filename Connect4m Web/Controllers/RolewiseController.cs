@@ -216,6 +216,7 @@ namespace Connect4m_Web.Controllers
             List<RoleMenu> list = new List<RoleMenu>();
             AftercreteRole obj = new AftercreteRole();
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             obj.Roleid = Request.Cookies["Roleid_Display"];
             obj.MenuId = Request.Cookies["MenuId_Display"];
             string jsondata = JsonConvert.SerializeObject(obj);
@@ -332,10 +333,10 @@ namespace Connect4m_Web.Controllers
         [HttpPost]
         public IActionResult PostAttendanceSave([FromBody] List<AttendanceData> obj)
         {
-            //obj.InstanceId = InstanceId;
             try
             {
                 obj[0].CreatedBy = UserId;
+                obj[0].InstanceId = InstanceId;
                 obj[0].startdate = Convert.ToDateTime(Request.Cookies["Attendancestartdate"]);
                 obj[0].SubjectSlotID = Request.Cookies["Attendanceslotid"];
                 string jsonData = JsonConvert.SerializeObject(obj);
@@ -361,7 +362,7 @@ namespace Connect4m_Web.Controllers
             AttendanceDelete obj = new AttendanceDelete();
             try
             {
-                //obj.CreatedBy = UserId;
+                obj.CreatedBy = UserId;
                 obj.InstanceId = InstanceId;
                 obj.RoleName = "TEACHER,CLASS TEACHER";
 
@@ -418,7 +419,7 @@ namespace Connect4m_Web.Controllers
             Commonclass obj = new Commonclass();
             ViewBag.Years = obj.GetYears();//-------------------------  Get Years
 
-            string[] parameter = new string[] { InstanceId.ToString() };
+            string[] parameter = new string[] { InstanceId.ToString(), UserId.ToString() };
             ViewBag.instancceidME = InstanceId.ToString();
             ViewBag.Department = CommonDropdown("GetDepartment", parameter, "ClassificationName", "InstanceClassificationId");    /* new List<SelectListItem>();//---------------------  Getting  Department*/
             ViewBag.PayrollCategory = CommonDropdown("GetPayrollCategory", parameter, "PayrollCategoryName", "PayrollCategoryId");         /* new List<SelectListItem>();//---------------------  Getting  Slots*/
@@ -434,6 +435,7 @@ namespace Connect4m_Web.Controllers
         {
             List<StaffMonthAttendance> StudentNamesList = new List<StaffMonthAttendance>();
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
             string jsonData = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/SearchStaffAttendance", content).Result;
@@ -485,6 +487,7 @@ namespace Connect4m_Web.Controllers
         {
             List<StaffMonthLeave> StudentNamesList = new List<StaffMonthLeave>();
             obj.InstanceId = InstanceId;
+            obj.CreatedBy = UserId;
 
             obj.Year = DateTime.Now.Year.ToString();
             obj.EndYear = DateTime.Now.Year.ToString();
