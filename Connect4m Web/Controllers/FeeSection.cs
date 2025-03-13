@@ -2098,6 +2098,7 @@ namespace Connect4m_Web.Controllers
         }
         #endregion
 
+
         [HttpGet]
         public IActionResult AutomaticChallanGeneration()
         {
